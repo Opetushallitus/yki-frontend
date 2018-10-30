@@ -1,0 +1,22 @@
+.NavigationItems {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  height: 100%;
+}
+
+.Separator {
+  position: relative;
+  border-radius: 2px;
+  height: 60%;
+  border: 1px solid #007391;
+}
+
+@media (min-width: 500px) {
+  .NavigationItems {
+    flex-flow: row;
+  }
+}
