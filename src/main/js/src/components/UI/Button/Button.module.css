@@ -1,8 +1,14 @@
 .Button {
   text-decoration: none;
-  margin-top: 5px;
+  height: 41px;
+  border-radius: 2px;
+  background-color: #149ecb;
+  color: white;
+  font-size: 1em;
+  float: right;
+  padding: 0 12px;
 }
 
-.Button:first-of-type {
+.Button:nth-of-type(2) {
   margin-right: 5px;
 }

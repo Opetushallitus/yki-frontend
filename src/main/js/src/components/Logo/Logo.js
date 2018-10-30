@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import OPHLogo from '../../assets/images/oph_logo_vaaka.svg';
+import OPHLogo from '../../assets/svg/oph-logo-vaaka.svg';
 import classes from './Logo.module.css';
 
 const logo = props => (

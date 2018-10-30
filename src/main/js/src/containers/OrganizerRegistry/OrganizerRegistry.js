@@ -22,13 +22,18 @@ class OrganizerRegistry extends Component {
   render() {
     return (
       <div className={classes.OrganizerRegistry}>
-        <h1>Järjestäjärekisteri</h1>
-        <Organizers
-          localization={this.props.localization}
-          loading={this.props.loading}
-          registry={this.props.organizerRegistry}
-        />
-        <Button clicked={this.addOrganizerHandler}>Lisää uusi</Button>
+        <h1>Kielitutkintojen järjestäjärekisteri</h1>
+        <div className={classes.Searchbar}>
+          <input type="text" placeholder="Hae järjestäjää tai paikkakuntaa" />
+          <Button clicked={this.addOrganizerHandler}>Lisää järjestäjä</Button>
+        </div>
+        <div>
+          <Organizers
+            localization={this.props.localization}
+            loading={this.props.loading}
+            registry={this.props.organizerRegistry}
+          />
+        </div>
       </div>
     );
   }

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import axios from '../../../axios';
 import classes from './AddOrganizer.module.css';
-import ophStyles from '../../../assets/css/oph-styles.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Modal from '../../../components/UI/Modal/Modal';
 import AddOrganizerForm from './AddOrganizerForm/AddOrganizerForm';
@@ -105,7 +104,7 @@ class AddOrganizer extends Component {
             autoFocus
             type="text"
             id="organizationSearchField"
-            className={ophStyles['oph-input']}
+            className={classes.Searchbar}
             placeholder="Järjestäjän nimi"
             value={this.state.organizationSearchInput}
             onChange={this.searchInputChangedHandler}
