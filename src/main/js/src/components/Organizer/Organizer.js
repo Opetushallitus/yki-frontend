@@ -11,8 +11,7 @@ const organizer = props => {
         <strong>Kielet</strong>
       </p>
       {props.organizer.languages.map(lang => {
-        const language = `${lang.name} - ${lang.level}`;
-        return <p key={language}>{language}</p>;
+        return <p key={lang}>{lang}</p>;
       })}
     </div>
   );

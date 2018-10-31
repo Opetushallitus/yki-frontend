@@ -73,31 +73,19 @@ const Fieldset = ({ name, label, ...rest }) => (
 );
 
 const addOrganizerForm = props => {
-  const {
-    name,
-    values,
-    touched,
-    dirty,
-    errors,
-    setFieldValue,
-    setFieldTouched,
-    isSubmitting,
-    handleReset,
-  } = props;
-
   return (
     <Form className={classes.Form}>
-      <h1>{name}</h1>
+      <h1>{props.name}</h1>
       <h2>Sopimuskausi</h2>
       <Fieldset name="agreementStart" type="date" label="Alkaa" />
       <Fieldset name="agreementEnd" type="date" label="Loppuu" />
       <h2>Kielet</h2>
       <LanguageSelect
-        value={values.topics}
-        onChange={languages => setFieldValue('languages', languages)}
-        onBlur={setFieldTouched}
-        error={errors.topics}
-        touched={touched.topics}
+        value={props.values.topics}
+        onChange={languages => props.setFieldValue('languages', languages)}
+        onBlur={props.setFieldTouched}
+        error={props.errors.topics}
+        touched={props.touched.topics}
       />
       <h2>Yhteyshenkilö</h2>
       <Fieldset
@@ -126,12 +114,12 @@ const addOrganizerForm = props => {
       />
       <Button
         type="button"
-        clicked={handleReset}
-        disabled={!dirty || isSubmitting}
+        clicked={props.handleReset}
+        disabled={!props.dirty || props.isSubmitting}
       >
         Tyhjennä
       </Button>
-      <Button type="submit" disabled={!dirty || isSubmitting}>
+      <Button type="submit" disabled={!props.dirty || props.isSubmitting}>
         Lisää Järjestäjä
       </Button>
     </Form>

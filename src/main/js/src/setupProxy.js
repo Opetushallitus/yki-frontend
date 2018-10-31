@@ -29,12 +29,20 @@ const organizers = [
         level_code: 'KESKI',
       },
       {
-        language_code: 'sv',
+        language_code: 'fi',
         level_code: 'YLIN',
       },
       {
-        language_code: 'sv',
+        language_code: 'de',
+        level_code: 'YLIN',
+      },
+      {
+        language_code: 'se',
         level_code: 'PERUS',
+      },
+      {
+        language_code: 'se',
+        level_code: 'KESKI',
       },
     ],
   },
@@ -98,7 +106,7 @@ module.exports = function(app) {
   app.get('/organisaatio-service/rest/organisaatio/v3/:oid', (req, res) => {
     try {
       const { oid } = req.params;
-      const data = fs.readFileSync(`./dev/rest/organisaatio/${oid}.json`);
+      const data = fs.readFileSync(`./dev/rest/organization/${oid}.json`);
       res.send(data);
     } catch (err) {
       console.log(err);

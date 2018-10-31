@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -35,7 +35,7 @@ class App extends Component {
         <BrowserRouter basename="/yki">
           <Layout>
             <Switch>
-              <Route exact path="/" component={OrganizerRegistry} />
+              <Redirect exact from="/" to="/jarjestajarekisteri" />
               <Route
                 exact
                 path="/jarjestajarekisteri"

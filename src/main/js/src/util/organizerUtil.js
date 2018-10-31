@@ -1,6 +1,7 @@
 import moment from 'moment';
 
-import * as constants from '../common/Constants';
+import { DATE_FORMAT, LANGUAGES, CODE_TO_LEVEL } from '../common/Constants';
+import { firstCharToUpper } from '../util/util';
 
 export const filterOrganizerInfo = (organizer, organization, localization) => {
   const org = {
@@ -29,9 +30,7 @@ export const filterOrganizerInfo = (organizer, organization, localization) => {
   org.agreement = getAgreementPeriod(organizer);
   org.address = getAddress(organization);
   org.contact = getContact(organizer);
-  for (const lang in organizer.languages) {
-    getLanguage(organizer.languages[lang], org.languages);
-  }
+  org.languages = getLanguages(organizer.languages);
 
   return org;
 };
@@ -92,38 +91,34 @@ const getContact = organizer => {
 const getAgreementPeriod = organizer => {
   return {
     start: organizer.agreement_start_date
-      ? moment(organizer.agreement_start_date).format(constants.DATE_FORMAT)
+      ? moment(organizer.agreement_start_date).format(DATE_FORMAT)
       : '',
     end: organizer.agreement_end_date
-      ? moment(organizer.agreement_end_date).format(constants.DATE_FORMAT)
+      ? moment(organizer.agreement_end_date).format(DATE_FORMAT)
       : '',
   };
 };
 
-const getLanguage = (lang, languages) => {
-  const languageCodeToLanguage = {
-    fi: 'suomi',
-    sv: 'ruotsi',
-    en: 'englanti',
-    es: 'espanja',
-    it: 'italia',
-    fr: 'ranska',
-    se: 'ruotsi',
-    de: 'saksa',
-    ru: 'venäjä',
-  };
-  const levelCodeToLevel = {
-    PERUS: 'perustaso',
-    KESKI: 'keskitaso',
-    YLIN: 'ylin taso',
-  };
-  if (
-    languageCodeToLanguage[lang.language_code] &&
-    levelCodeToLevel[lang.level_code]
-  ) {
-    languages.push({
-      name: languageCodeToLanguage[lang.language_code],
-      level: levelCodeToLevel[lang.level_code],
-    });
+const getLanguages = languageList => {
+  if (!languageList) {
+    return [];
   }
+
+  const list = [];
+  for (const lang in LANGUAGES) {
+    const language = LANGUAGES[lang];
+    const levels = languageList
+      .filter(l => l.language_code === language.code)
+      .map(l => l.level_code)
+      .reduce((acc, l) => acc.concat(l), []);
+
+    if (levels.length > 0) {
+      const description =
+        levels.length === language.levels.length
+          ? 'kaikki tasot'
+          : levels.map(l => CODE_TO_LEVEL[l]).join(' ja ');
+      list.push(`${language.name} - ${firstCharToUpper(description)}`);
+    }
+  }
+  return list;
 };
