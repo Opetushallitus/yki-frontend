@@ -4,7 +4,6 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
-import ophStyles from './assets/css/oph-styles.css';
 import organizerReducer from './store/reducers/organizer';
 import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
@@ -34,28 +33,26 @@ class App extends Component {
     return (
       <Provider store={store}>
         <BrowserRouter basename="/yki">
-          <div className={ophStyles['oph-typography']}>
-            <Layout>
-              <Switch>
-                <Route exact path="/" component={OrganizerRegistry} />
-                <Route
-                  exact
-                  path="/jarjestajarekisteri"
-                  component={OrganizerRegistry}
-                />
-                <Route
-                  path="/jarjestajarekisteri/uusi"
-                  component={AddOrganizer}
-                />
-                <Route path="/tutkintotilaisuudet" component={ExamSessions} />
-                <Route
-                  path="/jarjestajarekisteri"
-                  component={OrganizerRegistry}
-                />
-                <Route component={NotFound} />
-              </Switch>
-            </Layout>
-          </div>
+          <Layout>
+            <Switch>
+              <Route exact path="/" component={OrganizerRegistry} />
+              <Route
+                exact
+                path="/jarjestajarekisteri"
+                component={OrganizerRegistry}
+              />
+              <Route
+                path="/jarjestajarekisteri/uusi"
+                component={AddOrganizer}
+              />
+              <Route path="/tutkintotilaisuudet" component={ExamSessions} />
+              <Route
+                path="/jarjestajarekisteri"
+                component={OrganizerRegistry}
+              />
+              <Route component={NotFound} />
+            </Switch>
+          </Layout>
         </BrowserRouter>
       </Provider>
     );

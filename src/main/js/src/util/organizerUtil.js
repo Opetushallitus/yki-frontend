@@ -11,7 +11,6 @@ export const filterOrganizerInfo = (organizer, organization, localization) => {
       end: '',
     },
     address: {
-      type: '',
       street: '',
       zipCode: '',
       city: '',
@@ -66,20 +65,15 @@ const getWebsite = contactInformation => {
 };
 
 const getAddress = organization => {
-  const addressInfo =
-    Object.keys(organization.kayntiosoite).length >=
-    Object.keys(organization.postiosoite).length
-      ? organization.kayntiosoite
-      : organization.postiosoite;
   return {
-    type:
-      addressInfo.osoiteTyyppi === 'kaynti' ? 'Käyntiosoite' : 'Postiosoite',
-    street: addressInfo.osoite ? addressInfo.osoite : '<katuosoite puuttuu>',
-    zipCode: addressInfo.postinumeroUri
-      ? addressInfo.postinumeroUri.split('_').pop()
+    street: organization.postiosoite.osoite
+      ? organization.postiosoite.osoite
+      : '<postiosoite puuttuu>',
+    zipCode: organization.postiosoite.postinumeroUri
+      ? organization.postiosoite.postinumeroUri.split('_').pop()
       : '',
-    city: addressInfo.postitoimipaikka
-      ? ' ' + addressInfo.postitoimipaikka
+    city: organization.postiosoite.postitoimipaikka
+      ? ' ' + organization.postiosoite.postitoimipaikka
       : '',
   };
 };

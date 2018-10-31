@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 const withErrorHandler = (WrappedComponent, axios) => {
   return class withErrorHandler extends Component {
     state = {
-      error: false,
+      error: null,
     };
 
     componentDidMount() {
