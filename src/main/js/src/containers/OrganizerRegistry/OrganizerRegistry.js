@@ -42,7 +42,7 @@ class OrganizerRegistry extends Component {
 
     return (
       <div className={classes.OrganizerRegistry}>
-        <h2>Kielitutkintojen järjestäjärekisteri</h2>
+        <h1>Kielitutkintojen järjestäjärekisteri</h1>
         <div className={classes.Searchbar}>
           <input type="text" placeholder="Hae järjestäjää tai paikkakuntaa" />
           <Button clicked={this.toggleModalHandler}>Lisää järjestäjä</Button>
