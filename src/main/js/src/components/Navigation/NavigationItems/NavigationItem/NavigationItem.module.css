@@ -10,8 +10,8 @@
   text-decoration: none;
   width: 100%;
   box-sizing: border-box;
+  line-height: 50px;
   text-align: center;
-  padding: 15px 20px;
   color: white;
 }
 

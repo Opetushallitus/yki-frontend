@@ -1,16 +1,13 @@
 .Modal {
-  position: fixed;
-  top: 1%;
-  width: 80%;
+  position: absolute;
+  top: 75px;
+  left: 50px;
+  height: calc(100% - 120px);
+  width: calc(100% - 100px);
   z-index: 500;
   box-sizing: border-box;
   background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 1px 1px 1px black;
-  padding: 16px;
   word-wrap: break-word;
-  transition: all 0.3s ease-out;
   max-height: calc(100vh - 2%);
   overflow-y: auto;
 }

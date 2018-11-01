@@ -96,7 +96,8 @@ class AddOrganizer extends Component {
   render() {
     const search = (
       <React.Fragment>
-        <h1>Hae lisättävä järjestäjä</h1>
+        <h2>Lisää uusi kielitutkintojen järjestäjä</h2>
+        <button className={classes.ModalClose} onClick={this.props.onCancel} />
         {this.state.organizations.length === 0 ? (
           <Spinner />
         ) : (

@@ -2,31 +2,52 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import classes from './OrganizerRegistry.module.css';
+import Modal from '../../components/UI/Modal/Modal';
+import AddOrganizer from '../Organizers/AddOrganizer/AddOrganizer';
 import * as actions from '../../store/actions/index';
 import Organizers from '../Organizers/Organizers';
 import Button from '../../components/UI/Button/Button';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios';
-import classes from './OrganizerRegistry.module.css';
 
 class OrganizerRegistry extends Component {
+  state = {
+    showModal: false,
+  };
+
   componentDidMount() {
     document.title = 'YKI - Järjestäjärekisteri';
     this.props.onFetchOrganizerRegistryContent();
   }
 
   addOrganizerHandler = () => {
-    this.props.history.push('/jarjestajarekisteri/uusi');
+    this.setState({ showModal: false });
+    console.log('TODO: Make post to backend.');
+  };
+
+  toggleModalHandler = () => {
+    this.setState({ showModal: !this.state.showModal });
   };
 
   render() {
+    const addOrganizer = (
+      <Modal show={this.state.showModal} modalClosed={this.toggleModalHandler}>
+        <AddOrganizer
+          onSubmit={this.addOrganizerHandler}
+          onCancel={this.toggleModalHandler}
+        />
+      </Modal>
+    );
+
     return (
       <div className={classes.OrganizerRegistry}>
-        <h1>Kielitutkintojen järjestäjärekisteri</h1>
+        <h2>Kielitutkintojen järjestäjärekisteri</h2>
         <div className={classes.Searchbar}>
           <input type="text" placeholder="Hae järjestäjää tai paikkakuntaa" />
-          <Button clicked={this.addOrganizerHandler}>Lisää järjestäjä</Button>
+          <Button clicked={this.toggleModalHandler}>Lisää järjestäjä</Button>
         </div>
+        {addOrganizer}
         <div>
           <Organizers
             localization={this.props.localization}
