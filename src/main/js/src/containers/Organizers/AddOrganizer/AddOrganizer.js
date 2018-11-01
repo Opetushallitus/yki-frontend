@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import axios from '../../../axios';
 import classes from './AddOrganizer.module.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import Modal from '../../../components/UI/Modal/Modal';
 import AddOrganizerForm from './AddOrganizerForm/AddOrganizerForm';
-import { getLocalizedName } from '../../../util/organizerUtil';
+import { getLocalizedName, getAddressText } from '../../../util/organizerUtil';
 
 class AddOrganizer extends Component {
   state = {
     organizations: [],
-    searchInput: '',
     numOfResults: 0,
+    searchInput: '',
     organizationsMatchingSearch: [],
-    selectedOrganization: {},
+    selected: false,
+    selectedOrganization: {
+      address: '',
+    },
   };
 
   componentDidMount() {
@@ -26,6 +27,8 @@ class AddOrganizer extends Component {
       )
       .then(res => {
         this.setState({ organizations: res.data.organisaatiot });
+        // TODO: REMOVE
+        this.selectOrganizationHandler(this.state.organizations[0]);
       })
       .catch(err => {
         console.error(`FETCHING ORGANIZATIONS FAILED: ${err}`);
@@ -34,34 +37,13 @@ class AddOrganizer extends Component {
 
   searchInputChangedHandler = event => {
     this.setState({
-      searchInput: event.target.value,
       numOfResults: 0,
+      searchInput: event.target.value,
       organizationsMatchingSearch: [],
+      selected: false,
+      selectedOrganization: {},
     });
     this.findMatchingOrganizations(event.target.value);
-  };
-
-  selectOrganizationHandler = org => {
-    this.setState({ selectedOrganization: org });
-  };
-
-  addOrganizerHandler = values => {
-    const body = {
-      ...values,
-      oid: this.state.selectedOrganization.oid,
-    };
-    axios
-      .post('/yki/api/virkailija/organizer', body)
-      .catch(err => {
-        console.error(`ADD_ORGANIZER failed: ${err}`);
-      })
-      .then(() => {
-        this.props.history.push('/jarjestajarekisteri/');
-      });
-  };
-
-  addOrganizerCancelHandler = () => {
-    this.setState({ selectedOrganization: {} });
   };
 
   findMatchingOrganizations = str => {
@@ -83,90 +65,139 @@ class AddOrganizer extends Component {
     }
   };
 
-  searchResultInfo = () => {
-    if (this.state.searchInput.length !== 0) {
-      const info =
-        this.state.numOfResults === 1
-          ? this.state.numOfResults + ' hakutulos'
-          : this.state.numOfResults + ' hakutulosta';
-      return this.state.numOfResults > 50 ? info + '. Tarkenna hakua.' : info;
+  selectOrganizationHandler = org => {
+    axios
+      .post('/organisaatio-service/rest/organisaatio/v3/findbyoids', [org.oid])
+      .then(res => {
+        const organization = {
+          ...org,
+        };
+        organization.address = getAddressText(res.data[0]);
+        this.setState({
+          selectedOrganization: organization,
+          selected: true,
+          searchInput: '',
+        });
+      })
+      .catch(err => console.error(`Unable to retrieve address info: ${err}`));
+  };
+
+  addOrganizerHandler = values => {
+    const body = {
+      ...values,
+      oid: this.state.selectedOrganization.oid,
+    };
+    axios
+      .post('/yki/api/virkailija/organizer', body)
+      .catch(err => {
+        console.error(`ADD_ORGANIZER failed: ${err}`);
+      })
+      .then(() => {
+        this.props.history.push('/jarjestajarekisteri/');
+      });
+  };
+
+  addOrganizerCancelHandler = () => {
+    this.setState({
+      numOfResults: 0,
+      searchInput: '',
+      selected: false,
+      selectedOrganization: {},
+      organizationsMatchingSearch: [],
+    });
+    this.props.onCancel();
+  };
+
+  searchInfo = () => {
+    let info = '';
+    if (this.state.searchInput.length !== 0 && !this.state.selected) {
+      info += `${this.state.numOfResults} ${
+        this.state.numOfResults === 1 ? 'hakutulos' : 'hakutulosta'
+      }`;
+      if (this.state.numOfResults > 50) {
+        info += '. Tarkenna hakua.';
+      }
     }
+    return info;
+  };
+
+  orgName = () => {
+    return this.state.selected
+      ? getLocalizedName(
+          this.state.selectedOrganization.nimi,
+          this.props.localization,
+        )
+      : '';
   };
 
   render() {
     const search = (
       <React.Fragment>
-        <h2>Lisää uusi kielitutkintojen järjestäjä</h2>
-        <button className={classes.ModalClose} onClick={this.props.onCancel} />
         {this.state.organizations.length === 0 ? (
           <Spinner />
         ) : (
-          <input
-            autoFocus
-            type="text"
-            id="organizationSearchField"
-            className={classes.Searchbar}
-            placeholder="Järjestäjän nimi"
-            value={this.state.organizationSearchInput}
-            onChange={this.searchInputChangedHandler}
-          />
+          <div className={classes.Search}>
+            <input
+              autoFocus
+              type="text"
+              id="organizationSearchField"
+              placeholder="Hae organisaation nimellä"
+              value={this.state.searchInput}
+              onChange={this.searchInputChangedHandler}
+            />
+            <label>{this.searchInfo()}</label>
+          </div>
         )}
       </React.Fragment>
     );
 
-    const searchResultInfo = (
-      <p>
-        {this.state.searchInput.length !== 0 ? this.searchResultInfo() : ''}
-      </p>
-    );
-
     const searchResults = (
-      <ul className={classes.SearchResults}>
-        {this.state.organizationsMatchingSearch.map(org => (
-          <li key={org.oid} onClick={() => this.selectOrganizationHandler(org)}>
-            {getLocalizedName(org.nimi)}
-          </li>
-        ))}
-      </ul>
+      <div className={classes.SearchResults}>
+        <ul>
+          {this.state.organizationsMatchingSearch.map(org => (
+            <li
+              key={org.oid}
+              onClick={() => this.selectOrganizationHandler(org)}
+            >
+              {getLocalizedName(org.nimi, this.props.localization)}
+            </li>
+          ))}
+        </ul>
+      </div>
     );
 
-    const orgName =
-      Object.keys(this.state.selectedOrganization).length !== 0
-        ? getLocalizedName(this.state.selectedOrganization.nimi)
-        : '';
-
-    const addOrganizerForm = (
-      <Modal
-        show={Object.keys(this.state.selectedOrganization).length !== 0}
-        modalClosed={this.addOrganizerCancelHandler}
-      >
-        <AddOrganizerForm name={orgName} onSubmit={this.addOrganizerHandler} />
-      </Modal>
+    const form = (
+      <div>
+        {!this.state.selected ? (
+          searchResults
+        ) : (
+          <AddOrganizerForm
+            name={this.orgName()}
+            address={this.state.selectedOrganization.address}
+            onSubmit={this.addOrganizerHandler}
+          />
+        )}
+      </div>
     );
 
     return (
       <div className={classes.AddOrganizer}>
+        <h1>Lisää uusi kielitutkintojen järjestäjä</h1>
+        <button
+          aria-label="Close"
+          className={classes.ModalClose}
+          onClick={this.addOrganizerCancelHandler}
+        />
         {search}
-        {searchResultInfo}
-        {searchResults}
-        {addOrganizerForm}
+        {form}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    lang: state.org.lang,
-  };
-};
-
 AddOrganizer.propTypes = {
-  lang: PropTypes.string,
+  localization: PropTypes.string,
   history: PropTypes.object,
 };
 
-export default connect(
-  mapStateToProps,
-  null,
-)(AddOrganizer);
+export default AddOrganizer;

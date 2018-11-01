@@ -35,12 +35,12 @@ export const filterOrganizerInfo = (organizer, organization, localization) => {
   return org;
 };
 
-export const getLocalizedName = (namesObj, lang) => {
+export const getLocalizedName = (namesObj, localization) => {
   if (Object.keys(namesObj).length === 1) {
     return Object.values(namesObj)[0];
   } else {
-    if (namesObj[lang]) {
-      return namesObj[lang];
+    if (namesObj[localization]) {
+      return namesObj[localization];
     } else {
       if (namesObj['fi']) {
         return namesObj['fi'];
@@ -63,6 +63,13 @@ const getWebsite = contactInformation => {
   return wwwObj && wwwObj.www ? wwwObj.www : '-';
 };
 
+export const getAddressText = organization => {
+  const address = getAddress(organization);
+  return `${address.street}, ${address.zipCode} ${firstCharToUpper(
+    address.city,
+  )}`;
+};
+
 const getAddress = organization => {
   return {
     street: organization.postiosoite.osoite
@@ -72,7 +79,7 @@ const getAddress = organization => {
       ? organization.postiosoite.postinumeroUri.split('_').pop()
       : '',
     city: organization.postiosoite.postitoimipaikka
-      ? ' ' + organization.postiosoite.postitoimipaikka
+      ? organization.postiosoite.postitoimipaikka
       : '',
   };
 };

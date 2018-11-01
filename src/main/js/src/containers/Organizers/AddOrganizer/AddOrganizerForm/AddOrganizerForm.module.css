@@ -3,7 +3,16 @@
 }
 
 .Form h2 {
-  margin-top: 30px;
+  margin: 0;
+}
+
+.Form hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #aeaeae;
+  margin: 1em 0;
+  padding: 0;
 }
 
 .Form span {

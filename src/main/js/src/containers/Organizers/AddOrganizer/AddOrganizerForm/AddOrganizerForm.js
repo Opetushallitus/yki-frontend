@@ -75,50 +75,48 @@ const Fieldset = ({ name, label, ...rest }) => (
 const addOrganizerForm = props => {
   return (
     <Form className={classes.Form}>
-      <h1>{props.name}</h1>
-      <h2>Sopimuskausi</h2>
-      <Fieldset name="agreementStart" type="date" label="Alkaa" />
-      <Fieldset name="agreementEnd" type="date" label="Loppuu" />
-      <h2>Kielet</h2>
-      <LanguageSelect
-        value={props.values.topics}
-        onChange={languages => props.setFieldValue('languages', languages)}
-        onBlur={props.setFieldTouched}
-        error={props.errors.topics}
-        touched={props.touched.topics}
-      />
-      <h2>Yhteyshenkilö</h2>
-      <Fieldset
-        name="contactName"
-        type="text"
-        label="Nimi"
-        placeholder="Essi Esimerkki"
-      />
-      <Fieldset
-        name="contactPhone"
-        type="tel"
-        label="Puhelinnumero"
-        placeholder="0101234567"
-      />
-      <Fieldset
-        name="contactEmail"
-        type="email"
-        label="Sähköposti"
-        placeholder="essi.esimerkki@oph.fi"
-      />
-      <Fieldset
-        name="contactSharedEmail"
-        type="email"
-        label="Toissijainen Sähköposti"
-        placeholder="toissijainen@oph.fi"
-      />
-      <Button
-        type="button"
-        clicked={props.handleReset}
-        disabled={!props.dirty || props.isSubmitting}
-      >
-        Tyhjennä
-      </Button>
+      <h2>{props.name}</h2>
+      <p>{props.address}</p>
+      <hr />
+      <div className={classes.FormInputs}>
+        <h3>Järjestäjäsopimus</h3>
+        <Fieldset name="agreementStart" type="date" label="Alkaa" />
+        <Fieldset name="agreementEnd" type="date" label="Loppuu" />
+        <h3>Kielet</h3>
+        <LanguageSelect
+          value={props.values.topics}
+          onChange={languages => props.setFieldValue('languages', languages)}
+          onBlur={props.setFieldTouched}
+          error={props.errors.topics}
+          touched={props.touched.topics}
+        />
+        <h3>Yhteyshenkilö</h3>
+        <Fieldset
+          name="contactName"
+          type="text"
+          label="Nimi"
+          placeholder="Essi Esimerkki"
+        />
+        <Fieldset
+          name="contactPhone"
+          type="tel"
+          label="Puhelinnumero"
+          placeholder="0101234567"
+        />
+        <Fieldset
+          name="contactEmail"
+          type="email"
+          label="Sähköposti"
+          placeholder="essi.esimerkki@oph.fi"
+        />
+        <Fieldset
+          name="contactSharedEmail"
+          type="email"
+          label="Toissijainen Sähköposti"
+          placeholder="toissijainen@oph.fi"
+        />
+      </div>
+
       <Button type="submit" disabled={!props.dirty || props.isSubmitting}>
         Lisää Järjestäjä
       </Button>
@@ -143,6 +141,7 @@ addOrganizerForm.propTypes = {
   setFieldTouched: PropTypes.func,
   isSubmitting: PropTypes.bool,
   handleReset: PropTypes.func,
+  address: PropTypes.string,
 };
 
 export default formikEnhancer(addOrganizerForm);

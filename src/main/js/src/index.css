@@ -3,21 +3,42 @@ body {
   padding: 0;
   font-family: 'Open Sans';
   background-color: #fafafa;
+  color: #2a2a2a;
   font-size: 16px;
 }
 
 h1 {
   font-size: 1.125em;
   font-weight: 600;
+  line-height: 30px;
 }
 
 h2 {
   font-size: 1em;
   font-weight: 600;
+  line-height: 30px;
+}
+
+h3 {
+  font-size: 0.875em;
+  font-weight: 600;
 }
 
 p {
   font-size: 0.875em;
+}
+
+input {
+  font-size: 0.875em;
+  color: #666666;
+  opacity: 1;
+  padding-left: 5px;
+  border: 1px solid #aeaeae;
+  border-radius: 2px;
+}
+
+button {
+  border-radius: 2px;
 }
 
 @media only screen and (min-width: 768px) {

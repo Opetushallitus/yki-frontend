@@ -13,7 +13,7 @@ import axios from '../../axios';
 
 class OrganizerRegistry extends Component {
   state = {
-    showModal: false,
+    showModal: true,
   };
 
   componentDidMount() {
@@ -34,6 +34,7 @@ class OrganizerRegistry extends Component {
     const addOrganizer = (
       <Modal show={this.state.showModal} modalClosed={this.toggleModalHandler}>
         <AddOrganizer
+          localization={this.props.localization}
           onSubmit={this.addOrganizerHandler}
           onCancel={this.toggleModalHandler}
         />
