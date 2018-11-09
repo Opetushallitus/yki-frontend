@@ -27,7 +27,7 @@ class OrganizerRegistry extends Component {
   };
 
   toggleModalHandler = () => {
-    this.setState({ showModal: !this.state.showModal });
+    this.setState(prevState => ({ showModal: !prevState.showModal }));
   };
 
   render() {
