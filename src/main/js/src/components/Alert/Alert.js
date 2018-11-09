@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ophStyles from '../../oph-styles.css';
-
 const alert = props => (
-  <div className={ophStyles['oph-typography']}>
-    <div className={[ophStyles['oph-alert'], ophStyles['oph-alert-success']].join(' ')}>
-      <div className={ophStyles['oph-alert-container']}>
-        <div className={ophStyles['oph-alert-title']}>{props.title}</div>
+  <div className={}>
+    <div
+      className={}
+    >
+      <div className={}>
+        <div className={}>{props.title}</div>
         {props.optionalText && (
-          <div className={ophStyles['oph-alert-text']}>{props.optionalText}</div>
+          <div className={}>
+            {props.optionalText}
+          </div>
         )}
         <button
-          className={[ophStyles['oph-button'], ophStyles['oph-button-close']].join(' ')}
+          className={}
           type="button"
           title="Close"
           aria-label="Close"
