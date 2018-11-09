@@ -2,7 +2,7 @@
 .Hyperlink:visited {
   cursor: pointer;
   text-decoration: none;
-  color: black;
+  color: hsla(0, 0%, 0%, 1);
 }
 
 .Hyperlink:hover {

@@ -1,9 +1,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans';
-  background-color: #fafafa;
-  color: #2a2a2a;
+  font-family: 'Open Sans', sans-serif;
+  background-color: hsla(0, 0%, 98%, 1);
+  color: hsla(0, 0%, 16%, 1);
   font-size: 16px;
 }
 
@@ -22,6 +22,7 @@ h2 {
 h3 {
   font-size: 0.875em;
   font-weight: 600;
+  line-height: 24px;
 }
 
 p {
@@ -30,10 +31,10 @@ p {
 
 input {
   font-size: 0.875em;
-  color: #666666;
+  color: hsla(0, 0%, 40%, 1);
   opacity: 1;
   padding-left: 5px;
-  border: 1px solid #aeaeae;
+  border: 1px solid hsla(0, 0%, 68%, 1);
   border-radius: 2px;
 }
 
@@ -45,10 +46,18 @@ button {
   h1 {
     font-size: 1.5em;
     font-weight: 600;
+    line-height: 30px;
   }
 
   h2 {
     font-size: 1.125em;
     font-weight: 600;
+    line-height: 30px;
+  }
+
+  h3 {
+    font-size: 0.875em;
+    font-weight: 600;
+    line-height: 24px;
   }
 }

@@ -3,10 +3,6 @@
   margin: auto;
 }
 
-h2 {
-  padding: 30px 0;
-}
-
 .Search {
   display: inline-block;
   box-sizing: border-box;
@@ -65,7 +61,7 @@ h2 {
   content: ' ';
   height: 20px;
   width: 2px;
-  background-color: #333;
+  background-color: hsla(0, 0%, 20%, 1);
 }
 .ModalClose:before {
   transform: rotate(45deg);

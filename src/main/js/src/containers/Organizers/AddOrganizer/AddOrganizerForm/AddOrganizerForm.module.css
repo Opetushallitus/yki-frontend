@@ -1,21 +1,71 @@
-.Label {
-  margin-top: 10px;
-}
-
-.Form h2 {
-  margin: 0;
-}
-
 .Form hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #aeaeae;
+  border-top: 1px solid hsla(0, 0%, 68%, 1);
   margin: 1em 0;
   padding: 0;
 }
 
+.Label {
+  display: block;
+  margin: 15px 0 5px 0;
+  font-size: 0.875em;
+}
+
+.Form h2,
+h3 {
+  margin: 0;
+}
+
 .Form span {
   display: block;
-  color: red;
+  color: hsla(15, 100%, 40%, 1);
+}
+
+.Form input {
+  display: block;
+  height: 35px;
+  width: 340px;
+  color: hsla(0, 0%, 40%, 1);
+}
+
+.Form button {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+}
+
+.Contact textarea {
+  display: block;
+  width: 340px;
+  padding-left: 5px;
+  border: 1px solid hsla(0, 0%, 68%, 1);
+  border-radius: 2px;
+  font-size: 0.875em;
+  color: hsla(0, 0%, 40%, 1);
+  resize: none;
+}
+
+.FormElements {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    'agreement  contact'
+    'languages  contact';
+  grid-gap: 50px;
+}
+
+.Agreement {
+  grid-area: agreement;
+}
+
+.Languages {
+  grid-area: languages;
+}
+
+.Contact {
+  grid-area: contact;
 }
