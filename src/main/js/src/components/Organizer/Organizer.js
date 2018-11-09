@@ -7,9 +7,7 @@ import Hyperlink from '../../components/UI/Hyperlink/Hyperlink';
 const organizer = props => {
   const languages = (
     <div>
-      <p>
-        <strong>Kielet</strong>
-      </p>
+      <h3>Kielitutkinnot</h3>
       {props.organizer.languages.map(lang => {
         return <p key={lang}>{lang}</p>;
       })}
@@ -22,9 +20,7 @@ const organizer = props => {
 
   const contact = (
     <div>
-      <p>
-        <strong>Yhteystiedot</strong>
-      </p>
+      <h3>Yhteystiedot</h3>
       <p>{props.organizer.contact.name}</p>
       <Hyperlink type="phone" to={props.organizer.contact.phone} />
       <Hyperlink type="email" to={props.organizer.contact.email} />
@@ -35,9 +31,7 @@ const organizer = props => {
 
   const contract = (
     <div>
-      <p>
-        <strong>Sopimuskausi</strong>
-      </p>
+      <h3>Sopimuskausi</h3>
       <p>
         {props.organizer.agreement.start} - {props.organizer.agreement.end}
       </p>
@@ -45,14 +39,20 @@ const organizer = props => {
   );
 
   const extra = (
-    <p>
-      <strong>Lisätiedot</strong>
-    </p>
+    <div>
+      <h3>Lisätiedot</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta
+        ligula turpis, eu augue porta et. Aenean fermentum ut vehicula rhoncus.
+        Orci varius natoque penatibus et magnis dis parturient montes, nascetur
+        ridiculus mus.
+      </p>
+    </div>
   );
 
   return (
     <div className={classes.Organizer}>
-      <h3>{props.organizer.name}</h3>
+      <h2>{props.organizer.name}</h2>
       {languages}
       {contact}
       {contract}

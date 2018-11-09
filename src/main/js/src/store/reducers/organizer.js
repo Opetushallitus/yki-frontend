@@ -4,9 +4,9 @@ const initialState = {
   localization: 'fi',
   organizerRegistry: [],
   loading: false,
+  organizations: [],
+  loadingOrganizations: false,
   error: null,
-  organizerAddResult: null,
-  busyCounter: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +27,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: action.error,
         loading: false,
+      };
+    case actionTypes.FETCH_ORGANIZATIONS_START:
+      return {
+        ...state,
+        loadingOrganizations: true,
+      };
+    case actionTypes.FETCH_ORGANIZATIONS_SUCCESS:
+      return {
+        ...state,
+        organizations: action.organizations,
+        loadingOrganizations: false,
+      };
+    case actionTypes.FETCH_ORGANIZATIONS_FAIL:
+      return {
+        ...state,
+        error: action.error,
+        loadingOrganizations: false,
       };
     default:
       return state;

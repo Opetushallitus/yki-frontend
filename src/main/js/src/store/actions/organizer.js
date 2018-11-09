@@ -19,8 +19,8 @@ export const fetchOrganizerRegistryContentSuccess = registry => {
 export const fetchOrganizerRegistryContentFail = error => {
   return {
     type: actionTypes.FETCH_ORGANIZER_REGISTRY_CONTENT_FAIL,
-    error: error,
     loading: false,
+    error: error,
   };
 };
 
@@ -59,9 +59,49 @@ export const fetchOrganizerRegistryContent = () => {
           });
         }
         dispatch(fetchOrganizerRegistryContentSuccess(registry));
+        dispatch(fetchOrganizations());
       })
       .catch(err => {
         dispatch(fetchOrganizerRegistryContentFail(err));
+      });
+  };
+};
+
+export const fetchOrganizationsStart = () => {
+  return {
+    type: actionTypes.FETCH_ORGANIZATIONS_START,
+    loadingOrganizations: true,
+  };
+};
+
+export const fetchOrganizationsSuccess = organizations => {
+  return {
+    type: actionTypes.FETCH_ORGANIZATIONS_SUCCESS,
+    organizations: organizations,
+    loadingOrganizations: false,
+  };
+};
+
+export const fetchOrganizationsFail = error => {
+  return {
+    type: actionTypes.FETCH_ORGANIZATIONS_FAIL,
+    loadingOrganizations: false,
+    error: error,
+  };
+};
+
+export const fetchOrganizations = () => {
+  return dispatch => {
+    dispatch(fetchOrganizationsStart());
+    axios
+      .get(
+        '/organisaatio-service/rest/organisaatio/v4/hae?searchStr=&aktiiviset=true&suunnitellut=true&lakkautetut=false',
+      )
+      .then(res => {
+        dispatch(fetchOrganizationsSuccess(res.data.organisaatiot));
+      })
+      .catch(err => {
+        dispatch(fetchOrganizationsFail(err));
       });
   };
 };

@@ -1,3 +1,3 @@
 export {} from './examSession';
-export { fetchOrganizerRegistryContent } from './organizer';
+export { fetchOrganizerRegistryContent, fetchOrganizations } from './organizer';
 export {} from './registration';

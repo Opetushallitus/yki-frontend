@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { withFormik, Field, Form, ErrorMessage } from 'formik';
+import { withFormik, Form, Field, ErrorMessage } from 'formik';
+import Select from 'react-select';
 
 import classes from './AddOrganizerForm.module.css';
-import ophStyles from '../../../../assets/css/oph-styles.css';
-import LanguageSelect from '../../../../components/LanguageSelect/LanguageSelect';
 import Button from '../../../../components/UI/Button/Button';
 
 const validationSchema = Yup.object().shape({
@@ -16,7 +15,7 @@ const validationSchema = Yup.object().shape({
   contactEmail: Yup.string()
     .email()
     .required('Yhteyshenkilön sähköpostiosoite puuttuu.'),
-  contactSharedEmail: Yup.string().email(),
+  contactSharedEmail: Yup.string(),
 });
 
 const formikEnhancer = withFormik({
@@ -54,67 +53,84 @@ const formikEnhancer = withFormik({
   displayName: 'AddOrganizerForm',
 });
 
-const Fieldset = ({ name, label, ...rest }) => (
-  <React.Fragment>
-    <label
-      htmlFor={name}
-      className={[ophStyles['oph-label'], classes.Label].join(' ')}
-    >
-      {label}
-    </label>
-    <Field
-      id={name}
-      name={name}
-      className={[ophStyles['oph-input'], classes.Fieldset].join(' ')}
-      {...rest}
-    />
-    <ErrorMessage name={name} component="span" />
-  </React.Fragment>
-);
-
 const addOrganizerForm = props => {
   return (
     <Form className={classes.Form}>
       <h2>{props.name}</h2>
       <p>{props.address}</p>
       <hr />
-      <div className={classes.FormInputs}>
-        <h3>Järjestäjäsopimus</h3>
-        <Fieldset name="agreementStart" type="date" label="Alkaa" />
-        <Fieldset name="agreementEnd" type="date" label="Loppuu" />
-        <h3>Kielet</h3>
-        <LanguageSelect
-          value={props.values.topics}
-          onChange={languages => props.setFieldValue('languages', languages)}
-          onBlur={props.setFieldTouched}
-          error={props.errors.topics}
-          touched={props.touched.topics}
-        />
-        <h3>Yhteyshenkilö</h3>
-        <Fieldset
-          name="contactName"
-          type="text"
-          label="Nimi"
-          placeholder="Essi Esimerkki"
-        />
-        <Fieldset
-          name="contactPhone"
-          type="tel"
-          label="Puhelinnumero"
-          placeholder="0101234567"
-        />
-        <Fieldset
-          name="contactEmail"
-          type="email"
-          label="Sähköposti"
-          placeholder="essi.esimerkki@oph.fi"
-        />
-        <Fieldset
-          name="contactSharedEmail"
-          type="email"
-          label="Toissijainen Sähköposti"
-          placeholder="toissijainen@oph.fi"
-        />
+      <div className={classes.FormElements}>
+        <div className={classes.Agreement}>
+          <h3>Järjestäjäsopimus</h3>
+          {/* <Fieldset name="agreementStart" type="date" label="Alkaa" />
+          <Fieldset name="agreementEnd" type="date" label="Loppuu" /> */}
+        </div>
+        <div className={classes.Languages}>
+          <h3>Kielitutkinnot</h3>
+          <Select
+            isMulti
+            name="languageSelect"
+            options={props.languages}
+            theme={theme => ({
+              ...theme,
+              borderRadius: 2,
+              controlHeight: 20,
+              colors: {
+                ...theme.colors,
+                text: 'orangered',
+                primary25: 'hotpink',
+                primary: 'black',
+              },
+            })}
+            placeholder="Valitse..."
+            onChange={l => props.setFieldValue('languages', l)}
+          />
+        </div>
+        <div className={classes.Contact}>
+          <h3>Yhteyshenkilön tiedot</h3>
+          <label htmlFor="contactName" className={classes.Label}>
+            Nimi
+          </label>
+          <Field
+            type="input"
+            id="contactName"
+            name="contactName"
+            placeholder="Essi Esimerkki"
+          />
+          <ErrorMessage name="contactName" component="span" />
+          <label htmlFor="contactEmail" className={classes.Label}>
+            Sähköpostiosoite
+          </label>
+          <Field
+            type="input"
+            id="contactEmail"
+            name="contactEmail"
+            placeholder="essi.esimerkki@jarjestaja.fi"
+          />
+          <ErrorMessage name="contactEmail" component="span" />
+          <label htmlFor="contactPhone" className={classes.Label}>
+            Puhelinnumero
+          </label>
+          <Field
+            type="tel"
+            id="contactPhone"
+            name="contactPhone"
+            placeholder="+358 01 234 5678"
+          />
+          <ErrorMessage name="contactPhone" component="span" />
+          <label htmlFor="contactSharedEmail" className={classes.Label}>
+            Lisätiedot
+          </label>
+          <textarea
+            name="contactSharedEmail"
+            rows="5"
+            cols="33"
+            maxLength="255"
+            wrap="soft"
+            placeholder="Esim. Yleinen sähköpostilista: kaikille@jarjestaja.fi"
+          />
+          <ErrorMessage name="contactSharedEmail" component="span" />
+        </div>
       </div>
 
       <Button type="submit" disabled={!props.dirty || props.isSubmitting}>
@@ -122,12 +138,6 @@ const addOrganizerForm = props => {
       </Button>
     </Form>
   );
-};
-
-Fieldset.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string,
-  rest: PropTypes.any,
 };
 
 addOrganizerForm.propTypes = {

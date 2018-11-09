@@ -13,7 +13,7 @@ import axios from '../../axios';
 
 class OrganizerRegistry extends Component {
   state = {
-    showModal: true,
+    showModal: false,
   };
 
   componentDidMount() {
@@ -31,16 +31,6 @@ class OrganizerRegistry extends Component {
   };
 
   render() {
-    const addOrganizer = (
-      <Modal show={this.state.showModal} modalClosed={this.toggleModalHandler}>
-        <AddOrganizer
-          localization={this.props.localization}
-          onSubmit={this.addOrganizerHandler}
-          onCancel={this.toggleModalHandler}
-        />
-      </Modal>
-    );
-
     return (
       <div className={classes.OrganizerRegistry}>
         <h1>Kielitutkintojen järjestäjärekisteri</h1>
@@ -48,7 +38,15 @@ class OrganizerRegistry extends Component {
           <input type="text" placeholder="Hae järjestäjää tai paikkakuntaa" />
           <Button clicked={this.toggleModalHandler}>Lisää järjestäjä</Button>
         </div>
-        {addOrganizer}
+        <Modal
+          show={this.state.showModal}
+          modalClosed={this.toggleModalHandler}
+        >
+          <AddOrganizer
+            onSubmit={this.addOrganizerHandler}
+            onCancel={this.toggleModalHandler}
+          />
+        </Modal>
         <div>
           <Organizers
             localization={this.props.localization}

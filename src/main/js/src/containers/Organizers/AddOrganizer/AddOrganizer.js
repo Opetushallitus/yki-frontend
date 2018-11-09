@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import axios from '../../../axios';
 import classes from './AddOrganizer.module.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import AddOrganizerForm from './AddOrganizerForm/AddOrganizerForm';
+import { LANGUAGES } from '../../../common/Constants';
+import { firstCharToUpper } from '../../../util/util';
 import { getLocalizedName, getAddressText } from '../../../util/organizerUtil';
 
 class AddOrganizer extends Component {
   state = {
-    organizations: [],
     numOfResults: 0,
     searchInput: '',
     organizationsMatchingSearch: [],
@@ -17,22 +19,27 @@ class AddOrganizer extends Component {
     selectedOrganization: {
       address: '',
     },
+    languages: [],
   };
 
   componentDidMount() {
     document.title = 'Lisää järjestäjä - YKI Järjestäjärekisteri';
-    axios
-      .get(
-        `/organisaatio-service/rest/organisaatio/v4/hae?searchStr=&aktiiviset=true&suunnitellut=true&lakkautetut=false`,
-      )
-      .then(res => {
-        this.setState({ organizations: res.data.organisaatiot });
-        // TODO: REMOVE
-        this.selectOrganizationHandler(this.state.organizations[0]);
-      })
-      .catch(err => {
-        console.error(`FETCHING ORGANIZATIONS FAILED: ${err}`);
-      });
+    const languages = [];
+    for (const lang in LANGUAGES) {
+      for (const level in LANGUAGES[lang].levels) {
+        const lName =
+          LANGUAGES[lang].name +
+          ' / ' +
+          firstCharToUpper(LANGUAGES[lang].levels[level]);
+        languages.push({
+          value: lName,
+          label: lName,
+          code: LANGUAGES[lang].code,
+          level: LANGUAGES[lang].levels[level],
+        });
+      }
+    }
+    this.setState({ languages: languages });
   }
 
   searchInputChangedHandler = event => {
@@ -48,14 +55,13 @@ class AddOrganizer extends Component {
 
   findMatchingOrganizations = str => {
     const results = [];
-
-    for (const key in this.state.organizations) {
+    for (const key in this.props.organizations) {
       if (
-        Object.values(this.state.organizations[key].nimi).find(name => {
+        Object.values(this.props.organizations[key].nimi).find(name => {
           return name.toLowerCase().includes(str.toLowerCase());
         })
       ) {
-        results.push(this.state.organizations[key]);
+        results.push(this.props.organizations[key]);
       }
     }
 
@@ -93,7 +99,7 @@ class AddOrganizer extends Component {
         console.error(`ADD_ORGANIZER failed: ${err}`);
       })
       .then(() => {
-        this.props.history.push('/jarjestajarekisteri/');
+        this.props.history.push('/jarjestajarekisteri');
       });
   };
 
@@ -133,7 +139,7 @@ class AddOrganizer extends Component {
   render() {
     const search = (
       <React.Fragment>
-        {this.state.organizations.length === 0 ? (
+        {this.props.loading ? (
           <Spinner />
         ) : (
           <div className={classes.Search}>
@@ -174,6 +180,7 @@ class AddOrganizer extends Component {
           <AddOrganizerForm
             name={this.orgName()}
             address={this.state.selectedOrganization.address}
+            languages={this.state.languages}
             onSubmit={this.addOrganizerHandler}
           />
         )}
@@ -195,9 +202,19 @@ class AddOrganizer extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    organizations: state.org.organizations,
+    loading: state.org.loadingOrganizations,
+    localization: state.org.localization,
+  };
+};
+
 AddOrganizer.propTypes = {
-  localization: PropTypes.string,
   history: PropTypes.object,
 };
 
-export default AddOrganizer;
+export default connect(
+  mapStateToProps,
+  null,
+)(AddOrganizer);
