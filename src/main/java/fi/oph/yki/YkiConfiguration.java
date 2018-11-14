@@ -22,17 +22,12 @@ public class YkiConfiguration {
 
     @Bean
     @ConditionalOnProperty(name = "logback.access")
-    public WebServerFactoryCustomizer containerCustomizer() {
+    public TomcatServletWebServerFactory servletContainer() {
         logger.info("Configuring logback access log from file {}", logbackAccess);
-        return container -> {
-            if (container instanceof TomcatServletWebServerFactory) {
-                ((TomcatServletWebServerFactory) container).addContextCustomizers((TomcatContextCustomizer) context -> {
-                    LogbackValve logbackValve = new LogbackValve();
-                    logbackValve.setFilename(logbackAccess);
-                    context.getPipeline().addValve(logbackValve);
-                });
-            }
-        };
-
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+        LogbackValve logbackValve = new LogbackValve();
+        logbackValve.setFilename("logback-access.xml");
+        tomcat.addContextValves(logbackValve);
+        return tomcat;
     }
 }
