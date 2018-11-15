@@ -6,6 +6,7 @@ import Select from 'react-select';
 
 import classes from './AddOrganizerForm.module.css';
 import Button from '../UI/Button/Button';
+import DatePicker from '../UI/DatePicker/DatePicker';
 
 const validationSchema = Yup.object().shape({
   agreementStart: Yup.date().required('Sopimuskauden aloitusaika puuttuu.'),
@@ -54,6 +55,7 @@ const formikEnhancer = withFormik({
 });
 
 const addOrganizerForm = props => {
+  console.log(props.values);
   return (
     <Form className={classes.Form}>
       <h2>{props.name}</h2>
@@ -62,8 +64,21 @@ const addOrganizerForm = props => {
       <div className={classes.FormElements}>
         <div className={classes.Agreement}>
           <h3>Järjestäjäsopimus</h3>
-          {/* <Fieldset name="agreementStart" type="date" label="Alkaa" />
-          <Fieldset name="agreementEnd" type="date" label="Loppuu" /> */}
+          <div className={classes.DatePickers}>
+            <div>
+              <label htmlFor="agreementStart" className={classes.Label}>
+                Alkupäivämäärä
+              </label>
+              <DatePicker id="agreementStart" onChange={d => props.setFieldValue('agreementStart', d[0])} />
+            </div>
+            <div className={classes.Separator}>−</div>
+            <div>
+              <label htmlFor="agreementEnd" className={classes.Label}>
+                Loppupäivämäärä
+              </label>
+              <DatePicker id="agreementEnd" onChange={d => props.setFieldValue('agreementEnd', d[0])} />
+            </div>
+          </div>
         </div>
         <div className={classes.Languages}>
           <h3>Kielitutkinnot</h3>

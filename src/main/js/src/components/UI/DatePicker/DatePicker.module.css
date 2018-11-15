@@ -1,0 +1,5 @@
+.DatePicker {
+  background: url('../../../assets/svg/calendar.svg') no-repeat center right;
+  background-position: 92% center;
+  background-size: 1.5em;
+}
