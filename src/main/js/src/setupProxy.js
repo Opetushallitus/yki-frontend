@@ -120,7 +120,7 @@ module.exports = function(app) {
     (req, res) => {
       axios
         .post(
-          'https://virkailija.hahtuvaopintopolku.fi/organisaatio-service/rest/organisaatio/v4/findbyoids',
+          'https://virkailija.untuvaopintopolku.fi/organisaatio-service/rest/organisaatio/v4/findbyoids',
           req.body,
         )
         .then(response => {

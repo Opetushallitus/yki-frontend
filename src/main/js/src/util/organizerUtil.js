@@ -41,18 +41,9 @@ export const getLocalizedName = (namesObj, localization) => {
   } else {
     if (namesObj[localization]) {
       return namesObj[localization];
-    } else {
-      if (namesObj['fi']) {
-        return namesObj['fi'];
-      }
-      if (namesObj['en']) {
-        return namesObj['en'];
-      }
-      if (namesObj['sv']) {
-        return namesObj['sv'];
-      }
-      return 'No Name Found';
     }
+    const name = [namesObj['fi'], namesObj['en'], namesObj['sv']].filter(o => o)[0];
+    return name ? name : '-';
   }
 };
 
