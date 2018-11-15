@@ -1,0 +1,10 @@
+.Header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Header p {
+  display: inline-flex;
+  font-size: 1.125em;
+}
