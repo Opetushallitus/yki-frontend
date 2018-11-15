@@ -26,7 +26,7 @@ public class YkiConfiguration {
         logger.info("Configuring logback access log from file {}", logbackAccess);
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
         LogbackValve logbackValve = new LogbackValve();
-        logbackValve.setFilename("logback-access.xml");
+        logbackValve.setFilename(logbackAccess);
         tomcat.addContextValves(logbackValve);
         return tomcat;
     }
