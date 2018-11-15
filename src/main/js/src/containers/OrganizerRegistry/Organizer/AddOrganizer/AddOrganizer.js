@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import axios from '../../../axios';
+import axios from '../../../../axios';
 import classes from './AddOrganizer.module.css';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import AddOrganizerForm from './AddOrganizerForm/AddOrganizerForm';
-import { LANGUAGES } from '../../../common/Constants';
-import { firstCharToUpper } from '../../../util/util';
-import { getLocalizedName, getAddressText } from '../../../util/organizerUtil';
+import Spinner from '../../../../components/UI/Spinner/Spinner';
+import AddOrganizerForm from '../../../../components/AddOrganizerForm/AddOrganizerForm';
+import { LANGUAGES } from '../../../../common/Constants';
+import { firstCharToUpper } from '../../../../util/util';
+import {
+  getLocalizedName,
+  getAddressText,
+} from '../../../../util/organizerUtil';
 
 class AddOrganizer extends Component {
   state = {
@@ -127,15 +130,6 @@ class AddOrganizer extends Component {
     return info;
   };
 
-  orgName = () => {
-    return this.state.selected
-      ? getLocalizedName(
-          this.state.selectedOrganization.nimi,
-          this.props.localization,
-        )
-      : '';
-  };
-
   render() {
     const search = (
       <React.Fragment>
@@ -159,18 +153,24 @@ class AddOrganizer extends Component {
 
     const searchResults = (
       <div className={classes.SearchResults}>
-        <ul>
-          {this.state.organizationsMatchingSearch.map(org => (
-            <li
-              key={org.oid}
-              onClick={() => this.selectOrganizationHandler(org)}
-            >
-              {getLocalizedName(org.nimi, this.props.localization)}
-            </li>
-          ))}
-        </ul>
+        {this.state.organizationsMatchingSearch.map(org => (
+          <div
+            key={org.oid}
+            className={classes.SearchResult}
+            onClick={() => this.selectOrganizationHandler(org)}
+          >
+            {getLocalizedName(org.nimi, this.props.localization)}
+          </div>
+        ))}
       </div>
     );
+
+    const name = this.state.selected
+      ? getLocalizedName(
+          this.state.selectedOrganization.nimi,
+          this.props.localization,
+        )
+      : '';
 
     const form = (
       <div>
@@ -178,7 +178,7 @@ class AddOrganizer extends Component {
           searchResults
         ) : (
           <AddOrganizerForm
-            name={this.orgName()}
+            name={name}
             address={this.state.selectedOrganization.address}
             languages={this.state.languages}
             onSubmit={this.addOrganizerHandler}

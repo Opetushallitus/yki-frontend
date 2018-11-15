@@ -8,7 +8,6 @@
   box-sizing: border-box;
   height: 39px;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .Search input {
@@ -23,22 +22,32 @@
   opacity: 0.5;
 }
 
-.SearchResults,
-.SearchResults ul {
+.SearchResults {
+  position: relative;
   height: 100%;
-  width: 100%;
   overflow: auto;
   list-style-type: none;
-  padding-inline-start: 0px;
+  top: -1px;
 }
 
-.SearchResults li {
-  font-size: 1.125rem;
-  padding: 12px 0;
+.SearchResult {
+  width: 341px;
+  padding-left: 5px;
+  line-height: 35px;
+  font-size: 0.875rem;
+  color: hsla(0, 0%, 40%, 1);
+  border: 1px solid hsla(0, 0%, 68%, 1);
+  border-bottom: none;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
-.SearchResults li:hover {
-  box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2);
+.SearchResult:last-of-type {
+  border-bottom: 1px solid hsla(0, 0%, 68%, 1);
+}
+
+.SearchResult:hover {
+  font-weight: 600;
 }
 
 .ModalClose {

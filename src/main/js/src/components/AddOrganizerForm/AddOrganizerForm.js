@@ -5,7 +5,7 @@ import { withFormik, Form, Field, ErrorMessage } from 'formik';
 import Select from 'react-select';
 
 import classes from './AddOrganizerForm.module.css';
-import Button from '../../../../components/UI/Button/Button';
+import Button from '../UI/Button/Button';
 
 const validationSchema = Yup.object().shape({
   agreementStart: Yup.date().required('Sopimuskauden aloitusaika puuttuu.'),

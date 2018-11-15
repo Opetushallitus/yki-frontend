@@ -13,9 +13,15 @@
   font-size: 0.875em;
 }
 
-.Form h2,
-h3 {
+.Form h2 {
+  font-size: 1.25em;
+  line-height: 28px;
+  margin: 40px 0px 5px 0px;
+}
+
+.Form h3 {
   margin: 0;
+  line-height: 19px;
 }
 
 .Form span {

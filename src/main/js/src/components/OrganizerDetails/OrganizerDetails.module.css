@@ -1,0 +1,38 @@
+.OrganizerDetails {
+  position: relative;
+  display: block;
+  border: 0;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
+.Grid {
+  display: grid;
+  grid-column-gap: 50px;
+  grid-row-gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.Grid h3 {
+  margin: 0px 0px 9px 0px;
+}
+
+.Grid p {
+  line-height: 1.625em;
+}
+
+.Modify {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 0.875em;
+  line-height: 1.625em;
+  letter-spacing: -0.3px;
+  text-decoration-line: underline;
+  color: hsla(195, 82%, 44%, 1);
+}

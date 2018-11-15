@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import classes from './Organizer.module.css';
-import Hyperlink from '../../components/UI/Hyperlink/Hyperlink';
+import classes from './OrganizerDetails.module.css';
+import Hyperlink from '../UI/Hyperlink/Hyperlink';
 
-const organizer = props => {
+const organizerDetails = props => {
   const languages = (
-    <div>
+    <div className={classes.Languages}>
       <h3>Kielitutkinnot</h3>
       {props.organizer.languages.map(lang => {
         return <p key={lang}>{lang}</p>;
@@ -19,7 +18,7 @@ const organizer = props => {
   } ${props.organizer.address.city}`;
 
   const contact = (
-    <div>
+    <div className={classes.Contact}>
       <h3>Yhteystiedot</h3>
       <p>{props.organizer.contact.name}</p>
       <Hyperlink type="phone" to={props.organizer.contact.phone} />
@@ -29,8 +28,8 @@ const organizer = props => {
     </div>
   );
 
-  const contract = (
-    <div>
+  const agreement = (
+    <div className={classes.Agreement}>
       <h3>Sopimuskausi</h3>
       <p>
         {props.organizer.agreement.start} - {props.organizer.agreement.end}
@@ -39,7 +38,7 @@ const organizer = props => {
   );
 
   const extra = (
-    <div>
+    <div className={classes.Extra}>
       <h3>Lisätiedot</h3>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta
@@ -51,18 +50,16 @@ const organizer = props => {
   );
 
   return (
-    <div className={classes.Organizer}>
-      <h2>{props.organizer.name}</h2>
-      {languages}
-      {contact}
-      {contract}
-      {extra}
+    <div className={classes.OrganizerDetails}>
+      <div className={classes.Grid}>
+        {languages}
+        {contact}
+        {agreement}
+        {extra}
+      </div>
+      <button className={classes.Modify}>Muokkaa</button>
     </div>
   );
 };
 
-organizer.propTypes = {
-  organizer: PropTypes.object.isRequired,
-};
-
-export default organizer;
+export default organizerDetails;

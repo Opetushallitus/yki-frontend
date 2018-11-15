@@ -59,11 +59,11 @@ export const fetchOrganizerRegistryContent = () => {
           });
         }
         dispatch(fetchOrganizerRegistryContentSuccess(registry));
-        dispatch(fetchOrganizations());
       })
       .catch(err => {
         dispatch(fetchOrganizerRegistryContentFail(err));
-      });
+      })
+      .finally(() => dispatch(fetchOrganizations()));
   };
 };
 

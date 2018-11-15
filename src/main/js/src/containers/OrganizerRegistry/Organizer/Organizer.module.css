@@ -1,0 +1,44 @@
+.Organizer {
+  margin-bottom: 10px;
+}
+
+.OrganizerWithDetails {
+  margin-bottom: 0px;
+}
+
+.Collapsible {
+  height: 68px;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 0px 110px 0px 20px;
+  box-shadow: 0px 2px 4px hsla(0, 0%, 0%, 0.5);
+  background: url('../../../assets/svg/chevron-white.svg') no-repeat,
+    linear-gradient(
+      to right,
+      hsla(0, 100%, 100%, 1) calc(100% - 80px),
+      hsla(195, 82%, 44%, 1) calc(100% - 80px),
+      hsla(195, 82%, 44%, 1) 100%
+    );
+  background-position: right 26px top 50%, top left;
+}
+
+.HeaderText {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.HeaderText div {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.HeaderText div:nth-child(1) {
+  flex-grow: 2;
+  padding-right: 30px;
+}
+
+.HeaderText div:nth-child(3) {
+  padding-left: 101px;
+}
