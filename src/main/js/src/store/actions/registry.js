@@ -63,7 +63,7 @@ export const fetchRegistryContent = () => {
       .catch(err => {
         dispatch(fetchRegistryContentFail(err));
       })
-      .finally(() => dispatch(fetchOrganizations()));
+      .then(() => dispatch(fetchOrganizations()));
   };
 };
 
@@ -142,11 +142,13 @@ export const addRegistryItem = organizer => {
       ])
       .then(res => {
         registryItem.organization = res.data[0];
-        return axios
-          .post('/yki/api/virkailija/organizer', registryItem.organizer)
-          .then(() => {
-            dispatch(addRegistryItemSuccess(registryItem));
-          });
+        return axios.post(
+          '/yki/api/virkailija/organizer',
+          registryItem.organizer,
+        );
+      })
+      .then(() => {
+        dispatch(addRegistryItemSuccess(registryItem));
       })
       .catch(err => {
         dispatch(addRegistryItemFail(err));
