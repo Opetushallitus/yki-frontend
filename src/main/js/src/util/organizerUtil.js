@@ -20,9 +20,9 @@ export const filterOrganizerInfo = (organizer, organization, localization) => {
       name: '',
       phone: '',
       email: '',
-      altEmail: '',
     },
     languages: [],
+    extra: '',
   };
 
   org.name = getLocalizedName(organization.nimi, localization);
@@ -31,6 +31,7 @@ export const filterOrganizerInfo = (organizer, organization, localization) => {
   org.address = getAddress(organization);
   org.contact = getContact(organizer);
   org.languages = getLanguages(organizer.languages);
+  org.extra = getExtra(organizer);
 
   return org;
 };
@@ -42,7 +43,9 @@ export const getLocalizedName = (namesObj, localization) => {
     if (namesObj[localization]) {
       return namesObj[localization];
     }
-    const name = [namesObj['fi'], namesObj['en'], namesObj['sv']].filter(o => o)[0];
+    const name = [namesObj['fi'], namesObj['en'], namesObj['sv']].filter(
+      o => o,
+    )[0];
     return name ? name : '-';
   }
 };
@@ -54,7 +57,7 @@ const getWebsite = contactInformation => {
   return wwwObj && wwwObj.www ? wwwObj.www : '-';
 };
 
-export const getAddressText = organization => {
+export const getCompleteAddress = organization => {
   const address = getAddress(organization);
   return `${address.street}, ${address.zipCode} ${firstCharToUpper(
     address.city,
@@ -80,9 +83,6 @@ const getContact = organizer => {
     name: organizer.contact_name ? organizer.contact_name : '',
     phone: organizer.contact_phone_number ? organizer.contact_phone_number : '',
     email: organizer.contact_email ? organizer.contact_email : '',
-    altEmail: organizer.contact_shared_email
-      ? organizer.contact_shared_email
-      : '',
   };
 };
 
@@ -119,4 +119,30 @@ const getLanguages = languageList => {
     }
   }
   return list;
+};
+
+const getExtra = organizer => {
+  return organizer.extra ? organizer.extra : '';
+};
+
+export const sortArrayByName = array => {
+  array.sort((a, b) => {
+    try {
+      const nameA = [a.nimi.fi, a.nimi.en, a.nimi.sv]
+        .filter(n => n)[0]
+        .toLowerCase();
+      const nameB = [b.nimi.fi, b.nimi.en, b.nimi.sv]
+        .filter(n => n)[0]
+        .toLowerCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    } catch (error) {
+      return 0;
+    }
+  });
 };

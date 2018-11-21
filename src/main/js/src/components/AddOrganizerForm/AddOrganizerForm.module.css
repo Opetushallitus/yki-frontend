@@ -24,11 +24,6 @@
   line-height: 19px;
 }
 
-.Form span {
-  display: block;
-  color: hsla(15, 100%, 40%, 1);
-}
-
 .Form input {
   display: block;
   height: 35px;
@@ -40,15 +35,21 @@
   right: 50px;
 }
 
+.ErrorMessage {
+  display: block;
+  color: hsla(15, 100%, 40%, 1);
+}
+
 .FormElements {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    'agreement  contact'
-    'languages  contact';
-  grid-gap: 50px;
+    'agreement languages'
+    'contact languages'
+    'contact languages'
+    'contact languages';
 }
 
 .DatePickers {

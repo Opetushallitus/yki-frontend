@@ -40,12 +40,7 @@ const organizerDetails = props => {
   const extra = (
     <div className={classes.Extra}>
       <h3>Lisätiedot</h3>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta
-        ligula turpis, eu augue porta et. Aenean fermentum ut vehicula rhoncus.
-        Orci varius natoque penatibus et magnis dis parturient montes, nascetur
-        ridiculus mus.
-      </p>
+      <p>{props.organizer.extra}</p>
     </div>
   );
 

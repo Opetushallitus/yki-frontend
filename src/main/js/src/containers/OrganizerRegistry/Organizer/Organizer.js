@@ -1,18 +1,14 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import classes from './Organizer.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
 import OrganizerDetails from '../../../components/OrganizerDetails/OrganizerDetails';
 
-class Organizer extends Component {
+class Organizer extends PureComponent {
   state = {
     show: false,
     agreementExpired: false,
   };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.show !== this.state.show;
-  }
 
   toggleHandler = () => {
     this.setState(prevState => ({
@@ -21,8 +17,6 @@ class Organizer extends Component {
   };
 
   render() {
-    console.log(this.props.organizer);
-
     const languages = this.props.organizer.languages
       .map(lang => {
         return lang.split(' ')[0].toLowerCase();
@@ -44,7 +38,7 @@ class Organizer extends Component {
             <div>
               <strong>{this.props.organizer.name}</strong>
             </div>
-            <div>{languages}</div>
+            <div className={classes.HeaderLanguages}>{languages}</div>
             <div className={classes.HeaderCity}>
               {this.props.organizer.address.city}
             </div>

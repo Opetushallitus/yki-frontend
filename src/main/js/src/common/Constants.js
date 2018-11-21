@@ -16,14 +16,14 @@ export const LANGUAGES = [
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'es',
-    name: 'Espanja',
+    code: 'de',
+    name: 'Saksa',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'it',
-    name: 'Italia',
-    levels: ['PERUS', 'KESKI'],
+    code: 'ru',
+    name: 'Venäjä',
+    levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
     code: 'fr',
@@ -36,14 +36,14 @@ export const LANGUAGES = [
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'de',
-    name: 'Saksa',
+    code: 'es',
+    name: 'Espanja',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'ru',
-    name: 'Venäjä',
-    levels: ['PERUS', 'KESKI', 'YLIN'],
+    code: 'it',
+    name: 'Italia',
+    levels: ['PERUS', 'KESKI'],
   },
 ];
 export const CODE_TO_LEVEL = {

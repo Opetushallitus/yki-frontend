@@ -7,9 +7,7 @@
 }
 
 .Collapsible {
-  height: 68px;
   cursor: pointer;
-  box-sizing: border-box;
   padding: 0px 110px 0px 20px;
   box-shadow: 0px 2px 4px hsla(0, 0%, 0%, 0.5);
   background: url('../../../assets/svg/chevron-white.svg') no-repeat,
@@ -23,22 +21,19 @@
 }
 
 .HeaderText {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto 20%;
+  grid-template-rows: minmax(68px, max-content);
+  grid-column-gap: 10px;
   width: 100%;
-  justify-content: space-between;
   align-items: center;
 }
 
-.HeaderText div {
-  display: flex;
-  box-sizing: border-box;
+.HeaderLanguages {
+  justify-self: right;
 }
 
-.HeaderText div:nth-child(1) {
-  flex-grow: 2;
-  padding-right: 30px;
-}
-
-.HeaderText div:nth-child(3) {
-  padding-left: 101px;
+.HeaderCity {
+  justify-self: right;
+  word-break: break-all;
 }

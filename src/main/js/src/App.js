@@ -16,7 +16,7 @@ import NotFound from './components/NotFound/NotFound';
 class App extends Component {
   render() {
     const rootReducer = combineReducers({
-      org: organizerReducer,
+      registry: organizerReducer,
       exam: examSessionReducer,
       reg: registrationReducer,
     });

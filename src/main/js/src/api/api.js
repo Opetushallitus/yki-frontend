@@ -55,7 +55,11 @@ export const createOrganizer = organizer => {
 };
 
 export const loadOrganization = oid => {
-  return apiGet('LOAD_ORGANIZATION', `organisaatio-service/rest/organisaatio/v3/${oid}`, oid);
+  return apiGet(
+    'LOAD_ORGANIZATION',
+    `organisaatio-service/rest/organisaatio/v3/${oid}`,
+    oid,
+  );
 };
 
 export const loadOrganizationsByFreeText = searchText => {

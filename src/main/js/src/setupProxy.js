@@ -45,6 +45,7 @@ const organizers = [
         level_code: 'KESKI',
       },
     ],
+    extra: 'Yleinen sähköpostilista: yki@amiedu.fi',
   },
   {
     oid: '1.2.246.562.10.39706139522',
@@ -54,6 +55,7 @@ const organizers = [
     contact_email: 'ismo.supinen@jkl.fi',
     contact_phone_number: '01412345467',
     languages: null,
+    extra: 'Sisäänkäynti hämyiseltä sivuovelta',
   },
 ];
 

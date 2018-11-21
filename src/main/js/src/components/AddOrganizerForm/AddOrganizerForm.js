@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
   contactEmail: Yup.string()
     .email()
     .required('Yhteyshenkilön sähköpostiosoite puuttuu.'),
-  contactSharedEmail: Yup.string(),
+  extra: Yup.string(),
 });
 
 const formikEnhancer = withFormik({
@@ -27,8 +27,8 @@ const formikEnhancer = withFormik({
     contactName: '',
     contactPhone: '',
     contactEmail: '',
-    contactSharedEmail: '',
     languages: [],
+    extra: '',
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     const languages = [];
@@ -45,8 +45,8 @@ const formikEnhancer = withFormik({
       contact_name: values.contactName,
       contact_email: values.contactEmail,
       contact_phone_number: values.contactPhone,
-      contact_shared_email: values.contactSharedEmail,
-      languages: languages,
+      languages: values.languages,
+      extra: values.extra,
     };
     setSubmitting(false);
     props.onSubmit(payload);
@@ -55,7 +55,6 @@ const formikEnhancer = withFormik({
 });
 
 const addOrganizerForm = props => {
-  console.log(props.values);
   return (
     <Form className={classes.Form}>
       <h2>{props.name}</h2>
@@ -149,7 +148,7 @@ const addOrganizerForm = props => {
       </div>
 
       <Button type="submit" disabled={!props.dirty || props.isSubmitting}>
-        Lisää Järjestäjä
+        Lisää järjestäjä
       </Button>
     </Form>
   );
