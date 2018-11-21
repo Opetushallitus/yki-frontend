@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 import classes from './Registry.module.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
-import * as actions from '../../store/actions/index';
 import Button from '../../components/UI/Button/Button';
+import * as actions from '../../store/actions/index';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
 import RegistryItem from './RegistryItem/RegistryItem';
 import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
 
-class Registry extends Component {
+export class Registry extends Component {
   state = {
     showModal: false,
   };
@@ -48,7 +48,7 @@ class Registry extends Component {
       </Modal>
     );
 
-    const registry = this.state.loading ? (
+    const registry = this.props.loading ? (
       <Spinner />
     ) : (
       this.props.registry.map((org, i) => {
