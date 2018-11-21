@@ -7,7 +7,7 @@ it('renders without crashing', () => {
   const div = document.createElement('div');
 
   const app = (
-    <StaticRouter>
+    <StaticRouter context={{}}>
       <App />
     </StaticRouter>
   );
