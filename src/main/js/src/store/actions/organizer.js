@@ -1,36 +1,36 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
-export const fetchOrganizerRegistryContentStart = () => {
+const fetchRegistryContentStart = () => {
   return {
-    type: actionTypes.FETCH_ORGANIZER_REGISTRY_CONTENT_START,
+    type: actionTypes.FETCH_REGISTRY_CONTENT_START,
     loading: true,
   };
 };
 
-export const fetchOrganizerRegistryContentSuccess = registry => {
+const fetchRegistryContentSuccess = registry => {
   return {
-    type: actionTypes.FETCH_ORGANIZER_REGISTRY_CONTENT_SUCCESS,
-    organizerRegistry: registry,
+    type: actionTypes.FETCH_REGISTRY_CONTENT_SUCCESS,
+    registry: registry,
     loading: false,
   };
 };
 
-export const fetchOrganizerRegistryContentFail = error => {
+const fetchRegistryContentFail = error => {
   return {
-    type: actionTypes.FETCH_ORGANIZER_REGISTRY_CONTENT_FAIL,
-    loading: false,
+    type: actionTypes.FETCH_REGISTRY_CONTENT_FAIL,
     error: error,
+    loading: false,
   };
 };
 
-export const fetchOrganizerRegistryContent = () => {
+export const fetchRegistryContent = () => {
   const fetchedOrganizers = [];
   const organizationIds = [];
   const fetchedOrganizations = [];
   const registry = [];
   return dispatch => {
-    dispatch(fetchOrganizerRegistryContentStart());
+    dispatch(fetchRegistryContentStart());
     axios
       .get('/yki/api/virkailija/organizer')
       .then(res => {
@@ -58,23 +58,23 @@ export const fetchOrganizerRegistryContent = () => {
             organization: organization,
           });
         }
-        dispatch(fetchOrganizerRegistryContentSuccess(registry));
+        dispatch(fetchRegistryContentSuccess(registry));
       })
       .catch(err => {
-        dispatch(fetchOrganizerRegistryContentFail(err));
+        dispatch(fetchRegistryContentFail(err));
       })
       .finally(() => dispatch(fetchOrganizations()));
   };
 };
 
-export const fetchOrganizationsStart = () => {
+const fetchOrganizationsStart = () => {
   return {
     type: actionTypes.FETCH_ORGANIZATIONS_START,
     loadingOrganizations: true,
   };
 };
 
-export const fetchOrganizationsSuccess = organizations => {
+const fetchOrganizationsSuccess = organizations => {
   return {
     type: actionTypes.FETCH_ORGANIZATIONS_SUCCESS,
     organizations: organizations,
@@ -82,11 +82,11 @@ export const fetchOrganizationsSuccess = organizations => {
   };
 };
 
-export const fetchOrganizationsFail = error => {
+const fetchOrganizationsFail = error => {
   return {
     type: actionTypes.FETCH_ORGANIZATIONS_FAIL,
-    loadingOrganizations: false,
     error: error,
+    loadingOrganizations: false,
   };
 };
 
@@ -102,6 +102,54 @@ export const fetchOrganizations = () => {
       })
       .catch(err => {
         dispatch(fetchOrganizationsFail(err));
+      });
+  };
+};
+
+const addRegistryItemStart = () => {
+  return {
+    type: actionTypes.ADD_REGISTRY_ITEM_START,
+    loading: true,
+  };
+};
+
+const addRegistryItemSuccess = registryItem => {
+  return {
+    type: actionTypes.ADD_REGISTRY_ITEM_SUCCESS,
+    registryItem: registryItem,
+    loading: false,
+  };
+};
+
+const addRegistryItemFail = error => {
+  return {
+    type: actionTypes.ADD_REGISTRY_ITEM_FAIL,
+    error: error,
+    loading: false,
+  };
+};
+
+export const addRegistryItem = organizer => {
+  const registryItem = {
+    organizer: organizer,
+    organization: {},
+  };
+  return dispatch => {
+    dispatch(addRegistryItemStart());
+    axios
+      .post('/organisaatio-service/rest/organisaatio/v3/findbyoids', [
+        organizer.oid,
+      ])
+      .then(res => {
+        registryItem.organization = res.data[0];
+        return axios
+          .post('/yki/api/virkailija/organizer', registryItem.organizer)
+          .then(() => {
+            dispatch(addRegistryItemSuccess(registryItem));
+          });
+      })
+      .catch(err => {
+        dispatch(addRegistryItemFail(err));
       });
   };
 };

@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   localization: 'fi',
-  organizerRegistry: [],
+  registry: [],
   loading: false,
   organizations: [],
   loadingOrganizations: false,
@@ -11,18 +11,18 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_ORGANIZER_REGISTRY_CONTENT_START:
+    case actionTypes.FETCH_REGISTRY_CONTENT_START:
       return {
         ...state,
         loading: true,
       };
-    case actionTypes.FETCH_ORGANIZER_REGISTRY_CONTENT_SUCCESS:
+    case actionTypes.FETCH_REGISTRY_CONTENT_SUCCESS:
       return {
         ...state,
-        organizerRegistry: action.organizerRegistry,
+        registry: action.registry,
         loading: false,
       };
-    case actionTypes.FETCH_ORGANIZER_REGISTRY_CONTENT_FAIL:
+    case actionTypes.FETCH_REGISTRY_CONTENT_FAIL:
       return {
         ...state,
         error: action.error,
@@ -44,6 +44,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: action.error,
         loadingOrganizations: false,
+      };
+    case actionTypes.ADD_REGISTRY_ITEM_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.ADD_REGISTRY_ITEM_SUCCESS:
+      return {
+        ...state,
+        registry: [...state.registry, action.registryItem],
+        loading: false,
+      };
+    case actionTypes.ADD_REGISTRY_ITEM_FAIL:
+      return {
+        ...state,
+        error: action.error,
+        loading: false,
       };
     default:
       return state;
