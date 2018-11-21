@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import classes from './OrganizerRegistry.module.css';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
 import AddOrganizer from './Organizer/AddOrganizer/AddOrganizer';
 import * as actions from '../../store/actions/index';
@@ -19,13 +20,15 @@ class OrganizerRegistry extends Component {
 
   componentDidMount() {
     document.title = 'YKI - Järjestäjärekisteri';
-    this.props.onFetchOrganizerRegistryContent();
+    this.props.onFetchRegistryContent();
   }
 
-  addOrganizerHandler = () => {
-    this.setState({ showModal: false });
-    console.log('TODO: Make post to backend.');
-  };
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.registry !== this.props.registry ||
+      nextState.showModal !== this.state.showModal
+    );
+  }
 
   toggleModalHandler = () => {
     this.setState(prevState => ({ showModal: !prevState.showModal }));
@@ -34,28 +37,29 @@ class OrganizerRegistry extends Component {
   render() {
     const searchBar = (
       <div className={classes.Searchbar}>
-        <input type="text" placeholder="Hae järjestäjää tai paikkakuntaa" />
+        <input type="search" placeholder="Hae järjestäjää tai paikkakuntaa" />
         <Button clicked={this.toggleModalHandler}>Lisää järjestäjä</Button>
       </div>
     );
 
     const addOrganizerModal = (
       <Modal show={this.state.showModal} modalClosed={this.toggleModalHandler}>
-        <AddOrganizer
-          onSubmit={this.addOrganizerHandler}
-          onCancel={this.toggleModalHandler}
-        />
+        <AddOrganizer onExit={this.toggleModalHandler} />
       </Modal>
     );
 
-    const organizerList = this.props.registry.map((org, i) => {
-      const organizer = filterOrganizerInfo(
-        org.organizer,
-        org.organization,
-        this.props.localization,
-      );
-      return <Organizer key={i} organizer={organizer} />;
-    });
+    const organizerList = this.state.loading ? (
+      <Spinner />
+    ) : (
+      this.props.registry.map((org, i) => {
+        const organizer = filterOrganizerInfo(
+          org.organizer,
+          org.organization,
+          this.props.localization,
+        );
+        return <Organizer key={i} organizer={organizer} />;
+      })
+    );
 
     return (
       <div className={classes.OrganizerRegistry}>
@@ -70,22 +74,20 @@ class OrganizerRegistry extends Component {
 
 const mapStateToProps = state => {
   return {
-    registry: state.org.organizerRegistry,
-    loading: state.org.loading,
-    localization: state.org.localization,
-    error: state.org.error,
+    registry: state.registry.registry,
+    loading: state.registry.loading,
+    localization: state.registry.localization,
+    error: state.registry.error,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchOrganizerRegistryContent: () =>
-      dispatch(actions.fetchOrganizerRegistryContent()),
+    onFetchRegistryContent: () => dispatch(actions.fetchRegistryContent()),
   };
 };
 
 OrganizerRegistry.propTypes = {
-  onFetchOrganizerRegistryContent: PropTypes.func.isRequired,
   registry: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   localization: PropTypes.string.isRequired,

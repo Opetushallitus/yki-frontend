@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -6,14 +6,14 @@ import axios from '../../../../axios';
 import classes from './AddOrganizer.module.css';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import AddOrganizerForm from '../../../../components/AddOrganizerForm/AddOrganizerForm';
-import { LANGUAGES } from '../../../../common/Constants';
-import { firstCharToUpper } from '../../../../util/util';
 import {
   getLocalizedName,
-  getAddressText,
+  getCompleteAddress,
+  sortArrayByName,
 } from '../../../../util/organizerUtil';
+import * as actions from '../../../../store/actions/index';
 
-class AddOrganizer extends Component {
+class AddOrganizer extends PureComponent {
   state = {
     numOfResults: 0,
     searchInput: '',
@@ -22,27 +22,10 @@ class AddOrganizer extends Component {
     selectedOrganization: {
       address: '',
     },
-    languages: [],
   };
 
   componentDidMount() {
     document.title = 'Lisää järjestäjä - YKI Järjestäjärekisteri';
-    const languages = [];
-    for (const lang in LANGUAGES) {
-      for (const level in LANGUAGES[lang].levels) {
-        const lName =
-          LANGUAGES[lang].name +
-          ' / ' +
-          firstCharToUpper(LANGUAGES[lang].levels[level]);
-        languages.push({
-          value: lName,
-          label: lName,
-          code: LANGUAGES[lang].code,
-          level: LANGUAGES[lang].levels[level],
-        });
-      }
-    }
-    this.setState({ languages: languages });
   }
 
   searchInputChangedHandler = event => {
@@ -70,6 +53,7 @@ class AddOrganizer extends Component {
 
     this.setState({ numOfResults: results.length });
     if (results.length <= 50) {
+      sortArrayByName(results);
       this.setState({ organizationsMatchingSearch: results });
     }
   };
@@ -80,11 +64,12 @@ class AddOrganizer extends Component {
       .then(res => {
         const organization = {
           ...org,
+          address: '',
         };
-        organization.address = getAddressText(res.data[0]);
+        organization.address = getCompleteAddress(res.data[0]);
         this.setState({
-          selectedOrganization: organization,
           selected: true,
+          selectedOrganization: organization,
           searchInput: '',
         });
       })
@@ -92,32 +77,28 @@ class AddOrganizer extends Component {
   };
 
   addOrganizerHandler = values => {
-    const body = {
+    const organizer = {
       ...values,
       oid: this.state.selectedOrganization.oid,
     };
-    axios
-      .post('/yki/api/virkailija/organizer', body)
-      .catch(err => {
-        console.error(`ADD_ORGANIZER failed: ${err}`);
-      })
-      .then(() => {
-        this.props.history.push('/jarjestajarekisteri');
-      });
+    this.props.onAddRegistryItem(organizer);
+    this.resetStateAndExit();
   };
 
-  addOrganizerCancelHandler = () => {
+  resetStateAndExit = () => {
     this.setState({
       numOfResults: 0,
       searchInput: '',
-      selected: false,
-      selectedOrganization: {},
       organizationsMatchingSearch: [],
+      selected: false,
+      selectedOrganization: {
+        address: '',
+      },
     });
-    this.props.onCancel();
+    this.props.onExit();
   };
 
-  searchInfo = () => {
+  render() {
     let info = '';
     if (this.state.searchInput.length !== 0 && !this.state.selected) {
       info += `${this.state.numOfResults} ${
@@ -127,10 +108,6 @@ class AddOrganizer extends Component {
         info += '. Tarkenna hakua.';
       }
     }
-    return info;
-  };
-
-  render() {
     const search = (
       <React.Fragment>
         {this.props.loading ? (
@@ -139,13 +116,13 @@ class AddOrganizer extends Component {
           <div className={classes.Search}>
             <input
               autoFocus
-              type="text"
+              type="search"
               id="organizationSearchField"
               placeholder="Hae organisaation nimellä"
               value={this.state.searchInput}
               onChange={this.searchInputChangedHandler}
             />
-            <label>{this.searchInfo()}</label>
+            <label>{info}</label>
           </div>
         )}
       </React.Fragment>
@@ -165,12 +142,12 @@ class AddOrganizer extends Component {
       </div>
     );
 
-    const name = this.state.selected
-      ? getLocalizedName(
-          this.state.selectedOrganization.nimi,
-          this.props.localization,
-        )
-      : '';
+    const name =
+      this.state.selected &&
+      getLocalizedName(
+        this.state.selectedOrganization.nimi,
+        this.props.localization,
+      );
 
     const form = (
       <div>
@@ -180,7 +157,6 @@ class AddOrganizer extends Component {
           <AddOrganizerForm
             name={name}
             address={this.state.selectedOrganization.address}
-            languages={this.state.languages}
             onSubmit={this.addOrganizerHandler}
           />
         )}
@@ -193,7 +169,7 @@ class AddOrganizer extends Component {
         <button
           aria-label="Close"
           className={classes.ModalClose}
-          onClick={this.addOrganizerCancelHandler}
+          onClick={this.resetStateAndExit}
         />
         {search}
         {form}
@@ -204,9 +180,16 @@ class AddOrganizer extends Component {
 
 const mapStateToProps = state => {
   return {
-    organizations: state.org.organizations,
-    loading: state.org.loadingOrganizations,
-    localization: state.org.localization,
+    organizations: state.registry.organizations,
+    loading: state.registry.loadingOrganizations,
+    localization: state.registry.localization,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddRegistryItem: organizer =>
+      dispatch(actions.addRegistryItem(organizer)),
   };
 };
 
@@ -216,5 +199,5 @@ AddOrganizer.propTypes = {
 
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(AddOrganizer);

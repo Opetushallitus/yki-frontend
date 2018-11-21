@@ -1,0 +1,37 @@
+.LanguageCheckboxes {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.LanguageLabels {
+  display: grid;
+  grid-template-columns: 31% 23% 23% 23%;
+  grid-auto-rows: 30px;
+}
+
+.LanguageLabel {
+  color: hsla(0, 0%, 16%, 1);
+  font-size: 0.875em;
+  justify-self: start;
+  align-self: center;
+}
+
+.Language {
+  line-height: 10px;
+  color: hsla(0, 0%, 16%, 1);
+  font-size: 0.875em;
+  justify-self: start;
+  align-self: center;
+}
+
+.CheckboxGrid {
+  display: grid;
+  grid-template-columns: 31% 23% 23% 23%;
+  grid-auto-rows: 30px;
+}
+
+.Checkbox {
+  height: 10px;
+  justify-self: start;
+  align-self: center;
+}
