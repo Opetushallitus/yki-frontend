@@ -1,10 +1,14 @@
 import moment from 'moment';
 
 import { DATE_FORMAT, LANGUAGES, CODE_TO_LEVEL } from '../common/Constants';
-import { firstCharToUpper } from '../util/util';
+import { firstCharToUpper } from './util';
 
-export const filterOrganizerInfo = (organizer, organization, localization) => {
-  const org = {
+export const collectRegistryItemDetails = (
+  organizer,
+  organization,
+  localization,
+) => {
+  const item = {
     name: '',
     website: '',
     agreement: {
@@ -25,15 +29,15 @@ export const filterOrganizerInfo = (organizer, organization, localization) => {
     extra: '',
   };
 
-  org.name = getLocalizedName(organization.nimi, localization);
-  org.website = getWebsite(organization.yhteystiedot);
-  org.agreement = getAgreementPeriod(organizer);
-  org.address = getAddress(organization);
-  org.contact = getContact(organizer);
-  org.languages = getLanguages(organizer.languages);
-  org.extra = getExtra(organizer);
+  item.name = getLocalizedName(organization.nimi, localization);
+  item.website = getWebsite(organization.yhteystiedot);
+  item.agreement = getAgreementPeriod(organizer);
+  item.address = getAddress(organization);
+  item.contact = getContact(organizer);
+  item.languages = getLanguages(organizer.languages);
+  item.extra = getExtra(organizer);
 
-  return org;
+  return item;
 };
 
 export const getLocalizedName = (namesObj, localization) => {
@@ -121,8 +125,8 @@ const getLanguages = languageList => {
   return list;
 };
 
-const getExtra = organizer => {
-  return organizer.extra ? organizer.extra : '';
+const getExtra = item => {
+  return item.extra ? item.extra : '';
 };
 
 export const sortArrayByName = array => {

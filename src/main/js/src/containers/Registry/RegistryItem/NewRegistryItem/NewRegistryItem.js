@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import axios from '../../../../axios';
-import classes from './AddOrganizer.module.css';
+import classes from './NewRegistryItem.module.css';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
-import AddOrganizerForm from '../../../../components/AddOrganizerForm/AddOrganizerForm';
+import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
 import {
   getLocalizedName,
   getCompleteAddress,
   sortArrayByName,
-} from '../../../../util/organizerUtil';
+} from '../../../../util/registryUtil';
 import * as actions from '../../../../store/actions/index';
 
-class AddOrganizer extends PureComponent {
+class NewRegistryItem extends PureComponent {
   state = {
     numOfResults: 0,
     searchInput: '',
@@ -76,7 +76,7 @@ class AddOrganizer extends PureComponent {
       .catch(err => console.error(`Unable to retrieve address info: ${err}`));
   };
 
-  addOrganizerHandler = values => {
+  newRegistryItemHandler = values => {
     const organizer = {
       ...values,
       oid: this.state.selectedOrganization.oid,
@@ -154,17 +154,17 @@ class AddOrganizer extends PureComponent {
         {!this.state.selected ? (
           searchResults
         ) : (
-          <AddOrganizerForm
+          <RegistryItemForm
             name={name}
             address={this.state.selectedOrganization.address}
-            onSubmit={this.addOrganizerHandler}
+            onSubmit={this.newRegistryItemHandler}
           />
         )}
       </div>
     );
 
     return (
-      <div className={classes.AddOrganizer}>
+      <div className={classes.RegistryItem}>
         <h1>Lisää uusi kielitutkintojen järjestäjä</h1>
         <button
           aria-label="Close"
@@ -193,11 +193,11 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-AddOrganizer.propTypes = {
+NewRegistryItem.propTypes = {
   history: PropTypes.object,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddOrganizer);
+)(NewRegistryItem);

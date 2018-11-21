@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { withFormik, Form, Field, ErrorMessage } from 'formik';
 import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
 
-import classes from './AddOrganizerForm.module.css';
+import classes from './RegistryItemForm.module.css';
 import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
 
@@ -51,10 +51,10 @@ const formikEnhancer = withFormik({
     setSubmitting(false);
     props.onSubmit(payload);
   },
-  displayName: 'AddOrganizerForm',
+  displayName: 'RegistryItemForm',
 });
 
-const addOrganizerForm = props => {
+const registryItemForm = props => {
   return (
     <Form className={classes.Form}>
       <h2>{props.name}</h2>
@@ -163,7 +163,7 @@ const addOrganizerForm = props => {
   );
 };
 
-addOrganizerForm.propTypes = {
+registryItemForm.propTypes = {
   name: PropTypes.string,
   onSubmit: PropTypes.func,
   values: PropTypes.object,
@@ -177,4 +177,4 @@ addOrganizerForm.propTypes = {
   address: PropTypes.string,
 };
 
-export default formikEnhancer(addOrganizerForm);
+export default formikEnhancer(registryItemForm);

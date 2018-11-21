@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import classes from './OrganizerRegistry.module.css';
+import classes from './Registry.module.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
-import AddOrganizer from './Organizer/AddOrganizer/AddOrganizer';
 import * as actions from '../../store/actions/index';
 import Button from '../../components/UI/Button/Button';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios';
-import { filterOrganizerInfo } from '../../util/organizerUtil';
-import Organizer from './Organizer/Organizer';
+import { collectRegistryItemDetails } from '../../util/registryUtil';
+import RegistryItem from './RegistryItem/RegistryItem';
+import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
 
-class OrganizerRegistry extends Component {
+class Registry extends Component {
   state = {
     showModal: false,
   };
@@ -42,31 +42,31 @@ class OrganizerRegistry extends Component {
       </div>
     );
 
-    const addOrganizerModal = (
+    const NewRegistryItemModal = (
       <Modal show={this.state.showModal} modalClosed={this.toggleModalHandler}>
-        <AddOrganizer onExit={this.toggleModalHandler} />
+        <NewRegistryItem onExit={this.toggleModalHandler} />
       </Modal>
     );
 
-    const organizerList = this.state.loading ? (
+    const registry = this.state.loading ? (
       <Spinner />
     ) : (
       this.props.registry.map((org, i) => {
-        const organizer = filterOrganizerInfo(
+        const registryItem = collectRegistryItemDetails(
           org.organizer,
           org.organization,
           this.props.localization,
         );
-        return <Organizer key={i} organizer={organizer} />;
+        return <RegistryItem key={i} item={registryItem} />;
       })
     );
 
     return (
-      <div className={classes.OrganizerRegistry}>
+      <div className={classes.Registry}>
         <h1>Kielitutkintojen järjestäjärekisteri</h1>
         {searchBar}
-        {addOrganizerModal}
-        {organizerList}
+        {NewRegistryItemModal}
+        {registry}
       </div>
     );
   }
@@ -87,7 +87,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-OrganizerRegistry.propTypes = {
+Registry.propTypes = {
   registry: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   localization: PropTypes.string.isRequired,
@@ -97,4 +97,4 @@ OrganizerRegistry.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withErrorHandler(OrganizerRegistry, axios));
+)(withErrorHandler(Registry, axios));

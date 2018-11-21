@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 
-import classes from './Organizer.module.css';
+import classes from './RegistryItem.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
-import OrganizerDetails from '../../../components/OrganizerDetails/OrganizerDetails';
+import RegistryItemDetails from '../../../components/RegistryItemDetails/RegistryItemDetails';
 
-class Organizer extends PureComponent {
+class RegistryItem extends PureComponent {
   state = {
     show: false,
     agreementExpired: false,
@@ -17,7 +17,7 @@ class Organizer extends PureComponent {
   };
 
   render() {
-    const languages = this.props.organizer.languages
+    const languages = this.props.item.languages
       .map(lang => {
         return lang.split(' ')[0].toLowerCase();
       })
@@ -26,7 +26,9 @@ class Organizer extends PureComponent {
     return (
       <div
         className={
-          this.state.show ? classes.OrganizerWithDetails : classes.Organizer
+          this.state.show
+            ? classes.RegistryItemWithDetails
+            : classes.RegistryItem
         }
       >
         <Collapsible
@@ -36,18 +38,18 @@ class Organizer extends PureComponent {
         >
           <div className={classes.HeaderText}>
             <div>
-              <strong>{this.props.organizer.name}</strong>
+              <strong>{this.props.item.name}</strong>
             </div>
             <div className={classes.HeaderLanguages}>{languages}</div>
             <div className={classes.HeaderCity}>
-              {this.props.organizer.address.city}
+              {this.props.item.address.city}
             </div>
           </div>
-          <OrganizerDetails organizer={this.props.organizer} />
+          <RegistryItemDetails item={this.props.item} />
         </Collapsible>
       </div>
     );
   }
 }
 
-export default Organizer;
+export default RegistryItem;

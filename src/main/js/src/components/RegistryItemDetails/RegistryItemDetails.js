@@ -1,30 +1,30 @@
 import React from 'react';
 
-import classes from './OrganizerDetails.module.css';
+import classes from './RegistryItemDetails.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
 
-const organizerDetails = props => {
+const registryItemDetails = props => {
   const languages = (
     <div className={classes.Languages}>
       <h3>Kielitutkinnot</h3>
-      {props.organizer.languages.map(lang => {
+      {props.item.languages.map(lang => {
         return <p key={lang}>{lang}</p>;
       })}
     </div>
   );
 
-  const address = `${props.organizer.address.street}, ${
-    props.organizer.address.zipCode
-  } ${props.organizer.address.city}`;
+  const address = `${props.item.address.street}, ${
+    props.item.address.zipCode
+  } ${props.item.address.city}`;
 
   const contact = (
     <div className={classes.Contact}>
       <h3>Yhteystiedot</h3>
-      <p>{props.organizer.contact.name}</p>
-      <Hyperlink type="phone" to={props.organizer.contact.phone} />
-      <Hyperlink type="email" to={props.organizer.contact.email} />
+      <p>{props.item.contact.name}</p>
+      <Hyperlink type="phone" to={props.item.contact.phone} />
+      <Hyperlink type="email" to={props.item.contact.email} />
       <p>{address}</p>
-      <Hyperlink to={props.organizer.website} />
+      <Hyperlink to={props.item.website} />
     </div>
   );
 
@@ -32,7 +32,7 @@ const organizerDetails = props => {
     <div className={classes.Agreement}>
       <h3>Sopimuskausi</h3>
       <p>
-        {props.organizer.agreement.start} - {props.organizer.agreement.end}
+        {props.item.agreement.start} - {props.item.agreement.end}
       </p>
     </div>
   );
@@ -40,12 +40,12 @@ const organizerDetails = props => {
   const extra = (
     <div className={classes.Extra}>
       <h3>Lisätiedot</h3>
-      <p>{props.organizer.extra}</p>
+      <p>{props.item.extra}</p>
     </div>
   );
 
   return (
-    <div className={classes.OrganizerDetails}>
+    <div className={classes.RegistryItemDetails}>
       <div className={classes.Grid}>
         {languages}
         {contact}
@@ -57,4 +57,4 @@ const organizerDetails = props => {
   );
 };
 
-export default organizerDetails;
+export default registryItemDetails;

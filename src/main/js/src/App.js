@@ -4,19 +4,19 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
-import organizerReducer from './store/reducers/organizer';
+import registryReducer from './store/reducers/registry';
 import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
 import Layout from './hoc/Layout/Layout';
-import OrganizerRegistry from './containers/OrganizerRegistry/OrganizerRegistry';
+import Registry from './containers/Registry/Registry';
 import ExamSessions from './containers/ExamSessions/ExamSessions';
-import AddOrganizer from './containers/OrganizerRegistry/Organizer/AddOrganizer/AddOrganizer';
+import NewRegistryItem from './containers/Registry/RegistryItem/NewRegistryItem/NewRegistryItem';
 import NotFound from './components/NotFound/NotFound';
 
 class App extends Component {
   render() {
     const rootReducer = combineReducers({
-      registry: organizerReducer,
+      registry: registryReducer,
       exam: examSessionReducer,
       reg: registrationReducer,
     });
@@ -38,20 +38,13 @@ class App extends Component {
           <Layout>
             <Switch>
               <Redirect exact from="/" to="/jarjestajarekisteri" />
-              <Route
-                exact
-                path="/jarjestajarekisteri"
-                component={OrganizerRegistry}
-              />
+              <Route exact path="/jarjestajarekisteri" component={Registry} />
               <Route
                 path="/jarjestajarekisteri/uusi"
-                component={AddOrganizer}
+                component={NewRegistryItem}
               />
               <Route path="/tutkintotilaisuudet" component={ExamSessions} />
-              <Route
-                path="/jarjestajarekisteri"
-                component={OrganizerRegistry}
-              />
+              <Route path="/jarjestajarekisteri" component={Registry} />
               <Route component={NotFound} />
             </Switch>
           </Layout>

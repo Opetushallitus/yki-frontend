@@ -3,5 +3,5 @@ export {
   fetchRegistryContent,
   fetchOrganizations,
   addRegistryItem,
-} from './organizer';
+} from './registry';
 export {} from './registration';
