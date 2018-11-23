@@ -33,6 +33,12 @@
   justify-self: right;
 }
 
+.AgreementExpired {
+  justify-self: right;
+  color: hsla(15, 100%, 40%, 1);
+  font-size: 1.125em;
+}
+
 .HeaderCity {
   justify-self: right;
   word-break: break-all;

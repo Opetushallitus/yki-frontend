@@ -29,8 +29,8 @@ const registryItemDetails = props => {
   );
 
   const agreement = (
-    <div className={classes.Agreement}>
-      <h3>Sopimuskausi</h3>
+    <div className={!props.agreementActive && classes.AgreementExpired}>
+      <h3>Järjestäjäsopimus</h3>
       <p>
         {props.item.agreement.start} - {props.item.agreement.end}
       </p>

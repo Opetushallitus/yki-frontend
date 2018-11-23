@@ -35,3 +35,8 @@
   text-decoration-line: underline;
   color: hsla(195, 82%, 44%, 1);
 }
+
+.AgreementExpired > p {
+  color: hsla(15, 100%, 40%, 1);
+  font-weight: 600;
+}

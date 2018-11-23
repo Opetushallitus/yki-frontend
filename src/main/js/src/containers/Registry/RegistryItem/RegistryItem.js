@@ -3,11 +3,11 @@ import React, { PureComponent } from 'react';
 import classes from './RegistryItem.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
 import RegistryItemDetails from '../../../components/RegistryItemDetails/RegistryItemDetails';
+import { isAgreementActive } from '../../../util/registryUtil';
 
 class RegistryItem extends PureComponent {
   state = {
     show: false,
-    agreementExpired: false,
   };
 
   toggleHandler = () => {
@@ -23,6 +23,10 @@ class RegistryItem extends PureComponent {
       })
       .join(', ');
 
+    const agreementActive = isAgreementActive(
+      this.props.item.agreement.start,
+      this.props.item.agreement.end,
+    );
     return (
       <div
         className={
@@ -40,12 +44,22 @@ class RegistryItem extends PureComponent {
             <div>
               <strong>{this.props.item.name}</strong>
             </div>
-            <div className={classes.HeaderLanguages}>{languages}</div>
+            {agreementActive ? (
+              <div className={classes.HeaderLanguages}>{languages}</div>
+            ) : (
+              <div className={classes.AgreementExpired}>
+                Sopimus vanhentunut
+              </div>
+            )}
             <div className={classes.HeaderCity}>
               {this.props.item.address.city}
             </div>
           </div>
-          <RegistryItemDetails item={this.props.item} />
+          <RegistryItemDetails
+            item={this.props.item}
+            clicked={this.props.modify}
+            agreementActive={agreementActive}
+          />
         </Collapsible>
       </div>
     );

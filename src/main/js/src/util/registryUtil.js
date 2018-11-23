@@ -150,3 +150,11 @@ export const sortArrayByName = array => {
     }
   });
 };
+
+export const isAgreementActive = (agreementStartDate, agreementEndDate) => {
+  const start = moment(agreementStartDate, DATE_FORMAT);
+  const now = moment(new Date());
+  const end = moment(agreementEndDate, DATE_FORMAT);
+
+  return now.isBetween(start, end, 'day', '[]');
+};
