@@ -36,10 +36,10 @@ class NewRegistryItem extends PureComponent {
       selected: false,
       selectedOrganization: {},
     });
-    this.findMatchingOrganizations(event.target.value);
+    this.findOrganizationsMatchingSearch(event.target.value);
   };
 
-  findMatchingOrganizations = str => {
+  findOrganizationsMatchingSearch = str => {
     const results = [];
     for (const key in this.props.organizations) {
       if (
@@ -82,20 +82,7 @@ class NewRegistryItem extends PureComponent {
       oid: this.state.selectedOrganization.oid,
     };
     this.props.onAddRegistryItem(organizer);
-    this.resetStateAndExit();
-  };
-
-  resetStateAndExit = () => {
-    this.setState({
-      numOfResults: 0,
-      searchInput: '',
-      organizationsMatchingSearch: [],
-      selected: false,
-      selectedOrganization: {
-        address: '',
-      },
-    });
-    this.props.onExit();
+    this.props.onClose();
   };
 
   render() {
@@ -166,11 +153,6 @@ class NewRegistryItem extends PureComponent {
     return (
       <div className={classes.RegistryItem}>
         <h1>Lisää uusi kielitutkintojen järjestäjä</h1>
-        <button
-          aria-label="Close"
-          className={classes.ModalClose}
-          onClick={this.resetStateAndExit}
-        />
         {search}
         {form}
       </div>

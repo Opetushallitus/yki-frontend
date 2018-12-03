@@ -29,7 +29,7 @@ const registryItemDetails = props => {
   );
 
   const agreement = (
-    <div className={!props.agreementActive && classes.AgreementExpired}>
+    <div className={props.agreementActive ? null : classes.AgreementExpired}>
       <h3>Järjestäjäsopimus</h3>
       <p>
         {props.item.agreement.start} - {props.item.agreement.end}
@@ -52,7 +52,9 @@ const registryItemDetails = props => {
         {agreement}
         {extra}
       </div>
-      <button className={classes.Modify}>Muokkaa</button>
+      <button className={classes.Modify} onClick={props.clicked}>
+        Muokkaa
+      </button>
     </div>
   );
 };

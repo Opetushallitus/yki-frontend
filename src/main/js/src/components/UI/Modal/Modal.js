@@ -1,38 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import classes from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
-class Modal extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      nextProps.show !== this.props.show ||
-      nextProps.children !== this.props.children
-    );
-  }
+const modal = props => (
+  <React.Fragment>
+    <Backdrop show={props.show} clicked={props.modalClosed} />
+    <div
+      className={classes.Modal}
+      style={{
+        display: props.show ? 'block' : 'none',
+      }}
+    >
+      <button
+        aria-label="Close"
+        className={classes.ModalClose}
+        onClick={props.modalClosed}
+      />
+      {props.children}
+    </div>
+  </React.Fragment>
+);
 
-  render() {
-    return (
-      <React.Fragment>
-        <Backdrop show={this.props.show} clicked={this.props.modalClosed} />
-        <div
-          className={classes.Modal}
-          style={{
-            display: this.props.show ? 'block' : 'none',
-          }}
-        >
-          {this.props.children}
-        </div>
-      </React.Fragment>
-    );
-  }
-}
-
-Modal.propTypes = {
+modal.propTypes = {
   show: PropTypes.bool,
   children: PropTypes.any,
   modalClosed: PropTypes.func,
 };
 
-export default Modal;
+export default modal;

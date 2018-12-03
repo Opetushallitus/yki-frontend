@@ -12,10 +12,13 @@ import axios from '../../axios';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
 import RegistryItem from './RegistryItem/RegistryItem';
 import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
+import ModifyRegistryItem from './RegistryItem/ModifyRegistryItem/ModifyRegistryItem';
 
 export class Registry extends Component {
   state = {
     showModal: false,
+    modifying: false,
+    selectedItem: {},
   };
 
   componentDidMount() {
@@ -30,34 +33,62 @@ export class Registry extends Component {
     );
   }
 
-  toggleModalHandler = () => {
-    this.setState(prevState => ({ showModal: !prevState.showModal }));
+  openModalHandler = () => {
+    this.setState({ showModal: true });
+  };
+
+  closeModalHandler = () => {
+    this.setState({ showModal: false, modifying: false });
+  };
+
+  modifyItemHandler = item => {
+    this.setState({ showModal: true, modifying: true, selectedItem: item });
   };
 
   render() {
     const searchBar = (
       <div className={classes.Searchbar}>
         <input type="search" placeholder="Hae järjestäjää tai paikkakuntaa" />
-        <Button clicked={this.toggleModalHandler}>Lisää järjestäjä</Button>
+        <Button clicked={this.openModalHandler}>Lisää järjestäjä</Button>
       </div>
     );
 
-    const NewRegistryItemModal = (
-      <Modal show={this.state.showModal} modalClosed={this.toggleModalHandler}>
-        <NewRegistryItem onExit={this.toggleModalHandler} />
-      </Modal>
+    const modal = (
+      <React.Fragment>
+        {this.state.showModal ? (
+          <Modal
+            show={this.state.showModal}
+            modalClosed={this.closeModalHandler}
+          >
+            {this.state.modifying ? (
+              <ModifyRegistryItem
+                item={this.state.selectedItem}
+                onClose={this.closeModalHandler}
+              />
+            ) : (
+              <NewRegistryItem onClose={this.closeModalHandler} />
+            )}
+          </Modal>
+        ) : null}
+      </React.Fragment>
     );
 
     const registry = this.props.loading ? (
       <Spinner />
     ) : (
-      this.props.registry.map((org, i) => {
+      this.props.registry.map((item, index) => {
         const registryItem = collectRegistryItemDetails(
-          org.organizer,
-          org.organization,
+          item.organizer,
+          item.organization,
           this.props.localization,
         );
-        return <RegistryItem key={i} item={registryItem} />;
+        return (
+          <RegistryItem
+            key={index}
+            item={registryItem}
+            modify={() => this.modifyItemHandler(registryItem)}
+          />
+        );
       })
     );
 
@@ -65,7 +96,7 @@ export class Registry extends Component {
       <div className={classes.Registry}>
         <h1>Kielitutkintojen järjestäjärekisteri</h1>
         {searchBar}
-        {NewRegistryItemModal}
+        {modal}
         {registry}
       </div>
     );
