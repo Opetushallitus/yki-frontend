@@ -28,6 +28,7 @@ describe('<Registry />', () => {
   });
 
   it('should render <Modal /> for adding a new item to registry', () => {
+    wrapper.setState({ showModal: true });
     expect(wrapper.find(Modal)).toHaveLength(1);
   });
 });
