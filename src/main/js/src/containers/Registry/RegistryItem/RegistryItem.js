@@ -3,7 +3,10 @@ import React, { PureComponent } from 'react';
 import classes from './RegistryItem.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
 import RegistryItemDetails from '../../../components/RegistryItemDetails/RegistryItemDetails';
-import { isAgreementActive } from '../../../util/registryUtil';
+import {
+  isAgreementActive,
+  languagesToString,
+} from '../../../util/registryUtil';
 
 class RegistryItem extends PureComponent {
   state = {
@@ -17,12 +20,7 @@ class RegistryItem extends PureComponent {
   };
 
   render() {
-    const languages = this.props.item.languages
-      .map(lang => {
-        return lang.split(' ')[0].toLowerCase();
-      })
-      .join(', ');
-
+    const languages = languagesToString(this.props.item.languages);
     const agreementActive = isAgreementActive(
       this.props.item.agreement.start,
       this.props.item.agreement.end,

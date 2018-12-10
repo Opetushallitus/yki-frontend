@@ -9,6 +9,7 @@ export const collectRegistryItemDetails = (
   localization,
 ) => {
   const item = {
+    oid: '',
     name: '',
     website: '',
     agreement: {
@@ -29,9 +30,10 @@ export const collectRegistryItemDetails = (
     extra: '',
   };
 
+  item.oid = organization.oid;
   item.name = getLocalizedName(organization.nimi, localization);
   item.website = getWebsite(organization.yhteystiedot);
-  item.agreement = getAgreementPeriod(organizer);
+  item.agreement = getAgreementDuration(organizer);
   item.address = getAddress(organization);
   item.contact = getContact(organizer);
   item.languages = getLanguages(organizer.languages);
@@ -90,7 +92,7 @@ const getContact = organizer => {
   };
 };
 
-const getAgreementPeriod = organizer => {
+const getAgreementDuration = organizer => {
   return {
     start: organizer.agreement_start_date
       ? moment(organizer.agreement_start_date).format(DATE_FORMAT)
@@ -102,14 +104,19 @@ const getAgreementPeriod = organizer => {
 };
 
 const getLanguages = languageList => {
-  if (!languageList) {
-    return [];
-  }
+  return languageList ? languageList : [];
+};
 
+export const languagesToString = array => {
+  const list = getLanguagesWithLevelDescriptions(array);
+  return list.map(lang => lang.split(' ')[0].toLowerCase()).join(', ');
+};
+
+export const getLanguagesWithLevelDescriptions = array => {
   const list = [];
   for (const lang in LANGUAGES) {
     const language = LANGUAGES[lang];
-    const levels = languageList
+    const levels = array
       .filter(l => l.language_code === language.code)
       .map(l => l.level_code)
       .reduce((acc, l) => acc.concat(l), []);

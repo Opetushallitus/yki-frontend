@@ -2,12 +2,13 @@ import React from 'react';
 
 import classes from './RegistryItemDetails.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
+import { getLanguagesWithLevelDescriptions } from '../../util/registryUtil';
 
 const registryItemDetails = props => {
   const languages = (
     <div className={classes.Languages}>
       <h3>Kielitutkinnot</h3>
-      {props.item.languages.map(lang => {
+      {getLanguagesWithLevelDescriptions(props.item.languages).map(lang => {
         return <p key={lang}>{lang}</p>;
       })}
     </div>
