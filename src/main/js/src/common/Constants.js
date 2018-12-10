@@ -1,47 +1,47 @@
 export const DATE_FORMAT = 'D.M.YYYY';
 export const LANGUAGES = [
   {
-    code: 'fi',
+    code: 'fin',
     name: 'Suomi',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'sv',
+    code: 'swe',
     name: 'Ruotsi',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'en',
+    code: 'eng',
     name: 'Englanti',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'de',
+    code: 'deu',
     name: 'Saksa',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'ru',
+    code: 'rus',
     name: 'Venäjä',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'fr',
+    code: 'fra',
     name: 'Ranska',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'se',
+    code: 'sme',
     name: 'Pohjoissaame',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'es',
+    code: 'spa',
     name: 'Espanja',
     levels: ['PERUS', 'KESKI', 'YLIN'],
   },
   {
-    code: 'it',
+    code: 'ita',
     name: 'Italia',
     levels: ['PERUS', 'KESKI'],
   },

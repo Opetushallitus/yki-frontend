@@ -21,27 +21,27 @@ const organizers = [
     contact_phone_number: '0101234546',
     languages: [
       {
-        language_code: 'fi',
+        language_code: 'fin',
         level_code: 'PERUS',
       },
       {
-        language_code: 'fi',
+        language_code: 'fin',
         level_code: 'KESKI',
       },
       {
-        language_code: 'fi',
+        language_code: 'fin',
         level_code: 'YLIN',
       },
       {
-        language_code: 'de',
+        language_code: 'deu',
         level_code: 'YLIN',
       },
       {
-        language_code: 'se',
+        language_code: 'sme',
         level_code: 'PERUS',
       },
       {
-        language_code: 'se',
+        language_code: 'sme',
         level_code: 'KESKI',
       },
     ],
