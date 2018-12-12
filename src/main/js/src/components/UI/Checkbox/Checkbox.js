@@ -7,7 +7,7 @@ const checkbox = props => (
   <label className={classes.Container}>
     <input
       type="checkbox"
-      onChange={() => props.onChange(props.languageCode, props.languageLevel)}
+      onChange={props.onChange}
       defaultChecked={props.checked || false}
     />
     <span className={classes.Checkmark} />
@@ -16,8 +16,6 @@ const checkbox = props => (
 
 checkbox.propTypes = {
   onChange: PropTypes.func.isRequired,
-  languageCode: PropTypes.string.isRequired,
-  languageLevel: PropTypes.string.isRequired,
   checked: PropTypes.bool,
 };
 

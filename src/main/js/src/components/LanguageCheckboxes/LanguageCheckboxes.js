@@ -45,7 +45,7 @@ const languageCheckboxes = props => {
           languageCode={l.code}
           languageLevel={ll}
           checked={isSelected(l.code, ll)}
-          onChange={(code, level) => toggleChecked(code, level)}
+          onChange={() => toggleChecked(l.code, ll)}
         />
       ))}
     </div>
