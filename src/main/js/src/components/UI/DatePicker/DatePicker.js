@@ -31,6 +31,7 @@ class DatePicker extends Component {
         ref={node => {
           this.node = node;
         }}
+        tabIndex={this.props.tabIndex}
       />
     );
   }

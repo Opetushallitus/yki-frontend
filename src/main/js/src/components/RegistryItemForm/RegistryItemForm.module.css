@@ -29,6 +29,10 @@
   height: 35px;
 }
 
+.Form input:focus {
+  outline: 1px solid hsla(195, 100%, 47%, 1);
+}
+
 .Form button {
   position: absolute;
   bottom: 50px;

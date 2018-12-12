@@ -65,6 +65,7 @@ const registryItemForm = props => {
                       value: values.agreementStart,
                     }}
                     onChange={d => setFieldValue('agreementStart', d[0])}
+                    tabIndex="1"
                   />
                 </div>
                 <div className={classes.Separator}>−</div>
@@ -79,6 +80,7 @@ const registryItemForm = props => {
                       value: values.agreementEnd,
                     }}
                     onChange={d => setFieldValue('agreementEnd', d[0])}
+                    tabIndex="2"
                   />
                 </div>
               </div>
@@ -100,6 +102,7 @@ const registryItemForm = props => {
                 id="contactName"
                 name="contactName"
                 placeholder="Essi Esimerkki"
+                tabIndex="3"
               />
               <ErrorMessage
                 name="contactName"
@@ -114,6 +117,7 @@ const registryItemForm = props => {
                 id="contactEmail"
                 name="contactEmail"
                 placeholder="essi.esimerkki@jarjestaja.fi"
+                tabIndex="4"
               />
               <ErrorMessage
                 name="contactEmail"
@@ -128,6 +132,7 @@ const registryItemForm = props => {
                 id="contactPhone"
                 name="contactPhone"
                 placeholder="+358 01 234 5678"
+                tabIndex="5"
               />
               <ErrorMessage
                 name="contactPhone"
@@ -146,6 +151,7 @@ const registryItemForm = props => {
                 maxLength="255"
                 wrap="soft"
                 placeholder="Esim. Yleinen sähköpostilista: kaikille@jarjestaja.fi"
+                tabIndex="6"
               />
               <ErrorMessage
                 name="extra"
@@ -155,7 +161,7 @@ const registryItemForm = props => {
             </div>
           </div>
 
-          <Button type="submit" disabled={!isValid}>
+          <Button type="submit" disabled={!isValid} tabIndex="7">
             {props.modifying ? 'Tallenna muutokset' : 'Lisää järjestäjä'}
           </Button>
         </Form>

@@ -9,6 +9,7 @@ const button = props => (
     disabled={props.disabled}
     className={[classes.Button, classes[props.btnType]].join(' ')}
     onClick={props.clicked}
+    tabIndex={props.tabIndex}
   >
     {props.children}
   </button>

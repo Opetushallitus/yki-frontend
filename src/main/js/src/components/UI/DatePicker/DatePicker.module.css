@@ -3,7 +3,3 @@
   background-position: 92% center;
   background-size: 1.5em;
 }
-
-.DatePicker:focus {
-  outline: none;
-}
