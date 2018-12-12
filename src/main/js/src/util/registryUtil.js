@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { DATE_FORMAT, LANGUAGES, CODE_TO_LEVEL } from '../common/Constants';
+import { LANGUAGES, CODE_TO_LEVEL } from '../common/Constants';
 import { firstCharToUpper } from './util';
 
 export const collectRegistryItemDetails = (
@@ -94,12 +94,8 @@ const getContact = organizer => {
 
 const getAgreementDuration = organizer => {
   return {
-    start: organizer.agreement_start_date
-      ? moment(organizer.agreement_start_date).format(DATE_FORMAT)
-      : '',
-    end: organizer.agreement_end_date
-      ? moment(organizer.agreement_end_date).format(DATE_FORMAT)
-      : '',
+    start: organizer.agreement_start_date,
+    end: organizer.agreement_end_date,
   };
 };
 
@@ -159,9 +155,6 @@ export const sortArrayByName = array => {
 };
 
 export const isAgreementActive = (agreementStartDate, agreementEndDate) => {
-  const start = moment(agreementStartDate, DATE_FORMAT);
   const now = moment(new Date());
-  const end = moment(agreementEndDate, DATE_FORMAT);
-
-  return now.isBetween(start, end, 'day', '[]');
+  return now.isBetween(agreementStartDate, agreementEndDate, 'day', '[]');
 };

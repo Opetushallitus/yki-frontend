@@ -63,13 +63,13 @@ const registryItemForm = props => {
                   <DatePicker
                     id="agreementStart"
                     options={{
-                      defaultDate: props.agreementStart || null,
+                      defaultDate: props.agreementStart,
                       value: values.agreementStart,
                     }}
                     onChange={d =>
                       setFieldValue(
                         'agreementStart',
-                        moment(d[0], DATE_FORMAT).toDate(),
+                        moment(d[0], DATE_FORMAT).toISOString(),
                       )
                     }
                     tabIndex="1"
@@ -83,13 +83,13 @@ const registryItemForm = props => {
                   <DatePicker
                     id="agreementEnd"
                     options={{
-                      defaultDate: props.agreementEnd || null,
+                      defaultDate: props.agreementEnd,
                       value: values.agreementEnd,
                     }}
                     onChange={d =>
                       setFieldValue(
                         'agreementEnd',
-                        moment(d[0], DATE_FORMAT).toDate(),
+                        moment(d[0], DATE_FORMAT).toISOString(),
                       )
                     }
                     tabIndex="2"

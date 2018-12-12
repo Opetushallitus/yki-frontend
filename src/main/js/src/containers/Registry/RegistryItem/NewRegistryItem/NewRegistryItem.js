@@ -100,6 +100,7 @@ class NewRegistryItem extends PureComponent {
             <input
               autoFocus
               type="search"
+              autoComplete="off"
               id="organizationSearchField"
               placeholder="Hae organisaation nimellä"
               value={this.state.searchInput}

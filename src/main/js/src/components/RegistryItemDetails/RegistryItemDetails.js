@@ -1,8 +1,11 @@
 import React from 'react';
+import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import classes from './RegistryItemDetails.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
 import { getLanguagesWithLevelDescriptions } from '../../util/registryUtil';
+import { DATE_FORMAT } from '../../common/Constants';
 
 const registryItemDetails = props => {
   const languages = (
@@ -33,7 +36,8 @@ const registryItemDetails = props => {
     <div className={props.agreementActive ? null : classes.AgreementExpired}>
       <h3>Järjestäjäsopimus</h3>
       <p>
-        {props.item.agreement.start} - {props.item.agreement.end}
+        {moment(props.item.agreement.start).format(DATE_FORMAT)} -{' '}
+        {moment(props.item.agreement.end).format(DATE_FORMAT)}
       </p>
     </div>
   );
@@ -58,6 +62,11 @@ const registryItemDetails = props => {
       </button>
     </div>
   );
+};
+
+registryItemDetails.propTypes = {
+  item: PropTypes.object.isRequired,
+  clicked: PropTypes.func.isRequired,
 };
 
 export default registryItemDetails;
