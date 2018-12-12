@@ -36,8 +36,8 @@ export const collectRegistryItemDetails = (
   item.agreement = getAgreementDuration(organizer);
   item.address = getAddress(organization);
   item.contact = getContact(organizer);
-  item.languages = getLanguages(organizer.languages);
-  item.extra = getExtra(organizer);
+  item.languages = organizer.languages || [];
+  item.extra = organizer.extra || '';
 
   return item;
 };
@@ -99,10 +99,6 @@ const getAgreementDuration = organizer => {
   };
 };
 
-const getLanguages = languageList => {
-  return languageList ? languageList : [];
-};
-
 export const languagesToString = array => {
   const list = getLanguagesWithLevelDescriptions(array);
   return list.map(lang => lang.split(' ')[0].toLowerCase()).join(', ');
@@ -126,10 +122,6 @@ export const getLanguagesWithLevelDescriptions = array => {
     }
   }
   return list;
-};
-
-const getExtra = item => {
-  return item.extra ? item.extra : '';
 };
 
 export const sortArrayByName = array => {
