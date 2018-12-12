@@ -26,6 +26,7 @@ class DatePicker extends Component {
   render() {
     return (
       <input
+        id={this.props.id}
         className={classes.DatePicker}
         {...this.props}
         ref={node => {
@@ -39,8 +40,9 @@ class DatePicker extends Component {
 
 DatePicker.propTypes = {
   id: PropTypes.string,
-  options: PropTypes.object,
-  onChange: PropTypes.func,
+  options: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  tabIndex: PropTypes.string,
 };
 
 export default DatePicker;

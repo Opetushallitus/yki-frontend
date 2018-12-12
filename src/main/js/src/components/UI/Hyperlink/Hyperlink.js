@@ -27,8 +27,8 @@ const hyperlink = props => {
 };
 
 hyperlink.propTypes = {
-  to: PropTypes.string.isRequired,
   type: PropTypes.string,
+  to: PropTypes.string.isRequired,
 };
 
 export default hyperlink;

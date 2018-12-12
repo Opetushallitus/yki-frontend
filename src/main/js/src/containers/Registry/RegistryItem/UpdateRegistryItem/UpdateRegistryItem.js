@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import classes from './UpdateRegistryItem.module.css';
 import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
@@ -41,6 +42,12 @@ const mapDispatchToProps = dispatch => {
     onUpdateRegistryItem: values =>
       dispatch(actions.updateRegistryItem(values)),
   };
+};
+
+UpdateRegistryItem.propTypes = {
+  onUpdateRegistryItem: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default connect(

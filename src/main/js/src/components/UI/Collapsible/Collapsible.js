@@ -24,6 +24,7 @@ const collapsible = props => (
 collapsible.propTypes = {
   className: PropTypes.string,
   clicked: PropTypes.func.isRequired,
+  children: PropTypes.any,
 };
 
 export default collapsible;

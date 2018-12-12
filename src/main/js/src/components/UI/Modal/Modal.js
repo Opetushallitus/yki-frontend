@@ -24,9 +24,9 @@ const modal = props => (
 );
 
 modal.propTypes = {
-  show: PropTypes.bool,
+  show: PropTypes.bool.isRequired,
+  modalClosed: PropTypes.func.isRequired,
   children: PropTypes.any,
-  modalClosed: PropTypes.func,
 };
 
 export default modal;

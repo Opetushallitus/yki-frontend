@@ -20,6 +20,7 @@ button.propTypes = {
   disabled: PropTypes.bool,
   btnType: PropTypes.string,
   clicked: PropTypes.func,
+  tabIndex: PropTypes.string,
   children: PropTypes.any,
 };
 

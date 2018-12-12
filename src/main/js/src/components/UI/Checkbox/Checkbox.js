@@ -16,6 +16,8 @@ const checkbox = props => (
 
 checkbox.propTypes = {
   onChange: PropTypes.func.isRequired,
+  languageCode: PropTypes.string.isRequired,
+  languageLevel: PropTypes.string.isRequired,
   checked: PropTypes.bool,
 };
 

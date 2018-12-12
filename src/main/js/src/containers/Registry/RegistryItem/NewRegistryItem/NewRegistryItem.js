@@ -173,7 +173,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 NewRegistryItem.propTypes = {
-  history: PropTypes.object,
+  organizations: PropTypes.array.isRequired,
+  onAddRegistryItem: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  localization: PropTypes.string.isRequired,
 };
 
 export default connect(

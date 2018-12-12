@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import classes from './RegistryItem.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
@@ -63,5 +64,10 @@ class RegistryItem extends PureComponent {
     );
   }
 }
+
+RegistryItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  update: PropTypes.func,
+};
 
 export default RegistryItem;

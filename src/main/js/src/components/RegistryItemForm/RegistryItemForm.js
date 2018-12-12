@@ -183,17 +183,16 @@ const registryItemForm = props => {
 };
 
 registryItemForm.propTypes = {
+  agreementStart: PropTypes.string,
+  agreementEnd: PropTypes.string,
+  contactName: PropTypes.string,
+  contactPhone: PropTypes.string,
+  contactEmail: PropTypes.string,
+  languages: PropTypes.array,
+  extra: PropTypes.string,
   oid: PropTypes.string,
   name: PropTypes.string,
   onSubmit: PropTypes.func,
-  values: PropTypes.object,
-  touched: PropTypes.object,
-  dirty: PropTypes.bool,
-  errors: PropTypes.object,
-  setFieldValue: PropTypes.func,
-  setFieldTouched: PropTypes.func,
-  isSubmitting: PropTypes.bool,
-  handleReset: PropTypes.func,
   address: PropTypes.string,
   updating: PropTypes.bool,
 };

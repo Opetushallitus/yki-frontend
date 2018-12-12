@@ -119,10 +119,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 Registry.propTypes = {
+  onFetchRegistryContent: PropTypes.func.isRequired,
   registry: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   localization: PropTypes.string.isRequired,
-  history: PropTypes.object,
 };
 
 export default connect(
