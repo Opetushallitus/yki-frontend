@@ -24,10 +24,6 @@ class NewRegistryItem extends PureComponent {
     },
   };
 
-  componentDidMount() {
-    document.title = 'Lisää järjestäjä - YKI Järjestäjärekisteri';
-  }
-
   searchInputChangedHandler = event => {
     this.setState({
       numOfResults: 0,

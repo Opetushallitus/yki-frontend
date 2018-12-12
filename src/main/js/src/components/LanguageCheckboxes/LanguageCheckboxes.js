@@ -6,7 +6,6 @@ import { LANGUAGES } from '../../common/Constants';
 import Checkbox from '../UI/Checkbox/Checkbox';
 
 const languageCheckboxes = props => {
-  // console.log(props.languages);
   const toggleChecked = (code, level) => {
     let updatedLanguages = props.languages.some(
       l => l.language_code === code && l.level_code === level,

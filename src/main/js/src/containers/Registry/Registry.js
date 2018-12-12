@@ -12,12 +12,12 @@ import axios from '../../axios';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
 import RegistryItem from './RegistryItem/RegistryItem';
 import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
-import ModifyRegistryItem from './RegistryItem/ModifyRegistryItem/ModifyRegistryItem';
+import UpdateRegistryItem from './RegistryItem/UpdateRegistryItem/UpdateRegistryItem';
 
 export class Registry extends Component {
   state = {
     showModal: false,
-    modifying: false,
+    updating: false,
     selectedItem: {},
   };
 
@@ -38,11 +38,11 @@ export class Registry extends Component {
   };
 
   closeModalHandler = () => {
-    this.setState({ showModal: false, modifying: false });
+    this.setState({ showModal: false, updating: false });
   };
 
-  modifyItemHandler = item => {
-    this.setState({ showModal: true, modifying: true, selectedItem: item });
+  updateRegistryItemHandler = item => {
+    this.setState({ showModal: true, updating: true, selectedItem: item });
   };
 
   render() {
@@ -60,8 +60,8 @@ export class Registry extends Component {
             show={this.state.showModal}
             modalClosed={this.closeModalHandler}
           >
-            {this.state.modifying ? (
-              <ModifyRegistryItem
+            {this.state.updating ? (
+              <UpdateRegistryItem
                 item={this.state.selectedItem}
                 onClose={this.closeModalHandler}
               />
@@ -86,7 +86,7 @@ export class Registry extends Component {
           <RegistryItem
             key={index}
             item={registryItem}
-            modify={() => this.modifyItemHandler(registryItem)}
+            update={() => this.updateRegistryItemHandler(registryItem)}
           />
         );
       })

@@ -55,7 +55,7 @@ class RegistryItem extends PureComponent {
           </div>
           <RegistryItemDetails
             item={this.props.item}
-            clicked={this.props.modify}
+            clicked={this.props.update}
             agreementActive={agreementActive}
           />
         </Collapsible>

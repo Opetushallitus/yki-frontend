@@ -53,7 +53,7 @@ const registryItemDetails = props => {
         {agreement}
         {extra}
       </div>
-      <button className={classes.Modify} onClick={props.clicked}>
+      <button className={classes.Update} onClick={props.clicked}>
         Muokkaa
       </button>
     </div>
