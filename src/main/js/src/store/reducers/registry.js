@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  localization: 'fi',
+  localization: 'fin',
   registry: [],
   loading: false,
   organizations: [],
@@ -57,6 +57,28 @@ const reducer = (state = initialState, action) => {
         loading: false,
       };
     case actionTypes.ADD_REGISTRY_ITEM_FAIL:
+      return {
+        ...state,
+        error: action.error,
+        loading: false,
+      };
+    case actionTypes.UPDATE_REGISTRY_ITEM_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.UPDATE_REGISTRY_ITEM_SUCCESS:
+      const registry = [...state.registry];
+      const index = registry
+        .map(i => i.organizer.oid)
+        .indexOf(action.registryItem.oid);
+      registry[index].organizer = action.registryItem;
+      return {
+        ...state,
+        registry: registry,
+        loading: false,
+      };
+    case actionTypes.UPDATE_REGISTRY_ITEM_FAIL:
       return {
         ...state,
         error: action.error,

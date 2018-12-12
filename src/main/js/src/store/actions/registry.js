@@ -1,29 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
-const fetchRegistryContentStart = () => {
-  return {
-    type: actionTypes.FETCH_REGISTRY_CONTENT_START,
-    loading: true,
-  };
-};
-
-const fetchRegistryContentSuccess = registry => {
-  return {
-    type: actionTypes.FETCH_REGISTRY_CONTENT_SUCCESS,
-    registry: registry,
-    loading: false,
-  };
-};
-
-const fetchRegistryContentFail = error => {
-  return {
-    type: actionTypes.FETCH_REGISTRY_CONTENT_FAIL,
-    error: error,
-    loading: false,
-  };
-};
-
 export const fetchRegistryContent = () => {
   const fetchedOrganizers = [];
   const organizationIds = [];
@@ -67,6 +44,45 @@ export const fetchRegistryContent = () => {
   };
 };
 
+const fetchRegistryContentStart = () => {
+  return {
+    type: actionTypes.FETCH_REGISTRY_CONTENT_START,
+    loading: true,
+  };
+};
+
+const fetchRegistryContentSuccess = registry => {
+  return {
+    type: actionTypes.FETCH_REGISTRY_CONTENT_SUCCESS,
+    registry: registry,
+    loading: false,
+  };
+};
+
+const fetchRegistryContentFail = error => {
+  return {
+    type: actionTypes.FETCH_REGISTRY_CONTENT_FAIL,
+    error: error,
+    loading: false,
+  };
+};
+
+export const fetchOrganizations = () => {
+  return dispatch => {
+    dispatch(fetchOrganizationsStart());
+    axios
+      .get(
+        '/organisaatio-service/rest/organisaatio/v4/hae?searchStr=&aktiiviset=true&suunnitellut=true&lakkautetut=false',
+      )
+      .then(res => {
+        dispatch(fetchOrganizationsSuccess(res.data.organisaatiot));
+      })
+      .catch(err => {
+        dispatch(fetchOrganizationsFail(err));
+      });
+  };
+};
+
 const fetchOrganizationsStart = () => {
   return {
     type: actionTypes.FETCH_ORGANIZATIONS_START,
@@ -87,45 +103,6 @@ const fetchOrganizationsFail = error => {
     type: actionTypes.FETCH_ORGANIZATIONS_FAIL,
     error: error,
     loadingOrganizations: false,
-  };
-};
-
-export const fetchOrganizations = () => {
-  return dispatch => {
-    dispatch(fetchOrganizationsStart());
-    axios
-      .get(
-        '/organisaatio-service/rest/organisaatio/v4/hae?searchStr=&aktiiviset=true&suunnitellut=true&lakkautetut=false',
-      )
-      .then(res => {
-        dispatch(fetchOrganizationsSuccess(res.data.organisaatiot));
-      })
-      .catch(err => {
-        dispatch(fetchOrganizationsFail(err));
-      });
-  };
-};
-
-const addRegistryItemStart = () => {
-  return {
-    type: actionTypes.ADD_REGISTRY_ITEM_START,
-    loading: true,
-  };
-};
-
-const addRegistryItemSuccess = registryItem => {
-  return {
-    type: actionTypes.ADD_REGISTRY_ITEM_SUCCESS,
-    registryItem: registryItem,
-    loading: false,
-  };
-};
-
-const addRegistryItemFail = error => {
-  return {
-    type: actionTypes.ADD_REGISTRY_ITEM_FAIL,
-    error: error,
-    loading: false,
   };
 };
 
@@ -153,5 +130,65 @@ export const addRegistryItem = organizer => {
       .catch(err => {
         dispatch(addRegistryItemFail(err));
       });
+  };
+};
+
+const addRegistryItemStart = () => {
+  return {
+    type: actionTypes.ADD_REGISTRY_ITEM_START,
+    loading: true,
+  };
+};
+
+const addRegistryItemSuccess = registryItem => {
+  return {
+    type: actionTypes.ADD_REGISTRY_ITEM_SUCCESS,
+    registryItem: registryItem,
+    loading: false,
+  };
+};
+
+const addRegistryItemFail = error => {
+  return {
+    type: actionTypes.ADD_REGISTRY_ITEM_FAIL,
+    error: error,
+    loading: false,
+  };
+};
+
+export const updateRegistryItem = item => {
+  return dispatch => {
+    dispatch(updateRegistryItemStart());
+    axios
+      .put(`/yki/api/virkailija/organizer/${item.oid}`, item)
+      .then(() => {
+        dispatch(updateRegistryItemSuccess(item));
+      })
+      .catch(err => {
+        dispatch(updateRegistryItemFail(err));
+      });
+  };
+};
+
+const updateRegistryItemStart = () => {
+  return {
+    type: actionTypes.UPDATE_REGISTRY_ITEM_START,
+    loading: true,
+  };
+};
+
+const updateRegistryItemSuccess = item => {
+  return {
+    type: actionTypes.UPDATE_REGISTRY_ITEM_SUCCESS,
+    registryItem: item,
+    loading: false,
+  };
+};
+
+const updateRegistryItemFail = error => {
+  return {
+    type: actionTypes.UPDATE_REGISTRY_ITEM_FAIL,
+    error: error,
+    loading: false,
   };
 };
