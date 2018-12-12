@@ -134,4 +134,16 @@ module.exports = function(app) {
         });
     },
   );
+
+  app.put('/yki/api/virkailija/organizer/:oid', (req, res) => {
+    try {
+      const { oid } = req.params;
+      const index = organizers.map(o => o.oid).indexOf(oid);
+      organizers[index] = req.body;
+      res.send({ success: true });
+    } catch (err) {
+      console.log(err);
+      res.status(404).send('Organizer not found');
+    }
+  });
 };

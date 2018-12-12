@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
+import moment from 'moment';
 
 import classes from './RegistryItemForm.module.css';
+import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
 import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
+import { DATE_FORMAT } from '../../common/Constants';
 
 const validationSchema = Yup.object().shape({
   agreementStart: Yup.string().required('Sopimuskauden aloitusaika puuttuu.'),
@@ -64,7 +66,12 @@ const registryItemForm = props => {
                       defaultDate: props.agreementStart || null,
                       value: values.agreementStart,
                     }}
-                    onChange={d => setFieldValue('agreementStart', d[0])}
+                    onChange={d =>
+                      setFieldValue(
+                        'agreementStart',
+                        moment(d[0], DATE_FORMAT).toDate(),
+                      )
+                    }
                     tabIndex="1"
                   />
                 </div>
@@ -79,7 +86,12 @@ const registryItemForm = props => {
                       defaultDate: props.agreementEnd || null,
                       value: values.agreementEnd,
                     }}
-                    onChange={d => setFieldValue('agreementEnd', d[0])}
+                    onChange={d =>
+                      setFieldValue(
+                        'agreementEnd',
+                        moment(d[0], DATE_FORMAT).toDate(),
+                      )
+                    }
                     tabIndex="2"
                   />
                 </div>
@@ -162,7 +174,7 @@ const registryItemForm = props => {
           </div>
 
           <Button type="submit" disabled={!isValid} tabIndex="7">
-            {props.modifying ? 'Tallenna muutokset' : 'Lisää järjestäjä'}
+            {props.updating ? 'Tallenna muutokset' : 'Lisää järjestäjä'}
           </Button>
         </Form>
       )}
@@ -183,7 +195,7 @@ registryItemForm.propTypes = {
   isSubmitting: PropTypes.bool,
   handleReset: PropTypes.func,
   address: PropTypes.string,
-  modifying: PropTypes.bool,
+  updating: PropTypes.bool,
 };
 
 export default registryItemForm;
