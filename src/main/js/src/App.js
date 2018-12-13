@@ -1,8 +1,9 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import registryReducer from './store/reducers/registry';
 import examSessionReducer from './store/reducers/examSession';
@@ -24,15 +25,11 @@ const rootReducer = combineReducers({
   reg: registrationReducer,
 });
 
-// To enable https://github.com/zalmoxisus/redux-devtools-extension
-const composeEnhancers =
-  process.env.NODE_ENV === 'development'
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : null || compose;
-
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk)),
+  process.env.NODE_ENV === 'development'
+    ? composeWithDevTools(applyMiddleware(thunk))
+    : applyMiddleware(thunk),
 );
 
 const app = () => (

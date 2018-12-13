@@ -1,6 +1,6 @@
 describe('Organizer registry', () => {
   beforeEach(() => {
-    cy.visit('/yki/');
+    cy.visit('/jarjestajarekisteri');
   });
 
   it('front page loads', () => {
@@ -11,6 +11,6 @@ describe('Organizer registry', () => {
     cy.get('button')
       .contains('Lisää järjestäjä')
       .click();
-    cy.get('h1').contains('Hae lisättävä järjestäjä');
+    cy.get('h1').contains('Lisää uusi kielitutkintojen järjestäjä');
   });
 });
