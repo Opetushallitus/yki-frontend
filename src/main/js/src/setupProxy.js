@@ -72,7 +72,7 @@ module.exports = function(app) {
     ) {
       // eslint-disable-next-line
       console.log(
-        'Time:',
+        '\nTime:',
         getCurrentTime(),
         req.method + ': ' + req.originalUrl,
         '\n',
@@ -140,6 +140,18 @@ module.exports = function(app) {
       const { oid } = req.params;
       const index = organizers.map(o => o.oid).indexOf(oid);
       organizers[index] = req.body;
+      res.send({ success: true });
+    } catch (err) {
+      console.log(err);
+      res.status(404).send('Organizer not found');
+    }
+  });
+
+  app.delete('/yki/api/virkailija/organizer/:oid', (req, res) => {
+    try {
+      const { oid } = req.params;
+      const index = organizers.map(o => o.oid).indexOf(oid);
+      organizers.splice(index, 1);
       res.send({ success: true });
     } catch (err) {
       console.log(err);

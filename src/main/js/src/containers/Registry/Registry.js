@@ -75,7 +75,7 @@ export class Registry extends Component {
 
     const registry = this.props.loading ? (
       <Spinner />
-    ) : (
+    ) : this.props.registry.length ? (
       this.props.registry.map((item, index) => {
         const registryItem = collectRegistryItemDetails(
           item.organizer,
@@ -90,7 +90,7 @@ export class Registry extends Component {
           />
         );
       })
-    );
+    ) : null;
 
     return (
       <div className={classes.Registry}>

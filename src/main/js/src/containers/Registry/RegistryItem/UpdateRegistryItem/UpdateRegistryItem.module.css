@@ -1,12 +1,11 @@
 .Content {
   position: relative;
-  padding-right: 135px;
 }
 
 .DeleteButtons {
   position: absolute;
-  top: 123px;
-  right: 175px;
+  top: 124px;
+  right: 40px;
   font-size: 0.875em;
   line-height: 1.625em;
   letter-spacing: -0.3px;
@@ -33,4 +32,14 @@
   padding: 2px 5px;
   border: none;
   margin-left: 10px;
+}
+
+@media (min-width: 655px) {
+  .Content {
+    padding-right: 135px;
+  }
+
+  .DeleteButtons {
+    right: 175px;
+  }
 }
