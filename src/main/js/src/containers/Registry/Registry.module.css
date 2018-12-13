@@ -1,6 +1,7 @@
 .Registry {
   margin: auto;
   width: calc(100% - 170px);
+  max-width: 1440px;
   min-width: 300px;
   height: 100%;
   align-items: center;

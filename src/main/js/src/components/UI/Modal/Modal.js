@@ -18,7 +18,7 @@ const modal = props => (
         className={classes.ModalClose}
         onClick={props.modalClosed}
       />
-      {props.children}
+      <div className={classes.Content}>{props.children}</div>
     </div>
   </React.Fragment>
 );

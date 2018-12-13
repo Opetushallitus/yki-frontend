@@ -1,3 +1,22 @@
+.FormElements {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 50px;
+  grid-template-columns: repeat(auto-fill, 1fr);
+  grid-template-rows: repeat(5, minmax(120px, 1fr));
+  grid-template-areas:
+    'agreement'
+    'contact'
+    'languages';
+}
+
+.Label {
+  display: block;
+  margin: 15px 0 5px 0;
+  font-size: 0.875em;
+}
+
 .Form hr {
   display: block;
   height: 1px;
@@ -5,12 +24,6 @@
   border-top: 1px solid hsla(0, 0%, 68%, 1);
   margin: 1em 0;
   padding: 0;
-}
-
-.Label {
-  display: block;
-  margin: 15px 0 5px 0;
-  font-size: 0.875em;
 }
 
 .Form h2 {
@@ -35,25 +48,12 @@
 
 .Form button {
   position: absolute;
-  bottom: 50px;
-  right: 50px;
+  right: 40px;
 }
 
 .ErrorMessage {
   display: block;
   color: hsla(15, 100%, 40%, 1);
-}
-
-.FormElements {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-template-areas:
-    'agreement languages'
-    'contact languages'
-    'contact languages'
-    'contact languages';
 }
 
 .DatePickers {
@@ -70,16 +70,19 @@
 
 .Agreement {
   grid-area: agreement;
+  grid-row: span 1;
   width: 340px;
 }
 
 .Languages {
   grid-area: languages;
+  grid-row: span 2;
   width: 340px;
 }
 
 .Contact {
   grid-area: contact;
+  grid-row: span 2;
 }
 
 .Contact input {
@@ -95,4 +98,20 @@
   font-size: 0.875em;
   color: hsla(0, 0%, 40%, 1);
   resize: none;
+}
+
+@media (min-width: 1020px) {
+  .FormElements {
+    grid-template-columns: repeat(auto-fill, min-max(340px, 1fr));
+    grid-template-rows: repeat(3, minmax(120px, 1fr));
+    grid-template-areas:
+      'agreement languages'
+      'contact languages';
+  }
+
+  .Form button {
+    position: fixed;
+    bottom: 135px;
+    right: 175px;
+  }
 }
