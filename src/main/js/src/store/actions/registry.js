@@ -3,7 +3,7 @@ import axios from '../../axios';
 
 export const fetchRegistryContent = () => {
   const fetchedOrganizers = [];
-  const organizationIds = [];
+  const organizationIds = [''];
   const fetchedOrganizations = [];
   const registry = [];
   return dispatch => {
@@ -188,6 +188,43 @@ const updateRegistryItemSuccess = item => {
 const updateRegistryItemFail = error => {
   return {
     type: actionTypes.UPDATE_REGISTRY_ITEM_FAIL,
+    error: error,
+    loading: false,
+  };
+};
+
+export const deleteRegistryItem = oid => {
+  return dispatch => {
+    dispatch(deleteRegistryItemStart());
+    axios
+      .delete(`/yki/api/virkailija/organizer/${oid}`)
+      .then(() => {
+        dispatch(deleteRegistryItemSuccess(oid));
+      })
+      .catch(err => {
+        dispatch(deleteRegistryItemFail(err));
+      });
+  };
+};
+
+const deleteRegistryItemStart = () => {
+  return {
+    type: actionTypes.DELETE_REGISTRY_ITEM_START,
+    loading: true,
+  };
+};
+
+const deleteRegistryItemSuccess = oid => {
+  return {
+    type: actionTypes.DELETE_REGISTRY_ITEM_SUCCESS,
+    oid: oid,
+    loading: false,
+  };
+};
+
+const deleteRegistryItemFail = error => {
+  return {
+    type: actionTypes.DELETE_REGISTRY_ITEM_FAIL,
     error: error,
     loading: false,
   };

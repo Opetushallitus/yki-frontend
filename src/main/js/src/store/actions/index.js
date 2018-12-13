@@ -4,5 +4,6 @@ export {
   fetchOrganizations,
   addRegistryItem,
   updateRegistryItem,
+  deleteRegistryItem,
 } from './registry';
 export {} from './registration';

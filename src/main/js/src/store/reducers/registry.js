@@ -10,6 +10,8 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  let registry;
+  let index;
   switch (action.type) {
     case actionTypes.FETCH_REGISTRY_CONTENT_START:
       return {
@@ -68,8 +70,8 @@ const reducer = (state = initialState, action) => {
         loading: true,
       };
     case actionTypes.UPDATE_REGISTRY_ITEM_SUCCESS:
-      const registry = [...state.registry];
-      const index = registry
+      registry = [...state.registry];
+      index = registry
         .map(i => i.organizer.oid)
         .indexOf(action.registryItem.oid);
       registry[index].organizer = action.registryItem;
@@ -79,6 +81,26 @@ const reducer = (state = initialState, action) => {
         loading: false,
       };
     case actionTypes.UPDATE_REGISTRY_ITEM_FAIL:
+      return {
+        ...state,
+        error: action.error,
+        loading: false,
+      };
+    case actionTypes.DELETE_REGISTRY_ITEM_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.DELETE_REGISTRY_ITEM_SUCCESS:
+      registry = [...state.registry];
+      index = registry.map(i => i.organizer.oid).indexOf(action.oid);
+      delete registry[index];
+      return {
+        ...state,
+        registry: registry,
+        loading: false,
+      };
+    case actionTypes.DELETE_REGISTRY_ITEM_FAIL:
       return {
         ...state,
         error: action.error,
