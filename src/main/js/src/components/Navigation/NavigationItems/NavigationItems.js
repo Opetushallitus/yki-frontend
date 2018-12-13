@@ -12,6 +12,8 @@ const navigationItems = () => (
     <NavigationItem link="/tutkintotilaisuudet">
       Tutkintotilaisuudet
     </NavigationItem>
+    <div className={classes.Separator} />
+    <NavigationItem link="/">Ilmoittautuminen</NavigationItem>
   </ul>
 );
 

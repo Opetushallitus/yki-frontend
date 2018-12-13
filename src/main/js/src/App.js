@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -8,55 +8,58 @@ import registryReducer from './store/reducers/registry';
 import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
 import Layout from './hoc/Layout/Layout';
-import Registry from './containers/Registry/Registry';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
-import ExamSessions from './containers/ExamSessions/ExamSessions';
-import NewRegistryItem from './containers/Registry/RegistryItem/NewRegistryItem/NewRegistryItem';
+import Spinner from './components/UI/Spinner/Spinner';
+import Registration from './containers/Registration/Registration';
 import NotFound from './components/NotFound/NotFound';
 
-class App extends Component {
-  render() {
-    const rootReducer = combineReducers({
-      registry: registryReducer,
-      exam: examSessionReducer,
-      reg: registrationReducer,
-    });
+const Registry = lazy(() => import('./containers/Registry/Registry'));
+const ExamSessions = lazy(() =>
+  import('./containers/ExamSessions/ExamSessions'),
+);
 
-    // To enable https://github.com/zalmoxisus/redux-devtools-extension
-    const composeEnhancers =
-      process.env.NODE_ENV === 'development'
-        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        : null || compose;
+const rootReducer = combineReducers({
+  registry: registryReducer,
+  exam: examSessionReducer,
+  reg: registrationReducer,
+});
 
-    const store = createStore(
-      rootReducer,
-      composeEnhancers(applyMiddleware(thunk)),
-    );
+// To enable https://github.com/zalmoxisus/redux-devtools-extension
+const composeEnhancers =
+  process.env.NODE_ENV === 'development'
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : null || compose;
 
-    return (
-      <Provider store={store}>
-        <BrowserRouter basename="/yki">
-          <Layout>
-            <Switch>
-              <Redirect exact from="/" to="/jarjestajarekisteri" />
-              <ErrorBoundary title="Tapahtui odottamaton virhe" returnLinkTo="jarjestajarekisteri" returnLinkText="Palaa etusivulle">
-                <Route exact path="/jarjestajarekisteri" component={Registry} />
-              </ErrorBoundary>
-              <Route
-                path="/jarjestajarekisteri/uusi"
-                component={NewRegistryItem}
-              />
-              <Route path="/tutkintotilaisuudet" component={ExamSessions} />
-              <ErrorBoundary title="Tapahtui odottamaton virhe" returnLinkTo="jarjestajarekisteri" returnLinkText="Palaa etusivulle">
-                <Route path="/jarjestajarekisteri" component={Registry} />
-              </ErrorBoundary>
-              <Route component={NotFound} />
-            </Switch>
-          </Layout>
-        </BrowserRouter>
-      </Provider>
-    );
-  }
-}
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk)),
+);
 
-export default App;
+const app = () => (
+  <Provider store={store}>
+    <Router basename={'/yki'}>
+      <Suspense fallback={<Spinner />}>
+        <Layout>
+          <Switch>
+            <Route exact path="/" component={Registration} />
+            <ErrorBoundary
+              title="Tapahtui odottamaton virhe"
+              returnLinkTo="jarjestajarekisteri"
+              returnLinkText="Palaa etusivulle"
+            >
+              {/* TODO: change back to use component={Component} after react-router-dom updates version */}
+              <Route path="/jarjestajarekisteri" render={() => <Registry />} />
+            </ErrorBoundary>
+            <Route
+              path="/tutkintotilaisuudet"
+              render={() => <ExamSessions />}
+            />
+            <Route component={NotFound} />
+          </Switch>
+        </Layout>
+      </Suspense>
+    </Router>
+  </Provider>
+);
+
+export default app;

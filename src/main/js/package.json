@@ -7,7 +7,7 @@
     "axios": "^0.18.0",
     "flatpickr": "^4.5.2",
     "formik": "^1.4.0",
-    "moment": "^2.22.2",
+    "moment": "^2.23.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

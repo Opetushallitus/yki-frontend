@@ -13,7 +13,7 @@ describe('<NavigationItems />', () => {
     wrapper = shallow(<NavigationItems />);
   });
 
-  it('should render two <NavigationItem /> elements', () => {
-    expect(wrapper.find(NavigationItem)).toHaveLength(2);
+  it('should render three <NavigationItem /> elements', () => {
+    expect(wrapper.find(NavigationItem)).toHaveLength(3);
   });
 });

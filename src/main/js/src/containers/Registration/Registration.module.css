@@ -1,0 +1,6 @@
+.Registration {
+  border: 1px dotted red;
+  margin: auto;
+  width: calc(100% - 170px);
+  height: 500px;
+}
