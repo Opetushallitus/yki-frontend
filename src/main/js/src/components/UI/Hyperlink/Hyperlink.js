@@ -20,7 +20,7 @@ const hyperlink = props => {
   return (
     <p>
       <a href={prefix + props.to} className={classes.Hyperlink}>
-        {props.to}
+        {props.text ? props.text : props.to}
       </a>
     </p>
   );
@@ -29,6 +29,7 @@ const hyperlink = props => {
 hyperlink.propTypes = {
   type: PropTypes.string,
   to: PropTypes.string.isRequired,
+  text: PropTypes.string,
 };
 
 export default hyperlink;

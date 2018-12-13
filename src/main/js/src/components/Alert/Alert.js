@@ -1,20 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Hyperlink from '../UI/Hyperlink/Hyperlink';
+import classes from './Alert.module.css';
 
 const alert = props => (
-  <div className={}>
-    <div
-      className={}
-    >
-      <div className={}>
-        <div className={}>{props.title}</div>
-        {props.optionalText && (
-          <div className={}>
-            {props.optionalText}
-          </div>
-        )}
+  <div className={classes.Alert}>
+    <div className={[classes.AlertContainer, classes.AlertError].join(' ')}>
+      <div className={classes.AlertTitle}>{props.title}</div>
+      {props.optionalText && (
+        <div className={classes.AlertText}>{props.optionalText}</div>
+      )}
+      {props.returnLinkTo && (
+        <div className={classes.AlertText}>
+          <Hyperlink to={props.returnLinkTo} text={props.returnLinkText} />
+        </div>
+      )}
+      {props.onClose && (
         <button
-          className={}
           type="button"
           title="Close"
           aria-label="Close"
@@ -22,15 +24,17 @@ const alert = props => (
         >
           <span aria-hidden="true">×</span>
         </button>
-      </div>
+      )}
     </div>
   </div>
 );
 
-alert.PropTypes = {
-  title: PropTypes.string,
+alert.propTypes = {
+  title: PropTypes.isRequired,
   optionalText: PropTypes.string,
   onClose: PropTypes.func,
+  returnLinkTo: PropTypes.string,
+  returnLinkText: PropTypes.string,
 };
 
 export default alert;

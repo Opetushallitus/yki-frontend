@@ -9,6 +9,7 @@ import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
 import Layout from './hoc/Layout/Layout';
 import Registry from './containers/Registry/Registry';
+import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import ExamSessions from './containers/ExamSessions/ExamSessions';
 import NewRegistryItem from './containers/Registry/RegistryItem/NewRegistryItem/NewRegistryItem';
 import NotFound from './components/NotFound/NotFound';
@@ -38,13 +39,17 @@ class App extends Component {
           <Layout>
             <Switch>
               <Redirect exact from="/" to="/jarjestajarekisteri" />
-              <Route exact path="/jarjestajarekisteri" component={Registry} />
+              <ErrorBoundary title="Tapahtui odottamaton virhe" returnLinkTo="jarjestajarekisteri" returnLinkText="Palaa etusivulle">
+                <Route exact path="/jarjestajarekisteri" component={Registry} />
+              </ErrorBoundary>
               <Route
                 path="/jarjestajarekisteri/uusi"
                 component={NewRegistryItem}
               />
               <Route path="/tutkintotilaisuudet" component={ExamSessions} />
-              <Route path="/jarjestajarekisteri" component={Registry} />
+              <ErrorBoundary title="Tapahtui odottamaton virhe" returnLinkTo="jarjestajarekisteri" returnLinkText="Palaa etusivulle">
+                <Route path="/jarjestajarekisteri" component={Registry} />
+              </ErrorBoundary>
               <Route component={NotFound} />
             </Switch>
           </Layout>

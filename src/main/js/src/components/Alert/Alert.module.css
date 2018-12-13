@@ -1,0 +1,31 @@
+.Alert {
+  text-align: center;
+  display: block;
+  color: hsla(0, 0%, 16%, 1);
+}
+
+.AlertContainer {
+  position: relative;
+  max-width: 1440px;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 16px 64px;
+  padding: 1rem 4rem;
+}
+
+.AlertTitle {
+  font-weight: 600;
+}
+
+.AlertText {
+  margin-top: 8px;
+  margin-top: 0.5rem;
+}
+
+.AlertError {
+  background-color: hsla(0, 100%, 96%, 1);
+}
+
+.AlertError .AlertTitle {
+  color: hsla(0, 74%, 60%, 1);
+}
