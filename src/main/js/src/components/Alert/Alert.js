@@ -30,7 +30,7 @@ const alert = props => (
 );
 
 alert.propTypes = {
-  title: PropTypes.isRequired,
+  title: PropTypes.string.isRequired,
   optionalText: PropTypes.string,
   onClose: PropTypes.func,
   returnLinkTo: PropTypes.string,

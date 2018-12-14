@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Alert from '../../components/Alert/Alert';
 import axios from '../../axios';
 
+import Alert from '../../components/Alert/Alert';
+
 class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { error: null };
-  }
+  state = {
+    error: null,
+  };
 
   componentDidCatch(error) {
     this.setState({ error });
