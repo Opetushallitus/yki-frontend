@@ -14,6 +14,7 @@ import { collectRegistryItemDetails } from '../../util/registryUtil';
 import RegistryItem from './RegistryItem/RegistryItem';
 import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
 import UpdateRegistryItem from './RegistryItem/UpdateRegistryItem/UpdateRegistryItem';
+import i18n from '../../common/i18n';
 
 export class Registry extends Component {
   state = {
@@ -25,7 +26,7 @@ export class Registry extends Component {
   };
 
   componentDidMount = () => {
-    document.title = 'YKI - Järjestäjärekisteri';
+    document.title = i18n.t('registry.document.title');
     this.props.onFetchRegistryContent();
   };
 
@@ -48,6 +49,7 @@ export class Registry extends Component {
   render() {
     const searchBar = (
       <div className={classes.Searchbar}>
+<<<<<<< b4a3cc3abc8025e2375efc86f73553113c03641a
         <RegistryFilter
           registry={this.props.registry}
           onChange={(filtering, filtered) =>
@@ -55,6 +57,15 @@ export class Registry extends Component {
           }
         />
         <Button clicked={this.openModalHandler}>Lisää järjestäjä</Button>
+=======
+        <input
+          type="search"
+          placeholder={i18n.t('registry.search.placeholder')}
+        />
+        <Button clicked={this.openModalHandler}>
+          {i18n.t('registryItem.button.add')}
+        </Button>
+>>>>>>> Initial version of i18n
       </div>
     );
 
@@ -89,7 +100,7 @@ export class Registry extends Component {
         const registryItem = collectRegistryItemDetails(
           item.organizer,
           item.organization,
-          this.props.localization,
+          this.props.lang,
         );
         return (
           <RegistryItem
@@ -107,7 +118,7 @@ export class Registry extends Component {
 
     return (
       <div className={classes.Registry}>
-        <h1>Kielitutkintojen järjestäjärekisteri</h1>
+        <h1>{i18n.t('common.exam.languages.registry')}</h1>
         {searchBar}
         {modal}
         {list}
@@ -120,7 +131,7 @@ const mapStateToProps = state => {
   return {
     registry: state.registry.registry,
     loading: state.registry.loading,
-    localization: state.registry.localization,
+    lang: state.localisation.lang,
     error: state.registry.error,
   };
 };
@@ -135,7 +146,7 @@ Registry.propTypes = {
   onFetchRegistryContent: PropTypes.func.isRequired,
   registry: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
-  localization: PropTypes.string.isRequired,
+  lang: PropTypes.string.isRequired,
 };
 
 export default connect(

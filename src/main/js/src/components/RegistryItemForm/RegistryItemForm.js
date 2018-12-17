@@ -9,15 +9,24 @@ import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
 import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
 import { DATE_FORMAT } from '../../common/Constants';
+import i18n from '../../common/i18n';
 
 const validationSchema = Yup.object().shape({
-  agreementStart: Yup.string().required('Sopimuskauden aloitusaika puuttuu.'),
-  agreementEnd: Yup.string().required('Sopimuskauden päättymisaika puuttuu.'),
-  contactName: Yup.string().required('Yhteyshenkilön nimi puuttuu.'),
-  contactPhone: Yup.string().required('Yhteyshenkilön puhelinnumero puuttuu.'),
+  agreementStart: Yup.string().required(
+    i18n.t('registryItem.agreementStart.required'),
+  ),
+  agreementEnd: Yup.string().required(
+    i18n.t('registryItem.agreementEnd.required'),
+  ),
+  contactName: Yup.string().required(
+    i18n.t('registryItem.contactName.required'),
+  ),
+  contactPhone: Yup.string().required(
+    i18n.t('registryItem.contactPhone.required'),
+  ),
   contactEmail: Yup.string()
     .email()
-    .required('Yhteyshenkilön sähköpostiosoite puuttuu.'),
+    .required(i18n.t('registryItem.contactEmail.required')),
   extra: Yup.string(),
 });
 
@@ -54,11 +63,11 @@ const registryItemForm = props => {
           <hr />
           <div className={classes.FormElements}>
             <div className={classes.Agreement}>
-              <h3>Järjestäjäsopimus</h3>
+              <h3>{i18n.t('common.agreement')}</h3>
               <div className={classes.DatePickers}>
                 <div>
                   <label htmlFor="agreementStart" className={classes.Label}>
-                    Alkupäivämäärä
+                    {i18n.t('registryItem.agreementStart')}
                   </label>
                   <DatePicker
                     id="agreementStart"
@@ -78,7 +87,7 @@ const registryItemForm = props => {
                 <div className={classes.Separator}>−</div>
                 <div>
                   <label htmlFor="agreementEnd" className={classes.Label}>
-                    Loppupäivämäärä
+                    {i18n.t('registryItem.agreementStart')}
                   </label>
                   <DatePicker
                     id="agreementEnd"
@@ -98,16 +107,16 @@ const registryItemForm = props => {
               </div>
             </div>
             <div className={classes.Languages}>
-              <h3>Kielitutkinnot</h3>
+              <h3>{i18n.t('common.exam.languages')}</h3>
               <LanguageCheckboxes
                 languages={values.languages}
                 onChange={languages => setFieldValue('languages', languages)}
               />
             </div>
             <div className={classes.Contact}>
-              <h3>Yhteyshenkilön tiedot</h3>
+              <h3>{i18n.t('registryItem.contactHeader')}</h3>
               <label htmlFor="contactName" className={classes.Label}>
-                Nimi
+                {i18n.t('registryItem.contactName')}
               </label>
               <Field
                 type="input"
@@ -122,7 +131,7 @@ const registryItemForm = props => {
                 className={classes.ErrorMessage}
               />
               <label htmlFor="contactEmail" className={classes.Label}>
-                Sähköpostiosoite
+                {i18n.t('registryItem.contactEmail')}
               </label>
               <Field
                 type="input"
@@ -137,7 +146,7 @@ const registryItemForm = props => {
                 className={classes.ErrorMessage}
               />
               <label htmlFor="contactPhone" className={classes.Label}>
-                Puhelinnumero
+                {i18n.t('registryItem.contactPhone')}
               </label>
               <Field
                 type="tel"
@@ -152,7 +161,7 @@ const registryItemForm = props => {
                 className={classes.ErrorMessage}
               />
               <label htmlFor="extra" className={classes.Label}>
-                Lisätiedot
+                {i18n.t('registryItem.extra')}
               </label>
               <Field
                 type="textarea"
@@ -162,7 +171,7 @@ const registryItemForm = props => {
                 cols="33"
                 maxLength="255"
                 wrap="soft"
-                placeholder="Esim. Yleinen sähköpostilista: kaikille@jarjestaja.fi"
+                placeholder={i18n.t('registryItem.extra.placeholder')}
                 tabIndex="6"
               />
               <ErrorMessage
@@ -174,7 +183,9 @@ const registryItemForm = props => {
           </div>
 
           <Button type="submit" disabled={!isValid} tabIndex="7">
-            {props.updating ? 'Tallenna muutokset' : 'Lisää järjestäjä'}
+            {props.updating
+              ? i18n.t('registryItem.button.update')
+              : i18n.t('registryItem.button.add')}
           </Button>
         </Form>
       )}

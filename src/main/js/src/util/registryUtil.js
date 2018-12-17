@@ -6,7 +6,7 @@ import { firstCharToUpper } from './util';
 export const collectRegistryItemDetails = (
   organizer,
   organization,
-  localization,
+  lang,
 ) => {
   const item = {
     oid: '',
@@ -31,7 +31,7 @@ export const collectRegistryItemDetails = (
   };
 
   item.oid = organization.oid;
-  item.name = getLocalizedName(organization.nimi, localization);
+  item.name = getLocalizedName(organization.nimi, lang);
   item.website = getWebsite(organization.yhteystiedot);
   item.agreement = getAgreementDuration(organizer);
   item.address = getAddress(organization);
@@ -42,12 +42,12 @@ export const collectRegistryItemDetails = (
   return item;
 };
 
-export const getLocalizedName = (namesObj, localization) => {
+export const getLocalizedName = (namesObj, lang) => {
   if (Object.keys(namesObj).length === 1) {
     return Object.values(namesObj)[0];
   } else {
-    if (namesObj[localization]) {
-      return namesObj[localization];
+    if (namesObj[lang]) {
+      return namesObj[lang];
     }
     const name = [namesObj['fi'], namesObj['en'], namesObj['sv']].filter(
       o => o,

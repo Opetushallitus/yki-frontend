@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
 import classes from './Alert.module.css';
 

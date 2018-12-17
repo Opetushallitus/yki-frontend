@@ -7,3 +7,4 @@ export {
   deleteRegistryItem,
 } from './registry';
 export {} from './registration';
+export { fetchTranslations, setLang } from './localisation';

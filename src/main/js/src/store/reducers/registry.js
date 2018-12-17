@@ -1,7 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  localization: 'fin',
   registry: [],
   loading: false,
   organizations: [],

@@ -16,7 +16,7 @@ describe('<Registry />', () => {
         onFetchRegistryContent={() => {}}
         registry={[]}
         loading={false}
-        localization={'fi'}
+        lang={'fi'}
       />,
     );
   });

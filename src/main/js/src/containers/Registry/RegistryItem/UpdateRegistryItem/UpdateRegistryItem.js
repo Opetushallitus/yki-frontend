@@ -6,6 +6,7 @@ import classes from './UpdateRegistryItem.module.css';
 import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
 import { firstCharToUpper } from '../../../../util/util';
 import * as actions from '../../../../store/actions/index';
+import i18n from '../../../../common/i18n';
 
 class UpdateRegistryItem extends Component {
   state = {
@@ -31,7 +32,7 @@ class UpdateRegistryItem extends Component {
   render() {
     const remove = !this.state.deleting ? (
       <button onClick={this.toggleDeleting} className={classes.Delete}>
-        Poista järjestäjä
+        {i18n.t('registryItem.delete')}
       </button>
     ) : (
       <React.Fragment>
@@ -39,14 +40,14 @@ class UpdateRegistryItem extends Component {
           onClick={() => this.deleteRegistryItemHandler(this.props.item.oid)}
           className={classes.DeleteConfirmation}
         >
-          Vahvista poisto
+          {i18n.t('registryItem.deleteConfirm')}
         </button>
         <button
           onClick={this.toggleDeleting}
           className={classes.DeleteCancel}
           autoFocus
         >
-          Älä poista järjestäjää
+          {i18n.t('registryItem.deleteCancel')}
         </button>
       </React.Fragment>
     );

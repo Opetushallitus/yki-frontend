@@ -120,7 +120,7 @@ class NewRegistryItem extends PureComponent {
             className={classes.SearchResult}
             onClick={() => this.selectOrganizationHandler(org)}
           >
-            {getLocalizedName(org.nimi, this.props.localization)}
+            {getLocalizedName(org.nimi, this.props.lang)}
           </div>
         ))}
       </div>
@@ -130,7 +130,7 @@ class NewRegistryItem extends PureComponent {
       this.state.selected &&
       getLocalizedName(
         this.state.selectedOrganization.nimi,
-        this.props.localization,
+        this.props.lang,
       );
 
     const form = (
@@ -161,7 +161,7 @@ const mapStateToProps = state => {
   return {
     organizations: state.registry.organizations,
     loading: state.registry.loadingOrganizations,
-    localization: state.registry.localization,
+    lang: state.registry.lang,
   };
 };
 
@@ -177,7 +177,7 @@ NewRegistryItem.propTypes = {
   onAddRegistryItem: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  localization: PropTypes.string.isRequired,
+  lang: PropTypes.string.isRequired,
 };
 
 export default connect(

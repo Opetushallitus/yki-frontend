@@ -158,4 +158,14 @@ module.exports = function(app) {
       res.status(404).send('Organizer not found');
     }
   });
+  
+  app.get('/yki/api/localisation', (req, res) => {
+    try {
+      const data = fs.readFileSync('./dev/rest/localisation/translations.json');
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      res.send(data);
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
 };

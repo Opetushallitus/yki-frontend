@@ -8,6 +8,7 @@ import {
   isAgreementActive,
   languagesToString,
 } from '../../../util/registryUtil';
+import i18n from '../../../common/i18n';
 
 class RegistryItem extends PureComponent {
   state = {
@@ -47,7 +48,7 @@ class RegistryItem extends PureComponent {
               <div className={classes.HeaderLanguages}>{languages}</div>
             ) : (
               <div className={classes.AgreementExpired}>
-                Sopimus vanhentunut
+                {i18n.t('registryItem.agreementExpired')}
               </div>
             )}
             <div className={classes.HeaderCity}>
