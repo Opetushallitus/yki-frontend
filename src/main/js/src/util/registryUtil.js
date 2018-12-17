@@ -150,3 +150,23 @@ export const isAgreementActive = (agreementStartDate, agreementEndDate) => {
   const now = moment(new Date());
   return now.isBetween(agreementStartDate, agreementEndDate, 'day', '[]');
 };
+
+export const filterByNameOrLocation = (array, value) => {
+  const values = new Set();
+
+  array
+    .filter(i =>
+      i.organization.nimi.fi.toLowerCase().includes(value.toLowerCase()),
+    )
+    .map(i => values.add(i));
+
+  array
+    .filter(i =>
+      i.organization.postiosoite.postitoimipaikka
+        .toLowerCase()
+        .includes(value.toLowerCase()),
+    )
+    .map(i => values.add(i));
+
+  return [...values];
+};
