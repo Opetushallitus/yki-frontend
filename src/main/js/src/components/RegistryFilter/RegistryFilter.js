@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withNamespaces } from 'react-i18next';
 
 import classes from './RegistryFilter.module.css';
 import { filterByNameOrLocation } from '../../util/registryUtil';
@@ -47,7 +48,7 @@ class RegistryFilter extends Component {
       <div className={classes.Filter}>
         <input
           type="search"
-          placeholder="Hae järjestäjää tai paikkakuntaa"
+          placeholder={this.props.t('registry.search.placeholder')}
           onChange={this.inputChangeHandler}
         />
       </div>
@@ -55,4 +56,4 @@ class RegistryFilter extends Component {
   }
 }
 
-export default RegistryFilter;
+export default withNamespaces()(RegistryFilter);
