@@ -1,0 +1,9 @@
+.Filter {
+  height: 55px;
+}
+
+.Filter > input {
+  height: 35px;
+  width: 330px;
+  padding-right: 10px;
+}
