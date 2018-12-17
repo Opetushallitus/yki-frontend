@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
 
 import axios from '../../../../axios';
 import classes from './NewRegistryItem.module.css';
@@ -85,10 +86,12 @@ class NewRegistryItem extends PureComponent {
     let info = '';
     if (this.state.searchInput.length !== 0 && !this.state.selected) {
       info += `${this.state.numOfResults} ${
-        this.state.numOfResults === 1 ? 'hakutulos' : 'hakutulosta'
+        this.state.numOfResults === 1
+          ? this.props.t('common.searchResult')
+          : this.props.t('common.searchResults')
       }`;
       if (this.state.numOfResults > 50) {
-        info += '. Tarkenna hakua.';
+        info += this.props.t('common.searchTooManyResults');
       }
     }
     const search = (
@@ -102,7 +105,7 @@ class NewRegistryItem extends PureComponent {
               type="search"
               autoComplete="off"
               id="organizationSearchField"
-              placeholder="Hae organisaation nimellä"
+              placeholder={this.props.t('registryItem.search.placeholder')}
               value={this.state.searchInput}
               onChange={this.searchInputChangedHandler}
             />
@@ -120,7 +123,7 @@ class NewRegistryItem extends PureComponent {
             className={classes.SearchResult}
             onClick={() => this.selectOrganizationHandler(org)}
           >
-            {getLocalizedName(org.nimi, this.props.lang)}
+            {getLocalizedName(org.nimi, this.props.lng)}
           </div>
         ))}
       </div>
@@ -128,10 +131,7 @@ class NewRegistryItem extends PureComponent {
 
     const name =
       this.state.selected &&
-      getLocalizedName(
-        this.state.selectedOrganization.nimi,
-        this.props.lang,
-      );
+      getLocalizedName(this.state.selectedOrganization.nimi, this.props.lng);
 
     const form = (
       <div>
@@ -149,7 +149,7 @@ class NewRegistryItem extends PureComponent {
 
     return (
       <div className={classes.RegistryItem}>
-        <h1>Lisää uusi kielitutkintojen järjestäjä</h1>
+        <h1>{this.props.t('registryItem.add.header')}</h1>
         {search}
         {form}
       </div>
@@ -161,7 +161,6 @@ const mapStateToProps = state => {
   return {
     organizations: state.registry.organizations,
     loading: state.registry.loadingOrganizations,
-    lang: state.registry.lang,
   };
 };
 
@@ -177,10 +176,9 @@ NewRegistryItem.propTypes = {
   onAddRegistryItem: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  lang: PropTypes.string.isRequired,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(NewRegistryItem);
+)(withNamespaces()(NewRegistryItem));

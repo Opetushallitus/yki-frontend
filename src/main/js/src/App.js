@@ -6,16 +6,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import registryReducer from './store/reducers/registry';
-import localisationReducer from './store/reducers/localisation';
 import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
 import Layout from './hoc/Layout/Layout';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
-import Init from './containers/Init/Init';
 import Spinner from './components/UI/Spinner/Spinner';
 import Registration from './containers/Registration/Registration';
 import NotFound from './components/NotFound/NotFound';
-import i18n from './common/i18n';
 
 const Registry = lazy(() => import('./containers/Registry/Registry'));
 const ExamSessions = lazy(() =>
@@ -26,7 +23,6 @@ const rootReducer = combineReducers({
   registry: registryReducer,
   exam: examSessionReducer,
   reg: registrationReducer,
-  localisation: localisationReducer,
 });
 
 export const store = createStore(
@@ -38,16 +34,15 @@ export const store = createStore(
 
 const app = () => (
   <Provider store={store}>
-    <Init>
       <Router basename={'/yki'}>
         <Suspense fallback={<Spinner />}>
           <Layout>
             <Switch>
               <Route exact path="/" component={Registration} />
               <ErrorBoundary
-                title={i18n.t('errorBoundary.title')}
+                titleKey="errorBoundary.title"
                 returnLinkTo="jarjestajarekisteri"
-                returnLinkText={i18n.t('errorBoundary.return')}
+                returnLinkTextKey="errorBoundary.return"
               >
                 {/* TODO: change back to use component={Component} after react-router-dom updates version */}
                 <Route
@@ -64,7 +59,6 @@ const app = () => (
           </Layout>
         </Suspense>
       </Router>
-    </Init>
   </Provider>
 );
 

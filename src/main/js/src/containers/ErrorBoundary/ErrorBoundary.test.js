@@ -3,7 +3,7 @@ import axios from '../../axios';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import ErrorBoundary from './ErrorBoundary';
+import { ErrorBoundary } from './ErrorBoundary';
 import Alert from '../../components/Alert/Alert';
 
 // suppress expected errors
@@ -28,7 +28,7 @@ describe('<ErrorBoundary />', () => {
     jest.spyOn(axios, 'post');
 
     let wrapper = mount(
-      <ErrorBoundary title="error" returnLinkTo="/" returnLinkText="error">
+      <ErrorBoundary t={key => key} titleKey="error" returnLinkTo="/" returnLinkTextKey="error">
         <ComponentWithError />
       </ErrorBoundary>,
     );

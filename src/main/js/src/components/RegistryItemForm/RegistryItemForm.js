@@ -3,34 +3,34 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import moment from 'moment';
+import { withNamespaces } from 'react-i18next';
 
 import classes from './RegistryItemForm.module.css';
 import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
 import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
 import { DATE_FORMAT } from '../../common/Constants';
-import i18n from '../../common/i18n';
-
-const validationSchema = Yup.object().shape({
-  agreementStart: Yup.string().required(
-    i18n.t('registryItem.agreementStart.required'),
-  ),
-  agreementEnd: Yup.string().required(
-    i18n.t('registryItem.agreementEnd.required'),
-  ),
-  contactName: Yup.string().required(
-    i18n.t('registryItem.contactName.required'),
-  ),
-  contactPhone: Yup.string().required(
-    i18n.t('registryItem.contactPhone.required'),
-  ),
-  contactEmail: Yup.string()
-    .email()
-    .required(i18n.t('registryItem.contactEmail.required')),
-  extra: Yup.string(),
-});
 
 const registryItemForm = props => {
+  const validationSchema = Yup.object().shape({
+    agreementStart: Yup.string().required(
+      props.t('registryItem.agreementStart.required'),
+    ),
+    agreementEnd: Yup.string().required(
+      props.t('registryItem.agreementEnd.required'),
+    ),
+    contactName: Yup.string().required(
+      props.t('registryItem.contactName.required'),
+    ),
+    contactPhone: Yup.string().required(
+      props.t('registryItem.contactPhone.required'),
+    ),
+    contactEmail: Yup.string()
+      .email()
+      .required(props.t('registryItem.contactEmail.required')),
+    extra: Yup.string(),
+  });
+
   return (
     <Formik
       initialValues={{
@@ -63,11 +63,11 @@ const registryItemForm = props => {
           <hr />
           <div className={classes.FormElements}>
             <div className={classes.Agreement}>
-              <h3>{i18n.t('common.agreement')}</h3>
+              <h3>{props.t('common.agreement')}</h3>
               <div className={classes.DatePickers}>
                 <div>
                   <label htmlFor="agreementStart" className={classes.Label}>
-                    {i18n.t('registryItem.agreementStart')}
+                    {props.t('registryItem.agreementStart')}
                   </label>
                   <DatePicker
                     id="agreementStart"
@@ -87,7 +87,7 @@ const registryItemForm = props => {
                 <div className={classes.Separator}>−</div>
                 <div>
                   <label htmlFor="agreementEnd" className={classes.Label}>
-                    {i18n.t('registryItem.agreementStart')}
+                    {props.t('registryItem.agreementStart')}
                   </label>
                   <DatePicker
                     id="agreementEnd"
@@ -107,16 +107,16 @@ const registryItemForm = props => {
               </div>
             </div>
             <div className={classes.Languages}>
-              <h3>{i18n.t('common.exam.languages')}</h3>
+              <h3>{props.t('common.exam.languages')}</h3>
               <LanguageCheckboxes
                 languages={values.languages}
                 onChange={languages => setFieldValue('languages', languages)}
               />
             </div>
             <div className={classes.Contact}>
-              <h3>{i18n.t('registryItem.contactHeader')}</h3>
+              <h3>{props.t('registryItem.contactHeader')}</h3>
               <label htmlFor="contactName" className={classes.Label}>
-                {i18n.t('registryItem.contactName')}
+                {props.t('registryItem.contactName')}
               </label>
               <Field
                 type="input"
@@ -131,7 +131,7 @@ const registryItemForm = props => {
                 className={classes.ErrorMessage}
               />
               <label htmlFor="contactEmail" className={classes.Label}>
-                {i18n.t('registryItem.contactEmail')}
+                {props.t('registryItem.contactEmail')}
               </label>
               <Field
                 type="input"
@@ -146,7 +146,7 @@ const registryItemForm = props => {
                 className={classes.ErrorMessage}
               />
               <label htmlFor="contactPhone" className={classes.Label}>
-                {i18n.t('registryItem.contactPhone')}
+                {props.t('registryItem.contactPhone')}
               </label>
               <Field
                 type="tel"
@@ -161,7 +161,7 @@ const registryItemForm = props => {
                 className={classes.ErrorMessage}
               />
               <label htmlFor="extra" className={classes.Label}>
-                {i18n.t('registryItem.extra')}
+                {props.t('registryItem.extra')}
               </label>
               <Field
                 type="textarea"
@@ -171,7 +171,7 @@ const registryItemForm = props => {
                 cols="33"
                 maxLength="255"
                 wrap="soft"
-                placeholder={i18n.t('registryItem.extra.placeholder')}
+                placeholder={props.t('registryItem.extra.placeholder')}
                 tabIndex="6"
               />
               <ErrorMessage
@@ -184,8 +184,8 @@ const registryItemForm = props => {
 
           <Button type="submit" disabled={!isValid} tabIndex="7">
             {props.updating
-              ? i18n.t('registryItem.button.update')
-              : i18n.t('registryItem.button.add')}
+              ? props.t('registryItem.button.update')
+              : props.t('registryItem.button.add')}
           </Button>
         </Form>
       )}
@@ -208,4 +208,4 @@ registryItemForm.propTypes = {
   updating: PropTypes.bool,
 };
 
-export default registryItemForm;
+export default withNamespaces()(registryItemForm);

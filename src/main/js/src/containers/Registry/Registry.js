@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
 
 import classes from './Registry.module.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
 import * as actions from '../../store/actions/index';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import axios from '../../axios';
 import RegistryFilter from '../../components/RegistryFilter/RegistryFilter';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
 import RegistryItem from './RegistryItem/RegistryItem';
 import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
 import UpdateRegistryItem from './RegistryItem/UpdateRegistryItem/UpdateRegistryItem';
-import i18n from '../../common/i18n';
 
 export class Registry extends Component {
   state = {
@@ -26,7 +24,7 @@ export class Registry extends Component {
   };
 
   componentDidMount = () => {
-    document.title = i18n.t('registry.document.title');
+    document.title = this.props.t('registry.document.title');
     this.props.onFetchRegistryContent();
   };
 
@@ -49,23 +47,13 @@ export class Registry extends Component {
   render() {
     const searchBar = (
       <div className={classes.Searchbar}>
-<<<<<<< b4a3cc3abc8025e2375efc86f73553113c03641a
         <RegistryFilter
           registry={this.props.registry}
           onChange={(filtering, filtered) =>
             this.filterChangeHandler(filtering, filtered)
           }
         />
-        <Button clicked={this.openModalHandler}>Lisää järjestäjä</Button>
-=======
-        <input
-          type="search"
-          placeholder={i18n.t('registry.search.placeholder')}
-        />
-        <Button clicked={this.openModalHandler}>
-          {i18n.t('registryItem.button.add')}
-        </Button>
->>>>>>> Initial version of i18n
+        <Button clicked={this.openModalHandler}>{this.props.t('registryItem.button.add')}</Button>
       </div>
     );
 
@@ -100,7 +88,7 @@ export class Registry extends Component {
         const registryItem = collectRegistryItemDetails(
           item.organizer,
           item.organization,
-          this.props.lang,
+          this.props.lng,
         );
         return (
           <RegistryItem
@@ -118,7 +106,7 @@ export class Registry extends Component {
 
     return (
       <div className={classes.Registry}>
-        <h1>{i18n.t('common.exam.languages.registry')}</h1>
+        <h1>{this.props.t('common.exam.languages.registry')}</h1>
         {searchBar}
         {modal}
         {list}
@@ -131,7 +119,6 @@ const mapStateToProps = state => {
   return {
     registry: state.registry.registry,
     loading: state.registry.loading,
-    lang: state.localisation.lang,
     error: state.registry.error,
   };
 };
@@ -146,10 +133,9 @@ Registry.propTypes = {
   onFetchRegistryContent: PropTypes.func.isRequired,
   registry: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
-  lang: PropTypes.string.isRequired,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withErrorHandler(Registry, axios));
+)(withNamespaces()(Registry));

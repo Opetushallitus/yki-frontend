@@ -17,6 +17,7 @@ describe('<Registry />', () => {
         registry={[]}
         loading={false}
         lang={'fi'}
+        t={key => key}
       />,
     );
   });

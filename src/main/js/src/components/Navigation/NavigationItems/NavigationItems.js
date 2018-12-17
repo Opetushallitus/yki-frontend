@@ -1,21 +1,21 @@
 import React from 'react';
+import { withNamespaces } from 'react-i18next';
 
 import classes from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
-import i18n from '../../../common/i18n';
 
-const navigationItems = () => (
+export const navigationItems = props => (
   <ul className={classes.NavigationItems}>
     <NavigationItem link="/jarjestajarekisteri">
-      {i18n.t('common.registry')}
+      {props.t('common.registry')}
     </NavigationItem>
     <div className={classes.Separator} />
     <NavigationItem link="/tutkintotilaisuudet">
-      {i18n.t('common.examSessions')}
+      {props.t('common.examSessions')}
     </NavigationItem>
     <div className={classes.Separator} />
-    <NavigationItem link="/">{i18n.t('common.registration')}</NavigationItem>
+    <NavigationItem link="/">{props.t('common.registration')}</NavigationItem>
   </ul>
 );
 
-export default navigationItems;
+export default withNamespaces()(navigationItems);

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
 
 import classes from './UpdateRegistryItem.module.css';
 import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
 import { firstCharToUpper } from '../../../../util/util';
 import * as actions from '../../../../store/actions/index';
-import i18n from '../../../../common/i18n';
 
 class UpdateRegistryItem extends Component {
   state = {
@@ -32,7 +32,7 @@ class UpdateRegistryItem extends Component {
   render() {
     const remove = !this.state.deleting ? (
       <button onClick={this.toggleDeleting} className={classes.Delete}>
-        {i18n.t('registryItem.delete')}
+        {this.props.t('registryItem.delete')}
       </button>
     ) : (
       <React.Fragment>
@@ -40,14 +40,14 @@ class UpdateRegistryItem extends Component {
           onClick={() => this.deleteRegistryItemHandler(this.props.item.oid)}
           className={classes.DeleteConfirmation}
         >
-          {i18n.t('registryItem.deleteConfirm')}
+          {this.props.t('registryItem.deleteConfirm')}
         </button>
         <button
           onClick={this.toggleDeleting}
           className={classes.DeleteCancel}
           autoFocus
         >
-          {i18n.t('registryItem.deleteCancel')}
+          {this.props.t('registryItem.deleteCancel')}
         </button>
       </React.Fragment>
     );
@@ -95,4 +95,4 @@ UpdateRegistryItem.propTypes = {
 export default connect(
   null,
   mapDispatchToProps,
-)(UpdateRegistryItem);
+)(withNamespaces()(UpdateRegistryItem));

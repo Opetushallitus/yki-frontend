@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../axios';
+import { withNamespaces } from 'react-i18next';
 
 import Alert from '../../components/Alert/Alert';
 
-class ErrorBoundary extends Component {
+export class ErrorBoundary extends Component {
   state = {
     error: null,
   };
@@ -22,9 +23,9 @@ class ErrorBoundary extends Component {
     if (this.state.error) {
       return (
         <Alert
-          title={this.props.title}
+          title={this.props.t(this.props.titleKey)}
           returnLinkTo={this.props.returnLinkTo}
-          returnLinkText={this.props.returnLinkText}
+          returnLinkText={this.props.t(this.props.returnLinkTextKey)}
         />
       );
     } else {
@@ -34,9 +35,9 @@ class ErrorBoundary extends Component {
 }
 
 ErrorBoundary.propTypes = {
-  title: PropTypes.string.isRequired,
+  titleKey: PropTypes.string.isRequired,
   returnLinkTo: PropTypes.string.isRequired,
-  returnLinkText: PropTypes.string,
+  returnLinkTextKey: PropTypes.string,
 };
 
-export default ErrorBoundary;
+export default withNamespaces()(ErrorBoundary);

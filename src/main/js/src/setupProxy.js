@@ -161,7 +161,8 @@ module.exports = function(app) {
   
   app.get('/yki/api/localisation', (req, res) => {
     try {
-      const data = fs.readFileSync('./dev/rest/localisation/translations.json');
+      const { lang } = req.query;
+      const data = fs.readFileSync(`./dev/rest/localisation/translations_${lang}.json`);
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(data);
     } catch (err) {

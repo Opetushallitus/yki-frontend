@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
 
 import classes from './RegistryItem.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
@@ -8,7 +9,6 @@ import {
   isAgreementActive,
   languagesToString,
 } from '../../../util/registryUtil';
-import i18n from '../../../common/i18n';
 
 class RegistryItem extends PureComponent {
   state = {
@@ -48,7 +48,7 @@ class RegistryItem extends PureComponent {
               <div className={classes.HeaderLanguages}>{languages}</div>
             ) : (
               <div className={classes.AgreementExpired}>
-                {i18n.t('registryItem.agreementExpired')}
+                {this.props.t('registryItem.agreementExpired')}
               </div>
             )}
             <div className={classes.HeaderCity}>
@@ -71,4 +71,4 @@ RegistryItem.propTypes = {
   update: PropTypes.func,
 };
 
-export default RegistryItem;
+export default withNamespaces()(RegistryItem);
