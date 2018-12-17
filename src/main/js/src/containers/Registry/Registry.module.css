@@ -17,12 +17,14 @@
 }
 
 .Searchbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   height: 55px;
   width: 100%;
 }
 
-.Searchbar input {
-  height: 35px;
-  width: 330px;
-  padding-right: 10px;
+.SearchResultsEmpty {
+  padding-top: 25px;
+  font-size: 1.125em;
 }

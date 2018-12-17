@@ -9,6 +9,7 @@ import Button from '../../components/UI/Button/Button';
 import * as actions from '../../store/actions/index';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios';
+import RegistryFilter from '../../components/RegistryFilter/RegistryFilter';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
 import RegistryItem from './RegistryItem/RegistryItem';
 import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
@@ -19,36 +20,40 @@ export class Registry extends Component {
     showModal: false,
     updating: false,
     selectedItem: {},
+    filtering: false,
+    filtered: [],
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     document.title = 'YKI - Järjestäjärekisteri';
     this.props.onFetchRegistryContent();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      nextProps.registry !== this.props.registry ||
-      nextState.showModal !== this.state.showModal
-    );
-  }
-
-  openModalHandler = () => {
-    this.setState({ showModal: true });
   };
 
-  closeModalHandler = () => {
+  shouldComponentUpdate = (nextProps, nextState) =>
+    nextProps.registry !== this.props.registry ||
+    nextState.showModal !== this.state.showModal ||
+    nextState.filtered !== this.state.filtered;
+
+  openModalHandler = () => this.setState({ showModal: true });
+
+  closeModalHandler = () =>
     this.setState({ showModal: false, updating: false });
-  };
 
-  updateRegistryItemHandler = item => {
+  updateRegistryItemHandler = item =>
     this.setState({ showModal: true, updating: true, selectedItem: item });
-  };
+
+  filterChangeHandler = (filtering, filtered) =>
+    this.setState({ filtering: filtering, filtered: filtered });
 
   render() {
     const searchBar = (
       <div className={classes.Searchbar}>
-        <input type="search" placeholder="Hae järjestäjää tai paikkakuntaa" />
+        <RegistryFilter
+          registry={this.props.registry}
+          onChange={(filtering, filtered) =>
+            this.filterChangeHandler(filtering, filtered)
+          }
+        />
         <Button clicked={this.openModalHandler}>Lisää järjestäjä</Button>
       </div>
     );
@@ -73,10 +78,14 @@ export class Registry extends Component {
       </React.Fragment>
     );
 
-    const registry = this.props.loading ? (
+    const items = this.state.filtering
+      ? this.state.filtered
+      : this.props.registry;
+
+    const list = this.props.loading ? (
       <Spinner />
-    ) : this.props.registry.length ? (
-      this.props.registry.map((item, index) => {
+    ) : items.length ? (
+      items.map((item, index) => {
         const registryItem = collectRegistryItemDetails(
           item.organizer,
           item.organization,
@@ -90,6 +99,10 @@ export class Registry extends Component {
           />
         );
       })
+    ) : this.state.filtering ? (
+      <p className={classes.SearchResultsEmpty}>
+        Annetuilla hakuehdoilla ei löytynyt järjestäjiä.
+      </p>
     ) : null;
 
     return (
@@ -97,7 +110,7 @@ export class Registry extends Component {
         <h1>Kielitutkintojen järjestäjärekisteri</h1>
         {searchBar}
         {modal}
-        {registry}
+        {list}
       </div>
     );
   }
