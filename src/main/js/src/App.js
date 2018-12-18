@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   reg: registrationReducer,
 });
 
-export const store = createStore(
+const store = createStore(
   rootReducer,
   process.env.NODE_ENV === 'development'
     ? composeWithDevTools(applyMiddleware(thunk))
@@ -34,31 +34,28 @@ export const store = createStore(
 
 const app = () => (
   <Provider store={store}>
-      <Router basename={'/yki'}>
-        <Suspense fallback={<Spinner />}>
-          <Layout>
-            <Switch>
-              <Route exact path="/" component={Registration} />
-              <ErrorBoundary
-                titleKey="errorBoundary.title"
-                returnLinkTo="jarjestajarekisteri"
-                returnLinkTextKey="errorBoundary.return"
-              >
-                {/* TODO: change back to use component={Component} after react-router-dom updates version */}
-                <Route
-                  path="/jarjestajarekisteri"
-                  render={() => <Registry />}
-                />
-              </ErrorBoundary>
-              <Route
-                path="/tutkintotilaisuudet"
-                render={() => <ExamSessions />}
-              />
-              <Route component={NotFound} />
-            </Switch>
-          </Layout>
-        </Suspense>
-      </Router>
+    <Router basename={'/yki'}>
+      <Suspense fallback={<Spinner />}>
+        <Layout>
+          <Switch>
+            <Route exact path="/" component={Registration} />
+            <ErrorBoundary
+              titleKey="errorBoundary.title"
+              returnLinkTo="jarjestajarekisteri"
+              returnLinkTextKey="errorBoundary.return"
+            >
+              {/* TODO: change back to use component={Component} after react-router-dom updates version */}
+              <Route path="/jarjestajarekisteri" render={() => <Registry />} />
+            </ErrorBoundary>
+            <Route
+              path="/tutkintotilaisuudet"
+              render={() => <ExamSessions />}
+            />
+            <Route component={NotFound} />
+          </Switch>
+        </Layout>
+      </Suspense>
+    </Router>
   </Provider>
 );
 
