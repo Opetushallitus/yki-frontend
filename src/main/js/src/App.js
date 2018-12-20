@@ -39,6 +39,10 @@ const app = () => (
         <Layout>
           <Switch>
             <Route exact path="/" component={Registration} />
+            <Route
+              path="/tutkintotilaisuudet"
+              render={() => <ExamSessions />}
+            />
             <ErrorBoundary
               titleKey="errorBoundary.title"
               returnLinkTo="jarjestajarekisteri"
@@ -47,10 +51,6 @@ const app = () => (
               {/* TODO: change back to use component={Component} after react-router-dom updates version */}
               <Route path="/jarjestajarekisteri" render={() => <Registry />} />
             </ErrorBoundary>
-            <Route
-              path="/tutkintotilaisuudet"
-              render={() => <ExamSessions />}
-            />
             <Route component={NotFound} />
           </Switch>
         </Layout>

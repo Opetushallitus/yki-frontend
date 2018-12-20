@@ -105,10 +105,22 @@ module.exports = function(app) {
     }
   });
 
-  app.get('/organisaatio-service/rest/organisaatio/v3/:oid', (req, res) => {
+  app.get('/organisaatio-service/rest/organisaatio/v4/:oid', (req, res) => {
     try {
       const { oid } = req.params;
-      const data = fs.readFileSync(`./dev/rest/organization/${oid}.json`);
+      const data = fs.readFileSync(`./dev/rest/organization/findbyoid.json`);
+      // res.status(404).send('err.message');
+      res.send(data);
+    } catch (err) {
+      console.log(err);
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.get('/yki/api/virkailija/organizer/:oid/exam-session', (req, res) => {
+    try {
+      const { oid } = req.params;
+      const data = fs.readFileSync(`./dev/rest/examSessions/examSessions.json`);
       res.send(data);
     } catch (err) {
       console.log(err);

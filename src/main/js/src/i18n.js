@@ -17,7 +17,7 @@ i18n
   .init({
     keySeparator: '|', // override default to be able to use dots in keys
     fallbackLng: 'fi',
-    debug: true,
+    debug: false,
     whitelist: ['fi', 'sv', 'en'],
 
     backend: {

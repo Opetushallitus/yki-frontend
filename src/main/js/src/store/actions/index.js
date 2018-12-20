@@ -1,4 +1,4 @@
-export {} from './examSession';
+export { fetchExamSessionContent } from './examSession';
 export {
   fetchRegistryContent,
   fetchOrganizations,

@@ -13,9 +13,11 @@
   "email.payment_success.subject": "Maksu onnistui_en",
   "email.payment.content.line2": "Olet ilmoittautumassa seuraavaan kielitutkintoon:_en",
   "common.registration": "Ilmoittautuminen_en",
+  "common.examDate": "Tutkintopäivä_en",
   "email.login.link_text": "Login",
   "email.payment.content.line5": "Tämä on automaattinen viesti, älä vastaa tähän viestiin._en",
   "email.payment.content.line4": "Tutkintomaksu maksetaan oheisen linkin kautta._en",
+  "common.language": "Language",
   "email.login.content": "Pääset kirjautumaan oheisen linkin kautta._en",
   "common.exam.languages": "Kielitutkinnot_en",
   "email.payment.subject": "Maksulinkki_en",
@@ -23,7 +25,9 @@
   "common.exam.languages.registry": "Kielitutkintojen järjestäjärekisteri_en",
   "email.payment.link_text": "email.payment.link_text_en",
   "email.payment.content.line3": "Tutkintomaksu_en",
+  "common.level": "Taso_en",
   "errorBoundary.return": "Palaa etusivulle_en",
   "registry.document.title": "YKI - Järjestäjärekisteri_en",
+  "common.registationPeriod": "Ilmoittautumisaika_en",
   "email.payment.content.line1": "Tärkeää! Mikäli maksua ei ole maksettu eräpäivään mennessä, ilmoittautumisesi perutaan._en"
 }

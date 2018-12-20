@@ -99,6 +99,11 @@ const getAgreementDuration = organizer => {
   };
 };
 
+export const languageToString = lang => {
+  const found = LANGUAGES.find(l => l.code === lang);
+  return found ? found.name : '';
+}
+
 export const languagesToString = array => {
   const list = getLanguagesWithLevelDescriptions(array);
   return list.map(lang => lang.split(' ')[0].toLowerCase()).join(', ');
