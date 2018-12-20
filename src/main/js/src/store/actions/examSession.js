@@ -34,6 +34,7 @@ export const fetchExamSessionContent = () => {
     axios
       .get(`/yki/api/virkailija/organizer`)
       .then(orgRes => {
+        // there should always be at most one organizer
         const organizer = orgRes.data.organizers[0];
         if (organizer) {
           Promise.all([

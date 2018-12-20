@@ -1,0 +1,23 @@
+.ExamSessionOrganizer {
+  position: relative;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.AgreementGrid {
+  display: grid;
+  grid-column-gap: 50px;
+  grid-row-gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.Update {
+  background: none;
+  border: none;
+  text-decoration-line: underline;
+  padding: 0
+}
+
+.Update:hover {
+  color: hsla(195, 100%, 47%, 1);
+}

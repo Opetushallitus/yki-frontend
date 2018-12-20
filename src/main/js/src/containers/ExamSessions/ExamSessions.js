@@ -5,7 +5,9 @@ import { withNamespaces } from 'react-i18next';
 
 import classes from './ExamSessions.module.css';
 import UpcomingExamSessions from '../../components/UpcomingExamSessions/UpcomingExamSessions';
+import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Button from '../../components/UI/Button/Button';
 import { getLocalizedName } from '../../util/registryUtil';
 import * as actions from '../../store/actions/index';
 
@@ -15,26 +17,34 @@ class ExamSessions extends Component {
   };
 
   render() {
-    return this.props.loading ? (
-      <Spinner />
-    ) : this.props.examSessionContent.organizer ? (
+    return (
       <div className={classes.ExamSessions}>
-        <div>
-          <h1>
-            {getLocalizedName(
-              this.props.examSessionContent.organization.nimi,
-              this.props.lng,
-            )}
-          </h1>
-          <UpcomingExamSessions
-            organizer={this.props.examSessionContent.organizer}
-            examSessions={this.props.examSessionContent.examSessions}
-          />
-        </div>
-      </div>
-    ) : (
-      <div className={classes.ExamSessions}>
-        <p>{this.props.t('examSessions.agreementNotFound')}</p>
+        {this.props.loading ? (
+          <Spinner />
+        ) : this.props.examSessionContent.organizer ? (
+          <div className={classes.ExamSessions}>
+            <div>
+              <h1 data-cy="exam-session-header">
+                {getLocalizedName(
+                  this.props.examSessionContent.organization.nimi,
+                  this.props.lng,
+                )}
+              </h1>
+              <UpcomingExamSessions
+                organizer={this.props.examSessionContent.organizer}
+                examSessions={this.props.examSessionContent.examSessions}
+              />
+              <div className={classes.AddExamSessionButton}>
+                <Button type="submit">Lisää tutkintotilaisuus</Button>
+              </div>
+              <ExamSessionOrganizer
+                examSessionContent={this.props.examSessionContent}
+              />
+            </div>
+          </div>
+        ) : (
+          <p>{this.props.t('examSessions.agreementNotFound')}</p>
+        )}
       </div>
     );
   }

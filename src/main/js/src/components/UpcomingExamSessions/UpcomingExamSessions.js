@@ -21,24 +21,24 @@ const upcomingExamSessions = props => {
         moment(e.registration_start_date),
       );
       return (
-        <div className={classes.Row} key={i}>
-          <div>
+        <div className={classes.Row} key={i} data-cy="exam-sessions-table-row">
+          <p>
             {moment(e.session_date).format(DATE_FORMAT)}
-          </div>
-          <div>
+          </p>
+          <p>
             {languageToString(e.language_code).toLowerCase()}
-          </div>
-          <div>{CODE_TO_LEVEL[e.level_code]}</div>
-          <div>
+          </p>
+          <p>{CODE_TO_LEVEL[e.level_code]}</p>
+          <p>
             {moment(e.registration_start_date).format(DATE_FORMAT_WITHOUT_YEAR)}
             &ndash;
             {moment(e.registration_end_date).format(DATE_FORMAT)}
-          </div>
-          <div>
+          </p>
+          <p>
             {registrationOpen
               ? `${e.participants} / ${e.max_participants}`
               : '-'}
-          </div>
+          </p>
         </div>
       );
     })
@@ -48,12 +48,12 @@ const upcomingExamSessions = props => {
     <div className={classes.ExamSessionList}>
       <h2>{props.t('examSession.upcomingExamSessions')}</h2>
       {props.examSessions.length > 0 ? (
-        <div className={classes.Grid}>
-            <div className={classes.Heading}>{props.t('common.examDate')}</div>
-            <div className={classes.Heading}>{props.t('common.language')}</div>
-            <div className={classes.Heading}>{props.t('common.level')}</div>
-            <div className={classes.Heading}>{props.t('common.registationPeriod')}</div>
-            <div className={classes.Heading}>{props.t('examSession.participants')}</div>
+        <div className={classes.Grid} data-cy="exam-sessions-table">
+            <h3>{props.t('common.examDate')}</h3>
+            <h3>{props.t('common.language')}</h3>
+            <h3>{props.t('common.level')}</h3>
+            <h3>{props.t('common.registationPeriod')}</h3>
+            <h3>{props.t('examSession.participants')}</h3>
           {examSessionRows}
         </div>
       ) : (

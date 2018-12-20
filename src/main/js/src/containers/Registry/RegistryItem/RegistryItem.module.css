@@ -6,6 +6,16 @@
   margin-bottom: 0px;
 }
 
+.RegistryItemDetails {
+  position: relative;
+  display: block;
+  border: 0;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+  padding: 20px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
 .Collapsible {
   cursor: pointer;
   padding: 0px 110px 0px 20px;
