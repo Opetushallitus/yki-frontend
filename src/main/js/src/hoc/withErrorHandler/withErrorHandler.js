@@ -1,29 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Modal from '../../components/UI/Modal/Modal';
 
 const defaultKey = 'error.common';
 
 const withErrorHandler = WrappedComponent => {
-  return class withErrorHandler extends Component {
-    render() {
-      return (
-        <React.Fragment>
-          <Modal
-            show={!!this.props.error}
-            modalClosed={this.props.errorConfirmedHandler}
-          >
-            {this.props.error
-              ? this.props.error.key
-                ? this.props.t(this.props.error.key)
-                : this.props.t(defaultKey)
-              : null}
-          </Modal>
-          <WrappedComponent {...this.props} />
-        </React.Fragment>
-      );
-    }
+  const errorHandler = props => (
+    <React.Fragment>
+      <Modal show={!!props.error} modalClosed={props.errorConfirmedHandler}>
+        {props.error
+          ? props.error.key
+            ? props.t(props.error.key)
+            : props.t(defaultKey)
+          : null}
+      </Modal>
+      <WrappedComponent {...props} />
+    </React.Fragment>
+  );
+
+  errorHandler.propTypes = {
+    errorConfirmedHandler: PropTypes.func.isRequired,
+    error: PropTypes.object,
+    t: PropTypes.func.isRequired,
   };
+
+  return errorHandler;
 };
 
 export default withErrorHandler;
