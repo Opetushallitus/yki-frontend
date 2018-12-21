@@ -4,7 +4,7 @@ const initialState = {
   examSessionContent: {
     organizer: null,
     organization: null,
-    examSessions: []
+    examSessions: [],
   },
   loading: false,
   error: null,
@@ -28,6 +28,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: action.error,
         loading: false,
+      };
+    case actionTypes.FETCH_EXAM_SESSION_CONTENT_FAIL_RESET:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

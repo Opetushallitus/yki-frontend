@@ -8,6 +8,7 @@ import UpcomingExamSessions from '../../components/UpcomingExamSessions/Upcoming
 import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Button from '../../components/UI/Button/Button';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { getLocalizedName } from '../../util/registryUtil';
 import * as actions from '../../store/actions/index';
 
@@ -35,7 +36,9 @@ class ExamSessions extends Component {
                 examSessions={this.props.examSessionContent.examSessions}
               />
               <div className={classes.AddExamSessionButton}>
-                <Button type="submit">{this.props.t('examSession.addExamSession')}</Button>
+                <Button type="submit">
+                  {this.props.t('examSession.addExamSession')}
+                </Button>
               </div>
               <ExamSessionOrganizer
                 organizer={this.props.examSessionContent.organizer}
@@ -63,6 +66,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchExamSessionContent: () =>
       dispatch(actions.fetchExamSessionContent()),
+    errorConfirmedHandler: () =>
+      dispatch(actions.fetchExamSessionContentFailReset()),
   };
 };
 
@@ -76,4 +81,4 @@ ExamSessions.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(ExamSessions));
+)(withNamespaces()(withErrorHandler(ExamSessions)));

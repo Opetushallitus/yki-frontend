@@ -1,4 +1,4 @@
-export { fetchExamSessionContent } from './examSession';
+export { fetchExamSessionContent, fetchExamSessionContentFailReset } from './examSession';
 export {
   fetchRegistryContent,
   fetchOrganizations,

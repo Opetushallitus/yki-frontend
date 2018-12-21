@@ -22,8 +22,14 @@ const fetchExamSessionContentSuccess = examSessionContent => {
 const fetchExamSessionContentFail = error => {
   return {
     type: actionTypes.FETCH_EXAM_SESSION_CONTENT_FAIL,
-    error: error,
+    error: Object.assign(error, { key: 'error.examSession.fetchFailed' }),
     loading: false,
+  };
+};
+
+export const fetchExamSessionContentFailReset = () => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSION_CONTENT_FAIL_RESET,
   };
 };
 
