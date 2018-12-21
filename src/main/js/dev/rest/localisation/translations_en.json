@@ -1,6 +1,7 @@
 {
   "common.searchResult": "hakutulos_en",
   "common.agreement": "Järjestäjäsopimus_en",
+  "common.validityPeriod": "Voimassaoloaika_en",
   "errorBoundary.title": "Tapahtui odottamaton virhe_en",
   "common.examSessions": "Tutkintotilaisuudet_en",
   "common.searchTooManyResults": ". Tarkenna hakua._en",
@@ -24,6 +25,7 @@
   "email.payment_success.content.line1": "Tutkintomaksu suoritettu._en",
   "common.exam.languages.registry": "Kielitutkintojen järjestäjärekisteri_en",
   "email.payment.link_text": "email.payment.link_text_en",
+  "examSession.addExamSession": "Luo tutkintotilaisuus_en",
   "email.payment.content.line3": "Tutkintomaksu_en",
   "common.level": "Taso_en",
   "errorBoundary.return": "Palaa etusivulle_en",

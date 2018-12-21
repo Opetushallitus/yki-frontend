@@ -35,10 +35,11 @@ class ExamSessions extends Component {
                 examSessions={this.props.examSessionContent.examSessions}
               />
               <div className={classes.AddExamSessionButton}>
-                <Button type="submit">Lisää tutkintotilaisuus</Button>
+                <Button type="submit">{this.props.t('examSession.addExamSession')}</Button>
               </div>
               <ExamSessionOrganizer
-                examSessionContent={this.props.examSessionContent}
+                organizer={this.props.examSessionContent.organizer}
+                organization={this.props.examSessionContent.organization}
               />
             </div>
           </div>
