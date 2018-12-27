@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 
 import classes from './RegistryFilter.module.css';
-import { filterByNameOrLocation } from '../../util/registryUtil';
+import {
+  filterByNameOrLocation,
+  filterByLanguage,
+} from '../../util/registryUtil';
 import { LANGUAGES } from '../../common/Constants';
 
 class RegistryFilter extends Component {
@@ -40,7 +43,7 @@ class RegistryFilter extends Component {
         }
 
         if (this.state.language !== '') {
-          // filtered = filterByLanguage(filtered, this.state.language);
+          filtered = filterByLanguage(filtered, this.state.language);
         }
 
         if (this.state.level !== '') {

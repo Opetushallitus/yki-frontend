@@ -3,11 +3,7 @@ import moment from 'moment';
 import { LANGUAGES, CODE_TO_LEVEL } from '../common/Constants';
 import { firstCharToUpper } from './util';
 
-export const collectRegistryItemDetails = (
-  organizer,
-  organization,
-  lang,
-) => {
+export const collectRegistryItemDetails = (organizer, organization, lang) => {
   const item = {
     oid: '',
     name: '',
@@ -102,7 +98,7 @@ const getAgreementDuration = organizer => {
 export const languageToString = lang => {
   const found = LANGUAGES.find(l => l.code === lang);
   return found ? found.name : '';
-}
+};
 
 export const languagesToString = array => {
   const list = getLanguagesWithLevelDescriptions(array);
@@ -174,4 +170,12 @@ export const filterByNameOrLocation = (array, value) => {
     .map(i => values.add(i));
 
   return [...values];
+};
+
+export const filterByLanguage = (array, value) => {
+  return array.filter(i =>
+    i.organizer.languages
+      ? i.organizer.languages.some(l => l.language_code === value)
+      : false,
+  );
 };
