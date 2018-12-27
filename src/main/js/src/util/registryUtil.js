@@ -157,7 +157,11 @@ export const filterByNameOrLocation = (array, value) => {
 
   array
     .filter(i =>
-      i.organization.nimi.fi.toLowerCase().includes(value.toLowerCase()),
+      i.organization.nimet.some(n =>
+        Object.values(n.nimi)[0]
+          .toLowerCase()
+          .includes(value.toLowerCase()),
+      ),
     )
     .map(i => values.add(i));
 
