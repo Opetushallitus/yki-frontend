@@ -65,6 +65,7 @@ class RegistryFilter extends Component {
             : classes.LanguageSelected,
         ].join(' ')}
         onChange={this.languageSelectHandler}
+        data-cy="language-filter"
       >
         <option value="">
           {this.props.t('registry.search.languageSelectPlaceholder')}

@@ -34,6 +34,7 @@ class RegistryItem extends PureComponent {
             ? classes.RegistryItemWithDetails
             : classes.RegistryItem
         }
+        data-cy="registry-item"
       >
         <Collapsible
           show={this.state.show}

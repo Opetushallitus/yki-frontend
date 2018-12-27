@@ -53,7 +53,9 @@ export class Registry extends Component {
             this.filterChangeHandler(filtering, filtered)
           }
         />
-        <Button clicked={this.openModalHandler}>{this.props.t('registryItem.button.add')}</Button>
+        <Button clicked={this.openModalHandler}>
+          {this.props.t('registryItem.button.add')}
+        </Button>
       </div>
     );
 
