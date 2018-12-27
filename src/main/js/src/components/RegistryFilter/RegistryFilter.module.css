@@ -7,3 +7,22 @@
   width: 330px;
   padding-right: 10px;
 }
+
+.Language {
+  appearance: none;
+  margin-left: 20px;
+  height: 35px;
+  width: 150px;
+  font-size: 0.875em;
+  padding-left: 5px;
+  border: 1px solid hsl(0, 0%, 68%);
+  border-radius: 2px;
+}
+
+.Placeholder {
+  color: hsl(0, 0%, 40%);
+}
+
+.LanguageSelected {
+  color: hsl(0, 0%, 16%);
+}
