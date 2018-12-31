@@ -1,0 +1,19 @@
+.RadioButton input {
+  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
+  margin-right: 8px;
+}
+
+.RadioButton:hover {
+  color: hsla(195, 100%, 47%, 1);
+}
+
+.RadioButtonDisabled {
+  color: #aeaeae;
+}
+
+.RadioButtonDisabled input {
+  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
+  margin-right: 8px;
+}
