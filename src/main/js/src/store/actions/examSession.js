@@ -52,13 +52,15 @@ export const fetchExamSessionContent = () => {
                 organizer.oid
               }/exam-session?from=${today}`,
             ),
+            axios.get('/yki/api/exam-date'),
           ])
-            .then(([organizationRes, examSessionRes]) => {
+            .then(([organizationRes, examSessionRes, examDateRes]) => {
               dispatch(
                 fetchExamSessionContentSuccess({
                   organizer: organizer,
                   organization: organizationRes.data,
                   examSessions: examSessionRes.data.exam_sessions,
+                  examDates: examDateRes.data.dates,
                 }),
               );
             })
@@ -70,6 +72,7 @@ export const fetchExamSessionContent = () => {
             fetchExamSessionContentSuccess({
               organizer: null,
               examSessions: [],
+              examDate: [],
             }),
           );
         }
@@ -77,5 +80,47 @@ export const fetchExamSessionContent = () => {
       .catch(err => {
         dispatch(fetchExamSessionContentFail(err));
       });
+  };
+};
+
+export const addExamSession = (examSession, oid) => {
+  return dispatch => {
+    dispatch(addExamSessionStart());
+    axios
+      .post(`/yki/api/virkailija/organizer/${oid}/exam-session`, examSession)
+      .then(() => {
+        dispatch(addExamSessionSuccess());
+      })
+      .catch(err => {
+        dispatch(addExamSessionFail(err));
+      });
+  };
+};
+
+const addExamSessionStart = () => {
+  return {
+    type: actionTypes.ADD_EXAM_SESSION_START,
+    loading: true,
+  };
+};
+
+const addExamSessionSuccess = () => {
+  return {
+    type: actionTypes.ADD_EXAM_SESSION_SUCCESS,
+    loading: false,
+  };
+};
+
+const addExamSessionFail = error => {
+  return {
+    type: actionTypes.ADD_EXAM_SESSION_FAIL,
+    error: Object.assign(error, { key: 'error.examSession.addFailed' }), // TODO lisää avaimet
+    loading: false,
+  };
+};
+
+export const addExamSessionFailReset = () => {
+  return {
+    type: actionTypes.ADD_EXAM_SESSION_FAIL_RESET,
   };
 };

@@ -1,0 +1,55 @@
+.RadiobuttonGroup {
+  margin: 0px 0 27px 0;
+}
+
+.MaxParticipantsInput {
+  display: block;
+  width: 35px;
+  height: 35px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.TextInput {
+  width: 340px;
+  height: 35px;
+}
+
+.TextArea {
+  width: 340px;
+  height: 100px;
+  resize: none;
+}
+
+.FormElement {
+  margin-top: 14px;
+  margin-bottom: 27px;
+}
+
+.Form h2 {
+  font-size: 1.25em;
+  line-height: 28px;
+  margin: 8px 0px 14px 0px;
+}
+
+.Form h3 {
+  margin: 0px 0px 8px 0px;
+  line-height: 19px;
+}
+
+.Form label {
+  font-size: 0.875em;
+}
+
+.Form input:focus {
+  outline: 1px solid hsla(195, 100%, 47%, 1);
+}
+
+.Form button {
+  float: left;
+}
+
+.ErrorMessage {
+  display: block;
+  color: hsla(15, 100%, 40%, 1);
+}

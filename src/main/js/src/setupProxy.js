@@ -11,6 +11,49 @@ const getCurrentTime = () => {
   return localISOTime;
 };
 
+const examSessions = JSON.parse(
+  fs.readFileSync('./dev/rest/examSessions/examSessions.json'),
+);
+
+const examDates = {
+  dates: [
+    {
+      exam_date: '2019-01-27',
+      registration_start_date: '2018-12-01',
+      registration_end_date: '2018-12-08',
+      languages: [{ language_code: 'fin' }],
+    },
+    {
+      exam_date: '2019-10-27',
+      registration_start_date: '2019-09-03',
+      registration_end_date: '2019-09-28',
+      languages: [{ language_code: 'eng' }],
+    },
+    {
+      exam_date: '2019-11-10',
+      registration_start_date: '2019-09-03',
+      registration_end_date: '2019-09-28',
+      languages: [{ language_code: 'fin' }],
+    },
+    {
+      exam_date: '2019-11-17',
+      registration_start_date: '2019-09-03',
+      registration_end_date: '2019-09-28',
+      languages: [
+        { language_code: 'spa' },
+        { language_code: 'sme' },
+        { language_code: 'deu' },
+      ],
+    },
+    {
+      exam_date: '2020-01-26',
+      registration_start_date: '2019-12-03',
+      registration_end_date: '2019-12-14',
+      languages: [{ language_code: 'fin' }],
+    },
+  ],
+};
+
 const organizers = [
   {
     oid: '1.2.246.562.10.28646781493',
@@ -59,7 +102,8 @@ const organizers = [
   },
 ];
 
-const getNumberBetween = (min, max) => Math.random() * (max - min) + min;
+const getNumberBetween = (min, max) =>
+  Math.trunc(Math.random() * (max - min) + min);
 
 module.exports = function(app) {
   app.use(bodyParser.json({ limit: '5mb' }));
@@ -119,11 +163,29 @@ module.exports = function(app) {
 
   app.get('/yki/api/virkailija/organizer/:oid/exam-session', (req, res) => {
     try {
-      const { oid } = req.params;
-      const data = fs.readFileSync(`./dev/rest/examSessions/examSessions.json`);
-      res.send(data);
+      res.send(examSessions);
     } catch (err) {
       console.log(err);
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.post('/yki/api/virkailija/organizer/:oid/exam-session', (req, res) => {
+    try {
+      const id = getNumberBetween(1000, 100000);
+      const examSession = req.body;
+      const examDate = examDates.dates.find(
+        d => d.exam_date === examSession.session_date,
+      );
+      const backendData = {
+        id: id,
+        participants: 0,
+        registration_start_date: examDate.registration_start_date,
+        registration_end_date: examDate.registration_end_date,
+      };
+      examSessions.exam_sessions.push(Object.assign(examSession, backendData));
+      res.send({ id: id });
+    } catch (err) {
       res.status(404).send(err.message);
     }
   });
@@ -170,13 +232,24 @@ module.exports = function(app) {
       res.status(404).send('Organizer not found');
     }
   });
-  
+
   app.get('/yki/api/localisation', (req, res) => {
     try {
       const { lang } = req.query;
-      const data = fs.readFileSync(`./dev/rest/localisation/translations_${lang}.json`);
+      const data = fs.readFileSync(
+        `./dev/rest/localisation/translations_${lang}.json`,
+      );
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(data);
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.get('/yki/api/exam-date', (req, res) => {
+    try {
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      res.send(examDates);
     } catch (err) {
       res.status(404).send(err.message);
     }
