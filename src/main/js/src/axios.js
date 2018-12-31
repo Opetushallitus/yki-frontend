@@ -14,7 +14,7 @@ instance.interceptors.response.use(
         window.location.href = 'auth/cas';
       }
     }
-    return error;
+    return Promise.reject(error);
   },
 );
 
