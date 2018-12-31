@@ -24,15 +24,21 @@ describe('Registry', () => {
     cy.contains('Lisätiedot');
   });
 
-  it('should show only one registry item after filtering by city', () => {
+  it('should filter by city name', () => {
     cy.wait('@findbyoids');
     cy.get('input').type('Helsinki');
     cy.get('[data-cy=registry-item]').should('have.length', 1);
   });
 
-  it('should show only one registry item after filtering by language', () => {
+  it('should filter by language', () => {
     cy.wait('@findbyoids');
     cy.get('[data-cy=language-filter]').select('Saksa');
+    cy.get('[data-cy=registry-item]').should('have.length', 1);
+  });
+
+  it('should filter by level', () => {
+    cy.wait('@findbyoids');
+    cy.get('[data-cy=level-filter]').select('Perustaso');
     cy.get('[data-cy=registry-item]').should('have.length', 1);
   });
 
