@@ -5,7 +5,7 @@ import { withNamespaces } from 'react-i18next';
 
 import classes from './ExamSessionOrganizer.module.css';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
-import { getLanguagesWithLevelDescriptions } from '../../util/registryUtil';
+import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
 
 export const examSessionOrganizer = props => {

@@ -5,8 +5,7 @@ import moment from 'moment';
 
 import classes from './UpcomingExamSessions.module.css';
 import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
-import { levelDescription } from '../../util/util';
-import { languageToString } from '../../util/registryUtil';
+import { languageToString, levelDescription } from '../../util/util';
 
 export const upcomingExamSessions = props => {
   const examSessionRows = props.examSessions.map((e, i) => {

@@ -5,10 +5,8 @@ import { withNamespaces } from 'react-i18next';
 import classes from './RegistryItem.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
 import RegistryItemDetails from '../../../components/RegistryItemDetails/RegistryItemDetails';
-import {
-  isAgreementActive,
-  languagesToString,
-} from '../../../util/registryUtil';
+import { languagesToString } from '../../../util/util';
+import { isAgreementActive } from '../../../util/registryUtil';
 
 class RegistryItem extends PureComponent {
   state = {

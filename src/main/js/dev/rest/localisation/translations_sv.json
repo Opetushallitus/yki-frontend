@@ -1,11 +1,13 @@
 {
   "common.agreement": "Järjestäjäsopimus_sv",
+  "common.and": "och",
   "common.exam.languages.registry": "Kielitutkintojen järjestäjärekisteri_sv",
   "common.exam.languages": "Kielitutkinnot_sv",
   "common.examDate": "Tutkintopäivä_sv",
   "common.examSessions": "Tutkintotilaisuudet_sv",
   "common.language": "Kieli_sv",
   "common.level": "Taso_sv",
+  "common.level.all": "Kaikki tasot_sv",
   "common.level.basic": "Perustaso_sv",
   "common.level.high": "Ylin taso_sv",
   "common.level.middle": "Keskitaso_sv",

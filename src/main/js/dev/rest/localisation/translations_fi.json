@@ -1,11 +1,13 @@
 {
   "common.agreement": "Järjestäjäsopimus",
+  "common.and": "ja",
   "common.exam.languages.registry": "Kielitutkintojen järjestäjärekisteri",
   "common.exam.languages": "Kielitutkinnot",
   "common.examDate": "Tutkintopäivä",
   "common.examSessions": "Tutkintotilaisuudet",
   "common.language": "Kieli",
   "common.level": "Taso",
+  "common.level.all": "Kaikki tasot",
   "common.level.basic": "Perustaso",
   "common.level.high": "Ylin taso",
   "common.level.middle": "Keskitaso",

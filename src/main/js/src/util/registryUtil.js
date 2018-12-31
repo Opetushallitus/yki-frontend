@@ -1,7 +1,6 @@
 import moment from 'moment';
 
-import { LANGUAGES } from '../common/Constants';
-import { firstCharToUpper, levelDescription } from './util';
+import { firstCharToUpper } from './util';
 
 export const collectRegistryItemDetails = (organizer, organization, lang) => {
   const item = {
@@ -93,36 +92,6 @@ const getAgreementDuration = organizer => {
     start: organizer.agreement_start_date,
     end: organizer.agreement_end_date,
   };
-};
-
-export const languageToString = lang => {
-  const found = LANGUAGES.find(l => l.code === lang);
-  return found ? found.name : '';
-};
-
-export const languagesToString = array => {
-  const list = getLanguagesWithLevelDescriptions(array);
-  return list.map(lang => lang.split(' ')[0].toLowerCase()).join(', ');
-};
-
-export const getLanguagesWithLevelDescriptions = array => {
-  const list = [];
-  for (const lang in LANGUAGES) {
-    const language = LANGUAGES[lang];
-    const levels = array
-      .filter(l => l.language_code === language.code)
-      .map(l => l.level_code)
-      .reduce((acc, l) => acc.concat(l), []);
-
-    if (levels.length > 0) {
-      const description =
-        levels.length === language.levels.length
-          ? 'kaikki tasot'
-          : levels.map(l => levelDescription(l)).join(' ja ');
-      list.push(`${language.name} - ${firstCharToUpper(description)}`);
-    }
-  }
-  return list;
 };
 
 export const sortArrayByName = array => {

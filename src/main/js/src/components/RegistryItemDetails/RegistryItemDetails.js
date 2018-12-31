@@ -5,7 +5,7 @@ import { withNamespaces } from 'react-i18next';
 
 import classes from './RegistryItemDetails.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
-import { getLanguagesWithLevelDescriptions } from '../../util/registryUtil';
+import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
 
 const registryItemDetails = props => {
