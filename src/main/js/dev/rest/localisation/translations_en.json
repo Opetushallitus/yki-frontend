@@ -1,10 +1,14 @@
 {
+  "common.address": "Address",
+  "common.address.placeholder": "Järjestäjänkatu 3, 00100 Helsinki",
   "common.agreement": "Järjestäjäsopimus_en",
   "common.and": "and",
   "common.exam.languages.registry": "Kielitutkintojen järjestäjärekisteri_en",
   "common.exam.languages": "Kielitutkinnot_en",
+  "common.exam.languages.registry": "Kielitutkintojen järjestäjärekisteri_en",
   "common.examDate": "Tutkintopäivä_en",
   "common.examSessions": "Tutkintotilaisuudet_en",
+  "common.extra": "Lisätiedot_en",
   "common.language": "Language",
   "common.level": "Taso_en",
   "common.level.all": "All levels",
@@ -22,8 +26,6 @@
   "email.login.content": "Pääset kirjautumaan oheisen linkin kautta._en",
   "email.login.link_text": "Login",
   "email.login.subject": "Ilmoittautuminen_en",
-  "email.payment_success.content.line1": "Tutkintomaksu suoritettu._en",
-  "email.payment_success.subject": "Maksu onnistui_en",
   "email.payment.content.line1": "Tärkeää! Mikäli maksua ei ole maksettu eräpäivään mennessä, ilmoittautumisesi perutaan._en",
   "email.payment.content.line2": "Olet ilmoittautumassa seuraavaan kielitutkintoon:_en",
   "email.payment.content.line3": "Tutkintomaksu_en",
@@ -31,8 +33,12 @@
   "email.payment.content.line5": "Tämä on automaattinen viesti, älä vastaa tähän viestiin._en",
   "email.payment.link_text": "email.payment.link_text_en",
   "email.payment.subject": "Maksulinkki_en",
+  "email.payment_success.content.line1": "Tutkintomaksu suoritettu._en",
+  "email.payment_success.subject": "Maksu onnistui_en",
   "error.common": "Tapahtui odottamaton virhe_en",
   "error.examSession.fetchFailed": "Tutkintotilaisuuksien hakeminen epäonnistui._en",
+  "error.mandatory": "Mandatory",
+  "error.numeric": "Arvon pitää olla luku_en",
   "errorBoundary.return": "Palaa etusivulle_en",
   "errorBoundary.title": "Tapahtui odottamaton virhe_en",
   "examSession.addExamSession": "Luo tutkintotilaisuus_en",
@@ -46,6 +52,5 @@
   "registry.search.languageSelectPlaceholder": "Valitse kieli_en",
   "registry.search.levelSelectPlaceholder": "Valitse taso_en",
   "registry.search.placeholder": "Hae järjestäjää tai paikkakuntaa_en",
-
   "registryItem.agreementStart.required": "Sopimuskauden aloitusaika puuttuu._en"
 }

@@ -14,7 +14,7 @@ import {
   DATE_FORMAT_WITHOUT_YEAR,
   CODE_TO_LEVEL,
 } from '../../common/Constants';
-import { languageToString } from '../../util/registryUtil';
+import { languageToString, getLocalizedName } from '../../util/registryUtil';
 
 const examSessionForm = props => {
   function validateDuplicateExamSession() {
@@ -35,21 +35,21 @@ const examSessionForm = props => {
   }
 
   const validationSchema = Yup.object().shape({
-    language: Yup.string().required(props.t('examSession.language.required')),
-    level: Yup.string().required(props.t('examSession.level.required')),
+    language: Yup.string().required(props.t('error.mandatory')),
+    level: Yup.string().required(props.t('error.mandatory')),
     examDate: Yup.string()
-      .required(props.t('examSession.examDate.required'))
+      .required(props.t('error.mandatory'))
       .test(
         'duplicateExamSession',
-        'Tutkintotilaisuus on jo olemassa',
+        props.t('examSession.duplicate'),
         validateDuplicateExamSession,
       ),
     maxParticipants: Yup.number()
-      .typeError('Pitää olla luku')
-      .required(props.t('examSession.maxParticipants.required'))
+      .typeError(props.t('error.numeric'))
+      .required(props.t('error.mandatory'))
       .positive()
       .integer(),
-    address: Yup.string(),
+    address: Yup.string().required(props.t('error.mandatory')),
     location: Yup.string(),
     extra: Yup.string(),
   });
@@ -58,6 +58,7 @@ const examSessionForm = props => {
     field: { name, value, onChange },
     id,
     label,
+    extraLabel,
     disabled,
   }) => {
     return (
@@ -67,6 +68,7 @@ const examSessionForm = props => {
         value={value}
         onChange={onChange}
         label={label}
+        extraLabel={extraLabel}
         disabled={disabled}
       />
     );
@@ -137,6 +139,11 @@ const examSessionForm = props => {
         { language_code: selectedLanguage },
         examDate.languages,
       );
+      const languages = examDate.languages
+        .map(l => {
+          return languageToString(l.language_code).toLowerCase();
+        })
+        .join(', ');
       return (
         <Field
           component={RadioButtonComponent}
@@ -144,6 +151,7 @@ const examSessionForm = props => {
           id={examDate.exam_date}
           key={examDate.exam_date}
           label={moment(examDate.exam_date).format(DATE_FORMAT)}
+          extraLabel={languages}
           disabled={!enabled}
         />
       );
@@ -159,7 +167,7 @@ const examSessionForm = props => {
       const end = moment(examDate.registration_end_date).format(DATE_FORMAT);
       return (
         <p>
-          Ilmoittautumisaika {start} &ndash; {end}
+          {props.t('common.registationPeriod')} {start} &ndash; {end}
         </p>
       );
     } else {
@@ -188,7 +196,10 @@ const examSessionForm = props => {
           published_at: moment().toISOString(),
           location: [
             {
-              name: 'TODO',
+              name: getLocalizedName(
+                props.examSessionContent.organization.nimi,
+                props.lng,
+              ),
               address: values.address,
               other_location_info: values.location,
               extra_information: values.extra,
@@ -200,13 +211,13 @@ const examSessionForm = props => {
       }}
       render={({ values, isValid, errors, touched }) => (
         <Form className={classes.Form}>
-          <h1>Luo uusi tutkintotilaisuus</h1>
-          <h2>Tutkintotilaisuuden tiedot</h2>
+          <h1>{props.t('examSession.add.header')}</h1>
+          <h2>{props.t('examSession.add.subHeader')}</h2>
           <div data-cy="exam-session-form">
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="language"
-                label={'Kieli *'}
+                label={`${props.t('common.language')} *`}
                 value={values.language}
                 error={errors.language}
               >
@@ -216,7 +227,7 @@ const examSessionForm = props => {
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="level"
-                label={'Taso *'}
+                label={`${props.t('common.level')} *`}
                 value={values.level}
                 error={errors.level}
               >
@@ -229,7 +240,7 @@ const examSessionForm = props => {
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="examDate"
-                label={'Ajankohta *'}
+                label={`${props.t('common.date')} *`}
                 value={values.examDate}
                 error={errors.examDate}
               >
@@ -243,14 +254,9 @@ const examSessionForm = props => {
                 props.examSessionContent.examDates,
                 values.examDate,
               )}
-              {/* <ErrorMessage
-                name="examDate"
-                component="span"
-                className={classes.ErrorMessage}
-            /> */}
             </div>
             <div className={classes.FormElement}>
-              <h3>Osallistujapaikkojen määrä *</h3>
+              <h3>{`${props.t('examSession.maxParticipants')} *`}</h3>
               <Field
                 id="maxParticipants"
                 name="maxParticipants"
@@ -264,11 +270,11 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>Osoite</h3>
+              <h3>{`${props.t('common.address')} *`}</h3>
               <Field
                 id="address"
                 name="address"
-                placeholder="Järjestäjänkatu 3, 00100 Helsinki"
+                placeholder={props.t('common.address.placeholder')}
                 className={classes.TextInput}
               />
               <ErrorMessage
@@ -278,11 +284,11 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>Tila</h3>
+              <h3>{props.t('common.location')}</h3>
               <Field
                 id="location"
                 name="location"
-                placeholder="Esim. auditorio A2"
+                placeholder={props.t('common.location.placeholder')}
                 className={classes.TextInput}
               />
               <ErrorMessage
@@ -292,7 +298,7 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>Lisätiedot</h3>
+              <h3>{props.t('common.extra')}</h3>
               <Field
                 component="textarea"
                 id="extra"
@@ -301,7 +307,7 @@ const examSessionForm = props => {
                 cols={33}
                 maxLength="2048"
                 wrap="soft"
-                placeholder="Esim. ohjeistus testiin saapumiseksi"
+                placeholder={props.t('examSession.extra.placeholder')}
                 className={classes.TextArea}
               />
               <ErrorMessage
@@ -313,7 +319,7 @@ const examSessionForm = props => {
           </div>
 
           <Button type="submit" disabled={!isValid}>
-            Tallenna tilaisuuden tiedot
+            {props.t('examSession.addButton')}
           </Button>
         </Form>
       )}

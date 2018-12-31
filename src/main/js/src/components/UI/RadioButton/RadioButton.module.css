@@ -17,3 +17,12 @@
   margin-bottom: 0.5rem;
   margin-right: 8px;
 }
+
+.RadioButtonLabel {
+  display: inline-block;
+  width: 17%;
+}
+
+.RadioButtonExtraLabel {
+  display: inline-block;
+}

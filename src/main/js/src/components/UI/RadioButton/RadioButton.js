@@ -5,9 +5,10 @@ import classes from './RadioButton.module.css';
 
 const radioButton = props => (
   <div
-    className={
-      props.disabled ? classes.RadioButtonDisabled : classes.RadioButton
-    }
+    className={[
+      classes.RadioButton,
+      props.disabled ? classes.RadioButtonDisabled : '',
+    ].join(' ')}
   >
     <input
       name={props.name}
@@ -19,7 +20,10 @@ const radioButton = props => (
       onChange={props.onChange}
       disabled={props.disabled || false}
     />
-    <label htmlFor={props.id}>{props.label}</label>
+    <label className={classes.RadioButtonLabel} htmlFor={props.id}>{props.label}</label>
+    {props.extraLabel ? (
+      <label className={classes.RadioButtonExtraLabel} htmlFor={props.id}>{props.extraLabel}</label>
+    ) : null}
   </div>
 );
 
@@ -28,6 +32,7 @@ radioButton.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string,
   label: PropTypes.string.isRequired,
+  extraLabel: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
 };

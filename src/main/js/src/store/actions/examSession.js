@@ -114,7 +114,7 @@ const addExamSessionSuccess = () => {
 const addExamSessionFail = error => {
   return {
     type: actionTypes.ADD_EXAM_SESSION_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.addFailed' }), // TODO lisää avaimet
+    error: Object.assign(error, { key: 'error.examSession.addFailed' }),
     loading: false,
   };
 };
