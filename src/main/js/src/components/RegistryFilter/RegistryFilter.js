@@ -41,7 +41,7 @@ class RegistryFilter extends Component {
       prevState.level !== this.state.level
     ) {
       if (this.notFiltering()) {
-        this.props.onChange([]);
+        this.props.onChange(false, []);
       } else {
         let filtered = [...this.props.registry];
 
@@ -56,7 +56,7 @@ class RegistryFilter extends Component {
         if (this.state.level !== '') {
           filtered = filterByLevel(filtered, this.state.level);
         }
-        this.props.onChange(filtered);
+        this.props.onChange(true, filtered);
       }
     }
   };
