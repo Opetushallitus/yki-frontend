@@ -1,4 +1,4 @@
-import { firstCharToUpper, languageToString, languagesToString } from './util';
+import { firstCharToUpper, languageToString } from './util';
 
 describe('Util', () => {
   it('should change first character of string to uppercase', () => {
