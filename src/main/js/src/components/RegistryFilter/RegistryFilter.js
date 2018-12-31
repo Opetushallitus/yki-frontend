@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 
 import classes from './RegistryFilter.module.css';
+import { levelDescription } from '../../util/util';
 import {
   filterByNameOrLocation,
   filterByLanguage,
+  filterByLevel,
 } from '../../util/registryUtil';
 import { LANGUAGES } from '../../common/Constants';
 
@@ -23,6 +25,10 @@ class RegistryFilter extends Component {
     this.setState({ language: event.target.value });
   };
 
+  levelSelectHandler = event => {
+    this.setState({ level: event.target.value });
+  };
+
   notFiltering = () =>
     this.state.input === '' &&
     this.state.language === '' &&
@@ -31,10 +37,11 @@ class RegistryFilter extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     if (
       prevState.input !== this.state.input ||
-      prevState.language !== this.state.language
+      prevState.language !== this.state.language ||
+      prevState.level !== this.state.level
     ) {
       if (this.notFiltering()) {
-        this.props.onChange(false, []);
+        this.props.onChange([]);
       } else {
         let filtered = [...this.props.registry];
 
@@ -47,9 +54,9 @@ class RegistryFilter extends Component {
         }
 
         if (this.state.level !== '') {
-          // filtered = filterByLevel(filtered, this.state.level);
+          filtered = filterByLevel(filtered, this.state.level);
         }
-        this.props.onChange(true, filtered);
+        this.props.onChange(filtered);
       }
     }
   };
@@ -59,10 +66,8 @@ class RegistryFilter extends Component {
       <select
         value={this.state.language}
         className={[
-          classes.Language,
-          this.state.language === ''
-            ? classes.Placeholder
-            : classes.LanguageSelected,
+          classes.Select,
+          this.state.language === '' ? classes.Placeholder : classes.Selected,
         ].join(' ')}
         onChange={this.languageSelectHandler}
         data-cy="language-filter"
@@ -78,6 +83,27 @@ class RegistryFilter extends Component {
       </select>
     );
 
+    const levelSelect = (
+      <select
+        value={this.state.level}
+        className={[
+          classes.Select,
+          this.state.level === '' ? classes.Placeholder : classes.Selected,
+        ].join(' ')}
+        onChange={this.levelSelectHandler}
+        data-cy="level-filter"
+      >
+        <option value="">
+          {this.props.t('registry.search.levelSelectPlaceholder')}
+        </option>
+        {LANGUAGES[0].levels.map(l => (
+          <option key={l} value={l}>
+            {levelDescription(l)}
+          </option>
+        ))}
+      </select>
+    );
+
     return (
       <div className={classes.Filter}>
         <input
@@ -86,6 +112,7 @@ class RegistryFilter extends Component {
           onChange={this.inputChangeHandler}
         />
         {languageSelect}
+        {levelSelect}
       </div>
     );
   }

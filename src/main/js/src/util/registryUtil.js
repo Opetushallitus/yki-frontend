@@ -152,3 +152,11 @@ export const filterByLanguage = (array, value) => {
       : false,
   );
 };
+
+export const filterByLevel = (array, value) => {
+  return array.filter(i =>
+    i.organizer.languages
+      ? i.organizer.languages.some(l => l.level_code === value)
+      : false,
+  );
+};

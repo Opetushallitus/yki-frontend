@@ -41,17 +41,15 @@ export class Registry extends Component {
   updateRegistryItemHandler = item =>
     this.setState({ showModal: true, updating: true, selectedItem: item });
 
-  filterChangeHandler = (filtering, filtered) =>
-    this.setState({ filtering: filtering, filtered: filtered });
+  filterChangeHandler = filtered =>
+    this.setState({ filtering: filtered.length !== 0, filtered: filtered });
 
   render() {
     const searchBar = (
       <div className={classes.Searchbar}>
         <RegistryFilter
           registry={this.props.registry}
-          onChange={(filtering, filtered) =>
-            this.filterChangeHandler(filtering, filtered)
-          }
+          onChange={filtered => this.filterChangeHandler(filtered)}
         />
         <Button clicked={this.openModalHandler}>
           {this.props.t('registryItem.button.add')}
