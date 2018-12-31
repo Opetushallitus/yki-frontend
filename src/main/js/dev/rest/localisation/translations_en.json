@@ -6,6 +6,9 @@
   "common.examSessions": "Tutkintotilaisuudet_en",
   "common.language": "Language",
   "common.level": "Taso_en",
+  "common.level.basic": "Perustaso_en",
+  "common.level.high": "Ylin taso_en",
+  "common.level.middle": "Keskitaso_en",
   "common.modify": "Muokkaa_en",
   "common.registationPeriod": "Ilmoittautumisaika_en",
   "common.registration": "Ilmoittautuminen_en",
@@ -32,7 +35,9 @@
   "errorBoundary.title": "Tapahtui odottamaton virhe_en",
   "examSession.addExamSession": "Luo tutkintotilaisuus_en",
   "registry.document.title": "YKI - Järjestäjärekisteri_en",
-  "registry.search.placeholder": "Hae järjestäjää tai paikkakuntaa_en",
   "registry.search.languageSelectPlaceholder": "Valitse kieli_en",
+  "registry.search.levelSelectPlaceholder": "Valitse taso_en",
+  "registry.search.placeholder": "Hae järjestäjää tai paikkakuntaa_en",
+
   "registryItem.agreementStart.required": "Sopimuskauden aloitusaika puuttuu._en"
 }
