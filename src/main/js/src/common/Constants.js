@@ -48,8 +48,3 @@ export const LANGUAGES = [
     levels: ['PERUS', 'KESKI'],
   },
 ];
-export const CODE_TO_LEVEL = {
-  PERUS: 'perustaso',
-  KESKI: 'keskitaso',
-  YLIN: 'ylin taso',
-};

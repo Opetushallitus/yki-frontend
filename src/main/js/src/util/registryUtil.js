@@ -1,7 +1,7 @@
 import moment from 'moment';
 
-import { LANGUAGES, CODE_TO_LEVEL } from '../common/Constants';
-import { firstCharToUpper } from './util';
+import { LANGUAGES } from '../common/Constants';
+import { firstCharToUpper, levelDescription } from './util';
 
 export const collectRegistryItemDetails = (organizer, organization, lang) => {
   const item = {
@@ -118,7 +118,7 @@ export const getLanguagesWithLevelDescriptions = array => {
       const description =
         levels.length === language.levels.length
           ? 'kaikki tasot'
-          : levels.map(l => CODE_TO_LEVEL[l]).join(' ja ');
+          : levels.map(l => levelDescription(l)).join(' ja ');
       list.push(`${language.name} - ${firstCharToUpper(description)}`);
     }
   }

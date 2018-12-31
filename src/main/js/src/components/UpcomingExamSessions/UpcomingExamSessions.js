@@ -4,11 +4,8 @@ import { withNamespaces } from 'react-i18next';
 import moment from 'moment';
 
 import classes from './UpcomingExamSessions.module.css';
-import {
-  DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR,
-  CODE_TO_LEVEL,
-} from '../../common/Constants';
+import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
+import { levelDescription } from '../../util/util';
 import { languageToString } from '../../util/registryUtil';
 
 export const upcomingExamSessions = props => {
@@ -20,7 +17,7 @@ export const upcomingExamSessions = props => {
       <div className={classes.Row} key={i} data-cy="exam-sessions-table-row">
         <p>{moment(e.session_date).format(DATE_FORMAT)}</p>
         <p>{languageToString(e.language_code).toLowerCase()}</p>
-        <p>{CODE_TO_LEVEL[e.level_code]}</p>
+        <p>{levelDescription(e.level_code)}</p>
         <p>
           {moment(e.registration_start_date).format(DATE_FORMAT_WITHOUT_YEAR)}
           &ndash;
