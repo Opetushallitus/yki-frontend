@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import classes from './Registration.module.css';
+import Description from '../../components/Registration/Description/Description';
 
-const registration = () => (
-  <React.Fragment>
-    <header className={classes.Header}>Opetushallitus</header>
-    <div className={classes.Registration}>YKI Sign Up Page</div>
-  </React.Fragment>
-);
+class Registration extends Component {
+  descriptionClickHandler = () => {
+    console.log('continue...');
+  };
 
-export default registration;
+  render() {
+    return (
+      <React.Fragment>
+        <header className={classes.Header}>Opetushallitus</header>
+        <div className={classes.Registration}>
+          <Description clicked={this.descriptionClickHandler} />
+        </div>
+      </React.Fragment>
+    );
+  }
+}
+
+export default Registration;
