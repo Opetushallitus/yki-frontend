@@ -3,7 +3,10 @@ import React from 'react';
 import classes from './Registration.module.css';
 
 const registration = () => (
-  <div className={classes.Registration}>YKI Sign Up Page</div>
+  <React.Fragment>
+    <header className={classes.Header}>Opetushallitus</header>
+    <div className={classes.Registration}>YKI Sign Up Page</div>
+  </React.Fragment>
 );
 
 export default registration;
