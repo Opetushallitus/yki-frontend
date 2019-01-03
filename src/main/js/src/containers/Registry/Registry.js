@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 
 import classes from './Registry.module.css';
+import Page from '../../hoc/Page/Page';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
@@ -107,12 +108,14 @@ export class Registry extends Component {
     ) : null;
 
     return (
-      <div className={classes.Registry}>
-        <h1>{this.props.t('common.exam.languages.registry')}</h1>
-        {searchBar}
-        {modal}
-        {list}
-      </div>
+      <Page>
+        <div className={classes.Registry}>
+          <h1>{this.props.t('common.exam.languages.registry')}</h1>
+          {searchBar}
+          {modal}
+          {list}
+        </div>
+      </Page>
     );
   }
 }

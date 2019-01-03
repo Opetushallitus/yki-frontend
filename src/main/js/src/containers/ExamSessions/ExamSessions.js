@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 
 import classes from './ExamSessions.module.css';
+import Page from '../../hoc/Page/Page';
 import UpcomingExamSessions from '../../components/UpcomingExamSessions/UpcomingExamSessions';
 import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -19,37 +20,39 @@ class ExamSessions extends Component {
 
   render() {
     return (
-      <div className={classes.ExamSessions}>
-        {this.props.loading ? (
-          <Spinner />
-        ) : this.props.examSessionContent.organizer ? (
-          <div className={classes.ExamSessions}>
-            <div>
-              <h1 data-cy="exam-session-header">
-                {getLocalizedName(
-                  this.props.examSessionContent.organization.nimi,
-                  this.props.lng,
-                )}
-              </h1>
-              <UpcomingExamSessions
-                organizer={this.props.examSessionContent.organizer}
-                examSessions={this.props.examSessionContent.examSessions}
-              />
-              <div className={classes.AddExamSessionButton}>
-                <Button type="submit">
-                  {this.props.t('examSession.addExamSession')}
-                </Button>
+      <Page>
+        <div className={classes.ExamSessions}>
+          {this.props.loading ? (
+            <Spinner />
+          ) : this.props.examSessionContent.organizer ? (
+            <div className={classes.ExamSessions}>
+              <div>
+                <h1 data-cy="exam-session-header">
+                  {getLocalizedName(
+                    this.props.examSessionContent.organization.nimi,
+                    this.props.lng,
+                  )}
+                </h1>
+                <UpcomingExamSessions
+                  organizer={this.props.examSessionContent.organizer}
+                  examSessions={this.props.examSessionContent.examSessions}
+                />
+                <div className={classes.AddExamSessionButton}>
+                  <Button type="submit">
+                    {this.props.t('examSession.addExamSession')}
+                  </Button>
+                </div>
+                <ExamSessionOrganizer
+                  organizer={this.props.examSessionContent.organizer}
+                  organization={this.props.examSessionContent.organization}
+                />
               </div>
-              <ExamSessionOrganizer
-                organizer={this.props.examSessionContent.organizer}
-                organization={this.props.examSessionContent.organization}
-              />
             </div>
-          </div>
-        ) : (
-          <p>{this.props.t('examSessions.agreementNotFound')}</p>
-        )}
-      </div>
+          ) : (
+            <p>{this.props.t('examSessions.agreementNotFound')}</p>
+          )}
+        </div>
+      </Page>
     );
   }
 }

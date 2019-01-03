@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import registryReducer from './store/reducers/registry';
 import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
-import Layout from './hoc/Layout/Layout';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Registration from './containers/Registration/Registration';
@@ -36,24 +35,19 @@ const app = () => (
   <Provider store={store}>
     <Router basename={'/yki'}>
       <Suspense fallback={<Spinner />}>
-        <Layout>
-          <Switch>
-            <Route exact path="/" component={Registration} />
-            <Route
-              path="/tutkintotilaisuudet"
-              render={() => <ExamSessions />}
-            />
-            <ErrorBoundary
-              titleKey="errorBoundary.title"
-              returnLinkTo="jarjestajarekisteri"
-              returnLinkTextKey="errorBoundary.return"
-            >
-              {/* TODO: change back to use component={Component} after react-router-dom updates version */}
-              <Route path="/jarjestajarekisteri" render={() => <Registry />} />
-            </ErrorBoundary>
-            <Route component={NotFound} />
-          </Switch>
-        </Layout>
+        <Switch>
+          <Route exact path="/" component={Registration} />
+          <Route path="/tutkintotilaisuudet" render={() => <ExamSessions />} />
+          <ErrorBoundary
+            titleKey="errorBoundary.title"
+            returnLinkTo="jarjestajarekisteri"
+            returnLinkTextKey="errorBoundary.return"
+          >
+            {/* TODO: change back to use component={Component} after react-router-dom updates version */}
+            <Route path="/jarjestajarekisteri" render={() => <Registry />} />
+          </ErrorBoundary>
+          <Route component={NotFound} />
+        </Switch>
       </Suspense>
     </Router>
   </Provider>
