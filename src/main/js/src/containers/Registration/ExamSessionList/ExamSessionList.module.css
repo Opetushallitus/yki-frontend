@@ -1,0 +1,45 @@
+.Return {
+  width: 90px;
+  height: 40px;
+  margin: 15px 0 20px 0;
+  font-size: 0.75em;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.Content {
+  width: calc(100vw - 40px);
+  margin: 0 auto;
+}
+
+.Title {
+  display: block;
+  font-size: 1.125em;
+  margin-bottom: 30px;
+}
+
+.Instructions {
+  margin-bottom: 30px;
+}
+
+.Selections {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.Selection {
+  height: 50px;
+  font-size: 1.125em;
+}
+
+.SelectionText {
+  font-size: 18px;
+}
+
+.LanguageSelection {
+  margin-bottom: 24px;
+}
