@@ -17,7 +17,7 @@ jest.mock('react-i18next', () => ({
 describe('<NavigationItems />', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<NavigationItems t={key => key} />);
+    wrapper = shallow(<NavigationItems />);
   });
 
   it('should render three <NavigationItem /> elements', () => {
