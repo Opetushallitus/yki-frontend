@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { withNamespaces } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import classes from './ExamSessionList.module.css';
+import classes from './ExamSessionSelection.module.css';
 import { LANGUAGES } from '../../../common/Constants';
 import { levelDescription } from '../../../util/util';
 
-class ExamSessionList extends Component {
+class ExamSessionSelection extends Component {
   state = {
     language: null,
     level: '',
@@ -36,7 +36,7 @@ class ExamSessionList extends Component {
         onClick={this.returnHandler}
         aria-label="Return"
       >
-        &lt; {this.props.t('registration.return')}
+        &lsaquo; {this.props.t('registration.return')}
       </button>
     );
 
@@ -87,22 +87,31 @@ class ExamSessionList extends Component {
       </React.Fragment>
     );
 
-    const selection = !this.state.language ? languages : levels;
+    const content =
+      this.state.language && this.state.level ? (
+        <h1>Hello</h1>
+      ) : !this.state.language ? (
+        languages
+      ) : (
+        levels
+      );
+
+    console.log(this.state);
 
     return (
       <React.Fragment>
         {returnButton}
         <div className={classes.Content}>
           {title}
-          {selection}
+          {content}
         </div>
       </React.Fragment>
     );
   }
 }
 
-ExamSessionList.propTypes = {
+ExamSessionSelection.propTypes = {
   onReturn: PropTypes.func.isRequired,
 };
 
-export default withNamespaces()(ExamSessionList);
+export default withNamespaces()(ExamSessionSelection);

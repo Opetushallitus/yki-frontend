@@ -4,20 +4,17 @@
 }
 
 .Header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 40px;
   align-items: center;
-  padding-left: 48px;
   color: hsl(0, 0%, 100%);
   font-size: 0.875em;
   font-weight: 600;
-  background: url('../../assets/svg/oph-logo.svg') no-repeat;
   background-color: hsl(96, 96%, 27%);
-  background-position: 10px center;
   background-size: 2.2em;
 }
 
@@ -30,6 +27,5 @@
     height: 80px;
     font-size: 1.125em;
     background-size: 3.5em;
-    padding-left: 88px;
   }
 }

@@ -43,3 +43,9 @@
 .LanguageSelection {
   margin-bottom: 24px;
 }
+
+@media (min-width: 620px) {
+  .Content {
+    width: calc(100vw - 200px);
+  }
+}

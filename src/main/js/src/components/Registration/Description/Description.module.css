@@ -29,12 +29,13 @@
 
 @media (min-width: 620px) {
   .Title {
-    margin: 34px 70px;
+    margin: 34px 100px;
   }
 
   .Description {
+    width: calc(100vw - 200px);
     max-width: 457px;
-    margin: 0 0 88px 70px;
+    margin: 0 0 88px 100px;
   }
 
   .StartingText {
@@ -42,6 +43,6 @@
   }
 
   .ContinueButton {
-    margin: 0 84px;
+    margin: 0 114px;
   }
 }

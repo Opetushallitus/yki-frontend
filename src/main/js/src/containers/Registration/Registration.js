@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import classes from './Registration.module.css';
-import ExamSessionList from './ExamSessionList/ExamSessionList';
+import Logo from '../../components/UI/Logo/Logo';
+import ExamSessionSelection from './ExamSessionSelection/ExamSessionSelection';
 import Description from '../../components/Registration/Description/Description';
 
 class Registration extends Component {
@@ -20,10 +21,13 @@ class Registration extends Component {
   render() {
     return (
       <React.Fragment>
-        <header className={classes.Header}>Opetushallitus</header>
+        <header className={classes.Header}>
+          <Logo />
+          Opetushallitus
+        </header>
         <div className={classes.Registration}>
           {this.state.selecting ? (
-            <ExamSessionList onReturn={this.onReturnHandler} />
+            <ExamSessionSelection onReturn={this.onReturnHandler} />
           ) : (
             <Description clicked={this.descriptionClickHandler} />
           )}
