@@ -9,12 +9,13 @@ import * as R from 'ramda';
 import classes from './ExamSessionForm.module.css';
 import Button from '../UI/Button/Button';
 import RadioButton from '../UI/RadioButton/RadioButton';
+import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
 import {
-  DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR,
-  CODE_TO_LEVEL,
-} from '../../common/Constants';
-import { languageToString, getLocalizedName } from '../../util/registryUtil';
+  languageToString,
+  levelDescription,
+  levelTranslations,
+} from '../../util/util';
+import { getLocalizedName } from '../../util/registryUtil';
 
 const examSessionForm = props => {
   function validateDuplicateExamSession() {
@@ -113,7 +114,7 @@ const examSessionForm = props => {
   };
 
   const languageLevelFields = (languages, selectedLang) => {
-    const allLevels = R.keys(CODE_TO_LEVEL);
+    const allLevels = R.keys(levelTranslations);
 
     return allLevels.map(level => {
       const enabled = R.includes(
@@ -126,7 +127,7 @@ const examSessionForm = props => {
           name="level"
           id={level}
           key={level}
-          label={CODE_TO_LEVEL[level]}
+          label={levelDescription(level).toLowerCase()}
           disabled={!enabled}
         />
       );
@@ -274,6 +275,7 @@ const examSessionForm = props => {
               <Field
                 id="address"
                 name="address"
+                data-cy="input-address"
                 placeholder={props.t('common.address.placeholder')}
                 className={classes.TextInput}
               />

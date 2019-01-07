@@ -27,6 +27,13 @@ const examSessions = [
   },
 ];
 
+jest.mock('i18next', () => ({
+  use: () => {
+    return { init: () => {} };
+  },
+  t: k => k,
+}));
+
 describe('<UpcomingExamSessions />', () => {
   it('should render 2 exam session rows', () => {
     const wrapper = shallow(

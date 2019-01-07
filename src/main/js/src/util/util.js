@@ -6,7 +6,7 @@ export const firstCharToUpper = string => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
 
-const levelTranslations = {
+export const levelTranslations = {
   PERUS: i18next.t('common.level.basic'),
   KESKI: i18next.t('common.level.middle'),
   YLIN: i18next.t('common.level.high'),

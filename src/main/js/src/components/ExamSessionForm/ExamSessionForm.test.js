@@ -1,7 +1,6 @@
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-
 import ExamSessionForm from './ExamSessionForm';
 
 configure({ adapter: new Adapter() });
@@ -67,6 +66,13 @@ jest.mock('react-i18next', () => ({
     Component.defaultProps = { ...Component.defaultProps, t: () => '' };
     return Component;
   },
+}));
+
+jest.mock('i18next', () => ({
+  use: () => {
+    return { init: () => {} };
+  },
+  t: k => k,
 }));
 
 describe('<ExamSessionForm />', () => {

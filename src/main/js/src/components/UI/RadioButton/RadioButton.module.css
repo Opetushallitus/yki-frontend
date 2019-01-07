@@ -9,7 +9,7 @@
 }
 
 .RadioButtonDisabled {
-  color: #aeaeae;
+  color: hsla(0, 0%, 68%, 1);
 }
 
 .RadioButtonDisabled input {

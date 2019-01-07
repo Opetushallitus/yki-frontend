@@ -16,7 +16,7 @@ export const upcomingExamSessions = props => {
       <div className={classes.Row} key={i} data-cy="exam-sessions-table-row">
         <p>{moment(e.session_date).format(DATE_FORMAT)}</p>
         <p>{languageToString(e.language_code).toLowerCase()}</p>
-        <p>{levelDescription(e.level_code)}</p>
+        <p>{levelDescription(e.level_code).toLowerCase()}</p>
         <p>
           {moment(e.registration_start_date).format(DATE_FORMAT_WITHOUT_YEAR)}
           &ndash;
