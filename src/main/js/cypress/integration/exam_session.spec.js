@@ -27,6 +27,8 @@ describe('Exam session', () => {
     cy.get('[data-cy=radio-PERUS]').click();
     cy.get('[data-cy=radio-2019-01-27]').click();
     cy.get('[data-cy=input-max-participants]').type('50')
+    cy.get('[data-cy=input-max-participants]').type('50')
+    cy.get('[data-cy=input-address]').type('address')
     cy.contains('Tallenna tilaisuuden tiedot').should('not.be.disabled');
 
     cy.log('when add button is clicked should return to frontpage');
