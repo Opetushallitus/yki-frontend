@@ -72,7 +72,7 @@ export const fetchOrganizations = () => {
     dispatch(fetchOrganizationsStart());
     axios
       .get(
-        '/organisaatio-service/rest/organisaatio/v4/hae?searchStr=&aktiiviset=true&suunnitellut=true&lakkautetut=false',
+        '/organisaatio-service/rest/organisaatio/v4/hae?searchStr=&aktiiviset=true&suunnitellut=true&lakkautetut=false&organisaatiotyyppi=organisaatiotyyppi_02',
       )
       .then(res => {
         dispatch(fetchOrganizationsSuccess(res.data.organisaatiot));

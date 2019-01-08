@@ -52,6 +52,7 @@
   "examSession.extra.placeholder": "Esim. ohjeistus testiin saapumiseksi_sv",
   "examSession.maxParticipants": "Osallistujapaikkojen määrä_sv",
   "examSession.noPlannedSessions": "Ei suunniteltuja tutkintotilaisuuksia._sv",
+  "examSession.office": "Toimipiste_sv",
   "examSession.participants": "Ilmoittautuneet_sv",
   "examSession.upcomingExamSessions": "Tulevat tutkintotilaisuudet_sv",
   "examSessions.agreementNotFound": "Ei löytynyt voimassaolevaa järjestäjäsopimusta._sv",

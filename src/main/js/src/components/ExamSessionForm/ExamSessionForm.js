@@ -176,9 +176,23 @@ const examSessionForm = props => {
     }
   };
 
+  const organizationChildrenOptions = (children, lang) => {
+    return children.map(c => {
+      return (
+        <option value={c.oid} key={c.oid}>
+          {getLocalizedName(c.nimi, lang)}
+        </option>
+      );
+    });
+  };
+
   return (
     <Formik
       initialValues={{
+        officeOid:
+          props.examSessionContent.organizationChildren.length > 0
+            ? props.examSessionContent.organizationChildren[0].oid
+            : null,
         language: '',
         level: '',
         examDate: '',
@@ -193,6 +207,7 @@ const examSessionForm = props => {
           session_date: values.examDate,
           language_code: values.language,
           level_code: values.level,
+          office_oid: values.officeOid,
           max_participants: Number.parseInt(values.maxParticipants),
           published_at: moment().toISOString(),
           location: [
@@ -210,11 +225,26 @@ const examSessionForm = props => {
         };
         props.onSubmit(payload);
       }}
-      render={({ values, isValid, errors, touched }) => (
+      render={({ values, isValid, errors }) => (
         <Form className={classes.Form}>
           <h1>{props.t('examSession.add.header')}</h1>
           <h2>{props.t('examSession.add.subHeader')}</h2>
           <div data-cy="exam-session-form">
+            {props.examSessionContent.organizationChildren.length > 0 ? (
+              <div className={[classes.FormElement].join(' ')}>
+                <h3>{`${props.t('examSession.office')} *`}</h3>
+                <Field
+                  component="select"
+                  name="officeOid"
+                  className={classes.Select}
+                >
+                  {organizationChildrenOptions(
+                    props.examSessionContent.organizationChildren,
+                    props.lng,
+                  )}
+                </Field>
+              </div>
+            ) : null}
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="language"

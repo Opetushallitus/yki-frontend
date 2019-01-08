@@ -48,17 +48,21 @@ export const fetchExamSessionContent = () => {
               `/organisaatio-service/rest/organisaatio/v4/${organizer.oid}`,
             ),
             axios.get(
+              `/organisaatio-service/rest/organisaatio/v4/${organizer.oid}/children`,
+            ),
+            axios.get(
               `/yki/api/virkailija/organizer/${
                 organizer.oid
               }/exam-session?from=${today}`,
             ),
             axios.get('/yki/api/exam-date'),
           ])
-            .then(([organizationRes, examSessionRes, examDateRes]) => {
+            .then(([organizationRes, organizationChildrenRes, examSessionRes, examDateRes]) => {
               dispatch(
                 fetchExamSessionContentSuccess({
                   organizer: organizer,
                   organization: organizationRes.data,
+                  organizationChildren: organizationChildrenRes.data,
                   examSessions: examSessionRes.data.exam_sessions,
                   examDates: examDateRes.data.dates,
                 }),
@@ -71,8 +75,9 @@ export const fetchExamSessionContent = () => {
           dispatch(
             fetchExamSessionContentSuccess({
               organizer: null,
+              organizationChildren: [],
               examSessions: [],
-              examDate: [],
+              examDates: [],
             }),
           );
         }

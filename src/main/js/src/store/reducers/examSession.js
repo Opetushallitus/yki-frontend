@@ -4,6 +4,7 @@ const initialState = {
   examSessionContent: {
     organizer: null,
     organization: null,
+    organizationChildren: [],
     examSessions: [],
     examDates: [],
   },

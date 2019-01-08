@@ -5,6 +5,8 @@ import ExamSessionForm from './ExamSessionForm';
 
 configure({ adapter: new Adapter() });
 
+const organizationChildren = [];
+
 const examSessionContent = {
   organizer: {
     languages: [
@@ -22,7 +24,13 @@ const examSessionContent = {
       },
     ],
   },
-  organization: { nimi: 'Test org' },
+  organization: {
+    oid: '1.2.246.562.10.80191559571',
+    nimi: {
+      fi: 'Amiedu',
+    },
+  },
+  organizationChildren: organizationChildren,
   examSessions: [
     {
       registration_end_date: '2028-12-15',
@@ -76,7 +84,7 @@ jest.mock('i18next', () => ({
 }));
 
 describe('<ExamSessionForm />', () => {
-  it('should render form', () => {
+  it('should render form with disabled submit button', () => {
     const form = mount(
       <ExamSessionForm
         onSubmit={onSubmitSpy}
@@ -85,7 +93,30 @@ describe('<ExamSessionForm />', () => {
     );
     expect(form.find('.Form').exists()).toBeTruthy();
     expect(form.find('.Button').prop('disabled')).toBeTruthy();
-
     expect(form.find('[htmlFor="fin"]').text()).toEqual('suomi');
+  });
+
+  it('should render organization office selection if organization has children', () => {
+    organizationChildren.push(
+      {
+        oid: '1.2.246.562.10.80191559573',
+        nimi: {
+          fi: 'Amiedu 2',
+        },
+      },
+      {
+        oid: '1.2.246.562.10.80191559574',
+        nimi: {
+          fi: 'Amiedu 3',
+        },
+      },
+    );
+    const form = mount(
+      <ExamSessionForm
+        onSubmit={onSubmitSpy}
+        examSessionContent={examSessionContent}
+      />,
+    );
+    expect(form.find('select').children()).toHaveLength(2);
   });
 });

@@ -21,9 +21,18 @@
   resize: none;
 }
 
+.Select {
+  height: 35px;
+  width: 250px;
+  font-size: 0.875em;
+  border: 1px solid hsl(0, 0%, 68%);
+  border-radius: 2px;
+  background-color: hsl(0, 0%, 100%);
+}
+
 .FormElement {
-  margin-top: 14px;
-  margin-bottom: 27px;
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
 .Form h2 {
