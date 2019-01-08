@@ -10,7 +10,10 @@ instance.interceptors.response.use(
   },
   error => {
     if (error.response.status === 401) {
-      if (window.location.href.includes('jarjestajarekisteri')) {
+      if (
+        window.location.href.includes('jarjestajarekisteri') ||
+        window.location.href.includes('tutkintotilaisuudet')
+      ) {
         window.location.href = 'auth/cas';
       }
     }
