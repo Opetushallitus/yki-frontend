@@ -1,6 +1,7 @@
 import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import toJson from 'enzyme-to-json';
 
 import { upcomingExamSessions as UpcomingExamSessions } from './UpcomingExamSessions';
 
@@ -39,6 +40,6 @@ describe('<UpcomingExamSessions />', () => {
     const wrapper = shallow(
       <UpcomingExamSessions t={key => key} examSessions={examSessions} examSessionSelected={jest.fn()}/>,
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
