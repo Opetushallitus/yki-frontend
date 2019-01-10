@@ -52,6 +52,7 @@ describe('<ParticipantList />', () => {
       <ParticipantList
         examSession={examSession}
         participants={participants}
+        t={t => t}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();

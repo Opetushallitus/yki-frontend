@@ -12,7 +12,10 @@ import classes from './ParticipantList.module.css';
 export const participantList = props => {
   const registratioStatus = state => {
     const image = state === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
-    const text = state === 'COMPLETED' ? 'Maksanut' : 'Ei maksanut';
+    const text =
+      state === 'COMPLETED'
+        ? props.t('examSession.paid')
+        : props.t('examSession.notPaid');
     return (
       <React.Fragment>
         <img src={image} alt="" /> {text}
@@ -59,10 +62,13 @@ export const participantList = props => {
   return (
     <div data-cy="participant-list">
       <h3>
-        Ilmoittautuneet: {props.examSession.participants} /{' '}
+        {props.t('examSession.participants')}
+        {':'} {props.examSession.participants} /{' '}
         {props.examSession.max_participants}
       </h3>
-      <div className={classes.ParticipantList}>{participantRows(props.participants)}</div>
+      <div className={classes.ParticipantList}>
+        {participantRows(props.participants)}
+      </div>
     </div>
   );
 };

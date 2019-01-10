@@ -23,7 +23,7 @@ export class ExamSessionDetails extends Component {
     return (
       <div data-cy="exam-session-details">
         <h2 className={classes.ExamSessionDetailsHeader}>
-          Tutkintotilaisuus:{' '}
+          {this.props.t('examSession')}{': '}
           {getLanguagesWithLevelDescriptions([
             this.props.examSession,
           ])[0].toLowerCase()}{' '}

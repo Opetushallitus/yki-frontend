@@ -45,6 +45,7 @@
   "error.numeric": "Arvon pitää olla luku_sv",
   "errorBoundary.return": "Palaa etusivulle",
   "errorBoundary.title": "Tapahtui odottamaton virhe_sv",
+  "examSession": "Tutkintotilaisuus_sv",
   "examSession.add.header": "Luo uusi tutkintotilaisuus_sv",
   "examSession.add.subHeader": "Tutkintotilaisuuden tiedot_sv",
   "examSession.addButton": "Tallenna tilaisuuden tiedot_sv",

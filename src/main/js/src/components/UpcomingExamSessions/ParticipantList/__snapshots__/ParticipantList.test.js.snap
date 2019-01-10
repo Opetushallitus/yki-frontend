@@ -5,7 +5,9 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
   data-cy="participant-list"
 >
   <h3>
-    Ilmoittautuneet: 
+    examSession.participants
+    :
+     
     2
      /
      
@@ -35,7 +37,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         src="checkmark-done.svg"
       />
        
-      Maksanut
+      examSession.paid
     </p>
     <p />
     <p />
@@ -84,7 +86,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         src="checkmark-not-done.svg"
       />
        
-      Ei maksanut
+      examSession.notPaid
     </p>
     <p />
     <p />
