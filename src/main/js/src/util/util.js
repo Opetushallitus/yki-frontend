@@ -7,13 +7,13 @@ export const firstCharToUpper = string => {
 };
 
 export const levelTranslations = {
-  PERUS: i18next.t('common.level.basic'),
-  KESKI: i18next.t('common.level.middle'),
-  YLIN: i18next.t('common.level.high'),
+  PERUS: 'common.level.basic',
+  KESKI: 'common.level.middle',
+  YLIN: 'common.level.high',
 };
 
 export const levelDescription = level => {
-  return levelTranslations[level];
+  return i18next.t(levelTranslations[level]);
 };
 
 export const languageToString = lang => {
