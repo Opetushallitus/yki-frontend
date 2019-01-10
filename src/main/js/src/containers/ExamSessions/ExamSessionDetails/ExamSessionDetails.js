@@ -5,12 +5,10 @@ import { withNamespaces } from 'react-i18next';
 import moment from 'moment';
 
 import classes from './ExamSessionDetails.module.css';
-import {
-  DATE_FORMAT,
-} from '../../../common/Constants';
+import { DATE_FORMAT } from '../../../common/Constants';
 import { getLanguagesWithLevelDescriptions } from '../../../util/util';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import ParticipantList from '../../../components/UpcomingExamSessions/ExamSessionDetails/ParticipantList/ParticipantList';
+import ParticipantList from '../../../components/UpcomingExamSessions/ParticipantList/ParticipantList';
 import * as actions from '../../../store/actions/index';
 
 class ExamSessionDetails extends Component {
@@ -22,9 +20,7 @@ class ExamSessionDetails extends Component {
   };
 
   render() {
-    return this.props.loading ? (
-      <Spinner />
-    ) : (
+    return (
       <div data-cy="exam-session-details">
         <h2 className={classes.ExamSessionDetailsHeader}>
           Tutkintotilaisuus:{' '}
@@ -33,10 +29,14 @@ class ExamSessionDetails extends Component {
           ])[0].toLowerCase()}{' '}
           {moment(this.props.examSession.session_date).format(DATE_FORMAT)}
         </h2>
-        <ParticipantList
-          examSession={this.props.examSession}
-          participants={this.props.participants}
-        />
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <ParticipantList
+            examSession={this.props.examSession}
+            participants={this.props.participants}
+          />
+        )}
       </div>
     );
   }

@@ -148,7 +148,7 @@ const fetchExamSessionParticipantsSuccess = participants => {
 const fetchExamSessionParticipantsFail = error => {
   return {
     type: actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_FAIL,
-    error: error,
+    error: Object.assign(error, { key: 'error.examSession.fetchParticipantsFailed' }),
     loading: false,
   };
 };

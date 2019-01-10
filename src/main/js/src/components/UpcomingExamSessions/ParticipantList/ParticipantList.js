@@ -4,9 +4,9 @@ import { withNamespaces } from 'react-i18next';
 import moment from 'moment';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
-import { DATE_FORMAT } from '../../../../common/Constants';
-import checkMarkDone from '../../../../assets/svg/checkmark-done.svg';
-import checkMarkNotDone from '../../../../assets/svg/checkmark-not-done.svg';
+import { DATE_FORMAT } from '../../../common/Constants';
+import checkMarkDone from '../../../assets/svg/checkmark-done.svg';
+import checkMarkNotDone from '../../../assets/svg/checkmark-not-done.svg';
 import classes from './ParticipantList.module.css';
 
 export const participantList = props => {

@@ -6,18 +6,14 @@
   grid-row-gap: 0px;
 }
 
-.Row {
+.Item {
   display: grid;
+  white-space: nowrap;
 }
 
 .ItemHeader {
   display: grid;
   font-weight: bold;
-}
-
-.Item {
-  display: grid;
-  white-space: nowrap;
 }
 
 .Status {

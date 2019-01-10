@@ -27,6 +27,18 @@ class ExamSessions extends Component {
     this.props.onFetchExamSessionContent();
   };
 
+  componentDidUpdate = (prevProps) => {
+    // close open modals in case of error
+    if (!prevProps.error && this.props.error) {
+      if (this.state.showExamSessionDetailsModal) {
+        this.closeExamSessionDetailsModalHandler();
+      }
+      if (this.state.showAddExamSessionModal) {
+        this.closeAddExamSessionModalHandler();
+      }
+    }
+  }
+
   openAddExamSessionModalHandler = () =>
     this.setState({ showAddExamSessionModal: true });
 

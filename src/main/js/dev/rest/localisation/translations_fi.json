@@ -40,6 +40,7 @@
   "error.common": "Tapahtui odottamaton virhe.",
   "error.examSession.addFailed": "Tutkintotilaisuuden lisäys epäonnistui",
   "error.examSession.fetchFailed": "Tutkintotilaisuuksien hakeminen epäonnistui.",
+  "error.examSession.fetchParticipantsFailed": "Tutkintotilaisuuden osallistujien haku epäonnistui",
   "error.mandatory": "Pakollinen",
   "error.numeric": "Arvon pitää olla luku",
   "errorBoundary.return": "Palaa etusivulle",
