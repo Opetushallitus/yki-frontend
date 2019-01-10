@@ -8,6 +8,7 @@ const initialState = {
     examSessions: [],
     examDates: [],
   },
+  participants: [],
   loading: false,
   error: null,
 };
@@ -24,6 +25,12 @@ const reducer = (state = initialState, action) => {
       case actionTypes.ADD_EXAM_SESSION_SUCCESS:
         return {
           ...state,
+          loading: false,
+        };
+      case actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_SUCCESS:
+        return {
+          ...state,
+          participants: action.participants,
           loading: false,
         };
       default:

@@ -1,6 +1,8 @@
 export {
   fetchExamSessionContent,
   fetchExamSessionContentFailReset,
+  fetchExamSessionParticipants,
+  fetchExamSessionParticipantsFailReset,
   addExamSession,
   addExamSessionFailReset,
 } from './examSession';

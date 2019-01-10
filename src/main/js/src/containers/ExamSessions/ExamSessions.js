@@ -6,6 +6,7 @@ import { withNamespaces } from 'react-i18next';
 import classes from './ExamSessions.module.css';
 import Page from '../../hoc/Page/Page';
 import UpcomingExamSessions from '../../components/UpcomingExamSessions/UpcomingExamSessions';
+import ExamSessionDetails from './ExamSessionDetails/ExamSessionDetails'
 import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer';
 import ExamSessionForm from '../../components/ExamSessionForm/ExamSessionForm';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -17,38 +18,64 @@ import * as actions from '../../store/actions/index';
 
 class ExamSessions extends Component {
   state = {
-    showModal: false,
+    showAddExamSessionModal: false,
+    showExamSessionDetailsModal: false,
+    selectedExamSession: null,
   };
 
   componentDidMount = () => {
     this.props.onFetchExamSessionContent();
   };
 
-  openModalHandler = () => this.setState({ showModal: true });
+  openAddExamSessionModalHandler = () =>
+    this.setState({ showAddExamSessionModal: true });
 
-  closeModalHandler = () => this.setState({ showModal: false });
+  closeAddExamSessionModalHandler = () =>
+    this.setState({ showAddExamSessionModal: false });
+
+  openExamSessionDetailsModalHandler = examSession =>
+    this.setState({
+      selectedExamSession: examSession,
+      showExamSessionDetailsModal: true,
+    });
+
+  closeExamSessionDetailsModalHandler = () =>
+    this.setState({ showExamSessionDetailsModal: false });
 
   createExamSessionHandler = examSession => {
     this.props.onAddExamSession(
       examSession,
       this.props.examSessionContent.organization.oid,
     );
-    this.closeModalHandler();
+    this.closeAddExamSessionModalHandler();
     this.props.onFetchExamSessionContent();
   };
 
   render() {
     const addExamSessionModal = (
       <React.Fragment>
-        {this.state.showModal ? (
+        {this.state.showAddExamSessionModal ? (
           <Modal
-            show={this.state.showModal}
-            modalClosed={this.closeModalHandler}
+            show={this.state.showAddExamSessionModal}
+            modalClosed={this.closeAddExamSessionModalHandler}
           >
             <ExamSessionForm
               examSessionContent={this.props.examSessionContent}
               onSubmit={this.createExamSessionHandler}
             />
+          </Modal>
+        ) : null}
+      </React.Fragment>
+    );
+
+    const examSessionDetailsModal = (
+      <React.Fragment>
+        {this.state.showExamSessionDetailsModal ? (
+          <Modal
+            show={this.state.showExamSessionDetailsModal}
+            modalClosed={this.closeExamSessionDetailsModalHandler}
+          >
+            <ExamSessionDetails examSession={this.state.selectedExamSession} />
           </Modal>
         ) : null}
       </React.Fragment>
@@ -68,12 +95,13 @@ class ExamSessions extends Component {
           <UpcomingExamSessions
             organizer={this.props.examSessionContent.organizer}
             examSessions={this.props.examSessionContent.examSessions}
+            examSessionSelected={this.openExamSessionDetailsModalHandler}
           />
           <div
             className={classes.AddExamSessionButton}
             data-cy="add-exam-session-button"
           >
-            <Button clicked={this.openModalHandler}>
+            <Button clicked={this.openAddExamSessionModalHandler}>
               {this.props.t('examSession.addExamSession')}
             </Button>
           </div>
@@ -91,6 +119,7 @@ class ExamSessions extends Component {
       <Page>
         <div className={classes.ExamSessions}>
           {addExamSessionModal}
+          {examSessionDetailsModal}
           {content}
         </div>
       </Page>

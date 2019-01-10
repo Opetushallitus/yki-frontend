@@ -1,0 +1,72 @@
+{
+    "participants": [
+      {
+        "form": {
+          "post_office": "Ankkalinna",
+          "ssn": "301079-122F",
+          "exam_lang": "fi",
+          "phone_number": "+358401234678",
+          "gender": null,
+          "email": "aa@al.fi",
+          "certificate_lang": "fi",
+          "last_name": "Ankka",
+          "first_name": "Iines",
+          "nationalities": ["FIN"],
+          "street_address": "Katu 4",
+          "zip": "00100"
+        },
+        "state": "COMPLETED"
+      },
+      {
+        "form": {
+          "post_office": "Ankkalinna",
+          "exam_lang": "fi",
+          "phone_number": "+358407812345",
+          "gender": "1",
+          "email": "aa@al.fi",
+          "certificate_lang": "fi",
+          "birth_date": "1999-01-01",
+          "last_name": "Ankka",
+          "first_name": "Aku",
+          "nationalities": ["FIN"],
+          "street_address": "Katu 3",
+          "zip": "00100"
+        },
+        "state": "SUBMITTED"
+      },
+      {
+        "form": {
+          "post_office": "Espoo",
+          "ssn": "011088-1234 ",
+          "exam_lang": "fi",
+          "phone_number": "+358405131441",
+          "gender": 1,
+          "email": "michael.wallis@gmail.co",
+          "certificate_lang": "fi",
+          "last_name": "Michael",
+          "first_name": "Wallis",
+          "nationalities": ["FIN"],
+          "street_address": "Revontulentie 13 C 2",
+          "zip": "02100"
+        },
+        "state": "COMPLETED"
+      },
+      {
+        "form": {
+          "post_office": "Espoo",
+          "ssn": "011088-1234 ",
+          "exam_lang": "fi",
+          "phone_number": "+358405131441",
+          "gender": 2,
+          "email": "natalia.gaddens@test.com",
+          "certificate_lang": "fi",
+          "last_name": "Natalia",
+          "first_name": "Gaddens",
+          "nationalities": ["FIN"],
+          "street_address": "Revontulentie 13 C 2",
+          "zip": "02100"
+        },
+        "state": "COMPLETED"
+      }
+    ]
+  }

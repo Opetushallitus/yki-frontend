@@ -129,3 +129,48 @@ export const addExamSessionFailReset = () => {
     type: actionTypes.ADD_EXAM_SESSION_FAIL_RESET,
   };
 };
+
+const fetchExamSessionParticipantsStart = () => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_START,
+    loading: true,
+  };
+};
+
+const fetchExamSessionParticipantsSuccess = participants => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_SUCCESS,
+    participants: participants,
+    loading: false,
+  };
+};
+
+const fetchExamSessionParticipantsFail = error => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_FAIL,
+    error: error,
+    loading: false,
+  };
+};
+
+export const fetchExamSessionParticipantsFailReset = () => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_FAIL_RESET,
+  };
+};
+
+export const fetchExamSessionParticipants = (organizerOid, examSessionId) => {
+  return dispatch => {
+    dispatch(fetchExamSessionParticipantsStart());
+    axios
+      .get(
+        `/yki/api/virkailija/organizer/${organizerOid}/exam-session/${examSessionId}/participant`,
+      )
+      .then(res => {
+        dispatch(fetchExamSessionParticipantsSuccess(res.data.participants));
+      })
+      .catch(err => {
+        dispatch(fetchExamSessionParticipantsFail(err));
+      });
+  };
+};

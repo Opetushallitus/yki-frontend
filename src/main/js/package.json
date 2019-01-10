@@ -10,6 +10,7 @@
     "i18next": "^13.1.0",
     "i18next-browser-languagedetector": "^2.2.4",
     "i18next-xhr-backend": "^1.5.1",
+    "libphonenumber-js": "^1.7.5",
     "moment": "^2.23.0",
     "prop-types": "^15.6.2",
     "ramda": "^0.26.1",

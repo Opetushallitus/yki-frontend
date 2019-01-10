@@ -13,7 +13,7 @@ export const upcomingExamSessions = props => {
       moment(e.registration_start_date),
     );
     return (
-      <div className={classes.Row} key={i} data-cy="exam-sessions-table-row">
+      <div className={classes.Row} key={i} data-cy="exam-sessions-table-row" onClick={() => props.examSessionSelected(e)}>
         <p>{moment(e.session_date).format(DATE_FORMAT)}</p>
         <p>{languageToString(e.language_code).toLowerCase()}</p>
         <p>{levelDescription(e.level_code).toLowerCase()}</p>
@@ -50,6 +50,7 @@ export const upcomingExamSessions = props => {
 
 upcomingExamSessions.propTypes = {
   examSessions: PropTypes.array.isRequired,
+  examSessionSelected: PropTypes.func.isRequired
 };
 
 export default withNamespaces()(upcomingExamSessions);

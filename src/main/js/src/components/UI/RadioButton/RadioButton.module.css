@@ -21,6 +21,7 @@
 .RadioButtonLabel {
   display: inline-block;
   width: 17%;
+  vertical-align:text-top;
 }
 
 .RadioButtonExtraLabel {
