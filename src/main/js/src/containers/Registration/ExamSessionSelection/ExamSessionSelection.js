@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import classes from './ExamSessionSelection.module.css';
 import { LANGUAGES } from '../../../common/Constants';
 import { levelDescription } from '../../../util/util';
+import ExamSessionList from '../../../components/Registration/ExamSessionList/ExamSessionList';
 
 class ExamSessionSelection extends Component {
   state = {
@@ -89,14 +90,16 @@ class ExamSessionSelection extends Component {
 
     const content =
       this.state.language && this.state.level ? (
-        <h1>Hello</h1>
+        <ExamSessionList
+          language={this.state.language}
+          level={this.state.level}
+          area={this.state.area}
+        />
       ) : !this.state.language ? (
         languages
       ) : (
         levels
       );
-
-    console.log(this.state);
 
     return (
       <React.Fragment>

@@ -1,0 +1,35 @@
+.Filters {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 5px;
+  max-width: 520px;
+}
+
+.Filters label {
+  font-size: 12px;
+}
+
+.Filters select {
+  display: block;
+  height: 31px;
+  width: 100%;
+  padding-left: 7px;
+  appearance: none;
+  background: url('../../../assets/svg/down-facing-triangle.svg') 90% no-repeat
+    hsl(0, 0%, 100%);
+  border: 1px solid hsl(0, 0%, 70%);
+  border-radius: 2px;
+  font-size: 14px;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 620px) {
+  .Filters {
+    grid-gap: 20px;
+  }
+
+  .Filters select {
+    background: url('../../../assets/svg/down-facing-triangle.svg') 95%
+      no-repeat hsl(0, 0%, 100%);
+  }
+}
