@@ -11,9 +11,12 @@ const getCurrentTime = () => {
   return localISOTime;
 };
 
-const examSessions = JSON.parse(
-  fs.readFileSync('./dev/rest/examSessions/examSessions.json'),
-);
+const getExamSessions = () => {
+  return JSON.parse(
+    fs.readFileSync('./dev/rest/examSessions/examSessions.json'),
+  );
+};
+let examSessions = getExamSessions();
 
 const participants = JSON.parse(
   fs.readFileSync('./dev/rest/examSessions/participants.json'),
@@ -136,6 +139,11 @@ module.exports = function(app) {
     next();
   });
 
+  app.get('/yki/reset-mocks', (req, res) => {
+    examSessions = getExamSessions();
+    res.send({ success: true });
+  });
+
   app.get('/yki/api/virkailija/organizer', (req, res) => {
     try {
       res.send({ organizers: organizers });
@@ -162,14 +170,17 @@ module.exports = function(app) {
     }
   });
 
-  app.get('/yki/api/virkailija/organizer/:oid/exam-session/:id/participant', (req, res) => {
-    try {
-      res.send(participants);
-    } catch (err) {
-      console.log(err);
-      res.status(404).send(err.message);
-    }
-  });
+  app.get(
+    '/yki/api/virkailija/organizer/:oid/exam-session/:id/participant',
+    (req, res) => {
+      try {
+        res.send(participants);
+      } catch (err) {
+        console.log(err);
+        res.status(404).send(err.message);
+      }
+    },
+  );
 
   app.post('/yki/api/virkailija/organizer/:oid/exam-session', (req, res) => {
     try {

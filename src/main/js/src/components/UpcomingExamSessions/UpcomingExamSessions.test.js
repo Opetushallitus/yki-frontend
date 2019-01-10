@@ -37,7 +37,7 @@ jest.mock('i18next', () => ({
 describe('<UpcomingExamSessions />', () => {
   it('should render 2 exam session rows', () => {
     const wrapper = shallow(
-      <UpcomingExamSessions t={key => key} examSessions={examSessions} />,
+      <UpcomingExamSessions t={key => key} examSessions={examSessions} examSessionSelected={jest.fn()}/>,
     );
 
     expect(wrapper.find('.ExamSessionList').exists()).toBeTruthy();

@@ -23,12 +23,14 @@ const examSessionForm = props => {
     const examDate = this.parent.examDate;
     const language = this.parent.language;
     const level = this.parent.level;
+    const officeOid = this.parent.officeOid;
     if (examDate && language && level) {
       duplicateFound = props.examSessionContent.examSessions.some(e => {
         return (
           e.session_date === examDate &&
           e.level_code === level &&
-          e.language_code === language
+          e.language_code === language &&
+          e.office_oid === officeOid
         );
       });
     }
@@ -237,6 +239,7 @@ const examSessionForm = props => {
                   component="select"
                   name="officeOid"
                   className={classes.Select}
+                  data-cy="select-officeOid"
                 >
                   {organizationChildrenOptions(
                     props.examSessionContent.organizationChildren,
