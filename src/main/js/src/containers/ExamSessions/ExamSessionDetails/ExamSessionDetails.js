@@ -11,7 +11,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import ParticipantList from '../../../components/UpcomingExamSessions/ParticipantList/ParticipantList';
 import * as actions from '../../../store/actions/index';
 
-class ExamSessionDetails extends Component {
+export class ExamSessionDetails extends Component {
   componentDidMount = () => {
     this.props.onFetchExamSessionParticipants(
       this.props.examSession.organizer_oid,

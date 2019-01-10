@@ -35,12 +35,10 @@ jest.mock('i18next', () => ({
 }));
 
 describe('<UpcomingExamSessions />', () => {
-  it('should render 2 exam session rows', () => {
+  it('should render exam session rows', () => {
     const wrapper = shallow(
       <UpcomingExamSessions t={key => key} examSessions={examSessions} examSessionSelected={jest.fn()}/>,
     );
-
-    expect(wrapper.find('.ExamSessionList').exists()).toBeTruthy();
-    expect(wrapper.find('.Row')).toHaveLength(2);
+    expect(wrapper).toMatchSnapshot();
   });
 });

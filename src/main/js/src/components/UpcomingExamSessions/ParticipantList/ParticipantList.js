@@ -62,7 +62,7 @@ export const participantList = props => {
         Ilmoittautuneet: {props.examSession.participants} /{' '}
         {props.examSession.max_participants}
       </h3>
-      <div className={classes.Grid}>{participantRows(props.participants)}</div>
+      <div className={classes.ParticipantList}>{participantRows(props.participants)}</div>
     </div>
   );
 };

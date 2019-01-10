@@ -1,0 +1,228 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ExamSessionDetails /> should render exam session details 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <ExamSessionDetails
+    errorConfirmedHandler={[MockFunction]}
+    examSession={
+      Object {
+        "language_code": "eng",
+        "level_code": "KESKI",
+        "max_participants": 50,
+        "participants": 2,
+        "registration_end_date": "2028-12-15",
+        "registration_start_date": "2018-09-01",
+        "session_date": "2028-12-30",
+      }
+    }
+    loading={false}
+    onFetchExamSessionParticipants={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            undefined,
+            undefined,
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    participants={Array []}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <h2
+          className="ExamSessionDetailsHeader"
+        >
+          Tutkintotilaisuus:
+           
+          englanti - 
+           
+          30.12.2028
+        </h2>,
+        <LoadNamespace(participantList)
+          examSession={
+            Object {
+              "language_code": "eng",
+              "level_code": "KESKI",
+              "max_participants": 50,
+              "participants": 2,
+              "registration_end_date": "2028-12-15",
+              "registration_start_date": "2018-09-01",
+              "session_date": "2028-12-30",
+            }
+          }
+          participants={Array []}
+        />,
+      ],
+      "data-cy": "exam-session-details",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            "Tutkintotilaisuus:",
+            " ",
+            "englanti - ",
+            " ",
+            "30.12.2028",
+          ],
+          "className": "ExamSessionDetailsHeader",
+        },
+        "ref": null,
+        "rendered": Array [
+          "Tutkintotilaisuus:",
+          " ",
+          "englanti - ",
+          " ",
+          "30.12.2028",
+        ],
+        "type": "h2",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "examSession": Object {
+            "language_code": "eng",
+            "level_code": "KESKI",
+            "max_participants": 50,
+            "participants": 2,
+            "registration_end_date": "2028-12-15",
+            "registration_start_date": "2018-09-01",
+            "session_date": "2028-12-30",
+          },
+          "participants": Array [],
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <h2
+            className="ExamSessionDetailsHeader"
+          >
+            Tutkintotilaisuus:
+             
+            englanti - 
+             
+            30.12.2028
+          </h2>,
+          <LoadNamespace(participantList)
+            examSession={
+              Object {
+                "language_code": "eng",
+                "level_code": "KESKI",
+                "max_participants": 50,
+                "participants": 2,
+                "registration_end_date": "2028-12-15",
+                "registration_start_date": "2018-09-01",
+                "session_date": "2028-12-30",
+              }
+            }
+            participants={Array []}
+          />,
+        ],
+        "data-cy": "exam-session-details",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              "Tutkintotilaisuus:",
+              " ",
+              "englanti - ",
+              " ",
+              "30.12.2028",
+            ],
+            "className": "ExamSessionDetailsHeader",
+          },
+          "ref": null,
+          "rendered": Array [
+            "Tutkintotilaisuus:",
+            " ",
+            "englanti - ",
+            " ",
+            "30.12.2028",
+          ],
+          "type": "h2",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "examSession": Object {
+              "language_code": "eng",
+              "level_code": "KESKI",
+              "max_participants": 50,
+              "participants": 2,
+              "registration_end_date": "2028-12-15",
+              "registration_start_date": "2018-09-01",
+              "session_date": "2028-12-30",
+            },
+            "participants": Array [],
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;
