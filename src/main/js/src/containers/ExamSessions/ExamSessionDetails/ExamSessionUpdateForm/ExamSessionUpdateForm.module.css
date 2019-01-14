@@ -1,3 +1,8 @@
+.Form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 .RadiobuttonGroup {
   margin: 0px 0 27px 0;
 }
@@ -18,8 +23,12 @@
 
 .TextArea {
   width: 340px;
-  height: 100px;
+  height: 108px;
   resize: none;
+}
+
+.Buttons {
+  width: 340px;
 }
 
 .Select {
@@ -34,7 +43,6 @@
 .FormElement {
   margin-top: 20px;
   margin-bottom: 25px;
-  font-size: 0.875em;
 }
 
 .Form h2 {
@@ -48,7 +56,7 @@
   line-height: 19px;
 }
 
-.Form label  {
+.Form label {
   font-size: 0.875em;
 }
 
@@ -56,12 +64,24 @@
   outline: 1px solid hsla(195, 100%, 47%, 1);
 }
 
-.Form button {
+.DeleteButton {
   float: left;
+  padding: 8px;
+}
+
+.UpdateButton {
+  float: right;
 }
 
 .ErrorMessage {
   display: block;
   color: hsla(15, 100%, 40%, 1);
   margin: 14px 0px 14px 0px;
+}
+
+@media (max-width: 920px) {
+  .Form {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }

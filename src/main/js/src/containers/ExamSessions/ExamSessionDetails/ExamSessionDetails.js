@@ -9,6 +9,7 @@ import { DATE_FORMAT } from '../../../common/Constants';
 import { getLanguagesWithLevelDescriptions } from '../../../util/util';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import ParticipantList from '../../../components/UpcomingExamSessions/ParticipantList/ParticipantList';
+import ExamSessionUpdateForm from './ExamSessionUpdateForm/ExamSessionUpdateForm';
 import * as actions from '../../../store/actions/index';
 
 export class ExamSessionDetails extends Component {
@@ -29,6 +30,7 @@ export class ExamSessionDetails extends Component {
           ])[0].toLowerCase()}{' '}
           {moment(this.props.examSession.session_date).format(DATE_FORMAT)}
         </h2>
+        <ExamSessionUpdateForm onSubmit={this.props.onSubmitUpdateExamSession} onDelete={this.props.onSubmitDeleteExamSession} examSession={this.props.examSession}/>
         {this.props.loading ? (
           <Spinner />
         ) : (
@@ -57,7 +59,7 @@ const mapDispatchToProps = dispatch => {
         actions.fetchExamSessionParticipants(organizerOid, examSessionId),
       ),
     errorConfirmedHandler: () =>
-      dispatch(actions.fetchExamSessionParticipantsFailReset()),
+      dispatch(actions.examSessionFailReset()),
   };
 };
 
@@ -67,6 +69,8 @@ ExamSessionDetails.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   onFetchExamSessionParticipants: PropTypes.func.isRequired,
+  onSubmitUpdateExamSession: PropTypes.func.isRequired,
+  onSubmitDeleteExamSession: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
 };
 

@@ -27,12 +27,6 @@ const fetchExamSessionContentFail = error => {
   };
 };
 
-export const fetchExamSessionContentFailReset = () => {
-  return {
-    type: actionTypes.FETCH_EXAM_SESSION_CONTENT_FAIL_RESET,
-  };
-};
-
 export const fetchExamSessionContent = () => {
   return dispatch => {
     dispatch(fetchExamSessionContentStart());
@@ -48,7 +42,9 @@ export const fetchExamSessionContent = () => {
               `/organisaatio-service/rest/organisaatio/v4/${organizer.oid}`,
             ),
             axios.get(
-              `/organisaatio-service/rest/organisaatio/v4/${organizer.oid}/children`,
+              `/organisaatio-service/rest/organisaatio/v4/${
+                organizer.oid
+              }/children`,
             ),
             axios.get(
               `/yki/api/virkailija/organizer/${
@@ -57,17 +53,24 @@ export const fetchExamSessionContent = () => {
             ),
             axios.get('/yki/api/exam-date'),
           ])
-            .then(([organizationRes, organizationChildrenRes, examSessionRes, examDateRes]) => {
-              dispatch(
-                fetchExamSessionContentSuccess({
-                  organizer: organizer,
-                  organization: organizationRes.data,
-                  organizationChildren: organizationChildrenRes.data,
-                  examSessions: examSessionRes.data.exam_sessions,
-                  examDates: examDateRes.data.dates,
-                }),
-              );
-            })
+            .then(
+              ([
+                organizationRes,
+                organizationChildrenRes,
+                examSessionRes,
+                examDateRes,
+              ]) => {
+                dispatch(
+                  fetchExamSessionContentSuccess({
+                    organizer: organizer,
+                    organization: organizationRes.data,
+                    organizationChildren: organizationChildrenRes.data,
+                    examSessions: examSessionRes.data.exam_sessions,
+                    examDates: examDateRes.data.dates,
+                  }),
+                );
+              },
+            )
             .catch(err => {
               dispatch(fetchExamSessionContentFail(err));
             });
@@ -124,9 +127,42 @@ const addExamSessionFail = error => {
   };
 };
 
-export const addExamSessionFailReset = () => {
+export const updateExamSession = (examSession, oid) => {
+  return dispatch => {
+    dispatch(updateExamSessionStart());
+    axios
+      .put(
+        `/yki/api/virkailija/organizer/${oid}/exam-session/${examSession.id}`,
+        examSession,
+      )
+      .then(() => {
+        dispatch(updateExamSessionSuccess());
+      })
+      .catch(err => {
+        dispatch(updateExamSessionFail(err));
+      });
+  };
+};
+
+const updateExamSessionStart = () => {
   return {
-    type: actionTypes.ADD_EXAM_SESSION_FAIL_RESET,
+    type: actionTypes.UPDATE_EXAM_SESSION_START,
+    loading: true,
+  };
+};
+
+const updateExamSessionSuccess = () => {
+  return {
+    type: actionTypes.UPDATE_EXAM_SESSION_SUCCESS,
+    loading: false,
+  };
+};
+
+const updateExamSessionFail = error => {
+  return {
+    type: actionTypes.UPDATE_EXAM_SESSION_FAIL,
+    error: Object.assign(error, { key: 'error.examSession.updateFailed' }),
+    loading: false,
   };
 };
 
@@ -148,14 +184,16 @@ const fetchExamSessionParticipantsSuccess = participants => {
 const fetchExamSessionParticipantsFail = error => {
   return {
     type: actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.fetchParticipantsFailed' }),
+    error: Object.assign(error, {
+      key: 'error.examSession.fetchParticipantsFailed',
+    }),
     loading: false,
   };
 };
 
-export const fetchExamSessionParticipantsFailReset = () => {
+export const examSessionFailReset = () => {
   return {
-    type: actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_FAIL_RESET,
+    type: actionTypes.EXAM_SESSION_FAIL_RESET,
   };
 };
 
@@ -172,5 +210,43 @@ export const fetchExamSessionParticipants = (organizerOid, examSessionId) => {
       .catch(err => {
         dispatch(fetchExamSessionParticipantsFail(err));
       });
+  };
+};
+
+export const deleteExamSession = (oid, examSessionId) => {
+  return dispatch => {
+    dispatch(deleteExamSessionStart());
+    axios
+      .delete(
+        `/yki/api/virkailija/organizer/${oid}/exam-session/${examSessionId}`,
+      )
+      .then(() => {
+        dispatch(deleteExamSessionSuccess());
+      })
+      .catch(err => {
+        dispatch(deleteExamSessionFail(err));
+      });
+  };
+};
+
+const deleteExamSessionStart = () => {
+  return {
+    type: actionTypes.DELETE_EXAM_SESSION_START,
+    loading: true,
+  };
+};
+
+const deleteExamSessionSuccess = () => {
+  return {
+    type: actionTypes.DELETE_EXAM_SESSION_SUCCESS,
+    loading: false,
+  };
+};
+
+const deleteExamSessionFail = error => {
+  return {
+    type: actionTypes.DELETE_EXAM_SESSION_FAIL,
+    error: Object.assign(error, { key: 'error.examSession.deleteFailed' }),
+    loading: false,
   };
 };

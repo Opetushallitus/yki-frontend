@@ -202,6 +202,28 @@ module.exports = function(app) {
     }
   });
 
+  app.put('/yki/api/virkailija/organizer/:oid/exam-session/:id', (req, res) => {
+    try {
+      const { id } = req.params;
+      const foundIndex = examSessions.exam_sessions.findIndex(x => x.id == id);
+      examSessions.exam_sessions[foundIndex] = req.body;
+      res.send({ success: true });
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.delete('/yki/api/virkailija/organizer/:oid/exam-session/:id', (req, res) => {
+    try {
+      const { id } = req.params;
+      const foundIndex = examSessions.exam_sessions.findIndex(x => x.id == id);
+      examSessions.exam_sessions.splice(foundIndex, 1);
+      res.send({ success: true });
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
   // need to proxy here because dev server bug: https://github.com/webpack/webpack-dev-server/issues/1440
   app.post(
     '/organisaatio-service/rest/organisaatio/v3/findbyoids',

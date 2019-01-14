@@ -6,7 +6,7 @@ import { withNamespaces } from 'react-i18next';
 import classes from './ExamSessions.module.css';
 import Page from '../../hoc/Page/Page';
 import UpcomingExamSessions from '../../components/UpcomingExamSessions/UpcomingExamSessions';
-import ExamSessionDetails from './ExamSessionDetails/ExamSessionDetails'
+import ExamSessionDetails from './ExamSessionDetails/ExamSessionDetails';
 import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer';
 import ExamSessionForm from '../../components/ExamSessionForm/ExamSessionForm';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -27,7 +27,7 @@ class ExamSessions extends Component {
     this.props.onFetchExamSessionContent();
   };
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = prevProps => {
     // close open modals in case of error
     if (!prevProps.error && this.props.error) {
       if (this.state.showExamSessionDetailsModal) {
@@ -37,7 +37,7 @@ class ExamSessions extends Component {
         this.closeAddExamSessionModalHandler();
       }
     }
-  }
+  };
 
   openAddExamSessionModalHandler = () =>
     this.setState({ showAddExamSessionModal: true });
@@ -60,6 +60,24 @@ class ExamSessions extends Component {
       this.props.examSessionContent.organization.oid,
     );
     this.closeAddExamSessionModalHandler();
+    this.props.onFetchExamSessionContent();
+  };
+
+  updateExamSessionHandler = examSession => {
+    this.props.onUpdateExamSession(
+      examSession,
+      this.props.examSessionContent.organization.oid,
+    );
+    this.closeExamSessionDetailsModalHandler();
+    this.props.onFetchExamSessionContent();
+  };
+
+  deleteExamSessionHandler = () => {
+    this.props.onDeleteExamSession(
+      this.props.examSessionContent.organization.oid,
+      this.state.selectedExamSession.id,
+    );
+    this.closeExamSessionDetailsModalHandler();
     this.props.onFetchExamSessionContent();
   };
 
@@ -87,7 +105,11 @@ class ExamSessions extends Component {
             show={this.state.showExamSessionDetailsModal}
             modalClosed={this.closeExamSessionDetailsModalHandler}
           >
-            <ExamSessionDetails examSession={this.state.selectedExamSession} />
+            <ExamSessionDetails
+              examSession={this.state.selectedExamSession}
+              onSubmitUpdateExamSession={this.updateExamSessionHandler}
+              onSubmitDeleteExamSession={this.deleteExamSessionHandler}
+            />
           </Modal>
         ) : null}
       </React.Fragment>
@@ -152,9 +174,13 @@ const mapDispatchToProps = dispatch => {
     onFetchExamSessionContent: () =>
       dispatch(actions.fetchExamSessionContent()),
     errorConfirmedHandler: () =>
-      dispatch(actions.fetchExamSessionContentFailReset()),
+      dispatch(actions.examSessionFailReset()),
     onAddExamSession: (examSession, oid) =>
       dispatch(actions.addExamSession(examSession, oid)),
+    onUpdateExamSession: (examSession, oid) =>
+      dispatch(actions.updateExamSession(examSession, oid)),
+    onDeleteExamSession: (oid, examSessionId) =>
+      dispatch(actions.deleteExamSession(oid, examSessionId)),
   };
 };
 
@@ -165,6 +191,8 @@ ExamSessions.propTypes = {
   onFetchExamSessionContent: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
   onAddExamSession: PropTypes.func.isRequired,
+  onUpdateExamSession: PropTypes.func.isRequired,
+  onDeleteExamSession: PropTypes.func.isRequired,
 };
 
 export default connect(

@@ -1,83 +1,76 @@
 {
-    "exam_sessions": [
-      {
-        "published_at": "2018-01-01T00:00:00.000Z",
-        "registration_end_date": "2018-12-15",
-        "office_oid": null,
-        "id": 1,
-        "location": [
-          {
-            "lang": "fi",
-            "extra_information": null,
-            "city": "Tampere",
-            "name": "Omenia",
-            "other_location_info": "auditorio A2",
-            "street_address": "Jokukatu 4"
-          },
-          {
-            "lang": "sv",
-            "extra_information": null,
-            "city": "Tammerfors",
-            "name": "Omenia",
-            "other_location_info": "auditorium A2",
-            "street_address": "Jokukatu 4"
-          },
-          {
-            "lang": "en",
-            "extra_information": null,
-            "city": "Tampere",
-            "name": "Omenia",
-            "other_location_info": "auditorium A2",
-            "street_address": "Jokukatu 4"
-          }
-        ],
-        "session_date": "2018-12-30",
-        "participants": 4,
-        "max_participants": 50,
-        "registration_start_date": "2018-09-01",
-        "organizer_oid": "1.2.3.4",
-        "language_code": "eng",
-        "level_code": "KESKI"
-      },
-      {
-        "published_at": "2018-01-01T00:00:00.000Z",
-        "registration_end_date": "2019-12-01",
-        "office_oid": null,
-        "id": 1,
-        "location": [
-          {
-            "lang": "fi",
-            "extra_information": null,
-            "city": "Tampere",
-            "name": "Omenia",
-            "other_location_info": "auditorio A2",
-            "street_address": "Jokukatu 4"
-          },
-          {
-            "lang": "sv",
-            "extra_information": null,
-            "city": "Tammerfors",
-            "name": "Omenia",
-            "other_location_info": "auditorium A2",
-            "street_address": "Jokukatu 4"
-          },
-          {
-            "lang": "en",
-            "extra_information": null,
-            "city": "Tampere",
-            "name": "Omenia",
-            "other_location_info": "auditorium A2",
-            "street_address": "Jokukatu 4"
-          }
-        ],
-        "session_date": "2019-05-02",
-        "participants": 0,
-        "max_participants": 50,
-        "registration_start_date": "2019-04-02",
-        "organizer_oid": "1.2.3.4",
-        "language_code": "fin",
-        "level_code": "PERUS"
-      }
-    ]
-  }
-  
+  "exam_sessions": [
+    {
+      "published_at": "2018-01-01T00:00:00.000Z",
+      "registration_end_date": "2018-12-15",
+      "office_oid": null,
+      "id": 1,
+      "location": [
+        {
+          "lang": "fi",
+          "extra_information": null,
+          "address": "Jokukatu 4, 00100 Tampere",
+          "name": "Omenia",
+          "other_location_info": "auditorio A2"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "address": "Jokukatu 4, 00100 Tammerfors",
+          "name": "Omenia",
+          "other_location_info": "auditorium A2"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "address": "Jokukatu 4, 00100 Tampere",
+          "name": "Omenia",
+          "other_location_info": "auditorium A2"
+        }
+      ],
+      "session_date": "2018-12-30",
+      "participants": 4,
+      "max_participants": 50,
+      "registration_start_date": "2018-09-01",
+      "organizer_oid": "1.2.3.4",
+      "language_code": "eng",
+      "level_code": "KESKI"
+    },
+    {
+      "published_at": "2018-01-01T00:00:00.000Z",
+      "registration_end_date": "2019-12-01",
+      "office_oid": null,
+      "id": 2,
+      "location": [
+        {
+          "lang": "fi",
+          "extra_information": null,
+          "name": "Omenia",
+          "other_location_info": "auditorio A2",
+          "address": "Jokukatu 4, 00100 Tammerfors"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "name": "Omenia",
+          "other_location_info": "auditorium A2",
+          "address": "Jokukatu 4, 00100 Tammerfors"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "name": "Omenia",
+          "other_location_info": "auditorium A2",
+          "address": "Jokukatu 4, 00100 Tammerfors"
+        }
+      ],
+      "session_date": "2019-05-02",
+      "participants": 0,
+      "max_participants": 50,
+      "registration_start_date": "2019-04-02",
+      "organizer_oid": "1.2.3.4",
+      "language_code": "fin",
+      "level_code": "PERUS"
+    }
+  ]
+}

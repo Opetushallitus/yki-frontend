@@ -34,6 +34,12 @@ const reducer = (state = initialState, action) => {
           loading: false,
         };
       default:
+        if (action.type.endsWith('_SUCCESS')) {
+          return {
+            ...state,
+            loading: false,
+          };
+        }
         if (action.type.endsWith('_START')) {
           return {
             ...state,

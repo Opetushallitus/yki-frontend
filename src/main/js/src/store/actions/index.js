@@ -1,10 +1,10 @@
 export {
   fetchExamSessionContent,
-  fetchExamSessionContentFailReset,
   fetchExamSessionParticipants,
-  fetchExamSessionParticipantsFailReset,
+  examSessionFailReset,
   addExamSession,
-  addExamSessionFailReset,
+  updateExamSession,
+  deleteExamSession,
 } from './examSession';
 export {
   fetchRegistryContent,
