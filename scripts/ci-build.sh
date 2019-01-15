@@ -6,6 +6,7 @@ if [ "${TRAVIS_EVENT_TYPE}" = "cron" ]; then
 fi
 if [ "${TRAVIS_EVENT_TYPE}" != "cron" ]; then
   npm test --prefix src/main/js/
+  npm run e2e-test --prefix src/main/js/
   ./mvnw clean install
   mv target/yki-frontend-*.jar $DOCKER_BUILD_DIR/artifact/${ARTIFACT_NAME}.jar
   cp -vr src/main/resources/* $DOCKER_BUILD_DIR/config/
