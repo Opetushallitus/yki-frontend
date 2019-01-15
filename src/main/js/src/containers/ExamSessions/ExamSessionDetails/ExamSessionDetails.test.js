@@ -18,19 +18,19 @@ const examSession = {
 };
 
 describe('<ExamSessionDetails />', () => {
-
   it('should render exam session details', () => {
     const wrapper = shallow(
       <ExamSessionDetails
-          examSession={examSession}
-          participants={[]}
-          loading={false}
-          t={t => t}
-          onFetchExamSessionParticipants = {jest.fn()}
-          errorConfirmedHandler= {jest.fn()}
+        examSession={examSession}
+        participants={[]}
+        loading={false}
+        t={t => t}
+        onFetchExamSessionParticipants={jest.fn()}
+        errorConfirmedHandler={jest.fn()}
+        onSubmitUpdateExamSession={jest.fn()}
+        onSubmitDeleteExamSession={jest.fn()}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();
   });
-
 });

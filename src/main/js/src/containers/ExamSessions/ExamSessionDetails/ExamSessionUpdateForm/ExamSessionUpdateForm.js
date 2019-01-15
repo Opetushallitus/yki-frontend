@@ -13,13 +13,12 @@ import {
   DATE_FORMAT_WITHOUT_YEAR,
 } from '../../../../common/Constants';
 
-export class ExamSessionForm extends Component {
+export class ExamSessionUpdateForm extends Component {
   state = {
     deleting: false,
   };
 
   toggleDeleting = () => {
-    console.log('state.deleting', this.state.deleting);
     this.setState(prevState => ({
       deleting: !prevState.deleting,
     }));
@@ -184,10 +183,10 @@ export class ExamSessionForm extends Component {
   }
 }
 
-ExamSessionForm.propTypes = {
+ExamSessionUpdateForm.propTypes = {
   examSession: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
-export default withNamespaces()(ExamSessionForm);
+export default withNamespaces()(ExamSessionUpdateForm);

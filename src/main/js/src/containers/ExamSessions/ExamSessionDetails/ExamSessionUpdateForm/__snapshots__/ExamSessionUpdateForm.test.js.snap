@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ExamSessionUpdateForm /> should render form 1`] = `
+<form
+  class="Form"
+>
+  <div>
+    <div
+      class="FormElement"
+    >
+      <h3>
+        common.registationPeriod
+      </h3>
+      <label>
+        1.9. – 15.12.2028
+      </label>
+    </div>
+    <div
+      class="FormElement"
+    >
+      <h3>
+        examSession.maxParticipants *
+      </h3>
+      <input
+        class="MaxParticipantsInput"
+        data-cy="input-max-participants"
+        id="maxParticipants"
+        name="maxParticipants"
+        value="50"
+      />
+    </div>
+    <div
+      class="FormElement"
+    >
+      <h3>
+        common.address *
+      </h3>
+      <input
+        class="TextInput"
+        data-cy="input-address"
+        id="address"
+        name="address"
+        value="Jokukatu 4, 00100 Tammerfors"
+      />
+    </div>
+  </div>
+  <div>
+    <div
+      class="FormElement"
+    >
+      <h3>
+        common.location
+      </h3>
+      <input
+        class="TextInput"
+        id="location"
+        name="location"
+        value="auditorio A2"
+      />
+    </div>
+    <div
+      class="FormElement"
+    >
+      <h3>
+        common.extra
+      </h3>
+      <textarea
+        class="TextArea"
+        cols="33"
+        id="extra"
+        maxlength="2048"
+        name="extra"
+        rows="5"
+        wrap="soft"
+      />
+    </div>
+    <div
+      class="Buttons"
+    >
+      <div
+        class="DeleteButton"
+      >
+        <button
+          class="Delete"
+          type="button"
+        >
+          examSession.delete
+        </button>
+      </div>
+      <button
+        class="Button undefined"
+        disabled=""
+        type="submit"
+      >
+        registryItem.button.update
+      </button>
+    </div>
+  </div>
+</form>
+`;
