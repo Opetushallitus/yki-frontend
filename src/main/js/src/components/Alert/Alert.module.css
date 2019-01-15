@@ -1,6 +1,7 @@
 .Alert {
   text-align: center;
   display: block;
+  width: 95%;
   color: hsla(0, 0%, 16%, 1);
 }
 

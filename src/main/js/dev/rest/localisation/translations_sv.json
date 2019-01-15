@@ -55,6 +55,7 @@
   "error.examSession.fetchFailed": "Tutkintotilaisuuksien hakeminen epäonnistui._sv",
   "error.examSession.fetchParticipantsFailed": "Tutkintotilaisuuden osallistujien haku epäonnistui_sv",
   "error.examSession.updateFailed": "Tutkintotilaisuuden päivitys epäonnistui_sv",
+  "error.generic.info": "Virhetilanteissa lähetä sähköposti osoitteeseen..._sv",
   "error.mandatory": "Pakollinen_sv",
   "error.numeric": "Arvon pitää olla luku_sv",
   "errorBoundary.return": "Palaa etusivulle",

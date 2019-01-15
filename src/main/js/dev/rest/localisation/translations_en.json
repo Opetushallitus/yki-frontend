@@ -52,6 +52,7 @@
   "email.payment_success.subject": "Maksu onnistui_en",
   "error.common": "Tapahtui odottamaton virhe_en",
   "error.examSession.fetchFailed": "Tutkintotilaisuuksien hakeminen epäonnistui._en",
+  "error.generic.info": "Virhetilanteissa lähetä sähköposti osoitteeseen..._en",
   "error.mandatory": "Mandatory",
   "error.numeric": "Arvon pitää olla luku_en",
   "errorBoundary.return": "Palaa etusivulle_en",
