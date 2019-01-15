@@ -21,16 +21,30 @@ export class ExamSessionDetails extends Component {
   };
 
   render() {
+    const officeHeader = () => {
+      return this.props.examSession.office_oid ? (
+        <h2 className={classes.ExamSessionDetailsHeader}>
+          {this.props.examSession.location[0].name}
+        </h2>
+      ) : null;
+    };
+
     return (
       <div data-cy="exam-session-details">
+        {officeHeader()}
         <h2 className={classes.ExamSessionDetailsHeader}>
-          {this.props.t('examSession')}{': '}
+          {this.props.t('examSession')}
+          {': '}
           {getLanguagesWithLevelDescriptions([
             this.props.examSession,
           ])[0].toLowerCase()}{' '}
           {moment(this.props.examSession.session_date).format(DATE_FORMAT)}
         </h2>
-        <ExamSessionUpdateForm onSubmit={this.props.onSubmitUpdateExamSession} onDelete={this.props.onSubmitDeleteExamSession} examSession={this.props.examSession}/>
+        <ExamSessionUpdateForm
+          onSubmit={this.props.onSubmitUpdateExamSession}
+          onDelete={this.props.onSubmitDeleteExamSession}
+          examSession={this.props.examSession}
+        />
         {this.props.loading ? (
           <Spinner />
         ) : (
@@ -58,8 +72,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         actions.fetchExamSessionParticipants(organizerOid, examSessionId),
       ),
-    errorConfirmedHandler: () =>
-      dispatch(actions.examSessionFailReset()),
+    errorConfirmedHandler: () => dispatch(actions.examSessionFailReset()),
   };
 };
 

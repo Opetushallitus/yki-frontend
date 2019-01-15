@@ -205,6 +205,11 @@ const examSessionForm = props => {
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
+        const office = values.officeOid
+          ? props.examSessionContent.organizationChildren.find(
+              o => o.oid === values.officeOid,
+            )
+          : null;
         const payload = {
           session_date: values.examDate,
           language_code: values.language,
@@ -215,7 +220,9 @@ const examSessionForm = props => {
           location: [
             {
               name: getLocalizedName(
-                props.examSessionContent.organization.nimi,
+                office
+                  ? office.nimi
+                  : props.examSessionContent.organization.nimi,
                 props.lng,
               ),
               address: values.address,
