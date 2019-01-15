@@ -53,6 +53,7 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       </h3>
       <input
         class="TextInput"
+        data-cy="input-location"
         id="location"
         name="location"
         value="auditorio A2"
@@ -67,6 +68,7 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       <textarea
         class="TextArea"
         cols="33"
+        data-cy="input-extra"
         id="extra"
         maxlength="2048"
         name="extra"

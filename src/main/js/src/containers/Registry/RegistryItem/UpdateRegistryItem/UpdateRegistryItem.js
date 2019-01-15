@@ -5,6 +5,7 @@ import { withNamespaces } from 'react-i18next';
 
 import classes from './UpdateRegistryItem.module.css';
 import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
+import DeleteButton from '../../../../components/UI/DeleteButton/DeleteButton';
 import { firstCharToUpper } from '../../../../util/util';
 import * as actions from '../../../../store/actions/index';
 
@@ -30,28 +31,6 @@ class UpdateRegistryItem extends Component {
   };
 
   render() {
-    const remove = !this.state.deleting ? (
-      <button onClick={this.toggleDeleting} className={classes.Delete}>
-        {this.props.t('registryItem.delete')}
-      </button>
-    ) : (
-      <React.Fragment>
-        <button
-          onClick={() => this.deleteRegistryItemHandler(this.props.item.oid)}
-          className={classes.DeleteConfirmation}
-        >
-          {this.props.t('registryItem.deleteConfirm')}
-        </button>
-        <button
-          onClick={this.toggleDeleting}
-          className={classes.DeleteCancel}
-          autoFocus
-        >
-          {this.props.t('registryItem.deleteCancel')}
-        </button>
-      </React.Fragment>
-    );
-
     return (
       <React.Fragment>
         <div className={classes.Content}>
@@ -72,7 +51,16 @@ class UpdateRegistryItem extends Component {
             onSubmit={this.updateRegistryItemHandler}
           />
         </div>
-        <div className={classes.DeleteButtons}>{remove}</div>
+        <div className={classes.DeleteButtons}>
+          <DeleteButton
+            onClick={() => this.deleteRegistryItemHandler(this.props.item.oid)}
+            deleting={this.state.deleting}
+            toggleDeleting={this.toggleDeleting}
+            deleteText={this.props.t('registryItem.delete')}
+            deleteConfirmText={this.props.t('registryItem.deleteConfirm')}
+            deleteCancelText={this.props.t('registryItem.deleteCancel')}
+          />
+        </div>
       </React.Fragment>
     );
   }
