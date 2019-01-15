@@ -3,28 +3,28 @@
     {
       "published_at": "2018-01-01T00:00:00.000Z",
       "registration_end_date": "2018-12-15",
-      "office_oid": null,
+      "office_oid": "1.2.246.562.10.29461948951",
       "id": 1,
       "location": [
         {
           "lang": "fi",
           "extra_information": null,
           "address": "Jokukatu 4, 00100 Tampere",
-          "name": "Omenia",
+          "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorio A2"
         },
         {
           "lang": "sv",
           "extra_information": null,
           "address": "Jokukatu 4, 00100 Tammerfors",
-          "name": "Omenia",
+          "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorium A2"
         },
         {
           "lang": "en",
           "extra_information": null,
           "address": "Jokukatu 4, 00100 Tampere",
-          "name": "Omenia",
+          "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorium A2"
         }
       ],
@@ -39,27 +39,27 @@
     {
       "published_at": "2018-01-01T00:00:00.000Z",
       "registration_end_date": "2019-04-01",
-      "office_oid": null,
+      "office_oid": "1.2.246.562.10.29461948951",
       "id": 2,
       "location": [
         {
           "lang": "fi",
           "extra_information": null,
-          "name": "Omenia",
+          "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorio A2",
           "address": "Jokukatu 4, 00100 Tammerfors"
         },
         {
           "lang": "sv",
           "extra_information": null,
-          "name": "Omenia",
+          "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorium A2",
           "address": "Jokukatu 4, 00100 Tammerfors"
         },
         {
           "lang": "en",
           "extra_information": null,
-          "name": "Omenia",
+          "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorium A2",
           "address": "Jokukatu 4, 00100 Tammerfors"
         }

@@ -57,16 +57,15 @@ export class ExamSessionUpdateForm extends Component {
       );
       return registrationStarted ? null : (
         <div className={classes.DeleteButton}>
-        <DeleteButton
-          onClick={this.props.onDelete}
-          deleting={this.state.deleting}
-          toggleDeleting={this.toggleDeleting}
-          deleteText={this.props.t('examSession.delete')}
-          deleteConfirmText={this.props.t('common.confirm')}
-          deleteCancelText={this.props.t('common.cancelConfirm')}
-        />
+          <DeleteButton
+            onClick={this.props.onDelete}
+            deleting={this.state.deleting}
+            toggleDeleting={this.toggleDeleting}
+            deleteText={this.props.t('examSession.delete')}
+            deleteConfirmText={this.props.t('common.confirm')}
+            deleteCancelText={this.props.t('common.cancelConfirm')}
+          />
         </div>
-
       );
     };
 
