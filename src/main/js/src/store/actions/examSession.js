@@ -98,6 +98,7 @@ export const addExamSession = (examSession, oid) => {
       .post(`/yki/api/virkailija/organizer/${oid}/exam-session`, examSession)
       .then(() => {
         dispatch(addExamSessionSuccess());
+        dispatch(fetchExamSessionContent());
       })
       .catch(err => {
         dispatch(addExamSessionFail(err));
@@ -137,6 +138,7 @@ export const updateExamSession = (examSession, oid) => {
       )
       .then(() => {
         dispatch(updateExamSessionSuccess());
+        dispatch(fetchExamSessionContent());
       })
       .catch(err => {
         dispatch(updateExamSessionFail(err));
@@ -222,6 +224,7 @@ export const deleteExamSession = (oid, examSessionId) => {
       )
       .then(() => {
         dispatch(deleteExamSessionSuccess());
+        dispatch(fetchExamSessionContent());
       })
       .catch(err => {
         dispatch(deleteExamSessionFail(err));

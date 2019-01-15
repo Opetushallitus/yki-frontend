@@ -60,7 +60,6 @@ class ExamSessions extends Component {
       this.props.examSessionContent.organization.oid,
     );
     this.closeAddExamSessionModalHandler();
-    this.props.onFetchExamSessionContent();
   };
 
   updateExamSessionHandler = examSession => {
@@ -69,7 +68,6 @@ class ExamSessions extends Component {
       this.props.examSessionContent.organization.oid,
     );
     this.closeExamSessionDetailsModalHandler();
-    this.props.onFetchExamSessionContent();
   };
 
   deleteExamSessionHandler = () => {
@@ -78,7 +76,6 @@ class ExamSessions extends Component {
       this.state.selectedExamSession.id,
     );
     this.closeExamSessionDetailsModalHandler();
-    this.props.onFetchExamSessionContent();
   };
 
   render() {

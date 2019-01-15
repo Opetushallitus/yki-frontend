@@ -1,4 +1,4 @@
-describe('Exam session', () => {
+describe('Exam sessions', () => {
   beforeEach(() => {
     cy.visit('/tutkintotilaisuudet');
   });
@@ -78,5 +78,44 @@ describe('Exam session', () => {
   it('selecting upcoming exam session opens details modal', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-list]');
+  });
+
+  it('exam session can be updated', () => {
+    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('button')
+      .contains('Tallenna muutokset')
+      .should('be.disabled');
+
+    cy.get('[data-cy=input-max-participants]')
+      .clear()
+      .type('100');
+    cy.get('[data-cy=input-location]')
+      .clear()
+      .type('auditorio A3');
+    cy.get('[data-cy=input-extra]')
+      .clear()
+      .type('extra');
+    cy.get('button')
+      .contains('Tallenna muutokset')
+      .click();
+
+    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=input-max-participants]').should('have.value', '100');
+    cy.get('[data-cy=input-location]').should('have.value', 'auditorio A3');
+    cy.get('[data-cy=input-extra]').should('have.value', 'extra');
+  });
+
+  it('exam session can be deleted when registration is closed', () => {
+    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('button')
+      .contains('Poista tutkintotilaisuus')
+      .should('not.exist');
+
+    cy.visit('/tutkintotilaisuudet');
+
+    cy.get('[data-cy=exam-sessions-table-row-1]').click();
+    cy.get('button')
+      .contains('Poista tutkintotilaisuus')
+      .should('exist');
   });
 });

@@ -38,7 +38,7 @@
     },
     {
       "published_at": "2018-01-01T00:00:00.000Z",
-      "registration_end_date": "2019-12-01",
+      "registration_end_date": "2019-04-01",
       "office_oid": null,
       "id": 2,
       "location": [
@@ -67,7 +67,7 @@
       "session_date": "2019-05-02",
       "participants": 0,
       "max_participants": 50,
-      "registration_start_date": "2019-04-02",
+      "registration_start_date": "2019-03-01",
       "organizer_oid": "1.2.3.4",
       "language_code": "fin",
       "level_code": "PERUS"

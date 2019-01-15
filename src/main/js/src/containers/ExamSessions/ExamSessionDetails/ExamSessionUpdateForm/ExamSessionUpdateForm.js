@@ -139,6 +139,7 @@ export class ExamSessionUpdateForm extends Component {
                 <Field
                   id="location"
                   name="location"
+                  data-cy="input-location"
                   className={classes.TextInput}
                 />
                 <ErrorMessage
@@ -153,6 +154,7 @@ export class ExamSessionUpdateForm extends Component {
                   component="textarea"
                   id="extra"
                   name="extra"
+                  data-cy="input-extra"
                   rows={5}
                   cols={33}
                   maxLength="2048"
