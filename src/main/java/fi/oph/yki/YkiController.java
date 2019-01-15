@@ -12,12 +12,18 @@ public class YkiController {
 
     private static final Logger logger = LoggerFactory.getLogger(YkiController.class);
 
-    @GetMapping(value = { "/", "/ilmoittautuminen", "/jarjestajarekisteri" })
+    @GetMapping(value = {"/",
+            "/ilmoittautuminen",
+            "/jarjestajarekisteri",
+            "/tutkintotilaisuudet",
+            "/ilmoittautuminen/**",
+            "/jarjestajarekisteri/**",
+            "/tutkintotilaisuudet/**"})
     public String index() {
         return "/index.html";
     }
 
-    @GetMapping(value = { "/status" })
+    @GetMapping(value = {"/status"})
     public ResponseEntity<String> status() {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
