@@ -54,7 +54,9 @@ const examSessionForm = props => {
       .integer(),
     address: Yup.string().required(props.t('error.mandatory')),
     location: Yup.string(),
-    extra: Yup.string(),
+    extraFi: Yup.string(),
+    extraSv: Yup.string(),
+    extraEn: Yup.string(),
   });
 
   const RadioButtonComponent = ({
@@ -201,7 +203,9 @@ const examSessionForm = props => {
         maxParticipants: '',
         address: '',
         location: '',
-        extra: '',
+        extraFi: '',
+        extraSv: '',
+        extraEn: '',
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
@@ -210,6 +214,9 @@ const examSessionForm = props => {
               o => o.oid === values.officeOid,
             )
           : null;
+        const orgOrOfficeName = office
+          ? office.nimi
+          : props.examSessionContent.organization.nimi;
         const payload = {
           session_date: values.examDate,
           language_code: values.language,
@@ -219,16 +226,25 @@ const examSessionForm = props => {
           published_at: moment().toISOString(),
           location: [
             {
-              name: getLocalizedName(
-                office
-                  ? office.nimi
-                  : props.examSessionContent.organization.nimi,
-                props.lng,
-              ),
+              name: getLocalizedName(orgOrOfficeName, 'fi'),
               address: values.address,
               other_location_info: values.location,
-              extra_information: values.extra,
+              extra_information: values.extraFi,
               lang: 'fi',
+            },
+            {
+              name: getLocalizedName(orgOrOfficeName, 'sv'),
+              address: values.address,
+              other_location_info: values.location,
+              extra_information: values.extraSv,
+              lang: 'sv',
+            },
+            {
+              name: getLocalizedName(orgOrOfficeName, 'en'),
+              address: values.address,
+              other_location_info: values.location,
+              extra_information: values.extraEn,
+              lang: 'en',
             },
           ],
         };
@@ -340,12 +356,14 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>{props.t('common.extra')}</h3>
+              <h3>
+                {props.t('common.extra')} {props.t('common.language.fin')}
+              </h3>
               <Field
                 component="textarea"
-                id="extra"
-                name="extra"
-                rows={5}
+                id="extraFi"
+                name="extraFi"
+                rows={3}
                 cols={33}
                 maxLength="2048"
                 wrap="soft"
@@ -353,7 +371,47 @@ const examSessionForm = props => {
                 className={classes.TextArea}
               />
               <ErrorMessage
-                name="extra"
+                name="extraFi"
+                component="span"
+                className={classes.ErrorMessage}
+              />
+            </div>
+            <div className={classes.FormElement}>
+              <h3>
+                {props.t('common.extra')} {props.t('common.language.swe')}
+              </h3>
+              <Field
+                component="textarea"
+                id="extraSv"
+                name="extraSv"
+                rows={3}
+                cols={33}
+                maxLength="2048"
+                wrap="soft"
+                className={classes.TextArea}
+              />
+              <ErrorMessage
+                name="extraSv"
+                component="span"
+                className={classes.ErrorMessage}
+              />
+            </div>
+            <div className={classes.FormElement}>
+              <h3>
+                {props.t('common.extra')} {props.t('common.language.eng')}
+              </h3>
+              <Field
+                component="textarea"
+                id="extraEn"
+                name="extraEn"
+                rows={3}
+                cols={33}
+                maxLength="2048"
+                wrap="soft"
+                className={classes.TextArea}
+              />
+              <ErrorMessage
+                name="extraEn"
                 component="span"
                 className={classes.ErrorMessage}
               />

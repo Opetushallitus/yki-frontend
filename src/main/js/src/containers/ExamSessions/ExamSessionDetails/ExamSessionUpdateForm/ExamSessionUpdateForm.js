@@ -36,7 +36,9 @@ export class ExamSessionUpdateForm extends Component {
         .integer(),
       address: Yup.string().required(this.props.t('error.mandatory')),
       location: Yup.string(),
-      extra: Yup.string(),
+      extraFi: Yup.string(),
+      extraSe: Yup.string(),
+      extraEn: Yup.string(),
     });
 
     const registrationPediod = examSession => {
@@ -69,15 +71,25 @@ export class ExamSessionUpdateForm extends Component {
       );
     };
 
+    const getLocationExtraByLang = lang => {
+      const location = this.props.examSession.location.find(l => l.lang === lang);
+      return (location && location.extra_information) ? location.extra_information : '';
+    }
+
+    const getLocationNameByLang = lang => {
+      const location = this.props.examSession.location.find(l => l.lang === lang);
+      return location.name;
+    }
+
     return (
       <Formik
         initialValues={{
           maxParticipants: this.props.examSession.max_participants,
           address: this.props.examSession.location[0].address,
           location: this.props.examSession.location[0].other_location_info,
-          extra: this.props.examSession.location[0].extra_information
-            ? this.props.examSession.location[0].extra_information
-            : '',
+          extraFi: getLocationExtraByLang('fi'),
+          extraSv: getLocationExtraByLang('sv'),
+          extraEn: getLocationExtraByLang('en'),
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
@@ -86,11 +98,25 @@ export class ExamSessionUpdateForm extends Component {
             max_participants: Number.parseInt(values.maxParticipants),
             location: [
               {
-                name: this.props.examSession.location[0].name,
+                name: getLocationNameByLang('fi'),
                 address: values.address,
                 other_location_info: values.location,
-                extra_information: values.extra,
+                extra_information: values.extraFi,
                 lang: 'fi',
+              },
+              {
+                name: getLocationNameByLang('sv'),
+                address: values.address,
+                other_location_info: values.location,
+                extra_information: values.extraSv,
+                lang: 'sv',
+              },
+              {
+                name: getLocationNameByLang('en'),
+                address: values.address,
+                other_location_info: values.location,
+                extra_information: values.extraEn,
+                lang: 'en',
               },
             ],
           };
@@ -147,25 +173,75 @@ export class ExamSessionUpdateForm extends Component {
                   className={classes.ErrorMessage}
                 />
               </div>
-              <div className={classes.FormElement}>
-                <h3>{this.props.t('common.extra')}</h3>
-                <Field
-                  component="textarea"
-                  id="extra"
-                  name="extra"
-                  data-cy="input-extra"
-                  rows={5}
-                  cols={33}
-                  maxLength="2048"
-                  wrap="soft"
-                  className={classes.TextArea}
-                />
-                <ErrorMessage
-                  name="extra"
-                  component="span"
-                  className={classes.ErrorMessage}
-                />
+              <div>
+                <div className={classes.FormElement}>
+                  <h3>
+                    {this.props.t('common.extra')}{' '}
+                    {this.props.t('common.language.fin')}
+                  </h3>
+                  <Field
+                    component="textarea"
+                    id="extraFi"
+                    name="extraFi"
+                    data-cy="input-extra-fi"
+                    rows={3}
+                    cols={33}
+                    maxLength="2048"
+                    wrap="soft"
+                    className={classes.TextArea}
+                  />
+                  <ErrorMessage
+                    name="extraFi"
+                    component="span"
+                    className={classes.ErrorMessage}
+                  />
+                </div>
+                <div className={classes.FormElement}>
+                  <h3>
+                    {this.props.t('common.extra')}{' '}
+                    {this.props.t('common.language.swe')}
+                  </h3>
+                  <Field
+                    component="textarea"
+                    id="extraSv"
+                    name="extraSv"
+                    data-cy="input-extra-sv"
+                    rows={3}
+                    cols={33}
+                    maxLength="2048"
+                    wrap="soft"
+                    className={classes.TextArea}
+                  />
+                  <ErrorMessage
+                    name="extraSv"
+                    component="span"
+                    className={classes.ErrorMessage}
+                  />
+                </div>
+                <div className={classes.FormElement}>
+                  <h3>
+                    {this.props.t('common.extra')}{' '}
+                    {this.props.t('common.language.eng')}
+                  </h3>
+                  <Field
+                    component="textarea"
+                    id="extraEn"
+                    name="extraEn"
+                    data-cy="input-extra-en"
+                    rows={3}
+                    cols={33}
+                    maxLength="2048"
+                    wrap="soft"
+                    className={classes.TextArea}
+                  />
+                  <ErrorMessage
+                    name="extraEn"
+                    component="span"
+                    className={classes.ErrorMessage}
+                  />
+                </div>
               </div>
+
               <div className={classes.Buttons}>
                 {deleteButton(this.props.examSession)}
                 <Button

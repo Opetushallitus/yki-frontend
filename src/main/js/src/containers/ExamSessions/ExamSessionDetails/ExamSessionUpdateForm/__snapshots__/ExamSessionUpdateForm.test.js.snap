@@ -59,22 +59,58 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
         value="auditorio A2"
       />
     </div>
-    <div
-      class="FormElement"
-    >
-      <h3>
-        common.extra
-      </h3>
-      <textarea
-        class="TextArea"
-        cols="33"
-        data-cy="input-extra"
-        id="extra"
-        maxlength="2048"
-        name="extra"
-        rows="5"
-        wrap="soft"
-      />
+    <div>
+      <div
+        class="FormElement"
+      >
+        <h3>
+          common.extra common.language.fin
+        </h3>
+        <textarea
+          class="TextArea"
+          cols="33"
+          data-cy="input-extra-fi"
+          id="extraFi"
+          maxlength="2048"
+          name="extraFi"
+          rows="3"
+          wrap="soft"
+        />
+      </div>
+      <div
+        class="FormElement"
+      >
+        <h3>
+          common.extra common.language.swe
+        </h3>
+        <textarea
+          class="TextArea"
+          cols="33"
+          data-cy="input-extra-sv"
+          id="extraSv"
+          maxlength="2048"
+          name="extraSv"
+          rows="3"
+          wrap="soft"
+        />
+      </div>
+      <div
+        class="FormElement"
+      >
+        <h3>
+          common.extra common.language.eng
+        </h3>
+        <textarea
+          class="TextArea"
+          cols="33"
+          data-cy="input-extra-en"
+          id="extraEn"
+          maxlength="2048"
+          name="extraEn"
+          rows="3"
+          wrap="soft"
+        />
+      </div>
     </div>
     <div
       class="Buttons"

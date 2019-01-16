@@ -25,12 +25,6 @@ const participants = JSON.parse(
 const examDates = {
   dates: [
     {
-      exam_date: '2019-01-27',
-      registration_start_date: '2018-12-01',
-      registration_end_date: '2018-12-08',
-      languages: [{ language_code: 'fin' }],
-    },
-    {
       exam_date: '2019-10-27',
       registration_start_date: '2019-09-03',
       registration_end_date: '2019-09-28',

@@ -10,7 +10,7 @@ describe('Exam sessions', () => {
   const fillExamSessionForm = () => {
     cy.get('[data-cy=radio-fin]').click();
     cy.get('[data-cy=radio-PERUS]').click();
-    cy.get('[data-cy=radio-2019-01-27]').click();
+    cy.get('[data-cy=radio-2019-11-10]').click();
     cy.get('[data-cy=input-max-participants]').type('100');
     cy.get('[data-cy=input-address]').type('address');
   };
@@ -92,9 +92,15 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=input-location]')
       .clear()
       .type('auditorio A3');
-    cy.get('[data-cy=input-extra]')
+    cy.get('[data-cy=input-extra-fi]')
       .clear()
-      .type('extra');
+      .type('extra-fi');
+    cy.get('[data-cy=input-extra-sv]')
+      .clear()
+      .type('extra-sv');
+    cy.get('[data-cy=input-extra-en]')
+      .clear()
+      .type('extra-en');
     cy.get('button')
       .contains('Tallenna muutokset')
       .click();
@@ -102,7 +108,9 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('[data-cy=input-max-participants]').should('have.value', '100');
     cy.get('[data-cy=input-location]').should('have.value', 'auditorio A3');
-    cy.get('[data-cy=input-extra]').should('have.value', 'extra');
+    cy.get('[data-cy=input-extra-fi]').should('have.value', 'extra-fi');
+    cy.get('[data-cy=input-extra-sv]').should('have.value', 'extra-sv');
+    cy.get('[data-cy=input-extra-en]').should('have.value', 'extra-en');
   });
 
   it('exam session can be deleted when registration is closed', () => {
