@@ -12,5 +12,6 @@ export {
   addRegistryItem,
   updateRegistryItem,
   deleteRegistryItem,
+  registryFailReset,
 } from './registry';
 export {} from './registration';

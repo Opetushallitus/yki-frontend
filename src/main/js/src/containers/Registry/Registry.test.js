@@ -14,6 +14,7 @@ describe('<Registry />', () => {
     wrapper = shallow(
       <Registry
         onFetchRegistryContent={() => {}}
+        errorConfirmedHandler={() => {}}
         registry={[]}
         loading={false}
         lang={'fi'}

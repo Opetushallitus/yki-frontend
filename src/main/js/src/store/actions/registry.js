@@ -229,3 +229,9 @@ const deleteRegistryItemFail = error => {
     loading: false,
   };
 };
+
+export const registryFailReset = () => {
+  return {
+    type: actionTypes.REGISTRY_FAIL_RESET,
+  };
+};

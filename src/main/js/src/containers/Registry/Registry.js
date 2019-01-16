@@ -14,6 +14,7 @@ import { collectRegistryItemDetails } from '../../util/registryUtil';
 import RegistryItem from './RegistryItem/RegistryItem';
 import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
 import UpdateRegistryItem from './RegistryItem/UpdateRegistryItem/UpdateRegistryItem';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 export class Registry extends Component {
   state = {
@@ -30,6 +31,7 @@ export class Registry extends Component {
   };
 
   shouldComponentUpdate = (nextProps, nextState) =>
+    nextProps.error !== this.props.error ||
     nextProps.registry !== this.props.registry ||
     nextState.showModal !== this.state.showModal ||
     nextState.filtered !== this.state.filtered;
@@ -103,7 +105,7 @@ export class Registry extends Component {
       })
     ) : this.state.filtering ? (
       <p className={classes.SearchResultsEmpty}>
-        Annetuilla hakuehdoilla ei löytynyt järjestäjiä.
+        {this.props.t('registry.search.noResults')}
       </p>
     ) : null;
 
@@ -131,6 +133,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchRegistryContent: () => dispatch(actions.fetchRegistryContent()),
+    errorConfirmedHandler: () => dispatch(actions.registryFailReset()),
   };
 };
 
@@ -138,9 +141,11 @@ Registry.propTypes = {
   onFetchRegistryContent: PropTypes.func.isRequired,
   registry: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
+  error: PropTypes.object,
+  errorConfirmedHandler: PropTypes.func.isRequired,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(Registry));
+)(withNamespaces()(withErrorHandler(Registry)));

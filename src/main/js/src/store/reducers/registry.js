@@ -105,6 +105,11 @@ const reducer = (state = initialState, action) => {
         error: action.error,
         loading: false,
       };
+    case actionTypes.REGISTRY_FAIL_RESET:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }

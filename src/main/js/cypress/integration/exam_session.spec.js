@@ -26,7 +26,7 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=exam-session-organizer-agreement]');
     cy.get('[data-cy=exam-session-organizer-agreement-validity]').should(
       'have.text',
-      '1.1.2018 - 1.1.2019',
+      '1.1.2018 - 1.1.2029',
     );
   });
 

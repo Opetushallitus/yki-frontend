@@ -72,6 +72,7 @@
   "registry.document.title": "YKI - Järjestäjärekisteri_en",
   "registry.search.languageSelectPlaceholder": "Valitse kieli_en",
   "registry.search.levelSelectPlaceholder": "Valitse taso_en",
+  "registry.search.noResults": "Annetuilla hakuehdoilla ei löytynyt järjestäjiä._en",
   "registry.search.placeholder": "Hae järjestäjää tai paikkakuntaa_en",
   "registryItem.agreementStart.required": "Sopimuskauden aloitusaika puuttuu._en"
 }

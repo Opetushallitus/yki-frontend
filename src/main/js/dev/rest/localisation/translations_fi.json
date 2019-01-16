@@ -92,6 +92,7 @@
   "registry.document.title": "YKI - Järjestäjärekisteri",
   "registry.search.languageSelectPlaceholder": "Valitse kieli",
   "registry.search.levelSelectPlaceholder": "Valitse taso",
+  "registry.search.noResults": "Annetuilla hakuehdoilla ei löytynyt järjestäjiä.",
   "registry.search.placeholder": "Hae järjestäjää tai paikkakuntaa",
   "registryItem.add.header": "Lisää uusi kielitutkintojen järjestäjä",
   "registryItem.agreementEnd": "Loppupäivämäärä",
