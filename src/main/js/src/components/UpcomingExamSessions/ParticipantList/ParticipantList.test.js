@@ -30,6 +30,7 @@ const participants = [
       zip: '02100',
     },
     state: 'COMPLETED',
+    registration_id: 1,
   },
   {
     form: {
@@ -43,6 +44,7 @@ const participants = [
       zip: '02100',
     },
     state: 'SUBMITTED',
+    registration_id: 2,
   },
 ];
 
@@ -53,6 +55,7 @@ describe('<ParticipantList />', () => {
         examSession={examSession}
         participants={participants}
         t={t => t}
+        onCancel={jest.fn()}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();

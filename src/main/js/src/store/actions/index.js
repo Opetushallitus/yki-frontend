@@ -5,6 +5,7 @@ export {
   addExamSession,
   updateExamSession,
   deleteExamSession,
+  cancelRegistration,
 } from './examSession';
 export {
   fetchRegistryContent,

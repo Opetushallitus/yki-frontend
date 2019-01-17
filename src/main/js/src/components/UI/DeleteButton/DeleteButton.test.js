@@ -10,12 +10,10 @@ describe('<DeleteButton />', () => {
   it('should show delete button when deleting is false', () => {
     const wrapper = shallow(
       <DeleteButton
-        deleting={false}
-        toggleDeleting={jest.fn()}
         onClick={jest.fn()}
-        deleteText={'delete'}
-        deleteConfirmText={'confirm'}
-        deleteCancelText={'cancel'}
+        children={'delete'}
+        confirmText={'confirm'}
+        cancelText={'cancel'}
       />,
     );
     expect(wrapper.find('.Delete').exists()).toBeTruthy();
@@ -25,14 +23,13 @@ describe('<DeleteButton />', () => {
   it('should show confirm and cancel buttons when deleting is true', () => {
     const wrapper = shallow(
       <DeleteButton
-        deleting={true}
-        toggleDeleting={jest.fn()}
         onClick={jest.fn()}
-        deleteText={'delete'}
-        deleteConfirmText={'confirm'}
-        deleteCancelText={'cancel'}
+        children={'delete'}
+        confirmText={'confirm'}
+        cancelText={'cancel'}
       />,
     );
+    wrapper.setState({ deleting: true });
     expect(wrapper.find('.Delete').exists()).toBeFalsy();
     expect(wrapper.find('.DeleteConfirmation').exists()).toBeTruthy();
     expect(wrapper.find('.DeleteCancel').exists()).toBeTruthy();

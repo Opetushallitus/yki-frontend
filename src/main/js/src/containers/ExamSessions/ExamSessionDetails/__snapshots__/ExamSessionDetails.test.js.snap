@@ -40,6 +40,7 @@ exports[`<ExamSessionDetails /> should render exam session details 1`] = `
         "session_date": "2028-12-30",
       }
     }
+    onCancel={[MockFunction]}
     participants={Array []}
   />
 </div>

@@ -43,8 +43,6 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
         value="Jokukatu 4, 00100 Tammerfors"
       />
     </div>
-  </div>
-  <div>
     <div
       class="FormElement"
     >
@@ -59,13 +57,20 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
         value="auditorio A2"
       />
     </div>
+  </div>
+  <div>
     <div>
       <div
         class="FormElement"
       >
         <h3>
-          common.extra common.language.fin
+          common.extra
         </h3>
+        <label
+          class="ExtraLabel"
+        >
+          common.language.fin
+        </label>
         <textarea
           class="TextArea"
           cols="33"
@@ -80,9 +85,11 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       <div
         class="FormElement"
       >
-        <h3>
-          common.extra common.language.swe
-        </h3>
+        <label
+          class="ExtraLabel"
+        >
+          common.language.swe
+        </label>
         <textarea
           class="TextArea"
           cols="33"
@@ -97,9 +104,11 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       <div
         class="FormElement"
       >
-        <h3>
-          common.extra common.language.eng
-        </h3>
+        <label
+          class="ExtraLabel"
+        >
+          common.language.eng
+        </label>
         <textarea
           class="TextArea"
           cols="33"

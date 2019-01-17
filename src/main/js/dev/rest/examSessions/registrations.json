@@ -15,7 +15,8 @@
           "street_address": "Katu 4",
           "zip": "00100"
         },
-        "state": "COMPLETED"
+        "state": "COMPLETED",
+        "registration_id": 1
       },
       {
         "form": {
@@ -32,7 +33,8 @@
           "street_address": "Katu 3",
           "zip": "00100"
         },
-        "state": "SUBMITTED"
+        "state": "SUBMITTED",
+        "registration_id": 2
       },
       {
         "form": {
@@ -49,7 +51,8 @@
           "street_address": "Revontulentie 13 C 2",
           "zip": "02100"
         },
-        "state": "COMPLETED"
+        "state": "COMPLETED",
+        "registration_id": 3
       },
       {
         "form": {
@@ -66,7 +69,8 @@
           "street_address": "Revontulentie 13 C 2",
           "zip": "02100"
         },
-        "state": "COMPLETED"
+        "state": "COMPLETED",
+        "registration_id": 4
       }
     ]
   }

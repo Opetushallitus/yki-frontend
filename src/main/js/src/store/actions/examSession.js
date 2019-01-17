@@ -204,7 +204,7 @@ export const fetchExamSessionParticipants = (organizerOid, examSessionId) => {
     dispatch(fetchExamSessionParticipantsStart());
     axios
       .get(
-        `/yki/api/virkailija/organizer/${organizerOid}/exam-session/${examSessionId}/participant`,
+        `/yki/api/virkailija/organizer/${organizerOid}/exam-session/${examSessionId}/registration`,
       )
       .then(res => {
         dispatch(fetchExamSessionParticipantsSuccess(res.data.participants));
@@ -250,6 +250,45 @@ const deleteExamSessionFail = error => {
   return {
     type: actionTypes.DELETE_EXAM_SESSION_FAIL,
     error: Object.assign(error, { key: 'error.examSession.deleteFailed' }),
+    loading: false,
+  };
+};
+
+export const cancelRegistration = (oid, examSessionId, registrationId) => {
+  return dispatch => {
+    dispatch(cancelRegistrationStart());
+    axios
+      .delete(
+        `/yki/api/virkailija/organizer/${oid}/exam-session/${examSessionId}/registration/${registrationId}`,
+      )
+      .then(() => {
+        dispatch(cancelRegistrationSuccess());
+        dispatch(fetchExamSessionParticipants());
+      })
+      .catch(err => {
+        dispatch(cancelRegistrationFail(err));
+      });
+  };
+};
+
+const cancelRegistrationStart = () => {
+  return {
+    type: actionTypes.DELETE_EXAM_SESSION_START,
+    loading: true,
+  };
+};
+
+const cancelRegistrationSuccess = () => {
+  return {
+    type: actionTypes.DELETE_EXAM_SESSION_SUCCESS,
+    loading: false,
+  };
+};
+
+const cancelRegistrationFail = error => {
+  return {
+    type: actionTypes.DELETE_EXAM_SESSION_FAIL,
+    error: Object.assign(error, { key: 'error.registration.cancelFailed' }),
     loading: false,
   };
 };

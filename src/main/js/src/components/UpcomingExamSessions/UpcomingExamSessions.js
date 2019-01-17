@@ -17,7 +17,7 @@ export const upcomingExamSessions = props => {
         <p>{moment(e.session_date).format(DATE_FORMAT)}</p>
         <p>{languageToString(e.language_code).toLowerCase()}</p>
         <p>{levelDescription(e.level_code).toLowerCase()}</p>
-        <p>
+        <p className={classes.DesktopOnly}>
           {moment(e.registration_start_date).format(DATE_FORMAT_WITHOUT_YEAR)}
           &ndash;
           {moment(e.registration_end_date).format(DATE_FORMAT)}
@@ -37,7 +37,7 @@ export const upcomingExamSessions = props => {
           <h3>{props.t('common.examDate')}</h3>
           <h3>{props.t('common.language')}</h3>
           <h3>{props.t('common.level')}</h3>
-          <h3>{props.t('common.registationPeriod')}</h3>
+          <h3 className={classes.DesktopOnly}>{props.t('common.registationPeriod')}</h3>
           <h3>{props.t('examSession.participants')}</h3>
           {examSessionRows}
         </div>

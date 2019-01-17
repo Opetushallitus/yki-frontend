@@ -16,11 +16,17 @@ const getExamSessions = () => {
     fs.readFileSync('./dev/rest/examSessions/examSessions.json'),
   );
 };
+
 let examSessions = getExamSessions();
 
-const participants = JSON.parse(
-  fs.readFileSync('./dev/rest/examSessions/participants.json'),
-);
+const getRegistrations = () => {
+  return JSON.parse(
+    fs.readFileSync('./dev/rest/examSessions/registrations.json'),
+  );
+};
+
+let registrations = getRegistrations();
+
 
 const examDates = {
   dates: [
@@ -137,6 +143,7 @@ module.exports = function(app) {
 
   app.get('/yki/reset-mocks', (req, res) => {
     examSessions = getExamSessions();
+    registrations = getRegistrations();
     res.send({ success: true });
   });
 
@@ -167,10 +174,10 @@ module.exports = function(app) {
   });
 
   app.get(
-    '/yki/api/virkailija/organizer/:oid/exam-session/:id/participant',
+    '/yki/api/virkailija/organizer/:oid/exam-session/:id/registration',
     (req, res) => {
       try {
-        res.send(participants);
+        res.send(registrations);
       } catch (err) {
         console.log(err);
         res.status(404).send(err.message);
@@ -218,6 +225,22 @@ module.exports = function(app) {
           x => x.id == id,
         );
         examSessions.exam_sessions.splice(foundIndex, 1);
+        res.send({ success: true });
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
+    },
+  );
+
+  app.delete(
+    '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id',
+    (req, res) => {
+      try {
+        const { id } = req.params;
+        const foundIndex = registrations.participants.findIndex(
+          x => x.registration_id == id,
+        );
+        registrations.participants.splice(foundIndex, 1);
         res.send({ success: true });
       } catch (err) {
         res.status(404).send(err.message);

@@ -20,7 +20,9 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
     <h3>
       common.level
     </h3>
-    <h3>
+    <h3
+      className="DesktopOnly"
+    >
       common.registationPeriod
     </h3>
     <h3>
@@ -41,7 +43,9 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
       <p>
         common.level.middle
       </p>
-      <p>
+      <p
+        className="DesktopOnly"
+      >
         1.9.
         –
         15.12.2028
@@ -65,7 +69,9 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
       <p>
         common.level.basic
       </p>
-      <p>
+      <p
+        className="DesktopOnly"
+      >
         1.3.
         –
         15.12.2025

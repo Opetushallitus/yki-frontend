@@ -116,14 +116,26 @@ describe('Exam sessions', () => {
   it('exam session can be deleted when registration is closed', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('button')
-      .contains('Poista tutkintotilaisuus')
+      .contains('Poista')
       .should('not.exist');
 
     cy.visit('/tutkintotilaisuudet');
 
     cy.get('[data-cy=exam-sessions-table-row-1]').click();
     cy.get('button')
-      .contains('Poista tutkintotilaisuus')
+      .contains('Poista')
       .should('exist');
+  });
+
+  it('registration can be cancelled', () => {
+    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=participant-1]').should('exist');
+
+    cy.get('button')
+      .contains('Peru osallistuminen')
+      .click();
+    cy.get('[data-cy=button-confirm-delete]').click();
+
+    cy.get('[data-cy=participant-1]').should('not.exist');
   });
 });

@@ -26,6 +26,7 @@ describe('<ExamSessionDetails />', () => {
         loading={false}
         t={t => t}
         onFetchExamSessionParticipants={jest.fn()}
+        onCancelRegistration={jest.fn()}
         errorConfirmedHandler={jest.fn()}
         onSubmitUpdateExamSession={jest.fn()}
         onSubmitDeleteExamSession={jest.fn()}

@@ -9,8 +9,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     :
      
     2
-     /
-     
+     / 
     50
   </h3>
   <div
@@ -18,6 +17,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
   >
     <p
       className="ItemHeader Index"
+      data-cy="participant-1"
     >
       1
       .
@@ -42,6 +42,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <p />
     <p />
     <p />
+    <p />
     <p
       className="Item"
     >
@@ -62,11 +63,29 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <p>
       michael.wallis@test.com
     </p>
+    <p>
+      <DeleteButton
+        cancelText="examSession.registration.cancel.cancel"
+        confirmText="examSession.registration.cancel.confirm"
+        onClick={[Function]}
+      >
+        <img
+          alt=""
+          src="trashcan.svg"
+        />
+         
+        examSession.registration.cancel
+      </DeleteButton>
+    </p>
     <span
-      className="Line"
+      className="Line DesktopOnly"
+    />
+    <span
+      className="LineEnd"
     />
     <p
       className="ItemHeader Index"
+      data-cy="participant-2"
     >
       2
       .
@@ -91,6 +110,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <p />
     <p />
     <p />
+    <p />
     <p
       className="Item"
     >
@@ -111,8 +131,25 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <p>
       natalia.gaddens@test.com
     </p>
+    <p>
+      <DeleteButton
+        cancelText="examSession.registration.cancel.cancel"
+        confirmText="examSession.registration.cancel.confirm"
+        onClick={[Function]}
+      >
+        <img
+          alt=""
+          src="trashcan.svg"
+        />
+         
+        examSession.registration.cancel
+      </DeleteButton>
+    </p>
     <span
-      className="Line"
+      className="Line DesktopOnly"
+    />
+    <span
+      className="LineEnd"
     />
   </div>
 </div>

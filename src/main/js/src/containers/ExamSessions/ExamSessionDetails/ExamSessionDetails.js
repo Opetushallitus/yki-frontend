@@ -51,6 +51,7 @@ export class ExamSessionDetails extends Component {
           <ParticipantList
             examSession={this.props.examSession}
             participants={this.props.participants}
+            onCancel={this.props.onCancelRegistration}
           />
         )}
       </div>
@@ -72,6 +73,10 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         actions.fetchExamSessionParticipants(organizerOid, examSessionId),
       ),
+    onCancelRegistration: (organizerOid, examSessionId, registrationId) =>
+      dispatch(
+        actions.cancelRegistration(organizerOid, examSessionId, registrationId),
+      ),
     errorConfirmedHandler: () => dispatch(actions.examSessionFailReset()),
   };
 };
@@ -82,6 +87,7 @@ ExamSessionDetails.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   onFetchExamSessionParticipants: PropTypes.func.isRequired,
+  onCancelRegistration: PropTypes.func.isRequired,
   onSubmitUpdateExamSession: PropTypes.func.isRequired,
   onSubmitDeleteExamSession: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,

@@ -1,6 +1,6 @@
 .Form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 }
 
 .MaxParticipantsInput {
@@ -19,7 +19,7 @@
 
 .TextArea {
   width: 340px;
-  height: 40px;
+  height: 50px;
   resize: none;
 }
 
@@ -29,7 +29,7 @@
 
 .FormElement {
   margin-top: 20px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .Form h2 {
@@ -60,15 +60,21 @@
   float: right;
 }
 
+.ExtraLabel {
+  display: block;
+  margin-bottom: 8px;
+  margin-bottom: .5rem;
+}
+
 .ErrorMessage {
   display: block;
   color: hsla(15, 100%, 40%, 1);
   margin: 14px 0px 14px 0px;
 }
 
-@media (max-width: 920px) {
+@media (min-width: 920px) {
   .Form {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }

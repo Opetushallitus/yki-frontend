@@ -10,15 +10,6 @@ import { firstCharToUpper } from '../../../../util/util';
 import * as actions from '../../../../store/actions/index';
 
 class UpdateRegistryItem extends Component {
-  state = {
-    deleting: false,
-  };
-
-  toggleDeleting = () => {
-    this.setState(prevState => ({
-      deleting: !prevState.deleting,
-    }));
-  };
 
   deleteRegistryItemHandler = oid => {
     this.props.onDeleteRegistryItem(oid);
@@ -54,11 +45,9 @@ class UpdateRegistryItem extends Component {
         <div className={classes.DeleteButtons}>
           <DeleteButton
             onClick={() => this.deleteRegistryItemHandler(this.props.item.oid)}
-            deleting={this.state.deleting}
-            toggleDeleting={this.toggleDeleting}
-            deleteText={this.props.t('registryItem.delete')}
-            deleteConfirmText={this.props.t('registryItem.deleteConfirm')}
-            deleteCancelText={this.props.t('registryItem.deleteCancel')}
+            children={this.props.t('registryItem.delete')}
+            confirmText={this.props.t('registryItem.deleteConfirm')}
+            cancelText={this.props.t('registryItem.deleteCancel')}
           />
         </div>
       </React.Fragment>

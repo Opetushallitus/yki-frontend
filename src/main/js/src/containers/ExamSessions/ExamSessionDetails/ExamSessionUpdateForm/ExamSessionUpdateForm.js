@@ -14,16 +14,6 @@ import {
 } from '../../../../common/Constants';
 
 export class ExamSessionUpdateForm extends Component {
-  state = {
-    deleting: false,
-  };
-
-  toggleDeleting = () => {
-    this.setState(prevState => ({
-      deleting: !prevState.deleting,
-    }));
-  };
-
   render() {
     const validationSchema = Yup.object().shape({
       maxParticipants: Yup.number()
@@ -61,25 +51,29 @@ export class ExamSessionUpdateForm extends Component {
         <div className={classes.DeleteButton}>
           <DeleteButton
             onClick={this.props.onDelete}
-            deleting={this.state.deleting}
-            toggleDeleting={this.toggleDeleting}
-            deleteText={this.props.t('examSession.delete')}
-            deleteConfirmText={this.props.t('common.confirm')}
-            deleteCancelText={this.props.t('common.cancelConfirm')}
+            children={this.props.t('examSession.delete')}
+            confirmText={this.props.t('common.confirm')}
+            cancelText={this.props.t('common.cancelConfirm')}
           />
         </div>
       );
     };
 
     const getLocationExtraByLang = lang => {
-      const location = this.props.examSession.location.find(l => l.lang === lang);
-      return (location && location.extra_information) ? location.extra_information : '';
-    }
+      const location = this.props.examSession.location.find(
+        l => l.lang === lang,
+      );
+      return location && location.extra_information
+        ? location.extra_information
+        : '';
+    };
 
     const getLocationNameByLang = lang => {
-      const location = this.props.examSession.location.find(l => l.lang === lang);
+      const location = this.props.examSession.location.find(
+        l => l.lang === lang,
+      );
       return location.name;
-    }
+    };
 
     return (
       <Formik
@@ -157,8 +151,6 @@ export class ExamSessionUpdateForm extends Component {
                   className={classes.ErrorMessage}
                 />
               </div>
-            </div>
-            <div>
               <div className={classes.FormElement}>
                 <h3>{this.props.t('common.location')}</h3>
                 <Field
@@ -173,12 +165,14 @@ export class ExamSessionUpdateForm extends Component {
                   className={classes.ErrorMessage}
                 />
               </div>
+            </div>
+            <div>
               <div>
                 <div className={classes.FormElement}>
-                  <h3>
-                    {this.props.t('common.extra')}{' '}
+                  <h3>{this.props.t('common.extra')}</h3>
+                  <label className={classes.ExtraLabel}>
                     {this.props.t('common.language.fin')}
-                  </h3>
+                  </label>
                   <Field
                     component="textarea"
                     id="extraFi"
@@ -197,10 +191,9 @@ export class ExamSessionUpdateForm extends Component {
                   />
                 </div>
                 <div className={classes.FormElement}>
-                  <h3>
-                    {this.props.t('common.extra')}{' '}
+                  <label className={classes.ExtraLabel}>
                     {this.props.t('common.language.swe')}
-                  </h3>
+                  </label>
                   <Field
                     component="textarea"
                     id="extraSv"
@@ -219,10 +212,9 @@ export class ExamSessionUpdateForm extends Component {
                   />
                 </div>
                 <div className={classes.FormElement}>
-                  <h3>
-                    {this.props.t('common.extra')}{' '}
+                  <label className={classes.ExtraLabel}>
                     {this.props.t('common.language.eng')}
-                  </h3>
+                  </label>
                   <Field
                     component="textarea"
                     id="extraEn"

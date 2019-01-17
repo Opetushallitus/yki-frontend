@@ -1,6 +1,6 @@
 .ParticipantList {
   display: grid;
-  grid-template-columns: 20px 1fr 2fr 1fr 1fr;
+  grid-template-columns: 20px 1fr 2fr 1fr 1fr 1fr;
   grid-auto-rows: 20px;
   grid-gap: 4px;
   grid-row-gap: 0px;
@@ -8,12 +8,12 @@
 
 .Item {
   display: grid;
-  white-space: nowrap;
 }
 
 .ItemHeader {
   display: grid;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .Status {
@@ -28,6 +28,21 @@
 
 .Line {
   grid-column: 1/6;
-  height: 22px;
+  margin-top: 22px;
   border-bottom: 1px solid hsla(0, 0%, 80%, 1);
+}
+
+.LineEnd {
+  grid-column: 6/7;
+  margin-top: 22px;
+}
+
+@media (max-width: 1000px) {
+  .Line {
+    margin-top: 32px;
+  }
+
+  .LineEnd {
+    margin-top: 32px;
+  }
 }

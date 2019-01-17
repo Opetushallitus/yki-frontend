@@ -7,7 +7,9 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { DATE_FORMAT } from '../../../common/Constants';
 import checkMarkDone from '../../../assets/svg/checkmark-done.svg';
 import checkMarkNotDone from '../../../assets/svg/checkmark-not-done.svg';
+import trashcan from '../../../assets/svg/trashcan.svg';
 import classes from './ParticipantList.module.css';
+import { DeleteButton } from '../../UI/DeleteButton/DeleteButton';
 
 export const participantList = props => {
   const registratioStatus = state => {
@@ -27,10 +29,22 @@ export const participantList = props => {
     return form.ssn ? form.ssn : moment(form.birth_date).format(DATE_FORMAT);
   };
 
+  const cancelRegistration = () => {
+    return (
+      <React.Fragment>
+        <img src={trashcan} alt="" />{' '}
+        {props.t('examSession.registration.cancel')}
+      </React.Fragment>
+    );
+  };
+
   const participantRows = participants => {
     return participants.map((p, i) => (
       <React.Fragment key={i}>
-        <p className={[classes.ItemHeader, classes.Index].join(' ')}>
+        <p
+          className={[classes.ItemHeader, classes.Index].join(' ')}
+          data-cy={`participant-${p.registration_id}`}
+        >
           {i + 1}.
         </p>
         <p className={classes.ItemHeader}>
@@ -39,6 +53,7 @@ export const participantList = props => {
         <p className={[classes.ItemHeader, classes.Status].join(' ')}>
           {registratioStatus(p.state)}
         </p>
+        <p />
         <p />
         <p />
         <p />
@@ -54,7 +69,22 @@ export const participantList = props => {
           ).formatInternational()}
         </p>
         <p>{p.form.email}</p>
-        <span className={classes.Line} />
+        <p>
+          <DeleteButton
+            children={cancelRegistration()}
+            onClick={() =>
+              props.onCancel(
+                props.examSession.organizer_oid,
+                props.examSession.id,
+                p.registration_id,
+              )
+            }
+            confirmText={props.t('examSession.registration.cancel.confirm')}
+            cancelText={props.t('examSession.registration.cancel.cancel')}
+          />
+        </p>
+        <span className={[classes.Line, classes.DesktopOnly].join(' ')}/>
+        <span className={classes.LineEnd} />
       </React.Fragment>
     ));
   };
@@ -63,8 +93,7 @@ export const participantList = props => {
     <div data-cy="participant-list">
       <h3>
         {props.t('examSession.participants')}
-        {':'} {props.examSession.participants} /{' '}
-        {props.examSession.max_participants}
+        {':'} {props.participants.length} / {props.examSession.max_participants}
       </h3>
       <div className={classes.ParticipantList}>
         {participantRows(props.participants)}
@@ -76,6 +105,7 @@ export const participantList = props => {
 participantList.propTypes = {
   examSession: PropTypes.object.isRequired,
   participants: PropTypes.array.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default withNamespaces()(participantList);

@@ -25,3 +25,9 @@
 .Row:hover {
   color: hsla(195, 100%, 47%, 1);
 }
+
+@media (max-width: 900px) {
+  .DesktopOnly {
+    display: none;
+  }
+}

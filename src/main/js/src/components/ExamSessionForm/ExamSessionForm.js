@@ -356,9 +356,10 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>
-                {props.t('common.extra')} {props.t('common.language.fin')}
-              </h3>
+              <h3>{props.t('common.extra')}</h3>
+              <label className={classes.ExtraLabel}>
+                {props.t('common.language.fin')}
+              </label>
               <Field
                 component="textarea"
                 id="extraFi"
@@ -377,9 +378,9 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>
-                {props.t('common.extra')} {props.t('common.language.swe')}
-              </h3>
+              <label className={classes.ExtraLabel}>
+                {props.t('common.language.swe')}
+              </label>
               <Field
                 component="textarea"
                 id="extraSv"
@@ -397,9 +398,9 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>
-                {props.t('common.extra')} {props.t('common.language.eng')}
-              </h3>
+              <label className={classes.ExtraLabel}>
+                {props.t('common.language.eng')}
+              </label>
               <Field
                 component="textarea"
                 id="extraEn"
