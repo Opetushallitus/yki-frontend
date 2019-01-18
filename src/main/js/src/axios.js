@@ -9,13 +9,14 @@ instance.interceptors.response.use(
     return response;
   },
   error => {
-    if (error.response.status === 401) {
-      if (
-        window.location.href.includes('jarjestajarekisteri') ||
-        window.location.href.includes('tutkintotilaisuudet')
-      ) {
-        window.location.href = `auth/cas?success-redirect=${window.location.href}`;
-      }
+    if (
+      error.response.status === 401 &&
+      (window.location.href.includes('jarjestajarekisteri') ||
+        window.location.href.includes('tutkintotilaisuudet'))
+    ) {
+      window.location.href = `auth/cas?success-redirect=${
+        window.location.href
+      }`;
     }
     return Promise.reject(error);
   },

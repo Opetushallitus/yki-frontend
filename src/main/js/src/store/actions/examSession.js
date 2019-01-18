@@ -86,7 +86,9 @@ export const fetchExamSessionContent = () => {
         }
       })
       .catch(err => {
-        dispatch(fetchExamSessionContentFail(err));
+        setTimeout(() => {
+          dispatch(fetchExamSessionContentFail(err));
+        }, 500);
       });
   };
 };
