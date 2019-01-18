@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
 import classes from './Alert.module.css';
 
+const alertClass = props => {
+  return props.success ? classes.AlertSuccess : classes.AlertError;
+}
+
 const alert = props => (
   <div className={classes.Alert}>
-    <div className={[classes.AlertContainer, classes.AlertError].join(' ')}>
+    <div className={[classes.AlertContainer, alertClass(props)].join(' ')}>
       <div className={classes.AlertTitle}>{props.title}</div>
       {props.optionalText && (
         <div className={classes.AlertText}>{props.optionalText}</div>
@@ -36,6 +40,7 @@ alert.propTypes = {
   onClose: PropTypes.func,
   returnLinkTo: PropTypes.string,
   returnLinkText: PropTypes.string,
+  success: PropTypes.bool,
 };
 
 export default alert;

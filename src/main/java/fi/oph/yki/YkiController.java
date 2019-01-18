@@ -16,9 +16,11 @@ public class YkiController {
             "/ilmoittautuminen",
             "/jarjestajarekisteri",
             "/tutkintotilaisuudet",
+            "/maksut",
             "/ilmoittautuminen/**",
             "/jarjestajarekisteri/**",
-            "/tutkintotilaisuudet/**"})
+            "/tutkintotilaisuudet/**",
+            "/maksut/**"})
     public String index() {
         return "/index.html";
     }

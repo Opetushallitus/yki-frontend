@@ -12,6 +12,8 @@ import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Registration from './containers/Registration/Registration';
 import NotFound from './components/NotFound/NotFound';
+import PaymentRedirect from './containers/PaymentRedirect/PaymentRedirect';
+import PaymentStatus from './components/PaymentStatus/PaymentStatus';
 
 const Registry = lazy(() => import('./containers/Registry/Registry'));
 const ExamSessions = lazy(() =>
@@ -38,6 +40,8 @@ const app = () => (
         <Switch>
           <Route exact path="/" component={Registration} />
           <Route path="/tutkintotilaisuudet" render={() => <ExamSessions />} />
+          <Route path="/maksut/tila" component={PaymentStatus} />
+          <Route path="/maksut/:registrationId" component={PaymentRedirect} />
           <ErrorBoundary
             titleKey="errorBoundary.title"
             returnLinkTo="jarjestajarekisteri"

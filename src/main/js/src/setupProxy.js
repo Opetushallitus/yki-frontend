@@ -109,6 +109,27 @@ const organizers = [
   },
 ];
 
+const paymentFormData = {
+  uri: 'https://payment.paytrail.com/e2',
+  params: {
+    MERCHANT_ID: 13466,
+    URL_SUCCESS: 'https://yki.untuvaopintopolku.fi/yki/payment/payment/success',
+    AMOUNT: "100.00",
+    PARAMS_OUT:
+      'ORDER_NUMBER,PAYMENT_ID,AMOUNT,TIMESTAMP,STATUS,PAYMENT_METHOD,SETTLEMENT_REFERENCE_NUMBER,LOCALE',
+    URL_CANCEL: 'https://yki.untuvaopintopolku.fi/yki/payment/payment/cancel',
+    LOCALE: 'fi_FI',
+    AUTHCODE:
+      '708C62459471D5AA42381A7284BE4EFFCC73906604CAE92B694F5D393E69B5F6',
+    PARAMS_IN:
+      'MERCHANT_ID,LOCALE,URL_SUCCESS,URL_CANCEL,URL_NOTIFY,AMOUNT,ORDER_NUMBER,MSG_SETTLEMENT_PAYER,MSG_UI_MERCHANT_PANEL,PARAMS_IN,PARAMS_OUT',
+    MSG_SETTLEMENT_PAYER: 'tutkintomaksu_fi',
+    URL_NOTIFY: 'https://yki.untuvaopintopolku.fi/yki/payment/payment/notify',
+    MSG_UI_MERCHANT_PANEL: 'tutkintomaksu_fi',
+    ORDER_NUMBER: 123456,
+  },
+};
+
 const getNumberBetween = (min, max) =>
   Math.trunc(Math.random() * (max - min) + min);
 
@@ -308,6 +329,15 @@ module.exports = function(app) {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(examDates);
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.get('/yki/payment/formdata', (req, res) => {
+    try {
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      res.send(paymentFormData);
     } catch (err) {
       res.status(404).send(err.message);
     }

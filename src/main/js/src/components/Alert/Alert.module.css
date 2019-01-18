@@ -30,3 +30,10 @@
 .AlertError .AlertTitle {
   color: hsla(0, 74%, 60%, 1);
 }
+
+.AlertSuccess {
+  background-color: hsla(84, 100%, 88%, 1);
+}
+.AlertSuccess .AlertTitle {
+  color: hsla(84, 100%, 25%, 1);
+}
