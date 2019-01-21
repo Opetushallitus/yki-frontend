@@ -14,6 +14,7 @@ import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Description from './components/Registration/Description/Description';
 import LanguageSelection from './containers/Registration/LanguageSelection/LanguageSelection';
+import LevelSelection from './containers/Registration/LevelSelection/LevelSelection';
 import Registration from './containers/Registration/Registration';
 import NotFound from './components/NotFound/NotFound';
 import PaymentRedirect from './containers/PaymentRedirect/PaymentRedirect';
@@ -49,6 +50,7 @@ const app = () => (
           <Switch>
             <Route exact path="/" component={Description} />
             <Route path="/valitse-kieli" component={LanguageSelection} />
+            <Route path="/valitse-taso" component={LevelSelection} />
             <Route path="/maksut/tila" component={PaymentStatus} />
             <Route path="/maksut/:registrationId" component={PaymentRedirect} />
             <ErrorBoundary>
