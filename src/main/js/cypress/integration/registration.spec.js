@@ -17,12 +17,12 @@ describe('Registration', () => {
     cy.contains('Yleiset kielitutkinnot');
   });
 
-  it('Filters persist through exam session selection', () => {
-    cy.get('button').click();
-    cy.contains('Suomi').click();
-    cy.contains('Perustaso').click();
-    cy.get('select').contains('Suomi');
-    cy.get('select').contains('Perustaso');
-    cy.get('select').contains('Koko maa');
-  });
+  // it('Filters persist through exam session selection', () => {
+  //   cy.get('button').click();
+  //   cy.contains('Suomi').click();
+  //   cy.contains('Perustaso').click();
+  //   cy.get('select').contains('Suomi');
+  //   cy.get('select').contains('Perustaso');
+  //   cy.get('select').contains('Koko maa');
+  // });
 });
