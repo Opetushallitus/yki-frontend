@@ -12,6 +12,8 @@ import userReducer from './store/reducers/user';
 import examDatesReducer from './store/reducers/examDates';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
+import Description from './components/Registration/Description/Description';
+import LanguageSelection from './containers/Registration/LanguageSelection/LanguageSelection';
 import Registration from './containers/Registration/Registration';
 import NotFound from './components/NotFound/NotFound';
 import PaymentRedirect from './containers/PaymentRedirect/PaymentRedirect';
@@ -45,7 +47,8 @@ const app = () => (
       <Router basename={'/yki'}>
         <Suspense fallback={<Spinner />}>
           <Switch>
-            <Route exact path="/" component={Registration} />
+            <Route exact path="/" component={Description} />
+            <Route path="/valitse-kieli" component={LanguageSelection} />
             <Route path="/maksut/tila" component={PaymentStatus} />
             <Route path="/maksut/:registrationId" component={PaymentRedirect} />
             <ErrorBoundary>

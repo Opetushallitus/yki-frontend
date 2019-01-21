@@ -96,6 +96,8 @@
   "registration.description.text3": "Yleisissä kielitutkinnoissa käytetään kuusiportaista taitotasoasteikkoa, joka on yhteismitallinen yleiseurooppalaisen viitekehyksen taitotasoasteikon kanssa.",
   "registration.description.text4": "Vuoden 2003 kesäkuusta lähtien tutkinnon suomen tai ruotsin kielen todistuksella on voinut osoittaa myös Suomen kansalaisuuden saamiseksi edellytettävää kielitaitoa.",
   "registration.description.title": "Yleiset kielitutkinnot",
+  "registration.document.title.language": "Valitse kieli - YKI",
+  "registration.path.select.language": "/valitse-kieli",
   "registration.return": "Takaisin",
   "registration.select.language": "Valitse ensin, minkä kielen tutkintoon haluat ilmoittautua",
   "registration.select.level": "Valitse tutkinnon taso",

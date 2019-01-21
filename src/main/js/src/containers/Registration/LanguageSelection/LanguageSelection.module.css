@@ -1,23 +1,12 @@
-.Return {
-  width: 90px;
-  height: 40px;
-  margin: 15px 0 20px 0;
-  font-size: 0.75em;
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
 .Content {
   width: calc(100vw - 40px);
   margin: 0 auto;
 }
 
 .Title {
+  margin: 0 0 30px 0;
   display: block;
   font-size: 1.125em;
-  margin-bottom: 30px;
 }
 
 .Instructions {

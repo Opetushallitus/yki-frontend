@@ -1,3 +1,7 @@
+.Content {
+  width: 100vw;
+}
+
 .Title {
   font-size: 1.5em;
   margin: 38px 0 34px 20px;
