@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import classes from './Registration.module.css';
 import Logo from '../../components/UI/Logo/Logo';
-import ExamSessionSelection from './ExamSessionSelection/ExamSessionSelection';
-import Description from '../../components/Registration/Description/Description';
 
 class Registration extends Component {
   state = {
