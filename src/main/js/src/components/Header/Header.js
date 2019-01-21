@@ -7,7 +7,7 @@ import NavigationItems from './NavigationItems/NavigationItems';
 const header = ({ nav }) =>
   nav ? (
     <header className={classes.Header}>
-      <nav className={classes.DesktopOnly}>
+      <nav>
         <NavigationItems />
       </nav>
     </header>

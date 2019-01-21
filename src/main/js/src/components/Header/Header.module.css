@@ -28,10 +28,6 @@
 }
 
 @media (min-width: 620px) {
-  .DesktopOnly {
-    display: none;
-  }
-
   .RegistrationHeader {
     height: 80px;
     font-size: 1.125em;
