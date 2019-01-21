@@ -27,7 +27,7 @@ const ExamSessions = lazy(() =>
 const rootReducer = combineReducers({
   registry: registryReducer,
   exam: examSessionReducer,
-  reg: registrationReducer,
+  registration: registrationReducer,
   user: userReducer,
   dates: examDatesReducer,
 });
@@ -55,7 +55,7 @@ const app = () => (
               />
               {/* TODO: change back to use component={Component} after react-router-dom updates version */}
               <Route path="/jarjestajarekisteri" render={() => <Registry />} />
-              <Route path="/tutkintopaivat" render={() => <ExamDates/>} />
+              <Route path="/tutkintopaivat" render={() => <ExamDates />} />
             </ErrorBoundary>
             <Route component={NotFound} />
           </Switch>
