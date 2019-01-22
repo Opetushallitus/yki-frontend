@@ -15,21 +15,21 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
   <div
     className="ParticipantList"
   >
-    <p
+    <div
       className="ItemHeader Index"
       data-cy="participant-1"
     >
       1
       .
-    </p>
-    <p
+    </div>
+    <div
       className="ItemHeader"
     >
       Wallis
        
       Michael
-    </p>
-    <p
+    </div>
+    <div
       className="ItemHeader Status"
     >
       <img
@@ -38,17 +38,25 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       />
        
       examSession.paid
-    </p>
-    <p />
-    <p />
-    <p />
-    <p />
-    <p
+    </div>
+    <div
+      className="Item"
+    />
+    <div
+      className="Item"
+    />
+    <div
+      className="Item"
+    />
+    <div
+      className="Item"
+    />
+    <div
       className="Item"
     >
       011088-1234 
-    </p>
-    <p
+    </div>
+    <div
       className="Item"
     >
       Revontulentie 13 C 2
@@ -56,14 +64,21 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       02100
       , 
       Espoo
-    </p>
-    <p>
+    </div>
+    <div
+      className="Item"
+    >
       +358 40 5131441
-    </p>
-    <p>
+    </div>
+    <div
+      className="Item"
+    >
+       
       michael.wallis@test.com
-    </p>
-    <p>
+    </div>
+    <div
+      className="ShowOnHover"
+    >
       <DeleteButton
         cancelText="examSession.registration.cancel.cancel"
         confirmText="examSession.registration.cancel.confirm"
@@ -76,28 +91,28 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
          
         examSession.registration.cancel
       </DeleteButton>
-    </p>
+    </div>
     <span
-      className="Line DesktopOnly"
+      className="Line"
     />
     <span
       className="LineEnd"
     />
-    <p
+    <div
       className="ItemHeader Index"
       data-cy="participant-2"
     >
       2
       .
-    </p>
-    <p
+    </div>
+    <div
       className="ItemHeader"
     >
       Gaddens
        
       Natalia
-    </p>
-    <p
+    </div>
+    <div
       className="ItemHeader Status"
     >
       <img
@@ -106,17 +121,25 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       />
        
       examSession.notPaid
-    </p>
-    <p />
-    <p />
-    <p />
-    <p />
-    <p
+    </div>
+    <div
+      className="Item"
+    />
+    <div
+      className="Item"
+    />
+    <div
+      className="Item"
+    />
+    <div
+      className="Item"
+    />
+    <div
       className="Item"
     >
       011088-1234 
-    </p>
-    <p
+    </div>
+    <div
       className="Item"
     >
       Revontulentie 13 C 2
@@ -124,14 +147,21 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       02100
       , 
       Espoo
-    </p>
-    <p>
+    </div>
+    <div
+      className="Item"
+    >
       +358 40 5131441
-    </p>
-    <p>
+    </div>
+    <div
+      className="Item"
+    >
+       
       natalia.gaddens@test.com
-    </p>
-    <p>
+    </div>
+    <div
+      className="ShowOnHover"
+    >
       <DeleteButton
         cancelText="examSession.registration.cancel.cancel"
         confirmText="examSession.registration.cancel.confirm"
@@ -144,9 +174,9 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
          
         examSession.registration.cancel
       </DeleteButton>
-    </p>
+    </div>
     <span
-      className="Line DesktopOnly"
+      className="Line"
     />
     <span
       className="LineEnd"

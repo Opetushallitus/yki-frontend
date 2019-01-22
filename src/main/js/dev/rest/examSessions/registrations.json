@@ -71,6 +71,24 @@
         },
         "state": "COMPLETED",
         "registration_id": 4
+      },
+      {
+        "form": {
+          "post_office": "Espoo",
+          "ssn": "210262-3758 ",
+          "exam_lang": "fi",
+          "phone_number": "+358401112813",
+          "gender": "2",
+          "email": "fua.lamba@test.com",
+          "certificate_lang": "fi",
+          "last_name": "Fua",
+          "first_name": "Lamba",
+          "nationalities": ["FIN"],
+          "street_address": "Revontulentie 13 C 2",
+          "zip": "02100"
+        },
+        "state": "COMPLETED",
+        "registration_id": 5
       }
     ]
   }

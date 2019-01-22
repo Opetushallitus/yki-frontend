@@ -1,17 +1,17 @@
 .ParticipantList {
   display: grid;
   grid-template-columns: 20px 1fr 2fr 1fr 1fr 1fr;
-  grid-auto-rows: 20px;
   grid-gap: 4px;
   grid-row-gap: 0px;
 }
 
 .Item {
-  display: grid;
+  font-size: 0.875em;
 }
 
 .ItemHeader {
   display: grid;
+  font-size: 0.875em;
   font-weight: bold;
   white-space: nowrap;
 }
@@ -26,23 +26,35 @@
   font-weight: bold;
 }
 
+.Row:hover {
+  color: hsla(195, 100%, 47%, 1);
+}
+
 .Line {
   grid-column: 1/6;
-  margin-top: 22px;
+  margin-top: 2x;
+  margin-bottom: 8px;
   border-bottom: 1px solid hsla(0, 0%, 80%, 1);
 }
 
 .LineEnd {
   grid-column: 6/7;
-  margin-top: 22px;
+  margin-top: 2x;
+  margin-bottom: 8px;
 }
 
-@media (max-width: 1000px) {
-  .Line {
-    margin-top: 32px;
-  }
+.ShowOnHover {
+  opacity: 0.0;
+}
 
-  .LineEnd {
-    margin-top: 32px;
-  }
+.ShowOnHover:hover {
+  opacity: 1.0;
+}
+
+.Item:hover ~ .ShowOnHover {
+  opacity: 1.0;
+}
+
+.Item:hover ~ .ShowOnHover + .Line ~ .ShowOnHover {
+  opacity: 0.0;
 }

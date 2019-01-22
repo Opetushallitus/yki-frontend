@@ -12,10 +12,11 @@ import classes from './ParticipantList.module.css';
 import { DeleteButton } from '../../UI/DeleteButton/DeleteButton';
 
 export const participantList = props => {
-  const registratioStatus = state => {
-    const image = state === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
+  const registratioStatus = registrationState => {
+    const image =
+      registrationState === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
     const text =
-      state === 'COMPLETED'
+      registrationState === 'COMPLETED'
         ? props.t('examSession.paid')
         : props.t('examSession.notPaid');
     return (
@@ -41,35 +42,36 @@ export const participantList = props => {
   const participantRows = participants => {
     return participants.map((p, i) => (
       <React.Fragment key={i}>
-        <p
+        <div
           className={[classes.ItemHeader, classes.Index].join(' ')}
           data-cy={`participant-${p.registration_id}`}
         >
           {i + 1}.
-        </p>
-        <p className={classes.ItemHeader}>
+        </div>
+        <div className={classes.ItemHeader}>
           {p.form.first_name} {p.form.last_name}
-        </p>
-        <p className={[classes.ItemHeader, classes.Status].join(' ')}>
+        </div>
+        <div className={[classes.ItemHeader, classes.Status].join(' ')}>
           {registratioStatus(p.state)}
-        </p>
-        <p />
-        <p />
-        <p />
-        <p />
-        <p className={classes.Item}>{ssnOrBirthDate(p.form)}</p>
-        <p className={classes.Item}>
+        </div>
+        <div className={classes.Item}/>
+        <div className={classes.Item}/>
+        <div className={classes.Item}/>
+        <div className={classes.Item}/>
+        <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
+        <div className={classes.Item}>
           {p.form.street_address} {p.form.zip}
           {', '}
           {p.form.post_office}
-        </p>
-        <p>
+        </div>
+        <div className={classes.Item}>
           {parsePhoneNumberFromString(
             p.form.phone_number,
           ).formatInternational()}
-        </p>
-        <p>{p.form.email}</p>
-        <p>
+        </div>
+        <div className={classes.Item}> {p.form.email}</div>
+        {/* <div className={classes.Datarow} key={'row-' + i} /> */}
+        <div className={[classes.ShowOnHover].join(' ')}>
           <DeleteButton
             children={cancelRegistration()}
             onClick={() =>
@@ -82,8 +84,8 @@ export const participantList = props => {
             confirmText={props.t('examSession.registration.cancel.confirm')}
             cancelText={props.t('examSession.registration.cancel.cancel')}
           />
-        </p>
-        <span className={[classes.Line, classes.DesktopOnly].join(' ')}/>
+        </div>
+        <span className={classes.Line} />
         <span className={classes.LineEnd} />
       </React.Fragment>
     ));
