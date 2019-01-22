@@ -10,7 +10,7 @@ export class PaymentRedirect extends Component {
   paymentForm = React.createRef();
 
   state = {
-    formData: {},
+    formData: null,
     error: false,
   };
 
@@ -29,13 +29,13 @@ export class PaymentRedirect extends Component {
   };
 
   componentDidUpdate = () => {
-    if (this.state.formData.params) {
+    if (this.state.formData) {
       this.paymentForm.current.submit();
     }
   };
 
   render() {
-    return this.state.formData.params && !this.state.error ? (
+    return this.state.formData && !this.state.error ? (
       <form
         ref={this.paymentForm}
         action={this.state.formData.uri}
