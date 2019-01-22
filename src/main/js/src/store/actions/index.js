@@ -16,3 +16,4 @@ export {
   registryFailReset,
 } from './registry';
 export {} from './registration';
+export { fetchUser } from './user';

@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import registryReducer from './store/reducers/registry';
 import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
+import userReducer from './store/reducers/user';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Registration from './containers/Registration/Registration';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   registry: registryReducer,
   exam: examSessionReducer,
   reg: registrationReducer,
+  user: userReducer,
 });
 
 const store = createStore(
