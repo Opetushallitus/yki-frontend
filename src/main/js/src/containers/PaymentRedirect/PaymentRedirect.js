@@ -58,7 +58,7 @@ export class PaymentRedirect extends Component {
         />
       </form>
     ) : (
-      <Page withoutNavigation={true}>
+      <Page>
         <Alert
           title={this.props.t('payment.redirect.error')}
           optionalText={this.props.t('payment.redirect.error.info')}

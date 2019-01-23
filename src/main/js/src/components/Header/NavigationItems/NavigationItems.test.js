@@ -2,25 +2,25 @@ import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import NavigationItems from './NavigationItems';
+import { navigationItems as NavigationItems } from './NavigationItems';
 import NavigationItem from './NavigationItem/NavigationItem';
 
 configure({ adapter: new Adapter() });
 
 jest.mock('react-i18next', () => ({
   withNamespaces: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: () => "" };
+    Component.defaultProps = { ...Component.defaultProps, t: () => '' };
     return Component;
   },
 }));
 
 describe('<NavigationItems />', () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = shallow(<NavigationItems />);
+  it('should render two <NavigationItem /> elements for admin', () => {
+    const wrapper = shallow(<NavigationItems user={{ isAdmin: true }} />);
+    expect(wrapper.find(NavigationItem)).toHaveLength(2);
   });
-
-  it('should render three <NavigationItem /> elements', () => {
-    expect(wrapper.find(NavigationItem)).toHaveLength(3);
+  it('should render one <NavigationItem /> element for organizer', () => {
+    const wrapper = shallow(<NavigationItems user={{ isAdmin: false }} />);
+    expect(wrapper.find(NavigationItem)).toHaveLength(1);
   });
 });

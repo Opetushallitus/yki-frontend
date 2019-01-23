@@ -1,4 +1,3 @@
-const proxy = require('http-proxy-middleware');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const axios = require('axios');
@@ -26,7 +25,6 @@ const getRegistrations = () => {
 };
 
 let registrations = getRegistrations();
-
 
 const examDates = {
   dates: [
@@ -114,7 +112,7 @@ const paymentFormData = {
   params: {
     MERCHANT_ID: 13466,
     URL_SUCCESS: 'https://yki.untuvaopintopolku.fi/yki/payment/payment/success',
-    AMOUNT: "100.00",
+    AMOUNT: '100.00',
     PARAMS_OUT:
       'ORDER_NUMBER,PAYMENT_ID,AMOUNT,TIMESTAMP,STATUS,PAYMENT_METHOD,SETTLEMENT_REFERENCE_NUMBER,LOCALE',
     URL_CANCEL: 'https://yki.untuvaopintopolku.fi/yki/payment/payment/cancel',
@@ -128,6 +126,38 @@ const paymentFormData = {
     MSG_UI_MERCHANT_PANEL: 'tutkintomaksu_fi',
     ORDER_NUMBER: 123456,
   },
+};
+
+const adminUser = {
+  identity: {
+    username: 'ykitestaaja',
+    oid: '1.2.246.562.24.98107285507',
+    organizations: [
+      {
+        oid: '1.2.246.562.10.00000000001',
+        permissions: [{ palvelu: 'YKI', oikeus: 'YLLAPITAJA' }],
+      },
+    ],
+    lang: 'fi',
+  },
+};
+
+const organizerUser = {
+  identity: {
+    username: 'ykijarjestaja',
+    oid: '1.2.246.562.24.62800798482',
+    organizations: [
+      {
+        oid: '1.2.246.562.10.28646781493',
+        permissions: [{ palvelu: 'YKI', oikeus: 'JARJESTAJA' }],
+      },
+    ],
+    lang: 'fi',
+  },
+};
+
+const unauthenticatedUser = {
+  identity: null,
 };
 
 const getNumberBetween = (min, max) =>
@@ -338,6 +368,15 @@ module.exports = function(app) {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(paymentFormData);
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.get('/yki/auth/user', (req, res) => {
+    try {
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      res.send(adminUser);
     } catch (err) {
       res.status(404).send(err.message);
     }

@@ -23,7 +23,7 @@ const status = props => {
 
 export const paymentStatus = props => {
   return (
-    <Page withoutNavigation={true}>
+    <Page>
       <div>{status(props)}</div>
     </Page>
   );

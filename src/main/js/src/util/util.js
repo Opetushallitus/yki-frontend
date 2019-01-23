@@ -47,3 +47,10 @@ export const getLanguagesWithLevelDescriptions = array => {
   }
   return list;
 };
+
+export const inRegistryOrExamSessions = () => {
+  return (
+    window.location.href.includes('jarjestajarekisteri') ||
+    window.location.href.includes('tutkintotilaisuudet')
+  );
+};
