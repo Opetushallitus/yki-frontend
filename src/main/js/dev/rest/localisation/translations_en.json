@@ -55,6 +55,7 @@
   "error.generic.info": "Yritä hetken kuluttua uudelleen._en",
   "error.mandatory": "Mandatory",
   "error.numeric": "Arvon pitää olla luku_en",
+  "error.tryAgain": "Try again",
   "errorBoundary.return": "Palaa etusivulle_en",
   "errorBoundary.title": "Tapahtui odottamaton virhe_en",
   "examSession.addExamSession": "Luo tutkintotilaisuus_en",

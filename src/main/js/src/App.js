@@ -43,17 +43,13 @@ const app = () => (
         <Suspense fallback={<Spinner />}>
           <Switch>
             <Route exact path="/" component={Registration} />
-            <Route
-              path="/tutkintotilaisuudet"
-              render={() => <ExamSessions />}
-            />
             <Route path="/maksut/tila" component={PaymentStatus} />
             <Route path="/maksut/:registrationId" component={PaymentRedirect} />
-            <ErrorBoundary
-              titleKey="errorBoundary.title"
-              returnLinkTo="jarjestajarekisteri"
-              returnLinkTextKey="errorBoundary.return"
-            >
+            <ErrorBoundary>
+              <Route
+                path="/tutkintotilaisuudet"
+                render={() => <ExamSessions />}
+              />
               {/* TODO: change back to use component={Component} after react-router-dom updates version */}
               <Route path="/jarjestajarekisteri" render={() => <Registry />} />
             </ErrorBoundary>

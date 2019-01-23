@@ -23,9 +23,9 @@ export class ErrorBoundary extends Component {
     if (this.state.error) {
       return (
         <Alert
-          title={this.props.t(this.props.titleKey)}
-          returnLinkTo={this.props.returnLinkTo}
-          returnLinkText={this.props.t(this.props.returnLinkTextKey)}
+          title={this.props.t('errorBoundary.title')}
+          returnLinkTo={window.location.href}
+          returnLinkText={this.props.t('errorBoundary.return')}
         />
       );
     } else {
@@ -33,11 +33,5 @@ export class ErrorBoundary extends Component {
     }
   }
 }
-
-ErrorBoundary.propTypes = {
-  titleKey: PropTypes.string.isRequired,
-  returnLinkTo: PropTypes.string.isRequired,
-  returnLinkTextKey: PropTypes.string,
-};
 
 export default withNamespaces()(ErrorBoundary);

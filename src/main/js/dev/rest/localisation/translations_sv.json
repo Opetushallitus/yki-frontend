@@ -59,6 +59,7 @@
   "error.mandatory": "Pakollinen_sv",
   "error.numeric": "Arvon pitää olla luku_sv",
   "error.registration.cancelFailed": "Osallistumisen peruminen epäonnistui_sv",
+  "error.tryAgain": "Yritä uudelleen_sv",
   "errorBoundary.return": "Palaa etusivulle",
   "errorBoundary.title": "Tapahtui odottamaton virhe_sv",
   "examSession": "Tutkintotilaisuus_sv",

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withNamespaces } from 'react-i18next';
+
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
+import Alert from '../../components/Alert/Alert';
 
 class Init extends Component {
   componentDidMount() {
@@ -10,7 +13,17 @@ class Init extends Component {
   }
 
   render() {
-    return this.props.loading ? <Spinner /> : this.props.children;
+    return this.props.loading ? (
+      <Spinner />
+    ) : this.props.error ? (
+      <Alert
+        title={this.props.t('error.common')}
+        returnLinkTo={window.location.href}
+        returnLinkText={this.props.t('error.tryAgain')}
+      />
+    ) : (
+      this.props.children
+    );
   }
 }
 
@@ -35,4 +48,4 @@ Init.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Init);
+)(withNamespaces()(Init));

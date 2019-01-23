@@ -60,6 +60,7 @@
   "error.mandatory": "Pakollinen",
   "error.numeric": "Arvon pitää olla luku",
   "error.registration.cancelFailed": "Osallistumisen peruminen epäonnistui",
+  "error.tryAgain": "Yritä uudelleen",
   "errorBoundary.return": "Palaa etusivulle",
   "errorBoundary.title": "Tapahtui odottamaton virhe",
   "examSession": "Tutkintotilaisuus",
