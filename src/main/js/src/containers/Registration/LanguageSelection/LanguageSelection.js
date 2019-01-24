@@ -20,7 +20,7 @@ const languageSelection = props => {
     <React.Fragment>
       <Header />
       <BackButton clicked={() => props.history.goBack()} />
-      <div className={classes.Content}>
+      <main className={classes.Content}>
         <p className={classes.Title}>{props.t('registration.title')}</p>
         <p className={classes.Instructions}>
           {props.t('registration.select.language')}:
@@ -36,7 +36,7 @@ const languageSelection = props => {
             </span>
           ))}
         </div>
-      </div>
+      </main>
     </React.Fragment>
   );
 };

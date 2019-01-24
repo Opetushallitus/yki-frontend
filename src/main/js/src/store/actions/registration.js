@@ -14,9 +14,9 @@ export const selectLevel = level => {
   };
 };
 
-export const selectArea = area => {
+export const selectLocation = location => {
   return {
-    type: actionTypes.SELECT_AREA,
-    area: area,
+    type: actionTypes.SELECT_LOCATION,
+    location: location,
   };
 };

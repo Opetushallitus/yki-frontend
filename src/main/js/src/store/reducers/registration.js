@@ -3,7 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   language: '',
   level: '',
-  area: '',
+  location: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,10 +18,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         level: action.level,
       };
-    case actionTypes.SELECT_AREA:
+    case actionTypes.SELECT_LOCATION:
       return {
         ...state,
-        area: action.area,
+        location: action.location,
       };
     default:
       return state;

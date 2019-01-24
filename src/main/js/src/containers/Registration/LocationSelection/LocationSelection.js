@@ -3,23 +3,25 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withNamespaces } from 'react-i18next';
 
-import classes from './LevelSelection.module.css';
+import classes from './LocationSelection.module.css';
 import Header from '../../../components/Header/Header';
 import BackButton from '../../../components/Registration/BackButton/BackButton';
 import { levelDescription } from '../../../util/util';
-import { LANGUAGES } from '../../../common/Constants';
 import * as actions from '../../../store/actions/index';
 
-const languageSelection = props => {
+const locationSelection = props => {
   if (!props.language) {
     return <Redirect to={props.t('registration.path.select.language')} />;
   }
-  document.title = props.t('registration.document.title.level');
-  const levels = LANGUAGES.find(l => l.name === props.language).levels;
+  if (!props.level) {
+    return <Redirect to={props.t('registration.path.select.level')} />;
+  }
 
-  const selectLevel = level => {
-    props.onSelectLevel(level);
-    props.history.push(props.t('registration.path.select.location'));
+  document.title = props.t('registration.document.title.location');
+
+  const selectLocation = location => {
+    props.onSelectLocation(location);
+    props.history.push(props.t('registration.path.select.exam'));
   };
 
   return (
@@ -31,20 +33,18 @@ const languageSelection = props => {
         <p className={classes.LanguageSelection}>
           {props.t('registration.selected.language')}:{' '}
           <strong>{props.language}</strong>
+          <br />
+          {props.t('registration.selected.level')}:{' '}
+          <strong>{levelDescription(props.level)}</strong>
         </p>
-        <p>{props.t('registration.select.level')}:</p>
+        <p>{props.t('registration.select.location')}:</p>
         <div className={classes.Selections}>
-          {levels.map(level => (
-            <span
-              key={level}
-              onClick={() => selectLevel(level)}
-              className={classes.Selection}
-            >
-              <p className={classes.SelectionText}>
-                {props.t(levelDescription(level))}
-              </p>
-            </span>
-          ))}
+          <span
+            className={classes.Selection}
+            onClick={() => selectLocation(props.t('registration.location.all'))}
+          >
+            {props.t('registration.location.all')}
+          </span>
         </div>
       </main>
     </React.Fragment>
@@ -54,16 +54,17 @@ const languageSelection = props => {
 const mapStateToProps = state => {
   return {
     language: state.registration.language,
+    level: state.registration.level,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSelectLevel: level => dispatch(actions.selectLevel(level)),
+    onSelectLocation: location => dispatch(actions.selectLocation(location)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(languageSelection));
+)(withNamespaces()(locationSelection));

@@ -23,11 +23,11 @@ const ExamSessionList = props => {
     </label>
   );
 
-  const areaSelect = (
+  const locationSelect = (
     <label>
-      {props.t('common.area')}
+      {props.t('common.exam.location')}
       <select className={classes.Select}>
-        <option>{props.t('common.area.all')}</option>
+        <option>{props.t('common.location.all')}</option>
       </select>
     </label>
   );
@@ -36,7 +36,7 @@ const ExamSessionList = props => {
     <div className={classes.Filters}>
       {languageSelect}
       {levelSelect}
-      {areaSelect}
+      {locationSelect}
     </div>
   );
 
