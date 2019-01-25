@@ -333,7 +333,7 @@ module.exports = function(app) {
       const futureExamDates = examDates.dates.filter(d => {
         return moment(d.registration_end_date).isSameOrAfter(moment());
       });
-      res.send({ dates:futureExamDates});
+      res.send({ dates: futureExamDates });
     } catch (err) {
       res.status(404).send(err.message);
     }
@@ -352,6 +352,17 @@ module.exports = function(app) {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(adminUser);
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.post('/yki/api/login-link', (req, res) => {
+    try {
+      const id = getNumberBetween(1, 10);
+      id < 5
+        ? res.status(500).send('err.message')
+        : res.send({ success: true });
     } catch (err) {
       res.status(404).send(err.message);
     }
