@@ -32,7 +32,7 @@ describe('Navigation', () => {
     cy.log('Organizer is logged in')
     cy.route({
       method: 'GET',
-      url: '/yki/auth/user',
+      url: '/yki/auth/user?lang=fi',
       response: {
         identity: {
           organizations: [

@@ -3,7 +3,7 @@ describe('Registry', () => {
     cy.server();
     cy.route({
       method: 'POST',
-      url: '/organisaatio-service/rest/organisaatio/v3/findbyoids',
+      url: '/organisaatio-service/rest/organisaatio/v3/findbyoids?lang=fi',
     }).as('findbyoids');
     cy.visit('/jarjestajarekisteri');
   });
