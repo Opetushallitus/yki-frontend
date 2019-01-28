@@ -13,6 +13,7 @@ const languageSelection = props => {
 
   const selectLanguage = language => {
     props.onSelectLanguage(language);
+    props.onFetchExamLocations();
     props.history.push(props.t('registration.path.select.level'));
   };
 
@@ -43,6 +44,7 @@ const languageSelection = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onFetchExamLocations: () => dispatch(actions.fetchExamLocations()),
     onSelectLanguage: language => dispatch(actions.selectLanguage(language)),
   };
 };

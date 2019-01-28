@@ -15,6 +15,12 @@ export {
   deleteRegistryItem,
   registryFailReset,
 } from './registry';
-export { selectLanguage, selectLevel, selectLocation } from './registration';
+export {
+  fetchExamLocations,
+  selectLanguage,
+  selectLevel,
+  selectLocation,
+  setDefaultFilters,
+} from './registration';
 export { fetchExamDates, examDatesFailReset } from './examDates';
 export { fetchUser } from './user';

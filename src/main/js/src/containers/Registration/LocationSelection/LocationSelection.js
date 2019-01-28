@@ -39,12 +39,15 @@ const locationSelection = props => {
         </p>
         <p>{props.t('registration.select.location')}:</p>
         <div className={classes.Selections}>
-          <span
-            className={classes.Selection}
-            onClick={() => selectLocation(props.t('registration.location.all'))}
-          >
-            {props.t('registration.location.all')}
-          </span>
+          {props.locations.map(location => (
+            <span
+              key={location}
+              className={classes.Selection}
+              onClick={() => selectLocation(location)}
+            >
+              {location}
+            </span>
+          ))}
         </div>
       </main>
     </React.Fragment>
@@ -55,6 +58,7 @@ const mapStateToProps = state => {
   return {
     language: state.registration.language,
     level: state.registration.level,
+    locations: state.registration.locations,
   };
 };
 

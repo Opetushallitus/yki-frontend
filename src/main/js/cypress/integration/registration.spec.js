@@ -11,6 +11,8 @@ describe('Registration', () => {
     cy.get('button').click();
     cy.contains('Suomi').click();
     cy.contains('Perustaso').click();
+    cy.contains('Koko maa').click();
+    cy.contains('Takaisin').click();
     cy.contains('Takaisin').click();
     cy.contains('Takaisin').click();
     cy.contains('Takaisin').click();
