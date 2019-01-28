@@ -1,31 +1,24 @@
-.Registration {
-  width: 100vw;
-  padding-top: 40px;
+.Content {
+  width: calc(100vw - 40px);
+  margin: 0 auto;
 }
 
-.Header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  width: 100vw;
-  height: 40px;
-  align-items: center;
-  color: hsl(0, 0%, 100%);
-  font-size: 0.875em;
-  font-weight: 600;
-  background-color: hsl(96, 96%, 27%);
-  background-size: 2.2em;
+.Title {
+  margin: 0 0 30px 0;
+  display: block;
+  font-size: 1.125em;
+}
+
+.Upcoming {
+  margin: 29px 0 14px 0;
 }
 
 @media (min-width: 620px) {
-  .Registration {
-    padding-top: 80px;
+  .Content {
+    width: calc(100vw - 200px);
   }
 
-  .Header {
-    height: 80px;
-    font-size: 1.125em;
-    background-size: 3.5em;
+  .Upcoming {
+    font-size: 16px;
   }
 }

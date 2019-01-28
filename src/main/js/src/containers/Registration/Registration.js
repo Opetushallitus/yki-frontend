@@ -1,38 +1,79 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withNamespaces } from 'react-i18next';
 
 import classes from './Registration.module.css';
-import Logo from '../../components/UI/Logo/Logo';
+import Header from '../../components/Header/Header';
+import BackButton from '../../components/Registration/BackButton/BackButton';
+import Filters from '../../components/Registration/Filters/Filters';
+import * as actions from '../../store/actions/index';
 
 class Registration extends Component {
-  state = {
-    selecting: false,
+  componentDidMount() {
+    if (!this.props.language || !this.props.level || !this.props.location) {
+      this.props.onSetDefaultFilters();
+      this.props.onFetchExamLocations();
+    }
+  }
+
+  onLanguageChange = event => {
+    this.props.onSelectLanguage(event.target.value);
   };
 
-  onReturnHandler = () => {
-    this.setState({ selecting: false });
+  onLevelChange = event => {
+    this.props.onSelectLevel(event.target.value);
   };
 
-  descriptionClickHandler = () => {
-    this.setState({ selecting: true });
+  onLocationChange = event => {
+    this.props.onSelectLocation(event.target.value);
   };
 
   render() {
     return (
       <React.Fragment>
-        <header className={classes.Header}>
-          <Logo />
-          Opetushallitus
-        </header>
-        <div className={classes.Registration}>
-          {this.state.selecting ? (
-            <ExamSessionSelection onReturn={this.onReturnHandler} />
-          ) : (
-            <Description clicked={this.descriptionClickHandler} />
-          )}
-        </div>
+        <Header />
+        <BackButton clicked={() => this.props.history.goBack()} />
+        <main className={classes.Content}>
+          <p className={classes.Title}>{this.props.t('registration.title')}</p>
+          <Filters
+            language={this.props.language}
+            onLanguageChange={this.onLanguageChange}
+            level={this.props.level}
+            onLevelChange={this.onLevelChange}
+            location={this.props.location}
+            onLocationChange={this.onLocationChange}
+            locations={this.props.locations}
+          />
+          <p className={classes.Upcoming}>
+            {this.props.t('examSession.upcomingExamSessions')}
+          </p>
+          {/* TODO: list of exam sessions */}
+        </main>
       </React.Fragment>
     );
   }
 }
 
-export default Registration;
+const mapStateToProps = state => {
+  return {
+    language: state.registration.language,
+    level: state.registration.level,
+    location: state.registration.location,
+    locations: state.registration.locations,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchExamLocations: () => dispatch(actions.fetchExamLocations()),
+    onSelectLevel: level => dispatch(actions.selectLevel(level)),
+    onSelectLanguage: language => dispatch(actions.selectLanguage(language)),
+    onSelectLocation: location => dispatch(actions.selectLocation(location)),
+    onSetDefaultFilters: () => dispatch(actions.setDefaultFilters()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withNamespaces()(Registration));
