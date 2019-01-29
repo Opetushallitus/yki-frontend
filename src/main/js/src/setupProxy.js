@@ -15,6 +15,10 @@ const examDates = JSON.parse(
   fs.readFileSync('./dev/rest/examSessions/examDates.json'),
 );
 
+const initRegistration = JSON.parse(
+  fs.readFileSync('./dev/rest/registration/registrationInit.json'),
+);
+
 const getExamSessions = () => {
   return JSON.parse(
     fs.readFileSync('./dev/rest/examSessions/examSessions.json'),
@@ -363,6 +367,14 @@ module.exports = function(app) {
       id < 5
         ? res.status(500).send('err.message')
         : res.send({ success: true });
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.post('/yki/api/registration/init', (req, res) => {
+    try {
+      res.send(initRegistration);
     } catch (err) {
       res.status(404).send(err.message);
     }

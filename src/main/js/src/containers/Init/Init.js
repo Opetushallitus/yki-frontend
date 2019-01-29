@@ -13,7 +13,7 @@ class Init extends Component {
   }
 
   render() {
-    return this.props.loading ? (
+    return !this.props.error && this.props.loading ? (
       <Spinner />
     ) : this.props.error ? (
       <Alert

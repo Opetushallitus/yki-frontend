@@ -5,6 +5,7 @@ const initialState = {
   level: '',
   location: '',
   locations: [],
+  formInitData: null,
   loading: false,
   error: null,
 };
@@ -49,6 +50,23 @@ const reducer = (state = initialState, action) => {
         language: action.language,
         level: action.level,
         location: action.location,
+      };
+    case actionTypes.INIT_REGISTRATION_FORM_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.INIT_REGISTRATION_FORM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        formInitData: action.formInitData,
+      };
+    case actionTypes.INIT_REGISTRATION_FORM_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
       };
     default:
       return state;

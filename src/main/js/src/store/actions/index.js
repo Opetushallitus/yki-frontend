@@ -21,6 +21,7 @@ export {
   selectLevel,
   selectLocation,
   setDefaultFilters,
+  initRegistrationForm
 } from './registration';
 export { fetchExamDates, examDatesFailReset } from './examDates';
 export { fetchUser } from './user';

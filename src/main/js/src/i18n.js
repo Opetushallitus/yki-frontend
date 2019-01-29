@@ -33,7 +33,7 @@ i18n
       escapeValue: false, // not needed for react as it escapes by default
     },
     react: {
-      wait: true,
+      wait: false,
     },
   });
 

@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-// import axios from '../../axios';
+import axios from '../../axios';
 import i18next from 'i18next';
 
 import { firstCharToUpper } from '../../util/util';
@@ -61,5 +61,42 @@ export const setDefaultFilters = () => {
     language: firstCharToUpper(i18next.t('common.language.fin')),
     level: i18next.t('common.level.all'),
     location: i18next.t('common.location.all'),
+  };
+};
+
+export const initRegistrationForm = examSessionId => {
+  return dispatch => {
+    dispatch(initRegistrationFormStart());
+    axios
+      .post(`/yki/api/registration/init`, { exam_session_id: Math.trunc(examSessionId) })
+      .then(res => {
+        dispatch(initRegistrationFormSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(initRegistrationFormFail(err));
+      });
+  };
+};
+
+const initRegistrationFormStart = () => {
+  return {
+    type: actionTypes.INIT_REGISTRATION_FORM_START,
+    loading: true,
+  };
+};
+
+const initRegistrationFormSuccess = formInitData => {
+  return {
+    type: actionTypes.INIT_REGISTRATION_FORM_SUCCESS,
+    formInitData: formInitData,
+    loading: false,
+  };
+};
+
+const initRegistrationFormFail = error => {
+  return {
+    type: actionTypes.INIT_REGISTRATION_FORM_FAIL,
+    error: error,
+    loading: false,
   };
 };
