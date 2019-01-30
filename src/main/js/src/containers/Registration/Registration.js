@@ -12,7 +12,7 @@ class Registration extends Component {
   componentDidMount() {
     if (!this.props.language || !this.props.level || !this.props.location) {
       this.props.onSetDefaultFilters();
-      this.props.onFetchExamLocations();
+      this.props.onFetchExamSessions();
     }
   }
 
@@ -56,6 +56,7 @@ class Registration extends Component {
 
 const mapStateToProps = state => {
   return {
+    examSessions: state.registration.examSessions,
     language: state.registration.language,
     level: state.registration.level,
     location: state.registration.location,
@@ -65,7 +66,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchExamLocations: () => dispatch(actions.fetchExamLocations()),
+    onFetchExamSessions: () => dispatch(actions.fetchExamSessions()),
     onSelectLevel: level => dispatch(actions.selectLevel(level)),
     onSelectLanguage: language => dispatch(actions.selectLanguage(language)),
     onSelectLocation: location => dispatch(actions.selectLocation(location)),

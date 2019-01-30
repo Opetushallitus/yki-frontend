@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+  examSessions: [],
   language: '',
   level: '',
   location: '',
@@ -12,22 +13,27 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_EXAM_LOCATIONS_START:
+    case actionTypes.FETCH_EXAM_SESSIONS_START:
       return {
         ...state,
         loading: true,
       };
-    case actionTypes.FETCH_EXAM_LOCATIONS_SUCCESS:
+    case actionTypes.FETCH_EXAM_SESSIONS_SUCCESS:
       return {
         ...state,
         loading: false,
-        locations: action.locations,
+        examSessions: action.examSessions,
       };
-    case actionTypes.FETCH_EXAM_LOCATIONS_FAIL:
+    case actionTypes.FETCH_EXAM_SESSIONS_FAIL:
       return {
         ...state,
         loading: false,
         error: action.error,
+      };
+    case actionTypes.ADD_EXAM_LOCATIONS:
+      return {
+        ...state,
+        locations: action.locations,
       };
     case actionTypes.SELECT_LANGUAGE:
       return {

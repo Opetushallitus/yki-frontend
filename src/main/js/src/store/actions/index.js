@@ -16,7 +16,7 @@ export {
   registryFailReset,
 } from './registry';
 export {
-  fetchExamLocations,
+  fetchExamSessions,
   selectLanguage,
   selectLevel,
   selectLocation,

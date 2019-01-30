@@ -4,35 +4,54 @@ import i18next from 'i18next';
 
 import { firstCharToUpper } from '../../util/util';
 
-export const fetchExamLocations = () => {
-  const locations = ['Pernäjä', 'Hämeenlinna', 'Jämsä', 'Korso', 'Ankkalinna'];
+export const fetchExamSessions = () => {
   return dispatch => {
-    dispatch(fetchExamLocationsStart());
-    // TODO: get actual locations from api
-    // axios.get('/yki/api/exam-sessions')
-    dispatch(fetchExamLocationsSuccess(locations));
+    dispatch(fetchExamSessionsStart());
+    axios
+      .get('/yki/api/exam-sessions')
+      .then(res => {
+        dispatch(extractExamLocations(res.data.exam_sessions));
+        dispatch(fetchExamSessionsSuccess(res.data.exam_sessions));
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch(fetchExamSessionsFail(err));
+      });
   };
 };
 
-const fetchExamLocationsStart = () => {
+const extractExamLocations = array => {
+  const extracted = new Set();
+  array.map(e => extracted.add(e.location[0].address.split(' ').pop()));
+  const locations = [
+    i18next.t('common.location.all'),
+    ...[...extracted].sort(),
+  ];
   return {
-    type: actionTypes.FETCH_EXAM_LOCATIONS_START,
+    type: actionTypes.ADD_EXAM_LOCATIONS,
+    locations: locations,
   };
 };
 
-const fetchExamLocationsSuccess = locations => {
+const fetchExamSessionsStart = () => {
   return {
-    type: actionTypes.FETCH_EXAM_LOCATIONS_SUCCESS,
-    locations: [i18next.t('common.location.all'), ...locations.sort()],
+    type: actionTypes.FETCH_EXAM_SESSIONS_START,
   };
 };
 
-// const fetchExamLocationsFail = error => {
-//   return {
-//     type: actionTypes.FETCH_EXAM_LOCATIONS_FAIL,
-//     error: error,
-//   };
-// };
+const fetchExamSessionsSuccess = examSessions => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSIONS_SUCCESS,
+    examSessions: examSessions,
+  };
+};
+
+const fetchExamSessionsFail = error => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSIONS_FAIL,
+    error: error,
+  };
+};
 
 export const selectLanguage = language => {
   return {
