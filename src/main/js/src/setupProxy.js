@@ -27,6 +27,14 @@ const getExamSessions = () => {
 
 let examSessions = getExamSessions();
 
+const getAllExamSessions = () => {
+  return JSON.parse(
+    fs.readFileSync('./dev/rest/examSessions/allExamSessions.json'),
+  );
+};
+
+let allExamSessions = getAllExamSessions();
+
 const getRegistrations = () => {
   return JSON.parse(
     fs.readFileSync('./dev/rest/examSessions/registrations.json'),
@@ -375,6 +383,15 @@ module.exports = function(app) {
   app.post('/yki/api/registration/init', (req, res) => {
     try {
       res.send(initRegistration);
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.get('/yki/api/exam-sessions', (req, res) => {
+    try {
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      res.send(allExamSessions);
     } catch (err) {
       res.status(404).send(err.message);
     }
