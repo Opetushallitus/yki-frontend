@@ -6,11 +6,11 @@ import { withNamespaces } from 'react-i18next';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 import classes from './RegistrationForm.module.css';
-import Button from '../UI/Button/Button';
-import RadioButton from '../UI/RadioButton/RadioButton';
-import Alert from '../Alert/Alert';
+import Button from '../../UI/Button/Button';
+import RadioButton from '../../UI/RadioButton/RadioButton';
+import Alert from '../../Alert/Alert';
 
-const registrationForm = props => {
+export const registrationForm = props => {
   function validatePhoneNumber(value) {
     if (value) {
       const phoneNumber = parsePhoneNumberFromString(value);

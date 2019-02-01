@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RegistrationSuccess /> should render registration success page 1`] = `
+<div
+  className="RegistrationSuccess"
+>
+  <div>
+    <h1>
+      Ilmoittautuminen onnistui!
+    </h1>
+    <p>
+      Olet ilmoittautunut tutkintotilaisuuteen:
+    </p>
+  </div>
+  <div>
+    <p>
+      Saat maksuohjeet ja varmistuksen ilmoittautumisesta
+          sähköpostiosoitteeseen undefined
+    </p>
+  </div>
+  <div
+    className="InfoBox"
+  >
+    <p>
+      <b>
+        Tärkeää!
+      </b>
+       Muistathan, että tutkintomaksu on maksettava määräaikaan mennessä. Muutoin ilmoittautumisesi peruuntuu, etkä voi osallistua tutkintotilaisuuteen.
+    </p>
+  </div>
+  <div
+    className="BackButton"
+  >
+    <hyperlink
+      text="Palaa etusivulle"
+      to="/yki"
+    />
+  </div>
+</div>
+`;

@@ -398,9 +398,7 @@ module.exports = function(app) {
 
   app.post('/yki/api/registration/submit', (req, res) => {
     try {
-      getNumberBetween(1, 10) <= 5
-        ? res.status(500).send('err.message')
-        : res.send({ success: true });
+      res.send({ success: true });
     } catch (err) {
       res.status(404).send(err.message);
     }

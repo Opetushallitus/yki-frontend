@@ -14,9 +14,11 @@ const initialState = {
     initData: null,
     initDataLoading: false,
     initDataError: null,
+    formData: null,
     submitResponse: null,
     submitting: false,
     submitError: null,
+    submitSuccess: false,
   },
 };
 
@@ -126,6 +128,8 @@ const reducer = (state = initialState, action) => {
           ...state.form,
           submitting: false,
           submitError: null,
+          formData: action.formData,
+          submitSuccess: true,
           submitResponse: action.formSubmitResponse,
         }
       };

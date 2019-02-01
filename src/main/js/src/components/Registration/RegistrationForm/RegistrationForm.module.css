@@ -2,14 +2,6 @@
   margin: 0px 0 27px 0;
 }
 
-.MaxParticipantsInput {
-  display: block;
-  width: 35px;
-  height: 35px;
-  padding-left: 0px;
-  text-align: center;
-}
-
 .TextInput {
   width: 200px;
   height: 28px;
@@ -75,11 +67,7 @@
 }
 
 @media (min-width: 620px) {
-  .StartingText {
-    margin-bottom: 79px;
-  }
-
   .Form button {
-    margin: 0 114px;
+    margin: 0 40px;
   }
 }
