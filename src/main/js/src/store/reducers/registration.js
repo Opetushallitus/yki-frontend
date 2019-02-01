@@ -8,9 +8,11 @@ const initialState = {
   level: '',
   location: '',
   locations: [],
-  formInitData: null,
   loading: false,
   error: null,
+  formInitData: null,
+  formInitDataLoading: false,
+  formInitDataError: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -81,19 +83,19 @@ const reducer = (state = initialState, action) => {
     case actionTypes.INIT_REGISTRATION_FORM_START:
       return {
         ...state,
-        loading: true,
+        formInitDataLoading: true,
       };
     case actionTypes.INIT_REGISTRATION_FORM_SUCCESS:
       return {
         ...state,
-        loading: false,
+        formInitDataLoading: false,
         formInitData: action.formInitData,
       };
     case actionTypes.INIT_REGISTRATION_FORM_FAIL:
       return {
         ...state,
-        loading: false,
-        error: action.error,
+        formInitDataLoading: false,
+        formInitDataError: action.error,
       };
     default:
       return state;

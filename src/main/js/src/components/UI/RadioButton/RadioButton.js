@@ -15,8 +15,8 @@ const radioButton = props => (
       id={props.id}
       type="radio"
       data-cy={`radio-${props.id}`}
-      value={props.id}
-      checked={props.id === props.value}
+      value={props.checkedValue}
+      checked={props.checkedValue === props.value}
       onChange={props.onChange}
       disabled={props.disabled || false}
     />
@@ -31,6 +31,7 @@ radioButton.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.string,
+  checkedValue: PropTypes.any.isRequired,
   label: PropTypes.string.isRequired,
   extraLabel: PropTypes.string,
   onChange: PropTypes.func.isRequired,

@@ -62,6 +62,7 @@ const examSessionForm = props => {
   const RadioButtonComponent = ({
     field: { name, value, onChange },
     id,
+    checkedValue,
     label,
     extraLabel,
     disabled,
@@ -71,6 +72,7 @@ const examSessionForm = props => {
         name={name}
         id={id}
         value={value}
+        checkedValue={checkedValue}
         onChange={onChange}
         label={label}
         extraLabel={extraLabel}
@@ -111,6 +113,7 @@ const examSessionForm = props => {
           name="language"
           id={c}
           key={c}
+          checkedValue={c}
           label={languageToString(c).toLowerCase()}
         />
       );
@@ -131,6 +134,7 @@ const examSessionForm = props => {
           name="level"
           id={level}
           key={level}
+          checkedValue={level}
           label={levelDescription(level).toLowerCase()}
           disabled={!enabled}
         />
@@ -159,6 +163,7 @@ const examSessionForm = props => {
             name="examDate"
             id={examDate.exam_date}
             key={examDate.exam_date}
+            checkedValue={examDate.exam_date}
             label={moment(examDate.exam_date).format(DATE_FORMAT)}
             extraLabel={languages}
             disabled={!enabled}

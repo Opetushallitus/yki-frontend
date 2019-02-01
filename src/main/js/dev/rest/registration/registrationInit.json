@@ -37,12 +37,13 @@
     "last_name": "Parkkonen-Testi",
     "nick_name": null,
     "ssn": "260553-959D",
-    "post_office": "",
+    "post_office": "HELSINKI",
     "oid": null,
     "external-user-id": "260553-959D",
     "street_address": "Ateläniitynpolku 29 G",
     "first_name": "Carl-Erik",
-    "zip": "",
+    "zip": "00100",
+    "nationalities": ["246"],
     "email": null
   },
   "registration_id": 1

@@ -6,6 +6,13 @@ import { RegistrationPage } from './RegistrationPage';
 
 configure({ adapter: new Adapter() });
 
+jest.mock('react-i18next', () => ({
+  withNamespaces: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: () => '' };
+    return Component;
+  },
+}));
+
 describe('<RegistrationPage />', () => {
   it('should render registration page and get initial form data', () => {
     const onInitRegistrationForm = jest.fn();
