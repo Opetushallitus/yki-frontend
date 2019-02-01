@@ -8,7 +8,7 @@ const button = props => (
     type={props.type}
     disabled={props.disabled}
     className={[
-      props.isParticipant ? classes.ParticipantButton : classes.Button,
+      props.isRegistration ? classes.ParticipantButton : classes.Button,
       classes[props.btnType],
     ].join(' ')}
     onClick={props.clicked}
@@ -25,7 +25,7 @@ button.propTypes = {
   clicked: PropTypes.func,
   tabIndex: PropTypes.string,
   children: PropTypes.any,
-  isParticipant: PropTypes.bool,
+  isRegistration: PropTypes.bool,
 };
 
 export default button;

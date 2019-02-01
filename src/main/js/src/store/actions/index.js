@@ -20,7 +20,9 @@ export {
   selectLanguage,
   selectLevel,
   selectLocation,
+  setDefaultFilters,
   initRegistrationForm,
+  submitRegistrationForm,
 } from './registration';
 export { fetchExamDates, examDatesFailReset } from './examDates';
 export { fetchUser } from './user';

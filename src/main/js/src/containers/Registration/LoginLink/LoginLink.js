@@ -53,7 +53,7 @@ export class LoginLink extends Component {
             </div>
             <Button
               type="submit"
-              isParticipant={true}
+              isRegistration={true}
               disabled={!isValid || isSubmitting}
             >
               {this.props.t('examSession.addButton')}

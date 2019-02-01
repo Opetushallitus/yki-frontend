@@ -7,7 +7,7 @@ import Button from '../../UI/Button/Button';
 const authButton = props => (
   <form action={'/yki/auth/'}>
     <input type="hidden" name="examSessionId" value={props.examSessionId} />{' '}
-    <Button type="submit" isParticipant={true}>
+    <Button type="submit" isRegistration={true}>
       {props.t('registration.auth.button')}
     </Button>
   </form>

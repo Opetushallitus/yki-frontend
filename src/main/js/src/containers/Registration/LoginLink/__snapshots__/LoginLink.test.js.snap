@@ -436,7 +436,7 @@ exports[`<LoginLink /> should render login link page 1`] = `
           </div>
           <button
             disabled={true}
-            isParticipant={true}
+            isRegistration={true}
             type="submit"
           >
             <button

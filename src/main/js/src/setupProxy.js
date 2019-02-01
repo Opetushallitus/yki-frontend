@@ -371,8 +371,7 @@ module.exports = function(app) {
 
   app.post('/yki/api/login-link', (req, res) => {
     try {
-      const id = getNumberBetween(1, 10);
-      id < 5
+      getNumberBetween(1, 10) <= 5
         ? res.status(500).send('err.message')
         : res.send({ success: true });
     } catch (err) {
@@ -392,6 +391,16 @@ module.exports = function(app) {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(allExamSessions);
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.post('/yki/api/registration/submit', (req, res) => {
+    try {
+      getNumberBetween(1, 10) <= 5
+        ? res.status(500).send('err.message')
+        : res.send({ success: true });
     } catch (err) {
       res.status(404).send(err.message);
     }

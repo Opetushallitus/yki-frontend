@@ -10,9 +10,14 @@ const initialState = {
   locations: [],
   loading: false,
   error: null,
-  formInitData: null,
-  formInitDataLoading: false,
-  formInitDataError: null,
+  form: {
+    initData: null,
+    initDataLoading: false,
+    initDataError: null,
+    submitResponse: null,
+    submitting: false,
+    submitError: null,
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -83,19 +88,55 @@ const reducer = (state = initialState, action) => {
     case actionTypes.INIT_REGISTRATION_FORM_START:
       return {
         ...state,
-        formInitDataLoading: true,
+        form: {
+          ...state.form,
+          initDataLoading: true
+        }
       };
     case actionTypes.INIT_REGISTRATION_FORM_SUCCESS:
       return {
         ...state,
-        formInitDataLoading: false,
-        formInitData: action.formInitData,
+        form: {
+          ...state.form,
+          initDataLoading: false,
+          initData: action.formInitData,
+        }
       };
     case actionTypes.INIT_REGISTRATION_FORM_FAIL:
       return {
         ...state,
-        formInitDataLoading: false,
-        formInitDataError: action.error,
+        form: {
+          ...state.form,
+          initDataLoading: false,
+          initDataError: action.error,
+        }
+      };
+    case actionTypes.SUBMIT_REGISTRATION_FORM_START:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          submitting: true,
+        }
+      };
+    case actionTypes.SUBMIT_REGISTRATION_FORM_SUCCESS:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          submitting: false,
+          submitError: null,
+          submitResponse: action.formSubmitResponse,
+        }
+      };
+    case actionTypes.SUBMIT_REGISTRATION_FORM_FAIL:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          submitting: false,
+          submitError: action.error,
+        }
       };
     default:
       return state;

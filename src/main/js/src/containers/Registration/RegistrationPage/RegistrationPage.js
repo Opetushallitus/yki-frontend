@@ -11,20 +11,20 @@ import classes from './RegistrationPage.module.css';
 
 export class RegistrationPage extends Component {
   componentDidMount() {
-    if (!this.props.formInitData) {
+    if (!this.props.initData) {
       const examSessionId = this.props.match.params.examSessionId;
       this.props.onInitRegistrationForm(examSessionId);
     }
   }
 
   render() {
-    const content = this.props.loading ? (
+    const content = this.props.initDataLoading ? (
       <Spinner />
-    ) : this.props.formInitData ? (
+    ) : this.props.initData ? (
       <div className={classes.RegistrationPage}>
-        <div>Exam session details</div>
+        <div/>
         <hr/>
-        <RegistrationForm formInitData={this.props.formInitData} />
+        <RegistrationForm {...this.props} />
       </div> 
     ): null;
 
@@ -40,8 +40,11 @@ export class RegistrationPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    formInitData: state.registration.formInitData,
-    loading: state.registration.formInitDataLoading,
+    initData: state.registration.form.initData,
+    initDataLoading: state.registration.form.initDataLoading,
+    submitResponse: state.registration.form.submitResponse,
+    submitting: state.registration.form.submitting,
+    submitError: state.registration.form.submitError,
   };
 };
 
@@ -49,6 +52,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onInitRegistrationForm: examSessionId =>
       dispatch(actions.initRegistrationForm(examSessionId)),
+    onSubmitRegistrationForm: registrationForm =>
+      dispatch(actions.submitRegistrationForm(registrationForm)),
   };
 };
 

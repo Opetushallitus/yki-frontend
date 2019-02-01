@@ -3,22 +3,43 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { withNamespaces } from 'react-i18next';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 import classes from './RegistrationForm.module.css';
 import Button from '../UI/Button/Button';
 import RadioButton from '../UI/RadioButton/RadioButton';
+import Alert from '../Alert/Alert';
 
 const registrationForm = props => {
+  function validatePhoneNumber(value) {
+    if (value) {
+      const phoneNumber = parsePhoneNumberFromString(value);
+      return phoneNumber && phoneNumber.isValid();
+    } else {
+      return false;
+    }
+  }
+
+  const mandatoryErrorMsg = props.t('error.mandatory');
+
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required(props.t('error.mandatory')),
-    lastName: Yup.string().required(props.t('error.mandatory')),
-    streetAddress: Yup.string().required(props.t('error.mandatory')),
-    zip: Yup.string().required(props.t('error.mandatory')),
-    postOffice: Yup.string().required(props.t('error.mandatory')),
-    phoneNumber: Yup.string().required(props.t('error.mandatory')),
-    email: Yup.string().required(props.t('error.mandatory')),
-    examLang: Yup.string().required(props.t('error.mandatory')),
-    certificateLang: Yup.string().required(props.t('error.mandatory')),
+    firstName: Yup.string().required(mandatoryErrorMsg),
+    lastName: Yup.string().required(mandatoryErrorMsg),
+    streetAddress: Yup.string().required(mandatoryErrorMsg),
+    zip: Yup.string().required(mandatoryErrorMsg),
+    postOffice: Yup.string().required(mandatoryErrorMsg),
+    phoneNumber: Yup.string()
+      .required(mandatoryErrorMsg)
+      .test(
+        'invalid-phone-number',
+        props.t('error.phoneNumber'),
+        validatePhoneNumber,
+      ),
+    email: Yup.string()
+      .email(props.t('error.email'))
+      .required(mandatoryErrorMsg),
+    examLang: Yup.string().required(mandatoryErrorMsg),
+    certificateLang: Yup.string().required(mandatoryErrorMsg),
   });
 
   const RadioButtonComponent = ({
@@ -61,16 +82,17 @@ const registrationForm = props => {
   const readonlyField = (name, initialValues) => (
     <React.Fragment>
       <h3>{props.t(`registration.form.${name}`)}</h3>
-        <span>{initialValues[name]}</span>
+      <span>{initialValues[name]}</span>
     </React.Fragment>
   );
 
-  const inputField = name => (
+  const inputField = (name, placeholder = '') => (
     <React.Fragment>
       <h3>{props.t(`registration.form.${name}`)}</h3>
       <Field
         name={name}
         data-cy={`input-${name}`}
+        placeholder={placeholder}
         className={classes.TextInput}
       />
       <ErrorMessage
@@ -95,11 +117,11 @@ const registrationForm = props => {
   return (
     <Formik
       initialValues={{
-        firstName: props.formInitData.user.first_name,
-        lastName: props.formInitData.user.last_name,
-        streetAddress: props.formInitData.user.street_address,
-        zip: props.formInitData.user.zip,
-        postOffice: props.formInitData.user.post_office,
+        firstName: props.initData.user.first_name,
+        lastName: props.initData.user.last_name,
+        streetAddress: props.initData.user.street_address,
+        zip: props.initData.user.zip,
+        postOffice: props.initData.user.post_office,
         phoneNumber: '',
         email: '',
         examLang: 'fi',
@@ -107,7 +129,22 @@ const registrationForm = props => {
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
-        console.log(values);
+        const payload = {
+          first_name: values.firstName,
+          last_name: values.lastName,
+          nationalities: props.initData.user.nationalities,
+          ssn: props.initData.user.ssn,
+          certificate_lang: values.certificateLang,
+          exam_lang: values.examLang,
+          post_office: values.postOffice,
+          zip: values.zip,
+          street_address: values.streetAddress,
+          phone_number: parsePhoneNumberFromString(values.phoneNumber).format(
+            'E.164',
+          ),
+          email: values.email,
+        };
+        props.onSubmitRegistrationForm(payload);
       }}
       render={({ values, isValid, errors, initialValues }) => (
         <Form className={classes.Form}>
@@ -127,11 +164,9 @@ const registrationForm = props => {
               <span>{initialValues['postOffice']}</span>
             </div>
             <div className={classes.FormElement}>
-              {inputField('phoneNumber', initialValues)}
+              {inputField('phoneNumber', '+358 40 123 4567')}
             </div>
-            <div className={classes.FormElement}>
-              {inputField('email', initialValues)}
-            </div>
+            <div className={classes.FormElement}>{inputField('email')}</div>
             <div
               className={[classes.FormElement, classes.RadiobuttonGroup].join(
                 ' ',
@@ -192,9 +227,16 @@ const registrationForm = props => {
               </RadioButtonGroup>
             </div>
           </div>
-          <Button type="submit" disabled={false}>
-            Ilmoittaudu
+          <p>{props.t('registration.form.specialArrangements.info')}</p>
+          <p>{props.t('registration.form.summary.info')}</p>
+          <Button type="submit" disabled={!isValid || props.submitting} isRegistration={true}>
+            {props.t('registration.form.submit.button')}
           </Button>
+          {props.submitError && (
+            <div className={classes.SubmitError}>
+              <Alert title={props.t('error.registrationForm.submitFailed')} />
+            </div>
+          )}
         </Form>
       )}
     />
@@ -202,8 +244,10 @@ const registrationForm = props => {
 };
 
 registrationForm.propTypes = {
-  formInitData: PropTypes.object.isRequired,
-  // onSubmit: PropTypes.func.isRequired,
+  initData: PropTypes.object.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  onSubmitRegistrationForm: PropTypes.func.isRequired,
+  submitError: PropTypes.object,
 };
 
 export default withNamespaces()(registrationForm);

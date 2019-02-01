@@ -98,7 +98,7 @@ export const initRegistrationForm = examSessionId => {
   return dispatch => {
     dispatch(initRegistrationFormStart());
     axios
-      .post(`/yki/api/registration/init`, { exam_session_id: Math.trunc(examSessionId) })
+      .post('/yki/api/registration/init', { exam_session_id: Math.trunc(examSessionId) })
       .then(res => {
         dispatch(initRegistrationFormSuccess(res.data));
       })
@@ -111,7 +111,6 @@ export const initRegistrationForm = examSessionId => {
 const initRegistrationFormStart = () => {
   return {
     type: actionTypes.INIT_REGISTRATION_FORM_START,
-    loading: true,
   };
 };
 
@@ -119,7 +118,6 @@ const initRegistrationFormSuccess = formInitData => {
   return {
     type: actionTypes.INIT_REGISTRATION_FORM_SUCCESS,
     formInitData: formInitData,
-    loading: false,
   };
 };
 
@@ -127,6 +125,39 @@ const initRegistrationFormFail = error => {
   return {
     type: actionTypes.INIT_REGISTRATION_FORM_FAIL,
     error: error,
-    loading: false,
+  };
+};
+
+export const submitRegistrationForm = registrationForm => {
+  return dispatch => {
+    dispatch(submitRegistrationFormStart());
+    axios
+      .post('/yki/api/registration/submit', registrationForm)
+      .then(res => {
+        dispatch(submitRegistrationFormSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(submitRegistrationFormFail(err));
+      });
+  };
+};
+
+const submitRegistrationFormStart = () => {
+  return {
+    type: actionTypes.SUBMIT_REGISTRATION_FORM_START,
+  };
+};
+
+const submitRegistrationFormSuccess = formInitData => {
+  return {
+    type: actionTypes.SUBMIT_REGISTRATION_FORM_SUCCESS,
+    formInitData: formInitData,
+  };
+};
+
+const submitRegistrationFormFail = error => {
+  return {
+    type: actionTypes.SUBMIT_REGISTRATION_FORM_FAIL,
+    error: error,
   };
 };
