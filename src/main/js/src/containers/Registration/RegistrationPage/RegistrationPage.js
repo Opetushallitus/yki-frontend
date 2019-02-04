@@ -9,7 +9,6 @@ import Header from '../../../components/Header/Header';
 import BackButton from '../../../components/Registration/BackButton/BackButton';
 import classes from './RegistrationPage.module.css';
 import RegistrationSuccess from '../../../components/Registration/RegistrationSuccess/RegistrationSuccess';
-import Alert from '../../../components/Alert/Alert';
 import RegistrationError from '../../../components/Registration/RegistrationError/RegistrationError';
 
 export class RegistrationPage extends Component {
