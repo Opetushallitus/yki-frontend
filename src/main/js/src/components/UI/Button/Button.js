@@ -13,6 +13,7 @@ const button = props => (
     ].join(' ')}
     onClick={props.clicked}
     tabIndex={props.tabIndex}
+    data-cy={props.datacy}
   >
     {props.children}
   </button>
@@ -26,6 +27,7 @@ button.propTypes = {
   tabIndex: PropTypes.string,
   children: PropTypes.any,
   isRegistration: PropTypes.bool,
+  datacy: PropTypes.string,
 };
 
 export default button;

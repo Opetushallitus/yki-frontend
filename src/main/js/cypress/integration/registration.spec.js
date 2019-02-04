@@ -56,4 +56,28 @@ describe('Registration', () => {
     cy.get('[data-cy=location-filter]').select('Jyväskylä');
     cy.get('[data-cy=exam-session-list-item]').should('have.length', 1);
   });
+  
+  it('Registration form can be submitted', () => {
+    cy.visit('/ilmoittautuminen/tutkintotilaisuus/1');
+    cy.get('[data-cy=input-phoneNumber]').type('+358401234567');
+    cy.get('[data-cy=input-email]').type('test@test.com');
+    cy.get('button')
+      .contains('Vahvista ilmoittautuminen')
+      .click();
+      cy.get('h1')
+      .contains('Ilmoittautuminen onnistui!')
+      .should('exist');
+  });
+
+  it('Registration form validation errors are shown and form can be submitted only if valid', () => {
+    cy.visit('/ilmoittautuminen/tutkintotilaisuus/1');
+    cy.get('[data-cy=form-submit-button]')
+      .should('be.disabled');
+  
+  });
+
+  // it('Registration form submit errors are shown and user can try again', () => {
+  //   cy.visit('/ilmoittautuminen/tutkintotilaisuus/1');
+  // });
+
 });

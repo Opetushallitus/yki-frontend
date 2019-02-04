@@ -61,6 +61,8 @@
   "error.examSession.fetchFailed": "Tutkintotilaisuuksien hakeminen epäonnistui._en",
   "error.generic.info": "Yritä hetken kuluttua uudelleen._en",
   "error.mandatory": "Mandatory",
+  "error.max": "Arvo liian pitkä_en",
+  "error.min": "Arvo liian lyhyt_en",
   "error.numeric": "Arvon pitää olla luku_en",
   "error.phoneNumber": "Puhelinnumero on väärän muotoinen_en",
   "error.registrationForm.submitFailed": "Lomakkeen lähetys epäonnistui_en",

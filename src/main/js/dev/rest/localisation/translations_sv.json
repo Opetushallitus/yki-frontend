@@ -65,6 +65,8 @@
   "error.examSession.updateFailed": "Tutkintotilaisuuden päivitys epäonnistui_sv",
   "error.generic.info": "Yritä hetken kuluttua uudelleen._sv",
   "error.mandatory": "Pakollinen_sv",
+  "error.max": "Arvo liian pitkä_sv",
+  "error.min": "Arvo liian lyhyt_sv",
   "error.numeric": "Arvon pitää olla luku_sv",
   "error.phoneNumber": "Puhelinnumero on väärän muotoinen_sv",
   "error.registration.cancelFailed": "Osallistumisen peruminen epäonnistui_sv",

@@ -21,13 +21,14 @@ export const registrationForm = props => {
   }
 
   const mandatoryErrorMsg = props.t('error.mandatory');
+  const maxErrorMsg = props.t('error.max');
 
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required(mandatoryErrorMsg),
-    lastName: Yup.string().required(mandatoryErrorMsg),
-    streetAddress: Yup.string().required(mandatoryErrorMsg),
-    zip: Yup.string().required(mandatoryErrorMsg),
-    postOffice: Yup.string().required(mandatoryErrorMsg),
+    firstName: Yup.string().required(mandatoryErrorMsg).max(128, maxErrorMsg),
+    lastName: Yup.string().required(mandatoryErrorMsg).max(128, maxErrorMsg),
+    streetAddress: Yup.string().required(mandatoryErrorMsg).max(128, maxErrorMsg),
+    zip: Yup.string().required(mandatoryErrorMsg).max(16, maxErrorMsg),
+    postOffice: Yup.string().required(mandatoryErrorMsg).max(64, maxErrorMsg),
     phoneNumber: Yup.string()
       .required(mandatoryErrorMsg)
       .test(
@@ -37,7 +38,8 @@ export const registrationForm = props => {
       ),
     email: Yup.string()
       .email(props.t('error.email'))
-      .required(mandatoryErrorMsg),
+      .required(mandatoryErrorMsg)
+      .max(8, maxErrorMsg),
     examLang: Yup.string().required(mandatoryErrorMsg),
     certificateLang: Yup.string().required(mandatoryErrorMsg),
   });
@@ -229,7 +231,7 @@ export const registrationForm = props => {
           </div>
           <p>{props.t('registration.form.specialArrangements.info')}</p>
           <p>{props.t('registration.form.summary.info')}</p>
-          <Button type="submit" disabled={!isValid || props.submitting} isRegistration={true}>
+          <Button type="submit" disabled={!isValid || props.submitting} isRegistration={true} datacy="form-submit-button">
             {props.t('registration.form.submit.button')}
           </Button>
           {props.submitError && (
