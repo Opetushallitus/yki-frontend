@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   examSessions: [],
+  examSessionsGroupedByDate: {},
   language: '',
   level: '',
   location: '',
@@ -29,6 +30,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.error,
+      };
+    case actionTypes.ADD_EXAM_SESSIONS_GROUPED_BY_DATE:
+      return {
+        ...state,
+        examSessionsGroupedByDate: action.examSessionsGroupedByDate,
       };
     case actionTypes.ADD_EXAM_LOCATIONS:
       return {

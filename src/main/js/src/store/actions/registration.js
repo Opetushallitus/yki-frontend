@@ -12,6 +12,11 @@ export const fetchExamSessions = () => {
       .then(res => {
         dispatch(extractExamLocations(res.data.exam_sessions));
         dispatch(fetchExamSessionsSuccess(res.data.exam_sessions));
+        const dates = new Set();
+        res.data.exam_sessions.map(e => dates.add(e.session_date));
+        dispatch(
+          groupExamSessionsByDate([...dates].sort(), res.data.exam_sessions),
+        );
       })
       .catch(err => {
         console.log(err);
@@ -30,6 +35,20 @@ const extractExamLocations = array => {
   return {
     type: actionTypes.ADD_EXAM_LOCATIONS,
     locations: locations,
+  };
+};
+
+const groupExamSessionsByDate = (dates, examSessions) => {
+  const examSessionsGroupedByDate = {};
+  dates.map(
+    d =>
+      (examSessionsGroupedByDate[d] = examSessions.filter(
+        e => e.session_date === d,
+      )),
+  );
+  return {
+    type: actionTypes.ADD_EXAM_SESSIONS_GROUPED_BY_DATE,
+    examSessionsGroupedByDate: examSessionsGroupedByDate,
   };
 };
 
