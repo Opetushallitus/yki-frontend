@@ -6,17 +6,17 @@ import ExamSessionItem from '../ExamSessionItem/ExamSessionItem';
 
 const examSessionList = props => {
   const list =
-    Object.keys(props.examSessionsGroupedByDate).length !== 0 ? (
+    Object.keys(props.examSessions).length !== 0 ? (
       <div>
-        {Object.keys(props.examSessionsGroupedByDate).map(k => (
+        {Object.keys(props.examSessions).map(k => (
           <div key={k}>
             <p>
-              {k} {props.examSessionsGroupedByDate[k].length}{' '}
-              {props.examSessionsGroupedByDate[k].length === 1
+              {k} {props.examSessions[k].length}{' '}
+              {props.examSessions[k].length === 1
                 ? props.t('common.examSessions.amount.single')
                 : props.t('common.examSessions.amount')}
             </p>
-            {props.examSessionsGroupedByDate[k].map(e => (
+            {props.examSessions[k].map(e => (
               <ExamSessionItem key={e.published_at} examSession={e} />
             ))}
           </div>
@@ -29,7 +29,7 @@ const examSessionList = props => {
 };
 
 examSessionList.propTypes = {
-  examSessionsGroupedByDate: PropTypes.object.isRequired,
+  examSessions: PropTypes.object.isRequired,
 };
 
 export default withNamespaces()(examSessionList);

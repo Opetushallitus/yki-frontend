@@ -1,5 +1,6 @@
 import React from 'react';
 import { withNamespaces } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 import classes from './Filters.module.css';
 import { LANGUAGES } from '../../../common/Constants';
@@ -64,6 +65,16 @@ const filters = props => {
   );
 
   return <React.Fragment>{filters}</React.Fragment>;
+};
+
+filters.propTypes = {
+  language: PropTypes.object.isRequired,
+  onLanguageChange: PropTypes.func.isRequired,
+  level: PropTypes.string.isRequired,
+  onLevelChange: PropTypes.func.isRequired,
+  location: PropTypes.string.isRequired,
+  onLocationChange: PropTypes.func.isRequired,
+  locations: PropTypes.array.isRequired,
 };
 
 export default withNamespaces()(filters);

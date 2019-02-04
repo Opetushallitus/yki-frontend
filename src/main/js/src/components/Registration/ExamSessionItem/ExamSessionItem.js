@@ -1,5 +1,6 @@
 import React from 'react';
 import { withNamespaces } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 import classes from './ExamSessionItem.module.css';
 
@@ -36,6 +37,10 @@ const examSessionItem = props => {
       {registerButton}
     </div>
   );
+};
+
+examSessionItem.propTypes = {
+  examSession: PropTypes.object.isRequired,
 };
 
 export default withNamespaces()(examSessionItem);

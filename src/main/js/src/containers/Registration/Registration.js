@@ -50,9 +50,7 @@ class Registration extends Component {
             {this.props.t('examSession.upcomingExamSessions')}
           </p>
           <ExamSessionList
-            examSessionsGroupedByDate={
-              this.props.filteredExamSessionsGroupedByDate
-            }
+            examSessions={this.props.filteredExamSessionsGroupedByDate}
           />
         </main>
       </React.Fragment>
