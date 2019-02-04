@@ -9,6 +9,7 @@ import classes from './RegistrationForm.module.css';
 import Button from '../../UI/Button/Button';
 import RadioButton from '../../UI/RadioButton/RadioButton';
 import Alert from '../../Alert/Alert';
+import NationalitySelect from './NationalitySelect/NationalitySelect';
 
 export const registrationForm = props => {
   function validatePhoneNumber(value) {
@@ -24,11 +25,21 @@ export const registrationForm = props => {
   const maxErrorMsg = props.t('error.max');
 
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required(mandatoryErrorMsg).max(128, maxErrorMsg),
-    lastName: Yup.string().required(mandatoryErrorMsg).max(128, maxErrorMsg),
-    streetAddress: Yup.string().required(mandatoryErrorMsg).max(128, maxErrorMsg),
-    zip: Yup.string().required(mandatoryErrorMsg).max(16, maxErrorMsg),
-    postOffice: Yup.string().required(mandatoryErrorMsg).max(64, maxErrorMsg),
+    firstName: Yup.string()
+      .required(mandatoryErrorMsg)
+      .max(128, maxErrorMsg),
+    lastName: Yup.string()
+      .required(mandatoryErrorMsg)
+      .max(128, maxErrorMsg),
+    streetAddress: Yup.string()
+      .required(mandatoryErrorMsg)
+      .max(128, maxErrorMsg),
+    zip: Yup.string()
+      .required(mandatoryErrorMsg)
+      .max(16, maxErrorMsg),
+    postOffice: Yup.string()
+      .required(mandatoryErrorMsg)
+      .max(64, maxErrorMsg),
     phoneNumber: Yup.string()
       .required(mandatoryErrorMsg)
       .test(
@@ -125,6 +136,9 @@ export const registrationForm = props => {
         streetAddress: props.initData.user.street_address,
         zip: props.initData.user.zip,
         postOffice: props.initData.user.post_office,
+        nationality: props.initData.user.nationalities
+          ? props.initData.user.nationalities[0]
+          : '',
         phoneNumber: '',
         email: '',
         examLang: 'fi',
@@ -135,7 +149,7 @@ export const registrationForm = props => {
         const payload = {
           first_name: values.firstName,
           last_name: values.lastName,
-          nationalities: props.initData.user.nationalities,
+          nationalities: [values.nationality],
           ssn: props.initData.user.ssn,
           certificate_lang: values.certificateLang,
           exam_lang: values.examLang,
@@ -170,6 +184,14 @@ export const registrationForm = props => {
               {inputField('phoneNumber', '+358 40 123 4567')}
             </div>
             <div className={classes.FormElement}>{inputField('email')}</div>
+            <div className={classes.FormElement}>
+              {initialValues.nationality &&
+              initialValues.nationality.length > 0 ? null : (
+                <NationalitySelect
+                  nationalities={props.initData.nationalities}
+                />
+              )}
+            </div>
             <div
               className={[classes.FormElement, classes.RadiobuttonGroup].join(
                 ' ',
@@ -232,7 +254,12 @@ export const registrationForm = props => {
           </div>
           <p>{props.t('registration.form.specialArrangements.info')}</p>
           <p>{props.t('registration.form.summary.info')}</p>
-          <Button type="submit" disabled={!isValid || props.submitting} isRegistration={true} datacy="form-submit-button">
+          <Button
+            type="submit"
+            disabled={!isValid || props.submitting}
+            isRegistration={true}
+            datacy="form-submit-button"
+          >
             {props.t('registration.form.submit.button')}
           </Button>
           {props.submitError && (

@@ -1,54 +1,42 @@
-import React, { Component } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React from 'react';
+import { Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
-import axios from '../../axios';
+import { withNamespaces } from 'react-i18next';
+import * as R from 'ramda';
 
-export class NationalitySelect extends Component {
-  state = {
-    nationalities: [],
-    error: false,
-  };
+import classes from './NationalitySelect.module.css';
 
-  componentDidMount() {
-    axios
-      .get(
-        '/koodisto-service/rest/json/maatjavaltiot2/koodi?onlyValidKoodis=true',
-      )
-      .then(({ data }) => {
-        this.setState({ nationalities: data });
-      })
-      .catch(err => {
-        this.setState({ error: true });
-      });
-  }
-
-  render() {
-    const nationalityOptions = state.nationalities.map(n => {
-      const name = n.metadata.find(m => {
-        m.kieli === this.props.lng.toUpperCase();
-      });
-      return (
-        <option value={n.koodiArvo} key={n.koodiArvo}>
-          {name}
-        </option>
-      );
-    });
-
+export const nationalitySelect = props => {
+  const localeNationalities = props.nationalities.map(n => {
+    const metadata = n.metadata.find(m => m.kieli === props.lng.toUpperCase());
+    return { name: metadata.nimi, code: n.koodiArvo };
+  });
+  const sortByName = R.sortBy(R.prop('name'));
+  const nationalityOptions = sortByName(localeNationalities).map(n => {
     return (
+      <option value={n.code} key={n.code}>
+        {n.name}
+      </option>
+    );
+  });
+
+  return (
+    <React.Fragment>
+      <h3>{props.t('registration.form.nationality')}</h3>
       <Field
         component="select"
         name="nationality"
-        className={this.props.className}
+        className={classes.Select}
         data-cy="select-nationality"
       >
         {nationalityOptions}
       </Field>
-    );
-  }
-}
-
-NationalitySelect.propTypes = {
-  className: PropTypes.string.isRequired,
+    </React.Fragment>
+  );
 };
 
-export default withNamespaces()(NationalitySelect);
+nationalitySelect.propTypes = {
+  nationalities: PropTypes.array.isRequired,
+};
+
+export default withNamespaces()(nationalitySelect);

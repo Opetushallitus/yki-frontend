@@ -97,10 +97,18 @@ const setLocation = location => {
 export const initRegistrationForm = examSessionId => {
   return dispatch => {
     dispatch(initRegistrationFormStart());
-    axios
-      .post('/yki/api/registration/init', { exam_session_id: Math.trunc(examSessionId) })
-      .then(res => {
-        dispatch(initRegistrationFormSuccess(res.data));
+    Promise.all([
+      axios.post('/yki/api/registration/init', {
+        exam_session_id: Math.trunc(examSessionId),
+      }),
+      axios.get(
+        '/koodisto-service/rest/json/maatjavaltiot2/koodi?onlyValidKoodis=true',
+      ),
+    ])
+      .then(([initRes, nationalitiesRes]) => {
+        dispatch(
+          initRegistrationFormSuccess(initRes.data, nationalitiesRes.data),
+        );
       })
       .catch(err => {
         dispatch(initRegistrationFormFail(err));
@@ -114,10 +122,10 @@ const initRegistrationFormStart = () => {
   };
 };
 
-const initRegistrationFormSuccess = formInitData => {
+const initRegistrationFormSuccess = (formInitData, nationalities) => {
   return {
     type: actionTypes.INIT_REGISTRATION_FORM_SUCCESS,
-    formInitData: formInitData,
+    formInitData: Object.assign(formInitData, { nationalities: nationalities }),
   };
 };
 
@@ -151,7 +159,7 @@ const submitRegistrationFormStart = () => {
 const submitRegistrationFormSuccess = registrationForm => {
   return {
     type: actionTypes.SUBMIT_REGISTRATION_FORM_SUCCESS,
-    formData: registrationForm
+    formData: registrationForm,
   };
 };
 
