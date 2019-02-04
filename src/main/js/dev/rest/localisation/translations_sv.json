@@ -13,6 +13,8 @@
   "common.examDate": "Tutkintopäivä_sv",
   "common.examDates": "Tutkintopäivät_sv",
   "common.examSessions": "Tutkintotilaisuudet_sv",
+  "common.examSessions.amount": "tutkintotilaisuutta_sv",
+  "common.examSessions.amount.single": "tutkintotilaisuus_sv",
   "common.extra": "Lisätiedot_sv",
   "common.language": "Kieli_sv",
   "common.language.deu": "saksa_sv",
