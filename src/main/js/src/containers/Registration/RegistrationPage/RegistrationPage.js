@@ -9,6 +9,8 @@ import Header from '../../../components/Header/Header';
 import BackButton from '../../../components/Registration/BackButton/BackButton';
 import classes from './RegistrationPage.module.css';
 import RegistrationSuccess from '../../../components/Registration/RegistrationSuccess/RegistrationSuccess';
+import Alert from '../../../components/Alert/Alert';
+import RegistrationError from '../../../components/Registration/RegistrationError/RegistrationError';
 
 export class RegistrationPage extends Component {
   componentDidMount() {
@@ -19,6 +21,10 @@ export class RegistrationPage extends Component {
   }
 
   render() {
+    const initError = this.props.initDataError ? (
+      <RegistrationError error={this.props.initDataError}/>
+    ) : null;
+
     const successPage = this.props.submitSuccess ? (
       <RegistrationSuccess
         initData={this.props.initData}
@@ -43,7 +49,7 @@ export class RegistrationPage extends Component {
           <BackButton clicked={() => this.props.history.push('/')} />
         )}
         <main className={classes.Content}>
-          {successPage ? successPage : registrationPage}
+          {initError ? initError : successPage ? successPage : registrationPage}
         </main>
       </React.Fragment>
     );
@@ -55,6 +61,7 @@ const mapStateToProps = state => {
     initData: state.registration.form.initData,
     formData: state.registration.form.formData,
     initDataLoading: state.registration.form.initDataLoading,
+    initDataError: state.registration.form.initDataError,
     submitResponse: state.registration.form.submitResponse,
     submitSuccess: state.registration.form.submitSuccess,
     submitting: state.registration.form.submitting,

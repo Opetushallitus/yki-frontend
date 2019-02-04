@@ -6,16 +6,17 @@ exports[`<RegistrationSuccess /> should render registration success page 1`] = `
 >
   <div>
     <h1>
-      Ilmoittautuminen onnistui!
+      registration.success.header
     </h1>
     <p>
-      Olet ilmoittautunut tutkintotilaisuuteen:
+      registration.success.info1
+      :
     </p>
   </div>
   <div>
     <p>
-      Saat maksuohjeet ja varmistuksen ilmoittautumisesta
-          sähköpostiosoitteeseen undefined
+      registration.success.info2
+       
     </p>
   </div>
   <div
@@ -23,16 +24,17 @@ exports[`<RegistrationSuccess /> should render registration success page 1`] = `
   >
     <p>
       <b>
-        Tärkeää!
+        registration.success.info3
       </b>
-       Muistathan, että tutkintomaksu on maksettava määräaikaan mennessä. Muutoin ilmoittautumisesi peruuntuu, etkä voi osallistua tutkintotilaisuuteen.
+       
+      registration.success.info4
     </p>
   </div>
   <div
     className="BackButton"
   >
     <hyperlink
-      text="Palaa etusivulle"
+      text="errorBoundary.return"
       to="/yki"
     />
   </div>

@@ -1,15 +1,11 @@
 .Content {
-  width: 100vw;
-}
-
-.RegistrationPage {
   width: calc(100vw - 40px);
   margin: 32px auto;
 }
 
 @media (min-width: 620px) {
 
-  .RegistrationPage {
+  .Content {
     width: calc(100vw - 200px);
     max-width: 457px;
     margin: 0 0 88px 100px;

@@ -9,20 +9,22 @@ export const registrationSuccess = props => {
   return (
     <div className={classes.RegistrationSuccess}>
       <div>
-        <h1>Ilmoittautuminen onnistui!</h1>
-        <p>Olet ilmoittautunut tutkintotilaisuuteen:</p>
+        <h1>{props.t('registration.success.header')}</h1>
+        <p>{props.t('registration.success.info1')}:</p>
       </div>
       <div>
         <p>
-          {`Saat maksuohjeet ja varmistuksen ilmoittautumisesta
-          sähköpostiosoitteeseen ${props.formData.email}`} 
+          {props.t('registration.success.info2')} {props.formData.email}
         </p>
       </div>
       <div className={classes.InfoBox}>
-        <p><b>Tärkeää!</b> Muistathan, että tutkintomaksu on maksettava määräaikaan mennessä. Muutoin ilmoittautumisesi peruuntuu, etkä voi osallistua tutkintotilaisuuteen.</p>
+        <p>
+          <b>{props.t('registration.success.info3')}</b>{' '}
+          {props.t('registration.success.info4')}
+        </p>
       </div>
       <div className={classes.BackButton}>
-        <Hyperlink  to={'/yki'} text={'Palaa etusivulle'}/>
+        <Hyperlink to={'/yki'} text={props.t('errorBoundary.return')} />
       </div>
     </div>
   );

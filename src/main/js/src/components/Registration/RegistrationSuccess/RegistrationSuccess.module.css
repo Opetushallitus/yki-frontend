@@ -17,9 +17,3 @@
 .BackButton {
   margin-top: 20px;
 }
-
-@media (min-width: 620px) {
-  .RegistrationSuccess {
-    margin: 34px 100px;
-  }
-}

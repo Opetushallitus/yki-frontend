@@ -11,7 +11,7 @@ const alertClass = props => {
 const alert = props => (
   <div className={classes.Alert}>
     <div className={[classes.AlertContainer, alertClass(props)].join(' ')}>
-      <div className={classes.AlertTitle}>{props.title}</div>
+      <div data-cy="alert-title" className={classes.AlertTitle}>{props.title}</div>
       {props.optionalText && (
         <div className={classes.AlertText}>{props.optionalText}</div>
       )}

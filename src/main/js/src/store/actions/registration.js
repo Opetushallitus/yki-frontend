@@ -124,7 +124,7 @@ const initRegistrationFormSuccess = formInitData => {
 const initRegistrationFormFail = error => {
   return {
     type: actionTypes.INIT_REGISTRATION_FORM_FAIL,
-    error: error,
+    error: error.response,
   };
 };
 

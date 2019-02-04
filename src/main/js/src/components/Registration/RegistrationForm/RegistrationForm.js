@@ -39,7 +39,7 @@ export const registrationForm = props => {
     email: Yup.string()
       .email(props.t('error.email'))
       .required(mandatoryErrorMsg)
-      .max(8, maxErrorMsg),
+      .max(128, maxErrorMsg),
     examLang: Yup.string().required(mandatoryErrorMsg),
     certificateLang: Yup.string().required(mandatoryErrorMsg),
   });
@@ -99,6 +99,7 @@ export const registrationForm = props => {
       />
       <ErrorMessage
         name={name}
+        data-cy={`input-error-${name}`}
         component="span"
         className={classes.ErrorMessage}
       />
@@ -235,7 +236,7 @@ export const registrationForm = props => {
             {props.t('registration.form.submit.button')}
           </Button>
           {props.submitError && (
-            <div className={classes.SubmitError}>
+            <div data-cy="form-submit-error" className={classes.SubmitError}>
               <Alert title={props.t('error.registrationForm.submitFailed')} />
             </div>
           )}
