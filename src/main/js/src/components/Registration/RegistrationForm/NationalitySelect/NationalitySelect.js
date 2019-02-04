@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, ErrorMessage } from 'formik';
+import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import * as R from 'ramda';
