@@ -108,11 +108,10 @@ buildTime=${maven.build.timestamp}
                         <configuration>
                             <target name="webpack">
                                 <property environment="env" />
-
                                 <exec executable="cmd.exe" dir="${project.basedir}/src/main/js/" osfamily="windows" resultproperty="cmdresult">
                                     <env key="PATH" path="${env.PATH};${project.basedir}/node_modules/.bin" />
                                     <env key="PROJECT_TARGET" path="${project.build.directory}/${project.build.finalName}" />
-                                    <arg line="npm install --no-optional &amp; npm run build" />
+                                    <arg line="npm install --no-optional &amp; rm -r node_modules/terser &amp; npm install terser@3.14.1 --save-dev &amp; npm run build" />
                                 </exec>
 
                                 <exec executable="bash" dir="${project.basedir}/src/main/js/" osfamily="unix" resultproperty="cmdresult">
