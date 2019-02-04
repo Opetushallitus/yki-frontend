@@ -108,6 +108,8 @@
   "registration.path.select.language": "/valitse-kieli",
   "registration.path.select.level": "/valitse-taso",
   "registration.path.select.location": "/valitse-paikkakunta",
+  "registration.register": "Ilmoittaudu",
+  "registration.register.forQueue": "Ilmoittaudu varasijalle",
   "registration.return": "Takaisin",
   "registration.select.language": "Valitse ensin, minkä kielen tutkintoon haluat ilmoittautua",
   "registration.select.level": "Valitse tutkinnon taso",

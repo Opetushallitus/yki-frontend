@@ -1,0 +1,22 @@
+.ExamSessionItem {
+  background-color: hsl(0, 0%, 96%);
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+.RegisterButton {
+  width: 88px;
+  color: hsl(0, 0%, 100%);
+  box-shadow: 0px 0px 4px hsla(0, 0%, 0%, 0.5);
+  border-radius: 4px;
+}
+
+.ButtonForSignup {
+  height: 30px;
+  background: hsl(96, 96%, 27%);
+}
+
+.ButtonForQueue {
+  height: 55px;
+  background: hsl(225, 100%, 40%);
+}
