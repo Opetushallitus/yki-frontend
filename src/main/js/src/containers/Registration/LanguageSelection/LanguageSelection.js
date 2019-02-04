@@ -12,8 +12,8 @@ const languageSelection = props => {
   document.title = props.t('registration.document.title.language');
 
   const selectLanguage = language => {
-    props.onSelectLanguage(language);
     props.onFetchExamSessions();
+    props.onSelectLanguage(language);
     props.history.push(props.t('registration.path.select.level'));
   };
 
@@ -30,7 +30,7 @@ const languageSelection = props => {
           {LANGUAGES.map(l => (
             <span
               key={l.name}
-              onClick={() => selectLanguage(l.name)}
+              onClick={() => selectLanguage(l)}
               className={classes.Selection}
             >
               <p className={classes.SelectionText}>{l.name}</p>

@@ -3,7 +3,7 @@ import { withNamespaces } from 'react-i18next';
 
 import classes from './Filters.module.css';
 import { LANGUAGES } from '../../../common/Constants';
-import { levelDescription, firstCharToUpper } from '../../../util/util';
+import { levelDescription } from '../../../util/util';
 
 const filters = props => {
   const languageSelect = (
@@ -11,9 +11,7 @@ const filters = props => {
       {props.t('common.language')}
       <select
         className={classes.Select}
-        defaultValue={
-          props.language || firstCharToUpper(props.t('common.language.fin'))
-        }
+        defaultValue={props.language.name}
         onChange={props.onLanguageChange}
       >
         {LANGUAGES.map(l => (
@@ -23,20 +21,19 @@ const filters = props => {
     </label>
   );
 
-  const levels = props.language
-    ? LANGUAGES.find(l => l.name === props.language).levels
-    : LANGUAGES[0].levels;
   const levelSelect = (
     <label>
       {props.t('common.level')}
       <select
         className={classes.Select}
-        defaultValue={levelDescription(props.level)}
+        defaultValue={props.level}
         onChange={props.onLevelChange}
       >
-        <option>{props.t('common.level.all')}</option>
-        {levels.map(l => (
-          <option key={l}>{props.t(levelDescription(l))}</option>
+        <option value={''}>{props.t('common.level.all')}</option>
+        {props.language.levels.map(l => (
+          <option key={l} value={l}>
+            {props.t(levelDescription(l))}
+          </option>
         ))}
       </select>
     </label>
@@ -50,6 +47,7 @@ const filters = props => {
         defaultValue={props.location}
         onChange={props.onLocationChange}
       >
+        <option value={''}>{props.t('common.location.all')}</option>
         {props.locations.map(l => (
           <option key={l}>{l}</option>
         ))}

@@ -113,6 +113,7 @@
   "registration.register": "Ilmoittaudu",
   "registration.register.forQueue": "Ilmoittaudu varasijalle",
   "registration.return": "Takaisin",
+  "registration.search.noResults": "Annetuilla hakuehdoilla ei löytynyt tutkintotilaisuuksia.",
   "registration.select.language": "Valitse ensin, minkä kielen tutkintoon haluat ilmoittautua",
   "registration.select.level": "Valitse tutkinnon taso",
   "registration.select.location": "Valitse paikkakunta",

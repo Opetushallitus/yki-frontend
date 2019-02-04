@@ -10,11 +10,8 @@ import { levelDescription } from '../../../util/util';
 import * as actions from '../../../store/actions/index';
 
 const locationSelection = props => {
-  if (!props.language) {
+  if (!props.language || !props.level) {
     return <Redirect to={props.t('registration.path.select.language')} />;
-  }
-  if (!props.level) {
-    return <Redirect to={props.t('registration.path.select.level')} />;
   }
 
   document.title = props.t('registration.document.title.location');
@@ -27,18 +24,28 @@ const locationSelection = props => {
   return (
     <React.Fragment>
       <Header />
-      <BackButton clicked={() => props.history.goBack()} />
+      <BackButton
+        clicked={() =>
+          props.history.push(props.t('registration.path.select.level'))
+        }
+      />
       <main className={classes.Content}>
         <p className={classes.Title}>{props.t('registration.title')}</p>
         <p className={classes.LanguageSelection}>
           {props.t('registration.selected.language')}:{' '}
-          <strong>{props.language}</strong>
+          <strong>{props.language.name}</strong>
           <br />
           {props.t('registration.selected.level')}:{' '}
           <strong>{levelDescription(props.level)}</strong>
         </p>
         <p>{props.t('registration.select.location')}:</p>
         <div className={classes.Selections}>
+          <span
+            className={classes.Selection}
+            onClick={() => selectLocation('')}
+          >
+            {props.t('common.location.all')}
+          </span>
           {props.locations.map(location => (
             <span
               key={location}

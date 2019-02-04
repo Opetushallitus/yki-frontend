@@ -7,7 +7,6 @@ import classes from './LevelSelection.module.css';
 import Header from '../../../components/Header/Header';
 import BackButton from '../../../components/Registration/BackButton/BackButton';
 import { levelDescription } from '../../../util/util';
-import { LANGUAGES } from '../../../common/Constants';
 import * as actions from '../../../store/actions/index';
 
 const languageSelection = props => {
@@ -15,7 +14,6 @@ const languageSelection = props => {
     return <Redirect to={props.t('registration.path.select.language')} />;
   }
   document.title = props.t('registration.document.title.level');
-  const levels = LANGUAGES.find(l => l.name === props.language).levels;
 
   const selectLevel = level => {
     props.onSelectLevel(level);
@@ -25,16 +23,20 @@ const languageSelection = props => {
   return (
     <React.Fragment>
       <Header />
-      <BackButton clicked={() => props.history.goBack()} />
+      <BackButton
+        clicked={() =>
+          props.history.push(props.t('registration.path.select.language'))
+        }
+      />
       <main className={classes.Content}>
         <p className={classes.Title}>{props.t('registration.title')}</p>
         <p className={classes.LanguageSelection}>
           {props.t('registration.selected.language')}:{' '}
-          <strong>{props.language}</strong>
+          <strong>{props.language.name}</strong>
         </p>
         <p>{props.t('registration.select.level')}:</p>
         <div className={classes.Selections}>
-          {levels.map(level => (
+          {props.language.levels.map(level => (
             <span
               key={level}
               onClick={() => selectLevel(level)}
