@@ -28,7 +28,7 @@ const examSessionItem = props => {
     );
 
   return (
-    <div className={classes.ExamSessionItem}>
+    <div className={classes.ExamSessionItem} data-cy="exam-session-list-item">
       <p>{props.examSession.location[0].name}</p>
       <p>
         {props.examSession.participants}/{props.examSession.max_participants}

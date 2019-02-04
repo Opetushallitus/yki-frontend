@@ -14,6 +14,7 @@ const filters = props => {
         className={classes.Select}
         defaultValue={props.language.name}
         onChange={props.onLanguageChange}
+        data-cy={'language-filter'}
       >
         {LANGUAGES.map(l => (
           <option key={l.name}>{l.name}</option>
@@ -29,6 +30,7 @@ const filters = props => {
         className={classes.Select}
         defaultValue={props.level}
         onChange={props.onLevelChange}
+        data-cy={'level-filter'}
       >
         <option value={''}>{props.t('common.level.all')}</option>
         {props.language.levels.map(l => (
@@ -47,6 +49,7 @@ const filters = props => {
         className={classes.Select}
         defaultValue={props.location}
         onChange={props.onLocationChange}
+        data-cy={'location-filter'}
       >
         <option value={''}>{props.t('common.location.all')}</option>
         {props.locations.map(l => (
