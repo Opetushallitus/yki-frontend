@@ -42,7 +42,8 @@ const reducer = (state = initialState, action) => {
         error: action.error,
       };
     case actionTypes.FILTER_AND_GROUP_BY_DATE:
-      const filtered = state.examSessions
+      const groupedByDate = {};
+      state.examSessions
         .filter(e =>
           state.location === ''
             ? true
@@ -51,21 +52,15 @@ const reducer = (state = initialState, action) => {
                 .endsWith(state.location.toLowerCase()),
         )
         .filter(e => (state.level === '' ? true : e.level_code === state.level))
-        .filter(e => e.language_code === state.language.code);
-      const dates = new Set();
-      filtered.map(e => dates.add(e.session_date));
-      const examSessionsGroupedByDate = {};
-      [...dates]
-        .sort()
-        .map(
-          d =>
-            (examSessionsGroupedByDate[d] = filtered.filter(
-              e => e.session_date === d,
-            )),
+        .filter(e => e.language_code === state.language.code)
+        .map(e =>
+          (groupedByDate[e.session_date] = groupedByDate[e.session_date]
+            ? groupedByDate[e.session_date]
+            : []).push(e),
         );
       return {
         ...state,
-        filteredExamSessionsGroupedByDate: examSessionsGroupedByDate,
+        filteredExamSessionsGroupedByDate: groupedByDate,
       };
     case actionTypes.ADD_EXAM_LOCATIONS:
       return {
@@ -92,8 +87,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         form: {
           ...state.form,
-          initDataLoading: true
-        }
+          initDataLoading: true,
+        },
       };
     case actionTypes.INIT_REGISTRATION_FORM_SUCCESS:
       return {
@@ -102,7 +97,7 @@ const reducer = (state = initialState, action) => {
           ...state.form,
           initDataLoading: false,
           initData: action.formInitData,
-        }
+        },
       };
     case actionTypes.INIT_REGISTRATION_FORM_FAIL:
       return {
@@ -111,7 +106,7 @@ const reducer = (state = initialState, action) => {
           ...state.form,
           initDataLoading: false,
           initDataError: action.error,
-        }
+        },
       };
     case actionTypes.SUBMIT_REGISTRATION_FORM_START:
       return {
@@ -119,7 +114,7 @@ const reducer = (state = initialState, action) => {
         form: {
           ...state.form,
           submitting: true,
-        }
+        },
       };
     case actionTypes.SUBMIT_REGISTRATION_FORM_SUCCESS:
       return {
@@ -131,7 +126,7 @@ const reducer = (state = initialState, action) => {
           formData: action.formData,
           submitSuccess: true,
           submitResponse: action.formSubmitResponse,
-        }
+        },
       };
     case actionTypes.SUBMIT_REGISTRATION_FORM_FAIL:
       return {
@@ -140,7 +135,7 @@ const reducer = (state = initialState, action) => {
           ...state.form,
           submitting: false,
           submitError: action.error,
-        }
+        },
       };
     default:
       return state;
