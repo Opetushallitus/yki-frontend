@@ -113,6 +113,8 @@
   "registration.form.examLang": "Tehtävien kieli",
   "registration.form.firstName": "Etunimet",
   "registration.form.info": "Tarkista vielä, että yhteystietosi on oikein.",
+  "registration.form.input.postOffice": "Postitoimipaikka",
+  "registration.form.input.zip": "Postinumero",
   "registration.form.lastName": "Sukunimi",
   "registration.form.nationality": "Kansalaisuus",
   "registration.form.phoneNumber": "Matkapuhelin",

@@ -7,15 +7,12 @@ import { registrationForm as RegistrationForm } from './RegistrationForm';
 
 configure({ adapter: new Adapter() });
 
-const examSession = {
-  registration_end_date: '2025-12-15',
-  session_date: '2028-05-30',
-  participants: 0,
-  max_participants: 30,
-  registration_start_date: '2028-03-01',
-  language_code: 'fin',
-  level_code: 'PERUS',
-};
+jest.mock('react-i18next', () => ({
+  withNamespaces: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: () => '' };
+    return Component;
+  },
+}));
 
 const initData = {
   user: {

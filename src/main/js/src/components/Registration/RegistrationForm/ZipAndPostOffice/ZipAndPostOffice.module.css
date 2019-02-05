@@ -1,0 +1,20 @@
+
+.Zip {
+  float: left;
+  margin-right: 12px;
+}
+
+.Zip input {
+  width: 60px;
+  height: 28px;
+}
+
+.PostOffice input {
+  width: 100px;
+  height: 28px;
+}
+
+.ErrorMessage {
+  color: hsla(15, 100%, 40%, 1);
+  margin-left: 4px;
+}

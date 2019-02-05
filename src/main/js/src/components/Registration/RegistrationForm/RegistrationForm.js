@@ -10,6 +10,7 @@ import Button from '../../UI/Button/Button';
 import RadioButton from '../../UI/RadioButton/RadioButton';
 import Alert from '../../Alert/Alert';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
+import ZipAndPostOffice from './ZipAndPostOffice/ZipAndPostOffice';
 
 export const registrationForm = props => {
   function validatePhoneNumber(value) {
@@ -163,7 +164,7 @@ export const registrationForm = props => {
         };
         props.onSubmitRegistrationForm(payload);
       }}
-      render={({ values, isValid, errors, initialValues }) => (
+      render={({ values, isValid, errors, initialValues, setFieldValue }) => (
         <Form className={classes.Form}>
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
@@ -174,14 +175,13 @@ export const registrationForm = props => {
               {readonlyWhenExistsInput('lastName', initialValues)}
             </div>
             <div className={classes.FormElement}>
-              {readonlyField('streetAddress', initialValues)}
+              {inputField('streetAddress')}
             </div>
             <div className={classes.FormElement}>
-              {readonlyField('zip', initialValues)}{' '}
-              <span>{initialValues['postOffice']}</span>
+              <ZipAndPostOffice values={values} setFieldValue={setFieldValue}/>
             </div>
             <div className={classes.FormElement}>
-              {inputField('phoneNumber', '+358 40 123 4567')}
+              {inputField('phoneNumber', '+358')}
             </div>
             <div className={classes.FormElement}>{inputField('email')}</div>
             <div className={classes.FormElement}>

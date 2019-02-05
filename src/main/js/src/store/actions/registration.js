@@ -104,10 +104,13 @@ export const initRegistrationForm = examSessionId => {
       axios.get(
         '/koodisto-service/rest/json/maatjavaltiot2/koodi?onlyValidKoodis=true',
       ),
+      axios.get(
+        '/koodisto-service/rest/json/sukupuoli/koodi?onlyValidKoodis=true',
+      ),
     ])
-      .then(([initRes, nationalitiesRes]) => {
+      .then(([init, nationalities, genders]) => {
         dispatch(
-          initRegistrationFormSuccess(initRes.data, nationalitiesRes.data),
+          initRegistrationFormSuccess(init.data, nationalities.data, genders.data),
         );
       })
       .catch(err => {
@@ -122,10 +125,10 @@ const initRegistrationFormStart = () => {
   };
 };
 
-const initRegistrationFormSuccess = (formInitData, nationalities) => {
+const initRegistrationFormSuccess = (formInitData, nationalities, genders) => {
   return {
     type: actionTypes.INIT_REGISTRATION_FORM_SUCCESS,
-    formInitData: Object.assign(formInitData, { nationalities: nationalities }),
+    formInitData: Object.assign(formInitData, { nationalities: nationalities }, { genders: genders }),
   };
 };
 
