@@ -20,7 +20,6 @@ export {
   selectLanguage,
   selectLevel,
   selectLocation,
-  setDefaultFilters,
   initRegistrationForm,
   submitRegistrationForm,
 } from './registration';
