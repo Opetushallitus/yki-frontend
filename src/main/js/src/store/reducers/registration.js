@@ -33,33 +33,24 @@ const reducer = (state = initialState, action) => {
         error: action.error,
       };
     case actionTypes.FILTER_AND_GROUP_BY_DATE:
-      const filteredByLocation = state.examSessions.filter(e => {
-        if (state.location === '') {
-          return true;
-        } else {
-          return e.location[0].address
-            .toLowerCase()
-            .endsWith(state.location.toLowerCase());
-        }
-      });
-      const filteredByLevel = filteredByLocation.filter(e => {
-        if (state.level === '') {
-          return true;
-        } else {
-          return e.level_code === state.level;
-        }
-      });
-      const filteredByLanguage = filteredByLevel.filter(
-        e => e.language_code === state.language.code,
-      );
+      const filtered = state.examSessions
+        .filter(e =>
+          state.location === ''
+            ? true
+            : e.location[0].address
+                .toLowerCase()
+                .endsWith(state.location.toLowerCase()),
+        )
+        .filter(e => (state.level === '' ? true : e.level_code === state.level))
+        .filter(e => e.language_code === state.language.code);
       const dates = new Set();
-      filteredByLanguage.map(e => dates.add(e.session_date));
+      filtered.map(e => dates.add(e.session_date));
       const examSessionsGroupedByDate = {};
       [...dates]
         .sort()
         .map(
           d =>
-            (examSessionsGroupedByDate[d] = filteredByLanguage.filter(
+            (examSessionsGroupedByDate[d] = filtered.filter(
               e => e.session_date === d,
             )),
         );
