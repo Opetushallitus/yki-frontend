@@ -1,3 +1,5 @@
+import * as R from 'ramda';
+
 import * as actionTypes from '../actions/actionTypes';
 import { LANGUAGES } from '../../common/Constants';
 
@@ -42,8 +44,7 @@ const reducer = (state = initialState, action) => {
         error: action.error,
       };
     case actionTypes.FILTER_AND_GROUP_BY_DATE:
-      const groupedByDate = {};
-      state.examSessions
+      const filtered = state.examSessions
         .filter(e =>
           state.location === ''
             ? true
@@ -52,12 +53,8 @@ const reducer = (state = initialState, action) => {
                 .endsWith(state.location.toLowerCase()),
         )
         .filter(e => (state.level === '' ? true : e.level_code === state.level))
-        .filter(e => e.language_code === state.language.code)
-        .map(e =>
-          (groupedByDate[e.session_date] = groupedByDate[e.session_date]
-            ? groupedByDate[e.session_date]
-            : []).push(e),
-        );
+        .filter(e => e.language_code === state.language.code);
+      const groupedByDate = R.groupBy(s => s.session_date, filtered);
       return {
         ...state,
         filteredExamSessionsGroupedByDate: groupedByDate,
