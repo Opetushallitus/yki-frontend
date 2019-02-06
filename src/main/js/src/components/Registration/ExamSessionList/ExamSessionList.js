@@ -2,7 +2,7 @@ import React from 'react';
 import { withNamespaces } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import ExamSessionItem from '../ExamSessionItem/ExamSessionItem';
+import ExamSessionListItem from './ExamSessionListItem/ExamSessionListItem';
 
 const examSessionList = props => {
   const list =
@@ -17,7 +17,7 @@ const examSessionList = props => {
                 : props.t('common.examSessions.amount')}
             </p>
             {props.examSessions[k].map(e => (
-              <ExamSessionItem key={e.published_at} examSession={e} />
+              <ExamSessionListItem key={e.published_at} examSession={e} />
             ))}
           </div>
         ))}

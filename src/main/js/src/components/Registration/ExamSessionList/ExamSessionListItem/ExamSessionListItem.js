@@ -2,9 +2,9 @@ import React from 'react';
 import { withNamespaces } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import classes from './ExamSessionItem.module.css';
+import classes from './ExamSessionListItem.module.css';
 
-const examSessionItem = props => {
+const examSessionListItem = props => {
   const extraInfo = props.examSession.location[0].extra_information ? (
     <p>
       {props.t('common.extra')}:<br />
@@ -28,7 +28,10 @@ const examSessionItem = props => {
     );
 
   return (
-    <div className={classes.ExamSessionItem} data-cy="exam-session-list-item">
+    <div
+      className={classes.ExamSessionListItem}
+      data-cy="exam-session-list-item"
+    >
       <p>{props.examSession.location[0].name}</p>
       <p>
         {props.examSession.participants}/{props.examSession.max_participants}
@@ -39,8 +42,8 @@ const examSessionItem = props => {
   );
 };
 
-examSessionItem.propTypes = {
+examSessionListItem.propTypes = {
   examSession: PropTypes.object.isRequired,
 };
 
-export default withNamespaces()(examSessionItem);
+export default withNamespaces()(examSessionListItem);
