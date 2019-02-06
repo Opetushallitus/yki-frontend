@@ -55,9 +55,13 @@ const reducer = (state = initialState, action) => {
         .filter(e => (state.level === '' ? true : e.level_code === state.level))
         .filter(e => e.language_code === state.language.code);
       const groupedByDate = R.groupBy(s => s.session_date, filtered);
+      const orderedByDate = {};
+      Object.keys(groupedByDate)
+        .sort()
+        .map(k => (orderedByDate[k] = groupedByDate[k]));
       return {
         ...state,
-        filteredExamSessionsGroupedByDate: groupedByDate,
+        filteredExamSessionsGroupedByDate: orderedByDate,
       };
     case actionTypes.ADD_EXAM_LOCATIONS:
       return {

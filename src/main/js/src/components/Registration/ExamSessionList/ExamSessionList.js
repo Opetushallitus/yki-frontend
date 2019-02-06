@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { withNamespaces } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -11,7 +12,7 @@ const examSessionList = props => {
         {Object.keys(props.examSessions).map(k => (
           <div key={k}>
             <p>
-              {k} {props.examSessions[k].length}{' '}
+              {moment(k).format('DD.MM.YYYY')} {props.examSessions[k].length}{' '}
               {props.examSessions[k].length === 1
                 ? props.t('common.examSessions.amount.single')
                 : props.t('common.examSessions.amount')}
