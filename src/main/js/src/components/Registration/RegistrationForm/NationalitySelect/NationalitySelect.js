@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import * as R from 'ramda';
 
 export const nationalitySelect = props => {
@@ -39,4 +39,4 @@ nationalitySelect.propTypes = {
   className: PropTypes.string.isRequired,
 };
 
-export default withNamespaces()(nationalitySelect);
+export default withTranslation()(nationalitySelect);

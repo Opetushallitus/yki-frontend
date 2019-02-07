@@ -13,7 +13,7 @@ exports[`<ExamSessionDetails /> should render exam session details 1`] = `
      
     30.12.2028
   </h2>
-  <LoadNamespace(ExamSessionUpdateForm)
+  <Wrapper
     examSession={
       Object {
         "language_code": "eng",
@@ -28,7 +28,7 @@ exports[`<ExamSessionDetails /> should render exam session details 1`] = `
     onDelete={[MockFunction]}
     onSubmit={[MockFunction]}
   />
-  <LoadNamespace(participantList)
+  <Wrapper
     examSession={
       Object {
         "language_code": "eng",

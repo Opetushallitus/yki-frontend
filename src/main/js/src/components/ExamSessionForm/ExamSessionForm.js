@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import moment from 'moment';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import * as R from 'ramda';
 
 import classes from './ExamSessionForm.module.css';
@@ -442,4 +442,4 @@ examSessionForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default withNamespaces()(examSessionForm);
+export default withTranslation()(examSessionForm);

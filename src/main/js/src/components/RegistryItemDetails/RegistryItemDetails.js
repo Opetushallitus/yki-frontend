@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './RegistryItemDetails.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
@@ -70,4 +70,4 @@ registryItemDetails.propTypes = {
   clicked: PropTypes.func.isRequired,
 };
 
-export default withNamespaces()(registryItemDetails);
+export default withTranslation()(registryItemDetails);

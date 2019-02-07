@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import moment from 'moment';
 
@@ -355,4 +355,4 @@ registrationForm.propTypes = {
   submitError: PropTypes.object,
 };
 
-export default withNamespaces()(registrationForm);
+export default withTranslation()(registrationForm);

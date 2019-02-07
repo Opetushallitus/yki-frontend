@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './UpdateRegistryItem.module.css';
 import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
@@ -73,4 +73,4 @@ UpdateRegistryItem.propTypes = {
 export default connect(
   null,
   mapDispatchToProps,
-)(withNamespaces()(UpdateRegistryItem));
+)(withTranslation()(UpdateRegistryItem));

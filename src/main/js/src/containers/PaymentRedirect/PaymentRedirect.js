@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../axios';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Alert from '../../components/Alert/Alert';
 import Page from '../../hoc/Page/Page';
@@ -72,4 +72,4 @@ PaymentRedirect.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-export default withNamespaces()(PaymentRedirect);
+export default withTranslation()(PaymentRedirect);

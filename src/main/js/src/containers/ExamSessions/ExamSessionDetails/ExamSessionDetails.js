@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import classes from './ExamSessionDetails.module.css';
@@ -96,4 +96,4 @@ ExamSessionDetails.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(ExamSessionDetails));
+)(withTranslation()(ExamSessionDetails));

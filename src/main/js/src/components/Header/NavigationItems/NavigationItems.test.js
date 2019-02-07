@@ -8,7 +8,7 @@ import NavigationItem from './NavigationItem/NavigationItem';
 configure({ adapter: new Adapter() });
 
 jest.mock('react-i18next', () => ({
-  withNamespaces: () => Component => {
+  withTranslation: () => Component => {
     Component.defaultProps = { ...Component.defaultProps, t: () => '' };
     return Component;
   },

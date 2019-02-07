@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './ExamSessionOrganizer.module.css';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
@@ -65,4 +65,4 @@ examSessionOrganizer.propTypes = {
   organization: PropTypes.object.isRequired,
 };
 
-export default withNamespaces()(examSessionOrganizer);
+export default withTranslation()(examSessionOrganizer);

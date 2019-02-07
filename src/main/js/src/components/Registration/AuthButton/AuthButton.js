@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import Button from '../../UI/Button/Button';
@@ -17,4 +17,4 @@ authButton.propTypes = {
   examSessionId: PropTypes.number.isRequired,
 };
 
-export default withNamespaces()(authButton);
+export default withTranslation()(authButton);

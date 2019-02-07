@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Alert from '../../Alert/Alert';
 
@@ -29,4 +29,4 @@ registrationError.propTypes = {
   error: PropTypes.object.isRequired,
 };
 
-export default withNamespaces()(registrationError);
+export default withTranslation()(registrationError);

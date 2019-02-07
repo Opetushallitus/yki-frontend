@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import classes from './NavigationItems.module.css';
@@ -33,4 +33,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(withNamespaces()(navigationItems));
+export default connect(mapStateToProps)(withTranslation()(navigationItems));

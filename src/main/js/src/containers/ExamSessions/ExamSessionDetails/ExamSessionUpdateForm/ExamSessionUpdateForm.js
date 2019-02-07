@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import moment from 'moment';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './ExamSessionUpdateForm.module.css';
 import Button from '../../../../components/UI/Button/Button';
@@ -258,4 +258,4 @@ ExamSessionUpdateForm.propTypes = {
   onDelete: PropTypes.func.isRequired,
 };
 
-export default withNamespaces()(ExamSessionUpdateForm);
+export default withTranslation()(ExamSessionUpdateForm);

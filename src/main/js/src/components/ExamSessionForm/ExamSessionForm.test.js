@@ -70,7 +70,7 @@ const examSessionContent = {
 const onSubmitSpy = jest.fn();
 
 jest.mock('react-i18next', () => ({
-  withNamespaces: () => Component => {
+  withTranslation: () => Component => {
     Component.defaultProps = { ...Component.defaultProps, t: () => '' };
     return Component;
   },

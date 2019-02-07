@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './LevelSelection.module.css';
 import Header from '../../../components/Header/Header';
@@ -68,4 +68,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(languageSelection));
+)(withTranslation()(languageSelection));

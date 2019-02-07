@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import classes from './UpcomingExamSessions.module.css';
@@ -53,4 +53,4 @@ upcomingExamSessions.propTypes = {
   examSessionSelected: PropTypes.func.isRequired
 };
 
-export default withNamespaces()(upcomingExamSessions);
+export default withTranslation()(upcomingExamSessions);

@@ -47,9 +47,9 @@ const store = createStore(
 
 const app = () => (
   <Provider store={store}>
-    <Init>
-      <Router basename={'/yki'}>
-        <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<Spinner />}>
+      <Init>
+        <Router basename={'/yki'}>
           <Switch>
             <Route exact path="/" component={Description} />
             <Route path="/valitse-kieli" component={LanguageSelection} />
@@ -72,9 +72,9 @@ const app = () => (
             </ErrorBoundary>
             <Route component={NotFound} />
           </Switch>
-        </Suspense>
-      </Router>
-    </Init>
+        </Router>
+      </Init>
+    </Suspense>
   </Provider>
 );
 

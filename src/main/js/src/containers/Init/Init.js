@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
@@ -48,4 +48,4 @@ Init.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(Init));
+)(withTranslation()(Init));

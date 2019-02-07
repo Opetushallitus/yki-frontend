@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './Description.module.css';
 import Header from '../../../components/Header/Header';
@@ -38,4 +38,4 @@ const description = props => {
   );
 };
 
-export default withNamespaces()(description);
+export default withTranslation()(description);

@@ -5,7 +5,7 @@ import { StaticRouter } from 'react-router-dom';
 
 
 jest.mock('react-i18next', () => ({
-  withNamespaces: () => Component => {
+  withTranslation: () => Component => {
     Component.defaultProps = { ...Component.defaultProps, t: () => "" };
     return Component;
   },

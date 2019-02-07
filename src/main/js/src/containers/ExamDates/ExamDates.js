@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import * as R from 'ramda';
 
@@ -118,4 +118,4 @@ ExamDates.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(withErrorHandler(ExamDates)));
+)(withTranslation()(withErrorHandler(ExamDates)));

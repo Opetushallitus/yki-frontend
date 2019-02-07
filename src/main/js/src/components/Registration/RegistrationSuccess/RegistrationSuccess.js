@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './RegistrationSuccess.module.css';
 import Hyperlink from '../../UI/Hyperlink/Hyperlink';
@@ -37,4 +37,4 @@ registrationSuccess.propTypes = {
   formData: PropTypes.object.isRequired,
 };
 
-export default withNamespaces()(registrationSuccess);
+export default withTranslation()(registrationSuccess);

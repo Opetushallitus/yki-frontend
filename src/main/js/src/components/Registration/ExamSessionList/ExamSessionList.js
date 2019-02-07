@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import ExamSessionListItem from './ExamSessionListItem/ExamSessionListItem';
@@ -33,4 +33,4 @@ examSessionList.propTypes = {
   examSessions: PropTypes.object.isRequired,
 };
 
-export default withNamespaces()(examSessionList);
+export default withTranslation()(examSessionList);

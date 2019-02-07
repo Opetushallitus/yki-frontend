@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import classes from './ExamSessionListItem.module.css';
@@ -46,4 +46,4 @@ examSessionListItem.propTypes = {
   examSession: PropTypes.object.isRequired,
 };
 
-export default withNamespaces()(examSessionListItem);
+export default withTranslation()(examSessionListItem);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import classes from './Filters.module.css';
@@ -80,4 +80,4 @@ filters.propTypes = {
   locations: PropTypes.array.isRequired,
 };
 
-export default withNamespaces()(filters);
+export default withTranslation()(filters);

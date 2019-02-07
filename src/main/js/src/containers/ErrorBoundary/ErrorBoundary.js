@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../axios';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import Alert from '../../components/Alert/Alert';
 
@@ -33,4 +33,4 @@ export class ErrorBoundary extends Component {
   }
 }
 
-export default withNamespaces()(ErrorBoundary);
+export default withTranslation()(ErrorBoundary);

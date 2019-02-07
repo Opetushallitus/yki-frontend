@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './RegistryFilter.module.css';
 import { levelDescription } from '../../util/util';
@@ -118,4 +118,4 @@ class RegistryFilter extends Component {
   }
 }
 
-export default withNamespaces()(RegistryFilter);
+export default withTranslation()(RegistryFilter);

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './RegistryItem.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
@@ -80,4 +80,4 @@ RegistryItem.propTypes = {
   update: PropTypes.func,
 };
 
-export default withNamespaces()(RegistryItem);
+export default withTranslation()(RegistryItem);

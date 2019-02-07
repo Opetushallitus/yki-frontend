@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../../axios';
 import * as Yup from 'yup';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import classes from './LoginLink.module.css';
@@ -73,4 +73,4 @@ LoginLink.propTypes = {
   examSessionId: PropTypes.number.isRequired,
 };
 
-export default withNamespaces()(LoginLink);
+export default withTranslation()(LoginLink);

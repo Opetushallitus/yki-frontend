@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './Registry.module.css';
 import Page from '../../hoc/Page/Page';
@@ -148,4 +148,4 @@ Registry.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(withErrorHandler(Registry)));
+)(withTranslation()(withErrorHandler(Registry)));

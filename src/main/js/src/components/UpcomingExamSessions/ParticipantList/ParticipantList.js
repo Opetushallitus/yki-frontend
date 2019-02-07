@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
@@ -110,4 +110,4 @@ participantList.propTypes = {
   onCancel: PropTypes.func.isRequired,
 };
 
-export default withNamespaces()(participantList);
+export default withTranslation()(participantList);

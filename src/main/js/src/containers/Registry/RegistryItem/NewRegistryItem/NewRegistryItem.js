@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import axios from '../../../../axios';
 import classes from './NewRegistryItem.module.css';
@@ -182,4 +182,4 @@ NewRegistryItem.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withNamespaces()(NewRegistryItem));
+)(withTranslation()(NewRegistryItem));

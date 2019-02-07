@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import moment from 'moment';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './RegistryItemForm.module.css';
 import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
@@ -265,4 +265,4 @@ registryItemForm.propTypes = {
   updating: PropTypes.bool,
 };
 
-export default withNamespaces()(registryItemForm);
+export default withTranslation()(registryItemForm);
