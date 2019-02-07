@@ -5,7 +5,7 @@ export const fetchExamSessions = () => {
   return dispatch => {
     dispatch(fetchExamSessionsStart());
     axios
-      .get('/yki/api/exam-sessions')
+      .get('/yki/api/exam-session')
       .then(res => {
         dispatch(extractExamLocations(res.data.exam_sessions));
         dispatch(fetchExamSessionsSuccess(res.data.exam_sessions));
@@ -139,11 +139,11 @@ const initRegistrationFormFail = error => {
   };
 };
 
-export const submitRegistrationForm = registrationForm => {
+export const submitRegistrationForm = (registrationId, registrationForm) => {
   return dispatch => {
     dispatch(submitRegistrationFormStart());
     axios
-      .post('/yki/api/registration/submit', registrationForm)
+      .post(`/yki/api/registration/${registrationId}/submit`, registrationForm)
       .then(res => {
         dispatch(submitRegistrationFormSuccess(registrationForm));
       })

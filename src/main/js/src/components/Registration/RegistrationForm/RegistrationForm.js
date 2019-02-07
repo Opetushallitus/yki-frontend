@@ -206,7 +206,7 @@ export const registrationForm = props => {
           ),
           email: values.email,
         };
-        props.onSubmitRegistrationForm(payload);
+        props.onSubmitRegistrationForm(props.initData.registration_id, payload);
       }}
       render={({ values, isValid, errors, initialValues, setFieldValue }) => (
         <Form className={classes.Form}>

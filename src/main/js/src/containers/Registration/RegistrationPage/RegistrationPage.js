@@ -72,8 +72,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onInitRegistrationForm: examSessionId =>
       dispatch(actions.initRegistrationForm(examSessionId)),
-    onSubmitRegistrationForm: registrationForm =>
-      dispatch(actions.submitRegistrationForm(registrationForm)),
+    onSubmitRegistrationForm: (registrationId, registrationForm) =>
+      dispatch(actions.submitRegistrationForm(registrationId, registrationForm)),
   };
 };
 

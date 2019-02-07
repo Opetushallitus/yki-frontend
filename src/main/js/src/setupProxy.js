@@ -402,7 +402,7 @@ module.exports = function(app) {
     }
   });
 
-  app.post('/yki/api/registration/submit', (req, res) => {
+  app.post('/yki/api/registration/:id/submit', (req, res) => {
     try {
       res.send({ success: true });
     } catch (err) {
