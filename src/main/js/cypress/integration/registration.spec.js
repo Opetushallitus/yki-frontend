@@ -50,7 +50,7 @@ describe('Registration', () => {
 
   it('Filters work', () => {
     cy.visit('/valitse-tutkintotilaisuus');
-    cy.get('[data-cy=exam-session-list-item]').should('have.length', 2);
+    cy.get('[data-cy=exam-session-list-item]').should('have.length', 3);
     cy.get('[data-cy=language-filter]').select('Saksa');
     cy.get('[data-cy=level-filter]').select('Ylin taso');
     cy.get('[data-cy=location-filter]').select('Jyväskylä');
@@ -66,5 +66,4 @@ describe('Registration', () => {
     cy.visit('/maksu/vanhentunut');
     cy.get('[data-cy=link-expired-header]').should('exist');
   });
-
 });

@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import ExamSessionListItem from './ExamSessionListItem/ExamSessionListItem';
+import { DATE_FORMAT } from '../../../common/Constants';
 
 const examSessionList = props => {
   const list =
@@ -12,7 +13,7 @@ const examSessionList = props => {
         {Object.keys(props.examSessions).map(k => (
           <div key={k}>
             <p>
-              {moment(k).format('DD.MM.YYYY')} {props.examSessions[k].length}{' '}
+              {moment(k).format(DATE_FORMAT)} {props.examSessions[k].length}{' '}
               {props.examSessions[k].length === 1
                 ? props.t('common.examSessions.amount.single')
                 : props.t('common.examSessions.amount')}

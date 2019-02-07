@@ -45,6 +45,28 @@
       "registration_end_date": "2019-02-28"
     },
     {
+      "level_code": "KESKI",
+      "max_participants": 25,
+      "language_code": "fin",
+      "participants": 5,
+      "office_oid": "1.2.246.562.5.22724043777",
+      "published_at": "2019-01-17T12:30:00.000Z",
+      "session_date": "2019-04-06",
+      "organizer_oid": "1.2.246.562.10.39706139522",
+      "id": 12,
+      "registration_start_date": "2019-02-01",
+      "location": [
+        {
+          "name": "Jyväskylän kansalaisopisto",
+          "address": "Mikälietie 5, 40100 Jyväskylä",
+          "other_location_info": "Sali Kekkonen",
+          "extra_information": "Sali toisessa kerroksessa.",
+          "lang": "fi"
+        }
+      ],
+      "registration_end_date": "2019-02-28"
+    },
+    {
       "level_code": "YLIN",
       "max_participants": 10,
       "language_code": "deu",
