@@ -1,3 +1,7 @@
+.Form input {
+  color: hsla(0, 0%, 0%, 1);
+}
+
 .RadiobuttonGroup {
   margin: 0px 0 27px 0;
 }
@@ -5,14 +9,6 @@
 .TextInput {
   width: 200px;
   height: 28px;
-}
-
-.Select {
-  height: 35px;
-  width: 250px;
-  border: 1px solid hsl(0, 0%, 68%);
-  border-radius: 2px;
-  background-color: hsl(0, 0%, 100%);
 }
 
 .FormElement {
@@ -54,6 +50,47 @@
   text-align: center;
   font-size: 0.875em;
   background-color: hsl(96, 96%, 27%);
+}
+
+.GenderSelect {
+  height: 32px;
+  width: 80px;
+  border: 1px solid hsl(0, 0%, 68%);
+  border-radius: 2px;
+  background-color: hsl(0, 0%, 100%);
+}
+
+.Birthdate {
+  float: left;
+  margin-right: 12px;
+}
+
+.Birthdate input {
+  width: 108px;
+  height: 28px;
+}
+
+.Birthdate span {
+  display: inline;
+  margin-left: 4px;
+}
+
+.Zip input {
+  width: 60px;
+  height: 28px;
+}
+
+.PostOffice input {
+  width: 100px;
+  height: 28px;
+}
+
+.NationalitySelect {
+  height: 32px;
+  width: 200px;
+  border: 1px solid hsl(0, 0%, 68%);
+  border-radius: 2px;
+  background-color: hsl(0, 0%, 100%);
 }
 
 .ErrorMessage {

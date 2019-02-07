@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 import { withNamespaces } from 'react-i18next';
 import * as R from 'ramda';
 
-import classes from './NationalitySelect.module.css';
-
 export const nationalitySelect = props => {
-  const localeNationalities = props.nationalities.map(n => {
+  const nationalitiesByLocale = props.nationalities.map(n => {
     const metadata = n.metadata.find(m => m.kieli === props.lng.toUpperCase());
     return { name: metadata.nimi, code: n.koodiArvo };
   });
   const sortByName = R.sortBy(R.prop('name'));
-  const nationalityOptions = sortByName(localeNationalities).map(n => {
+  const nationalityOptions = sortByName(nationalitiesByLocale).map(n => {
     return (
       <option value={n.code} key={n.code}>
         {n.name}
@@ -26,9 +24,10 @@ export const nationalitySelect = props => {
       <Field
         component="select"
         name="nationality"
-        className={classes.Select}
+        className={props.className}
         data-cy="select-nationality"
       >
+        <option value="" key=""/>
         {nationalityOptions}
       </Field>
     </React.Fragment>
@@ -37,6 +36,7 @@ export const nationalitySelect = props => {
 
 nationalitySelect.propTypes = {
   nationalities: PropTypes.array.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default withNamespaces()(nationalitySelect);

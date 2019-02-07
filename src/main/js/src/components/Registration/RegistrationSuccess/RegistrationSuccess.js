@@ -9,7 +9,9 @@ export const registrationSuccess = props => {
   return (
     <div className={classes.RegistrationSuccess}>
       <div>
-        <h1>{props.t('registration.success.header')}</h1>
+        <h1 data-cy="registration-success-header">
+          {props.t('registration.success.header')}
+        </h1>
         <p>{props.t('registration.success.info1')}:</p>
       </div>
       <div>

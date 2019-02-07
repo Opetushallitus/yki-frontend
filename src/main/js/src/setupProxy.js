@@ -19,6 +19,10 @@ const initRegistration = JSON.parse(
   fs.readFileSync('./dev/rest/registration/registrationInit.json'),
 );
 
+const initRegistrationEmailAuth = JSON.parse(
+  fs.readFileSync('./dev/rest/registration/registrationInitEmailAuth.json'),
+);
+
 const getExamSessions = () => {
   return JSON.parse(
     fs.readFileSync('./dev/rest/examSessions/examSessions.json'),
@@ -381,7 +385,9 @@ module.exports = function(app) {
 
   app.post('/yki/api/registration/init', (req, res) => {
     try {
-      res.send(initRegistration);
+      req.body.exam_session_id === 2
+        ? res.send(initRegistrationEmailAuth)
+        : res.send(initRegistration);
     } catch (err) {
       res.status(404).send(err.message);
     }

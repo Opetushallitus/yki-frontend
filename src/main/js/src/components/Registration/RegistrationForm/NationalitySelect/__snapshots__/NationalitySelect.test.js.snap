@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NationalitySelect /> should render natonality selection sorted alphabetically 1`] = `
+<Fragment>
+  <h3>
+    registration.form.nationality
+  </h3>
+  <FormikConnect(FieldInner)
+    className="test"
+    component="select"
+    data-cy="select-nationality"
+    name="nationality"
+  >
+    <option
+      key=""
+      value=""
+    />
+    <option
+      key="064"
+      value="064"
+    >
+      Bhutan
+    </option>
+    <option
+      key="158"
+      value="158"
+    >
+      Taiwan
+    </option>
+  </FormikConnect(FieldInner)>
+</Fragment>
+`;

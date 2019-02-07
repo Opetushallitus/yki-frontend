@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GenderSelect /> should render gender selection sorted by code 1`] = `
+<Fragment>
+  <h3>
+    registration.form.gender
+  </h3>
+  <FormikConnect(FieldInner)
+    className="test"
+    component="select"
+    data-cy="select-gender"
+    name="gender"
+  >
+    <option
+      key=""
+      value=""
+    />
+    <option
+      key="1"
+      value="1"
+    >
+      mies
+    </option>
+    <option
+      key="2"
+      value="2"
+    >
+      nainen
+    </option>
+  </FormikConnect(FieldInner)>
+</Fragment>
+`;

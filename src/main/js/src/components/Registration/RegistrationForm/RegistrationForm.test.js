@@ -25,6 +25,9 @@ const initData = {
     zip: '00100',
     nationalities: ['246'],
   },
+  exam_session: {
+    language_code: 'eng'
+  }
 };
 describe('<RegistrationForm />', () => {
   it('should render registration form', () => {

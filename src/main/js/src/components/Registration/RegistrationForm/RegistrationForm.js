@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { withNamespaces } from 'react-i18next';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import moment from 'moment';
 
 import classes from './RegistrationForm.module.css';
 import Button from '../../UI/Button/Button';
@@ -11,19 +12,41 @@ import RadioButton from '../../UI/RadioButton/RadioButton';
 import Alert from '../../Alert/Alert';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
 import ZipAndPostOffice from './ZipAndPostOffice/ZipAndPostOffice';
+import GenderSelect from './GenderSelect/GenderSelect';
+import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
 
 export const registrationForm = props => {
+  const mandatoryErrorMsg = props.t('error.mandatory');
+  const maxErrorMsg = props.t('error.max');
+
   function validatePhoneNumber(value) {
     if (value) {
       const phoneNumber = parsePhoneNumberFromString(value);
       return phoneNumber && phoneNumber.isValid();
     } else {
-      return false;
+      return true;
     }
   }
 
-  const mandatoryErrorMsg = props.t('error.mandatory');
-  const maxErrorMsg = props.t('error.max');
+  function validateBirthDate(value) {
+    if (props.initData.user.ssn) {
+      return true;
+    }
+    if (value) {
+      const date = moment(value, DATE_FORMAT, true);
+      if (date.isValid() || date.isBefore(moment())) {
+        return true;
+      } else {
+        return this.createError({ message: props.t('error.birthdate') });
+      }
+    } else {
+      return this.createError({ message: mandatoryErrorMsg });
+    }
+  }
+
+  function sameEmail(confirmEmail) {
+    return confirmEmail === this.parent.email;
+  }
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -51,7 +74,18 @@ export const registrationForm = props => {
     email: Yup.string()
       .email(props.t('error.email'))
       .required(mandatoryErrorMsg)
-      .max(128, maxErrorMsg),
+      .max(64, maxErrorMsg),
+    nationality: Yup.string().required(mandatoryErrorMsg),
+    confirmEmail: Yup.string().test(
+      'same-email',
+      props.t('error.confirmEmail'),
+      sameEmail,
+    ),
+    birthdate: Yup.string().test(
+      'invalid-birthdate',
+      props.t('error.birthdate'),
+      validateBirthDate,
+    ),
     examLang: Yup.string().required(mandatoryErrorMsg),
     certificateLang: Yup.string().required(mandatoryErrorMsg),
   });
@@ -93,13 +127,6 @@ export const registrationForm = props => {
     );
   };
 
-  const readonlyField = (name, initialValues) => (
-    <React.Fragment>
-      <h3>{props.t(`registration.form.${name}`)}</h3>
-      <span>{initialValues[name]}</span>
-    </React.Fragment>
-  );
-
   const inputField = (name, placeholder = '') => (
     <React.Fragment>
       <h3>{props.t(`registration.form.${name}`)}</h3>
@@ -118,31 +145,44 @@ export const registrationForm = props => {
     </React.Fragment>
   );
 
-  const readonlyWhenExistsInput = (name, initialValues) => (
-    <React.Fragment>
-      <h3>{props.t(`registration.form.${name}`)}</h3>
-      {initialValues[name] && initialValues[name].length > 0 ? (
+  const readonlyWhenExistsInput = (name, initialValues) =>
+    initialValues[name] && initialValues[name].length > 0 ? (
+      <React.Fragment>
+        <h3>{props.t(`registration.form.${name}`)}</h3>
         <span>{initialValues[name]}</span>
-      ) : (
-        inputField(name)
-      )}
-    </React.Fragment>
-  );
+      </React.Fragment>
+    ) : (
+      inputField(name)
+    );
+
+  const showExamLang = () => {
+    const lang = props.initData.exam_session.language_code;
+
+    return !(lang === 'fin' || lang === 'swe');
+  };
+
+  const emptyIfAbsent = value => {
+    return value ? value : '';
+  };
 
   return (
     <Formik
       initialValues={{
-        firstName: props.initData.user.first_name,
-        lastName: props.initData.user.last_name,
-        streetAddress: props.initData.user.street_address,
-        zip: props.initData.user.zip,
-        postOffice: props.initData.user.post_office,
+        firstName: emptyIfAbsent(props.initData.user.first_name),
+        lastName: emptyIfAbsent(props.initData.user.last_name),
+        streetAddress: emptyIfAbsent(props.initData.user.street_address),
+        zip: emptyIfAbsent(props.initData.user.zip),
+        postOffice: emptyIfAbsent(props.initData.user.post_office),
         nationality: props.initData.user.nationalities
           ? props.initData.user.nationalities[0]
           : '',
+        birthdate: '',
+        gender: '',
         phoneNumber: '',
-        email: '',
-        examLang: 'fi',
+        email: emptyIfAbsent(props.initData.user.email),
+        confirmEmail: emptyIfAbsent(props.initData.user.email),
+        examLang:
+          props.initData.exam_session.language_code === 'swe' ? 'se' : 'fi',
         certificateLang: 'fi',
       }}
       validationSchema={validationSchema}
@@ -152,6 +192,10 @@ export const registrationForm = props => {
           last_name: values.lastName,
           nationalities: [values.nationality],
           ssn: props.initData.user.ssn,
+          birthdate: moment(values.birthdate, DATE_FORMAT).format(
+            ISO_DATE_FORMAT_SHORT,
+          ),
+          gender: values.gender,
           certificate_lang: values.certificateLang,
           exam_lang: values.examLang,
           post_office: values.postOffice,
@@ -178,46 +222,75 @@ export const registrationForm = props => {
               {inputField('streetAddress')}
             </div>
             <div className={classes.FormElement}>
-              <ZipAndPostOffice values={values} setFieldValue={setFieldValue}/>
+              <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
             </div>
             <div className={classes.FormElement}>
               {inputField('phoneNumber', '+358')}
             </div>
-            <div className={classes.FormElement}>{inputField('email')}</div>
             <div className={classes.FormElement}>
-              {initialValues.nationality &&
-              initialValues.nationality.length > 0 ? null : (
+              {readonlyWhenExistsInput('email', initialValues)}
+            </div>
+            {!props.initData.user.email && (
+              <div className={classes.FormElement}>
+                {inputField('confirmEmail')}
+              </div>
+            )}
+            {initialValues.nationality.length === 0 && (
+              <div className={classes.FormElement}>
                 <NationalitySelect
                   nationalities={props.initData.nationalities}
+                  className={classes.NationalitySelect}
                 />
-              )}
-            </div>
-            <div
-              className={[classes.FormElement, classes.RadiobuttonGroup].join(
-                ' ',
-              )}
-            >
-              <RadioButtonGroup
-                label={props.t('registration.form.examLang')}
-                value={values.examLang}
-                error={errors.examLang}
+              </div>
+            )}
+            {!props.initData.user.ssn && (
+              <div className={classes.FormElement}>
+                <div className={classes.Birthdate}>
+                  {inputField('birthdate')}
+                </div>
+                <div className={classes.Gender}>
+                  <GenderSelect
+                    genders={props.initData.genders}
+                    className={classes.GenderSelect}
+                  />
+                </div>
+              </div>
+            )}
+            {showExamLang() && (
+              <div
+                className={[classes.FormElement, classes.RadiobuttonGroup].join(
+                  ' ',
+                )}
               >
-                <Field
-                  component={RadioButtonComponent}
-                  name="examLang"
-                  id={'examLang-fi'}
-                  checkedValue={'fi'}
-                  label={props.t('common.language.fin')}
-                />
-                <Field
-                  component={RadioButtonComponent}
-                  name="examLang"
-                  id={'examLang-sv'}
-                  checkedValue={'sv'}
-                  label={props.t('common.language.swe')}
-                />
-              </RadioButtonGroup>
-            </div>
+                <RadioButtonGroup
+                  label={props.t('registration.form.examLang')}
+                  value={values.examLang}
+                  error={errors.examLang}
+                >
+                  <Field
+                    component={RadioButtonComponent}
+                    name="examLang"
+                    id={'examLang-fi'}
+                    checkedValue={'fi'}
+                    label={props.t('common.language.fin')}
+                  />
+                  <Field
+                    component={RadioButtonComponent}
+                    name="examLang"
+                    id={'examLang-sv'}
+                    checkedValue={'sv'}
+                    label={props.t('common.language.swe')}
+                  />
+                  <Field
+                    component={RadioButtonComponent}
+                    name="examLang"
+                    id={'examLang-en'}
+                    checkedValue={'en'}
+                    label={props.t('common.language.eng')}
+                  />
+                </RadioButtonGroup>
+              </div>
+            )}
             <div
               className={[classes.FormElement, classes.RadiobuttonGroup].join(
                 ' ',

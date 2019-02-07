@@ -5,7 +5,9 @@ exports[`<RegistrationSuccess /> should render registration success page 1`] = `
   className="RegistrationSuccess"
 >
   <div>
-    <h1>
+    <h1
+      data-cy="registration-success-header"
+    >
       registration.success.header
     </h1>
     <p>

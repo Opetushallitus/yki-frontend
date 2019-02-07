@@ -27,7 +27,7 @@ export const participantList = props => {
   };
 
   const ssnOrBirthDate = form => {
-    return form.ssn ? form.ssn : moment(form.birth_date).format(DATE_FORMAT);
+    return form.ssn ? form.ssn : moment(form.birthdate).format(DATE_FORMAT);
   };
 
   const cancelRegistration = () => {

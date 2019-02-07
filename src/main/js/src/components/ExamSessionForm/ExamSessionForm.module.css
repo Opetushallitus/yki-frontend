@@ -1,3 +1,7 @@
+.Form input, textarea {
+  color: hsla(0, 0%, 16%, 1);
+}
+
 .RadiobuttonGroup {
   margin: 0px 0 27px 0;
 }

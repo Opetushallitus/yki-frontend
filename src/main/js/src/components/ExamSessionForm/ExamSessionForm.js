@@ -43,7 +43,7 @@ const examSessionForm = props => {
     examDate: Yup.string()
       .required(props.t('error.mandatory'))
       .test(
-        'duplicateExamSession',
+        'duplicate-exam-session',
         props.t('examSession.duplicate'),
         validateDuplicateExamSession,
       ),

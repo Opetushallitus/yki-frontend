@@ -3,6 +3,10 @@
   grid-template-columns: 1fr;
 }
 
+.Form input, textarea {
+  color: hsla(0, 0%, 16%, 1);
+}
+
 .MaxParticipantsInput {
   display: block;
   width: 35px;
