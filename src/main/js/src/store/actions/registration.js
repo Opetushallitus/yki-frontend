@@ -102,10 +102,10 @@ export const initRegistrationForm = examSessionId => {
         exam_session_id: Math.trunc(examSessionId),
       }),
       axios.get(
-        '/koodisto-service/rest/json/maatjavaltiot2/koodi?onlyValidKoodis=true',
+        '/yki/api/code/maatjavaltiot2',
       ),
       axios.get(
-        '/koodisto-service/rest/json/sukupuoli/koodi?onlyValidKoodis=true',
+        '/yki/api/code/sukupuoli',
       ),
     ])
       .then(([init, nationalities, genders]) => {

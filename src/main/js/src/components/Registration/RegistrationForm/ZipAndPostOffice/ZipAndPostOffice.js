@@ -9,7 +9,7 @@ import classes from './ZipAndPostOffice.module.css';
 export class ZipAndPostOffice extends Component {
   getPostOffice(zip) {
     axios
-      .get(`/koodisto-service/rest/json/posti/koodi/posti_${zip}`)
+      .get(`/yki/api/code/posti/${zip}`)
       .then(res => {
         const metadata = res.data.metadata;
         if (metadata) {
