@@ -237,7 +237,7 @@ export const registrationForm = props => {
                 {inputField('confirmEmail')}
               </div>
             )}
-            {initialValues.nationality.length === 0 && (
+            {!initialValues.nationality && (
               <div className={classes.FormElement}>
                 <NationalitySelect
                   nationalities={props.initData.nationalities}
