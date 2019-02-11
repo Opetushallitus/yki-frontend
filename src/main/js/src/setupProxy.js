@@ -414,6 +414,15 @@ module.exports = function(app) {
     }
   });
 
+  app.get('/yki/api/exam-session/:id', (req, res) => {
+    try {
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      res.send(allExamSessions.exam_sessions[0]);
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
   app.post('/yki/api/registration/:id/submit', (req, res) => {
     try {
       res.send({ success: true });

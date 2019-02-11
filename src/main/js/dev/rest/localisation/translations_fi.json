@@ -98,13 +98,13 @@
   "examSessions.agreementNotFound": "Ei löytynyt voimassaolevaa järjestäjäsopimusta.",
   "payment.redirect.error": "Maksamiseen siirtyminen epäonnistui",
   "payment.redirect.error.info": "Kokeile hetken kuluttua uudelleen.",
-  "payment.status.cancel": "Maksutapahtuma keskeytyi",
-  "payment.status.error": "Maksu epäonnistui",
+  "payment.status.cancel": "Maksutapahtuma keskeytyi!",
+  "payment.status.cancel.info1": "Voit maksaa ilmoittumisen käyttämällä sähköpostissa olevaa linkkiä.",
+  "payment.status.error": "Maksu epäonnistui!",
+  "payment.status.error.info1": "Voit yrittää maksaa uudelleen käyttämällä sähköpostissa olevaa linkkiä.",
   "payment.status.success": "Tutkintomaksu suoritettu!",
-
   "payment.status.success.info1": "Ilmoittautumisesi on varmistettu tutkintotilaisuuteen",
-  "payment.status.success.info2": "Saat varmistuksen sähköpostiisi.",
-
+  "payment.status.success.info2": "Saat varmistuksen sähköpostiosoitteeseen",
   "registration.auth.button": "Tunnistaudu Suomi.fi:n kautta",
   "registration.description.continue": "Siirry ilmoittautumiseen",
   "registration.description.text1": "Yleiset kielitutkinnot ovat aikuisille suunnattuja kielitaitotutkintoja. Tutkinnot mittaavat kielen osaamista sellaisissa käytännön tilanteissa, joissa aikuinen joutuu puhumaan, kuuntelemaan, kirjoittamaan tai lukemaan jotakin vierasta kieltä - joko Suomessa tai ulkomailla.",

@@ -444,7 +444,7 @@ exports[`<LoginLink /> should render login link page 1`] = `
               disabled={true}
               type="submit"
             >
-              examSession.addButton
+              registration.loginlink.button
             </button>
           </button>
         </form>

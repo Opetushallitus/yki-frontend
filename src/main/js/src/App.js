@@ -19,7 +19,7 @@ import LocationSelection from './containers/Registration/LocationSelection/Locat
 import Registration from './containers/Registration/Registration';
 import NotFound from './components/NotFound/NotFound';
 import PaymentRedirect from './containers/PaymentRedirect/PaymentRedirect';
-import PaymentStatus from './components/PaymentStatus/PaymentStatus';
+import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
 import Init from './containers/Init/Init';
 import ExamDates from './containers/ExamDates/ExamDates';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
