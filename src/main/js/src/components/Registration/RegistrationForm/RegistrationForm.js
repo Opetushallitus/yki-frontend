@@ -182,7 +182,7 @@ export const registrationForm = props => {
         email: emptyIfAbsent(props.initData.user.email),
         confirmEmail: emptyIfAbsent(props.initData.user.email),
         examLang:
-          props.initData.exam_session.language_code === 'swe' ? 'se' : 'fi',
+          props.initData.exam_session.language_code === 'swe' ? 'sv' : 'fi',
         certificateLang: 'fi',
       }}
       validationSchema={validationSchema}
