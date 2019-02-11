@@ -82,7 +82,7 @@ export class PaymentStatus extends Component {
           <div>{content()}</div>
           <div className={classes.BackButton}>
             <Hyperlink
-              to={'/yki'}
+              to={'/yki/'}
               text={this.props.t('errorBoundary.return')}
             />
           </div>

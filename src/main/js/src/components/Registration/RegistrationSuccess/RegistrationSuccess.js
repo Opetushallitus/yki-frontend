@@ -26,7 +26,7 @@ export const registrationSuccess = props => {
         </p>
       </div>
       <div className={classes.BackButton}>
-        <Hyperlink to={'/yki'} text={props.t('errorBoundary.return')} />
+        <Hyperlink to={'/yki/'} text={props.t('errorBoundary.return')} />
       </div>
     </div>
   );
