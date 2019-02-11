@@ -131,6 +131,7 @@
   "registration.init.error.session.closed": "Ilmoittautumisaika on päättynyt._sv",
   "registration.init.error.session.full": "Tutkintotilaisuus on täynnä._sv",
   "registration.init.error.session.multiple": "Voit ilmoittautua vain yhteen tutkintotilaisuuteen._sv",
+  "registration.loginlink.button": "Tunnistaudu sähköpostilla_sv",
   "registration.loginlink.header": "Anna sähköpostiosoite johon kirjautumislinkki lähetetään_sv",
   "registration.loginlink.success": "Kirjautumislinkki on lähetetty._sv",
   "registration.path.select.exam": "/valitse-tutkintotilaisuus",

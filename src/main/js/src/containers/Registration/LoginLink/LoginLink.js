@@ -56,7 +56,7 @@ export class LoginLink extends Component {
               isRegistration={true}
               disabled={!isValid || isSubmitting}
             >
-              {this.props.t('examSession.addButton')}
+              {this.props.t('registration.loginlink.button')}
             </Button>
           </Form>
         )}
