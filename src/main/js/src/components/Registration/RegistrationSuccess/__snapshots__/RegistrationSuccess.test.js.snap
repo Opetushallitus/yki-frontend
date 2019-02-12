@@ -37,7 +37,7 @@ exports[`<RegistrationSuccess /> should render registration success page 1`] = `
   >
     <hyperlink
       text="errorBoundary.return"
-      to="/yki"
+      to="/yki/"
     />
   </div>
 </div>
