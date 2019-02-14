@@ -120,6 +120,7 @@ class NewRegistryItem extends PureComponent {
         {this.state.organizationsMatchingSearch.map(org => (
           <div
             key={org.oid}
+            data-cy={org.oppilaitosKoodi}
             className={classes.SearchResult}
             onClick={() => this.selectOrganizationHandler(org)}
           >

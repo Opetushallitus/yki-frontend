@@ -229,7 +229,12 @@ const registryItemForm = props => {
             </div>
           </div>
 
-          <Button type="submit" disabled={!isValid} tabIndex="9">
+          <Button
+            type="submit"
+            disabled={!isValid}
+            tabIndex="9"
+            datacy="registry-item-form-submit"
+          >
             {props.updating
               ? props.t('registryItem.button.update')
               : props.t('registryItem.button.add')}

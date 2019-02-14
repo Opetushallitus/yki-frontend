@@ -55,7 +55,7 @@ const genders = JSON.parse(fs.readFileSync('./dev/rest/codes/sukupuoli.json'));
 
 const postOffice = JSON.parse(fs.readFileSync('./dev/rest/codes/posti.json'));
 
-const organizers = [
+let organizers = [
   {
     oid: '1.2.246.562.10.28646781493',
     agreement_start_date: '2018-01-01T00:00:00.000Z',
@@ -106,6 +106,8 @@ const organizers = [
     extra: 'Sisäänkäynti hämyiseltä sivuovelta',
   },
 ];
+
+const initialOrganizers = [...organizers];
 
 const paymentFormData = {
   uri: 'https://payment.paytrail.com/e2',
@@ -195,6 +197,7 @@ module.exports = function(app) {
   app.get('/yki/reset-mocks', (req, res) => {
     examSessions = getExamSessions();
     registrations = getRegistrations();
+    organizers = [...initialOrganizers];
     res.send({ success: true });
   });
 
