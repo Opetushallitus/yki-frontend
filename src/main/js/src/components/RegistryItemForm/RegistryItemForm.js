@@ -31,10 +31,14 @@ const registryItemForm = props => {
     extra: Yup.string(),
     merchantId: Yup.number()
       .typeError(props.t('error.numeric'))
-      .nullable()
       .max(99999999999, props.t('error.max')),
     merchantSecret: Yup.string()
-      .nullable()
+      .when('merchantId', {
+        is: val => val,
+        then: Yup.string().required(
+          props.t('registryItem.merchantSecret.mandatory'),
+        ),
+      })
       .max(30, props.t('error.max')),
   });
 

@@ -185,6 +185,7 @@
   "registryItem.extra.placeholder": "Esim. Yleinen sähköpostilista kaikille@jarjestaja_sv",
   "registryItem.merchantId": "Kauppiastunnus_sv",
   "registryItem.merchantSecret": "Kauppiasvarmenne_sv",
+  "registryItem.merchantSecret.mandatory": "Pakollinen jos kauppiastunnus annettu_sv",
   "registryItem.payment": "Maksupalvelun tiedot_sv",
   "registryItem.paymentInfoMissing": "Maksupalvelun tiedot puuttuvat_sv",
   "registryItem.search.placeholder": "Hae organisaation nimellä_sv"
