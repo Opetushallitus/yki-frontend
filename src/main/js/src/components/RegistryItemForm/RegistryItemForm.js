@@ -29,6 +29,13 @@ const registryItemForm = props => {
       .email()
       .required(props.t('registryItem.contactEmail.required')),
     extra: Yup.string(),
+    merchantId: Yup.number()
+      .typeError(props.t('error.numeric'))
+      .nullable()
+      .max(99999999999, props.t('error.max')),
+    merchantSecret: Yup.string()
+      .nullable()
+      .max(30, props.t('error.max')),
   });
 
   return (
@@ -41,6 +48,9 @@ const registryItemForm = props => {
         contactEmail: props.contactEmail || '',
         languages: props.languages || [],
         extra: props.extra || '',
+        merchantId: (props.merchant && props.merchant.merchant_id) || '',
+        merchantSecret:
+          (props.merchant && props.merchant.merchant_secret) || '',
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
@@ -53,6 +63,12 @@ const registryItemForm = props => {
           contact_phone_number: values.contactPhone,
           languages: values.languages,
           extra: values.extra,
+          merchant: values.merchantId
+            ? {
+                merchant_id: Number.parseInt(values.merchantId),
+                merchant_secret: values.merchantSecret,
+              }
+            : null,
         };
         props.onSubmit(payload);
       }}
@@ -180,9 +196,40 @@ const registryItemForm = props => {
                 className={classes.ErrorMessage}
               />
             </div>
+            <div className={classes.Contact}>
+              <h3>{props.t('registryItem.payment')}</h3>
+              <label htmlFor="contactName" className={classes.Label}>
+                {props.t('registryItem.merchantId')}
+              </label>
+              <Field
+                type="input"
+                id="merchantId"
+                name="merchantId"
+                tabIndex="7"
+              />
+              <ErrorMessage
+                name="merchantId"
+                component="span"
+                className={classes.ErrorMessage}
+              />
+              <label htmlFor="merchantSecret" className={classes.Label}>
+                {props.t('registryItem.merchantSecret')}
+              </label>
+              <Field
+                type="input"
+                id="merchantSecret"
+                name="merchantSecret"
+                tabIndex="8"
+              />
+              <ErrorMessage
+                name="merchantSecret"
+                component="span"
+                className={classes.ErrorMessage}
+              />
+            </div>
           </div>
 
-          <Button type="submit" disabled={!isValid} tabIndex="7">
+          <Button type="submit" disabled={!isValid} tabIndex="9">
             {props.updating
               ? props.t('registryItem.button.update')
               : props.t('registryItem.button.add')}
@@ -203,6 +250,7 @@ registryItemForm.propTypes = {
   extra: PropTypes.string,
   oid: PropTypes.string,
   name: PropTypes.string,
+  merchant: PropTypes.object,
   onSubmit: PropTypes.func,
   address: PropTypes.string,
   updating: PropTypes.bool,

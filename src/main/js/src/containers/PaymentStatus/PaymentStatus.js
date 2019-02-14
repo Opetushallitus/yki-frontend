@@ -34,8 +34,7 @@ export class PaymentStatus extends Component {
         </div>
         <div>
           <p>
-            {this.props.t('payment.status.success.info2')}{' '}
-            {this.props.user ? this.props.user.email : ''}
+            {this.props.t('payment.status.success.info2')}
           </p>
         </div>
       </React.Fragment>

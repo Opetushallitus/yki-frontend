@@ -25,6 +25,10 @@ class RegistryItem extends PureComponent {
       this.props.item.agreement.start,
       this.props.item.agreement.end,
     );
+    const hasPaymentInfo =
+      this.props.item.merchant &&
+      this.props.item.merchant.merchant_id &&
+      this.props.item.merchant.merchant_secret;
     return (
       <div
         className={
@@ -44,7 +48,13 @@ class RegistryItem extends PureComponent {
               <strong>{this.props.item.name}</strong>
             </div>
             {agreementActive ? (
-              <div className={classes.HeaderLanguages}>{languages}</div>
+              hasPaymentInfo ? (
+                <div className={classes.HeaderLanguages}>{languages}</div>
+              ) : (
+                <div className={classes.AgreementExpired}>
+                  {this.props.t('registryItem.paymentInfoMissing')}
+                </div>
+              )
             ) : (
               <div className={classes.AgreementExpired}>
                 {this.props.t('registryItem.agreementExpired')}

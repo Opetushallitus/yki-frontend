@@ -51,13 +51,9 @@ const countries = JSON.parse(
   fs.readFileSync('./dev/rest/codes/maatjavaltiot2.json'),
 );
 
-const genders = JSON.parse(
-  fs.readFileSync('./dev/rest/codes/sukupuoli.json'),
-);
+const genders = JSON.parse(fs.readFileSync('./dev/rest/codes/sukupuoli.json'));
 
-const postOffice = JSON.parse(
-  fs.readFileSync('./dev/rest/codes/posti.json'),
-);
+const postOffice = JSON.parse(fs.readFileSync('./dev/rest/codes/posti.json'));
 
 const organizers = [
   {
@@ -94,6 +90,10 @@ const organizers = [
       },
     ],
     extra: 'Yleinen sähköpostilista: yki@amiedu.fi',
+    merchant: {
+      merchant_id: 13466,
+      merchant_secret: '6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ',
+    },
   },
   {
     oid: '1.2.246.562.10.39706139522',
@@ -457,5 +457,4 @@ module.exports = function(app) {
       res.status(404).send(err.message);
     }
   });
-
 };

@@ -8,6 +8,7 @@
   grid-template-areas:
     'agreement'
     'contact'
+    'payment'
     'languages';
   margin-bottom: 40px;
 }
@@ -86,6 +87,11 @@
   grid-row: span 2;
 }
 
+.PaymentInfo {
+  grid-area: payment;
+  grid-row: span 2;
+}
+
 .Contact input {
   width: 340px;
 }
@@ -107,7 +113,8 @@
     grid-template-rows: repeat(3, minmax(120px, 1fr));
     grid-template-areas:
       'agreement languages'
-      'contact languages';
+      'contact languages'
+      'payment languages';
   }
 
   .Form button {

@@ -35,6 +35,7 @@ class UpdateRegistryItem extends Component {
             languages={this.props.item.languages}
             extra={this.props.item.extra}
             name={this.props.item.name}
+            merchant={this.props.item.merchant}
             address={`${this.props.item.address.street}, ${
               this.props.item.address.zipCode
             } ${firstCharToUpper(this.props.item.address.city)}`}

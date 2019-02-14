@@ -33,6 +33,7 @@ export const collectRegistryItemDetails = (organizer, organization, lang) => {
   item.contact = getContact(organizer);
   item.languages = organizer.languages || [];
   item.extra = organizer.extra || '';
+  item.merchant = organizer.merchant;
 
   return item;
 };
