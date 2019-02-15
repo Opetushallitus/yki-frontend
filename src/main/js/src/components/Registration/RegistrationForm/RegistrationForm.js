@@ -227,7 +227,7 @@ export const registrationForm = props => {
               <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
             </div>
             <div className={classes.FormElement}>
-              {inputField('phoneNumber', '+358')}
+              {inputField('phoneNumber', '+358 50 1234 5678')}
             </div>
             <div className={classes.FormElement}>
               {readonlyWhenExistsInput('email', initialValues)}
@@ -248,7 +248,7 @@ export const registrationForm = props => {
             {!props.initData.user.ssn && (
               <div className={classes.FormElement}>
                 <div className={classes.Birthdate}>
-                  {inputField('birthdate')}
+                  {inputField('birthdate', props.t('registration.form.birthdate.placeholder'))}
                 </div>
                 <div className={classes.Gender}>
                   <GenderSelect
