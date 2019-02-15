@@ -200,7 +200,7 @@ const registryItemForm = props => {
                 className={classes.ErrorMessage}
               />
             </div>
-            <div className={classes.Contact}>
+            <div className={classes.PaymentInfo}>
               <h3>{props.t('registryItem.payment')}</h3>
               <label htmlFor="contactName" className={classes.Label}>
                 {props.t('registryItem.merchantId')}

@@ -92,6 +92,10 @@
   grid-row: span 2;
 }
 
+.PaymentInfo input {
+  width: 340px;
+}
+
 .Contact input {
   width: 340px;
 }
