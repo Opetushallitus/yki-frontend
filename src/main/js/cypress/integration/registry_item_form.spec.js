@@ -1,5 +1,3 @@
-import { closeSync } from "fs";
-
 describe('Registry item form', () => {
   beforeEach(() => {
     cy.server();
