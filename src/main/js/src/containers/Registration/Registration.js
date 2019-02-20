@@ -51,6 +51,7 @@ class Registration extends Component {
           </p>
           <ExamSessionList
             examSessions={this.props.filteredExamSessionsGroupedByDate}
+            language={this.props.language}
           />
         </main>
       </React.Fragment>

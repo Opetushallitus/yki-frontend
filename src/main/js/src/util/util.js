@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import moment from 'moment';
 
 import { LANGUAGES } from '../common/Constants';
 
@@ -53,4 +54,9 @@ export const inRegistryOrExamSessions = () => {
     window.location.href.includes('jarjestajarekisteri') ||
     window.location.href.includes('tutkintotilaisuudet')
   );
+};
+
+export const nowBetweenDates = (startDate, endDate) => {
+  const now = moment(new Date());
+  return now.isBetween(startDate, endDate, 'day', '[]');
 };

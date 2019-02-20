@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import { firstCharToUpper } from './util';
 
 export const collectRegistryItemDetails = (organizer, organization, lang) => {
@@ -115,11 +113,6 @@ export const sortArrayByName = array => {
       return 0;
     }
   });
-};
-
-export const isAgreementActive = (agreementStartDate, agreementEndDate) => {
-  const now = moment(new Date());
-  return now.isBetween(agreementStartDate, agreementEndDate, 'day', '[]');
 };
 
 export const filterByNameOrLocation = (array, value) => {

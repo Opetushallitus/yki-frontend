@@ -6,7 +6,7 @@ import classes from './RegistryItem.module.css';
 import Collapsible from '../../../components/UI/Collapsible/Collapsible';
 import RegistryItemDetails from '../../../components/RegistryItemDetails/RegistryItemDetails';
 import { languagesToString } from '../../../util/util';
-import { isAgreementActive } from '../../../util/registryUtil';
+import { nowBetweenDates } from '../../../util/util';
 
 class RegistryItem extends PureComponent {
   state = {
@@ -21,7 +21,7 @@ class RegistryItem extends PureComponent {
 
   render() {
     const languages = languagesToString(this.props.item.languages);
-    const agreementActive = isAgreementActive(
+    const agreementActive = nowBetweenDates(
       this.props.item.agreement.start,
       this.props.item.agreement.end,
     );
