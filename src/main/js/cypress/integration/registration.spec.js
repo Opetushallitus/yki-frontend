@@ -57,4 +57,14 @@ describe('Registration', () => {
     cy.get('[data-cy=exam-session-list-item]').should('have.length', 1);
   });
 
+  it('Login link expired page exists', () => {
+    cy.visit('/ilmoittautuminen/vanhentunut');
+    cy.get('[data-cy=link-expired-header]').should('exist');
+  });
+
+  it('Payment link expired page exists', () => {
+    cy.visit('/maksu/vanhentunut');
+    cy.get('[data-cy=link-expired-header]').should('exist');
+  });
+
 });

@@ -13,6 +13,7 @@ import examDatesReducer from './store/reducers/examDates';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Description from './components/Registration/Description/Description';
+import LinkExpired from './components/LinkExpired/LinkExpired';
 import LanguageSelection from './containers/Registration/LanguageSelection/LanguageSelection';
 import LevelSelection from './containers/Registration/LevelSelection/LevelSelection';
 import LocationSelection from './containers/Registration/LocationSelection/LocationSelection';
@@ -56,8 +57,10 @@ const app = () => (
             <Route path="/valitse-paikkakunta" component={LocationSelection} />
             <Route path="/valitse-tutkintotilaisuus" component={Registration} />
             <Route path="/ilmoittautuminen/tutkintotilaisuus/:examSessionId" component={RegistrationPage} />
-            <Route path="/maksut/tila" component={PaymentStatus} />
-            <Route path="/maksut/:registrationId" component={PaymentRedirect} />
+            <Route path="/ilmoittautuminen/vanhentunut" component={LinkExpired} />
+            <Route path="/maksu/vanhentunut" component={LinkExpired} />
+            <Route path="/maksu/tila" component={PaymentStatus} />
+            <Route path="/maksu/:registrationId" component={PaymentRedirect} />
             <ErrorBoundary>
               <Route
                 path="/tutkintotilaisuudet"

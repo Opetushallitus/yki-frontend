@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LinkExpired /> should render link expired page 1`] = `
+<Fragment>
+  <header />
+  <main
+    className="Content"
+  >
+    <h1
+      data-cy="link-expired-header"
+    >
+      registration.expired.loginlink
+    </h1>
+    <p>
+      registration.expired.loginlink.info
+    </p>
+    <div
+      className="BackButton"
+    >
+      <hyperlink
+        text="errorBoundary.return"
+        to="/yki/"
+      />
+    </div>
+  </main>
+</Fragment>
+`;
