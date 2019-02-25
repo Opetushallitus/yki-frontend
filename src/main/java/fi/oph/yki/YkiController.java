@@ -10,19 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class YkiController {
 
-    private static final Logger logger = LoggerFactory.getLogger(YkiController.class);
-
     @GetMapping(value = {"/",
             "/ilmoittautuminen",
             "/tutkintopaivat",
             "/jarjestajarekisteri",
             "/tutkintotilaisuudet",
-            "/maksut",
+            "/maksu",
             "/ilmoittautuminen/**",
             "/tutkintopaivat/**",
             "/jarjestajarekisteri/**",
             "/tutkintotilaisuudet/**",
-            "/maksut/**"})
+            "/maksu/**"})
     public String index() {
         return "/index.html";
     }
