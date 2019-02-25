@@ -28,7 +28,12 @@ describe('<ErrorBoundary />', () => {
     jest.spyOn(axios, 'post');
 
     let wrapper = mount(
-      <ErrorBoundary t={key => key} titleKey="error" returnLinkTo="/" returnLinkTextKey="error">
+      <ErrorBoundary
+        t={key => key}
+        titleKey="error"
+        returnLinkTo="/"
+        returnLinkTextKey="error"
+      >
         <ComponentWithError />
       </ErrorBoundary>,
     );

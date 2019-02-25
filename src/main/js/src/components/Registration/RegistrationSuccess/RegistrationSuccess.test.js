@@ -7,22 +7,25 @@ import { registrationSuccess as RegistrationSuccess } from './RegistrationSucces
 
 configure({ adapter: new Adapter() });
 
-const examSession = 
-  {
-    registration_end_date: '2025-12-15',
-    session_date: '2028-05-30',
-    participants: 0,
-    max_participants: 30,
-    registration_start_date: '2028-03-01',
-    language_code: 'fin',
-    level_code: 'PERUS',
-  };
+const examSession = {
+  registration_end_date: '2025-12-15',
+  session_date: '2028-05-30',
+  participants: 0,
+  max_participants: 30,
+  registration_start_date: '2028-03-01',
+  language_code: 'fin',
+  level_code: 'PERUS',
+};
 
 describe('<RegistrationSuccess />', () => {
   it('should render registration success page', () => {
     const wrapper = shallow(
-      <RegistrationSuccess t={key => key} initData={examSession} formData={{user: {email: 'test@test.com'}}}/>,
+      <RegistrationSuccess
+        t={key => key}
+        initData={examSession}
+        formData={{ user: { email: 'test@test.com' } }}
+      />,
     );
-   expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

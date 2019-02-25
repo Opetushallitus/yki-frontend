@@ -38,7 +38,11 @@ jest.mock('i18next', () => ({
 describe('<UpcomingExamSessions />', () => {
   it('should render exam session rows', () => {
     const wrapper = shallow(
-      <UpcomingExamSessions t={key => key} examSessions={examSessions} examSessionSelected={jest.fn()}/>,
+      <UpcomingExamSessions
+        t={key => key}
+        examSessions={examSessions}
+        examSessionSelected={jest.fn()}
+      />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();
   });
