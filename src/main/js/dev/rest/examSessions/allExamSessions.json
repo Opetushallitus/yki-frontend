@@ -87,6 +87,28 @@
         }
       ],
       "registration_end_date": "2029-02-28"
+    },
+    {
+      "level_code": "PERUS",
+      "max_participants": 20,
+      "language_code": "fin",
+      "participants": 20,
+      "office_oid": "1.2.246.562.5.22724043777",
+      "published_at": "2019-01-17T12:32:00.000Z",
+      "session_date": "2019-04-06",
+      "organizer_oid": "1.2.246.562.10.39706139522",
+      "id": 12,
+      "registration_start_date": "2019-02-01",
+      "location": [
+        {
+          "name": "Jyväskylän kansalaisopisto",
+          "address": "Mikälietie 5, 40100 Jyväskylä",
+          "other_location_info": "Sali Koivisto",
+          "extra_information": "Sali kolmannessa kerroksessa.",
+          "lang": "fi"
+        }
+      ],
+      "registration_end_date": "2019-02-28"
     }
   ]
 }

@@ -7,7 +7,13 @@
   grid-template-areas:
     'location exam'
     'availability button'
-    'timetable button';
+    'registrationOpen button';
+  grid-row-gap: 5px;
+}
+
+.Date {
+  display: none;
+  grid-area: date;
 }
 
 .Exam {
@@ -17,14 +23,19 @@
 
 .Location {
   grid-area: location;
+  justify-self: start;
 }
 
 .Availability {
   grid-area: availability;
 }
 
-.Timetable {
-  grid-area: timetable;
+.RegistrationOpen {
+  grid-area: registrationOpen;
+}
+
+.RegistrationOpen span:nth-child(2) {
+  white-space: nowrap;
 }
 
 .RegisterButton {
@@ -53,4 +64,52 @@
   color: hsl(225, 100%, 40%);
   border: 1px solid hsl(225, 100%, 40%);
   box-shadow: 0px 1px 3px hsla(0, 0%, 0%, 0.3);
+}
+
+@media (min-width: 620px) {
+  .ExamSessionListItem {
+    background-color: hsl(0, 0%, 98%);
+    height: 60px;
+    margin: 0;
+    padding: 5px 0;
+    font-size: 14px;
+    grid-template-columns: 1fr 3fr 1fr 2fr 2fr 2fr;
+    grid-template-areas: 'date location exam registrationOpen availability button';
+    align-items: center;
+    justify-items: start;
+    border-bottom: 1px solid hsl(0, 0%, 59%);
+  }
+
+  .ExamSessionListItem:hover {
+    background-color: hsl(0, 0%, 96%);
+  }
+
+  .RegisterButton {
+    justify-self: center;
+  }
+
+  .ButtonForSignup:hover {
+    background: hsl(96, 83%, 43%);
+    box-shadow: 0px 2px 3px hsla(0, 0%, 0%, 0.3);
+  }
+
+  .Date {
+    display: block;
+  }
+
+  .Exam {
+    white-space: nowrap;
+  }
+
+  .Availability {
+    justify-self: center;
+  }
+
+  .RegistrationOpen {
+    justify-self: center;
+  }
+
+  .HiddenOnDesktop {
+    display: none;
+  }
 }

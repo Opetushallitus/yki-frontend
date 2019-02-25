@@ -7,12 +7,19 @@ import classes from './ExamSessionList.module.css';
 import ExamSessionListItem from './ExamSessionListItem/ExamSessionListItem';
 import { DATE_FORMAT } from '../../../common/Constants';
 
-const examSessionList = ({ examSessions: sessions, language, t }) => {
-  const list =
-    Object.keys(sessions).length !== 0 ? (
-      <div>
+const examSessionList = ({ examSessions: sessions, language, t }) => (
+  <React.Fragment>
+    {Object.keys(sessions).length !== 0 ? (
+      <React.Fragment>
+        <div className={classes.ColumnHeaders}>
+          <div>{t('registration.list.date')}</div>
+          <div>{t('registration.list.place')}</div>
+          <div>{t('registration.list.exam')}</div>
+          <div>{t('registration.list.signupOpen')}</div>
+          <div>{t('registration.list.examSpots')}</div>
+        </div>
         {Object.keys(sessions).map(k => (
-          <div key={k}>
+          <div key={k} className={classes.Date}>
             <div className={classes.ExamsOnDate}>
               <span>{moment(k).format(DATE_FORMAT)}</span>
               <span>
@@ -22,22 +29,23 @@ const examSessionList = ({ examSessions: sessions, language, t }) => {
                   : t('common.examSessions.amount')}
               </span>
             </div>
-            <hr />
-            {sessions[k].map(e => (
-              <ExamSessionListItem
-                key={e.published_at}
-                examSession={e}
-                language={language}
-              />
-            ))}
+            <div className={classes.List}>
+              {sessions[k].map(e => (
+                <ExamSessionListItem
+                  key={e.published_at}
+                  examSession={e}
+                  language={language}
+                />
+              ))}
+            </div>
           </div>
         ))}
-      </div>
+      </React.Fragment>
     ) : (
       <p>{t('registration.search.noResults')}</p>
-    );
-  return <React.Fragment>{list}</React.Fragment>;
-};
+    )}
+  </React.Fragment>
+);
 
 examSessionList.propTypes = {
   examSessions: PropTypes.object.isRequired,

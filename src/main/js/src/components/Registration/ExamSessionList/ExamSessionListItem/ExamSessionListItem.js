@@ -5,50 +5,68 @@ import PropTypes from 'prop-types';
 
 import classes from './ExamSessionListItem.module.css';
 import { nowBetweenDates, levelDescription } from '../../../../util/util';
-import { DATE_FORMAT_WITHOUT_YEAR } from '../../../../common/Constants';
+import {
+  DATE_FORMAT,
+  DATE_FORMAT_WITHOUT_YEAR,
+} from '../../../../common/Constants';
 
 const examSessionListItem = ({ examSession: session, language, t }) => {
   console.log(session);
+
+  const date = (
+    <div className={classes.Date}>
+      {moment(session.session_date).format(DATE_FORMAT)}
+    </div>
+  );
   const exam = (
-    <p className={classes.Exam}>
+    <div className={classes.Exam}>
       <strong>{`${language.name}, ${levelDescription(
         session.level_code,
       ).toLowerCase()}`}</strong>
-    </p>
+    </div>
   );
   const name = session.location[0].name;
   const address = session.location[0].address.split(',')[0] || '';
   const city = session.location[0].address.split(' ').pop() || '';
   const location = (
-    <p className={classes.Location}>
+    <span className={classes.Location}>
       {name} <br /> {address} <br /> <strong>{city}</strong>
-    </p>
+    </span>
   );
   const spotsAvailable = session.max_participants - session.participants;
   const availability = (
-    <p className={classes.Availability}>
-      {spotsAvailable
-        ? `${spotsAvailable} ${
-            spotsAvailable === 1
-              ? t('registration.examSpots.singleFree')
-              : t('registration.examSpots.free')
-          }`
-        : t('registration.examSpots.full')}
-    </p>
+    <div className={classes.Availability}>
+      <strong>
+        {spotsAvailable ? (
+          <React.Fragment>
+            <span>{spotsAvailable}</span>{' '}
+            <span className={classes.HiddenOnDesktop}>
+              {spotsAvailable === 1
+                ? t('registration.examSpots.singleFree')
+                : t('registration.examSpots.free')}
+            </span>
+          </React.Fragment>
+        ) : (
+          <span>{t('registration.examSpots.full')}</span>
+        )}
+      </strong>
+    </div>
   );
 
-  const timetable = (
-    <p className={classes.Timetable}>
-      {t('registration.open')}{' '}
-      {`${moment(session.registration_end_date).format(
-        DATE_FORMAT_WITHOUT_YEAR,
-      )} - ${moment(session.registration_start_date).format(
-        DATE_FORMAT_WITHOUT_YEAR,
-      )}`}
-    </p>
+  const registrationOpen = (
+    <div className={classes.RegistrationOpen}>
+      <span className={classes.HiddenOnDesktop}>{t('registration.open')}</span>{' '}
+      <span>
+        {`${moment(session.registration_end_date).format(
+          DATE_FORMAT_WITHOUT_YEAR,
+        )} - ${moment(session.registration_start_date).format(
+          DATE_FORMAT_WITHOUT_YEAR,
+        )}`}
+      </span>
+    </div>
   );
 
-  const registrationOpen = nowBetweenDates(
+  const registrationCurrentlyOpen = nowBetweenDates(
     session.registration_start_date,
     session.registration_end_date,
   );
@@ -56,7 +74,7 @@ const examSessionListItem = ({ examSession: session, language, t }) => {
     <button
       className={[
         classes.RegisterButton,
-        !registrationOpen
+        !registrationCurrentlyOpen
           ? classes.RegistrationLocked
           : spotsAvailable
           ? classes.ButtonForSignup
@@ -74,10 +92,11 @@ const examSessionListItem = ({ examSession: session, language, t }) => {
       className={classes.ExamSessionListItem}
       data-cy="exam-session-list-item"
     >
+      {date}
       {exam}
       {availability}
       {location}
-      {timetable}
+      {registrationOpen}
       {registerButton}
     </div>
   );
