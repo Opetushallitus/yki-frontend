@@ -8,7 +8,7 @@ import { registrationForm as RegistrationForm } from './RegistrationForm';
 configure({ adapter: new Adapter() });
 
 jest.mock('react-i18next', () => ({
-  withNamespaces: () => Component => {
+  withTranslation: () => Component => {
     Component.defaultProps = { ...Component.defaultProps, t: () => '' };
     return Component;
   },
@@ -26,8 +26,8 @@ const initData = {
     nationalities: ['246'],
   },
   exam_session: {
-    language_code: 'eng'
-  }
+    language_code: 'eng',
+  },
 };
 describe('<RegistrationForm />', () => {
   it('should render registration form', () => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import queryString from 'query-string';
 
 import Header from '../../components/Header/Header';
@@ -33,9 +33,7 @@ export class PaymentStatus extends Component {
           <p>{this.props.t('payment.status.success.info1')}:</p>
         </div>
         <div>
-          <p>
-            {this.props.t('payment.status.success.info2')}
-          </p>
+          <p>{this.props.t('payment.status.success.info2')}</p>
         </div>
       </React.Fragment>
     );
@@ -101,4 +99,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(withNamespaces()(PaymentStatus));
+export default connect(mapStateToProps)(withTranslation()(PaymentStatus));

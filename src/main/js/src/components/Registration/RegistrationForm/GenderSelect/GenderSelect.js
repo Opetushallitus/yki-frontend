@@ -1,13 +1,15 @@
 import React from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import * as R from 'ramda';
 
 export const genderSelect = props => {
   const sortByCode = R.sortBy(R.prop('koodiArvo'));
   const gendersByLocale = sortByCode(props.genders).map(g => {
-    const metadata = g.metadata.find(m => m.kieli === props.lng.toUpperCase());
+    const metadata = g.metadata.find(
+      m => m.kieli === props.i18n.language.toUpperCase(),
+    );
     return (
       <option value={g.koodiArvo} key={g.koodiArvo}>
         {metadata.nimi}
@@ -24,7 +26,7 @@ export const genderSelect = props => {
         className={props.className}
         data-cy="select-gender"
       >
-        <option value="" key=""/>
+        <option value="" key="" />
         {gendersByLocale}
       </Field>
     </React.Fragment>
@@ -36,4 +38,4 @@ genderSelect.propTypes = {
   className: PropTypes.string.isRequired,
 };
 
-export default withNamespaces()(genderSelect);
+export default withTranslation()(genderSelect);

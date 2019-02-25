@@ -33,7 +33,7 @@ describe('<GenderSelect />', () => {
     const wrapper = shallow(
       <GenderSelect
         t={key => key}
-        lng={'fi'}
+        i18n={{ language: 'fi' }}
         genders={genders}
         className="test"
       />,

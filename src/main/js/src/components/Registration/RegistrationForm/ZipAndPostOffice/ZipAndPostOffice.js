@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 import { Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import axios from '../../../../axios';
 import classes from './ZipAndPostOffice.module.css';
 
 export class ZipAndPostOffice extends Component {
   getPostOffice(zip) {
-    axios
-      .get(`/yki/api/code/posti/${zip}`)
-      .then(res => {
-        const metadata = res.data.metadata;
-        if (metadata) {
-          const postOffice =
-            this.props.lng === 'sv'
-              ? metadata.find(m => m.kieli === 'SV').nimi
-              : metadata.find(m => m.kieli === 'FI').nimi;
-          this.props.setFieldValue('postOffice', postOffice);
-        }
-      });
+    axios.get(`/yki/api/code/posti/${zip}`).then(res => {
+      const metadata = res.data.metadata;
+      if (metadata) {
+        const postOffice =
+          this.props.lng === 'sv'
+            ? metadata.find(m => m.kieli === 'SV').nimi
+            : metadata.find(m => m.kieli === 'FI').nimi;
+        this.props.setFieldValue('postOffice', postOffice);
+      }
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -34,11 +32,7 @@ export class ZipAndPostOffice extends Component {
       <div className={classes.AddressInput}>
         <div className={classes.Zip}>
           <h3>{this.props.t('registration.form.input.zip')}</h3>
-          <Field
-            component="input"
-            name="zip"
-            data-cy="input-zip"
-          />
+          <Field component="input" name="zip" data-cy="input-zip" />
           <ErrorMessage
             name="zip"
             data-cy="input-error-zip"
@@ -70,4 +64,4 @@ ZipAndPostOffice.propTypes = {
   setFieldValue: PropTypes.func.isRequired,
 };
 
-export default withNamespaces()(ZipAndPostOffice);
+export default withTranslation()(ZipAndPostOffice);

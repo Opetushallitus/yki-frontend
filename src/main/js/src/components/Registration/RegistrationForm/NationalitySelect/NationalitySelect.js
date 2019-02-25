@@ -6,7 +6,9 @@ import * as R from 'ramda';
 
 export const nationalitySelect = props => {
   const nationalitiesByLocale = props.nationalities.map(n => {
-    const metadata = n.metadata.find(m => m.kieli === props.lng.toUpperCase());
+    const metadata = n.metadata.find(
+      m => m.kieli === props.i18n.language.toUpperCase(),
+    );
     return { name: metadata.nimi, code: n.koodiArvo };
   });
   const sortByName = R.sortBy(R.prop('name'));
@@ -27,7 +29,7 @@ export const nationalitySelect = props => {
         className={props.className}
         data-cy="select-nationality"
       >
-        <option value="" key=""/>
+        <option value="" key="" />
         {nationalityOptions}
       </Field>
     </React.Fragment>
