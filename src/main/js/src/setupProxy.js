@@ -302,6 +302,22 @@ module.exports = function(app) {
     },
   );
 
+  app.post(
+    '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id/confirm-payment',
+    (req, res) => {
+      try {
+        const { id } = req.params;
+        const registration = registrations.participants.find(
+          x => x.registration_id == id,
+        );
+        registration.state = 'COMPLETED';
+        res.send({ success: true });
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
+    },
+  );
+
   // need to proxy here because dev server bug: https://github.com/webpack/webpack-dev-server/issues/1440
   app.post(
     '/organisaatio-service/rest/organisaatio/v3/findbyoids',

@@ -52,6 +52,7 @@ export class ExamSessionDetails extends Component {
             examSession={this.props.examSession}
             participants={this.props.participants}
             onCancel={this.props.onCancelRegistration}
+            onConfirmPayment={this.props.onConfirmPayment}
           />
         )}
       </div>
@@ -76,6 +77,10 @@ const mapDispatchToProps = dispatch => {
     onCancelRegistration: (organizerOid, examSessionId, registrationId) =>
       dispatch(
         actions.cancelRegistration(organizerOid, examSessionId, registrationId),
+      ),
+    onConfirmPayment: (organizerOid, examSessionId, registrationId) =>
+      dispatch(
+        actions.confirmPayment(organizerOid, examSessionId, registrationId),
       ),
     errorConfirmedHandler: () => dispatch(actions.examSessionFailReset()),
   };

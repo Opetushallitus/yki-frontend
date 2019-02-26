@@ -275,22 +275,61 @@ export const cancelRegistration = (oid, examSessionId, registrationId) => {
 
 const cancelRegistrationStart = () => {
   return {
-    type: actionTypes.DELETE_EXAM_SESSION_START,
+    type: actionTypes.CANCEL_REGISTRATION_START,
     loading: true,
   };
 };
 
 const cancelRegistrationSuccess = () => {
   return {
-    type: actionTypes.DELETE_EXAM_SESSION_SUCCESS,
+    type: actionTypes.CANCEL_REGISTRATION_SUCCESS,
     loading: false,
   };
 };
 
 const cancelRegistrationFail = error => {
   return {
-    type: actionTypes.DELETE_EXAM_SESSION_FAIL,
+    type: actionTypes.CANCEL_REGISTRATION_FAIL,
     error: Object.assign(error, { key: 'error.registration.cancelFailed' }),
+    loading: false,
+  };
+};
+
+export const confirmPayment = (oid, examSessionId, registrationId) => {
+  return dispatch => {
+    dispatch(confirmPaymentStart());
+    axios
+      .post(
+        `/yki/api/virkailija/organizer/${oid}/exam-session/${examSessionId}/registration/${registrationId}/confirm-payment`,
+      )
+      .then(() => {
+        dispatch(confirmPaymentSuccess());
+        dispatch(fetchExamSessionParticipants());
+      })
+      .catch(err => {
+        dispatch(confirmPaymentFail(err));
+      });
+  };
+};
+
+const confirmPaymentStart = () => {
+  return {
+    type: actionTypes.CONFIRM_PAYMENT_START,
+    loading: true,
+  };
+};
+
+const confirmPaymentSuccess = () => {
+  return {
+    type: actionTypes.CONFIRM_PAYMENT_SUCCESS,
+    loading: false,
+  };
+};
+
+const confirmPaymentFail = error => {
+  return {
+    type: actionTypes.CONFIRM_PAYMENT_FAIL,
+    error: Object.assign(error, { key: 'error.examSession.registration.confirmPaymentFailed' }),
     loading: false,
   };
 };

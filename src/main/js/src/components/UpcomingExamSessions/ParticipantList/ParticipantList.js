@@ -39,6 +39,15 @@ export const participantList = props => {
     );
   };
 
+  const confirmPayment = registrationState => {
+    return registrationState === 'SUBMITTED' ? (
+      <React.Fragment>
+        <img src={checkMarkDone} alt="" />{' '}
+        {props.t('examSession.registration.confirmPayment')}
+      </React.Fragment>
+    ) : null;
+  };
+
   const participantRows = participants => {
     return participants.map((p, i) => (
       <React.Fragment key={i}>
@@ -54,10 +63,23 @@ export const participantList = props => {
         <div className={[classes.ItemHeader, classes.Status].join(' ')}>
           {registratioStatus(p.state)}
         </div>
-        <div className={classes.Item}/>
-        <div className={classes.Item}/>
-        <div className={classes.Item}/>
-        <div className={classes.Item}/>
+        <div className={classes.Item} />
+        <div className={classes.Item} />
+        <div className={classes.ShowOnHover}>
+          <ActionButton
+            children={confirmPayment(p.state)}
+            onClick={() =>
+              props.onConfirmPayment(
+                props.examSession.organizer_oid,
+                props.examSession.id,
+                p.registration_id,
+              )
+            }
+            confirmText={props.t('examSession.registration.confirmPayment.confirm')}
+            cancelText={props.t('examSession.registration.confirmPayment.cancel')}
+          />
+        </div>
+        <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
         <div className={classes.Item}>
           {p.form.street_address} {p.form.zip}
@@ -70,7 +92,7 @@ export const participantList = props => {
           ).formatInternational()}
         </div>
         <div className={classes.Item}> {p.form.email}</div>
-        <div className={[classes.ShowOnHover].join(' ')}>
+        <div className={classes.ShowOnHover}>
           <ActionButton
             children={cancelRegistration()}
             onClick={() =>
@@ -107,6 +129,7 @@ participantList.propTypes = {
   examSession: PropTypes.object.isRequired,
   participants: PropTypes.array.isRequired,
   onCancel: PropTypes.func.isRequired,
+  onConfirmPayment: PropTypes.func.isRequired,
 };
 
 export default withTranslation()(participantList);
