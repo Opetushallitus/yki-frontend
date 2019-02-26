@@ -125,10 +125,10 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       class="Buttons"
     >
       <div
-        class="DeleteButton"
+        class="ActionButton"
       >
         <button
-          class="Delete"
+          class="Action"
           type="button"
         >
           examSession.delete

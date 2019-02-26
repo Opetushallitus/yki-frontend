@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 
 import classes from './UpdateRegistryItem.module.css';
 import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
-import DeleteButton from '../../../../components/UI/DeleteButton/DeleteButton';
+import ActionButton from '../../../../components/UI/ActionButton/ActionButton';
 import { firstCharToUpper } from '../../../../util/util';
 import * as actions from '../../../../store/actions/index';
 
@@ -44,7 +44,7 @@ class UpdateRegistryItem extends Component {
           />
         </div>
         <div className={classes.DeleteButtons}>
-          <DeleteButton
+          <ActionButton
             onClick={() => this.deleteRegistryItemHandler(this.props.item.oid)}
             children={this.props.t('registryItem.delete')}
             confirmText={this.props.t('registryItem.deleteConfirm')}

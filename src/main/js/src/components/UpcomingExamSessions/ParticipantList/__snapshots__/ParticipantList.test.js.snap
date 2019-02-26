@@ -79,7 +79,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="ShowOnHover"
     >
-      <DeleteButton
+      <ActionButton
         cancelText="examSession.registration.cancel.cancel"
         confirmText="examSession.registration.cancel.confirm"
         onClick={[Function]}
@@ -90,7 +90,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         />
          
         examSession.registration.cancel
-      </DeleteButton>
+      </ActionButton>
     </div>
     <span
       className="Line"
@@ -162,7 +162,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="ShowOnHover"
     >
-      <DeleteButton
+      <ActionButton
         cancelText="examSession.registration.cancel.cancel"
         confirmText="examSession.registration.cancel.confirm"
         onClick={[Function]}
@@ -173,7 +173,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         />
          
         examSession.registration.cancel
-      </DeleteButton>
+      </ActionButton>
     </div>
     <span
       className="Line"

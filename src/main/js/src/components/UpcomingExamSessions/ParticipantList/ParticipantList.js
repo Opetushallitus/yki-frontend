@@ -9,7 +9,7 @@ import checkMarkDone from '../../../assets/svg/checkmark-done.svg';
 import checkMarkNotDone from '../../../assets/svg/checkmark-not-done.svg';
 import trashcan from '../../../assets/svg/trashcan.svg';
 import classes from './ParticipantList.module.css';
-import { DeleteButton } from '../../UI/DeleteButton/DeleteButton';
+import { ActionButton } from '../../UI/ActionButton/ActionButton';
 
 export const participantList = props => {
   const registratioStatus = registrationState => {
@@ -70,9 +70,8 @@ export const participantList = props => {
           ).formatInternational()}
         </div>
         <div className={classes.Item}> {p.form.email}</div>
-        {/* <div className={classes.Datarow} key={'row-' + i} /> */}
         <div className={[classes.ShowOnHover].join(' ')}>
-          <DeleteButton
+          <ActionButton
             children={cancelRegistration()}
             onClick={() =>
               props.onCancel(

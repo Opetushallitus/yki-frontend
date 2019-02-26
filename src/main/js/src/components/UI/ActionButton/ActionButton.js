@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import classes from './DeleteButton.module.css';
+import classes from './ActionButton.module.css';
 
-export class DeleteButton extends Component {
+export class ActionButton extends Component {
   state = {
-    deleting: false,
+    confirming: false,
   };
 
-  toggleDeleting = () => {
+  toggleConfirming = () => {
     this.setState(prevState => ({
-      deleting: !prevState.deleting,
+      confirming: !prevState.confirming,
     }));
   };
 
@@ -18,7 +18,7 @@ export class DeleteButton extends Component {
     const confirmButton = styles => (
       <button
         type="button"
-        onClick={this.toggleDeleting}
+        onClick={this.toggleConfirming}
         className={styles}
         autoFocus
       >
@@ -29,35 +29,35 @@ export class DeleteButton extends Component {
       <button
         type="button"
         onClick={this.props.onClick}
-        data-cy="button-confirm-delete"
+        data-cy="button-confirm-action"
         className={styles}
       >
         {this.props.confirmText}
       </button>
     );
-    return !this.state.deleting ? (
+    return !this.state.confirming ? (
       <button
         type="button"
-        onClick={this.toggleDeleting}
-        className={classes.Delete}
+        onClick={this.toggleConfirming}
+        className={classes.Action}
       >
         {this.props.children}
       </button>
     ) : this.props.confirmOnRight ? (
       <React.Fragment>
-        {confirmButton(classes.DeleteLeft)}
-        {cancelButton(classes.DeleteRight)}
+        {confirmButton(classes.ActionLeft)}
+        {cancelButton(classes.ActionRight)}
       </React.Fragment>
     ) : (
       <React.Fragment>
-        {cancelButton(classes.DeleteLeft)}
-        {confirmButton(classes.DeleteRight)}
+        {cancelButton(classes.ActionLeft)}
+        {confirmButton(classes.ActionRight)}
       </React.Fragment>
     );
   }
 }
 
-DeleteButton.propTypes = {
+ActionButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.any,
   confirmOnRight: PropTypes.bool,
@@ -65,4 +65,4 @@ DeleteButton.propTypes = {
   cancelText: PropTypes.string.isRequired,
 };
 
-export default DeleteButton;
+export default ActionButton;

@@ -7,7 +7,7 @@ import { withTranslation } from 'react-i18next';
 
 import classes from './ExamSessionUpdateForm.module.css';
 import Button from '../../../../components/UI/Button/Button';
-import DeleteButton from '../../../../components/UI/DeleteButton/DeleteButton';
+import ActionButton from '../../../../components/UI/ActionButton/ActionButton';
 import {
   DATE_FORMAT,
   DATE_FORMAT_WITHOUT_YEAR,
@@ -48,8 +48,8 @@ export class ExamSessionUpdateForm extends Component {
         moment(examSession.registration_start_date),
       );
       return registrationStarted ? null : (
-        <div className={classes.DeleteButton}>
-          <DeleteButton
+        <div className={classes.ActionButton}>
+          <ActionButton
             onClick={this.props.onDelete}
             confirmOnRight={true}
             children={this.props.t('examSession.delete')}

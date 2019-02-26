@@ -55,7 +55,7 @@
   outline: 1px solid hsla(195, 100%, 47%, 1);
 }
 
-.DeleteButton {
+.ActionButton {
   float: left;
   padding: 8px;
 }

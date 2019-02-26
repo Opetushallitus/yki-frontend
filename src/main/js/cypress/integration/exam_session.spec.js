@@ -134,7 +134,7 @@ describe('Exam sessions', () => {
     cy.get('button')
       .contains('Peru osallistuminen')
       .click();
-    cy.get('[data-cy=button-confirm-delete]').click();
+    cy.get('[data-cy=button-confirm-action]').click();
 
     cy.get('[data-cy=participant-1]').should('not.exist');
   });
