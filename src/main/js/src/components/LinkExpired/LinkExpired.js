@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withNamespaces } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import classes from './LinkExpired.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
@@ -39,4 +39,4 @@ linkExpired.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-export default withNamespaces()(linkExpired);
+export default withTranslation()(linkExpired);
