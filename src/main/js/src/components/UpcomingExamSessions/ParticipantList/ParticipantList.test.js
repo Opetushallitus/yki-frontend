@@ -56,6 +56,7 @@ describe('<ParticipantList />', () => {
         participants={participants}
         t={t => t}
         onCancel={jest.fn()}
+        onConfirmPayment={jest.fn()}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();

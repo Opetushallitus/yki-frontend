@@ -16,21 +16,21 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     className="ParticipantList"
   >
     <div
-      className="ItemHeader Index"
+      className="ItemHeader Index FirstLineItem"
       data-cy="participant-1"
     >
       1
       .
     </div>
     <div
-      className="ItemHeader"
+      className="ItemHeader FirstLineItem"
     >
       Wallis
        
       Michael
     </div>
     <div
-      className="ItemHeader Status"
+      className="ItemHeader Status FirstLineItem"
     >
       <img
         alt=""
@@ -40,14 +40,20 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       examSession.paid
     </div>
     <div
-      className="Item"
+      className="FirstLineItem"
     />
     <div
-      className="Item"
+      className="FirstLineItem"
     />
     <div
-      className="Item"
-    />
+      className="FirstShowOnHover"
+    >
+      <ActionButton
+        cancelText="examSession.registration.confirmPayment.cancel"
+        confirmText="examSession.registration.confirmPayment.confirm"
+        onClick={[Function]}
+      />
+    </div>
     <div
       className="Item"
     />
@@ -99,21 +105,21 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       className="LineEnd"
     />
     <div
-      className="ItemHeader Index"
+      className="ItemHeader Index FirstLineItem"
       data-cy="participant-2"
     >
       2
       .
     </div>
     <div
-      className="ItemHeader"
+      className="ItemHeader FirstLineItem"
     >
       Gaddens
        
       Natalia
     </div>
     <div
-      className="ItemHeader Status"
+      className="ItemHeader Status FirstLineItem"
     >
       <img
         alt=""
@@ -123,14 +129,27 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       examSession.notPaid
     </div>
     <div
-      className="Item"
+      className="FirstLineItem"
     />
     <div
-      className="Item"
+      className="FirstLineItem"
     />
     <div
-      className="Item"
-    />
+      className="FirstShowOnHover"
+    >
+      <ActionButton
+        cancelText="examSession.registration.confirmPayment.cancel"
+        confirmText="examSession.registration.confirmPayment.confirm"
+        onClick={[Function]}
+      >
+        <img
+          alt=""
+          src="checkmark-done.svg"
+        />
+         
+        examSession.registration.confirmPayment
+      </ActionButton>
+    </div>
     <div
       className="Item"
     />

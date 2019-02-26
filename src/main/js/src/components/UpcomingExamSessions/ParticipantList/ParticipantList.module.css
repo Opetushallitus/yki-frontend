@@ -9,6 +9,11 @@
   font-size: 0.875em;
 }
 
+.FirstLineItem {
+  font-size: 0.875em;
+}
+
+
 .ItemHeader {
   display: grid;
   font-size: 0.875em;
@@ -24,10 +29,6 @@
 .Index {
   text-align: right;
   font-weight: bold;
-}
-
-.Row:hover {
-  color: hsla(195, 100%, 47%, 1);
 }
 
 .Line {
@@ -56,5 +57,21 @@
 }
 
 .Item:hover ~ .ShowOnHover + .Line ~ .ShowOnHover {
+  opacity: 0.0;
+}
+
+.FirstShowOnHover {
+  opacity: 0.0;
+}
+
+.FirstShowOnHover:hover {
+  opacity: 1.0;
+}
+
+.FirstLineItem:hover ~ .FirstShowOnHover {
+  opacity: 1.0;
+}
+
+.FirstLineItem:hover ~ .ShowOnHover + .Line ~ .FirstShowOnHover {
   opacity: 0.0;
 }

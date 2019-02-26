@@ -52,20 +52,20 @@ export const participantList = props => {
     return participants.map((p, i) => (
       <React.Fragment key={i}>
         <div
-          className={[classes.ItemHeader, classes.Index].join(' ')}
+          className={[classes.ItemHeader, classes.Index, classes.FirstLineItem].join(' ')}
           data-cy={`participant-${p.registration_id}`}
         >
           {i + 1}.
         </div>
-        <div className={classes.ItemHeader}>
+        <div className={[classes.ItemHeader, classes.FirstLineItem].join(' ')}>
           {p.form.first_name} {p.form.last_name}
         </div>
-        <div className={[classes.ItemHeader, classes.Status].join(' ')}>
+        <div className={[classes.ItemHeader, classes.Status, classes.FirstLineItem].join(' ')}>
           {registratioStatus(p.state)}
         </div>
-        <div className={classes.Item} />
-        <div className={classes.Item} />
-        <div className={classes.ShowOnHover}>
+        <div className={classes.FirstLineItem} />
+        <div className={classes.FirstLineItem} />
+        <div className={classes.FirstShowOnHover}>
           <ActionButton
             children={confirmPayment(p.state)}
             onClick={() =>
