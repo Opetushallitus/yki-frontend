@@ -12,7 +12,7 @@ export const examSessionOrganizer = props => {
   const item = collectRegistryItemDetails(
     props.organizer,
     props.organization,
-    props.lng,
+    props.i18n.lang,
   );
 
   const languages = (

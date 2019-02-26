@@ -120,7 +120,7 @@ class ExamSessions extends Component {
           <h1 data-cy="exam-session-header">
             {getLocalizedName(
               this.props.examSessionContent.organization.nimi,
-              this.props.lng,
+              this.props.i18n.lang,
             )}
           </h1>
           <UpcomingExamSessions

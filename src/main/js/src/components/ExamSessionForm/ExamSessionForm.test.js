@@ -88,6 +88,7 @@ describe('<ExamSessionForm />', () => {
     const form = mount(
       <ExamSessionForm
         onSubmit={onSubmitSpy}
+        i18n={{lang: 'fi'}}
         examSessionContent={examSessionContent}
       />,
     );
@@ -114,6 +115,7 @@ describe('<ExamSessionForm />', () => {
     const form = mount(
       <ExamSessionForm
         onSubmit={onSubmitSpy}
+        i18n={{lang: 'fi'}}
         examSessionContent={examSessionContent}
       />,
     );

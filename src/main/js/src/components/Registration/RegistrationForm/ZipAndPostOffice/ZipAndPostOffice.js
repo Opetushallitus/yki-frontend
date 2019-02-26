@@ -12,7 +12,7 @@ export class ZipAndPostOffice extends Component {
       const metadata = res.data.metadata;
       if (metadata) {
         const postOffice =
-          this.props.lng === 'sv'
+          this.props.i18n.lang === 'sv'
             ? metadata.find(m => m.kieli === 'SV').nimi
             : metadata.find(m => m.kieli === 'FI').nimi;
         this.props.setFieldValue('postOffice', postOffice);
@@ -61,6 +61,7 @@ export class ZipAndPostOffice extends Component {
 
 ZipAndPostOffice.propTypes = {
   values: PropTypes.object.isRequired,
+  i18n: PropTypes.object.isRequired,
   setFieldValue: PropTypes.func.isRequired,
 };
 

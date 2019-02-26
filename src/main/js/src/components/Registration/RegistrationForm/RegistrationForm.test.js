@@ -1,5 +1,5 @@
 import React from 'react';
-import { configure, mount } from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 // import toJson from 'enzyme-to-json';
 
@@ -31,9 +31,10 @@ const initData = {
 };
 describe('<RegistrationForm />', () => {
   it('should render registration form', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <RegistrationForm
         t={key => key}
+        i18n={{lang: 'fi'}}
         initData={initData}
         submitting={false}
         onSubmitRegistrationForm={jest.fn()}

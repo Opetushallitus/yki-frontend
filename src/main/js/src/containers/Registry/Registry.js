@@ -93,7 +93,7 @@ export class Registry extends Component {
         const registryItem = collectRegistryItemDetails(
           item.organizer,
           item.organization,
-          this.props.lng,
+          this.props.i18n.lang,
         );
         return (
           <RegistryItem

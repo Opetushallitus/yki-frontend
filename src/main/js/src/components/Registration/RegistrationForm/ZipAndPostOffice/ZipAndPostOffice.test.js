@@ -15,6 +15,7 @@ describe('<ZipAndPostOffice />', () => {
       <ZipAndPostOffice
         t={key => key}
         values={values}
+        i18n={{lang: 'fi'}}
         setFieldValue={setFieldValue}
       />,
     );

@@ -41,6 +41,7 @@ describe('<ExamSessionOrganizer />', () => {
       <ExamSessionOrganizer
         t={key => key}
         organizer={organizer}
+        i18n={{lang: 'fi'}}
         organization={organization}
       />,
     );

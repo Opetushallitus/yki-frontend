@@ -275,7 +275,7 @@ const examSessionForm = props => {
                 >
                   {organizationChildrenOptions(
                     props.examSessionContent.organizationChildren,
-                    props.lng,
+                    props.i18n.lang,
                   )}
                 </Field>
               </div>
@@ -439,6 +439,7 @@ const examSessionForm = props => {
 
 examSessionForm.propTypes = {
   examSessionContent: PropTypes.object.isRequired,
+  i18n: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

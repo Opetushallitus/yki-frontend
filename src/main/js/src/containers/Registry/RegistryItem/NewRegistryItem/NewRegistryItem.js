@@ -124,7 +124,7 @@ class NewRegistryItem extends PureComponent {
             className={classes.SearchResult}
             onClick={() => this.selectOrganizationHandler(org)}
           >
-            {getLocalizedName(org.nimi, this.props.lng)}
+            {getLocalizedName(org.nimi, this.props.i18n.lang)}
           </div>
         ))}
       </div>
@@ -132,7 +132,7 @@ class NewRegistryItem extends PureComponent {
 
     const name =
       this.state.selected &&
-      getLocalizedName(this.state.selectedOrganization.nimi, this.props.lng);
+      getLocalizedName(this.state.selectedOrganization.nimi, this.props.i18n.lang);
 
     const form = (
       <div>
