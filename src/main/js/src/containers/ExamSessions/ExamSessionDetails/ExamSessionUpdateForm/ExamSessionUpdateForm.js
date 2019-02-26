@@ -51,6 +51,7 @@ export class ExamSessionUpdateForm extends Component {
         <div className={classes.DeleteButton}>
           <DeleteButton
             onClick={this.props.onDelete}
+            confirmOnRight={true}
             children={this.props.t('examSession.delete')}
             confirmText={this.props.t('common.confirm')}
             cancelText={this.props.t('common.cancelConfirm')}

@@ -17,8 +17,8 @@ describe('<DeleteButton />', () => {
       />,
     );
     expect(wrapper.find('.Delete').exists()).toBeTruthy();
-    expect(wrapper.find('.DeleteConfirmation').exists()).toBeFalsy();
-    expect(wrapper.find('.DeleteCancel').exists()).toBeFalsy();
+    expect(wrapper.find('.DeleteLeft').exists()).toBeFalsy();
+    expect(wrapper.find('.DeleteRight').exists()).toBeFalsy();
   });
   it('should show confirm and cancel buttons when deleting is true', () => {
     const wrapper = shallow(
@@ -31,7 +31,7 @@ describe('<DeleteButton />', () => {
     );
     wrapper.setState({ deleting: true });
     expect(wrapper.find('.Delete').exists()).toBeFalsy();
-    expect(wrapper.find('.DeleteConfirmation').exists()).toBeTruthy();
-    expect(wrapper.find('.DeleteCancel').exists()).toBeTruthy();
+    expect(wrapper.find('.DeleteLeft').exists()).toBeTruthy();
+    expect(wrapper.find('.DeleteRight').exists()).toBeTruthy();
   });
 });

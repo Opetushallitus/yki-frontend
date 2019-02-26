@@ -15,6 +15,26 @@ export class DeleteButton extends Component {
   };
 
   render() {
+    const confirmButton = styles => (
+      <button
+        type="button"
+        onClick={this.toggleDeleting}
+        className={styles}
+        autoFocus
+      >
+        {this.props.cancelText}
+      </button>
+    );
+    const cancelButton = styles => (
+      <button
+        type="button"
+        onClick={this.props.onClick}
+        data-cy="button-confirm-delete"
+        className={styles}
+      >
+        {this.props.confirmText}
+      </button>
+    );
     return !this.state.deleting ? (
       <button
         type="button"
@@ -23,24 +43,15 @@ export class DeleteButton extends Component {
       >
         {this.props.children}
       </button>
+    ) : this.props.confirmOnRight ? (
+      <React.Fragment>
+        {confirmButton(classes.DeleteLeft)}
+        {cancelButton(classes.DeleteRight)}
+      </React.Fragment>
     ) : (
       <React.Fragment>
-        <button
-          type="button"
-          onClick={this.props.onClick}
-          data-cy="button-confirm-delete"
-          className={classes.DeleteConfirmation}
-        >
-          {this.props.confirmText}
-        </button>
-        <button
-          type="button"
-          onClick={this.toggleDeleting}
-          className={classes.DeleteCancel}
-          autoFocus
-        >
-          {this.props.cancelText}
-        </button>
+        {cancelButton(classes.DeleteLeft)}
+        {confirmButton(classes.DeleteRight)}
       </React.Fragment>
     );
   }
@@ -49,6 +60,7 @@ export class DeleteButton extends Component {
 DeleteButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.any,
+  confirmOnRight: PropTypes.bool,
   confirmText: PropTypes.string.isRequired,
   cancelText: PropTypes.string.isRequired,
 };

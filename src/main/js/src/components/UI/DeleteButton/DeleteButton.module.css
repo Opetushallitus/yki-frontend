@@ -6,14 +6,14 @@
   padding: 0;
 }
 
-.DeleteConfirmation {
+.DeleteLeft {
   color: hsla(0, 0%, 100%, 1);
   background-color: hsla(15, 100%, 40%, 1);
   padding: 2px 5px;
   border: none;
 }
 
-.DeleteCancel {
+.DeleteRight {
   color: hsla(0, 0%, 100%, 1);
   background-color: hsla(195, 82%, 44%, 1);
   padding: 2px 5px;
