@@ -15,17 +15,18 @@ export class ActionButton extends Component {
   };
 
   render() {
-    const confirmButton = styles => (
+    const cancelButton = styles => (
       <button
         type="button"
         onClick={this.toggleConfirming}
+        data-cy="button-cancel-action"
         className={styles}
         autoFocus
       >
         {this.props.cancelText}
       </button>
     );
-    const cancelButton = styles => (
+    const confirmButton = styles => (
       <button
         type="button"
         onClick={this.props.onClick}
@@ -39,6 +40,7 @@ export class ActionButton extends Component {
       <button
         type="button"
         onClick={this.toggleConfirming}
+        data-cy="button-action"
         className={classes.Action}
       >
         {this.props.children}

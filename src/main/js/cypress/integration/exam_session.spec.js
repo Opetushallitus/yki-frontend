@@ -138,4 +138,14 @@ describe('Exam sessions', () => {
 
     cy.get('[data-cy=participant-1]').should('not.exist');
   });
+
+  it('payment for not completed registration can be confirmed', () => {
+    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=registration-SUBMITTED').should('exist');
+
+    cy.get('[data-cy=confirm-payment-icon]').click();
+    cy.get('[data-cy=button-confirm-action]').click();
+
+    cy.get('[data-cy=registration-SUBMITTED').should('not.exist');
+  });
 });

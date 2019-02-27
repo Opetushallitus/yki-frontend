@@ -16,34 +16,35 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     className="ParticipantList"
   >
     <div
-      className="ItemHeader Index FirstLineItem"
+      className="ItemHeader Index StateItem"
       data-cy="participant-1"
     >
       1
       .
     </div>
     <div
-      className="ItemHeader FirstLineItem"
+      className="ItemHeader StateItem"
     >
       Wallis
        
       Michael
     </div>
     <div
-      className="ItemHeader Status FirstLineItem"
+      className="ItemHeader Status StateItem"
     >
       <img
         alt=""
+        data-cy="registration-COMPLETED"
         src="checkmark-done.svg"
       />
        
       examSession.paid
     </div>
     <div
-      className="FirstLineItem"
+      className="StateItem"
     />
     <div
-      className="FirstLineItem"
+      className="StateItem"
     />
     <div
       className="FirstShowOnHover"
@@ -105,34 +106,35 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       className="LineEnd"
     />
     <div
-      className="ItemHeader Index FirstLineItem"
+      className="ItemHeader Index StateItem"
       data-cy="participant-2"
     >
       2
       .
     </div>
     <div
-      className="ItemHeader FirstLineItem"
+      className="ItemHeader StateItem"
     >
       Gaddens
        
       Natalia
     </div>
     <div
-      className="ItemHeader Status FirstLineItem"
+      className="ItemHeader Status StateItem"
     >
       <img
         alt=""
+        data-cy="registration-SUBMITTED"
         src="checkmark-not-done.svg"
       />
        
       examSession.notPaid
     </div>
     <div
-      className="FirstLineItem"
+      className="StateItem"
     />
     <div
-      className="FirstLineItem"
+      className="StateItem"
     />
     <div
       className="FirstShowOnHover"
@@ -144,6 +146,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       >
         <img
           alt=""
+          data-cy="confirm-payment-icon"
           src="checkmark-done.svg"
         />
          

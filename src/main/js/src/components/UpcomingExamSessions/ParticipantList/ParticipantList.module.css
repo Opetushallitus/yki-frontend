@@ -9,13 +9,12 @@
   font-size: 0.875em;
 }
 
-.FirstLineItem {
+.StateItem {
   font-size: 0.875em;
 }
 
 
 .ItemHeader {
-  display: grid;
   font-size: 0.875em;
   font-weight: bold;
   white-space: nowrap;
@@ -68,10 +67,10 @@
   opacity: 1.0;
 }
 
-.FirstLineItem:hover ~ .FirstShowOnHover {
+.StateItem:hover ~ .FirstShowOnHover {
   opacity: 1.0;
 }
 
-.FirstLineItem:hover ~ .ShowOnHover + .Line ~ .FirstShowOnHover {
+.StateItem:hover ~ .ShowOnHover + .Line ~ .FirstShowOnHover {
   opacity: 0.0;
 }

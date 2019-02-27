@@ -21,7 +21,8 @@ export const participantList = props => {
         : props.t('examSession.notPaid');
     return (
       <React.Fragment>
-        <img src={image} alt="" /> {text}
+        <img src={image} data-cy={`registration-${registrationState}`} alt="" />{' '}
+        {text}
       </React.Fragment>
     );
   };
@@ -42,7 +43,7 @@ export const participantList = props => {
   const confirmPayment = registrationState => {
     return registrationState === 'SUBMITTED' ? (
       <React.Fragment>
-        <img src={checkMarkDone} alt="" />{' '}
+        <img src={checkMarkDone} data-cy="confirm-payment-icon" alt="" />{' '}
         {props.t('examSession.registration.confirmPayment')}
       </React.Fragment>
     ) : null;
@@ -52,19 +53,29 @@ export const participantList = props => {
     return participants.map((p, i) => (
       <React.Fragment key={i}>
         <div
-          className={[classes.ItemHeader, classes.Index, classes.FirstLineItem].join(' ')}
+          className={[
+            classes.ItemHeader,
+            classes.Index,
+            classes.StateItem,
+          ].join(' ')}
           data-cy={`participant-${p.registration_id}`}
         >
           {i + 1}.
         </div>
-        <div className={[classes.ItemHeader, classes.FirstLineItem].join(' ')}>
+        <div className={[classes.ItemHeader, classes.StateItem].join(' ')}>
           {p.form.first_name} {p.form.last_name}
         </div>
-        <div className={[classes.ItemHeader, classes.Status, classes.FirstLineItem].join(' ')}>
+        <div
+          className={[
+            classes.ItemHeader,
+            classes.Status,
+            classes.StateItem,
+          ].join(' ')}
+        >
           {registratioStatus(p.state)}
         </div>
-        <div className={classes.FirstLineItem} />
-        <div className={classes.FirstLineItem} />
+        <div className={classes.StateItem} />
+        <div className={classes.StateItem} />
         <div className={classes.FirstShowOnHover}>
           <ActionButton
             children={confirmPayment(p.state)}
@@ -75,8 +86,12 @@ export const participantList = props => {
                 p.registration_id,
               )
             }
-            confirmText={props.t('examSession.registration.confirmPayment.confirm')}
-            cancelText={props.t('examSession.registration.confirmPayment.cancel')}
+            confirmText={props.t(
+              'examSession.registration.confirmPayment.confirm',
+            )}
+            cancelText={props.t(
+              'examSession.registration.confirmPayment.cancel',
+            )}
           />
         </div>
         <div className={classes.Item} />
