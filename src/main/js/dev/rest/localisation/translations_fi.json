@@ -64,11 +64,8 @@
   "error.examSession.addFailed": "Tutkintotilaisuuden lisäys epäonnistui",
   "error.examSession.fetchFailed": "Tutkintotilaisuuksien hakeminen epäonnistui.",
   "error.examSession.fetchParticipantsFailed": "Tutkintotilaisuuden osallistujien haku epäonnistui",
-  "error.examSession.updateFailed": "Tutkintotilaisuuden päivitys epäonnistui",
-
   "error.examSession.registration.confirmPaymentFailed": "Ilmoittautumisen kuittaaminen maksetuksi epäonnistui",
-
-
+  "error.examSession.updateFailed": "Tutkintotilaisuuden päivitys epäonnistui",
   "error.generic.info": "Yritä hetken kuluttua uudelleen.",
   "error.mandatory": "Pakollinen",
   "error.max": "Arvo liian pitkä",
@@ -95,14 +92,12 @@
   "examSession.office": "Toimipiste",
   "examSession.paid": "Maksanut",
   "examSession.participants": "Ilmoittautuneet",
-
-  "examSession.registration.confirmPayment": "Kuittaa maksetuksi",
-  "examSession.registration.confirmPayment.cancel": "Älä kuittaa",
-  "examSession.registration.confirmPayment.confirm": "Kuittaa",
-
   "examSession.registration.cancel": "Peru osallistuminen",
   "examSession.registration.cancel.cancel": "Älä peru",
   "examSession.registration.cancel.confirm": "Peru",
+  "examSession.registration.confirmPayment": "Kuittaa maksetuksi",
+  "examSession.registration.confirmPayment.cancel": "Älä kuittaa",
+  "examSession.registration.confirmPayment.confirm": "Kuittaa",
   "examSession.upcomingExamSessions": "Tulevat tutkintotilaisuudet",
   "examSessions.agreementNotFound": "Ei löytynyt voimassaolevaa järjestäjäsopimusta.",
   "payment.redirect.error": "Maksamiseen siirtyminen epäonnistui",
