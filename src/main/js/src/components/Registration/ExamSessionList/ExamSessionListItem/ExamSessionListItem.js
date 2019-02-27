@@ -10,12 +10,13 @@ import {
   DATE_FORMAT_WITHOUT_YEAR,
 } from '../../../../common/Constants';
 
-const examSessionListItem = ({ examSession: session, language, t }) => {
+const examSessionListItem = ({ examSession: session, language, t, i18n }) => {
   const date = (
     <div className={classes.Date}>
       {moment(session.session_date).format(DATE_FORMAT)}
     </div>
   );
+
   const exam = (
     <div className={classes.Exam}>
       <strong>{`${language.name}, ${levelDescription(
@@ -23,14 +24,18 @@ const examSessionListItem = ({ examSession: session, language, t }) => {
       ).toLowerCase()}`}</strong>
     </div>
   );
-  const name = session.location[0].name;
-  const address = session.location[0].address.split(',')[0] || '';
-  const city = session.location[0].address.split(' ').pop() || '';
+
+  const sessionLocation =
+    session.location.find(l => l.lang === i18n.language) || session.location[0];
+  const name = sessionLocation.name;
+  const address = sessionLocation.address.split(',')[0] || '';
+  const city = sessionLocation.address.split(' ').pop() || '';
   const location = (
     <span className={classes.Location}>
       {name} <br /> {address} <br /> <strong>{city}</strong>
     </span>
   );
+
   const spotsAvailable = session.max_participants - session.participants;
   const availability = (
     <div className={classes.Availability}>
@@ -53,7 +58,9 @@ const examSessionListItem = ({ examSession: session, language, t }) => {
 
   const registrationOpen = (
     <div className={classes.RegistrationOpen}>
-      <span className={classes.HiddenOnDesktop}>{t('registration.open')}</span>{' '}
+      <span className={classes.HiddenOnDesktop}>
+        {t('registration.list.signupOpen')}
+      </span>{' '}
       <span>
         {`${moment(session.registration_end_date).format(
           DATE_FORMAT_WITHOUT_YEAR,

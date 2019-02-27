@@ -13,11 +13,25 @@
       "registration_start_date": "2018-12-03",
       "location": [
         {
-          "name": "Amiedu, Strömberginkuja 3",
-          "address": "Jokukatu 4, 00100 Tampere",
-          "other_location_info": "",
-          "extra_information": "",
-          "lang": "fi"
+          "lang": "fi",
+          "extra_information": null,
+          "name": "Amiedu",
+          "other_location_info": "auditorio A2",
+          "address": "Jokukatu 4, 00100 Tampere"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "name": "Amiedu",
+          "other_location_info": "auditorium A2",
+          "address": "Jokukatu 4, 00100 Tammerfors"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "name": "Amiedu",
+          "other_location_info": "auditorium A2",
+          "address": "Jokukatu 4, 00100 Tampere"
         }
       ],
       "registration_end_date": "2018-12-14"
@@ -35,11 +49,25 @@
       "registration_start_date": "2019-02-01",
       "location": [
         {
-          "name": "Amiedu, Strömberginkuja 3",
-          "address": "Jokukatu 4, 00200 Tampere",
-          "other_location_info": "auditorio A3",
+          "lang": "fi",
           "extra_information": "uusia lisätietoja",
-          "lang": "fi"
+          "name": "Amiedu",
+          "other_location_info": "auditorio A3",
+          "address": "Jokukatu 4, 00100 Tampere"
+        },
+        {
+          "lang": "sv",
+          "extra_information": "ny extra info",
+          "name": "Omenia",
+          "other_location_info": "auditorium A3",
+          "address": "Jokukatu 4, 00100 Tammerfors"
+        },
+        {
+          "lang": "en",
+          "extra_information": "new additional info",
+          "name": "Omenia",
+          "other_location_info": "auditorium A3",
+          "address": "Jokukatu 4, 00100 Tampere"
         }
       ],
       "registration_end_date": "2019-02-28"
@@ -57,11 +85,25 @@
       "registration_start_date": "2019-02-01",
       "location": [
         {
-          "name": "Jyväskylän kansalaisopisto",
-          "address": "Mikälietie 5, 40100 Jyväskylä",
-          "other_location_info": "Sali Kekkonen",
+          "lang": "fi",
           "extra_information": "Sali toisessa kerroksessa.",
-          "lang": "fi"
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Sali Kekkonen",
+          "address": "Mikälietie 5, 40100 Jyväskylä"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Hall Kekkonen",
+          "address": "Vadsomhelstväg 5, 40100 Jyväskylä"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Hall Kekkonen",
+          "address": "Mikälietie 5, 40100 Jyväskylä"
         }
       ],
       "registration_end_date": "2019-02-28"
@@ -79,11 +121,25 @@
       "registration_start_date": "2019-02-01",
       "location": [
         {
-          "name": "Jyväskylän kansalaisopisto",
-          "address": "Mikälietie 5, 40100 Jyväskylä",
-          "other_location_info": "Sali Kekkonen",
+          "lang": "fi",
           "extra_information": "Sali toisessa kerroksessa.",
-          "lang": "fi"
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Sali Mannerheim",
+          "address": "Mikälietie 5, 40100 Jyväskylä"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Hall Mannerheim",
+          "address": "Vadsomhelstväg 5, 40100 Jyväskylä"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Hall Mannerheim",
+          "address": "Mikälietie 5, 40100 Jyväskylä"
         }
       ],
       "registration_end_date": "2029-02-28"
@@ -101,11 +157,25 @@
       "registration_start_date": "2019-02-01",
       "location": [
         {
-          "name": "Jyväskylän kansalaisopisto",
-          "address": "Mikälietie 5, 40100 Jyväskylä",
-          "other_location_info": "Sali Koivisto",
+          "lang": "fi",
           "extra_information": "Sali kolmannessa kerroksessa.",
-          "lang": "fi"
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Sali Koivisto",
+          "address": "Mikälietie 5, 40100 Jyväskylä"
+        },
+        {
+          "lang": "sv",
+          "extra_information": "Hall på tredje våningen.",
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Hall Koivisto",
+          "address": "Vadsomhelstväg 5, 40100 Jyväskylä"
+        },
+        {
+          "lang": "en",
+          "extra_information": "Hall is on the third floor.",
+          "name": "Jyväskylän kansalaisopisto",
+          "other_location_info": "Hall Koivisto",
+          "address": "Mikälietie 5, 40100 Jyväskylä"
         }
       ],
       "registration_end_date": "2019-02-28"
