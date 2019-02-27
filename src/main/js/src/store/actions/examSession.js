@@ -265,7 +265,7 @@ export const cancelRegistration = (oid, examSessionId, registrationId) => {
       )
       .then(() => {
         dispatch(cancelRegistrationSuccess());
-        dispatch(fetchExamSessionParticipants());
+        dispatch(fetchExamSessionParticipants(oid, examSessionId));
       })
       .catch(err => {
         dispatch(cancelRegistrationFail(err));
@@ -275,21 +275,21 @@ export const cancelRegistration = (oid, examSessionId, registrationId) => {
 
 const cancelRegistrationStart = () => {
   return {
-    type: actionTypes.CANCEL_REGISTRATION_START,
+    type: actionTypes.EXAM_SESSION_CANCEL_REGISTRATION_START,
     loading: true,
   };
 };
 
 const cancelRegistrationSuccess = () => {
   return {
-    type: actionTypes.CANCEL_REGISTRATION_SUCCESS,
+    type: actionTypes.EXAM_SESSION_CANCEL_REGISTRATION_SUCCESS,
     loading: false,
   };
 };
 
 const cancelRegistrationFail = error => {
   return {
-    type: actionTypes.CANCEL_REGISTRATION_FAIL,
+    type: actionTypes.EXAM_SESSION_CANCEL_REGISTRATION_FAIL,
     error: Object.assign(error, { key: 'error.registration.cancelFailed' }),
     loading: false,
   };
@@ -304,7 +304,7 @@ export const confirmPayment = (oid, examSessionId, registrationId) => {
       )
       .then(() => {
         dispatch(confirmPaymentSuccess());
-        dispatch(fetchExamSessionParticipants());
+        dispatch(fetchExamSessionParticipants(oid, examSessionId));
       })
       .catch(err => {
         dispatch(confirmPaymentFail(err));
@@ -314,21 +314,21 @@ export const confirmPayment = (oid, examSessionId, registrationId) => {
 
 const confirmPaymentStart = () => {
   return {
-    type: actionTypes.CONFIRM_PAYMENT_START,
+    type: actionTypes.EXAM_SESSION_CONFIRM_PAYMENT_START,
     loading: true,
   };
 };
 
 const confirmPaymentSuccess = () => {
   return {
-    type: actionTypes.CONFIRM_PAYMENT_SUCCESS,
+    type: actionTypes.EXAM_SESSION_CONFIRM_PAYMENT_SUCCESS,
     loading: false,
   };
 };
 
 const confirmPaymentFail = error => {
   return {
-    type: actionTypes.CONFIRM_PAYMENT_FAIL,
+    type: actionTypes.EXAM_SESSION_CONFIRM_PAYMENT_FAIL,
     error: Object.assign(error, { key: 'error.examSession.registration.confirmPaymentFailed' }),
     loading: false,
   };

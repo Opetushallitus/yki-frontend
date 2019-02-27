@@ -11,8 +11,6 @@ import {
 } from '../../../../common/Constants';
 
 const examSessionListItem = ({ examSession: session, language, t }) => {
-  console.log(session);
-
   const date = (
     <div className={classes.Date}>
       {moment(session.session_date).format(DATE_FORMAT)}
