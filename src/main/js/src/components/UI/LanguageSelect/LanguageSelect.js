@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import classes from './LanguageSelect.module.css';
 
-const languageSelect = props => {
-  const texts = { fi: 'suomeksi', sv: 'på svenska', en: 'in english' };
-  const languages = ['fi', 'sv', 'en'];
+const texts = { fi: 'suomeksi', sv: 'på svenska', en: 'in english' };
+const languages = ['fi', 'sv', 'en'];
+
+const languageSelect = () => {
   const { i18n } = useTranslation();
 
   const languageLinks = () => {
