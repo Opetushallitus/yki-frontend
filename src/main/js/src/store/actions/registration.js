@@ -94,6 +94,48 @@ const setLocation = location => {
   };
 };
 
+export const selectExamSession = examSession => {
+  return {
+    type: actionTypes.SELECT_EXAM_SESSION,
+    examSession: examSession,
+  };
+};
+
+// helper for testing spinner while loading
+const sleeper = ms => x =>
+  new Promise(resolve => setTimeout(() => resolve(x), ms));
+
+export const fetchExamSession = examSessionId => {
+  return dispatch => {
+    dispatch(fetchExamSessionStart());
+    axios
+      .get(`/yki/api/exam-session/${examSessionId}`)
+      .then(sleeper(3000))
+      .then(res => dispatch(fetchExamSessionSuccess(res.data)))
+      .catch(err => dispatch(fetchExamSessionFail(err)));
+  };
+};
+
+const fetchExamSessionStart = () => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSIONS_START,
+  };
+};
+
+const fetchExamSessionSuccess = examSession => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSION_SUCCESS,
+    examSession: examSession,
+  };
+};
+
+const fetchExamSessionFail = error => {
+  return {
+    type: actionTypes.FETCH_EXAM_SESSION_FAIL,
+    error: error,
+  };
+};
+
 export const initRegistrationForm = examSessionId => {
   return dispatch => {
     dispatch(initRegistrationFormStart());
@@ -101,16 +143,16 @@ export const initRegistrationForm = examSessionId => {
       axios.post('/yki/api/registration/init', {
         exam_session_id: Math.trunc(examSessionId),
       }),
-      axios.get(
-        '/yki/api/code/maatjavaltiot2',
-      ),
-      axios.get(
-        '/yki/api/code/sukupuoli',
-      ),
+      axios.get('/yki/api/code/maatjavaltiot2'),
+      axios.get('/yki/api/code/sukupuoli'),
     ])
       .then(([init, nationalities, genders]) => {
         dispatch(
-          initRegistrationFormSuccess(init.data, nationalities.data, genders.data),
+          initRegistrationFormSuccess(
+            init.data,
+            nationalities.data,
+            genders.data,
+          ),
         );
       })
       .catch(err => {
@@ -128,7 +170,11 @@ const initRegistrationFormStart = () => {
 const initRegistrationFormSuccess = (formInitData, nationalities, genders) => {
   return {
     type: actionTypes.INIT_REGISTRATION_FORM_SUCCESS,
-    formInitData: Object.assign(formInitData, { nationalities: nationalities }, { genders: genders }),
+    formInitData: Object.assign(
+      formInitData,
+      { nationalities: nationalities },
+      { genders: genders },
+    ),
   };
 };
 

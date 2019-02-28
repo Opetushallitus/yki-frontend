@@ -21,6 +21,8 @@ export {
   selectLanguage,
   selectLevel,
   selectLocation,
+  selectExamSession,
+  fetchExamSession,
   initRegistrationForm,
   submitRegistrationForm,
 } from './registration';
