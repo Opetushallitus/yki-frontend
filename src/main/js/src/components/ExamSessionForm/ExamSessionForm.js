@@ -439,7 +439,6 @@ const examSessionForm = props => {
 
 examSessionForm.propTypes = {
   examSessionContent: PropTypes.object.isRequired,
-  i18n: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

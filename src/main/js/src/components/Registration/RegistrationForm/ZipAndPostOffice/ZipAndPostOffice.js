@@ -61,7 +61,6 @@ export class ZipAndPostOffice extends Component {
 
 ZipAndPostOffice.propTypes = {
   values: PropTypes.object.isRequired,
-  i18n: PropTypes.object.isRequired,
   setFieldValue: PropTypes.func.isRequired,
 };
 

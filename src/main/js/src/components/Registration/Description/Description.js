@@ -27,6 +27,7 @@ const description = props => {
         </div>
         <button
           className={classes.ContinueButton}
+          data-cy="continue-button"
           onClick={() =>
             props.history.push(props.t('registration.path.select.language'))
           }

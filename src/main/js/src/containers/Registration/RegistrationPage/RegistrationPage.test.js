@@ -11,6 +11,9 @@ jest.mock('react-i18next', () => ({
     Component.defaultProps = { ...Component.defaultProps, t: () => '' };
     return Component;
   },
+  useTranslation: () => {
+    return {i18n: {language: 'fi'}};
+  },
 }));
 
 describe('<RegistrationPage />', () => {

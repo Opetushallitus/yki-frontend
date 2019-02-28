@@ -1,7 +1,12 @@
+.LanguageSelect {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: hsl(0, 0%, 100%);
+}
+
 .LanguageSelect:hover {
   text-decoration-line: underline;
 }
 
-.Separator {
-  /* padding: 2px 2px; */
-}

@@ -8,7 +8,7 @@ describe('Registration', () => {
   });
 
   it('Return button returns user back to description page', () => {
-    cy.get('button').click();
+    cy.get('[data-cy=continue-button]').click();
     cy.contains('Suomi').click();
     cy.contains('Perustaso').click();
     cy.contains('Koko maa').click();
@@ -20,7 +20,7 @@ describe('Registration', () => {
   });
 
   it('Navigation works using browser history', () => {
-    cy.get('button').click();
+    cy.get('[data-cy=continue-button]').click();
     cy.contains('Suomi').click();
     cy.contains('Perustaso').click();
     cy.contains('Koko maa').click();
@@ -32,7 +32,7 @@ describe('Registration', () => {
   });
 
   it('Filters persist through exam session selection', () => {
-    cy.get('button').click();
+    cy.get('[data-cy=continue-button]').click();
     cy.contains('Suomi').click();
     cy.contains('Perustaso').click();
     cy.contains('Koko maa').click();
