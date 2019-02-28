@@ -69,11 +69,11 @@
 @media (min-width: 620px) {
   .ExamSessionListItem {
     background-color: hsl(0, 0%, 98%);
-    height: 60px;
+    height: 70px;
     margin: 0;
     padding: 5px 0;
     font-size: 14px;
-    grid-template-columns: 1fr 3fr 1fr 2fr 2fr 2fr;
+    grid-template-columns: 0.7fr 2fr 0.8fr 1fr 1fr 0.7fr;
     grid-template-areas: 'date location exam registrationOpen availability button';
     align-items: center;
     justify-items: start;
@@ -99,6 +99,7 @@
 
   .Exam {
     white-space: nowrap;
+    justify-self: start;
   }
 
   .Availability {

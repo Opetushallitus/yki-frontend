@@ -87,7 +87,7 @@
         {
           "lang": "fi",
           "extra_information": "Sali toisessa kerroksessa.",
-          "name": "Jyväskylän kansalaisopisto",
+          "name": "Maunulan yhteiskoulu - Helsingin matematiikkalukio",
           "other_location_info": "Sali Kekkonen",
           "address": "Mikälietie 5, 40100 Jyväskylä"
         },
@@ -101,7 +101,7 @@
         {
           "lang": "en",
           "extra_information": null,
-          "name": "Jyväskylän kansalaisopisto",
+          "name": "Maunula Secondary School and Helsinki School of Mathematics",
           "other_location_info": "Hall Kekkonen",
           "address": "Mikälietie 5, 40100 Jyväskylä"
         }

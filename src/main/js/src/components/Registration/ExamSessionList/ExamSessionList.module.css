@@ -7,6 +7,7 @@
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid hsl(0, 0%, 59%);
+  font-size: 14px;
 }
 
 .ColumnHeaders {
@@ -23,16 +24,11 @@
   }
 
   .ColumnHeaders {
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr 2fr 2fr 2fr;
-    height: 25px;
-    line-height: 19px;
+    height: 38px;
     font-size: 14px;
-  }
-
-  .ColumnHeaders > div {
-    white-space: nowrap;
+    display: grid;
+    grid-template-columns: 0.7fr 2fr 0.8fr 1fr 1fr 0.7fr;
+    align-items: end;
   }
 
   .ColumnHeaders > div:nth-child(4),
