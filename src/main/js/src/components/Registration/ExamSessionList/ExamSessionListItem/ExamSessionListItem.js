@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import classes from './ExamSessionListItem.module.css';
@@ -9,8 +10,21 @@ import {
   DATE_FORMAT,
   DATE_FORMAT_WITHOUT_YEAR,
 } from '../../../../common/Constants';
+import * as actions from '../../../../store/actions/index';
 
-const examSessionListItem = ({ examSession: session, language, t, i18n }) => {
+const examSessionListItem = ({
+  examSession: session,
+  language,
+  onSelectExamSession,
+  history,
+}) => {
+  const [t, i18n] = useTranslation();
+
+  const selectExamSession = () => {
+    onSelectExamSession(session);
+    history.push(`/tutkintotilaisuus/${session.id}`);
+  };
+
   const date = (
     <div className={classes.Date}>
       {moment(session.session_date).format(DATE_FORMAT)}
@@ -41,14 +55,14 @@ const examSessionListItem = ({ examSession: session, language, t, i18n }) => {
     <div className={classes.Availability}>
       <strong>
         {spotsAvailable ? (
-          <React.Fragment>
+          <Fragment>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
               {spotsAvailable === 1
                 ? t('registration.examSpots.singleFree')
                 : t('registration.examSpots.free')}
             </span>
-          </React.Fragment>
+          </Fragment>
         ) : (
           <span>{t('registration.examSpots.full')}</span>
         )}
@@ -85,6 +99,7 @@ const examSessionListItem = ({ examSession: session, language, t, i18n }) => {
           ? classes.ButtonForSignup
           : classes.ButtonForQueue,
       ].join(' ')}
+      onClick={selectExamSession}
     >
       {spotsAvailable
         ? t('registration.register')
@@ -111,4 +126,14 @@ examSessionListItem.propTypes = {
   examSession: PropTypes.object.isRequired,
 };
 
-export default withTranslation()(examSessionListItem);
+const mapDispatchToProps = dispatch => {
+  return {
+    onSelectExamSession: session =>
+      dispatch(actions.selectExamSession(session)),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(examSessionListItem);

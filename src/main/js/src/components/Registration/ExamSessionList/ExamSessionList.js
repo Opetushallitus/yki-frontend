@@ -7,7 +7,7 @@ import classes from './ExamSessionList.module.css';
 import ExamSessionListItem from './ExamSessionListItem/ExamSessionListItem';
 import { DATE_FORMAT } from '../../../common/Constants';
 
-const examSessionList = ({ examSessions: sessions, language, t }) => (
+const examSessionList = ({ examSessions: sessions, language, t, history }) => (
   <React.Fragment>
     {Object.keys(sessions).length !== 0 ? (
       <React.Fragment>
@@ -35,6 +35,7 @@ const examSessionList = ({ examSessions: sessions, language, t }) => (
                   key={e.published_at}
                   examSession={e}
                   language={language}
+                  history={history}
                 />
               ))}
             </div>

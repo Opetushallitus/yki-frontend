@@ -1,0 +1,10 @@
+.Content {
+  width: calc(100vw - 40px);
+  margin: 0 auto;
+}
+
+@media (min-width: 620px) {
+  .Content {
+    width: calc(100vw - 200px);
+  }
+}

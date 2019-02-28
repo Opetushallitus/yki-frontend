@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
@@ -32,7 +32,7 @@ class Registration extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         <Header />
         <BackButton clicked={() => this.props.history.goBack()} />
         <main className={classes.Content}>
@@ -52,9 +52,10 @@ class Registration extends Component {
           <ExamSessionList
             examSessions={this.props.filteredExamSessionsGroupedByDate}
             language={this.props.language}
+            history={this.props.history}
           />
         </main>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

@@ -24,6 +24,7 @@ import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
 import Init from './containers/Init/Init';
 import ExamDates from './containers/ExamDates/ExamDates';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
+import ExamDetailsPage from './components/Registration/ExamDetailsPage/ExamDetailsPage';
 
 const Registry = lazy(() => import('./containers/Registry/Registry'));
 const ExamSessions = lazy(() =>
@@ -56,8 +57,18 @@ const app = () => (
             <Route path="/valitse-taso" component={LevelSelection} />
             <Route path="/valitse-paikkakunta" component={LocationSelection} />
             <Route path="/valitse-tutkintotilaisuus" component={Registration} />
-            <Route path="/ilmoittautuminen/tutkintotilaisuus/:examSessionId" component={RegistrationPage} />
-            <Route path="/ilmoittautuminen/vanhentunut" component={LinkExpired} />
+            <Route
+              path="/tutkintotilaisuus/:examSessionId"
+              component={ExamDetailsPage}
+            />
+            <Route
+              path="/ilmoittautuminen/tutkintotilaisuus/:examSessionId"
+              component={RegistrationPage}
+            />
+            <Route
+              path="/ilmoittautuminen/vanhentunut"
+              component={LinkExpired}
+            />
             <Route path="/maksu/vanhentunut" component={LinkExpired} />
             <Route path="/maksu/tila" component={PaymentStatus} />
             <Route path="/maksu/:registrationId" component={PaymentRedirect} />
