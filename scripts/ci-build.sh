@@ -9,7 +9,7 @@ if [ "${TRAVIS_EVENT_TYPE}" != "cron" ]; then
   ./mvnw clean package
   mv target/yki-frontend-*.jar $DOCKER_BUILD_DIR/artifact/${ARTIFACT_NAME}.jar
   cp -vr src/main/resources/* $DOCKER_BUILD_DIR/config/
-  export BASE_IMAGE="baseimage-fatjar:latest-master"
+  export BASE_IMAGE="baseimage-fatjar:jdk11"
   ./ci-tools/common/pull-image.sh
   ./ci-tools/build/build-fatjar.sh $ARTIFACT_NAME
 fi
