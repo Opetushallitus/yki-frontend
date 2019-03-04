@@ -115,6 +115,10 @@ class NewRegistryItem extends PureComponent {
       </React.Fragment>
     );
 
+    const orgTypes = {
+      organisaatiotyyppi_01: this.props.t('registry.search.orgType01'),
+      organisaatiotyyppi_02: this.props.t('registry.search.orgType02'),
+    };
     const searchResults = (
       <div className={classes.SearchResults}>
         {this.state.organizationsMatchingSearch.map(org => (
@@ -125,6 +129,9 @@ class NewRegistryItem extends PureComponent {
             onClick={() => this.selectOrganizationHandler(org)}
           >
             {getLocalizedName(org.nimi, this.props.i18n.lang)}
+            <span className={classes.OrgType}>
+              ({orgTypes[org.organisaatiotyypit[0]]})
+            </span>
           </div>
         ))}
       </div>
@@ -132,7 +139,10 @@ class NewRegistryItem extends PureComponent {
 
     const name =
       this.state.selected &&
-      getLocalizedName(this.state.selectedOrganization.nimi, this.props.i18n.lang);
+      getLocalizedName(
+        this.state.selectedOrganization.nimi,
+        this.props.i18n.lang,
+      );
 
     const form = (
       <div>
