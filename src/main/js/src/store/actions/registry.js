@@ -72,10 +72,16 @@ export const fetchOrganizations = () => {
     dispatch(fetchOrganizationsStart());
     axios
       .get(
-        '/organisaatio-service/rest/organisaatio/v4/hae?searchStr=&aktiiviset=true&suunnitellut=true&lakkautetut=false&organisaatiotyyppi=organisaatiotyyppi_02',
+        '/organisaatio-service/rest/organisaatio/v4/hae?searchStr=&aktiiviset=true&suunnitellut=true&lakkautetut=false',
       )
       .then(res => {
-        dispatch(fetchOrganizationsSuccess(res.data.organisaatiot));
+        const organizations_01_02 = res.data.organisaatiot.filter(org => {
+          return (
+            org.organisaatiotyypit.includes('organisaatiotyyppi_01') ||
+            org.organisaatiotyypit.includes('organisaatiotyyppi_02')
+          );
+        });
+        dispatch(fetchOrganizationsSuccess(organizations_01_02));
       })
       .catch(err => {
         dispatch(fetchOrganizationsFail(err));
