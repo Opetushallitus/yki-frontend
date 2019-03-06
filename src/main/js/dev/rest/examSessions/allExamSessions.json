@@ -10,7 +10,7 @@
       "session_date": "2019-05-26",
       "organizer_oid": "1.2.246.562.10.28646781493",
       "id": 10,
-      "registration_start_date": "2018-12-03",
+      "registration_start_date": "2025-12-03",
       "location": [
         {
           "lang": "fi",
@@ -34,7 +34,7 @@
           "address": "Jokukatu 4, 00100 Tampere"
         }
       ],
-      "registration_end_date": "2018-12-14"
+      "registration_end_date": "2039-12-14"
     },
     {
       "level_code": "KESKI",
@@ -70,7 +70,7 @@
           "address": "Jokukatu 4, 00100 Tampere"
         }
       ],
-      "registration_end_date": "2019-02-28"
+      "registration_end_date": "2039-02-28"
     },
     {
       "level_code": "KESKI",
@@ -106,7 +106,7 @@
           "address": "Mikälietie 5, 40100 Jyväskylä"
         }
       ],
-      "registration_end_date": "2019-02-28"
+      "registration_end_date": "2039-02-28"
     },
     {
       "level_code": "YLIN",
@@ -178,7 +178,7 @@
           "address": "Mikälietie 5, 40100 Jyväskylä"
         }
       ],
-      "registration_end_date": "2019-02-28"
+      "registration_end_date": "2039-02-28"
     }
   ]
 }
