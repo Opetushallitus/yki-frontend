@@ -101,6 +101,7 @@ const registryItemForm = props => {
                         moment(d[0], DATE_FORMAT).toISOString(),
                       )
                     }
+                    locale={props.i18n.language}
                     tabIndex="1"
                   />
                 </div>
@@ -121,6 +122,7 @@ const registryItemForm = props => {
                         moment(d[0], DATE_FORMAT).toISOString(),
                       )
                     }
+                    locale={props.i18n.language}
                     tabIndex="2"
                   />
                 </div>

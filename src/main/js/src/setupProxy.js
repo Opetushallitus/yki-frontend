@@ -58,8 +58,8 @@ const postOffice = JSON.parse(fs.readFileSync('./dev/rest/codes/posti.json'));
 let organizers = [
   {
     oid: '1.2.246.562.10.28646781493',
-    agreement_start_date: '2018-01-01T00:00:00.000Z',
-    agreement_end_date: '2029-01-01T00:00:00.000Z',
+    agreement_start_date: '2018-01-01',
+    agreement_end_date: '2029-01-01',
     contact_name: 'Iida Ikola',
     contact_email: 'iida.ikola@amiedu.fi',
     contact_phone_number: '0101234546',
