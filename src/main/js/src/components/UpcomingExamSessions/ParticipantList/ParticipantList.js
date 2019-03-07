@@ -79,6 +79,7 @@ export const participantList = props => {
         <div className={classes.FirstShowOnHover}>
           <ActionButton
             children={confirmPayment(p.state)}
+            confirmOnRight={true}
             onClick={() =>
               props.onConfirmPayment(
                 props.examSession.organizer_oid,
@@ -110,6 +111,7 @@ export const participantList = props => {
         <div className={classes.ShowOnHover}>
           <ActionButton
             children={cancelRegistration()}
+            confirmOnRight={true}
             onClick={() =>
               props.onCancel(
                 props.examSession.organizer_oid,

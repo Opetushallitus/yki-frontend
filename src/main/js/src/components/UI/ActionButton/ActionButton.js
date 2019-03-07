@@ -47,13 +47,13 @@ export class ActionButton extends Component {
       </button>
     ) : this.props.confirmOnRight ? (
       <React.Fragment>
-        {confirmButton(classes.ActionLeft)}
-        {cancelButton(classes.ActionRight)}
+        {cancelButton(classes.ActionLeft)}
+        {confirmButton(classes.ActionRight)}
       </React.Fragment>
     ) : (
       <React.Fragment>
-        {cancelButton(classes.ActionLeft)}
-        {confirmButton(classes.ActionRight)}
+        {confirmButton(classes.ActionLeft)}
+        {cancelButton(classes.ActionRight)}
       </React.Fragment>
     );
   }

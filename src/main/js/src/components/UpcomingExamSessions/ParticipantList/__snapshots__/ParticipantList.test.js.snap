@@ -51,6 +51,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     >
       <ActionButton
         cancelText="examSession.registration.confirmPayment.cancel"
+        confirmOnRight={true}
         confirmText="examSession.registration.confirmPayment.confirm"
         onClick={[Function]}
       />
@@ -88,6 +89,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     >
       <ActionButton
         cancelText="examSession.registration.cancel.cancel"
+        confirmOnRight={true}
         confirmText="examSession.registration.cancel.confirm"
         onClick={[Function]}
       >
@@ -141,6 +143,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     >
       <ActionButton
         cancelText="examSession.registration.confirmPayment.cancel"
+        confirmOnRight={true}
         confirmText="examSession.registration.confirmPayment.confirm"
         onClick={[Function]}
       >
@@ -186,6 +189,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     >
       <ActionButton
         cancelText="examSession.registration.cancel.cancel"
+        confirmOnRight={true}
         confirmText="examSession.registration.cancel.confirm"
         onClick={[Function]}
       >
