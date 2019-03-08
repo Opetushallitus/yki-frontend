@@ -10,6 +10,7 @@ import checkMarkNotDone from '../../../assets/svg/checkmark-not-done.svg';
 import trashcan from '../../../assets/svg/trashcan.svg';
 import classes from './ParticipantList.module.css';
 import { ActionButton } from '../../UI/ActionButton/ActionButton';
+import ListExport from './ListExport/ListExport';
 
 export const participantList = props => {
   const registratioStatus = registrationState => {
@@ -135,9 +136,16 @@ export const participantList = props => {
         {props.t('examSession.participants')}
         {':'} {props.participants.length} / {props.examSession.max_participants}
       </h3>
-      <div className={classes.ParticipantList}>
-        {participantRows(props.participants)}
-      </div>
+      {props.participants.length > 0 && (
+        <React.Fragment>
+          <div className={classes.ListExport}>
+            <ListExport participants={props.participants} />
+          </div>
+          <div className={classes.ParticipantList}>
+            {participantRows(props.participants)}
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 };

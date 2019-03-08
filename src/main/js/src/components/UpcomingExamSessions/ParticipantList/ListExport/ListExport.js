@@ -1,0 +1,98 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import XLSX from 'xlsx';
+import moment from 'moment';
+
+import { DATE_FORMAT } from '../../../../common/Constants';
+import classes from './ListExport.module.css';
+
+const defaultCol = { wch: 12 };
+const columns = [
+  defaultCol,
+  defaultCol,
+  defaultCol,
+  defaultCol,
+  defaultCol,
+  defaultCol,
+  { wch: 24 },
+  { wch: 16 },
+  { wch: 20 },
+  defaultCol,
+  defaultCol,
+  defaultCol,
+  { wch: 14 },
+  defaultCol,
+];
+
+export const listExport = props => {
+  const toArrayBuffer = s => {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+
+    for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
+    return buf;
+  };
+
+  const download = (url, type) => {
+    const link = document.createElement('a');
+    link.download = `osallistujat_${moment().format(DATE_FORMAT)}.${type}`;
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const exportToExcel = participants => {
+    const data = participants.map(p => {
+      return {
+        etunimi: p.form.first_name,
+        sukunimi: p.form.last_name,
+        tila: p.state === 'COMPLETED' ? 'Maksanut' : 'Ei maksanut',
+        hetu: p.form.ssn,
+        syntymaaika: p.form.birth_date,
+        sukupuoli: p.form.gender ? (p.form.gender === '1' ? 'M' : 'N') : null,
+        email: p.form.email,
+        puhelin: p.form.phone_number,
+        katuosoite: p.form.street_address,
+        tehtavakieli: p.form.exam_lang,
+        todistuskieli: p.form.certificate_lang,
+        postinumero: p.form.zip,
+        postitoimipaikka: p.form.post_office,
+        kansalaisuus: p.form.nationalities ? p.form.nationalities[0] : null,
+      };
+    });
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(data);
+
+    worksheet['!cols'] = columns;
+    workbook.SheetNames.push('');
+    workbook.Sheets[''] = worksheet;
+
+    const workbookOut = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      bookSST: true,
+      type: 'binary',
+    });
+
+    let url = window.URL.createObjectURL(
+      new Blob([toArrayBuffer(workbookOut)], {
+        type: 'application/octet-stream',
+      }),
+    );
+    console.log('url', url);
+    download(url, 'xlsx');
+  };
+
+  return (
+      <button className={classes.Button} onClick={() => exportToExcel(props.participants)}>
+        Lataa excel
+      </button>
+  );
+};
+
+listExport.propTypes = {
+  participants: PropTypes.array.isRequired,
+};
+
+export default listExport;
