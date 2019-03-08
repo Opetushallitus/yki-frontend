@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import XLSX from 'xlsx';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 import { DATE_FORMAT } from '../../../../common/Constants';
 import classes from './ListExport.module.css';
@@ -25,6 +26,8 @@ const columns = [
 ];
 
 export const listExport = props => {
+  const { t } = useTranslation();
+
   const toArrayBuffer = s => {
     const buf = new ArrayBuffer(s.length);
     const view = new Uint8Array(buf);
@@ -80,13 +83,12 @@ export const listExport = props => {
         type: 'application/octet-stream',
       }),
     );
-    console.log('url', url);
     download(url, 'xlsx');
   };
 
   return (
-      <button className={classes.Button} onClick={() => exportToExcel(props.participants)}>
-        Lataa excel
+      <button className={classes.Button} onClick={() => exportToExcel(props.participants)} data-cy="button-export-to-excel">
+        {t('examSession.downloadExcel')}
       </button>
   );
 };

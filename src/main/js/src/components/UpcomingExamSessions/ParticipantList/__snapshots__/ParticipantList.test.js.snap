@@ -13,6 +13,44 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     50
   </h3>
   <div
+    className="ListExport"
+  >
+    <listExport
+      participants={
+        Array [
+          Object {
+            "form": Object {
+              "email": "michael.wallis@test.com",
+              "first_name": "Wallis",
+              "last_name": "Michael",
+              "phone_number": "+358405131441",
+              "post_office": "Espoo",
+              "ssn": "011088-1234 ",
+              "street_address": "Revontulentie 13 C 2",
+              "zip": "02100",
+            },
+            "registration_id": 1,
+            "state": "COMPLETED",
+          },
+          Object {
+            "form": Object {
+              "email": "natalia.gaddens@test.com",
+              "first_name": "Gaddens",
+              "last_name": "Natalia",
+              "phone_number": "+358405131441",
+              "post_office": "Espoo",
+              "ssn": "011088-1234 ",
+              "street_address": "Revontulentie 13 C 2",
+              "zip": "02100",
+            },
+            "registration_id": 2,
+            "state": "SUBMITTED",
+          },
+        ]
+      }
+    />
+  </div>
+  <div
     className="ParticipantList"
   >
     <div
