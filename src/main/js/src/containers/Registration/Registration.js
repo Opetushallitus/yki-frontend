@@ -12,6 +12,7 @@ import * as actions from '../../store/actions/index';
 
 class Registration extends Component {
   componentDidMount() {
+    document.title = this.props.t('registration.document.title');
     if (!this.props.language || !this.props.level || !this.props.location) {
       this.props.onFetchExamSessions();
     }

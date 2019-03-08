@@ -6,6 +6,7 @@
   font-size: 1em;
   float: right;
   padding: 0 12px;
+  cursor: pointer;
 }
 
 .ParticipantButton {
@@ -19,6 +20,7 @@
   text-align: center;
   font-size: 0.875em;
   background-color: hsl(96, 96%, 27%);
+  cursor: pointer;
 }
 
 .Button:nth-of-type(2) {

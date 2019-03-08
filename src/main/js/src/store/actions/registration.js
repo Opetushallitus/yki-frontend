@@ -101,16 +101,11 @@ export const selectExamSession = examSession => {
   };
 };
 
-// helper for testing spinner while loading
-const sleeper = ms => x =>
-  new Promise(resolve => setTimeout(() => resolve(x), ms));
-
 export const fetchExamSession = examSessionId => {
   return dispatch => {
     dispatch(fetchExamSessionStart());
     axios
       .get(`/yki/api/exam-session/${examSessionId}`)
-      .then(sleeper(3000))
       .then(res => dispatch(fetchExamSessionSuccess(res.data)))
       .catch(err => dispatch(fetchExamSessionFail(err)));
   };

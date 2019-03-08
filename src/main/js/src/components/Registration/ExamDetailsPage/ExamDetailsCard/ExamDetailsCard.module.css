@@ -1,0 +1,30 @@
+.Card {
+  height: 140px;
+  width: 100%;
+  margin: 24px 0;
+  display: grid;
+  align-items: center;
+  grid-gap: 5px;
+}
+
+.Card > p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.Card > p:nth-child(2),
+.Card > p:nth-child(4) {
+  margin-bottom: 12px;
+}
+
+@media (min-width: 620px) {
+  .Card {
+    max-width: 333px;
+    padding: 10px;
+    background-color: hsl(0, 0%, 96%);
+  }
+
+  .Card > p {
+    margin-left: 4px;
+  }
+}

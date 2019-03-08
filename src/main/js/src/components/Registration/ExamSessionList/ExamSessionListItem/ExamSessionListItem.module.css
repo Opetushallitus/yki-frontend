@@ -44,12 +44,14 @@
   width: 88px;
   color: hsl(0, 0%, 100%);
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .RegistrationLocked {
   height: 30px;
   color: hsl(0, 0%, 40%);
   background: hsl(0, 0%, 80%);
+  pointer-events: none;
 }
 
 .ButtonForSignup {
