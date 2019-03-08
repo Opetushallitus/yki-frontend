@@ -43,7 +43,11 @@ export const listExport = props => {
     document.body.appendChild(link);
     link.click();
     link.remove();
-    window.URL.revokeObjectURL(url);
+
+    // needed for edge compatibility
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+    }, 100);
   };
 
   const exportToExcel = participants => {
@@ -87,9 +91,13 @@ export const listExport = props => {
   };
 
   return (
-      <button className={classes.Button} onClick={() => exportToExcel(props.participants)} data-cy="button-export-to-excel">
-        {t('examSession.downloadExcel')}
-      </button>
+    <button
+      className={classes.Button}
+      onClick={() => exportToExcel(props.participants)}
+      data-cy="button-export-to-excel"
+    >
+      {t('examSession.downloadExcel')}
+    </button>
   );
 };
 
