@@ -61,15 +61,21 @@ const examDetailsPage = ({
               )}
             </div>
             <hr />
-            <div className={classes.Identification}>
-              <p>
-                <strong>{t('registration.examDetails.identify')}</strong>
-              </p>
-              <AuthButton examSessionId={Number(match.params.examSessionId)} />
-              <button className={classes.EmailIdentificationButton}>
-                {t('registration.examDetails.identify.withEmail')}
-              </button>
-            </div>
+            {seatsAvailable ? (
+              <div className={classes.Identification}>
+                <p>
+                  <strong>{t('registration.examDetails.identify')}</strong>
+                </p>
+                <AuthButton
+                  examSessionId={Number(match.params.examSessionId)}
+                />
+                <button className={classes.EmailIdentificationButton}>
+                  {t('registration.examDetails.identify.withEmail')}
+                </button>
+              </div>
+            ) : (
+              <div>TODO: signing up for notifications</div>
+            )}
           </Fragment>
         )}
       </main>
