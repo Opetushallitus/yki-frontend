@@ -57,6 +57,26 @@ describe('Registration', () => {
     cy.get('[data-cy=exam-session-list-item]').should('have.length', 1);
   });
 
+  it('Show exam session details page after selecting exam', () => {
+    cy.visit('/valitse-tutkintotilaisuus');
+    cy.contains('Ilmoittaudu').click();
+    cy.contains('Olet ilmoittautumassa tutkintotilaisuuteen');
+    cy.contains('Tunnistaudu Suomi.fi:n kautta');
+  });
+
+  it('Exam session details page return button returns to exam session listing', () => {
+    cy.visit('/valitse-tutkintotilaisuus');
+    cy.contains('Ilmoittaudu').click();
+    cy.contains('Takaisin').click();
+    cy.url().should('include', '/valitse-tutkintotilaisuus');
+  });
+
+  it('Exam session details page shows notification signup information', () => {
+    cy.visit('/valitse-tutkintotilaisuus');
+    cy.contains('Ilmoittaudu varasijalle').click();
+    cy.contains('Olet ilmoittautumassa varasijalle tutkintotilaisuuteen');
+  });
+
   it('Login link expired page exists', () => {
     cy.visit('/ilmoittautuminen/vanhentunut');
     cy.get('[data-cy=link-expired-header]').should('exist');
