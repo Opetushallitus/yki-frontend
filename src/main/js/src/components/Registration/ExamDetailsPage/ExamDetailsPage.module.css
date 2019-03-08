@@ -3,8 +3,51 @@
   margin: 0 auto;
 }
 
+.Loading {
+  margin: 0;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Title {
+  text-align: center;
+  font-size: 1.125em;
+}
+
+.Identification {
+  display: grid;
+  grid-row-gap: 10px;
+  justify-items: center;
+}
+
+.EmailIdentificationButton {
+  border: none;
+  background: none;
+  height: 35px;
+  width: 252px;
+  font-size: 0.875em;
+  color: hsl(225, 100%, 40%);
+}
+
 @media (min-width: 620px) {
   .Content {
     width: calc(100vw - 200px);
+    max-width: 333px;
+    margin: 0 0 0 100px;
+  }
+
+  .Loading {
+    left: 20%;
+  }
+
+  .Title {
+    text-align: start;
+  }
+
+  .Identification {
+    grid-row-gap: 20px;
+    justify-items: start;
   }
 }

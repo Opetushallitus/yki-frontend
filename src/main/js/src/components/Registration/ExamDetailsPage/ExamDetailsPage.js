@@ -1,22 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import classes from './ExamDetailsPage.module.css';
+import Spinner from '../../UI/Spinner/Spinner';
 import * as actions from '../../../store/actions/index';
 import Header from '../../Header/Header';
 import BackButton from '../BackButton/BackButton';
+import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
+import AuthButton from '../AuthButton/AuthButton';
 
-const examDetailsPage = ({ session, history, match, onfetchExamSession }) => {
+const examDetailsPage = ({
+  session,
+  history,
+  match,
+  onfetchExamSession,
+  loading,
+}) => {
   const [t] = useTranslation();
 
   useEffect(() => {
+    document.title = t('registration.document.examDetails.title');
     if (!Object.keys(session).length) {
       onfetchExamSession(match.params.examSessionId);
     }
   });
 
-  console.log(session);
+  const seatsAvailable = session.max_participants - session.participants > 0;
 
   return (
     <div>
@@ -25,8 +36,42 @@ const examDetailsPage = ({ session, history, match, onfetchExamSession }) => {
         clicked={() => history.push(t('/valitse-tutkintotilaisuus'))}
       />
       <main className={classes.Content}>
-        <p>{session.language_code}</p>
-        <p>{session.level_code}</p>
+        {loading ? (
+          <div className={classes.Loading}>
+            <Spinner />
+          </div>
+        ) : (
+          <Fragment>
+            <h2 className={classes.Title}>
+              {seatsAvailable
+                ? t('registration.examDetails.title')
+                : t('registration.examDetails.full.title')}
+            </h2>
+            <ExamDetailsCard exam={session} isFull={!seatsAvailable} />
+            <div className={classes.InfoText}>
+              {seatsAvailable ? (
+                <p>{t('registration.examDetails.futureInfo')}</p>
+              ) : (
+                <Fragment>
+                  <p>
+                    <strong>{t('registration.examDetails.examFull')}</strong>
+                  </p>
+                  <p>{t('registration.examDetails.queueInfo')}</p>
+                </Fragment>
+              )}
+            </div>
+            <hr />
+            <div className={classes.Identification}>
+              <p>
+                <strong>{t('registration.examDetails.identify')}</strong>
+              </p>
+              <AuthButton examSessionId={Number(match.params.examSessionId)} />
+              <button className={classes.EmailIdentificationButton}>
+                {t('registration.examDetails.identify.withEmail')}
+              </button>
+            </div>
+          </Fragment>
+        )}
       </main>
     </div>
   );
@@ -35,7 +80,7 @@ const examDetailsPage = ({ session, history, match, onfetchExamSession }) => {
 const mapStateToProps = state => {
   return {
     session: state.registration.selectedExamSession,
-    loading: state.registry.loading,
+    loading: state.registration.loading,
   };
 };
 
@@ -44,6 +89,14 @@ const mapDispatchToProps = dispatch => {
     onfetchExamSession: examSessionId =>
       dispatch(actions.fetchExamSession(examSessionId)),
   };
+};
+
+examDetailsPage.propTypes = {
+  session: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  onfetchExamSession: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default connect(
