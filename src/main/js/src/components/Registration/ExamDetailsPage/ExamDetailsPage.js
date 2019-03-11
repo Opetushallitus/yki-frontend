@@ -33,7 +33,7 @@ const examDetailsPage = ({
     <div>
       <Header />
       <BackButton
-        clicked={() => history.push(t('/valitse-tutkintotilaisuus'))}
+        clicked={() => history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')}
       />
       <main className={classes.Content}>
         {loading ? (

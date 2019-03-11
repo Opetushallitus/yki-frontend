@@ -53,10 +53,10 @@ const app = () => (
         <Router basename={'/yki'}>
           <Switch>
             <Route exact path="/" component={Description} />
-            <Route path="/valitse-kieli" component={LanguageSelection} />
-            <Route path="/valitse-taso" component={LevelSelection} />
-            <Route path="/valitse-paikkakunta" component={LocationSelection} />
-            <Route path="/valitse-tutkintotilaisuus" component={Registration} />
+            <Route path="/ilmoittautuminen/valitse-kieli" component={LanguageSelection} />
+            <Route path="/ilmoittautuminen/valitse-taso" component={LevelSelection} />
+            <Route path="/ilmoittautuminen/valitse-paikkakunta" component={LocationSelection} />
+            <Route path="/ilmoittautuminen/valitse-tutkintotilaisuus" component={Registration} />
             <Route
               path="/tutkintotilaisuus/:examSessionId"
               component={ExamDetailsPage}

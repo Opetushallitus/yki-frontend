@@ -42,14 +42,14 @@ describe('Registration', () => {
   });
 
   it('Default filters get applied when directly visiting exam session list page', () => {
-    cy.visit('/valitse-tutkintotilaisuus');
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.get('select').contains('Suomi');
     cy.get('select').contains('Kaikki tasot');
     cy.get('select').contains('Koko maa');
   });
 
   it('Filters work', () => {
-    cy.visit('/valitse-tutkintotilaisuus');
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.get('[data-cy=exam-session-list-item]').should('have.length', 4);
     cy.get('[data-cy=language-filter]').select('Saksa');
     cy.get('[data-cy=level-filter]').select('Ylin taso');
@@ -58,21 +58,21 @@ describe('Registration', () => {
   });
 
   it('Show exam session details page after selecting exam', () => {
-    cy.visit('/valitse-tutkintotilaisuus');
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.contains('Ilmoittaudu').click();
     cy.contains('Olet ilmoittautumassa tutkintotilaisuuteen');
     cy.contains('Tunnistaudu Suomi.fi:n kautta');
   });
 
   it('Exam session details page return button returns to exam session listing', () => {
-    cy.visit('/valitse-tutkintotilaisuus');
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.contains('Ilmoittaudu').click();
     cy.contains('Takaisin').click();
-    cy.url().should('include', '/valitse-tutkintotilaisuus');
+    cy.url().should('include', '/ilmoittautuminen/valitse-tutkintotilaisuus');
   });
 
   it('Exam session details page shows notification signup information', () => {
-    cy.visit('/valitse-tutkintotilaisuus');
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.contains('Ilmoittaudu varasijalle').click();
     cy.contains('Olet ilmoittautumassa varasijalle tutkintotilaisuuteen');
   });
