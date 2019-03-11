@@ -15,6 +15,7 @@ const examSession = {
   registration_start_date: '2028-03-01',
   language_code: 'fin',
   level_code: 'PERUS',
+  exam_fee: '100.00',
 };
 
 describe('<RegistrationSuccess />', () => {
@@ -22,7 +23,7 @@ describe('<RegistrationSuccess />', () => {
     const wrapper = shallow(
       <RegistrationSuccess
         t={key => key}
-        initData={examSession}
+        initData={{ exam_session: examSession }}
         formData={{ user: { email: 'test@test.com' } }}
       />,
     );

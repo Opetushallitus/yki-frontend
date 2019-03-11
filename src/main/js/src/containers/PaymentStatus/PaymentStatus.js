@@ -5,32 +5,50 @@ import { withTranslation } from 'react-i18next';
 import queryString from 'query-string';
 
 import Header from '../../components/Header/Header';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import Hyperlink from '../../components/UI/Hyperlink/Hyperlink';
 import classes from './PaymentStatus.module.css';
 import axios from '../../axios';
+import ExamDetailsCard from '../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
 
 export class PaymentStatus extends Component {
   state = {
     examSession: null,
+    loading: true,
   };
 
   componentDidMount() {
     if (!this.state.examSession) {
-      const queryParams = queryString.parse(this.props.location.search);
-      axios.get(`/yki/api/exam-session/${queryParams.id}`).then(({ data }) => {
-        this.setState({ examSession: data });
-      });
+      const { id } = queryString.parse(this.props.location.search);
+      // only get exam session if url contains id query parameter
+      if (id) {
+        axios
+          .get(`/yki/api/exam-session/${id}`)
+          .then(({ data }) => {
+            this.setState({ examSession: data, loading: false });
+          })
+          .catch(() => this.setState({ loading: false }));
+      } else {
+        this.setState({ loading: false });
+      }
     }
   }
 
   render() {
-    const success = (
+    const success = this.state.loading ? (
+      <Spinner />
+    ) : (
       <React.Fragment>
         <div>
           <h1 data-cy="payment-status-header">
             {this.props.t('payment.status.success')}
           </h1>
-          <p>{this.props.t('payment.status.success.info1')}:</p>
+          {this.state.examSession && (
+            <React.Fragment>
+              <p>{this.props.t('payment.status.success.info1')}:</p>
+              <ExamDetailsCard exam={this.state.examSession} isFull={false} />
+            </React.Fragment>
+          )}
         </div>
         <div>
           <p>{this.props.t('payment.status.success.info2')}</p>
@@ -57,9 +75,9 @@ export class PaymentStatus extends Component {
     );
 
     const content = () => {
-      const queryParams = queryString.parse(this.props.location.search);
+      const { status } = queryString.parse(this.props.location.search);
 
-      switch (queryParams.status) {
+      switch (status) {
         case 'payment-success': {
           return success;
         }

@@ -28,11 +28,13 @@ const examDetailsCard = ({ exam, isFull }) => {
   const address = location ? <p>{`${location.address}`}</p> : null;
 
   const price = !isFull && (
-    <p>{`${t('registration.examDetails.card.price')} ??? €`}</p>
+    <p>{`${t('registration.examDetails.card.price')} ${
+      exam.exam_fee ? exam.exam_fee : ''
+    } €`}</p>
   );
 
   return (
-    <div className={classes.Card}>
+    <div className={classes.Card} data-cy="exam-details-card">
       {languageAndLevel}
       {date}
       {organizer}

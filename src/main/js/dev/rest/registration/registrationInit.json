@@ -30,9 +30,9 @@
         "extra_information": null,
         "lang": "en"
       }
-    ]
+    ],
+    "exam_fee": "100.00"
   },
-  "exam_payment": "100.00",
   "user": {
     "last_name": "Parkkonen-Testi",
     "nick_name": null,

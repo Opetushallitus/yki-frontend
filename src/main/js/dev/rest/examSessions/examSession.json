@@ -1,0 +1,37 @@
+{
+    "level_code": "PERUS",
+    "max_participants": 50,
+    "language_code": "fin",
+    "participants": 0,
+    "office_oid": "1.2.246.562.10.29461948951",
+    "published_at": "2019-01-15T11:16:37.959Z",
+    "session_date": "2019-05-26",
+    "organizer_oid": "1.2.246.562.10.28646781493",
+    "id": 10,
+    "registration_start_date": "2025-12-03",
+    "location": [
+      {
+        "lang": "fi",
+        "extra_information": null,
+        "name": "Amiedu",
+        "other_location_info": "auditorio A2",
+        "address": "Jokukatu 4, 00100 Tampere"
+      },
+      {
+        "lang": "sv",
+        "extra_information": null,
+        "name": "Amiedu",
+        "other_location_info": "auditorium A2",
+        "address": "Jokukatu 4, 00100 Tammerfors"
+      },
+      {
+        "lang": "en",
+        "extra_information": null,
+        "name": "Amiedu",
+        "other_location_info": "auditorium A2",
+        "address": "Jokukatu 4, 00100 Tampere"
+      }
+    ],
+    "registration_end_date": "2039-12-14",
+    "exam_fee": "100.00"
+  }

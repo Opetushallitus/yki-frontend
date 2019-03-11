@@ -133,5 +133,6 @@ describe('Registration form', () => {
     cy.get('[data-cy=form-submit-button]').click();
 
     cy.get('[data-cy=registration-success-header]').should('exist');
+    cy.get('[data-cy=exam-details-card').should('exist');
   });
 });

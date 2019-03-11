@@ -45,6 +45,8 @@ const getRegistrations = () => {
   );
 };
 
+const examSession = JSON.parse(fs.readFileSync('./dev/rest/examSessions/examSession.json'));
+
 let registrations = getRegistrations();
 
 const countries = JSON.parse(
@@ -436,7 +438,7 @@ module.exports = function(app) {
   app.get('/yki/api/exam-session/:id', (req, res) => {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(allExamSessions.exam_sessions[0]);
+      res.send(examSession);
     } catch (err) {
       res.status(404).send(err.message);
     }
