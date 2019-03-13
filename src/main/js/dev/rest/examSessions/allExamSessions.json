@@ -34,6 +34,7 @@
           "address": "Jokukatu 4, 00100 Tampere"
         }
       ],
+      "exam_fee": "100.00",
       "registration_end_date": "2039-12-14"
     },
     {
@@ -70,6 +71,7 @@
           "address": "Jokukatu 4, 00100 Tampere"
         }
       ],
+      "exam_fee": "123.00",
       "registration_end_date": "2039-02-28"
     },
     {
@@ -106,6 +108,7 @@
           "address": "Mikälietie 5, 40100 Jyväskylä"
         }
       ],
+      "exam_fee": "100.00",
       "registration_end_date": "2039-02-28"
     },
     {
@@ -142,6 +145,7 @@
           "address": "Mikälietie 5, 40100 Jyväskylä"
         }
       ],
+      "exam_fee": "160.00",
       "registration_end_date": "2029-02-28"
     },
     {
@@ -178,6 +182,7 @@
           "address": "Mikälietie 5, 40100 Jyväskylä"
         }
       ],
+      "exam_fee": "100.00",
       "registration_end_date": "2039-02-28"
     }
   ]

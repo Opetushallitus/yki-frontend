@@ -167,6 +167,9 @@
   "registration.init.error.session.closed": "Ilmoittautumisaika on päättynyt.",
   "registration.init.error.session.full": "Tutkintotilaisuus on täynnä.",
   "registration.init.error.session.multiple": "Voit ilmoittautua vain yhteen tutkintotilaisuuteen.",
+
+  "registration.error.form.expired": "Lomakkeen täyttöaika on umpeutunut",
+
   "registration.list.date": "Päivämäärä",
   "registration.list.exam": "Tutkinto",
   "registration.list.examSpots": "Paikkoja vapaana",

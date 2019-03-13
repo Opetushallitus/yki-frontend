@@ -87,6 +87,7 @@ describe('Registration form', () => {
       status: 500,
       response: {
         success: false,
+        error: { expired: true },
       },
     });
     cy.get('[data-cy=input-phoneNumber]').type('+358401234567');
@@ -97,6 +98,9 @@ describe('Registration form', () => {
     cy.log('form submit failed');
     cy.get('[data-cy=form-submit-error').should('exist');
     cy.get('[data-cy=form-submit-button]').should('exist');
+    cy.get('[data-cy=alert-title')
+      .contains('Lomakkeen täyttöaika on umpeutunut')
+      .should('exist');
   });
 
   it('suomi.fi authenticated user can fill and submit form', () => {

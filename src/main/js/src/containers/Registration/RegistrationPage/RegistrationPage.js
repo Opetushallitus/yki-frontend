@@ -21,7 +21,10 @@ export class RegistrationPage extends Component {
 
   render() {
     const initError = this.props.initDataError ? (
-      <RegistrationError error={this.props.initDataError}/>
+      <RegistrationError
+        error={this.props.initDataError}
+        defaultKey={'registration.init.error.generic'}
+      />
     ) : null;
 
     const successPage = this.props.submitSuccess ? (
@@ -73,7 +76,9 @@ const mapDispatchToProps = dispatch => {
     onInitRegistrationForm: examSessionId =>
       dispatch(actions.initRegistrationForm(examSessionId)),
     onSubmitRegistrationForm: (registrationId, registrationForm) =>
-      dispatch(actions.submitRegistrationForm(registrationId, registrationForm)),
+      dispatch(
+        actions.submitRegistrationForm(registrationId, registrationForm),
+      ),
   };
 };
 

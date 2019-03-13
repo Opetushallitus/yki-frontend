@@ -9,11 +9,11 @@ import moment from 'moment';
 import classes from './RegistrationForm.module.css';
 import Button from '../../UI/Button/Button';
 import RadioButton from '../../UI/RadioButton/RadioButton';
-import Alert from '../../Alert/Alert';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
 import ZipAndPostOffice from './ZipAndPostOffice/ZipAndPostOffice';
 import GenderSelect from './GenderSelect/GenderSelect';
 import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
+import RegistrationError from '../RegistrationError/RegistrationError';
 
 export const registrationForm = props => {
   const mandatoryErrorMsg = props.t('error.mandatory');
@@ -248,7 +248,10 @@ export const registrationForm = props => {
             {!props.initData.user.ssn && (
               <div className={classes.FormElement}>
                 <div className={classes.Birthdate}>
-                  {inputField('birthdate', props.t('registration.form.birthdate.placeholder'))}
+                  {inputField(
+                    'birthdate',
+                    props.t('registration.form.birthdate.placeholder'),
+                  )}
                 </div>
                 <div className={classes.Gender}>
                   <GenderSelect
@@ -339,7 +342,10 @@ export const registrationForm = props => {
           </Button>
           {props.submitError && (
             <div data-cy="form-submit-error" className={classes.SubmitError}>
-              <Alert title={props.t('error.registrationForm.submitFailed')} />
+              <RegistrationError
+                error={props.submitError}
+                defaultKey={'error.registrationForm.submitFailed'}
+              />
             </div>
           )}
         </Form>

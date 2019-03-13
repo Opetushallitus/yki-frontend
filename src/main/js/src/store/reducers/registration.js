@@ -158,7 +158,7 @@ const reducer = (state = initialState, action) => {
         form: {
           ...state.form,
           submitting: false,
-          submitError: action.error,
+          submitError: action.error.response,
         },
       };
     default:
