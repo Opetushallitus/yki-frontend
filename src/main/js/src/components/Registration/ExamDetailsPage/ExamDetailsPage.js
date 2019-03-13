@@ -25,7 +25,7 @@ const examDetailsPage = ({
     if (!Object.keys(session).length) {
       onfetchExamSession(match.params.examSessionId);
     }
-  });
+  }, []);
 
   const seatsAvailable = session.max_participants - session.participants > 0;
 
