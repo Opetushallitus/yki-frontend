@@ -11,6 +11,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import ParticipantList from '../../../components/UpcomingExamSessions/ParticipantList/ParticipantList';
 import ExamSessionUpdateForm from './ExamSessionUpdateForm/ExamSessionUpdateForm';
 import * as actions from '../../../store/actions/index';
+import { relocateExamSession } from '../../../store/actions/examSession';
 
 export class ExamSessionDetails extends Component {
   componentDidMount = () => {
@@ -53,6 +54,7 @@ export class ExamSessionDetails extends Component {
             participants={this.props.participants}
             onCancel={this.props.onCancelRegistration}
             onConfirmPayment={this.props.onConfirmPayment}
+            onRelocate={this.props.onRelocate}
           />
         )}
       </div>
@@ -83,6 +85,20 @@ const mapDispatchToProps = dispatch => {
         actions.confirmPayment(organizerOid, examSessionId, registrationId),
       ),
     errorConfirmedHandler: () => dispatch(actions.examSessionFailReset()),
+    onRelocate: (
+      organizerOid,
+      examSessionId,
+      registrationId,
+      toExamSessionId,
+    ) =>
+      dispatch(
+        actions.relocateExamSession(
+          organizerOid,
+          examSessionId,
+          registrationId,
+          toExamSessionId,
+        ),
+      ),
   };
 };
 
@@ -96,6 +112,7 @@ ExamSessionDetails.propTypes = {
   onSubmitUpdateExamSession: PropTypes.func.isRequired,
   onSubmitDeleteExamSession: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
+  onRelocate: PropTypes.func.isRequired,
 };
 
 export default connect(

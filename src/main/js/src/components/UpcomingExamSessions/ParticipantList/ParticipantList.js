@@ -155,6 +155,7 @@ participantList.propTypes = {
   participants: PropTypes.array.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirmPayment: PropTypes.func.isRequired,
+  onRelocate: PropTypes.func.isRequired,
 };
 
 export default withTranslation()(participantList);

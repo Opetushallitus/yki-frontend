@@ -7,6 +7,7 @@ export {
   deleteExamSession,
   cancelRegistration,
   confirmPayment,
+  relocateExamSession,
 } from './examSession';
 export {
   fetchRegistryContent,

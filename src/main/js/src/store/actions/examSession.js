@@ -329,7 +329,56 @@ const confirmPaymentSuccess = () => {
 const confirmPaymentFail = error => {
   return {
     type: actionTypes.EXAM_SESSION_CONFIRM_PAYMENT_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.registration.confirmPaymentFailed' }),
+    error: Object.assign(error, {
+      key: 'error.examSession.registration.confirmPaymentFailed',
+    }),
+    loading: false,
+  };
+};
+
+export const relocateExamSession = (
+  oid,
+  examSessionId,
+  registrationId,
+  toExamSessionId,
+) => {
+  return dispatch => {
+    dispatch(relocateExamSessionStart());
+    axios
+      .post(
+        `/yki/api/virkailija/organizer/${oid}/exam-session/${examSessionId}/registration/${registrationId}/relocate`,
+        { to_exam_session_id: toExamSessionId },
+      )
+      .then(() => {
+        dispatch(relocateExamSessionSuccess());
+        dispatch(fetchExamSessionParticipants(oid, examSessionId));
+      })
+      .catch(err => {
+        dispatch(relocateExamSessionFail(err));
+      });
+  };
+};
+
+const relocateExamSessionStart = () => {
+  return {
+    type: actionTypes.EXAM_SESSION_RELOCATE_START,
+    loading: true,
+  };
+};
+
+const relocateExamSessionSuccess = () => {
+  return {
+    type: actionTypes.EXAM_SESSION_RELOCATE_SUCCESS,
+    loading: false,
+  };
+};
+
+const relocateExamSessionFail = error => {
+  return {
+    type: actionTypes.EXAM_SESSION_RELOCATE_FAIL,
+    error: Object.assign(error, {
+      key: 'error.examSession.registration.relocateExamSessionFailed',
+    }),
     loading: false,
   };
 };
