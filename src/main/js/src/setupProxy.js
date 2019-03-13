@@ -433,8 +433,11 @@ module.exports = function(app) {
 
   app.get('/yki/api/exam-session/:id', (req, res) => {
     try {
+      const session = allExamSessions.exam_sessions.find(
+        e => e.id === Number(req.params.id),
+      );
       res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(allExamSessions.exam_sessions.find(e => e.id === req.params.id));
+      res.send(session);
     } catch (err) {
       res.status(404).send(err.message);
     }
