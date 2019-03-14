@@ -76,9 +76,9 @@ const examSessionListItem = ({
         {t('registration.list.signupOpen')}
       </span>{' '}
       <span>
-        {`${moment(session.registration_end_date).format(
+        {`${moment(session.registration_start_date).format(
           DATE_FORMAT_WITHOUT_YEAR,
-        )} - ${moment(session.registration_start_date).format(
+        )} - ${moment(session.registration_end_date).format(
           DATE_FORMAT_WITHOUT_YEAR,
         )}`}
       </span>
