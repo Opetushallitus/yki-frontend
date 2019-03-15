@@ -12,7 +12,7 @@ import {
   DATE_FORMAT,
   DATE_FORMAT_WITHOUT_YEAR,
 } from '../../../../common/Constants';
-import ZipAndPostOffice from '../../../../components/Registration/RegistrationForm/ZipAndPostOffice/ZipAndPostOffice';
+import ZipAndPostOffice from '../../../../components/ZipAndPostOffice/ZipAndPostOffice';
 
 export class ExamSessionUpdateForm extends Component {
   render() {

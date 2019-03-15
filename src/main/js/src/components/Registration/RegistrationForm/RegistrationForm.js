@@ -10,7 +10,7 @@ import classes from './RegistrationForm.module.css';
 import Button from '../../UI/Button/Button';
 import RadioButton from '../../UI/RadioButton/RadioButton';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
-import ZipAndPostOffice from './ZipAndPostOffice/ZipAndPostOffice';
+import ZipAndPostOffice from '../../ZipAndPostOffice/ZipAndPostOffice';
 import GenderSelect from './GenderSelect/GenderSelect';
 import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
 import RegistrationError from '../RegistrationError/RegistrationError';

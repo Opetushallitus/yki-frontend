@@ -3,7 +3,7 @@ import { Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
-import axios from '../../../../axios';
+import axios from '../../axios';
 import classes from './ZipAndPostOffice.module.css';
 
 export class ZipAndPostOffice extends Component {

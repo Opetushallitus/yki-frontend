@@ -16,7 +16,7 @@ import {
   levelTranslations,
 } from '../../util/util';
 import { getLocalizedName } from '../../util/registryUtil';
-import ZipAndPostOffice from '../Registration/RegistrationForm/ZipAndPostOffice/ZipAndPostOffice';
+import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 
 const examSessionForm = props => {
   function validateDuplicateExamSession() {
