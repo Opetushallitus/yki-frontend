@@ -28,7 +28,11 @@ export class ExamSessionUpdateForm extends Component {
         .integer(),
       streetAddress: Yup.string().required(t('error.mandatory')),
       postOffice: Yup.string().required(t('error.mandatory')),
-      zip: Yup.string().required(t('error.mandatory')),
+      zip: Yup.string()
+        .matches(/\b\d{5}\b/, {
+          message: t('error.zip'),
+        })
+        .required(t('error.mandatory')),
       location: Yup.string(),
       extraFi: Yup.string(),
       extraSe: Yup.string(),

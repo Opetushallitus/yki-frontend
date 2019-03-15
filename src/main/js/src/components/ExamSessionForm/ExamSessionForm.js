@@ -55,7 +55,11 @@ const examSessionForm = props => {
       .integer(),
     streetAddress: Yup.string().required(props.t('error.mandatory')),
     postOffice: Yup.string().required(props.t('error.mandatory')),
-    zip: Yup.string().required(props.t('error.mandatory')),
+    zip: Yup.string()
+      .matches(/\b\d{5}\b/, {
+        message: props.t('error.zip'),
+      })
+      .required(props.t('error.mandatory')),
     location: Yup.string(),
     extraFi: Yup.string(),
     extraSv: Yup.string(),

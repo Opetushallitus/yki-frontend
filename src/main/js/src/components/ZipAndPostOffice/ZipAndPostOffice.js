@@ -14,9 +14,7 @@ export class ZipAndPostOffice extends Component {
         const postOfficeFI = metadata.find(m => m.kieli === 'FI').nimi;
         const postOfficeSV = metadata.find(m => m.kieli === 'SV').nimi;
         const postOffice =
-          this.props.i18n.lang === 'sv'
-            ? postOfficeSV
-            : postOfficeFI;
+          this.props.i18n.lang === 'sv' ? postOfficeSV : postOfficeFI;
         this.props.setFieldValue('postOffice', postOffice);
         this.props.setFieldValue('postOfficeFI', postOfficeFI);
         this.props.setFieldValue('postOfficeSV', postOfficeSV);
@@ -35,7 +33,10 @@ export class ZipAndPostOffice extends Component {
     return (
       <div className={classes.AddressInput}>
         <div className={classes.Zip}>
-          <h3>{this.props.t('registration.form.input.zip')}{this.props.mandatory && ' *'}</h3>
+          <h3>
+            {this.props.t('registration.form.input.zip')}
+            {this.props.mandatory && ' *'}
+          </h3>
           <Field component="input" name="zip" data-cy="input-zip" />
           <ErrorMessage
             name="zip"
@@ -45,7 +46,10 @@ export class ZipAndPostOffice extends Component {
           />
         </div>
         <div className={classes.PostOffice}>
-          <h3>{this.props.t('registration.form.input.postOffice')}{this.props.mandatory && ' *'}</h3>
+          <h3>
+            {this.props.t('registration.form.input.postOffice')}
+            {this.props.mandatory && ' *'}
+          </h3>
           <Field
             component="input"
             name="postOffice"
@@ -66,7 +70,7 @@ export class ZipAndPostOffice extends Component {
 ZipAndPostOffice.propTypes = {
   values: PropTypes.object.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  mandatory: PropTypes.bool
+  mandatory: PropTypes.bool,
 };
 
 export default withTranslation()(ZipAndPostOffice);

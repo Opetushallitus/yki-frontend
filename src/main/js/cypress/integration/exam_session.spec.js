@@ -56,6 +56,18 @@ describe('Exam sessions', () => {
       .should('have.length', 3);
   });
 
+  it('exam session field validation errors disable submit button', () => {
+    cy.get('[data-cy=add-exam-session-button]').click();
+    fillExamSessionForm();
+    cy.get('button')
+      .contains('Tallenna tilaisuuden tiedot')
+      .should('not.be.disabled');
+    cy.get('[data-cy=input-zip]').type('abcdef');
+    cy.get('button')
+      .contains('Tallenna tilaisuuden tiedot')
+      .should('be.disabled');
+  });
+
   it('should allow to create same exam session to different offices', () => {
     cy.get('[data-cy=add-exam-session-button]').click();
     fillExamSessionForm();
