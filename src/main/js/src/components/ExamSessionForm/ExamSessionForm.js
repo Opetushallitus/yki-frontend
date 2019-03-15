@@ -359,7 +359,6 @@ const examSessionForm = props => {
                 id="streetAddress"
                 name="streetAddress"
                 data-cy="input-streetAddress"
-                placeholder={props.t('common.address.placeholder')}
                 className={classes.TextInput}
               />
               <ErrorMessage
