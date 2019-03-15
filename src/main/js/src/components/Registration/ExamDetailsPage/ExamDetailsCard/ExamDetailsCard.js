@@ -25,7 +25,7 @@ const examDetailsCard = ({ exam, isFull }) => {
   const location =
     exam.location && exam.location.find(l => l.lang === i18n.language);
   const organizer = location ? <p>{`${location.name}`}</p> : null;
-  const address = location ? <p>{`${location.address}`}</p> : null;
+  const address = location ? <p>{`${location.street_address}, ${location.zip} ${location.post_office}`}</p> : null;
 
   const price = !isFull && (
     <p>{`${t('registration.examDetails.card.price')} ${

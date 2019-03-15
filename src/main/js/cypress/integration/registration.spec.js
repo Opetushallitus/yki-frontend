@@ -38,6 +38,11 @@ describe('Registration', () => {
     cy.contains('Koko maa').click();
     cy.get('select').contains('Suomi');
     cy.get('select').contains('Perustaso');
+
+    cy.log('Shows location only once regardless of case')
+    cy.get('select').contains('Jyväskylä').should('exist');
+    cy.get('select').contains('JYVÄSKYLÄ').should('not.exist');
+
     cy.get('select').contains('Koko maa');
   });
 

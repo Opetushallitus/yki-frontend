@@ -49,13 +49,13 @@ const reducer = (state = initialState, action) => {
         .filter(e =>
           state.location === ''
             ? true
-            : e.location[0].address
+            : e.location[0].post_office
                 .toLowerCase()
                 .endsWith(state.location.toLowerCase()),
         )
         .filter(e => (state.level === '' ? true : e.level_code === state.level))
         .filter(e => e.language_code === state.language.code);
-      const groupedByDate = R.groupBy(s => s.session_date, filtered);
+      const groupedByDate = R.groupBy(R.prop('session_date'), filtered);
       const orderedByDate = {};
       Object.keys(groupedByDate)
         .sort()

@@ -17,9 +17,15 @@ export const fetchExamSessions = () => {
   };
 };
 
+const capitalize = s => {
+  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+};
+
 const extractExamLocations = array => {
-  const locations = new Set();
-  array.map(e => locations.add(e.location[0].address.split(' ').pop()));
+  const locations = array.reduce(
+    (acc, l) => acc.add(capitalize(l.location[0].post_office)),
+    new Set(),
+  );
   return {
     type: actionTypes.ADD_EXAM_LOCATIONS,
     locations: [...locations].sort(),

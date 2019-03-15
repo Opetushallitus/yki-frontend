@@ -42,8 +42,8 @@ const examSessionListItem = ({
   const sessionLocation =
     session.location.find(l => l.lang === i18n.language) || session.location[0];
   const name = sessionLocation.name;
-  const address = sessionLocation.address.split(',')[0] || '';
-  const city = sessionLocation.address.split(' ').pop() || '';
+  const address = sessionLocation.street_address || '';
+  const city = sessionLocation.post_office || '';
   const location = (
     <span className={classes.Location}>
       {name} <br /> {address} <br /> <strong>{city}</strong>
