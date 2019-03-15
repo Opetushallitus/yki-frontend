@@ -1,5 +1,5 @@
 {
-  "common.address": "Osoite",
+  "common.address": "Katuosoite",
   "common.address.placeholder": "Järjestäjänkatu 3, 00100 Helsinki",
   "common.agreement": "Järjestäjäsopimus",
   "common.and": "ja",
@@ -126,6 +126,7 @@
   "registration.document.title.language": "Valitse kieli - YKI",
   "registration.document.title.level": "Valitse taso - YKI",
   "registration.document.title.location": "Valitse paikkakunta - YKI",
+  "registration.error.form.expired": "Lomakkeen täyttöaika on umpeutunut",
   "registration.examDetails.card.price": "Tutkintomaksu",
   "registration.examDetails.card.time": "klo",
   "registration.examDetails.examFull": "Tutkintotilaisuus on täynnä!",
@@ -133,7 +134,6 @@
   "registration.examDetails.futureInfo": "Tarkemmat tiedot tutkintotilaisuudesta saat tutkinnon järjestäjältä lähempänä tutkintopäivää.",
   "registration.examDetails.identify": "Tunnistaudu ilmoittautumista varten",
   "registration.examDetails.identify.withEmail": "Tunnistaudu sähköpostilla",
-  "registration.examDetails.queueInfo": "Varasijalta saat ilmoituksen, mikäli paikkoja vapautuu tutkintotilaisuuteen.",
   "registration.examDetails.title": "Olet ilmoittautumassa tutkintotilaisuuteen:",
   "registration.examSpots.free": "vapaata paikkaa",
   "registration.examSpots.full": "Täynnä!",
@@ -167,9 +167,6 @@
   "registration.init.error.session.closed": "Ilmoittautumisaika on päättynyt.",
   "registration.init.error.session.full": "Tutkintotilaisuus on täynnä.",
   "registration.init.error.session.multiple": "Voit ilmoittautua vain yhteen tutkintotilaisuuteen.",
-
-  "registration.error.form.expired": "Lomakkeen täyttöaika on umpeutunut",
-
   "registration.list.date": "Päivämäärä",
   "registration.list.exam": "Tutkinto",
   "registration.list.examSpots": "Paikkoja vapaana",

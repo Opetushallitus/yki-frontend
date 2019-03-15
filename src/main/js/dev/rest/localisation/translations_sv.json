@@ -1,5 +1,5 @@
 {
-  "common.address": "Osoite_sv",
+  "common.address": "Katuosoite_sv",
   "common.address.placeholder": "Järjestäjänkatu 3, 00100 Helsinki",
   "common.agreement": "Järjestäjäsopimus_sv",
   "common.and": "och",
@@ -126,6 +126,7 @@
   "registration.document.title.language": "Valitse kieli - YKI_sv",
   "registration.document.title.level": "Valitse taso - YKI_sv",
   "registration.document.title.location": "Valitse paikkakunta - YKI_sv",
+  "registration.error.form.expired": "Lomakkeen täyttöaika on umpeutunut_sv",
   "registration.examDetails.card.price": "Tutkintomaksu_sv",
   "registration.examDetails.card.time": "klo_sv",
   "registration.examDetails.examFull": "Tutkintotilaisuus on täynnä!_sv",
@@ -133,7 +134,6 @@
   "registration.examDetails.futureInfo": "Tarkemmat tiedot tutkintotilaisuudesta saat tutkinnon järjestäjältä lähempänä tutkintopäivää._sv",
   "registration.examDetails.identify": "Tunnistaudu ilmoittautumista varten_sv",
   "registration.examDetails.identify.withEmail": "Tunnistaudu sähköpostilla_sv",
-  "registration.examDetails.queueInfo": "Varasijalta saat ilmoituksen, mikäli paikkoja vapautuu tutkintotilaisuuteen._sv",
   "registration.examDetails.title": "Olet ilmoittautumassa tutkintotilaisuuteen:_sv",
   "registration.examSpots.free": "vapaata paikkaa",
   "registration.examSpots.full": "Täynnä!_sv",
