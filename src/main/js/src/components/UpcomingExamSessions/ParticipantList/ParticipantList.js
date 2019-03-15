@@ -41,13 +41,54 @@ export const participantList = props => {
     );
   };
 
-  const confirmPayment = registrationState => {
-    return registrationState === 'SUBMITTED' ? (
+  const confirmPaymentButton = participant => {
+    const confirmPayment = (
       <React.Fragment>
         <img src={checkMarkDone} data-cy="confirm-payment-icon" alt="" />{' '}
         {props.t('examSession.registration.confirmPayment')}
       </React.Fragment>
-    ) : null;
+    );
+
+    return (
+      <ActionButton
+        children={confirmPayment}
+        confirmOnRight={true}
+        onClick={() =>
+          props.onConfirmPayment(
+            props.examSession.organizer_oid,
+            props.examSession.id,
+            participant.registration_id,
+          )
+        }
+        confirmText={props.t('examSession.registration.confirmPayment.confirm')}
+        cancelText={props.t('examSession.registration.confirmPayment.cancel')}
+      />
+    );
+  };
+
+  const relocateButton = participant => {
+    const relocate = (
+      <React.Fragment>
+        {props.t('examSession.registration.relocate')}
+      </React.Fragment>
+    );
+
+    return (
+      <ActionButton
+        children={relocate}
+        confirmOnRight={true}
+        onClick={() =>
+          props.onRelocate(
+            props.examSession.organizer_oid,
+            props.examSession.id,
+            participant.registration_id,
+            'toExamSessionId'
+          )
+        }
+        confirmText={props.t('examSession.registration.relocate.confirm')}
+        cancelText={props.t('examSession.registration.relocate.cancel')}
+      />
+    );
   };
 
   const participantRows = participants => {
@@ -78,23 +119,7 @@ export const participantList = props => {
         <div className={classes.StateItem} />
         <div className={classes.StateItem} />
         <div className={classes.FirstShowOnHover}>
-          <ActionButton
-            children={confirmPayment(p.state)}
-            confirmOnRight={true}
-            onClick={() =>
-              props.onConfirmPayment(
-                props.examSession.organizer_oid,
-                props.examSession.id,
-                p.registration_id,
-              )
-            }
-            confirmText={props.t(
-              'examSession.registration.confirmPayment.confirm',
-            )}
-            cancelText={props.t(
-              'examSession.registration.confirmPayment.cancel',
-            )}
-          />
+          {p.state === 'SUBMITTED' ? confirmPaymentButton(p) : relocateButton(p)}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
@@ -152,6 +177,7 @@ export const participantList = props => {
 
 participantList.propTypes = {
   examSession: PropTypes.object.isRequired,
+  examSessions: PropTypes.array.isRequired,
   participants: PropTypes.array.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirmPayment: PropTypes.func.isRequired,

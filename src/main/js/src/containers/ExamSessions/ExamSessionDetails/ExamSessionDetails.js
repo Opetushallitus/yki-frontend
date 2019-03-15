@@ -52,6 +52,7 @@ export class ExamSessionDetails extends Component {
           <ParticipantList
             examSession={this.props.examSession}
             participants={this.props.participants}
+            examSessions={this.props.examSessions}
             onCancel={this.props.onCancelRegistration}
             onConfirmPayment={this.props.onConfirmPayment}
             onRelocate={this.props.onRelocate}
@@ -65,6 +66,7 @@ export class ExamSessionDetails extends Component {
 const mapStateToProps = state => {
   return {
     participants: state.exam.participants,
+    examSessions: state.exam.examSessionContent.examSessions,
     loading: state.exam.loading,
     error: state.exam.error,
   };
@@ -104,6 +106,7 @@ const mapDispatchToProps = dispatch => {
 
 ExamSessionDetails.propTypes = {
   examSession: PropTypes.object.isRequired,
+  examSessions: PropTypes.array,
   participants: PropTypes.array,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
