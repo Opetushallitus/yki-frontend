@@ -11,21 +11,27 @@
     "location": [
       {
         "name": "Omenia",
-        "address": "Upseerinkatu 11, Espoo",
+        "street_address": "Upseerinkatu 11",
+        "post_office": "Espoo",
+        "zip": "2100",
         "other_location_info": "Other info",
         "extra_information": null,
         "lang": "fi"
       },
       {
         "name": "Omenia",
-        "address": "Upseerinkatu 11, Espoo",
+        "street_address": "Upseerinkatu 11",
+        "post_office": "Espoo",
+        "zip": "2100",
         "other_location_info": "Other info",
         "extra_information": null,
         "lang": "sv"
       },
       {
         "name": "Omenia",
-        "address": "Upseerinkatu 11, Espoo",
+        "street_address": "Upseerinkatu 11",
+        "post_office": "Espoo",
+        "zip": "2100",
         "other_location_info": "Other info",
         "extra_information": null,
         "lang": "en"
