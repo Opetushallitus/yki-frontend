@@ -227,7 +227,6 @@ const examSessionForm = props => {
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
-        console.log('values', values);
         const office = values.officeOid
           ? props.examSessionContent.organizationChildren.find(
               o => o.oid === values.officeOid,
