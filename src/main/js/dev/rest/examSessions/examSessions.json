@@ -9,21 +9,27 @@
         {
           "lang": "fi",
           "extra_information": null,
-          "address": "Jokukatu 4, 00100 Tampere",
+          "street_address": "Jokukatu 4",
+          "post_office": "Tampere",
+          "zip": "33100",
           "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorio A2"
         },
         {
           "lang": "sv",
           "extra_information": null,
-          "address": "Jokukatu 4, 00100 Tammerfors",
+          "street_address": "Jokukatu 4",
+          "post_office": "Tammerfors",
+          "zip": "33100",
           "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorium A2"
         },
         {
           "lang": "en",
           "extra_information": null,
-          "address": "Jokukatu 4, 00100 Tampere",
+          "street_address": "Jokukatu 4",
+          "post_office": "Tampere",
+          "zip": "33100",
           "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorium A2"
         }
@@ -47,21 +53,27 @@
           "extra_information": null,
           "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorio A2",
-          "address": "Jokukatu 4, 00100 Tammerfors"
+          "street_address": "Jokukatu 4",
+          "post_office": "Tampere",
+          "zip": "33100"
         },
         {
           "lang": "sv",
           "extra_information": null,
           "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorium A2",
-          "address": "Jokukatu 4, 00100 Tammerfors"
+          "street_address": "Jokukatu 4",
+          "post_office": "Tampere",
+          "zip": "33100"
         },
         {
           "lang": "en",
           "extra_information": null,
           "name": "Amiedu, Strömberginkuja 3",
           "other_location_info": "auditorium A2",
-          "address": "Jokukatu 4, 00100 Tammerfors"
+          "street_address": "Jokukatu 4",
+          "post_office": "Tampere",
+          "zip": "33100"
         }
       ],
       "session_date": "2029-05-02",

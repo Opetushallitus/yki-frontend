@@ -7,6 +7,13 @@ import { ExamSessionUpdateForm } from './ExamSessionUpdateForm';
 
 configure({ adapter: new Adapter() });
 
+jest.mock('react-i18next', () => ({
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: k => k };
+    return Component;
+  },
+}));
+
 const examSession = {
   registration_end_date: '2028-12-15',
   session_date: '2028-12-30',

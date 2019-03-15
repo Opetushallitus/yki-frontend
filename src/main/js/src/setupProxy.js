@@ -53,8 +53,6 @@ const countries = JSON.parse(
 
 const genders = JSON.parse(fs.readFileSync('./dev/rest/codes/sukupuoli.json'));
 
-const postOffice = JSON.parse(fs.readFileSync('./dev/rest/codes/posti.json'));
-
 let organizers = [
   {
     oid: '1.2.246.562.10.28646781493',
@@ -470,8 +468,18 @@ module.exports = function(app) {
 
   app.get('/yki/api/code/posti/:id', (req, res) => {
     try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(postOffice);
+      axios
+      .get(
+        `https://virkailija.untuvaopintopolku.fi/yki/api/code/posti/${req.params.id}`,
+        req.body,
+      )
+      .then(response => {
+        res.send(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(404).send(err.message);
+      });
     } catch (err) {
       res.status(404).send(err.message);
     }

@@ -16,6 +16,7 @@ import {
   levelTranslations,
 } from '../../util/util';
 import { getLocalizedName } from '../../util/registryUtil';
+import ZipAndPostOffice from '../Registration/RegistrationForm/ZipAndPostOffice/ZipAndPostOffice';
 
 const examSessionForm = props => {
   function validateDuplicateExamSession() {
@@ -52,7 +53,9 @@ const examSessionForm = props => {
       .required(props.t('error.mandatory'))
       .positive()
       .integer(),
-    address: Yup.string().required(props.t('error.mandatory')),
+    streetAddress: Yup.string().required(props.t('error.mandatory')),
+    postOffice: Yup.string().required(props.t('error.mandatory')),
+    zip: Yup.string().required(props.t('error.mandatory')),
     location: Yup.string(),
     extraFi: Yup.string(),
     extraSv: Yup.string(),
@@ -210,7 +213,9 @@ const examSessionForm = props => {
         level: '',
         examDate: '',
         maxParticipants: '',
-        address: '',
+        streetAddress: '',
+        postOffice: '',
+        zip: '',
         location: '',
         extraFi: '',
         extraSv: '',
@@ -218,6 +223,7 @@ const examSessionForm = props => {
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
+        console.log('values', values);
         const office = values.officeOid
           ? props.examSessionContent.organizationChildren.find(
               o => o.oid === values.officeOid,
@@ -236,21 +242,33 @@ const examSessionForm = props => {
           location: [
             {
               name: getLocalizedName(orgOrOfficeName, 'fi'),
-              address: values.address,
+              street_address: values.streetAddress,
+              post_office: values.postOfficeFI
+                ? values.postOfficeFI
+                : values.postOffice,
+              zip: values.zip,
               other_location_info: values.location,
               extra_information: values.extraFi,
               lang: 'fi',
             },
             {
               name: getLocalizedName(orgOrOfficeName, 'sv'),
-              address: values.address,
+              street_address: values.streetAddress,
+              post_office: values.postOfficeSV
+                ? values.postOfficeSV
+                : values.postOffice,
+              zip: values.zip,
               other_location_info: values.location,
               extra_information: values.extraSv,
               lang: 'sv',
             },
             {
               name: getLocalizedName(orgOrOfficeName, 'en'),
-              address: values.address,
+              street_address: values.streetAddress,
+              post_office: values.postOfficeFI
+                ? values.postOfficeFI
+                : values.postOffice,
+              zip: values.zip,
               other_location_info: values.location,
               extra_information: values.extraEn,
               lang: 'en',
@@ -259,7 +277,7 @@ const examSessionForm = props => {
         };
         props.onSubmit(payload);
       }}
-      render={({ values, isValid, errors }) => (
+      render={({ values, isValid, errors, setFieldValue }) => (
         <Form className={classes.Form}>
           <h1>{props.t('examSession.add.header')}</h1>
           <h2>{props.t('examSession.add.subHeader')}</h2>
@@ -338,16 +356,23 @@ const examSessionForm = props => {
             <div className={classes.FormElement}>
               <h3>{`${props.t('common.address')} *`}</h3>
               <Field
-                id="address"
-                name="address"
-                data-cy="input-address"
+                id="streetAddress"
+                name="streetAddress"
+                data-cy="input-streetAddress"
                 placeholder={props.t('common.address.placeholder')}
                 className={classes.TextInput}
               />
               <ErrorMessage
-                name="address"
+                name="streetAddress"
                 component="span"
                 className={classes.ErrorMessage}
+              />
+            </div>
+            <div className={classes.FormElement}>
+              <ZipAndPostOffice
+                values={values}
+                setFieldValue={setFieldValue}
+                mandatory={true}
               />
             </div>
             <div className={classes.FormElement}>

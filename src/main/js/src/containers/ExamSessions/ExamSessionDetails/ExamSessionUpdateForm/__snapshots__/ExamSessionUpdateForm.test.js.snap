@@ -38,10 +38,39 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       <input
         class="TextInput"
         data-cy="input-address"
-        id="address"
-        name="address"
-        value="Jokukatu 4, 00100 Tammerfors"
+        id="streetAddress"
+        name="streetAddress"
       />
+    </div>
+    <div
+      class="FormElement"
+    >
+      <div
+        class="AddressInput"
+      >
+        <div
+          class="Zip"
+        >
+          <h3>
+            registration.form.input.zip *
+          </h3>
+          <input
+            data-cy="input-zip"
+            name="zip"
+          />
+        </div>
+        <div
+          class="PostOffice"
+        >
+          <h3>
+            registration.form.input.postOffice *
+          </h3>
+          <input
+            data-cy="input-postOffice"
+            name="postOffice"
+          />
+        </div>
+      </div>
     </div>
     <div
       class="FormElement"

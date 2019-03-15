@@ -12,19 +12,23 @@ import {
   DATE_FORMAT,
   DATE_FORMAT_WITHOUT_YEAR,
 } from '../../../../common/Constants';
+import ZipAndPostOffice from '../../../../components/Registration/RegistrationForm/ZipAndPostOffice/ZipAndPostOffice';
 
 export class ExamSessionUpdateForm extends Component {
   render() {
+    const t = this.props.t;
     const validationSchema = Yup.object().shape({
       maxParticipants: Yup.number()
-        .typeError(this.props.t('error.numeric'))
-        .required(this.props.t('error.mandatory'))
+        .typeError(t('error.numeric'))
+        .required(t('error.mandatory'))
         .min(
           this.props.examSession.participants,
-          this.props.t('examSession.maxParticipants.lessThan.participants'),
+          t('examSession.maxParticipants.lessThan.participants'),
         )
         .integer(),
-      address: Yup.string().required(this.props.t('error.mandatory')),
+      streetAddress: Yup.string().required(t('error.mandatory')),
+      postOffice: Yup.string().required(t('error.mandatory')),
+      zip: Yup.string().required(t('error.mandatory')),
       location: Yup.string(),
       extraFi: Yup.string(),
       extraSe: Yup.string(),
@@ -52,9 +56,9 @@ export class ExamSessionUpdateForm extends Component {
           <ActionButton
             onClick={this.props.onDelete}
             confirmOnRight={true}
-            children={this.props.t('examSession.delete')}
-            confirmText={this.props.t('common.confirm')}
-            cancelText={this.props.t('common.cancelConfirm')}
+            children={t('examSession.delete')}
+            confirmText={t('common.confirm')}
+            cancelText={t('common.cancelConfirm')}
           />
         </div>
       );
@@ -80,7 +84,9 @@ export class ExamSessionUpdateForm extends Component {
       <Formik
         initialValues={{
           maxParticipants: this.props.examSession.max_participants,
-          address: this.props.examSession.location[0].address,
+          streetAddress: this.props.examSession.location[0].street_address,
+          postOffice: this.props.examSession.location[0].post_office,
+          zip: this.props.examSession.location[0].zip,
           location: this.props.examSession.location[0].other_location_info,
           extraFi: getLocationExtraByLang('fi'),
           extraSv: getLocationExtraByLang('sv'),
@@ -94,21 +100,33 @@ export class ExamSessionUpdateForm extends Component {
             location: [
               {
                 name: getLocationNameByLang('fi'),
-                address: values.address,
+                street_address: values.streetAddress,
+                post_office: values.postOfficeFI
+                  ? values.postOfficeFI
+                  : values.postOffice,
+                zip: values.zip,
                 other_location_info: values.location,
                 extra_information: values.extraFi,
                 lang: 'fi',
               },
               {
                 name: getLocationNameByLang('sv'),
-                address: values.address,
+                street_address: values.streetAddress,
+                post_office: values.postOfficeSV
+                  ? values.postOfficeSV
+                  : values.postOffice,
+                zip: values.zip,
                 other_location_info: values.location,
                 extra_information: values.extraSv,
                 lang: 'sv',
               },
               {
                 name: getLocationNameByLang('en'),
-                address: values.address,
+                street_address: values.streetAddress,
+                post_office: values.postOfficeFI
+                  ? values.postOfficeFI
+                  : values.postOffice,
+                zip: values.zip,
                 other_location_info: values.location,
                 extra_information: values.extraEn,
                 lang: 'en',
@@ -117,15 +135,15 @@ export class ExamSessionUpdateForm extends Component {
           };
           this.props.onSubmit(payload);
         }}
-        render={({ isValid }) => (
+        render={({ isValid, setFieldValue, values }) => (
           <Form className={classes.Form}>
             <div>
               <div className={classes.FormElement}>
-                <h3>{this.props.t('common.registationPeriod')}</h3>
+                <h3>{t('common.registationPeriod')}</h3>
                 {registrationPediod(this.props.examSession)}
               </div>
               <div className={classes.FormElement}>
-                <h3>{`${this.props.t('examSession.maxParticipants')} *`}</h3>
+                <h3>{`${t('examSession.maxParticipants')} *`}</h3>
                 <Field
                   id="maxParticipants"
                   name="maxParticipants"
@@ -139,21 +157,28 @@ export class ExamSessionUpdateForm extends Component {
                 />
               </div>
               <div className={classes.FormElement}>
-                <h3>{`${this.props.t('common.address')} *`}</h3>
+                <h3>{`${t('common.address')} *`}</h3>
                 <Field
-                  id="address"
-                  name="address"
+                  id="streetAddress"
+                  name="streetAddress"
                   data-cy="input-address"
                   className={classes.TextInput}
                 />
                 <ErrorMessage
-                  name="address"
+                  name="streetAddress"
                   component="span"
                   className={classes.ErrorMessage}
                 />
               </div>
               <div className={classes.FormElement}>
-                <h3>{this.props.t('common.location')}</h3>
+                <ZipAndPostOffice
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  mandatory={true}
+                />
+              </div>
+              <div className={classes.FormElement}>
+                <h3>{t('common.location')}</h3>
                 <Field
                   id="location"
                   name="location"
@@ -170,9 +195,9 @@ export class ExamSessionUpdateForm extends Component {
             <div>
               <div>
                 <div className={classes.FormElement}>
-                  <h3>{this.props.t('common.extra')}</h3>
+                  <h3>{t('common.extra')}</h3>
                   <label className={classes.ExtraLabel}>
-                    {this.props.t('common.language.fin')}
+                    {t('common.language.fin')}
                   </label>
                   <Field
                     component="textarea"
@@ -193,7 +218,7 @@ export class ExamSessionUpdateForm extends Component {
                 </div>
                 <div className={classes.FormElement}>
                   <label className={classes.ExtraLabel}>
-                    {this.props.t('common.language.swe')}
+                    {t('common.language.swe')}
                   </label>
                   <Field
                     component="textarea"
@@ -214,7 +239,7 @@ export class ExamSessionUpdateForm extends Component {
                 </div>
                 <div className={classes.FormElement}>
                   <label className={classes.ExtraLabel}>
-                    {this.props.t('common.language.eng')}
+                    {t('common.language.eng')}
                   </label>
                   <Field
                     component="textarea"
@@ -242,7 +267,7 @@ export class ExamSessionUpdateForm extends Component {
                   disabled={!isValid}
                   className={classes.UpdateButton}
                 >
-                  {this.props.t('registryItem.button.update')}
+                  {t('registryItem.button.update')}
                 </Button>
               </div>
             </div>

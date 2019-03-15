@@ -12,7 +12,8 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=radio-PERUS]').click();
     cy.get('[data-cy=radio-2019-11-09]').click();
     cy.get('[data-cy=input-max-participants]').type('100');
-    cy.get('[data-cy=input-address]').type('address');
+    cy.get('[data-cy=input-streetAddress]').type('address');
+    cy.get('[data-cy=input-zip]').type('00100');
   };
 
   it('front page contains list of upcoming exam sessions', () => {
