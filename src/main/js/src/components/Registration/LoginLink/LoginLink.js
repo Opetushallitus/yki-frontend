@@ -12,6 +12,7 @@ import Alert from '../../../components/Alert/Alert';
 export class LoginLink extends Component {
   state = {
     submitted: false,
+    email: null,
   };
 
   render() {
@@ -35,7 +36,7 @@ export class LoginLink extends Component {
             .then(() => {
               setSubmitting(false);
               setStatus(null);
-              this.setState({ submitted: true });
+              this.setState({ submitted: true, email: values.email });
             })
             .catch(err => {
               setSubmitting(false);
@@ -45,25 +46,39 @@ export class LoginLink extends Component {
       >
         {({ isSubmitting, status, isValid }) => (
           <Form className={classes.Form}>
-           {!!status && <Alert title={this.props.t('error.email.sendFailed')} optionalText={this.props.t('error.generic.info')}/>}
             <h3>{this.props.t('registration.loginlink.header')}</h3>
             <div className={classes.FormElement}>
-              <Field type="email" name="email" className={classes.TextInput} />
-              <ErrorMessage name="email" component="span" />
+              <Field type="email" name="email" className={classes.TextInput} data-cy="input-email"/>
+              <ErrorMessage
+                name="email"
+                component="span"
+                className={classes.ErrorMessage}
+              />
             </div>
             <Button
               type="submit"
               isRegistration={true}
               disabled={!isValid || isSubmitting}
+              datacy="button-loginlink-form-submit"
             >
               {this.props.t('registration.loginlink.button')}
             </Button>
+            {!!status && (
+              <div className={classes.SubmitError}>
+                <Alert
+                  title={this.props.t('error.email.sendFailed')}
+                  optionalText={this.props.t('error.generic.info')}
+                />
+              </div>
+            )}
           </Form>
         )}
       </Formik>
     ) : (
       <React.Fragment>
-        <p>{this.props.t('registration.loginlink.success')}</p>
+        <p data-cy="loginlink-success">
+          <b>{`${this.props.t('registration.loginlink.success')} ${this.state.email}`}</b>
+        </p>
       </React.Fragment>
     );
   }

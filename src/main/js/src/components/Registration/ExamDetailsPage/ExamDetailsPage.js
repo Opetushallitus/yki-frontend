@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -11,6 +11,7 @@ import BackButton from '../BackButton/BackButton';
 import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
 import AuthButton from '../AuthButton/AuthButton';
 import NotificationSignup from '../NotificationSignup/NotificationSignup';
+import LoginLink from '../LoginLink/LoginLink';
 
 const examDetailsPage = ({
   session,
@@ -20,6 +21,7 @@ const examDetailsPage = ({
   loading,
 }) => {
   const [t] = useTranslation();
+  const [showLoginLink, setShowLoginLink] = useState(false);
 
   useEffect(() => {
     document.title = t('registration.document.examDetails.title');
@@ -29,6 +31,8 @@ const examDetailsPage = ({
   }, []);
 
   const seatsAvailable = session.max_participants - session.participants > 0;
+
+  const examSessionId = Number(match.params.examSessionId);
 
   return (
     <div>
@@ -68,12 +72,20 @@ const examDetailsPage = ({
                 <p>
                   <strong>{t('registration.examDetails.identify')}</strong>
                 </p>
-                <AuthButton
-                  examSessionId={Number(match.params.examSessionId)}
-                />
-                <button className={classes.EmailIdentificationButton}>
-                  {t('registration.examDetails.identify.withEmail')}
-                </button>
+                <AuthButton examSessionId={examSessionId} />
+                {showLoginLink ? (
+                  <LoginLink examSessionId={examSessionId} />
+                ) : (
+                  <Fragment>
+                    <button
+                      className={classes.EmailIdentificationButton}
+                      data-cy="button-show-login-link"
+                      onClick={() => setShowLoginLink(true)}
+                    >
+                      {t('registration.examDetails.identify.withEmail')}
+                    </button>
+                  </Fragment>
+                )}
               </div>
             ) : (
               <NotificationSignup examSessionId={match.params.examSessionId} />

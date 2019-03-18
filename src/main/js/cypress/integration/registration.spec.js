@@ -103,4 +103,17 @@ describe('Registration', () => {
     cy.visit('/maksu/vanhentunut');
     cy.get('[data-cy=link-expired-header]').should('exist');
   });
+
+  it('Login link can be send from exam session details page', () => {
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
+    cy.get('select').contains('Suomi');
+    cy.get('select').contains('Kaikki tasot');
+    cy.get('select').contains('Koko maa');
+    cy.get('[data-cy=exam-session-list-item]').get('button').contains('Ilmoittaudu').first().click();
+
+    cy.get('[data-cy=button-show-login-link]').click();
+    cy.get('[data-cy=input-email]').type('test@test.com');
+    cy.get('[data-cy=button-loginlink-form-submit]').click();
+    cy.get('[data-cy=loginlink-success]').should('exist');
+  });
 });
