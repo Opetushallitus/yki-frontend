@@ -23,7 +23,7 @@ const notificationSignup = ({ examSessionId }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email(t('registration.notification.signup.error')),
+    email: Yup.string().email(t('registration.notification.signup.validation')),
   });
 
   return (
