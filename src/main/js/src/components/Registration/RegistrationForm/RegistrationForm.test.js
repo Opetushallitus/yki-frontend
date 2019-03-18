@@ -1,7 +1,7 @@
 import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-// import toJson from 'enzyme-to-json';
+import toJson from 'enzyme-to-json';
 
 import { registrationForm as RegistrationForm } from './RegistrationForm';
 
@@ -40,6 +40,6 @@ describe('<RegistrationForm />', () => {
         onSubmitRegistrationForm={jest.fn()}
       />,
     );
-    // expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
