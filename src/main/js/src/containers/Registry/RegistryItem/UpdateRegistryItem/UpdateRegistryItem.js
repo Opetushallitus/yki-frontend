@@ -6,11 +6,10 @@ import { withTranslation } from 'react-i18next';
 import classes from './UpdateRegistryItem.module.css';
 import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
 import ActionButton from '../../../../components/UI/ActionButton/ActionButton';
-import { firstCharToUpper } from '../../../../util/util';
+import { capitalize } from '../../../../util/util';
 import * as actions from '../../../../store/actions/index';
 
 class UpdateRegistryItem extends Component {
-
   deleteRegistryItemHandler = oid => {
     this.props.onDeleteRegistryItem(oid);
     this.props.onClose();
@@ -38,7 +37,7 @@ class UpdateRegistryItem extends Component {
             merchant={this.props.item.merchant}
             address={`${this.props.item.address.street}, ${
               this.props.item.address.zipCode
-            } ${firstCharToUpper(this.props.item.address.city)}`}
+            } ${capitalize(this.props.item.address.city)}`}
             updating
             onSubmit={this.updateRegistryItemHandler}
           />

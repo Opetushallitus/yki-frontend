@@ -1,6 +1,8 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
+import { capitalize } from '../../util/util';
+
 export const fetchExamSessions = () => {
   return dispatch => {
     dispatch(fetchExamSessionsStart());
@@ -15,10 +17,6 @@ export const fetchExamSessions = () => {
         dispatch(fetchExamSessionsFail(err));
       });
   };
-};
-
-const capitalize = s => {
-  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 };
 
 const extractExamLocations = array => {

@@ -1,4 +1,4 @@
-import { firstCharToUpper } from './util';
+import { capitalize } from './util';
 
 export const collectRegistryItemDetails = (organizer, organization, lang) => {
   const item = {
@@ -59,9 +59,7 @@ const getWebsite = contactInformation => {
 
 export const getCompleteAddress = organization => {
   const address = getAddress(organization);
-  return `${address.street}, ${address.zipCode} ${firstCharToUpper(
-    address.city,
-  )}`;
+  return `${address.street}, ${address.zipCode} ${capitalize(address.city)}`;
 };
 
 const getAddress = organization => {

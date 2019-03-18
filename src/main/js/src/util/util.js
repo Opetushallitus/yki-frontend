@@ -3,9 +3,8 @@ import moment from 'moment';
 
 import { LANGUAGES } from '../common/Constants';
 
-export const firstCharToUpper = string => {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-};
+export const capitalize = s =>
+  s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
 export const levelTranslations = {
   PERUS: 'common.level.basic',
@@ -43,7 +42,7 @@ export const getLanguagesWithLevelDescriptions = array => {
           : levels
               .map(l => levelDescription(l))
               .join(` ${i18next.t('common.and')} `);
-      list.push(`${language.name} - ${firstCharToUpper(description)}`);
+      list.push(`${language.name} - ${capitalize(description)}`);
     }
   }
   return list;
