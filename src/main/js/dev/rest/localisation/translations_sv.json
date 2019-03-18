@@ -203,6 +203,8 @@
   "registry.search.levelSelectPlaceholder": "Valitse taso_sv",
   "registry.search.noResults": "Annetuilla hakuehdoilla ei löytynyt järjestäjiä._sv",
   "registry.search.placeholder": "Hae järjestäjää tai paikkakuntaa_sv",
+  "registry.search.orgType01": "Koulutustoimija_sv",
+  "registry.search.orgType02": "Oppilaitos_sv",
   "registryItem.add.header": "Lisää uusi kielitutkintojen järjestäjä_sv",
   "registryItem.agreementEnd": "Loppupäivämäärä_sv",
   "registryItem.agreementEnd.required": "Sopimuskauden päättymisaika puuttuu._sv",
