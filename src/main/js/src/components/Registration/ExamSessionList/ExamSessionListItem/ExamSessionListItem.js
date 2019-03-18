@@ -33,9 +33,10 @@ const examSessionListItem = ({
 
   const exam = (
     <div className={classes.Exam}>
-      <strong>{`${language.name}, ${levelDescription(
-        session.level_code,
-      ).toLowerCase()}`}</strong>
+      <strong>
+        {t(`common.language.${language.code}`)},{' '}
+        {`${levelDescription(session.level_code).toLowerCase()}`}
+      </strong>
     </div>
   );
 
