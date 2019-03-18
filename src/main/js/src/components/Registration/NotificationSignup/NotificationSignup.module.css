@@ -1,0 +1,25 @@
+.Form {
+  display: grid;
+  grid-row-gap: 15px;
+  margin-top: 15px;
+}
+
+.Label {
+  font-size: 14px;
+}
+
+.Field {
+  height: 30px;
+}
+
+.ErrorMessage {
+  display: block;
+  color: hsl(15, 100%, 40%);
+  margin-top: -10px;
+}
+
+@media (min-width: 620px) {
+  .ErrorMessage {
+    justify-self: start;
+  }
+}

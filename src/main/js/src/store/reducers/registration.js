@@ -10,7 +10,7 @@ const initialState = {
   level: '',
   location: '',
   locations: [],
-  selectedExamSession: {},
+  examSession: {},
   loading: false,
   error: null,
   form: {
@@ -87,7 +87,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SELECT_EXAM_SESSION:
       return {
         ...state,
-        selectedExamSession: action.examSession,
+        examSession: action.examSession,
       };
     case actionTypes.FETCH_EXAM_SESSION_START:
       return {
@@ -98,7 +98,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        selectedExamSession: action.examSession,
+        examSession: action.examSession,
       };
     case actionTypes.FETCH_EXAM_SESSION_FAIL:
       return {

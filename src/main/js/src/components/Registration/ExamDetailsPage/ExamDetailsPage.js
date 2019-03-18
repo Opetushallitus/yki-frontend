@@ -10,6 +10,7 @@ import Header from '../../Header/Header';
 import BackButton from '../BackButton/BackButton';
 import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
 import AuthButton from '../AuthButton/AuthButton';
+import NotificationSignup from '../NotificationSignup/NotificationSignup';
 
 const examDetailsPage = ({
   session,
@@ -22,7 +23,7 @@ const examDetailsPage = ({
 
   useEffect(() => {
     document.title = t('registration.document.examDetails.title');
-    if (!Object.keys(session).length) {
+    if (Object.keys(session).length === 0) {
       onfetchExamSession(match.params.examSessionId);
     }
   }, []);
@@ -33,7 +34,9 @@ const examDetailsPage = ({
     <div>
       <Header />
       <BackButton
-        clicked={() => history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')}
+        clicked={() =>
+          history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
+        }
       />
       <main className={classes.Content}>
         {loading ? (
@@ -56,7 +59,6 @@ const examDetailsPage = ({
                   <p>
                     <strong>{t('registration.examDetails.examFull')}</strong>
                   </p>
-                  <p>{t('registration.examDetails.queueInfo')}</p>
                 </Fragment>
               )}
             </div>
@@ -74,7 +76,7 @@ const examDetailsPage = ({
                 </button>
               </div>
             ) : (
-              <div>TODO: signing up for notifications</div>
+              <NotificationSignup examSessionId={match.params.examSessionId} />
             )}
           </Fragment>
         )}
@@ -85,7 +87,7 @@ const examDetailsPage = ({
 
 const mapStateToProps = state => {
   return {
-    session: state.registration.selectedExamSession,
+    session: state.registration.examSession,
     loading: state.registration.loading,
   };
 };

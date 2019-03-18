@@ -443,6 +443,15 @@ module.exports = function(app) {
     }
   });
 
+  app.post('/yki/api/exam-session/:id/queue', (req, res) => {
+    try {
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      res.send({ success: true });
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
   app.post('/yki/api/registration/:id/submit', (req, res) => {
     try {
       res.send({ success: true });
