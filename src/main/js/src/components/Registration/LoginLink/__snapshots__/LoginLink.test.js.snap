@@ -328,12 +328,12 @@ exports[`<LoginLink /> should render login link page 1`] = `
               </FieldInner>
             </FormikConnect(FieldInner)>
             <FormikConnect(ErrorMessageImpl)
-              className="ErrorMessage"
+              className="ValidationError"
               component="span"
               name="email"
             >
               <ErrorMessageImpl
-                className="ErrorMessage"
+                className="ValidationError"
                 component="span"
                 formik={
                   Object {
