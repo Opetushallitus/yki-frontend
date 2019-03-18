@@ -36,7 +36,7 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
       "_deps": Array [],
       "_excludedEdges": Array [],
       "_exclusive": Object {},
-      "_mutate": false,
+      "_mutate": undefined,
       "_nodes": Array [
         "certificateLang",
         "examLang",
@@ -72,7 +72,7 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_exclusive": Object {
             "invalid-birthdate": false,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -98,9 +98,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_conditions": Array [],
           "_deps": Array [],
           "_exclusive": Object {
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -112,7 +112,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
           ],
           "transforms": Array [
@@ -129,7 +128,7 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_exclusive": Object {
             "same-email": false,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -156,10 +155,10 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_deps": Array [],
           "_exclusive": Object {
             "max": true,
-            "required": false,
+            "required": true,
             "undefined": false,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -171,7 +170,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
             [Function],
             [Function],
@@ -188,9 +186,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_conditions": Array [],
           "_deps": Array [],
           "_exclusive": Object {
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -202,7 +200,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
           ],
           "transforms": Array [
@@ -218,9 +215,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_deps": Array [],
           "_exclusive": Object {
             "max": true,
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -232,7 +229,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
             [Function],
           ],
@@ -249,9 +245,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_deps": Array [],
           "_exclusive": Object {
             "max": true,
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -263,7 +259,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
             [Function],
           ],
@@ -279,9 +274,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_conditions": Array [],
           "_deps": Array [],
           "_exclusive": Object {
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -293,7 +288,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
           ],
           "transforms": Array [
@@ -309,9 +303,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_deps": Array [],
           "_exclusive": Object {
             "invalid-phone-number": false,
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -323,7 +317,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
             [Function],
           ],
@@ -340,9 +333,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_deps": Array [],
           "_exclusive": Object {
             "max": true,
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -354,7 +347,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
             [Function],
           ],
@@ -371,9 +363,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_deps": Array [],
           "_exclusive": Object {
             "max": true,
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -385,7 +377,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
             [Function],
           ],
@@ -402,9 +393,9 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "_deps": Array [],
           "_exclusive": Object {
             "max": true,
-            "required": false,
+            "required": true,
           },
-          "_mutate": false,
+          "_mutate": undefined,
           "_options": Object {
             "abortEarly": true,
             "recursive": true,
@@ -416,7 +407,6 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
             [Function],
           ],

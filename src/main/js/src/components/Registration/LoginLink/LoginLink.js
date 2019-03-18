@@ -46,13 +46,20 @@ export class LoginLink extends Component {
       >
         {({ isSubmitting, status, isValid }) => (
           <Form className={classes.Form}>
-            <h3>{this.props.t('registration.loginlink.header')}</h3>
+            <label htmlFor="email" className={classes.Label}>
+              {this.props.t('registration.loginlink.header')}
+            </label>
             <div className={classes.FormElement}>
-              <Field type="email" name="email" className={classes.TextInput} data-cy="input-email"/>
+              <Field
+                type="email"
+                name="email"
+                className={classes.TextInput}
+                data-cy="input-email"
+              />
               <ErrorMessage
                 name="email"
                 component="span"
-                className={classes.ErrorMessage}
+                className={classes.ValidationError}
               />
             </div>
             <Button
@@ -77,7 +84,8 @@ export class LoginLink extends Component {
     ) : (
       <React.Fragment>
         <p data-cy="loginlink-success">
-          <b>{`${this.props.t('registration.loginlink.success')} ${this.state.email}`}</b>
+          {this.props.t('registration.loginlink.success')}{' '}
+          <strong>{this.state.email}</strong>
         </p>
       </React.Fragment>
     );

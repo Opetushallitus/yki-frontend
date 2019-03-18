@@ -1,19 +1,10 @@
 .TextInput {
   width: 340px;
-  height: 35px;
+  height: 30px;
 }
 
-.Form h3 {
-  margin: 0px 0px 8px 0px;
-  line-height: 19px;
-}
-
-.Form label {
-  font-size: 0.875em;
-}
-
-.Form input:focus {
-  outline: 1px solid hsla(195, 100%, 47%, 1);
+.Label {
+  font-size: 14px;
 }
 
 .Form button {
@@ -21,7 +12,7 @@
   margin-top: 15px;
 }
 
-.ErrorMessage {
+.ValidationError {
   display: block;
   color: hsla(15, 100%, 40%, 1);
   margin: 14px 0px 14px 0px;
