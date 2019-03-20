@@ -23,6 +23,7 @@ const columns = [
   defaultCol,
   { wch: 14 },
   defaultCol,
+  { wch: 24 },
 ];
 
 export const listExport = props => {
@@ -67,6 +68,7 @@ export const listExport = props => {
         postinumero: p.form.zip,
         postitoimipaikka: p.form.post_office,
         kansalaisuus: p.form.nationalities ? p.form.nationalities[0] : null,
+        maksunumero: p.order_number ? p.order_number : null,
       };
     });
     const workbook = XLSX.utils.book_new();
