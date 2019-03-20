@@ -75,7 +75,8 @@ export const participantList = props => {
         moment(e.session_date).isAfter(moment(session_date)) &&
         e.level_code === level_code &&
         e.language_code === language_code &&
-        e.office_oid === office_oid
+        e.office_oid === office_oid &&
+        e.max_participants > e.participants
       );
     };
     const getNextSession = R.compose(
