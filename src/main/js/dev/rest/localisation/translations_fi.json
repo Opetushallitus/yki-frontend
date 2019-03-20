@@ -69,6 +69,7 @@
   "error.examSession.fetchFailed": "Tutkintotilaisuuksien hakeminen epäonnistui.",
   "error.examSession.fetchParticipantsFailed": "Tutkintotilaisuuden osallistujien haku epäonnistui",
   "error.examSession.registration.confirmPaymentFailed": "Ilmoittautumisen kuittaaminen maksetuksi epäonnistui",
+  "error.examSession.registration.relocateExamSessionFailed": "Siirtäminen epäonnistui",
   "error.examSession.updateFailed": "Tutkintotilaisuuden päivitys epäonnistui",
   "error.generic.info": "Yritä hetken kuluttua uudelleen.",
   "error.mandatory": "Pakollinen",
@@ -104,15 +105,11 @@
   "examSession.registration.confirmPayment": "Kuittaa maksetuksi",
   "examSession.registration.confirmPayment.cancel": "Älä kuittaa",
   "examSession.registration.confirmPayment.confirm": "Kuittaa",
+  "examSession.registration.relocate": "Siirrä seuraavaan",
+  "examSession.registration.relocate.cancel": "Älä siirrä",
+  "examSession.registration.relocate.confirm": "Siirrä",
   "examSession.upcomingExamSessions": "Tulevat tutkintotilaisuudet",
   "examSessions.agreementNotFound": "Ei löytynyt voimassaolevaa järjestäjäsopimusta.",
-
-  "error.examSession.registration.relocateExamSessionFailed": "Siirtäminen epäonnistui",
-  "examSession.registration.relocate": "Siirrä seuraavaan",
-  "examSession.registration.relocate.confirm": "Siirrä",
-  "examSession.registration.relocate.cancel": "Älä siirrä",
-
-
   "payment.redirect.error": "Maksamiseen siirtyminen epäonnistui",
   "payment.redirect.error.info": "Kokeile hetken kuluttua uudelleen.",
   "payment.status.cancel": "Maksutapahtuma keskeytyi!",
