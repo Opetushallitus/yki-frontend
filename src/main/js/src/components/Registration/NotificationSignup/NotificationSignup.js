@@ -66,6 +66,7 @@ const notificationSignup = ({ examSessionId }) => {
                 disabled={!isValid}
                 tabIndex="2"
                 datacy="registry-item-form-submit"
+                isRegistration
               >
                 {t('registration.notification.signup.button')}
               </Button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import classes from './LocationSelection.module.css';
 import Header from '../../../components/Header/Header';
@@ -10,41 +10,41 @@ import { levelDescription } from '../../../util/util';
 import * as actions from '../../../store/actions/index';
 
 const locationSelection = props => {
+  const [t] = useTranslation();
+
   if (!props.language || !props.level) {
-    return <Redirect to={props.t('registration.path.select.language')} />;
+    return <Redirect to={t('registration.path.select.language')} />;
   }
 
-  document.title = props.t('registration.document.title.location');
+  document.title = t('registration.document.title.location');
 
   const selectLocation = location => {
     props.onSelectLocation(location);
-    props.history.push(props.t('registration.path.select.exam'));
+    props.history.push(t('registration.path.select.exam'));
   };
 
   return (
     <React.Fragment>
       <Header />
       <BackButton
-        clicked={() =>
-          props.history.push(props.t('registration.path.select.level'))
-        }
+        clicked={() => props.history.push(t('registration.path.select.level'))}
       />
       <main className={classes.Content}>
-        <p className={classes.Title}>{props.t('registration.title')}</p>
+        <p className={classes.Title}>{t('registration.title')}</p>
         <p className={classes.LanguageSelection}>
-          {props.t('registration.selected.language')}:{' '}
-          <strong>{props.language.name}</strong>
+          {t('registration.selected.language')}:{' '}
+          <strong>{t(`common.language.${props.language.code}`)}</strong>
           <br />
-          {props.t('registration.selected.level')}:{' '}
+          {t('registration.selected.level')}:{' '}
           <strong>{levelDescription(props.level)}</strong>
         </p>
-        <p>{props.t('registration.select.location')}:</p>
+        <p>{t('registration.select.location')}:</p>
         <div className={classes.Selections}>
           <span
             className={classes.Selection}
             onClick={() => selectLocation('')}
           >
-            {props.t('common.location.all')}
+            {t('common.location.all')}
           </span>
           {props.locations.map(location => (
             <span
@@ -78,4 +78,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(locationSelection));
+)(locationSelection);

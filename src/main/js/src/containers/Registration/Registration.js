@@ -35,7 +35,11 @@ class Registration extends Component {
     return (
       <Fragment>
         <Header />
-        <BackButton clicked={() => this.props.history.goBack()} />
+        <BackButton
+          clicked={() =>
+            this.props.history.push('/ilmoittautuminen/valitse-paikkakunta')
+          }
+        />
         <main className={classes.Content}>
           <p className={classes.Title}>{this.props.t('registration.title')}</p>
           <Filters

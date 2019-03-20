@@ -52,18 +52,12 @@ const examDetailsPage = ({
             <h2 className={classes.Title}>
               {seatsAvailable
                 ? t('registration.examDetails.title')
-                : t('registration.examDetails.full.title')}
+                : t('registration.examDetails.examFull')}
             </h2>
             <ExamDetailsCard exam={session} isFull={!seatsAvailable} />
             <div className={classes.InfoText}>
-              {seatsAvailable ? (
+              {seatsAvailable && (
                 <p>{t('registration.examDetails.futureInfo')}</p>
-              ) : (
-                <Fragment>
-                  <p>
-                    <strong>{t('registration.examDetails.examFull')}</strong>
-                  </p>
-                </Fragment>
               )}
             </div>
             <hr />
