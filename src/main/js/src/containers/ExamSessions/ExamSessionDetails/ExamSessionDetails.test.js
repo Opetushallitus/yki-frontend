@@ -30,6 +30,7 @@ describe('<ExamSessionDetails />', () => {
         errorConfirmedHandler={jest.fn()}
         onSubmitUpdateExamSession={jest.fn()}
         onSubmitDeleteExamSession={jest.fn()}
+        onRelocate={jest.fn()}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();

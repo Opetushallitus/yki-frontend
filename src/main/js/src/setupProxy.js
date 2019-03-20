@@ -45,7 +45,11 @@ const getRegistrations = () => {
   );
 };
 
-let registrations = getRegistrations();
+let registrations = {
+  1: getRegistrations(),
+  2: {participants: []},
+  3: {participants: []},
+}
 
 const countries = JSON.parse(
   fs.readFileSync('./dev/rest/codes/maatjavaltiot2.json'),
@@ -194,7 +198,12 @@ module.exports = function(app) {
 
   app.get('/yki/reset-mocks', (req, res) => {
     examSessions = getExamSessions();
-    registrations = getRegistrations();
+    
+    registrations = {
+      1: getRegistrations(),
+      2: {participants: []},
+      3: {participants: []},
+    };
     organizers = [...initialOrganizers];
     res.send({ success: true });
   });
@@ -229,7 +238,8 @@ module.exports = function(app) {
     '/yki/api/virkailija/organizer/:oid/exam-session/:id/registration',
     (req, res) => {
       try {
-        res.send(registrations);
+        const { id } = req.params;
+        res.send(registrations[id]);
       } catch (err) {
         console.log(err);
         res.status(404).send(err.message);
@@ -288,11 +298,31 @@ module.exports = function(app) {
     '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id',
     (req, res) => {
       try {
-        const { id } = req.params;
-        const foundIndex = registrations.participants.findIndex(
+        const { id, examSessionId } = req.params;
+        const foundIndex = registrations[examSessionId].participants.findIndex(
           x => x.registration_id == id,
         );
-        registrations.participants.splice(foundIndex, 1);
+        
+        registrations[examSessionId].participants.splice(foundIndex, 1);
+        res.send({ success: true });
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
+    },
+  );
+
+  app.post(
+    '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id/relocate',
+    (req, res) => {
+      try {
+        const { id, examSessionId } = req.params;
+        const toId = req.body.to_exam_session_id;
+        const foundIndex = registrations[examSessionId].participants.findIndex(
+          x => x.registration_id == id,
+        );
+        const reg = registrations[examSessionId].participants[foundIndex];
+        registrations[toId].participants.push(reg);
+        registrations[examSessionId].participants.splice(foundIndex, 1);
         res.send({ success: true });
       } catch (err) {
         res.status(404).send(err.message);
@@ -479,17 +509,19 @@ module.exports = function(app) {
   app.get('/yki/api/code/posti/:id', (req, res) => {
     try {
       axios
-      .get(
-        `https://virkailija.untuvaopintopolku.fi/yki/api/code/posti/${req.params.id}`,
-        req.body,
-      )
-      .then(response => {
-        res.send(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(404).send(err.message);
-      });
+        .get(
+          `https://virkailija.untuvaopintopolku.fi/yki/api/code/posti/${
+            req.params.id
+          }`,
+          req.body,
+        )
+        .then(response => {
+          res.send(response.data);
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(404).send(err.message);
+        });
     } catch (err) {
       res.status(404).send(err.message);
     }

@@ -11,7 +11,6 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import ParticipantList from '../../../components/UpcomingExamSessions/ParticipantList/ParticipantList';
 import ExamSessionUpdateForm from './ExamSessionUpdateForm/ExamSessionUpdateForm';
 import * as actions from '../../../store/actions/index';
-import { relocateExamSession } from '../../../store/actions/examSession';
 
 export class ExamSessionDetails extends Component {
   componentDidMount = () => {

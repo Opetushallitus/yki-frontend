@@ -106,6 +106,13 @@
   "examSession.registration.confirmPayment.confirm": "Kuittaa",
   "examSession.upcomingExamSessions": "Tulevat tutkintotilaisuudet",
   "examSessions.agreementNotFound": "Ei löytynyt voimassaolevaa järjestäjäsopimusta.",
+
+  "error.examSession.registration.relocateExamSessionFailed": "Siirtäminen epäonnistui",
+  "examSession.registration.relocate": "Siirrä seuraavaan",
+  "examSession.registration.relocate.confirm": "Siirrä",
+  "examSession.registration.relocate.cancel": "Älä siirrä",
+
+
   "payment.redirect.error": "Maksamiseen siirtyminen epäonnistui",
   "payment.redirect.error.info": "Kokeile hetken kuluttua uudelleen.",
   "payment.status.cancel": "Maksutapahtuma keskeytyi!",

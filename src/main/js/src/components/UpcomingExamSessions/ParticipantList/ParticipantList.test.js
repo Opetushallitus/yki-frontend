@@ -7,7 +7,7 @@ import { participantList as ParticipantList } from './ParticipantList';
 
 configure({ adapter: new Adapter() });
 
-const examSession = {
+const examSessionFirst = {
   registration_end_date: '2028-12-15',
   session_date: '2028-12-30',
   participants: 2,
@@ -15,6 +15,11 @@ const examSession = {
   registration_start_date: '2018-09-01',
   language_code: 'eng',
   level_code: 'KESKI',
+};
+
+const examSessionSecond = {
+  ...examSessionFirst,
+  session_date: '2029-01-01',
 };
 
 const participants = [
@@ -52,11 +57,13 @@ describe('<ParticipantList />', () => {
   it('should render participant rows', () => {
     const wrapper = shallow(
       <ParticipantList
-        examSession={examSession}
+        examSession={examSessionFirst}
+        examSessions={[examSessionFirst, examSessionSecond]}
         participants={participants}
         t={t => t}
         onCancel={jest.fn()}
         onConfirmPayment={jest.fn()}
+        onRelocate={jest.fn()}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();

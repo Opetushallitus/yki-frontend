@@ -2,7 +2,7 @@
   "exam_sessions": [
     {
       "published_at": "2018-01-01T00:00:00.000Z",
-      "registration_end_date": "2018-12-15",
+      "registration_end_date": "2019-12-15",
       "office_oid": "1.2.246.562.10.29461948951",
       "id": 1,
       "location": [
@@ -34,10 +34,52 @@
           "other_location_info": "auditorium A2"
         }
       ],
-      "session_date": "2018-12-30",
-      "participants": 4,
+      "session_date": "2019-12-30",
+      "participants": 5,
       "max_participants": 50,
-      "registration_start_date": "2018-09-01",
+      "registration_start_date": "2019-01-01",
+      "organizer_oid": "1.2.3.4",
+      "language_code": "eng",
+      "level_code": "KESKI"
+    },
+    {
+      "published_at": "2018-01-01T00:00:00.000Z",
+      "registration_end_date": "2020-12-15",
+      "office_oid": "1.2.246.562.10.29461948951",
+      "id": 3,
+      "location": [
+        {
+          "lang": "fi",
+          "extra_information": null,
+          "street_address": "Jokukatu 4",
+          "post_office": "Tampere",
+          "zip": "33100",
+          "name": "Amiedu, Strömberginkuja 3",
+          "other_location_info": "auditorio A2"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "street_address": "Jokukatu 4",
+          "post_office": "Tammerfors",
+          "zip": "33100",
+          "name": "Amiedu, Strömberginkuja 3",
+          "other_location_info": "auditorium A2"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "street_address": "Jokukatu 4",
+          "post_office": "Tampere",
+          "zip": "33100",
+          "name": "Amiedu, Strömberginkuja 3",
+          "other_location_info": "auditorium A2"
+        }
+      ],
+      "session_date": "2020-12-30",
+      "participants": 0,
+      "max_participants": 10,
+      "registration_start_date": "2020-09-01",
       "organizer_oid": "1.2.3.4",
       "language_code": "eng",
       "level_code": "KESKI"

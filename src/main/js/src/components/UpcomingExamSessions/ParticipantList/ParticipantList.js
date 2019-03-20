@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import * as R from 'ramda';
 
 import { DATE_FORMAT } from '../../../common/Constants';
 import checkMarkDone from '../../../assets/svg/checkmark-done.svg';
@@ -30,15 +31,6 @@ export const participantList = props => {
 
   const ssnOrBirthDate = form => {
     return form.ssn ? form.ssn : moment(form.birthdate).format(DATE_FORMAT);
-  };
-
-  const cancelRegistration = () => {
-    return (
-      <React.Fragment>
-        <img src={trashcan} alt="" />{' '}
-        {props.t('examSession.registration.cancel')}
-      </React.Fragment>
-    );
   };
 
   const confirmPaymentButton = participant => {
@@ -72,8 +64,29 @@ export const participantList = props => {
         {props.t('examSession.registration.relocate')}
       </React.Fragment>
     );
+    const {
+      language_code,
+      level_code,
+      session_date,
+      office_oid,
+    } = props.examSession;
+    const isSessionDateAfter = e => {
+      return (
+        moment(e.session_date).isAfter(moment(session_date)) &&
+        e.level_code === level_code &&
+        e.language_code === language_code &&
+        e.office_oid === office_oid
+      );
+    };
+    const getNextSession = R.compose(
+      R.head,
+      R.sortBy(R.prop('session_date')),
+      R.filter(isSessionDateAfter),
+    );
 
-    return (
+    const nextExamSession = getNextSession(props.examSessions);
+
+    return nextExamSession ? (
       <ActionButton
         children={relocate}
         confirmOnRight={true}
@@ -82,11 +95,35 @@ export const participantList = props => {
             props.examSession.organizer_oid,
             props.examSession.id,
             participant.registration_id,
-            'toExamSessionId'
+            nextExamSession.id,
           )
         }
         confirmText={props.t('examSession.registration.relocate.confirm')}
         cancelText={props.t('examSession.registration.relocate.cancel')}
+      />
+    ) : null;
+  };
+
+  const cancelRegistrationButton = p => {
+    const cancelRegistration = (
+      <React.Fragment>
+        <img src={trashcan} alt="" />{' '}
+        {props.t('examSession.registration.cancel')}
+      </React.Fragment>
+    );
+    return (
+      <ActionButton
+        children={cancelRegistration}
+        confirmOnRight={true}
+        onClick={() =>
+          props.onCancel(
+            props.examSession.organizer_oid,
+            props.examSession.id,
+            p.registration_id,
+          )
+        }
+        confirmText={props.t('examSession.registration.cancel.confirm')}
+        cancelText={props.t('examSession.registration.cancel.cancel')}
       />
     );
   };
@@ -119,7 +156,9 @@ export const participantList = props => {
         <div className={classes.StateItem} />
         <div className={classes.StateItem} />
         <div className={classes.FirstShowOnHover}>
-          {p.state === 'SUBMITTED' ? confirmPaymentButton(p) : relocateButton(p)}
+          {p.state === 'SUBMITTED'
+            ? confirmPaymentButton(p)
+            : relocateButton(p)}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
@@ -134,21 +173,7 @@ export const participantList = props => {
           ).formatInternational()}
         </div>
         <div className={classes.Item}> {p.form.email}</div>
-        <div className={classes.ShowOnHover}>
-          <ActionButton
-            children={cancelRegistration()}
-            confirmOnRight={true}
-            onClick={() =>
-              props.onCancel(
-                props.examSession.organizer_oid,
-                props.examSession.id,
-                p.registration_id,
-              )
-            }
-            confirmText={props.t('examSession.registration.cancel.confirm')}
-            cancelText={props.t('examSession.registration.cancel.cancel')}
-          />
-        </div>
+        <div className={classes.ShowOnHover}>{cancelRegistrationButton(p)}</div>
         <span className={classes.Line} />
         <span className={classes.LineEnd} />
       </React.Fragment>

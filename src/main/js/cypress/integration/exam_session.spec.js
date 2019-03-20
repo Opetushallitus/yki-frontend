@@ -20,7 +20,7 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=exam-session-header]');
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 2);
+      .should('have.length', 3);
   });
 
   it('front page contains agreement data', () => {
@@ -53,7 +53,7 @@ describe('Exam sessions', () => {
       .click();
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 3);
+      .should('have.length', 4);
   });
 
   it('exam session field validation errors disable submit button', () => {
@@ -76,7 +76,7 @@ describe('Exam sessions', () => {
       .click();
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 3);
+      .should('have.length', 4);
 
     cy.get('[data-cy=add-exam-session-button]').click();
     fillExamSessionForm();
@@ -126,7 +126,7 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=input-extra-en]').should('have.value', 'extra-en');
   });
 
-  it('exam session can be deleted when registration is closed', () => {
+  it('exam session can be deleted when registration has not started', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('button')
       .contains('Poista')
@@ -160,5 +160,20 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=button-confirm-action]').click();
 
     cy.get('[data-cy=registration-SUBMITTED').should('not.exist');
+  });
+
+  it('registration can be relocated to next exam session', () => {
+    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=participant-1]').should('exist');
+
+    cy.get('[data-cy=button-action]').first()
+      .click();
+    cy.get('[data-cy=button-confirm-action]').click();
+    cy.get('[data-cy=participant-1]').should('not.exist');
+
+    cy.log('registration is relocated to next session')
+    cy.visit('/tutkintotilaisuudet');
+    cy.get('[data-cy=exam-sessions-table-row-1]').click();
+    cy.get('[data-cy=participant-1]').should('exist');
   });
 });
