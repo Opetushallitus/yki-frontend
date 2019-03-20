@@ -4,14 +4,13 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import classes from './ExamDetailsCard.module.css';
-import { languageToString, levelDescription } from '../../../../util/util';
+import { levelDescription } from '../../../../util/util';
 import { DATE_FORMAT_WITHOUT_YEAR } from '../../../../common/Constants';
 
 const examDetailsCard = ({ exam, isFull }) => {
   const [t, i18n] = useTranslation();
-
   const languageAndLevel = (
-    <p>{`${languageToString(exam.language_code)}, ${levelDescription(
+    <p>{`${t(`common.language.${exam.language_code}`)}, ${levelDescription(
       exam.level_code,
     ).toLowerCase()}`}</p>
   );
@@ -25,7 +24,11 @@ const examDetailsCard = ({ exam, isFull }) => {
   const location =
     exam.location && exam.location.find(l => l.lang === i18n.language);
   const organizer = location ? <p>{`${location.name}`}</p> : null;
-  const address = location ? <p>{`${location.street_address}, ${location.zip} ${location.post_office}`}</p> : null;
+  const address = location ? (
+    <p>{`${location.street_address}, ${location.zip} ${
+      location.post_office
+    }`}</p>
+  ) : null;
 
   const price = !isFull && (
     <p>{`${t('registration.examDetails.card.price')} ${
