@@ -94,6 +94,8 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         onClick={[Function]}
       >
         examSession.registration.relocate
+         
+        1.1.2029
       </ActionButton>
     </div>
     <div
