@@ -65,7 +65,7 @@ export const participantList = props => {
       session_date,
       office_oid,
     } = props.examSession;
-    const isSessionDateAfter = e => {
+    const canBeRelocatedTo = e => {
       return (
         moment(e.session_date).isAfter(moment(session_date)) &&
         e.level_code === level_code &&
@@ -77,7 +77,7 @@ export const participantList = props => {
     const getNextSession = R.compose(
       R.head,
       R.sortBy(R.prop('session_date')),
-      R.filter(isSessionDateAfter),
+      R.filter(canBeRelocatedTo),
     );
 
     const nextExamSession = getNextSession(props.examSessions);
