@@ -83,7 +83,9 @@ export const participantList = props => {
     const nextExamSession = getNextSession(props.examSessions);
     const relocate = (
       <React.Fragment>
-        {props.t('examSession.registration.relocate')}{' '}{nextExamSession && moment(nextExamSession.session_date).format(DATE_FORMAT)}
+        {props.t('examSession.registration.relocate')}{' '}
+        {nextExamSession &&
+          moment(nextExamSession.session_date).format(DATE_FORMAT)}
       </React.Fragment>
     );
     return nextExamSession ? (

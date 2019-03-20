@@ -51,8 +51,10 @@ class ExamSessions extends Component {
       showExamSessionDetailsModal: true,
     });
 
-  closeExamSessionDetailsModalHandler = () =>
+  closeExamSessionDetailsModalHandler = () => {
     this.setState({ showExamSessionDetailsModal: false });
+    this.props.onFetchExamSessionContent();
+  };
 
   createExamSessionHandler = examSession => {
     this.props.onAddExamSession(
@@ -170,8 +172,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchExamSessionContent: () =>
       dispatch(actions.fetchExamSessionContent()),
-    errorConfirmedHandler: () =>
-      dispatch(actions.examSessionFailReset()),
+    errorConfirmedHandler: () => dispatch(actions.examSessionFailReset()),
     onAddExamSession: (examSession, oid) =>
       dispatch(actions.addExamSession(examSession, oid)),
     onUpdateExamSession: (examSession, oid) =>
