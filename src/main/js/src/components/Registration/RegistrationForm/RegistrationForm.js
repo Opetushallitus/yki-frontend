@@ -165,6 +165,16 @@ export const registrationForm = props => {
     return value ? value : '';
   };
 
+  const getNationalityDesc = code => {
+    const nationality = props.initData.nationalities.find(
+      n => n.koodiArvo === code
+    );
+    const metadata = nationality.metadata.find(
+      m => m.kieli === 'FI',
+    );
+    return metadata ? metadata.nimi : '';
+  };
+
   return (
     <Formik
       initialValues={{
@@ -191,6 +201,7 @@ export const registrationForm = props => {
           first_name: values.firstName,
           last_name: values.lastName,
           nationalities: [values.nationality],
+          nationality_desc: getNationalityDesc(values.nationality),
           ssn: props.initData.user.ssn,
           birthdate: values.birthdate
             ? moment(values.birthdate, DATE_FORMAT).format(
