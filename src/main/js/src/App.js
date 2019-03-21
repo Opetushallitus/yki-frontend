@@ -53,6 +53,7 @@ const app = () => (
         <Router basename={'/yki'}>
           <Switch>
             <Route exact path="/" component={Description} />
+            <Route exact path="/ilmoittautuminen" component={Description} />
             <Route path="/ilmoittautuminen/valitse-kieli" component={LanguageSelection} />
             <Route path="/ilmoittautuminen/valitse-taso" component={LevelSelection} />
             <Route path="/ilmoittautuminen/valitse-paikkakunta" component={LocationSelection} />
