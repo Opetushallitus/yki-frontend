@@ -9,7 +9,11 @@ configure({ adapter: new Adapter() });
 
 jest.mock('react-i18next', () => ({
   withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: k => k };
+    Component.defaultProps = {
+      ...Component.defaultProps,
+      t: k => k,
+      i18n: { language: 'fi' },
+    };
     return Component;
   },
 }));

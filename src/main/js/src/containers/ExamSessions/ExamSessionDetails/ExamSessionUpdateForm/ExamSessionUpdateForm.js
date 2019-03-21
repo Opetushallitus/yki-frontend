@@ -68,19 +68,22 @@ export class ExamSessionUpdateForm extends Component {
       );
     };
 
-    const getLocationExtraByLang = lang => {
+    const getLocationByLang = lang => {
       const location = this.props.examSession.location.find(
         l => l.lang === lang,
       );
+      return location ? location : this.props.examSession.location[0];
+    };
+    
+    const getLocationExtraByLang = lang => {
+      const location = getLocationByLang(lang);
       return location && location.extra_information
         ? location.extra_information
         : '';
     };
 
     const getLocationNameByLang = lang => {
-      const location = this.props.examSession.location.find(
-        l => l.lang === lang,
-      );
+      const location = getLocationByLang(lang);
       return location.name;
     };
 
@@ -88,10 +91,10 @@ export class ExamSessionUpdateForm extends Component {
       <Formik
         initialValues={{
           maxParticipants: this.props.examSession.max_participants,
-          streetAddress: this.props.examSession.location[0].street_address,
-          postOffice: this.props.examSession.location[0].post_office,
+          streetAddress: getLocationByLang(this.props.i18n.language).street_address,
+          postOffice: getLocationByLang(this.props.i18n.language).post_office,
           zip: this.props.examSession.location[0].zip,
-          location: this.props.examSession.location[0].other_location_info,
+          location: getLocationByLang(this.props.i18n.language).other_location_info,
           extraFi: getLocationExtraByLang('fi'),
           extraSv: getLocationExtraByLang('sv'),
           extraEn: getLocationExtraByLang('en'),
