@@ -127,7 +127,7 @@ export const registrationForm = props => {
     );
   };
 
-  const inputField = (name, placeholder = '') => (
+  const inputField = (name, placeholder = '', extra) => (
     <React.Fragment>
       <h3>{props.t(`registration.form.${name}`)}</h3>
       <Field
@@ -136,6 +136,7 @@ export const registrationForm = props => {
         placeholder={placeholder}
         className={classes.TextInput}
       />
+      {extra && <span>{extra}</span>}
       <ErrorMessage
         name={name}
         data-cy={`input-error-${name}`}
@@ -238,7 +239,7 @@ export const registrationForm = props => {
               <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
             </div>
             <div className={classes.FormElement}>
-              {inputField('phoneNumber', '+358 50 1234 5678')}
+              {inputField('phoneNumber', '',  ' (+358)')}
             </div>
             <div className={classes.FormElement}>
               {readonlyWhenExistsInput('email', initialValues)}
