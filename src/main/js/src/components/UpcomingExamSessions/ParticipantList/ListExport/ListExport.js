@@ -82,8 +82,9 @@ export const listExport = props => {
     const worksheet = XLSX.utils.json_to_sheet(data);
 
     worksheet['!cols'] = columns;
-    workbook.SheetNames.push('');
-    workbook.Sheets[''] = worksheet;
+    const sheetName = 'osallistujat';
+    workbook.SheetNames.push(sheetName);
+    workbook.Sheets[sheetName] = worksheet;
 
     const workbookOut = XLSX.write(workbook, {
       bookType: 'xlsx',
