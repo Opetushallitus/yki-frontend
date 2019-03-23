@@ -51,12 +51,19 @@ export const listExport = props => {
     }, 100);
   };
 
+  const stateToText = {
+    COMPLETED: 'Maksanut',
+    SUBMITTED: 'Ei maksanut',
+    CANCELLED: 'Peruttu',
+    PAID_AND_CANCELLED: 'Maksanut ja peruttu',
+  };
+
   const exportToExcel = participants => {
     const data = participants.map(p => {
       return {
         etunimi: p.form.first_name,
         sukunimi: p.form.last_name,
-        tila: p.state === 'COMPLETED' ? 'Maksanut' : 'Ei maksanut',
+        tila: stateToText[p.state],
         hetu: p.form.ssn,
         syntymaaika: p.form.birth_date,
         sukupuoli: p.form.gender ? (p.form.gender === '1' ? 'M' : 'N') : null,

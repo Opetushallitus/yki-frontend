@@ -14,13 +14,22 @@ import { ActionButton } from '../../UI/ActionButton/ActionButton';
 import ListExport from './ListExport/ListExport';
 
 export const participantList = props => {
+  const getStateTranslationKey = state => {
+    switch (state) {
+      case 'COMPLETED':
+        return 'examSession.paid';
+      case 'CANCELLED':
+        return 'examSession.cancelled';
+      case 'PAID_AND_CANCELLED':
+        return 'examSession.paidAndCancelled';
+      default:
+        return 'examSession.notPaid';
+    }
+  };
   const registratioStatus = registrationState => {
     const image =
       registrationState === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
-    const text =
-      registrationState === 'COMPLETED'
-        ? props.t('examSession.paid')
-        : props.t('examSession.notPaid');
+    const text = props.t(getStateTranslationKey(registrationState));
     return (
       <React.Fragment>
         <img src={image} data-cy={`registration-${registrationState}`} alt="" />{' '}
@@ -85,7 +94,8 @@ export const participantList = props => {
       <React.Fragment>
         {props.t('examSession.registration.relocate')}{' '}
         {nextExamSession &&
-          moment(nextExamSession.session_date).format(DATE_FORMAT)}
+          moment(nextExamSession.session_date).format(DATE_FORMAT)}{' '}
+        {props.t('examSession.registration.relocate.session')}
       </React.Fragment>
     );
     return nextExamSession ? (
@@ -160,7 +170,9 @@ export const participantList = props => {
         <div className={classes.FirstShowOnHover}>
           {p.state === 'SUBMITTED'
             ? confirmPaymentButton(p)
-            : relocateButton(p)}
+            : p.state === 'COMPLETED'
+            ? relocateButton(p)
+            : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
@@ -175,7 +187,11 @@ export const participantList = props => {
           ).formatInternational()}
         </div>
         <div className={classes.Item}> {p.form.email}</div>
-        <div className={classes.ShowOnHover}>{cancelRegistrationButton(p)}</div>
+        <div className={classes.ShowOnHover}>
+          {p.state === 'SUBMITTED' || p.state === 'COMPLETED'
+            ? cancelRegistrationButton(p)
+            : null}
+        </div>
         <span className={classes.Line} />
         <span className={classes.LineEnd} />
       </React.Fragment>
@@ -186,7 +202,8 @@ export const participantList = props => {
     <div data-cy="participant-list">
       <h3>
         {props.t('examSession.participants')}
-        {':'} {props.participants.length} / {props.examSession.max_participants}
+        {':'} {props.examSession.participants} /{' '}
+        {props.examSession.max_participants}
       </h3>
       {props.participants.length > 0 && (
         <React.Fragment>

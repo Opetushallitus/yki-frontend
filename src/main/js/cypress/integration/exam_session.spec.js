@@ -88,9 +88,21 @@ describe('Exam sessions', () => {
       .should('not.exist');
   });
 
-  it('selecting upcoming exam session opens details modal', () => {
+  it('selecting upcoming exam session opens details with participant list', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
-    cy.get('[data-cy=participant-list]');
+    cy.get('[data-cy=participant-list]').should('exist');
+
+    cy.log('list shows paid registrations');
+    cy.get('[data-cy=participant-list] [data-cy=registration-COMPLETED]').should('exist');
+
+    cy.log('list shows not paid registrations');
+    cy.get('[data-cy=participant-list] [data-cy=registration-SUBMITTED]').should('exist');
+
+    cy.log('list shows cancelled registrations');
+    cy.get('[data-cy=participant-list] [data-cy=registration-CANCELLED]').should('exist');
+
+    cy.log('list shows paid and cancelled registrations');
+    cy.get('[data-cy=participant-list] [data-cy=registration-PAID_AND_CANCELLED]').should('exist');
   });
 
   it('exam session can be updated', () => {

@@ -9,7 +9,8 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     :
      
     2
-     / 
+     /
+     
     50
   </h3>
   <div
@@ -96,6 +97,8 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         examSession.registration.relocate
          
         1.1.2029
+         
+        examSession.registration.relocate.session
       </ActionButton>
     </div>
     <div
