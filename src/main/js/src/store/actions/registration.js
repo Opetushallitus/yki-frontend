@@ -20,13 +20,28 @@ export const fetchExamSessions = () => {
 };
 
 const extractExamLocations = array => {
-  const locations = array.reduce(
-    (acc, l) => acc.add(capitalize(l.location[0].post_office)),
-    new Set(),
-  );
+  const locations = {};
+  for (const element of array) {
+    const key = capitalize(
+      element.location.find(l => l.lang === 'fi').post_office,
+    );
+
+    if (!locations.hasOwnProperty(key)) {
+      const value = capitalize(
+        element.location.find(l => l.lang === 'sv').post_office,
+      );
+      locations[key] = value;
+    }
+  }
+
+  const sortedLocations = {};
+  Object.keys(locations)
+    .sort()
+    .map(k => (sortedLocations[k] = locations[k]));
+
   return {
     type: actionTypes.ADD_EXAM_LOCATIONS,
-    locations: [...locations].sort(),
+    locations: sortedLocations,
   };
 };
 

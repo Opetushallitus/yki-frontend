@@ -10,7 +10,7 @@ import { levelDescription } from '../../../util/util';
 import * as actions from '../../../store/actions/index';
 
 const locationSelection = props => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
 
   if (!props.language || !props.level) {
     return <Redirect to={t('registration.path.select.language')} />;
@@ -46,13 +46,13 @@ const locationSelection = props => {
           >
             {t('common.location.all')}
           </span>
-          {props.locations.map(location => (
+          {Object.entries(props.locations).map(l => (
             <span
-              key={location}
+              key={l[0]}
               className={classes.Selection}
-              onClick={() => selectLocation(location)}
+              onClick={() => selectLocation(l[0])}
             >
-              {location}
+              {i18n.language === 'sv' ? l[1] : l[0]}
             </span>
           ))}
         </div>
