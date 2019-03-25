@@ -40,7 +40,9 @@
       "registration_start_date": "2019-01-01",
       "organizer_oid": "1.2.3.4",
       "language_code": "eng",
-      "level_code": "KESKI"
+      "level_code": "KESKI",
+      "exam_fee": "100.00",
+      "open": true
     },
     {
       "published_at": "2018-01-01T00:00:00.000Z",
@@ -82,7 +84,9 @@
       "registration_start_date": "2020-09-01",
       "organizer_oid": "1.2.3.4",
       "language_code": "eng",
-      "level_code": "KESKI"
+      "level_code": "KESKI",
+      "exam_fee": "100.00",
+      "open": false
     },
     {
       "published_at": "2018-01-01T00:00:00.000Z",
@@ -124,7 +128,9 @@
       "registration_start_date": "2029-03-01",
       "organizer_oid": "1.2.3.4",
       "language_code": "fin",
-      "level_code": "PERUS"
+      "level_code": "PERUS",
+      "exam_fee": "100.00",
+      "open": false
     }
   ]
 }

@@ -41,7 +41,8 @@
         }
       ],
       "exam_fee": "100.00",
-      "registration_end_date": "2039-12-14"
+      "registration_end_date": "2039-12-14",
+      "open": false
     },
     {
       "level_code": "KESKI",
@@ -84,7 +85,8 @@
         }
       ],
       "exam_fee": "123.00",
-      "registration_end_date": "2039-02-28"
+      "registration_end_date": "2039-02-28",
+      "open": true
     },
     {
       "level_code": "KESKI",
@@ -127,7 +129,8 @@
         }
       ],
       "exam_fee": "100.00",
-      "registration_end_date": "2039-02-28"
+      "registration_end_date": "2039-02-28",
+      "open": true
     },
     {
       "level_code": "YLIN",
@@ -170,7 +173,8 @@
         }
       ],
       "exam_fee": "160.00",
-      "registration_end_date": "2029-02-28"
+      "registration_end_date": "2029-02-28",
+      "open": true
     },
     {
       "level_code": "PERUS",
@@ -213,7 +217,8 @@
         }
       ],
       "exam_fee": "100.00",
-      "registration_end_date": "2039-02-28"
+      "registration_end_date": "2039-02-28",
+      "open": true
     }
   ]
 }
