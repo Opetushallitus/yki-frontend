@@ -65,7 +65,7 @@ export const listExport = props => {
         sukunimi: p.form.last_name,
         tila: stateToText[p.state],
         hetu: p.form.ssn,
-        syntymaaika: p.form.birth_date,
+        syntymaaika: p.form.birthdate,
         sukupuoli: p.form.gender ? (p.form.gender === '1' ? 'M' : 'N') : null,
         email: p.form.email,
         puhelin: p.form.phone_number,
