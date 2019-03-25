@@ -66,6 +66,15 @@ describe('Registration', () => {
     cy.get('[data-cy=exam-session-list-item]').should('have.length', 1);
   });
 
+  it('Filters are localized', () => {
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
+    cy.get('[data-cy=language-filter]').contains('Suomi');
+    cy.get('[data-cy=location-filter]').contains('Tampere');
+    cy.contains('på svenska').click();
+    cy.get('[data-cy=language-filter]').contains('Finska');
+    cy.get('[data-cy=location-filter]').contains('Tammerfors');
+  });
+
   it('Show exam session details page after selecting exam', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.contains('Ilmoittaudu').click();
@@ -83,7 +92,7 @@ describe('Registration', () => {
   it('Exam session details page shows notification signup information', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.contains('Ilmoittaudu varasijalle').click();
-    cy.contains('Olet ilmoittautumassa varasijalle tutkintotilaisuuteen');
+    cy.contains('Tutkintotilaisuus on täynnä!');
   });
 
   it('Notification signup works', () => {
@@ -109,7 +118,11 @@ describe('Registration', () => {
     cy.get('select').contains('Suomi');
     cy.get('select').contains('Kaikki tasot');
     cy.get('select').contains('Koko maa');
-    cy.get('[data-cy=exam-session-list-item]').get('button').contains('Ilmoittaudu').first().click();
+    cy.get('[data-cy=exam-session-list-item]')
+      .get('button')
+      .contains('Ilmoittaudu')
+      .first()
+      .click();
 
     cy.get('[data-cy=button-show-login-link]').click();
     cy.get('[data-cy=input-email]').type('test@test.com');
