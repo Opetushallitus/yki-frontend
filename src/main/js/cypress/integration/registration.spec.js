@@ -137,7 +137,7 @@ describe('Registration', () => {
     cy.wait('@getExamSession');
 
     cy.get('[data-cy=exam-details-title]')
-      .contains('Ilmoittautuminen ei ole auki tutkintotilaisuuteen:')
+      .contains('Ilmoittautuminen ei ole avoinna tutkintotilaisuuteen:')
       .should('exist');
   });
 });
