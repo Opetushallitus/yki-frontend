@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import classes from './ExamDetailsPage.module.css';
 import Spinner from '../../UI/Spinner/Spinner';
@@ -12,6 +13,7 @@ import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
 import AuthButton from '../AuthButton/AuthButton';
 import NotificationSignup from '../NotificationSignup/NotificationSignup';
 import LoginLink from '../LoginLink/LoginLink';
+import { DATE_FORMAT_WITHOUT_YEAR } from '../../../common/Constants';
 
 const examDetailsPage = ({
   session,
@@ -31,8 +33,20 @@ const examDetailsPage = ({
   }, []);
 
   const seatsAvailable = session.max_participants - session.participants > 0;
-
+  const registrationOpen = session.open;
   const examSessionId = Number(match.params.examSessionId);
+
+  const registrationPeriod = (
+    <div className={classes.InfoText}>
+      <p data-cy="exam-details-registrationPeriod">{`${t(
+        'registration.examDetails.registrationPeriod',
+      )} ${moment(session.registration_start_date).format(
+        DATE_FORMAT_WITHOUT_YEAR,
+      )} - ${moment(session.registration_end_date).format(
+        DATE_FORMAT_WITHOUT_YEAR,
+      )}`}</p>
+    </div>
+  );
 
   return (
     <div>
@@ -49,40 +63,50 @@ const examDetailsPage = ({
           </div>
         ) : (
           <Fragment>
-            <h2 className={classes.Title}>
-              {seatsAvailable
+            <h2 className={classes.Title} data-cy="exam-details-title">
+              {!registrationOpen
+                ? t('registration.examDetails.registrationClosed')
+                : seatsAvailable
                 ? t('registration.examDetails.title')
                 : t('registration.examDetails.examFull')}
             </h2>
             <ExamDetailsCard exam={session} isFull={!seatsAvailable} />
-            <div className={classes.InfoText}>
-              {seatsAvailable && (
-                <p>{t('registration.examDetails.futureInfo')}</p>
-              )}
-            </div>
-            <hr />
-            {seatsAvailable ? (
-              <div className={classes.Identification}>
-                <p>
-                  <strong>{t('registration.examDetails.identify')}</strong>
-                </p>
-                <AuthButton examSessionId={examSessionId} />
-                {showLoginLink ? (
-                  <LoginLink examSessionId={examSessionId} />
+            {registrationOpen ? (
+              <Fragment>
+                <div className={classes.InfoText}>
+                  {seatsAvailable && (
+                    <p>{t('registration.examDetails.futureInfo')}</p>
+                  )}
+                </div>
+                <hr />
+                {seatsAvailable ? (
+                  <div className={classes.Identification}>
+                    <p>
+                      <strong>{t('registration.examDetails.identify')}</strong>
+                    </p>
+                    <AuthButton examSessionId={examSessionId} />
+                    {showLoginLink ? (
+                      <LoginLink examSessionId={examSessionId} />
+                    ) : (
+                      <Fragment>
+                        <button
+                          className={classes.EmailIdentificationButton}
+                          data-cy="button-show-login-link"
+                          onClick={() => setShowLoginLink(true)}
+                        >
+                          {t('registration.examDetails.identify.withEmail')}
+                        </button>
+                      </Fragment>
+                    )}
+                  </div>
                 ) : (
-                  <Fragment>
-                    <button
-                      className={classes.EmailIdentificationButton}
-                      data-cy="button-show-login-link"
-                      onClick={() => setShowLoginLink(true)}
-                    >
-                      {t('registration.examDetails.identify.withEmail')}
-                    </button>
-                  </Fragment>
+                  <NotificationSignup
+                    examSessionId={match.params.examSessionId}
+                  />
                 )}
-              </div>
+              </Fragment>
             ) : (
-              <NotificationSignup examSessionId={match.params.examSessionId} />
+              registrationPeriod
             )}
           </Fragment>
         )}
