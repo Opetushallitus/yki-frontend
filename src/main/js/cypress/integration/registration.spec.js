@@ -129,4 +129,15 @@ describe('Registration', () => {
     cy.get('[data-cy=button-loginlink-form-submit]').click();
     cy.get('[data-cy=loginlink-success]').should('exist');
   });
+
+  it('Exam session details page shows if registration is not open', () => {
+    cy.server();
+    cy.route('/yki/api/exam-session/10?lang=fi').as('getExamSession')
+    cy.visit('/tutkintotilaisuus/10');
+    cy.wait('@getExamSession');
+
+    cy.get('[data-cy=exam-details-title]')
+      .contains('Ilmoittautuminen ei ole auki tutkintotilaisuuteen:')
+      .should('exist');
+  });
 });

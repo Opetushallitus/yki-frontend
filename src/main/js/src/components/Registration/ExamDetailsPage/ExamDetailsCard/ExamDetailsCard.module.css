@@ -1,5 +1,5 @@
 .Card {
-  height: 140px;
+  height: 180px;
   width: 100%;
   margin: 24px 0;
   display: grid;
@@ -13,7 +13,8 @@
 }
 
 .Card > p:nth-child(2),
-.Card > p:nth-child(4) {
+.Card > p:nth-child(4),
+.Card > p:nth-child(5) {
   margin-bottom: 12px;
 }
 

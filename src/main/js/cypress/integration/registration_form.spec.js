@@ -142,5 +142,6 @@ describe('Registration form', () => {
 
     cy.get('[data-cy=registration-success-header]').should('exist');
     cy.get('[data-cy=exam-details-card').should('exist');
+    cy.get('[data-cy=exam-details-card-extra').contains('Lisätiedot suomeksi').should('exist');
   });
 });

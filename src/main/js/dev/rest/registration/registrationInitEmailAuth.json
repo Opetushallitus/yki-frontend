@@ -15,7 +15,7 @@
         "post_office": "Espoo",
         "zip": "02110",
         "other_location_info": "Other info",
-        "extra_information": null,
+        "extra_information": "Lisätiedot suomeksi",
         "lang": "fi"
       },
       {
@@ -24,7 +24,7 @@
         "post_office": "Espoo",
         "zip": "02110",
         "other_location_info": "Other info",
-        "extra_information": null,
+        "extra_information": "Lisätiedot ruotsiksi",
         "lang": "sv"
       },
       {
@@ -33,12 +33,12 @@
         "post_office": "Espoo",
         "zip": "02110",
         "other_location_info": "Other info",
-        "extra_information": null,
+        "extra_information": "Lisätiedot englanniksi",
         "lang": "en"
       }
-    ]
+    ],
+    "exam_fee": "100.00"
   },
-  "exam_payment": "123.00",
   "user": {
     "email": "test@test.com"
   },

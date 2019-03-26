@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import classes from './ExamSessionListItem.module.css';
-import { nowBetweenDates, levelDescription } from '../../../../util/util';
+import { levelDescription } from '../../../../util/util';
 import {
   DATE_FORMAT,
   DATE_FORMAT_WITHOUT_YEAR,
@@ -86,15 +86,11 @@ const examSessionListItem = ({
     </div>
   );
 
-  const registrationCurrentlyOpen = nowBetweenDates(
-    session.registration_start_date,
-    session.registration_end_date,
-  );
   const registerButton = (
     <button
       className={[
         classes.RegisterButton,
-        !registrationCurrentlyOpen
+        !session.open
           ? classes.RegistrationLocked
           : spotsAvailable
           ? classes.ButtonForSignup

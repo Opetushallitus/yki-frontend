@@ -30,6 +30,11 @@ const examDetailsCard = ({ exam, isFull }) => {
     }`}</p>
   ) : null;
 
+  const extra =
+    location && location.extra_information ? (
+      <p data-cy="exam-details-card-extra">{location.extra_information}</p>
+    ) : null;
+
   const price = !isFull && (
     <p>{`${t('registration.examDetails.card.price')} ${
       exam.exam_fee ? exam.exam_fee : ''
@@ -42,6 +47,7 @@ const examDetailsCard = ({ exam, isFull }) => {
       {date}
       {organizer}
       {address}
+      {extra}
       {price}
     </div>
   );
