@@ -1,13 +1,16 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
+import moment from 'moment';
 
+import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 import { capitalize } from '../../util/util';
 
 export const fetchExamSessions = () => {
   return dispatch => {
     dispatch(fetchExamSessionsStart());
+    const today = moment().format(ISO_DATE_FORMAT_SHORT);
     axios
-      .get('/yki/api/exam-session')
+      .get(`/yki/api/exam-session?from=${today}`)
       .then(res => {
         dispatch(extractExamLocations(res.data.exam_sessions));
         dispatch(fetchExamSessionsSuccess(res.data.exam_sessions));
