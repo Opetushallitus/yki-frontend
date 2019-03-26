@@ -88,9 +88,10 @@ export class ExamSessionUpdateForm extends Component {
     };
 
     const createRegistrationUrl = examSessionId => {
-      return `https://yki.${
-        window.location.hostname
-      }/yki/tutkintotilaisuus/${examSessionId}`;
+      return `https://${window.location.hostname.replace(
+        'virkailija',
+        'yki',
+      )}/yki/tutkintotilaisuus/${examSessionId}`;
     };
 
     return (

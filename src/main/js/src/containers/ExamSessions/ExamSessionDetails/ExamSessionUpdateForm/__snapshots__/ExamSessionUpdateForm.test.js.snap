@@ -24,7 +24,7 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       <label
         data-cy="registration-link"
       >
-        https://yki.localhost/yki/tutkintotilaisuus/1
+        https://localhost/yki/tutkintotilaisuus/1
       </label>
     </div>
     <div
