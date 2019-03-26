@@ -143,6 +143,8 @@
   "registration.examDetails.futureInfo": "Tarkemmat tiedot tutkintotilaisuudesta saat tutkinnon järjestäjältä lähempänä tutkintopäivää.",
   "registration.examDetails.identify": "Tunnistaudu ilmoittautumista varten",
   "registration.examDetails.identify.withEmail": "Tunnistaudu sähköpostilla",
+  "registration.examDetails.registrationClosed": "Ilmoittautuminen ei ole auki tutkintotilaisuuteen:",
+  "registration.examDetails.registrationPeriod": "Ilmoittautumisaika on",
   "registration.examDetails.title": "Olet ilmoittautumassa tutkintotilaisuuteen:",
   "registration.examSpots.free": "vapaata paikkaa",
   "registration.examSpots.full": "Täynnä!",
