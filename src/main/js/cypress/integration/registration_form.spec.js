@@ -29,6 +29,7 @@ describe('Registration form', () => {
         success: false,
       },
     });
+    cy.visit('/ilmoittautuminen/tutkintotilaisuus/1');
     cy.get('[data-cy=alert-title')
       .contains('Ilmoittautumislomakkeen tietojen hakeminen epäonnistui.')
       .should('exist');
@@ -44,6 +45,7 @@ describe('Registration form', () => {
         error: { full: true, closed: false, registered: false },
       },
     });
+    cy.visit('/ilmoittautuminen/tutkintotilaisuus/1');
     cy.get('[data-cy=alert-title')
       .contains('Tutkintotilaisuus on täynnä.')
       .should('exist');
@@ -59,6 +61,7 @@ describe('Registration form', () => {
         error: { full: false, closed: true, registered: false },
       },
     });
+    cy.visit('/ilmoittautuminen/tutkintotilaisuus/1');
     cy.get('[data-cy=alert-title')
       .contains('Ilmoittautumisaika on päättynyt.')
       .should('exist');
@@ -74,6 +77,7 @@ describe('Registration form', () => {
         error: { full: false, closed: false, registered: true },
       },
     });
+    cy.visit('/ilmoittautuminen/tutkintotilaisuus/1');
     cy.get('[data-cy=alert-title')
       .contains('Voit ilmoittautua vain yhteen tutkintotilaisuuteen.')
       .should('exist');

@@ -92,6 +92,9 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-list]').should('exist');
 
+    cy.log('registration link is shown');
+    cy.get('[data-cy=registration-link]').contains('https://yki.localhost/yki/tutkintotilaisuus/1').should('exist');
+
     cy.log('list shows paid registrations');
     cy.get('[data-cy=participant-list] [data-cy=registration-COMPLETED]').should('exist');
 

@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { StaticRouter } from 'react-router-dom';
 
-
 jest.mock('react-i18next', () => ({
   withTranslation: () => Component => {
     Component.defaultProps = { ...Component.defaultProps, t: () => "" };
     return Component;
+  },
+  useTranslation: () => {
+    return { i18n: { language: 'fi', changeLanguage: jest.fn() } };
   },
 }));
 

@@ -23,6 +23,7 @@ const examSession = {
   session_date: '2028-12-30',
   participants: 2,
   max_participants: 50,
+  id: 1,
   registration_start_date: '2028-09-01',
   language_code: 'eng',
   level_code: 'KESKI',

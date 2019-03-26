@@ -74,7 +74,7 @@ export class ExamSessionUpdateForm extends Component {
       );
       return location ? location : this.props.examSession.location[0];
     };
-    
+
     const getLocationExtraByLang = lang => {
       const location = getLocationByLang(lang);
       return location && location.extra_information
@@ -87,14 +87,22 @@ export class ExamSessionUpdateForm extends Component {
       return location.name;
     };
 
+    const createRegistrationUrl = examSessionId => {
+      return `https://yki.${
+        window.location.hostname
+      }/yki/tutkintotilaisuus/${examSessionId}`;
+    };
+
     return (
       <Formik
         initialValues={{
           maxParticipants: this.props.examSession.max_participants,
-          streetAddress: getLocationByLang(this.props.i18n.language).street_address,
+          streetAddress: getLocationByLang(this.props.i18n.language)
+            .street_address,
           postOffice: getLocationByLang(this.props.i18n.language).post_office,
           zip: this.props.examSession.location[0].zip,
-          location: getLocationByLang(this.props.i18n.language).other_location_info,
+          location: getLocationByLang(this.props.i18n.language)
+            .other_location_info,
           extraFi: getLocationExtraByLang('fi'),
           extraSv: getLocationExtraByLang('sv'),
           extraEn: getLocationExtraByLang('en'),
@@ -148,6 +156,12 @@ export class ExamSessionUpdateForm extends Component {
               <div className={classes.FormElement}>
                 <h3>{t('common.registationPeriod')}</h3>
                 {registrationPediod(this.props.examSession)}
+              </div>
+              <div className={classes.FormElement}>
+                <h3>{t('examSession.registrationLink')}</h3>
+                <label data-cy="registration-link">
+                  {createRegistrationUrl(this.props.examSession.id)}
+                </label>
               </div>
               <div className={classes.FormElement}>
                 <h3>{`${t('examSession.maxParticipants')} *`}</h3>

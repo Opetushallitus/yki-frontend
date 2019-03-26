@@ -19,6 +19,18 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       class="FormElement"
     >
       <h3>
+        examSession.registrationLink
+      </h3>
+      <label
+        data-cy="registration-link"
+      >
+        https://yki.localhost/yki/tutkintotilaisuus/1
+      </label>
+    </div>
+    <div
+      class="FormElement"
+    >
+      <h3>
         examSession.maxParticipants *
       </h3>
       <input
