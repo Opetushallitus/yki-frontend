@@ -1,10 +1,15 @@
 .Return {
-  width: 90px;
+  width: 100px;
   height: 40px;
   margin: 15px 0 20px 0;
   font-size: 0.75em;
-  background: none;
   border: none;
-  outline: none;
   cursor: pointer;
+  padding-left: 30px;
+  background: url('../../../assets/svg/chevron-black.svg') no-repeat 20px center;
+}
+
+.Return:hover,
+.Recover:focus {
+  text-decoration: underline;
 }
