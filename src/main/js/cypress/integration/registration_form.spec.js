@@ -108,6 +108,9 @@ describe('Registration form', () => {
   });
 
   it('suomi.fi authenticated user can fill and submit form', () => {
+
+    cy.get('[data-cy=exam-details-card').should('exist');
+    
     cy.get('[data-cy=input-phoneNumber]').type('+358401234567');
     cy.get('[data-cy=input-email]').type('test@test.com');
     cy.get('[data-cy=input-confirmEmail]').type('test@test.com');
@@ -122,6 +125,8 @@ describe('Registration form', () => {
 
   it('email authenticated user can fill and submit form', () => {
     cy.visit('/ilmoittautuminen/tutkintotilaisuus/2');
+
+    cy.get('[data-cy=exam-details-card').should('exist');
 
     cy.get('[data-cy=input-firstName]').type('firstName');
     cy.get('[data-cy=input-lastName]').type('lastName');

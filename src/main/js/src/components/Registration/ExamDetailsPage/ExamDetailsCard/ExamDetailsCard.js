@@ -16,9 +16,7 @@ const examDetailsCard = ({ exam, isFull }) => {
   );
 
   const date = (
-    <p>{`${moment(exam.session_date).format(DATE_FORMAT_WITHOUT_YEAR)} ${t(
-      'registration.examDetails.card.time',
-    )} ? - ?`}</p>
+    <p>{moment(exam.session_date).format(DATE_FORMAT_WITHOUT_YEAR)}</p>
   );
 
   const location =
