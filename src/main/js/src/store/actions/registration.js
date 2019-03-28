@@ -102,6 +102,14 @@ const setLevel = level => {
   };
 };
 
+export const setAll = (language, level, location) => {
+  return dispatch => {
+    dispatch(setLanguage(language));
+    dispatch(setLevel(level));
+    dispatch(setLocation(location));
+  };
+};
+
 export const selectLocation = location => {
   return dispatch => {
     dispatch(setLocation(location));

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import queryString from 'query-string';
 
 import classes from './Registration.module.css';
 import { LANGUAGES } from '../../common/Constants';
@@ -12,7 +13,23 @@ import * as actions from '../../store/actions/index';
 
 class Registration extends Component {
   componentDidMount() {
+    const { language, level, location } = queryString.parse(
+      window.location.search,
+    );
+    const lang = LANGUAGES.find(l => l.code === language);
     document.title = this.props.t('registration.document.title');
+    // if redux state is different from query params user has probably refreshed the page
+    if (
+      (language &&
+        level &&
+        location &&
+        this.props.language.name !== lang.name) ||
+      this.props.level !== level ||
+      this.props.location !== location
+    ) {
+      // set query params to redux state
+      this.props.onSetAll(lang, level, location);
+    }
     if (this.props.examSessions.length === 0) {
       this.props.onFetchExamSessions();
     }
@@ -50,6 +67,7 @@ class Registration extends Component {
             location={this.props.location}
             onLocationChange={this.onLocationChange}
             locations={this.props.locations}
+            history={this.props.history}
           />
           <p className={classes.Upcoming}>
             {this.props.t('examSession.upcomingExamSessions')}
@@ -83,6 +101,8 @@ const mapDispatchToProps = dispatch => {
     onSelectLevel: level => dispatch(actions.selectLevel(level)),
     onSelectLanguage: language => dispatch(actions.selectLanguage(language)),
     onSelectLocation: location => dispatch(actions.selectLocation(location)),
+    onSetAll: (language, level, location) =>
+      dispatch(actions.setAll(language, level, location)),
   };
 };
 

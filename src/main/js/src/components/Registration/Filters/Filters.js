@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -8,6 +8,28 @@ import { levelDescription } from '../../../util/util';
 
 const filters = props => {
   const [t, i18n] = useTranslation();
+
+  const mounted = useRef(false);
+
+  /*
+   * To be able to handle page refresh filter values need to
+   * added to query params when component updates.
+   */
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      const search = `?language=${props.language.code}&level=${
+        props.level
+      }&location=${props.location}&lang=${i18n.language}`;
+      if (props.history.location.search !== search) {
+        props.history.replace({
+          pathname: props.history.location.pathname,
+          search: search,
+        });
+      }
+    }
+  });
 
   const languageSelect = (
     <label>

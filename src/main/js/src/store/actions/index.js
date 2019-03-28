@@ -23,6 +23,7 @@ export {
   selectLevel,
   selectLocation,
   selectExamSession,
+  setAll,
   fetchExamSession,
   initRegistrationForm,
   submitRegistrationForm,

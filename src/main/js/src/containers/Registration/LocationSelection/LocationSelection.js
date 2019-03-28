@@ -20,7 +20,10 @@ const locationSelection = props => {
 
   const selectLocation = location => {
     props.onSelectLocation(location);
-    props.history.push(t('registration.path.select.exam'));
+    props.history.push({
+      pathname: t('registration.path.select.exam'),
+      search: `?language=${props.language.code}&level=${props.level}&location=${location}&lang=${i18n.language}`
+    });
   };
 
   return (
