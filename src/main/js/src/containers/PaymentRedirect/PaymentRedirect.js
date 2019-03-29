@@ -59,15 +59,17 @@ export class PaymentRedirect extends Component {
         />
       </form>
     ) : (
-      <React.Fragment>
-        <Header />
-        <main className={classes.Content}>
-          <Alert
-            title={this.props.t('payment.redirect.error')}
-            optionalText={this.props.t('payment.redirect.error.info')}
-          />
-        </main>
-      </React.Fragment>
+      this.state.error && (
+        <React.Fragment>
+          <Header />
+          <main className={classes.Content}>
+            <Alert
+              title={this.props.t('payment.redirect.error')}
+              optionalText={this.props.t('payment.redirect.error.info')}
+            />
+          </main>
+        </React.Fragment>
+      )
     );
   }
 }

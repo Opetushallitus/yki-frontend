@@ -52,28 +52,43 @@ const app = () => (
       <Init>
         <Router basename={'/yki'}>
           <Switch>
-            <Route exact path="/" component={Description} />
-            <Route exact path="/ilmoittautuminen" component={Description} />
-            <Route path="/ilmoittautuminen/valitse-kieli" component={LanguageSelection} />
-            <Route path="/ilmoittautuminen/valitse-taso" component={LevelSelection} />
-            <Route path="/ilmoittautuminen/valitse-paikkakunta" component={LocationSelection} />
-            <Route path="/ilmoittautuminen/valitse-tutkintotilaisuus" component={Registration} />
-            <Route
-              path="/tutkintotilaisuus/:examSessionId"
-              component={ExamDetailsPage}
-            />
-            <Route
-              path="/ilmoittautuminen/tutkintotilaisuus/:examSessionId"
-              component={RegistrationPage}
-            />
-            <Route
-              path="/ilmoittautuminen/vanhentunut"
-              component={LinkExpired}
-            />
-            <Route path="/maksu/vanhentunut" component={LinkExpired} />
-            <Route path="/maksu/tila" component={PaymentStatus} />
-            <Route path="/maksu/:registrationId" component={PaymentRedirect} />
             <ErrorBoundary>
+              <Route exact path="/" component={Description} />
+              <Route exact path="/ilmoittautuminen" component={Description} />
+              <Route
+                path="/ilmoittautuminen/valitse-kieli"
+                component={LanguageSelection}
+              />
+              <Route
+                path="/ilmoittautuminen/valitse-taso"
+                component={LevelSelection}
+              />
+              <Route
+                path="/ilmoittautuminen/valitse-paikkakunta"
+                component={LocationSelection}
+              />
+              <Route
+                path="/ilmoittautuminen/valitse-tutkintotilaisuus"
+                component={Registration}
+              />
+              <Route
+                path="/tutkintotilaisuus/:examSessionId"
+                component={ExamDetailsPage}
+              />
+              <Route
+                path="/ilmoittautuminen/tutkintotilaisuus/:examSessionId"
+                component={RegistrationPage}
+              />
+              <Route
+                path="/ilmoittautuminen/vanhentunut"
+                component={LinkExpired}
+              />
+              <Route path="/maksu/vanhentunut" component={LinkExpired} />
+              <Route path="/maksu/tila" component={PaymentStatus} />
+              <Route
+                path="/maksu/ilmoittautuminen/:registrationId"
+                component={PaymentRedirect}
+              />
               <Route
                 path="/tutkintotilaisuudet"
                 render={() => <ExamSessions />}
