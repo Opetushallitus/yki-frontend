@@ -14,7 +14,7 @@ import * as actions from '../../store/actions/index';
 class Registration extends Component {
   componentDidMount() {
     const { language, level, location } = queryString.parse(
-      window.location.search,
+      this.props.history.location.search,
     );
     const lang = LANGUAGES.find(l => l.code === language);
     document.title = this.props.t('registration.document.title');
