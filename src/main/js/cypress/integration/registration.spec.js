@@ -3,6 +3,12 @@ describe('Registration', () => {
     cy.visit('/');
   });
 
+  const assertFilters = () => {
+    cy.get('[data-cy=exam-session-list-item]').should('have.length', 1);
+    cy.get('[data-cy=exam-session-list-item]').first().contains('JYVÄSKYLÄ').should('exist');
+    cy.get('[data-cy=exam-session-list-item]').first().contains('Saksa, ylin taso').should('exist');
+  };
+
   it('Description page loads', () => {
     cy.contains('Yleiset kielitutkinnot');
   });
@@ -57,13 +63,21 @@ describe('Registration', () => {
     cy.get('select').contains('Koko maa');
   });
 
-  it('Filters work', () => {
+  it('Filters can handle page refresh and direct links', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.get('[data-cy=exam-session-list-item]').should('have.length', 4);
     cy.get('[data-cy=language-filter]').select('Saksa');
     cy.get('[data-cy=level-filter]').select('Ylin taso');
     cy.get('[data-cy=location-filter]').select('Jyväskylä');
-    cy.get('[data-cy=exam-session-list-item]').should('have.length', 1);
+    assertFilters();
+
+    cy.log('Refresh page')
+    cy.reload();
+    assertFilters();
+
+    cy.log('Direct link')
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus?language=deu&level=YLIN&location=&lang=fi');
+    assertFilters();
   });
 
   it('Filters are localized', () => {

@@ -18,15 +18,14 @@ class Registration extends Component {
     );
     const lang = LANGUAGES.find(l => l.code === language);
     document.title = this.props.t('registration.document.title');
-    // if redux state is different from query params user has probably refreshed the page
-    if (
-      (language &&
-        level &&
-        location &&
-        this.props.language.name !== lang.name) ||
+
+    const allQueryParamsExist = language && level && location;
+    const paramsAreDifferent =
+      (lang && this.props.language.name !== lang.name) ||
       this.props.level !== level ||
-      this.props.location !== location
-    ) {
+      this.props.location !== location;
+    // if redux state is different from query params user has probably refreshed the page
+    if (allQueryParamsExist !== undefined && paramsAreDifferent) {
       // set query params to redux state
       this.props.onSetAll(lang, level, location);
     }
