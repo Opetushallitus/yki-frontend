@@ -12,8 +12,8 @@ const filters = props => {
   const mounted = useRef(false);
 
   /*
-   * To be able to handle page refresh filter values need to
-   * added to query params when component updates.
+   * To be able to handle page refresh, filter values need to
+   * be added to query params when component updates.
    */
   useEffect(() => {
     if (!mounted.current) {
