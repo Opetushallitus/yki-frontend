@@ -78,9 +78,9 @@ const filters = props => {
         data-cy={'location-filter'}
       >
         <option value={''}>{t('common.location.all')}</option>
-        {Object.entries(props.locations).map(l => (
-          <option key={l[0]} value={l[0]}>
-            {i18n.language === 'sv' ? l[1] : l[0]}
+        {props.locations.map(l => (
+          <option key={l.fi} value={l.fi}>
+            {i18n.language === 'sv' ? l.sv : l.fi}
           </option>
         ))}
       </select>
@@ -105,7 +105,7 @@ filters.propTypes = {
   onLevelChange: PropTypes.func.isRequired,
   location: PropTypes.string.isRequired,
   onLocationChange: PropTypes.func.isRequired,
-  locations: PropTypes.object.isRequired,
+  locations: PropTypes.array.isRequired,
 };
 
 export default filters;

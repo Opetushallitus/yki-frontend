@@ -9,7 +9,7 @@ const initialState = {
   language: LANGUAGES[0],
   level: '',
   location: '',
-  locations: {},
+  locations: [],
   examSession: {},
   loading: false,
   error: null,

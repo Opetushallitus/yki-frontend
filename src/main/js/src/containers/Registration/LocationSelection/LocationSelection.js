@@ -17,7 +17,7 @@ const locationSelection = props => {
   }
 
   document.title = t('registration.document.title.location');
-
+  
   const selectLocation = location => {
     props.onSelectLocation(location);
     props.history.push({
@@ -49,13 +49,13 @@ const locationSelection = props => {
           >
             {t('common.location.all')}
           </span>
-          {Object.entries(props.locations).map(l => (
+          {props.locations.map(l => (
             <span
-              key={l[0]}
+              key={l.fi}
               className={classes.Selection}
-              onClick={() => selectLocation(l[0])}
+              onClick={() => selectLocation(l.fi)}
             >
-              {i18n.language === 'sv' ? l[1] : l[0]}
+              {i18n.language === 'sv' ? l.sv : l.fi}
             </span>
           ))}
         </div>

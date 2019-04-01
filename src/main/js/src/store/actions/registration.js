@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 import moment from 'moment';
+import * as R from 'ramda';
 
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 import { capitalize } from '../../util/util';
@@ -21,30 +22,24 @@ export const fetchExamSessions = () => {
       });
   };
 };
+const locationByLang = (examSession, lang)=> {
+  return capitalize(
+    examSession.location.find(l => l.lang === lang).post_office,
+  );
+};
 
-const extractExamLocations = array => {
-  const locations = {};
-  for (const element of array) {
-    const key = capitalize(
-      element.location.find(l => l.lang === 'fi').post_office,
-    );
+const extractExamLocations = examSessions => {
+  const getUniqueLocations = (locations, examSession) => {
+    const location = {fi: locationByLang(examSession, 'fi'), sv: locationByLang(examSession, 'sv')};
+    return R.includes(location, locations) ? locations : R.append(location, locations);
+  };
 
-    if (!locations.hasOwnProperty(key)) {
-      const value = capitalize(
-        element.location.find(l => l.lang === 'sv').post_office,
-      );
-      locations[key] = value;
-    }
-  }
-
-  const sortedLocations = {};
-  Object.keys(locations)
-    .sort()
-    .map(k => (sortedLocations[k] = locations[k]));
+  const unique = R.reduce(getUniqueLocations, []);
+  const sortByFi = R.sort(R.prop('fi'));
 
   return {
     type: actionTypes.ADD_EXAM_LOCATIONS,
-    locations: sortedLocations,
+    locations: R.compose(sortByFi, unique)(examSessions),
   };
 };
 
