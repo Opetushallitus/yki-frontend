@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import classes from './ExamDetailsCard.module.css';
 import { levelDescription } from '../../../../util/util';
-import { DATE_FORMAT_WITHOUT_YEAR } from '../../../../common/Constants';
+import { DATE_FORMAT } from '../../../../common/Constants';
 
 const examDetailsCard = ({ exam, isFull }) => {
   const [t, i18n] = useTranslation();
@@ -16,7 +16,7 @@ const examDetailsCard = ({ exam, isFull }) => {
   );
 
   const date = (
-    <p>{moment(exam.session_date).format(DATE_FORMAT_WITHOUT_YEAR)}</p>
+    <p>{moment(exam.session_date).format(DATE_FORMAT)}</p>
   );
 
   const location =
