@@ -453,6 +453,20 @@ module.exports = function(app) {
   app.get('/yki/api/exam-session', (req, res) => {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
+      const monthFromNow = moment().add(1, 'months').format('YYYY-MM-DD');
+      const twoMonthFromNow = moment().add(2, 'months').format('YYYY-MM-DD');
+      const weekInPast = moment().subtract(1, 'weeks').format('YYYY-MM-DD');
+      const weekFromNow = moment().add(1, 'weeks').format('YYYY-MM-DD');
+      allExamSessions.exam_sessions.forEach(es => {
+        if (es.session_date === '2019-04-06') {
+          es.session_date = monthFromNow;
+          es.registration_start_date = weekInPast;
+          es.registration_end_date = weekFromNow;
+        }
+        if (es.session_date === '2019-05-26') {
+          es.session_date = twoMonthFromNow;
+        }
+      });
       res.send(allExamSessions);
     } catch (err) {
       res.status(404).send(err.message);
