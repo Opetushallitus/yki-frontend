@@ -9,6 +9,11 @@ const languages = ['fi', 'sv', 'en'];
 const languageSelect = () => {
   const { i18n, t } = useTranslation();
 
+  const changeLanguage = lang => {
+    document.documentElement.lang = lang;
+    i18n.changeLanguage(lang);
+  };
+
   const languageLinks = () => {
     return languages
       .filter(l => l !== i18n.language)
@@ -16,7 +21,9 @@ const languageSelect = () => {
         <span key={lang}>
           <button
             className={classes.LanguageSelect}
-            onClick={() => i18n.changeLanguage(lang)}
+            onClick={() => changeLanguage(lang)}
+            lang={lang}
+            role="link"
           >
             {texts[lang]}
           </button>

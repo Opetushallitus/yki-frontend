@@ -1,7 +1,6 @@
 .LanguageSelect {
   background: none;
   border: none;
-  outline: none;
   cursor: pointer;
   color: hsl(0, 0%, 100%);
 }
@@ -9,4 +8,3 @@
 .LanguageSelect:hover {
   text-decoration-line: underline;
 }
-
