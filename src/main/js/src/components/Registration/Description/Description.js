@@ -1,59 +1,44 @@
 import React from 'react';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import classes from './Description.module.css';
 import Header from '../../../components/Header/Header';
 
-const description = props => {
+const description = ({ history }) => {
+  const [t] = useTranslation();
+
   document.title = 'YKI';
+
   return (
     <React.Fragment>
       <Header />
-      <div className={classes.Content}>
-        <p className={classes.Title}>
-          {props.t('registration.description.title')}
-        </p>
-        <div className={classes.Description}>
-          <span className={classes.StartingText}>
-            {props.t('registration.description.text1')}
-          </span>
-          {props.t('registration.description.text2')}
-          <br />
-          <br />
-          {props.t('registration.description.text3')}
-          <br />
-          <br />
-          {props.t('registration.description.text4')}
-          <br />
-          <br />
-          {props.t('common.level.basic.price')}
-          <br />
-          {props.t('common.level.intermediate.price')}
-          <br />
-          {props.t('common.level.advanced.price')}
-          <br />
-          <div className={classes.Tutorial}>
-            <a
-              href={props.t('registration.tutorial.url')}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {props.t('registration.tutorial')}
-            </a>
-          </div>
-        </div>
+      <main className={classes.Content}>
+        <article>
+          <h1>{t('registration.description.title')}</h1>
+          <p>{t('registration.description.text1')}</p>
+          <p>{t('registration.description.text2')}</p>
+          <p>{t('registration.description.text3')}</p>
+          <p>{t('registration.description.text4')}</p>
+          <a
+            href={props.t('registration.tutorial.url')}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {props.t('registration.tutorial')}
+          </a>
+        </article>
         <button
           className={classes.ContinueButton}
           data-cy="continue-button"
-          onClick={() =>
-            props.history.push(props.t('registration.path.select.language'))
-          }
+          onClick={() => history.push(t('registration.path.select.language'))}
+          tabIndex="1"
+          role="link"
         >
-          {props.t('registration.description.continue')}
+          {t('registration.description.continue')}
         </button>
-      </div>
+      </main>
     </React.Fragment>
   );
 };
 
-export default withTranslation()(description);
+export default description;

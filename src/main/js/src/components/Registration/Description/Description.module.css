@@ -1,28 +1,27 @@
 .Content {
-  width: 100vw;
-}
-
-.Title {
-  font-size: 1.5em;
-  margin: 38px 0 34px 20px;
-}
-
-.Description {
   width: calc(100vw - 40px);
   margin: 32px auto;
-  font-size: 0.875em;
 }
 
-.StartingText {
-  display: block;
-  margin-bottom: 22px;
+.Content h1 {
+  font-weight: 400;
+  font-size: 1.5em;
+  margin: 32px 0;
+}
+
+.Content p {
+  margin-bottom: 20px;
+}
+
+.Content p:last-child {
+  margin-bottom: 40px;
 }
 
 .ContinueButton {
   display: block;
   width: 252px;
   height: 50px;
-  margin: 0 auto;
+  margin: 32px auto;
   border-radius: 2px;
   box-shadow: 0px 0px 4px hsla(0, 0%, 0%, 0.5);
   color: hsl(0, 0%, 100%);
@@ -36,21 +35,25 @@
 }
 
 @media (min-width: 620px) {
-  .Title {
-    margin: 34px 100px;
-  }
-
-  .Description {
+  .Content {
     width: calc(100vw - 200px);
     max-width: 457px;
     margin: 0 0 88px 100px;
   }
 
-  .StartingText {
-    margin-bottom: 79px;
+  .Content p {
+    margin-bottom: 25px;
+  }
+
+  .Content p:nth-child(2) {
+    margin-bottom: 50px;
+  }
+
+  .Content p:last-child {
+    margin-bottom: 50px;
   }
 
   .ContinueButton {
-    margin: 0 114px;
+    margin-left: 90px;
   }
 }
