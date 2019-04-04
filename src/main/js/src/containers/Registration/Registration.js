@@ -71,6 +71,9 @@ class Registration extends Component {
           <p className={classes.Upcoming}>
             {this.props.t('examSession.upcomingExamSessions')}
           </p>
+          <p>
+            {this.props.t('registration.times.info')} 
+          </p>
           <ExamSessionList
             examSessions={this.props.filteredExamSessionsGroupedByDate}
             language={this.props.language}

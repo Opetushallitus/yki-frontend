@@ -209,6 +209,7 @@
   "registration.success.info2": "Saat maksuohjeet ja varmistuksen ilmoittautumisesta sähköpostiosoitteeseen",
   "registration.success.info3": "Tärkeää!",
   "registration.success.info4": "Muistathan, että tutkintomaksu on maksettava määräaikaan mennessä. Muutoin ilmoittautumisesi peruuntuu, etkä voi osallistua tutkintotilaisuuteen.",
+  "registration.times.info": "Tutkintotilaisuuteen ilmoittautuminen alkaa klo 10.00 ja päättyy klo 16.00.",
   "registration.title": "Haettava tutkinto",
   "registry.document.title": "YKI - Järjestäjärekisteri",
   "registry.search.languageSelectPlaceholder": "Valitse kieli",
