@@ -1,5 +1,5 @@
 describe('Smoke test', () => {
-  if (Cypress.env('ADMIN_USER_PASSWORD').length > 0) {
+  if (Cypress.env('ADMIN_USER_PASSWORD') && Cypress.env('ADMIN_USER_PASSWORD').length > 0) {
     it('registration front page loads', () => {
       cy.visit('https://yki.untuvaopintopolku.fi/yki/ilmoittautuminen');
       cy.get('[data-cy=continue-button]').should('exist');
