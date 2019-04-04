@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
+import { useDropzone } from 'react-dropzone';
 
 import classes from './RegistryItemForm.module.css';
 import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
@@ -41,6 +42,28 @@ const registryItemForm = props => {
       })
       .max(30, props.t('error.max')),
   });
+
+  const onDrop = useCallback(acceptedFiles => {
+    console.log('acceptedFiles', acceptedFiles);
+  }, []);
+  const { getRootProps, getInputProps, rejectedFiles } = useDropzone({
+    onDrop,
+    accept: 'application/pdf',
+    minSize: 0,
+    maxSize: 104857600,
+  });
+
+  console.log('rejectedFiles', rejectedFiles);
+
+  const agreementPdf = (
+    <div>
+      <h3>Sopimus</h3>
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+          <p>Lisää sopimus</p>
+      </div>
+    </div>
+  );
 
   return (
     <Formik
@@ -127,6 +150,7 @@ const registryItemForm = props => {
                   />
                 </div>
               </div>
+              {agreementPdf}
             </div>
             <div className={classes.Languages}>
               <h3>{props.t('common.exam.languages')}</h3>
