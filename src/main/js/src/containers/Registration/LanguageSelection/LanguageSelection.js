@@ -24,21 +24,20 @@ const languageSelection = props => {
       <Header />
       <BackButton clicked={() => props.history.push('/')} />
       <main className={classes.Content}>
-        <p className={classes.Title}>{t('registration.title')}</p>
+        <h1>{t('registration.title')}</h1>
         <p className={classes.Instructions}>
           {t('registration.select.language')}:
         </p>
         <div className={classes.Selections}>
           {LANGUAGES.map(l => (
-            <span
+            <button
               key={l.name}
               onClick={() => selectLanguage(l)}
               className={classes.Selection}
+              role="link"
             >
-              <p className={classes.SelectionText}>
-                {t(`common.language.${l.code}`)}
-              </p>
-            </span>
+              {t(`common.language.${l.code}`)}
+            </button>
           ))}
         </div>
       </main>

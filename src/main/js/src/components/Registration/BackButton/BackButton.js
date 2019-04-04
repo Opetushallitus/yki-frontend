@@ -8,7 +8,7 @@ const backButton = ({ clicked }) => {
   const [t] = useTranslation();
 
   return (
-    <button className={classes.Return} onClick={clicked} tabIndex="999">
+    <button className={classes.Return} onClick={clicked} role="link">
       {t('registration.return')}
     </button>
   );

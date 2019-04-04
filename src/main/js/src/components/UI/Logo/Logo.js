@@ -6,7 +6,7 @@ import classes from './Logo.module.css';
 
 const logo = props => (
   <div className={classes.Logo}>
-    <img src={OPHLogo} alt="Opetushallitus" />
+    <img src={OPHLogo} alt="Opetushallitus logo" />
   </div>
 );
 

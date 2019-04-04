@@ -31,7 +31,6 @@ const description = ({ history }) => {
           className={classes.ContinueButton}
           data-cy="continue-button"
           onClick={() => history.push(t('registration.path.select.language'))}
-          tabIndex="1"
           role="link"
         >
           {t('registration.description.continue')}

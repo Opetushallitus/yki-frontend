@@ -14,25 +14,24 @@ const languageSelect = () => {
     i18n.changeLanguage(lang);
   };
 
-  const languageLinks = () => {
-    return languages
-      .filter(l => l !== i18n.language)
-      .map(lang => (
-        <span key={lang}>
-          <button
-            className={classes.LanguageSelect}
-            onClick={() => changeLanguage(lang)}
-            lang={lang}
-            role="link"
-          >
-            {texts[lang]}
-          </button>
-        </span>
-      ));
-  };
+  const languageLinks = languages
+    .filter(l => l !== i18n.language)
+    .map(lang => (
+      <span key={lang}>
+        <button
+          className={classes.LanguageSelect}
+          onClick={() => changeLanguage(lang)}
+          lang={lang}
+          role="link"
+        >
+          {texts[lang]}
+        </button>
+      </span>
+    ));
+
   return (
     <React.Fragment>
-      {t('feature.languageSelect.disable') !== 'true' && languageLinks()}
+      {t('feature.languageSelect.disable') !== 'true' && languageLinks}
     </React.Fragment>
   );
 };
