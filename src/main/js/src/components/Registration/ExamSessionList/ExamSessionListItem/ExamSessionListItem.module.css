@@ -51,7 +51,7 @@
   height: 35px;
   color: hsl(0, 0%, 40%);
   background: hsl(0, 0%, 80%);
-  pointer-events: none;
+  cursor: pointer;
 }
 
 .ButtonForSignup {

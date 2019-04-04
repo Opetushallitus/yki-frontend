@@ -17,12 +17,14 @@ const locationSelection = props => {
   }
 
   document.title = t('registration.document.title.location');
-  
+
   const selectLocation = location => {
     props.onSelectLocation(location);
     props.history.push({
       pathname: t('registration.path.select.exam'),
-      search: `?language=${props.language.code}&level=${props.level}&location=${location}&lang=${i18n.language}`
+      search: `?language=${props.language.code}&level=${
+        props.level
+      }&location=${location}&lang=${i18n.language}`,
     });
   };
 
@@ -33,7 +35,7 @@ const locationSelection = props => {
         clicked={() => props.history.push(t('registration.path.select.level'))}
       />
       <main className={classes.Content}>
-        <p className={classes.Title}>{t('registration.title')}</p>
+        <h1>{t('registration.title')}</h1>
         <p className={classes.LanguageSelection}>
           {t('registration.selected.language')}:{' '}
           <strong>{t(`common.language.${props.language.code}`)}</strong>
@@ -43,20 +45,13 @@ const locationSelection = props => {
         </p>
         <p>{t('registration.select.location')}:</p>
         <div className={classes.Selections}>
-          <span
-            className={classes.Selection}
-            onClick={() => selectLocation('')}
-          >
+          <button onClick={() => selectLocation('')} role="link">
             {t('common.location.all')}
-          </span>
+          </button>
           {props.locations.map(l => (
-            <span
-              key={l.fi}
-              className={classes.Selection}
-              onClick={() => selectLocation(l.fi)}
-            >
+            <button key={l.fi} onClick={() => selectLocation(l.fi)} role="link">
               {i18n.language === 'sv' ? l.sv : l.fi}
-            </span>
+            </button>
           ))}
         </div>
       </main>

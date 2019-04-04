@@ -39,12 +39,7 @@ const languageSelection = props => {
         <p>{t('registration.select.level')}:</p>
         <div className={classes.Selections}>
           {props.language.levels.map(level => (
-            <button
-              key={level}
-              onClick={() => selectLevel(level)}
-              className={classes.Selection}
-              role="link"
-            >
+            <button key={level} onClick={() => selectLevel(level)} role="link">
               {t(levelDescription(level))}
             </button>
           ))}

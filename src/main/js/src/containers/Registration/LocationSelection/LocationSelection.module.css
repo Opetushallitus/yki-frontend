@@ -3,10 +3,10 @@
   margin: 0 auto;
 }
 
-.Title {
+.Content h1 {
+  font-size: 18px;
+  font-weight: 400;
   margin: 0 0 30px 0;
-  display: block;
-  font-size: 1.125em;
 }
 
 .Instructions {
@@ -20,13 +20,15 @@
   cursor: pointer;
 }
 
-.Selection {
+.Selections button {
+  border: none;
+  padding: 0;
+  background: none;
+  text-align: left;
   height: 50px;
-  font-size: 1.125em;
-}
-
-.SelectionText {
-  font-size: 18px;
+  font-size: 16px;
+  color: hsla(0, 0%, 16%);
+  cursor: pointer;
 }
 
 .LanguageSelection {

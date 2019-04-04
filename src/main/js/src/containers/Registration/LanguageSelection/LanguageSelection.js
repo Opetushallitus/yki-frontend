@@ -30,12 +30,7 @@ const languageSelection = props => {
         </p>
         <div className={classes.Selections}>
           {LANGUAGES.map(l => (
-            <button
-              key={l.name}
-              onClick={() => selectLanguage(l)}
-              className={classes.Selection}
-              role="link"
-            >
+            <button key={l.name} onClick={() => selectLanguage(l)} role="link">
               {t(`common.language.${l.code}`)}
             </button>
           ))}
