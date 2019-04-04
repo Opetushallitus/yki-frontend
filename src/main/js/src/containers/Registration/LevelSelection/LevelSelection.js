@@ -31,7 +31,7 @@ const languageSelection = props => {
         }
       />
       <main className={classes.Content}>
-        <p className={classes.Title}>{t('registration.title')}</p>
+        <h1>{t('registration.title')}</h1>
         <p className={classes.LanguageSelection}>
           {t('registration.selected.language')}:{' '}
           <strong>{t(`common.language.${props.language.code}`)}</strong>
@@ -39,15 +39,14 @@ const languageSelection = props => {
         <p>{t('registration.select.level')}:</p>
         <div className={classes.Selections}>
           {props.language.levels.map(level => (
-            <span
+            <button
               key={level}
               onClick={() => selectLevel(level)}
               className={classes.Selection}
+              role="link"
             >
-              <p className={classes.SelectionText}>
-                {t(levelDescription(level))}
-              </p>
-            </span>
+              {t(levelDescription(level))}
+            </button>
           ))}
         </div>
       </main>
