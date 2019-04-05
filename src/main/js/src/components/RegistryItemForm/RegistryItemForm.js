@@ -11,6 +11,7 @@ import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
 import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
 import { DATE_FORMAT } from '../../common/Constants';
+import axios from '../../axios';
 
 const registryItemForm = props => {
   const validationSchema = Yup.object().shape({
@@ -43,24 +44,42 @@ const registryItemForm = props => {
       .max(30, props.t('error.max')),
   });
 
+  const maxSize = 104857600;
+
   const onDrop = useCallback(acceptedFiles => {
     console.log('acceptedFiles', acceptedFiles);
+    const formData = new FormData();
+    formData.append('file', acceptedFiles[0]);
+
+    axios
+      .post(`/yki/api/virkailija/organizer/${props.oid}/file`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(response => {
+        console.log('response', response);
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
   }, []);
+
   const { getRootProps, getInputProps, rejectedFiles } = useDropzone({
     onDrop,
     accept: 'application/pdf',
     minSize: 0,
-    maxSize: 104857600,
+    maxSize: maxSize,
   });
 
-  console.log('rejectedFiles', rejectedFiles);
+  const fileRejected = rejectedFiles.length > 0;
+  const fileTooLarge = fileRejected > 0 && rejectedFiles[0].size > maxSize;
+  console.log('isFileTooLarge', fileTooLarge);
 
   const agreementPdf = (
     <div>
       <h3>Sopimus</h3>
       <div {...getRootProps()}>
         <input {...getInputProps()} />
-          <p>Lisää sopimus</p>
+        <p>Lisää sopimus</p>
       </div>
     </div>
   );
