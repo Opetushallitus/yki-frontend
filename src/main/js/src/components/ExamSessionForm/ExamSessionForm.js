@@ -213,7 +213,7 @@ const examSessionForm = props => {
         officeOid:
           props.examSessionContent.organizationChildren.length > 0
             ? props.examSessionContent.organizationChildren[0].oid
-            : null,
+            : '',
         language: '',
         level: '',
         examDate: '',

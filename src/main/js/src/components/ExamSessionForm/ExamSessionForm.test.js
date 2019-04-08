@@ -97,7 +97,7 @@ describe('<ExamSessionForm />', () => {
     expect(form.find('[htmlFor="fin"]').text()).toEqual('suomi');
   });
 
-  it('should render organization office selection if organization has children', () => {
+  it('should render organization and children in office selection', () => {
     organizationChildren.push(
       {
         oid: '1.2.246.562.10.80191559573',
@@ -119,6 +119,6 @@ describe('<ExamSessionForm />', () => {
         examSessionContent={examSessionContent}
       />,
     );
-    expect(form.find('select').children()).toHaveLength(2);
+    expect(form.find('select').children()).toHaveLength(3);
   });
 });
