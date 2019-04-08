@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { useDropzone } from 'react-dropzone';
 
 import axios from '../../../axios';
@@ -8,6 +9,7 @@ import classes from './AgreementPdf.module.css';
 const agreementPdf = props => {
   const maxSize = 104857600;
 
+  const [t] = useTranslation();
   const [apiError, setApiError] = useState(false);
 
   const onFileSelect = useCallback(acceptedFiles => {
@@ -39,26 +41,15 @@ const agreementPdf = props => {
 
   return (
     <div className={classes.AgreementPdf}>
-      <div className={classes.UploadPdf} {...getRootProps()}>
+      <div {...getRootProps()}>
         <input {...getInputProps()} />
-        <button className={classes.UploadButton}>Lisää pdf</button>
+        <button className={classes.UploadButton}>
+          {t('registryItem.agreement.addPdf')}
+        </button>
       </div>
-      {props.attachmentId && (
-        <div className={classes.DownloadPdf}>
-          <a
-            href={`/yki/api/virkailija/organizer/${props.oid}/file/${
-              props.attachmentId
-            }`}
-            className={classes.PdfLink}
-            download
-          >
-            Lataa pdf
-          </a>
-        </div>
-      )}
       {(apiError || fileRejected) && (
         <div className={classes.ErrorMessage}>
-          Sopimuksen lisääminen epäonnistui
+          {t('registryItem.agreement.addPdfFailed')}
         </div>
       )}
     </div>

@@ -1,10 +1,6 @@
 .AgreementPdf {
-  padding: 8px 0 0 0;
+  padding: 12px 0 0 0;
   margin: auto;
-}
-
-.UploadPdf {
-  float: left;
 }
 
 .UploadButton {
@@ -18,16 +14,6 @@
   right: 0 !important;
   font-size: 0.875em;
   font-weight: normal;
-}
-
-.PdfLink {
-  font-size: 0.875em;
-  font-family: Arial;
-  color: hsla(0, 0%, 16%, 1);
-}
-
-.DownloadPdf {
-  margin-left: 35%;
 }
 
 .ErrorMessage {

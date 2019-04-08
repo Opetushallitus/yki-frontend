@@ -40,3 +40,13 @@
   color: hsla(15, 100%, 40%, 1);
   font-weight: 600;
 }
+
+.PdfLink {
+  font-size: 0.875em;
+  font-family: Arial;
+  color: hsla(0, 0%, 16%, 1);
+}
+
+.PdfLink:hover {
+  color: hsla(195, 100%, 47%, 1);
+}
