@@ -1,27 +1,30 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 
 import axios from '../../../axios';
+import classes from './AgreementPdf.module.css';
 
 const agreementPdf = props => {
   const maxSize = 104857600;
 
-  const onFileSelect = useCallback(acceptedFiles => {
-    console.log('acceptedFiles', acceptedFiles);
-    const formData = new FormData();
-    formData.append('file', acceptedFiles[0]);
+  const [apiError, setApiError] = useState(false);
 
-    axios
-      .post(`/yki/api/virkailija/organizer/${props.oid}/file`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
-      .then(response => {
-        console.log('response', response);
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+  const onFileSelect = useCallback(acceptedFiles => {
+    if (acceptedFiles.size) {
+      const formData = new FormData();
+      formData.append('file', acceptedFiles[0]);
+      axios
+        .post(`/yki/api/virkailija/organizer/${props.oid}/file`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+        .then(() => {
+          setApiError(false);
+        })
+        .catch(() => {
+          setApiError(true);
+        });
+    }
   }, []);
 
   const { getRootProps, getInputProps, rejectedFiles } = useDropzone({
@@ -33,44 +36,31 @@ const agreementPdf = props => {
   });
 
   const fileRejected = rejectedFiles.length > 0;
-  const fileTooLarge = fileRejected > 0 && rejectedFiles[0].size > maxSize;
-  console.log('isFileTooLarge', fileTooLarge);
-
-  const loadFile = () => {
-    axios
-      .get(`/yki/api/virkailija/organizer/${props.oid}/file/${props.attachmentId}`)
-      .then(response => {
-        console.log('response', response);
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.download = "file.pdf";
-        link.href = url;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    
-        // needed for edge compatibility
-        setTimeout(() => {
-          window.URL.revokeObjectURL(url);
-        }, 100);
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
-  };
 
   return (
-    <div>
-      <h3>Sopimus</h3>
-      <p
-        onClick={loadFile}
-      >
-        Lataa sopimus
-      </p>
-      <div {...getRootProps()}>
+    <div className={classes.AgreementPdf}>
+      <div className={classes.UploadPdf} {...getRootProps()}>
         <input {...getInputProps()} />
-        <p>Lisää sopimus</p>
+        <button className={classes.UploadButton}>Lisää pdf</button>
       </div>
+      {props.attachmentId && (
+        <div className={classes.DownloadPdf}>
+          <a
+            href={`/yki/api/virkailija/organizer/${props.oid}/file/${
+              props.attachmentId
+            }`}
+            className={classes.PdfLink}
+            download
+          >
+            Lataa pdf
+          </a>
+        </div>
+      )}
+      {(!apiError || fileRejected) && (
+        <div className={classes.ErrorMessage}>
+          Sopimuksen lisääminen epäonnistui
+        </div>
+      )}
     </div>
   );
 };
