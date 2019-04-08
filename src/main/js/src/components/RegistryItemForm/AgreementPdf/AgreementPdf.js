@@ -10,21 +10,22 @@ const agreementPdf = props => {
   const maxSize = 104857600;
 
   const [t] = useTranslation();
-  const [apiError, setApiError] = useState(false);
+  const [success, setSuccess] = useState(null);
 
   const onFileSelect = useCallback(acceptedFiles => {
-    if (acceptedFiles.size) {
+    if (acceptedFiles.length > 0) {
       const formData = new FormData();
       formData.append('file', acceptedFiles[0]);
+      setSuccess(null);
       axios
         .post(`/yki/api/virkailija/organizer/${props.oid}/file`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
         .then(() => {
-          setApiError(false);
+          setSuccess(true);
         })
         .catch(() => {
-          setApiError(true);
+          setSuccess(false);
         });
     }
   }, []);
@@ -47,10 +48,15 @@ const agreementPdf = props => {
           {t('registryItem.agreement.addPdf')}
         </button>
       </div>
-      {(apiError || fileRejected) && (
-        <div className={classes.ErrorMessage}>
+      {(success === false || fileRejected) && (
+        <p className={classes.ErrorMessage}>
           {t('registryItem.agreement.addPdfFailed')}
-        </div>
+        </p>
+      )}
+      {success && (
+        <p className={classes.SuccessMessage}>
+          {t('registryItem.agreement.addPdfSuccess')}
+        </p>
       )}
     </div>
   );

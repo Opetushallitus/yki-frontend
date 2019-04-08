@@ -254,5 +254,6 @@
 
   "registryItem.agreement.addPdf": "Lisää pdf",
   "registryItem.agreement.loadPdf": "Lataa pdf",
-  "registryItem.agreement.addPdfFailed": "Sopimuksen lisääminen epäonnistui"
+  "registryItem.agreement.addPdfFailed": "Sopimuksen lisääminen epäonnistui",
+  "registryItem.agreement.addPdfSuccess": "Sopimuksen lisääminen onnistui"
 }
