@@ -39,9 +39,10 @@ const filters = props => {
         defaultValue={t(`common.language.${props.language.code}`)}
         onChange={props.onLanguageChange}
         data-cy={'language-filter'}
+        role="listbox"
       >
         {LANGUAGES.map(l => (
-          <option key={l.name} value={l.name}>
+          <option key={l.name} value={l.name} role="listitem">
             {t(`common.language.${l.code}`)}
           </option>
         ))}
@@ -57,10 +58,13 @@ const filters = props => {
         defaultValue={props.level}
         onChange={props.onLevelChange}
         data-cy={'level-filter'}
+        role="listbox"
       >
-        <option value={''}>{t('common.level.all')}</option>
+        <option value={''} role="listitem">
+          {t('common.level.all')}
+        </option>
         {props.language.levels.map(l => (
-          <option key={l} value={l}>
+          <option key={l} value={l} role="listitem">
             {t(levelDescription(l))}
           </option>
         ))}
@@ -76,10 +80,13 @@ const filters = props => {
         defaultValue={props.location}
         onChange={props.onLocationChange}
         data-cy={'location-filter'}
+        role="listbox"
       >
-        <option value={''}>{t('common.location.all')}</option>
+        <option value={''} role="listitem">
+          {t('common.location.all')}
+        </option>
         {props.locations.map(l => (
-          <option key={l.fi} value={l.fi}>
+          <option key={l.fi} value={l.fi} role="listitem">
             {i18n.language === 'sv' ? l.sv : l.fi}
           </option>
         ))}

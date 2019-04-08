@@ -25,18 +25,14 @@ const examSessionListItem = ({
     history.push(`/tutkintotilaisuus/${session.id}`);
   };
 
-  const date = (
-    <div className={classes.Date}>
-      {moment(session.session_date).format(DATE_FORMAT)}
-    </div>
-  );
+  const examDate = moment(session.session_date).format(DATE_FORMAT);
+  const date = <div className={classes.Date}>{examDate}</div>;
 
+  const examLanguage = t(`common.language.${language.code}`);
+  const examLevel = levelDescription(session.level_code).toLowerCase();
   const exam = (
     <div className={classes.Exam}>
-      <strong>
-        {t(`common.language.${language.code}`)},{' '}
-        {`${levelDescription(session.level_code).toLowerCase()}`}
-      </strong>
+      <strong>{`${examLanguage}, ${examLevel}`}</strong>
     </div>
   );
 
@@ -53,6 +49,10 @@ const examSessionListItem = ({
 
   const spotsAvailable = session.max_participants - session.participants;
 
+  const spotsAvailableText =
+    spotsAvailable === 1
+      ? t('registration.examSpots.singleFree')
+      : t('registration.examSpots.free');
   const availability = (
     <div className={classes.Availability}>
       <strong>
@@ -60,9 +60,7 @@ const examSessionListItem = ({
           <Fragment>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
-              {spotsAvailable === 1
-                ? t('registration.examSpots.singleFree')
-                : t('registration.examSpots.free')}
+              {spotsAvailableText}
             </span>
           </Fragment>
         ) : (
@@ -87,6 +85,12 @@ const examSessionListItem = ({
     </div>
   );
 
+  const buttonText = spotsAvailable
+    ? t('registration.register')
+    : session.queue_full
+    ? 'Jono täynnä'
+    : t('registration.register.forQueue');
+  const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
   const registerButton = (
     <button
       className={[
@@ -98,12 +102,10 @@ const examSessionListItem = ({
           : classes.ButtonForQueue,
       ].join(' ')}
       onClick={selectExamSession}
+      role="link"
+      aria-label={srLabel}
     >
-      {spotsAvailable
-        ? t('registration.register')
-        : session.queue_full
-        ? 'Jono täynnä'
-        : t('registration.register.forQueue')}
+      {buttonText}
     </button>
   );
 

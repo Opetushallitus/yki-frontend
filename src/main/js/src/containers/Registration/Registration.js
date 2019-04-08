@@ -57,7 +57,7 @@ class Registration extends Component {
           }
         />
         <main className={classes.Content}>
-          <p className={classes.Title}>{this.props.t('registration.title')}</p>
+          <h1>{this.props.t('registration.title')}</h1>
           <Filters
             language={this.props.language}
             onLanguageChange={this.onLanguageChange}
