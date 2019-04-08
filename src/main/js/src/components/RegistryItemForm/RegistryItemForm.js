@@ -1,17 +1,16 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
-import { useDropzone } from 'react-dropzone';
 
 import classes from './RegistryItemForm.module.css';
 import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
 import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
 import { DATE_FORMAT } from '../../common/Constants';
-import axios from '../../axios';
+import AgreementPdf from './AgreementPdf/AgreementPdf';
 
 const registryItemForm = props => {
   const validationSchema = Yup.object().shape({
@@ -43,46 +42,6 @@ const registryItemForm = props => {
       })
       .max(30, props.t('error.max')),
   });
-
-  const maxSize = 104857600;
-
-  const onDrop = useCallback(acceptedFiles => {
-    console.log('acceptedFiles', acceptedFiles);
-    const formData = new FormData();
-    formData.append('file', acceptedFiles[0]);
-
-    axios
-      .post(`/yki/api/virkailija/organizer/${props.oid}/file`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
-      .then(response => {
-        console.log('response', response);
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
-  }, []);
-
-  const { getRootProps, getInputProps, rejectedFiles } = useDropzone({
-    onDrop,
-    accept: 'application/pdf',
-    minSize: 0,
-    maxSize: maxSize,
-  });
-
-  const fileRejected = rejectedFiles.length > 0;
-  const fileTooLarge = fileRejected > 0 && rejectedFiles[0].size > maxSize;
-  console.log('isFileTooLarge', fileTooLarge);
-
-  const agreementPdf = (
-    <div>
-      <h3>Sopimus</h3>
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        <p>Lisää sopimus</p>
-      </div>
-    </div>
-  );
 
   return (
     <Formik
@@ -169,7 +128,7 @@ const registryItemForm = props => {
                   />
                 </div>
               </div>
-              {agreementPdf}
+              <AgreementPdf oid={props.oid} attachmentId={props.attachmentId}/>
             </div>
             <div className={classes.Languages}>
               <h3>{props.t('common.exam.languages')}</h3>
@@ -303,6 +262,7 @@ registryItemForm.propTypes = {
   languages: PropTypes.array,
   extra: PropTypes.string,
   oid: PropTypes.string,
+  attachmentId: PropTypes.string,
   name: PropTypes.string,
   merchant: PropTypes.object,
   onSubmit: PropTypes.func,

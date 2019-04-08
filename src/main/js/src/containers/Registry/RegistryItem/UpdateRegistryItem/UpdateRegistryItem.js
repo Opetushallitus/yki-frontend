@@ -32,6 +32,7 @@ class UpdateRegistryItem extends Component {
             contactPhone={this.props.item.contact.phone}
             contactEmail={this.props.item.contact.email}
             languages={this.props.item.languages}
+            attachmentId={this.props.item.attachmentId}
             extra={this.props.item.extra}
             name={this.props.item.name}
             merchant={this.props.item.merchant}

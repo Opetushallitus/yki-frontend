@@ -47,9 +47,9 @@ const getRegistrations = () => {
 
 let registrations = {
   1: getRegistrations(),
-  2: {participants: []},
-  3: {participants: []},
-}
+  2: { participants: [] },
+  3: { participants: [] },
+};
 
 const countries = JSON.parse(
   fs.readFileSync('./dev/rest/codes/maatjavaltiot2.json'),
@@ -65,6 +65,12 @@ let organizers = [
     contact_name: 'Iida Ikola',
     contact_email: 'iida.ikola@amiedu.fi',
     contact_phone_number: '0101234546',
+    attachments: [
+      {
+        external_id: 'a0d5dfc2-4045-408e-8ee5-4fd1b74b2757',
+        created: '2019-04-04T13:49:21.02436+03:00',
+      },
+    ],
     languages: [
       {
         language_code: 'fin',
@@ -198,11 +204,11 @@ module.exports = function(app) {
 
   app.get('/yki/reset-mocks', (req, res) => {
     examSessions = getExamSessions();
-    
+
     registrations = {
       1: getRegistrations(),
-      2: {participants: []},
-      3: {participants: []},
+      2: { participants: [] },
+      3: { participants: [] },
     };
     organizers = [...initialOrganizers];
     res.send({ success: true });
@@ -303,7 +309,7 @@ module.exports = function(app) {
         const foundIndex = registrations[examSessionId].participants.findIndex(
           x => x.registration_id == id,
         );
-        
+
         registrations[examSessionId].participants.splice(foundIndex, 1);
         res.send({ success: true });
       } catch (err) {
@@ -454,10 +460,18 @@ module.exports = function(app) {
   app.get('/yki/api/exam-session', (req, res) => {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
-      const monthFromNow = moment().add(1, 'months').format('YYYY-MM-DD');
-      const twoMonthFromNow = moment().add(2, 'months').format('YYYY-MM-DD');
-      const weekInPast = moment().subtract(1, 'weeks').format('YYYY-MM-DD');
-      const weekFromNow = moment().add(1, 'weeks').format('YYYY-MM-DD');
+      const monthFromNow = moment()
+        .add(1, 'months')
+        .format('YYYY-MM-DD');
+      const twoMonthFromNow = moment()
+        .add(2, 'months')
+        .format('YYYY-MM-DD');
+      const weekInPast = moment()
+        .subtract(1, 'weeks')
+        .format('YYYY-MM-DD');
+      const weekFromNow = moment()
+        .add(1, 'weeks')
+        .format('YYYY-MM-DD');
       allExamSessions.exam_sessions.forEach(es => {
         if (es.session_date === '2019-04-06') {
           es.session_date = monthFromNow;

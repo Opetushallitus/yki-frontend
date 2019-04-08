@@ -29,6 +29,7 @@ export const collectRegistryItemDetails = (organizer, organization, lang) => {
   item.agreement = getAgreementDuration(organizer);
   item.address = getAddress(organization);
   item.contact = getContact(organizer);
+  item.attachmentId = organizer.attachments ? organizer.attachments[0].external_id : null;
   item.languages = organizer.languages || [];
   item.extra = organizer.extra || '';
   item.merchant = organizer.merchant;

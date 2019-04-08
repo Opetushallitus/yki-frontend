@@ -1,8 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-import { useDropzone } from 'react-dropzone';
 
 import classes from './ExamSessionOrganizer.module.css';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
@@ -45,25 +44,6 @@ export const examSessionOrganizer = props => {
     </div>
   );
 
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-  }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  const agreementPdf = (
-    <div>
-      <h3>Sopimus</h3>
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>Drop the files here ...</p>
-        ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
-        )}
-      </div>
-    </div>
-  );
-
   return (
     <div
       className={classes.ExamSessionOrganizer}
@@ -73,7 +53,6 @@ export const examSessionOrganizer = props => {
       <div className={classes.AgreementGrid}>
         {languages}
         {agreement}
-        {agreementPdf}
       </div>
       <h2>{props.t('registryItem.contact')}</h2>
       <div>{contact}</div>
