@@ -128,7 +128,12 @@ const registryItemForm = props => {
                   />
                 </div>
               </div>
-              <AgreementPdf oid={props.oid} attachmentId={props.attachmentId}/>
+              {props.updating && (
+                <AgreementPdf
+                  oid={props.oid}
+                  attachmentId={props.attachmentId}
+                />
+              )}
             </div>
             <div className={classes.Languages}>
               <h3>{props.t('common.exam.languages')}</h3>

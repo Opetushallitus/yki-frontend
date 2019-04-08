@@ -56,7 +56,7 @@ const agreementPdf = props => {
           </a>
         </div>
       )}
-      {(!apiError || fileRejected) && (
+      {(apiError || fileRejected) && (
         <div className={classes.ErrorMessage}>
           Sopimuksen lisääminen epäonnistui
         </div>
