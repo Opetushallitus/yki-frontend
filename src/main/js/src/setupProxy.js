@@ -274,6 +274,14 @@ module.exports = function(app) {
     }
   });
 
+  app.post('/yki/api/virkailija/organizer/:oid/file', (req, res) => {
+    try {
+      res.send({ success: true });
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
   app.put('/yki/api/virkailija/organizer/:oid/exam-session/:id', (req, res) => {
     try {
       const { id } = req.params;
