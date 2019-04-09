@@ -25,13 +25,15 @@ const examSessionForm = props => {
     const language = this.parent.language;
     const level = this.parent.level;
     const officeOid = this.parent.officeOid;
+    
     if (examDate && language && level) {
       duplicateFound = props.examSessionContent.examSessions.some(e => {
         return (
           e.session_date === examDate &&
           e.level_code === level &&
           e.language_code === language &&
-          e.office_oid === officeOid
+          (e.office_oid === officeOid ||
+            e.organizer_oid === officeOid)
         );
       });
     }
@@ -210,10 +212,7 @@ const examSessionForm = props => {
   return (
     <Formik
       initialValues={{
-        officeOid:
-          props.examSessionContent.organizationChildren.length > 0
-            ? props.examSessionContent.organizationChildren[0].oid
-            : '',
+        officeOid: props.examSessionContent.organization.oid,
         language: '',
         level: '',
         examDate: '',

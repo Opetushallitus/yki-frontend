@@ -239,7 +239,7 @@ module.exports = function(app) {
     (req, res) => {
       try {
         const { id } = req.params;
-        res.send(registrations[id]);
+        res.send(registrations[id] || {participants: []});
       } catch (err) {
         console.log(err);
         res.status(404).send(err.message);
@@ -259,6 +259,7 @@ module.exports = function(app) {
         participants: 0,
         registration_start_date: examDate.registration_start_date,
         registration_end_date: examDate.registration_end_date,
+        organizer_oid: req.params.oid
       };
       examSessions.exam_sessions.push(Object.assign(examSession, backendData));
       res.send({ id: id });
