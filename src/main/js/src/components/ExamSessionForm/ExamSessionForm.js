@@ -32,8 +32,7 @@ const examSessionForm = props => {
           e.session_date === examDate &&
           e.level_code === level &&
           e.language_code === language &&
-          (e.office_oid === officeOid ||
-            e.organizer_oid === officeOid)
+          (e.office_oid === officeOid || !e.office_oid)
         );
       });
     }
