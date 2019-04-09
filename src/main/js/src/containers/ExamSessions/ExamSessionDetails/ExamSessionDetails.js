@@ -21,17 +21,14 @@ export class ExamSessionDetails extends Component {
   };
 
   render() {
-    const officeHeader = () => {
-      return this.props.examSession.office_oid ? (
-        <h2 className={classes.ExamSessionDetailsHeader}>
-          {this.props.examSession.location[0].name}
-        </h2>
-      ) : null;
-    };
-
+    const location = this.props.examSession.location.find(
+      l => l.lang === this.props.language,
+    );
     return (
       <div data-cy="exam-session-details">
-        {officeHeader()}
+        <h2 className={classes.ExamSessionDetailsHeader}>
+          {location || this.props.examSession.location[0].name}
+        </h2>
         <h2 className={classes.ExamSessionDetailsHeader}>
           {this.props.t('examSession')}
           {': '}
