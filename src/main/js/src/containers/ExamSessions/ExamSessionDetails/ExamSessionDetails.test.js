@@ -1,7 +1,7 @@
 import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-// import toJson from 'enzyme-to-json';
+import toJson from 'enzyme-to-json';
 
 import { ExamSessionDetails } from './ExamSessionDetails';
 
@@ -15,6 +15,12 @@ const examSession = {
   registration_start_date: '2018-09-01',
   language_code: 'eng',
   level_code: 'KESKI',
+  location: [
+    {
+      lang: 'fi',
+      name: 'Amiedu, Strömberginkuja 3',
+    },
+  ],
 };
 
 describe('<ExamSessionDetails />', () => {
@@ -33,6 +39,6 @@ describe('<ExamSessionDetails />', () => {
         onRelocate={jest.fn()}
       />,
     );
-    // expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });
