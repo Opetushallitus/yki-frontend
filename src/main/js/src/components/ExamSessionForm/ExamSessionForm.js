@@ -18,7 +18,9 @@ import {
 import { getLocalizedName } from '../../util/registryUtil';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 
-const examSessionForm = props => {
+const examSessionForm = props => { 
+  const organizerOid = props.examSessionContent.organization.oid;
+
   function validateDuplicateExamSession() {
     let duplicateFound = false;
     const examDate = this.parent.examDate;
@@ -32,7 +34,7 @@ const examSessionForm = props => {
           e.session_date === examDate &&
           e.level_code === level &&
           e.language_code === language &&
-          (e.office_oid === officeOid || !e.office_oid)
+          (e.office_oid === officeOid || (officeOid === organizerOid && !e.office_oid))
         );
       });
     }
