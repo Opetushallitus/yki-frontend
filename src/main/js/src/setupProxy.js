@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const axios = require('axios');
 const moment = require('moment');
+const multer = require('multer');
 
 const getCurrentTime = () => {
   const tzoffset = new Date().getTimezoneOffset() * 60000;
@@ -65,12 +66,7 @@ let organizers = [
     contact_name: 'Iida Ikola',
     contact_email: 'iida.ikola@amiedu.fi',
     contact_phone_number: '0101234546',
-    attachments: [
-      {
-        external_id: 'a0d5dfc2-4045-408e-8ee5-4fd1b74b2757',
-        created: '2019-04-04T13:49:21.02436+03:00',
-      },
-    ],
+    attachments: null,
     languages: [
       {
         language_code: 'fin',
@@ -112,6 +108,7 @@ let organizers = [
     contact_phone_number: '01412345467',
     languages: null,
     extra: 'Sisäänkäynti hämyiseltä sivuovelta',
+    attachments: null,
   },
 ];
 
@@ -172,6 +169,13 @@ const unauthenticatedUser = {
 
 const getNumberBetween = (min, max) =>
   Math.trunc(Math.random() * (max - min) + min);
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 104857600 },
+});
+
+let uploadedFile;
 
 module.exports = function(app) {
   app.use(bodyParser.json({ limit: '5mb' }));
@@ -245,7 +249,7 @@ module.exports = function(app) {
     (req, res) => {
       try {
         const { id } = req.params;
-        res.send(registrations[id] || {participants: []});
+        res.send(registrations[id] || { participants: [] });
       } catch (err) {
         console.log(err);
         res.status(404).send(err.message);
@@ -265,7 +269,7 @@ module.exports = function(app) {
         participants: 0,
         registration_start_date: examDate.registration_start_date,
         registration_end_date: examDate.registration_end_date,
-        organizer_oid: req.params.oid
+        organizer_oid: req.params.oid,
       };
       examSessions.exam_sessions.push(Object.assign(examSession, backendData));
       res.send({ id: id });
@@ -274,9 +278,33 @@ module.exports = function(app) {
     }
   });
 
-  app.post('/yki/api/virkailija/organizer/:oid/file', (req, res) => {
+  app.post(
+    '/yki/api/virkailija/organizer/:oid/file', upload.single('file'), (req, res) => {
+      try {
+        const { oid } = req.params;
+        const index = organizers.map(o => o.oid).indexOf(oid);
+        organizers[index].attachments = [
+          {
+            external_id: 'a0d5dfc2-4045-408e-8ee5-4fd1b74b2757',
+            created: '2019-04-04T13:49:21.02436+03:00',
+          },
+        ];
+        uploadedFile = req.file;
+        res.send({ success: true });
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
+    },
+  );
+
+  app.get('/yki/api/virkailija/organizer/:oid/file/:id', (req, res) => {
     try {
-      res.send({ success: true });
+      res.set({
+        'Content-Disposition':
+          'attachment; filename=' + uploadedFile.originalname,
+        'Content-Type': uploadedFile.mimetype,
+      });
+      res.send(uploadedFile.buffer);
     } catch (err) {
       res.status(404).send(err.message);
     }
