@@ -18,23 +18,20 @@ import {
 import { getLocalizedName } from '../../util/registryUtil';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 
-const examSessionForm = props => { 
-  const organizerOid = props.examSessionContent.organization.oid;
-
+const examSessionForm = props => {
   function validateDuplicateExamSession() {
     let duplicateFound = false;
     const examDate = this.parent.examDate;
     const language = this.parent.language;
     const level = this.parent.level;
     const officeOid = this.parent.officeOid;
-    
     if (examDate && language && level) {
       duplicateFound = props.examSessionContent.examSessions.some(e => {
         return (
           e.session_date === examDate &&
           e.level_code === level &&
           e.language_code === language &&
-          (e.office_oid === officeOid || (officeOid === organizerOid && !e.office_oid))
+          e.office_oid == officeOid
         );
       });
     }
@@ -200,20 +197,25 @@ const examSessionForm = props => {
   };
 
   const organizationSelection = (organizer, children, lang) => {
-    const organizations = [organizer].concat(children);
-    return organizations.map(c => {
+    const organizerOption = (
+      <option value="" key={organizer.oid}>
+        {getLocalizedName(organizer.nimi, lang)}
+      </option>
+    );
+    const officeOptions = children.map(c => {
       return (
         <option value={c.oid} key={c.oid}>
           {getLocalizedName(c.nimi, lang)}
         </option>
       );
     });
+    return [organizerOption].concat(officeOptions);
   };
 
   return (
     <Formik
       initialValues={{
-        officeOid: props.examSessionContent.organization.oid,
+        officeOid: '',
         language: '',
         level: '',
         examDate: '',
@@ -240,7 +242,7 @@ const examSessionForm = props => {
           session_date: values.examDate,
           language_code: values.language,
           level_code: values.level,
-          office_oid: values.officeOid !== props.examSessionContent.organization.oid ? values.officeOid : null,
+          office_oid: values.officeOid ? values.officeOid : null,
           max_participants: Number.parseInt(values.maxParticipants),
           published_at: moment().toISOString(),
           location: [
@@ -286,21 +288,21 @@ const examSessionForm = props => {
           <h1>{props.t('examSession.add.header')}</h1>
           <h2>{props.t('examSession.add.subHeader')}</h2>
           <div data-cy="exam-session-form">
-              <div className={[classes.FormElement].join(' ')}>
-                <h3>{`${props.t('examSession.office')} *`}</h3>
-                <Field
-                  component="select"
-                  name="officeOid"
-                  className={classes.Select}
-                  data-cy="select-officeOid"
-                >
-                  {organizationSelection(
-                    props.examSessionContent.organization,
-                    props.examSessionContent.organizationChildren,
-                    props.i18n.lang,
-                  )}
-                </Field>
-              </div>
+            <div className={[classes.FormElement].join(' ')}>
+              <h3>{`${props.t('examSession.office')} *`}</h3>
+              <Field
+                component="select"
+                name="officeOid"
+                className={classes.Select}
+                data-cy="select-officeOid"
+              >
+                {organizationSelection(
+                  props.examSessionContent.organization,
+                  props.examSessionContent.organizationChildren,
+                  props.i18n.lang,
+                )}
+              </Field>
+            </div>
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="language"
