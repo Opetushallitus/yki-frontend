@@ -176,6 +176,8 @@
   "registration.success.info4": "Muistathan, että tutkintomaksu on maksettava määräaikaan mennessä. Muutoin ilmoittautumisesi peruuntuu, etkä voi osallistua tutkintotilaisuuteen._en",
   "registration.times.info": "Tutkintotilaisuuteen ilmoittautuminen alkaa klo 10.00 ja päättyy klo 16.00._en",
   "registration.title": "Haettava tutkinto_en",
+  "registration.tutorial": "Linkki ohjevideoon_en",
+  "registration.tutorial.url": "https://www.youtube.com/watch?v=pUVgdF-KBWQ",
   "registry.document.title": "YKI - Järjestäjärekisteri_en",
   "registry.search.languageSelectPlaceholder": "Valitse kieli_en",
   "registry.search.levelSelectPlaceholder": "Valitse taso_en",

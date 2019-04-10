@@ -31,6 +31,10 @@
   background-color: hsl(96, 96%, 27%);
 }
 
+.Tutorial {
+  margin: 28px 0 0 0;
+}
+
 @media (min-width: 620px) {
   .Title {
     margin: 34px 100px;

@@ -24,6 +24,15 @@ const description = props => {
           <br />
           <br />
           {props.t('registration.description.text4')}
+          <div className={classes.Tutorial}>
+            <a
+              href={props.t('registration.tutorial.url')}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {props.t('registration.tutorial')}
+            </a>
+          </div>
         </div>
         <button
           className={classes.ContinueButton}
