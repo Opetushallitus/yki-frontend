@@ -127,7 +127,7 @@ export const registrationForm = props => {
     );
   };
 
-  const inputField = (name, placeholder = '', extra) => (
+  const inputField = (name, placeholder = '', extra, type = 'text') => (
     <React.Fragment>
       <h3>{props.t(`registration.form.${name}`)}</h3>
       <Field
@@ -135,6 +135,8 @@ export const registrationForm = props => {
         data-cy={`input-${name}`}
         placeholder={placeholder}
         className={classes.TextInput}
+        type={type}
+        aria-label={props.t(`registration.form.aria.${name}`)}
       />
       {extra && <span>{extra}</span>}
       <ErrorMessage
@@ -146,14 +148,14 @@ export const registrationForm = props => {
     </React.Fragment>
   );
 
-  const readonlyWhenExistsInput = (name, initialValues) =>
+  const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
       <React.Fragment>
         <h3>{props.t(`registration.form.${name}`)}</h3>
         <span>{initialValues[name]}</span>
       </React.Fragment>
     ) : (
-      inputField(name)
+      inputField(name, null, null, type)
     );
 
   const showExamLang = () => {
@@ -168,11 +170,9 @@ export const registrationForm = props => {
 
   const getNationalityDesc = code => {
     const nationality = props.initData.nationalities.find(
-      n => n.koodiArvo === code
+      n => n.koodiArvo === code,
     );
-    const metadata = nationality.metadata.find(
-      m => m.kieli === 'FI',
-    );
+    const metadata = nationality.metadata.find(m => m.kieli === 'FI');
     return metadata ? metadata.nimi : '';
   };
 
@@ -239,14 +239,14 @@ export const registrationForm = props => {
               <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
             </div>
             <div className={classes.FormElement}>
-              {inputField('phoneNumber', '',  ' (+358)')}
+              {inputField('phoneNumber', null, ' (+358)', 'tel')}
             </div>
             <div className={classes.FormElement}>
-              {readonlyWhenExistsInput('email', initialValues)}
+              {readonlyWhenExistsInput('email', initialValues, 'email')}
             </div>
             {!props.initData.user.email && (
               <div className={classes.FormElement}>
-                {inputField('confirmEmail')}
+                {inputField('confirmEmail', null, null, 'email')}
               </div>
             )}
             {!initialValues.nationality && (
@@ -346,9 +346,14 @@ export const registrationForm = props => {
           <p>{props.t('registration.form.summary.info')}</p>
           <Button
             type="submit"
-            disabled={!isValid || props.submitting}
             isRegistration={true}
             datacy="form-submit-button"
+            btnType={!isValid || props.submitting ? 'Disabled' : null}
+            ariaLabel={
+              !isValid || props.submitting
+                ? props.t('registration.form.aria.submit.button')
+                : null
+            }
           >
             {props.t('registration.form.submit.button')}
           </Button>

@@ -37,7 +37,12 @@ export class ZipAndPostOffice extends Component {
             {this.props.t('registration.form.input.zip')}
             {this.props.mandatory && ' *'}
           </h3>
-          <Field component="input" name="zip" data-cy="input-zip" />
+          <Field
+            component="input"
+            name="zip"
+            data-cy="input-zip"
+            aria-label={this.props.t('registration.form.aria.input.zip')}
+          />
           <ErrorMessage
             name="zip"
             data-cy="input-error-zip"
@@ -54,6 +59,7 @@ export class ZipAndPostOffice extends Component {
             component="input"
             name="postOffice"
             data-cy="input-postOffice"
+            aria-label={this.props.t('registration.form.aria.input.postOffice')}
           />
           <ErrorMessage
             name="postOffice"

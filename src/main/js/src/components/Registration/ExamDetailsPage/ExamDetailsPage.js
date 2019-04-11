@@ -93,6 +93,7 @@ const examDetailsPage = ({
                           className={classes.EmailIdentificationButton}
                           data-cy="button-show-login-link"
                           onClick={() => setShowLoginLink(true)}
+                          role="link"
                         >
                           {t('registration.examDetails.identify.withEmail')}
                         </button>

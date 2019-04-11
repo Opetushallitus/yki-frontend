@@ -67,6 +67,7 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
             registration.form.input.zip *
           </h3>
           <input
+            aria-label="registration.form.aria.input.zip"
             data-cy="input-zip"
             name="zip"
           />
@@ -78,6 +79,7 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
             registration.form.input.postOffice *
           </h3>
           <input
+            aria-label="registration.form.aria.input.postOffice"
             data-cy="input-postOffice"
             name="postOffice"
           />
@@ -179,6 +181,7 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       <button
         class="Button undefined"
         disabled=""
+        role="link"
         type="submit"
       >
         registryItem.button.update

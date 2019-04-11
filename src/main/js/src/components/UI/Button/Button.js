@@ -14,6 +14,8 @@ const button = props => (
     onClick={props.clicked}
     tabIndex={props.tabIndex}
     data-cy={props.datacy}
+    role="link"
+    aria-label={props.ariaLabel}
   >
     {props.children}
   </button>
