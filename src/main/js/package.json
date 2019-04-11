@@ -5,7 +5,6 @@
   "homepage": "/yki",
   "dependencies": {
     "axios": "^0.18.0",
-    "browser-update": "^3.2.5",
     "flatpickr": "^4.5.7",
     "formik": "^1.5.1",
     "i18next": "^15.0.7",
