@@ -4,7 +4,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import browserUpdate from 'browser-update';
 
 import registryReducer from './store/reducers/registry';
 import examSessionReducer from './store/reducers/examSession';
@@ -46,19 +45,6 @@ const store = createStore(
     ? composeWithDevTools(applyMiddleware(thunk))
     : applyMiddleware(thunk),
 );
-
-browserUpdate({
-  required:{
-    i:12
-  },
-  reminder:0,
-  reminderClosed:0,
-  newwindow:true,
-  insecure:true,
-  unsupported:true,
-  no_permanent_hide:true,
-  api:2018.12
-});
 
 const app = () => (
   <Provider store={store}>
