@@ -53,7 +53,6 @@ const notificationSignup = ({ examSessionId }) => {
                 id="email"
                 name="email"
                 placeholder="essi@esimerkki.fi"
-                tabIndex="1"
                 autoFocus
               />
               <ErrorMessage
@@ -64,7 +63,6 @@ const notificationSignup = ({ examSessionId }) => {
               <Button
                 type="submit"
                 disabled={!isValid}
-                tabIndex="2"
                 datacy="registry-item-form-submit"
                 isRegistration
               >
