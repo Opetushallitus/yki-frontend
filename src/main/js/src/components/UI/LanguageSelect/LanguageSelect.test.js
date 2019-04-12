@@ -10,8 +10,8 @@ const mockFn = jest.fn();
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
-    return { i18n: { language: 'fi', changeLanguage: mockFn } };
-  },
+    return { i18n: { language: 'fi', changeLanguage: mockFn }, t: k => k };
+  }
 }));
 
 describe('<LanguageSelect />', () => {

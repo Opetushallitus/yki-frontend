@@ -52,10 +52,11 @@ const examSessionListItem = ({
   );
 
   const spotsAvailable = session.max_participants - session.participants;
+
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {spotsAvailable ? (
+        {spotsAvailable > 0 ? (
           <Fragment>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>

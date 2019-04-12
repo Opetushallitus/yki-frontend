@@ -7,7 +7,7 @@ const texts = { fi: 'suomeksi', sv: 'på svenska', en: 'in english' };
 const languages = ['fi', 'sv', 'en'];
 
 const languageSelect = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const languageLinks = () => {
     return languages
@@ -23,7 +23,11 @@ const languageSelect = () => {
         </span>
       ));
   };
-  return <React.Fragment>{languageLinks()}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {t('feature.languageSelect.disable') !== 'true' && languageLinks()}
+    </React.Fragment>
+  );
 };
 
 export default languageSelect;
