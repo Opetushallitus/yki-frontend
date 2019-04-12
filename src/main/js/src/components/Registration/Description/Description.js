@@ -24,6 +24,14 @@ const description = props => {
           <br />
           <br />
           {props.t('registration.description.text4')}
+          <br />
+          <br />
+          {props.t('common.level.basic.price')}
+          <br />
+          {props.t('common.level.intermediate.price')}
+          <br />
+          {props.t('common.level.advanced.price')}
+          <br />
           <div className={classes.Tutorial}>
             <a
               href={props.t('registration.tutorial.url')}
