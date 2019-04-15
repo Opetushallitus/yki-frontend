@@ -91,7 +91,7 @@ const examSessionListItem = ({
     <button
       className={[
         classes.RegisterButton,
-        !session.open
+        !session.open || session.queue_full
           ? classes.RegistrationLocked
           : spotsAvailable
           ? classes.ButtonForSignup
@@ -101,6 +101,8 @@ const examSessionListItem = ({
     >
       {spotsAvailable
         ? t('registration.register')
+        : session.queue_full
+        ? 'Jono täynnä'
         : t('registration.register.forQueue')}
     </button>
   );
