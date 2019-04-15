@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import classes from './BackButton.module.css';
 
 const backButton = ({ clicked }) => {
-  const [t] = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <button className={classes.Return} onClick={clicked} role="link">

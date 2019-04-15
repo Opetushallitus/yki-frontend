@@ -4,8 +4,6 @@ describe('Registration form', () => {
   });
 
   it('registration form validation errors are shown and form can be submitted only if valid', () => {
-    cy.get('[data-cy=form-submit-button]').should('be.disabled');
-
     cy.log('input invalid phone number');
     cy.get('[data-cy=input-phoneNumber]').type('+348401234567');
     cy.get('[data-cy=input-email]').focus();
@@ -16,7 +14,7 @@ describe('Registration form', () => {
     cy.get('[data-cy=radio-examLang-fi]').focus();
     cy.get('[data-cy=input-error-email]').should('exist');
 
-    cy.get('[data-cy=form-submit-button]').should('be.disabled');
+    cy.get('[data-cy=form-submit-button]').should('not.be.disabled');
   });
 
   it('generic registration form initialization error is shown', () => {
@@ -108,9 +106,8 @@ describe('Registration form', () => {
   });
 
   it('suomi.fi authenticated user can fill and submit form', () => {
-
     cy.get('[data-cy=exam-details-card').should('exist');
-    
+
     cy.get('[data-cy=input-phoneNumber]').type('+358401234567');
     cy.get('[data-cy=input-email]').type('test@test.com');
     cy.get('[data-cy=input-confirmEmail]').type('test@test.com');
@@ -147,6 +144,8 @@ describe('Registration form', () => {
 
     cy.get('[data-cy=registration-success-header]').should('exist');
     cy.get('[data-cy=exam-details-card').should('exist');
-    cy.get('[data-cy=exam-details-card-extra').contains('Lisätiedot suomeksi').should('exist');
+    cy.get('[data-cy=exam-details-card-extra')
+      .contains('Lisätiedot suomeksi')
+      .should('exist');
   });
 });

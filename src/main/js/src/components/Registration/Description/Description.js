@@ -5,7 +5,7 @@ import classes from './Description.module.css';
 import Header from '../../../components/Header/Header';
 
 const description = ({ history }) => {
-  const [t] = useTranslation();
+  const { t } = useTranslation();
 
   document.title = 'YKI';
 
@@ -20,11 +20,11 @@ const description = ({ history }) => {
           <p>{t('registration.description.text3')}</p>
           <p>{t('registration.description.text4')}</p>
           <a
-            href={props.t('registration.tutorial.url')}
+            href={t('registration.tutorial.url')}
             rel="noopener noreferrer"
             target="_blank"
           >
-            {props.t('registration.tutorial')}
+            {t('registration.tutorial')}
           </a>
         </article>
         <button

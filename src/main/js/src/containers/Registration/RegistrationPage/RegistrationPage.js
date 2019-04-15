@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import * as actions from '../../../store/actions/index';
@@ -13,56 +13,48 @@ import RegistrationSuccess from '../../../components/Registration/RegistrationSu
 import RegistrationError from '../../../components/Registration/RegistrationError/RegistrationError';
 import ExamDetailsCard from '../../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
 
-export class RegistrationPage extends Component {
-  componentDidMount() {
-    if (!this.props.initData) {
-      const examSessionId = this.props.match.params.examSessionId;
-      this.props.onInitRegistrationForm(examSessionId);
+export const RegistrationPage = props => {
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    if (!props.initData) {
+      const examSessionId = props.match.params.examSessionId;
+      props.onInitRegistrationForm(examSessionId);
     }
-  }
+  }, []);
 
-  render() {
-    const initError = this.props.initDataError ? (
-      <RegistrationError
-        error={this.props.initDataError}
-        defaultKey={'registration.init.error.generic'}
-      />
-    ) : null;
+  const initError = props.initDataError ? (
+    <RegistrationError
+      error={props.initDataError}
+      defaultKey={'registration.init.error.generic'}
+    />
+  ) : null;
 
-    const successPage = this.props.submitSuccess ? (
-      <RegistrationSuccess
-        initData={this.props.initData}
-        formData={this.props.formData}
-      />
-    ) : null;
+  const successPage = props.submitSuccess ? (
+    <RegistrationSuccess initData={props.initData} formData={props.formData} />
+  ) : null;
 
-    const registrationPage = this.props.initDataLoading ? (
-      <Spinner />
-    ) : this.props.initData ? (
-      <div className={classes.RegistrationPage}>
-        <h2>{this.props.t('registration.examDetails.title')}</h2>
-        <ExamDetailsCard
-          exam={this.props.initData.exam_session}
-          isFull={false}
-        />
-        <hr />
-        <RegistrationForm {...this.props} />
-      </div>
-    ) : null;
+  const registrationPage = props.initDataLoading ? (
+    <Spinner />
+  ) : props.initData ? (
+    <div className={classes.RegistrationPage}>
+      <h2>{t('registration.examDetails.title')}</h2>
+      <ExamDetailsCard exam={props.initData.exam_session} isFull={false} />
+      <hr />
+      <RegistrationForm {...props} />
+    </div>
+  ) : null;
 
-    return (
-      <React.Fragment>
-        <Header />
-        {!successPage && (
-          <BackButton clicked={() => this.props.history.push('/')} />
-        )}
-        <main className={classes.Content}>
-          {initError ? initError : successPage ? successPage : registrationPage}
-        </main>
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <Header />
+      {!successPage && <BackButton clicked={() => props.history.push('/')} />}
+      <main className={classes.Content}>
+        {initError ? initError : successPage ? successPage : registrationPage}
+      </main>
+    </React.Fragment>
+  );
+};
 
 const mapStateToProps = state => {
   return {
@@ -95,4 +87,4 @@ RegistrationPage.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(RegistrationPage));
+)(RegistrationPage);
