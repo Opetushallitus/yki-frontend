@@ -34,6 +34,7 @@ const examDetailsPage = ({
 
   const seatsAvailable = session.max_participants - session.participants > 0;
   const registrationOpen = session.open;
+  const queueFull = session.queue_full;
   const examSessionId = Number(match.params.examSessionId);
 
   const registrationPeriod = (
@@ -42,9 +43,11 @@ const examDetailsPage = ({
         'registration.examDetails.registrationPeriod',
       )} ${moment(session.registration_start_date).format(
         DATE_FORMAT_WITHOUT_YEAR,
-      )} ${t('registration.examDetails.card.time')} 10.00 - ${moment(session.registration_end_date).format(
-        DATE_FORMAT_WITHOUT_YEAR,
-      )} ${t('registration.examDetails.card.time')} 16.00`}</p>
+      )} ${t('registration.examDetails.card.time')} 10.00 - ${moment(
+        session.registration_end_date,
+      ).format(DATE_FORMAT_WITHOUT_YEAR)} ${t(
+        'registration.examDetails.card.time',
+      )} 16.00`}</p>
     </div>
   );
 
@@ -68,6 +71,8 @@ const examDetailsPage = ({
                 ? t('registration.examDetails.registrationClosed')
                 : seatsAvailable
                 ? t('registration.examDetails.title')
+                : queueFull
+                ? 'Tutkintotilaisuus ja jono ovat täynnä!'
                 : t('registration.examDetails.examFull')}
             </h2>
             <ExamDetailsCard exam={session} isFull={!seatsAvailable} />
@@ -100,9 +105,11 @@ const examDetailsPage = ({
                     )}
                   </div>
                 ) : (
-                  <NotificationSignup
-                    examSessionId={match.params.examSessionId}
-                  />
+                  !queueFull && (
+                    <NotificationSignup
+                      examSessionId={match.params.examSessionId}
+                    />
+                  )
                 )}
               </Fragment>
             ) : (
