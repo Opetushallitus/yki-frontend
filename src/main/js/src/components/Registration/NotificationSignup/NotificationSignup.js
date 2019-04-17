@@ -7,18 +7,23 @@ import PropTypes from 'prop-types';
 import classes from './NotificationSignup.module.css';
 import Button from '../../UI/Button/Button';
 import axios from '../../../axios';
+import Alert from '../../Alert/Alert';
 
 const notificationSignup = ({ examSessionId }) => {
   const [t] = useTranslation();
   const [signup, updateSignup] = useState({});
 
-  const submitPost = email => {
+  const submitPost = (email, setStatus) => {
     axios
       .post(`/yki/api/exam-session/${examSessionId}/queue`, {
         email: email,
       })
       .then(res => {
+        setStatus(null);
         updateSignup({ ...res.data, email: email });
+      })
+      .catch(error => {
+        setStatus(error.response);
       });
   };
 
@@ -38,10 +43,10 @@ const notificationSignup = ({ examSessionId }) => {
         <Formik
           initialValues={{ email: '' }}
           validationSchema={validationSchema}
-          onSubmit={values => {
-            submitPost(values.email);
+          onSubmit={(values, { setStatus }) => {
+            submitPost(values.email, setStatus);
           }}
-          render={({ isValid }) => (
+          render={({ isValid, status }) => (
             <Form className={classes.Form}>
               <label htmlFor="email" className={classes.Label}>
                 {t('registration.notification.signup.label')}
@@ -68,6 +73,15 @@ const notificationSignup = ({ examSessionId }) => {
               >
                 {t('registration.notification.signup.button')}
               </Button>
+              {!!status && (
+                <Alert
+                  title={
+                    status.status === 409
+                      ? t('error.emailAlreaydInQueue')
+                      : t('error.common')
+                  }
+                />
+              )}
             </Form>
           )}
         />

@@ -72,7 +72,7 @@ const examDetailsPage = ({
                 : seatsAvailable
                 ? t('registration.examDetails.title')
                 : queueFull
-                ? 'Tutkintotilaisuus ja jono ovat täynnä!'
+                ? t('registration.examDetails.queueFull')
                 : t('registration.examDetails.examFull')}
             </h2>
             <ExamDetailsCard exam={session} isFull={!seatsAvailable} />

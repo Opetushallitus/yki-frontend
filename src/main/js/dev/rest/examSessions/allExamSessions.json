@@ -224,6 +224,51 @@
       "registration_end_date": "2039-02-28",
       "open": true,
       "queue_full": false
+    },
+    {
+      "level_code": "PERUS",
+      "max_participants": 20,
+      "language_code": "fin",
+      "participants": 20,
+      "office_oid": "1.2.246.562.5.22724043777",
+      "published_at": "2019-01-17T12:32:00.001Z",
+      "session_date": "2019-04-06",
+      "organizer_oid": "1.2.246.562.10.39706139523",
+      "id": 15,
+      "registration_start_date": "2019-02-01",
+      "location": [
+        {
+          "lang": "fi",
+          "extra_information": null,
+          "name": "Helsingin aikuisopisto",
+          "other_location_info": "Sali Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINKI",
+          "zip": "00250"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "name": "Helsingin aikuisopisto",
+          "other_location_info": "Hall Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINGFORSS",
+          "zip": "00250"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "name": "Helsingin aikuisopisto",
+          "other_location_info": "Hall Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINKI",
+          "zip": "00250"
+        }
+      ],
+      "exam_fee": "100.00",
+      "registration_end_date": "2039-02-28",
+      "open": true,
+      "queue_full": true
     }
   ]
 }

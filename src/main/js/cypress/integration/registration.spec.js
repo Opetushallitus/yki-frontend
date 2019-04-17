@@ -65,7 +65,7 @@ describe('Registration', () => {
 
   it('Filters can handle page refresh and direct links', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
-    cy.get('[data-cy=exam-session-list-item]').should('have.length', 4);
+    cy.get('[data-cy=exam-session-list-item]').should('have.length', 5);
     cy.get('[data-cy=language-filter]').select('Saksa');
     cy.get('[data-cy=level-filter]').select('Ylin taso');
     cy.get('[data-cy=location-filter]').select('Jyväskylä');
@@ -152,6 +152,27 @@ describe('Registration', () => {
 
     cy.get('[data-cy=exam-details-title]')
       .contains('Ilmoittautuminen ei ole avoinna tutkintotilaisuuteen:')
+      .should('exist');
+  });
+
+  it('Exam session list shows when registration queue is full', () => {
+    cy.server();
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus?language=fin&level=&location=&lang=fi');
+
+    cy.get('[data-cy=exam-session-list-item]')
+      .get('button')
+      .contains('Jono täynnä')
+      .should('exist');
+  });
+
+  it('Exam session details page shows if queue is full', () => {
+    cy.server();
+    cy.route('/yki/api/exam-session/15?lang=fi').as('getExamSession')
+    cy.visit('/tutkintotilaisuus/15');
+    cy.wait('@getExamSession');
+
+    cy.get('[data-cy=exam-details-title]')
+      .contains('Tutkintotilaisuus ja jono ovat täynnä!')
       .should('exist');
   });
 });

@@ -88,7 +88,7 @@ const examSessionListItem = ({
   const buttonText = spotsAvailable
     ? t('registration.register')
     : session.queue_full
-    ? 'Jono täynnä'
+    ? t('registration.register.queueFull')
     : t('registration.register.forQueue');
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
   const registerButton = (
