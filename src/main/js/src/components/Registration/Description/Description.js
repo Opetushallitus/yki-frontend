@@ -19,13 +19,18 @@ const description = ({ history }) => {
           <p>{t('registration.description.text2')}</p>
           <p>{t('registration.description.text3')}</p>
           <p>{t('registration.description.text4')}</p>
-          <a
-            href={t('registration.tutorial.url')}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            {t('registration.tutorial')}
-          </a>
+          <p>{t('common.level.basic.price')}</p>
+          <p>{t('common.level.intermediate.price')}</p>
+          <p>{t('common.level.advanced.price')}</p>
+          <p>
+            <a
+              href={t('registration.tutorial.url')}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {t('registration.tutorial')}
+            </a>
+          </p>
         </article>
         <button
           className={classes.ContinueButton}

@@ -13,8 +13,14 @@
   margin-bottom: 20px;
 }
 
-.Content p:last-child {
-  margin-bottom: 40px;
+.Content p:nth-of-type(5),
+.Content p:nth-of-type(6),
+.Content p:nth-of-type(7) {
+  margin: 0px;
+}
+
+.Content p:last-of-type {
+  margin-top: 20px;
 }
 
 .ContinueButton {
