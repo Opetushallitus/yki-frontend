@@ -205,6 +205,13 @@ export const participantList = props => {
         {':'} {props.examSession.participants} /{' '}
         {props.examSession.max_participants}
       </h3>
+      {props.examSession.queue > 0 && (
+        <h3>
+          {props.t('examSession.inQueue')}
+          {':'} {props.examSession.queue}
+        </h3>
+      )}
+
       {props.participants.length > 0 && (
         <React.Fragment>
           <div className={classes.ListExport}>

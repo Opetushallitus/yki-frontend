@@ -42,7 +42,9 @@
       "language_code": "eng",
       "level_code": "KESKI",
       "exam_fee": "100.00",
-      "open": true
+      "open": true,
+      "queue": 0,
+      "queue_full": false
     },
     {
       "published_at": "2018-01-01T00:00:00.000Z",
@@ -86,7 +88,9 @@
       "language_code": "eng",
       "level_code": "KESKI",
       "exam_fee": "100.00",
-      "open": false
+      "open": false,
+      "queue": 0,
+      "queue_full": false
     },
     {
       "published_at": "2018-01-01T00:00:00.000Z",
@@ -130,7 +134,9 @@
       "language_code": "fin",
       "level_code": "PERUS",
       "exam_fee": "100.00",
-      "open": false
+      "open": false,
+      "queue": 1,
+      "queue_full": false
     }
   ]
 }

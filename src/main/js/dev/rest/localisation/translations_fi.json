@@ -105,6 +105,7 @@
   "examSession.paid": "Maksanut",
   "examSession.paidAndCancelled": "Maksanut ja peruttu",
   "examSession.participants": "Ilmoittautuneet",
+  "examSession.inQueue": "Jonossa",
   "examSession.registration.cancel": "Peru osallistuminen",
   "examSession.registration.cancel.cancel": "Älä peru",
   "examSession.registration.cancel.confirm": "Peru",
