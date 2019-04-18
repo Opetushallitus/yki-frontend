@@ -17,7 +17,6 @@
   font-size: 0.875em;
 }
 
-
 .ItemHeader {
   font-size: 0.875em;
   font-weight: bold;
@@ -25,8 +24,11 @@
 }
 
 .Status {
-  display: inline-block;
-  color: hsla(96, 96%, 27%, 1);
+  color: hsl(15, 100%, 40%);
+}
+
+.StatusCompleted {
+  color: hsl(96, 96%, 27%);
 }
 
 .Index {
@@ -38,7 +40,7 @@
   grid-column: 1/6;
   margin-top: 4px;
   margin-bottom: 8px;
-  border-bottom: 1px solid hsla(0, 0%, 80%, 1);
+  border-bottom: 1px solid hsl(0, 0%, 80%);
 }
 
 .LineEnd {
@@ -48,33 +50,33 @@
 }
 
 .ShowOnHover {
-  opacity: 0.0;
+  opacity: 0;
 }
 
 .ShowOnHover:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .Item:hover ~ .ShowOnHover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .Item:hover ~ .ShowOnHover + .Line ~ .ShowOnHover {
-  opacity: 0.0;
+  opacity: 0;
 }
 
 .FirstShowOnHover {
-  opacity: 0.0;
+  opacity: 0;
 }
 
 .FirstShowOnHover:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .StateItem:hover ~ .FirstShowOnHover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .StateItem:hover ~ .ShowOnHover + .Line ~ .FirstShowOnHover {
-  opacity: 0.0;
+  opacity: 0;
 }

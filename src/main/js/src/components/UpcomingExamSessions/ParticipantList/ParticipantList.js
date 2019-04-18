@@ -161,7 +161,7 @@ export const participantList = props => {
         <div
           className={[
             classes.ItemHeader,
-            classes.Status,
+            p.state === 'COMPLETED' ? classes.StatusCompleted : classes.Status,
             classes.StateItem,
           ].join(' ')}
         >
