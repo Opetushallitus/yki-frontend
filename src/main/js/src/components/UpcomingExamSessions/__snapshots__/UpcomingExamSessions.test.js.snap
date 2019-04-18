@@ -28,9 +28,10 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
     <h3>
       examSession.participants
     </h3>
-    <div
+    <a
       className="Row"
       data-cy="exam-sessions-table-row-0"
+      href="#"
       key="0"
       onClick={[Function]}
     >
@@ -53,10 +54,11 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
       <p>
         50 / 50
       </p>
-    </div>
-    <div
+    </a>
+    <a
       className="Row"
       data-cy="exam-sessions-table-row-1"
+      href="#"
       key="1"
       onClick={[Function]}
     >
@@ -79,7 +81,7 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
       <p>
         -
       </p>
-    </div>
+    </a>
   </div>
 </div>
 `;

@@ -13,7 +13,13 @@ export const upcomingExamSessions = props => {
       moment(e.registration_start_date),
     );
     return (
-      <div className={classes.Row} key={i} data-cy={`exam-sessions-table-row-${i}`} onClick={() => props.examSessionSelected(e)}>
+      <a
+        href="#"
+        className={classes.Row}
+        key={i}
+        data-cy={`exam-sessions-table-row-${i}`}
+        onClick={() => props.examSessionSelected(e)}
+      >
         <p>{moment(e.session_date).format(DATE_FORMAT)}</p>
         <p>{languageToString(e.language_code).toLowerCase()}</p>
         <p>{levelDescription(e.level_code).toLowerCase()}</p>
@@ -25,7 +31,7 @@ export const upcomingExamSessions = props => {
         <p>
           {registrationOpen ? `${e.participants} / ${e.max_participants}` : '-'}
         </p>
-      </div>
+      </a>
     );
   });
 
@@ -37,7 +43,9 @@ export const upcomingExamSessions = props => {
           <h3>{props.t('common.examDate')}</h3>
           <h3>{props.t('common.language')}</h3>
           <h3>{props.t('common.level')}</h3>
-          <h3 className={classes.DesktopOnly}>{props.t('common.registationPeriod')}</h3>
+          <h3 className={classes.DesktopOnly}>
+            {props.t('common.registationPeriod')}
+          </h3>
           <h3>{props.t('examSession.participants')}</h3>
           {examSessionRows}
         </div>
@@ -50,7 +58,7 @@ export const upcomingExamSessions = props => {
 
 upcomingExamSessions.propTypes = {
   examSessions: PropTypes.array.isRequired,
-  examSessionSelected: PropTypes.func.isRequired
+  examSessionSelected: PropTypes.func.isRequired,
 };
 
 export default withTranslation()(upcomingExamSessions);
