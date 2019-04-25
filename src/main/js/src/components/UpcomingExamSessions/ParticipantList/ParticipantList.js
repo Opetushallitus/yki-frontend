@@ -167,7 +167,9 @@ export const participantList = props => {
         >
           {registratioStatus(p.state)}
         </div>
-        <div className={classes.StateItem} />
+        <div className={classes.StateItem}>
+          {p.created && moment(p.created).format(DATE_FORMAT)}
+        </div>
         <div className={classes.StateItem} />
         <div className={classes.FirstShowOnHover}>
           {p.state === 'SUBMITTED'
