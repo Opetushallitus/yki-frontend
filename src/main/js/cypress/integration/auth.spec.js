@@ -1,5 +1,5 @@
 describe('Authorization', () => {
-  if (Cypress.env('ADMIN_USER_PASSWORD') && Cypress.env('ADMIN_USER_PASSWORD').length > 0) {
+  if (Cypress.env('ADMIN_USER_PASSWORD') && Cypress.env('ORG_USER_PASSWORD').length > 0) {
     it('init session endpoint should not be accessible in yki domain', () => {
       cy.request({
         url: 'https://yki.untuvaopintopolku.fi/yki/auth/initsession',

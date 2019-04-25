@@ -20,6 +20,8 @@ export const participantList = props => {
         return 'examSession.paid';
       case 'CANCELLED':
         return 'examSession.cancelled';
+      case 'EXPIRED':
+        return 'examSession.expired';
       case 'PAID_AND_CANCELLED':
         return 'examSession.paidAndCancelled';
       default:

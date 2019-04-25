@@ -106,6 +106,9 @@ describe('Exam sessions', () => {
 
     cy.log('list shows paid and cancelled registrations');
     cy.get('[data-cy=participant-list] [data-cy=registration-PAID_AND_CANCELLED]').should('exist');
+
+    cy.log('list shows expired registrations');
+    cy.get('[data-cy=participant-list] [data-cy=registration-EXPIRED]').should('exist');
   });
 
   it('exam session can be updated', () => {
