@@ -55,6 +55,7 @@ export const listExport = props => {
     COMPLETED: 'Maksanut',
     SUBMITTED: 'Ei maksanut',
     CANCELLED: 'Peruttu',
+    EXPIRED: 'Erääntynyt',
     PAID_AND_CANCELLED: 'Maksanut ja peruttu',
   };
 
