@@ -69,7 +69,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       Michael
     </div>
     <div
-      className="ItemHeader Status StateItem"
+      className="ItemHeader StatusCompleted StateItem"
     >
       <img
         alt=""

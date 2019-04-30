@@ -13,8 +13,7 @@ export const upcomingExamSessions = props => {
       moment(e.registration_start_date),
     );
     return (
-      <a
-        href="#"
+      <div
         className={classes.Row}
         key={i}
         data-cy={`exam-sessions-table-row-${i}`}
@@ -31,7 +30,7 @@ export const upcomingExamSessions = props => {
         <p>
           {registrationOpen ? `${e.participants} / ${e.max_participants}` : '-'}
         </p>
-      </a>
+      </div>
     );
   });
 
