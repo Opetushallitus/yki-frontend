@@ -10,11 +10,13 @@ import classes from './ExamDates.module.css';
 import Page from '../../hoc/Page/Page';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-//import AddOrEditPostAdmissionConfiguration from './AddOrEditPostAdmissionConfiguration';
+import AddOrEditPostAdmissionConfiguration from './PostAdmission/AddOrEditPostAdmissionConfiguration';
 import * as actions from '../../store/actions/index';
-import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
+import { DATE_FORMAT } from '../../common/Constants';
 import { languageToString } from '../../util/util';
 import ControlledCheckbox from "../../components/UI/Checkbox/ControlledCheckbox";
+import AddExamDateModal from "./AddExamDateModal/AddExamDateModal";
+import ExamRegistrationDatesSelector from "./RegistrationDateSelector/ExamRegistrationDateSelector";
 
 class ExamDates extends Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class ExamDates extends Component {
 
     this.state = {
       showAddOrEditPostAdmissionModal: false,
+      showAddNewExamDate: false,
       selectedExamDate: null,
       selectedExamDateIndex: null,
       selectedExamDates: [],
@@ -44,6 +47,11 @@ class ExamDates extends Component {
   closeAddOrEditPostAdmissionModalHandler = () =>
     this.setState({ showAddOrEditPostAdmissionModal: false, selectedExamDateIndex: null });
 
+  showAddNewExamDateModalHandler = () =>
+    this.setState({ showAddNewExamDate: true });
+
+  closeAddNewExamDateModal = () => this.setState({ showAddNewExamDate: false });
+
   selectAllCheckboxes = isSelected => {
     Object.keys(this.state.checkboxes).forEach(checkbox => {
       this.setState(prev => ({
@@ -54,6 +62,22 @@ class ExamDates extends Component {
       }));
     });
   };
+
+  // TODO: new filters & groupings to be added if needed
+  grouped = R.groupWith(
+    (a, b) => a.registration_start_date === b.registration_start_date,
+    this.props.examDates,
+  );
+
+  sortedByDateASC = [R.sort(R.ascend(R.prop('exam_date')), this.props.examDates)];
+  sortedByDateDESC = [R.sort(R.descend(R.prop('exam_date')), this.props.examDates)];
+
+  firstLanguageElementASC = R.ascend(R.prop(R.pathOr(0, ['languages', 0, 'language_code'])));
+  firstLanguageElementDESC = R.descend(R.prop(R.pathOr(0, ['languages', 0, 'language_code'])));
+
+  //TODO: ascend and descend not working
+  sortByLanguageASC = R.sort(this.firstLanguageElementASC, this.props.examDates);
+  sortByLanguageDESC = R.sort(this.firstLanguageElementDESC, this.props.examDates);
 
   render() {
     const addOrEditPostAdmissionModal = (
@@ -76,14 +100,18 @@ class ExamDates extends Component {
       </>
     );
 
+    const addNewExamDateModal = (
+      <>
+        {this.state.showAddNewExamDate ? (
+          <Modal smallModal show={this.state.showAddNewExamDate} modalClosed={this.closeAddNewExamDateModal}>
+            <AddExamDateModal examDates={this.grouped} />
+          </Modal>
+        ) : null}
+      </>
+    );
+
     const examDateTables = () => {
-      const grouped = R.groupWith(
-        (a, b) => a.registration_start_date === b.registration_start_date,
-        this.props.examDates,
-      );
-
       const selectAll = this.props.examDates;
-
       let result = [];
 
       selectAll.forEach(item => {
@@ -106,43 +134,20 @@ class ExamDates extends Component {
         }
       }
 
-      const examRegistrationDatesSelector = (dates) => {
-        return (
-          <>
-            <select className={classes.ExamRegistrationDates}>
-              {dates.map((date, i) => {
-                return (
-                  <option key={i}>
-                    {this.props.t('common.registationPeriod')}{' '}
-                    {moment(date[i].registration_start_date).format(
-                      DATE_FORMAT_WITHOUT_YEAR,
-                    )}
-                        &nbsp;
-                        &ndash;
-                        &nbsp;
-                    {moment(date[i].registration_end_date).format(DATE_FORMAT)}
-                  </option>
-                )
-              })}
-            </select>
-          </>
-        );
-      };
-
       const examDateButtons = (
         <div className={classes.ActionButtons}>
           <button
             className={classes.AdditionButton}
-            onClick={() => console.log('added new item')}
+            onClick={() => this.showAddNewExamDateModalHandler()}
           >
             Lisää tutkintopäivä
-            </button>
+                    </button>
           <button
             className={classes.DeleteButton}
             onClick={() => console.log('deleted')}
           >
             Poista valittuja tutkintopäiviä
-            </button>
+                    </button>
         </div>
       );
 
@@ -229,12 +234,16 @@ class ExamDates extends Component {
         });
       };
 
+      const sortedByLanguageASC = [this.sortByLanguageASC];
+      const sortedByLanguageDESC = [this.sortByLanguageDESC];
+
       return (
         <>
-          {examRegistrationDatesSelector(grouped)}
+          <ExamRegistrationDatesSelector examDates={this.grouped} />
           {examDateButtons}
           {examDateHeaders}
-          {grouped.map((dates, i) => {
+          {/* TODO: function to show date rows based on selected filter --> state object */}
+          {this.grouped.map((dates, i) => {
             return <div className={classes.Grid} key={i}>{examDateRows(dates)}</div>
           })}
         </>
@@ -258,6 +267,7 @@ class ExamDates extends Component {
       <Page>
         <div className={classes.ExamDates}>{content}</div>
         {addOrEditPostAdmissionModal}
+        {addNewExamDateModal}
       </Page>
     );
   }

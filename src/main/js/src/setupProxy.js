@@ -496,6 +496,10 @@ module.exports = function(app) {
         return moment(d.registration_end_date).isSameOrAfter(moment());
       });
       res.send({ dates: futureExamDates });
+      /*
+      // all exam dates
+      res.send({ dates: examDates.dates });
+       */
     } catch (err) {
       res.status(404).send(err.message);
     }

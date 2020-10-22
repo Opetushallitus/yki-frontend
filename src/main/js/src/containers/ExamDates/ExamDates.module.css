@@ -12,19 +12,9 @@
   border: 1px solid hsla(0, 0%, 50%, 0.5) !important;
 }
 
-.ExamRegistrationDates {
-  margin-top: 1vh;
-  margin-bottom: 5vh;
-  cursor: pointer;
-  font: normal normal normal 16px/24px PT Sans;
-  padding: 8px;
-  border: 1px solid hsla(0, 0%, 50%, 0.5);
-  border-radius: 2px;
-}
-
 .ActionButtons {
   display: flex;
-  margin-bottom: 4vh;
+  margin-bottom: 5vh;
 }
 
 .ActionButtons button {
@@ -50,7 +40,10 @@
 .Grid {
   display: grid;
   grid-template-columns: 50px 2fr 1fr 0.7fr;
-  grid-row-gap: 2vh;
+}
+
+.Grid label {
+  margin-top: 0;
 }
 
 .Grid h3 {
@@ -59,6 +52,7 @@
 
 .Grid p {
   margin: 0;
+  padding-bottom: 5vh;
 }
 
 .Heading {

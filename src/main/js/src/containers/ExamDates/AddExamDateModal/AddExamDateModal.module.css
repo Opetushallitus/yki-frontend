@@ -1,0 +1,45 @@
+.Form {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 30vw;
+    width: 300px;
+}
+
+.Form label {
+    display: block;
+    font-size: 0.875em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.Form select {
+    margin-bottom: 20px;
+}
+
+.DatePickerWrapper > input {
+    width: 300px;
+    height: 35px;
+    margin-bottom: 20px;
+    color: hsl(0, 0%, 0%);
+}
+
+.ExamLevels {
+    width: 100%;
+    margin-top: 1vh;
+    cursor: pointer;
+    font: normal normal normal 16px/24px PT Sans;
+    padding: 8px;
+    border: 1px solid hsla(0, 0%, 50%, 0.5);
+    border-radius: 2px;
+}
+
+.AdditionButton {
+    margin-top: 2vh;
+     border: none;
+     padding: 12px;
+     border-radius: 2px;
+     width: 220px;
+     background-color: hsla(199, 77%, 43%, 0.95);
+     margin-bottom: 5vh;
+     color: hsla(0, 0%, 100%, 1);
+ }

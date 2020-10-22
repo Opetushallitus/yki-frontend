@@ -1,0 +1,9 @@
+.ExamRegistrationDates {
+    margin-top: 1vh;
+    margin-bottom: 5vh;
+    cursor: pointer;
+    font: normal normal normal 16px/24px PT Sans;
+    padding: 8px;
+    border: 1px solid hsla(0, 0%, 50%, 0.5);
+    border-radius: 2px;
+}
