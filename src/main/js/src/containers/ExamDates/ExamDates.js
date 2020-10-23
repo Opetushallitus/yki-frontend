@@ -110,165 +110,157 @@ class ExamDates extends Component {
       </>
     );
 
-    const examDateTables = () => {
-      const selectAll = this.props.examDates;
-      let result = [];
+    const onSelectAllChange = () => {
+      const stateArray = this.state.selectedExamDates;
 
-      selectAll.forEach(item => {
-        result.push(item.id);
-      });
+      if (stateArray.length <= 1) {
+        this.setState({
+          selectedExamDates: [...result],
+        });
+        this.selectAllCheckboxes(true);
+      } else {
+        this.setState({
+          selectedExamDates: []
+        });
+        this.selectAllCheckboxes(false);
+      }
+    }
 
-      const onSelectAllChange = () => {
+    const examDateButtons = (
+      <div className={classes.ActionButtons}>
+        <button
+          className={classes.AdditionButton}
+          onClick={() => this.showAddNewExamDateModalHandler()}
+        >
+          {t('examDates.addNew.confirm')}
+        </button>
+        <button
+          className={classes.DeleteButton}
+          onClick={() => console.log('deleted')}
+        >
+          {t('examDates.delete.selected')}
+        </button>
+      </div>
+    );
+
+    const isAllChecked = Object.values(this.state.checkboxes).every(value => value === true);
+
+    const examDateHeaders = (
+      <>
+        <div className={classes.Grid} data-cy="exam-dates-table">
+          <ControlledCheckbox
+            onChange={() => onSelectAllChange()}
+            checked={isAllChecked}
+          />
+          <h3>{this.props.t('common.examDate')}</h3>
+          <h3>{this.props.t('common.language')}</h3>
+          <h3>{this.props.t('common.level')}</h3>
+        </div>
+        <hr className={classes.GridDivider} />
+      </>
+    );
+
+    const examDateRows = examDates => {
+
+      const handleCheckboxChange = key => {
         const stateArray = this.state.selectedExamDates;
+        const stateCheckboxes = this.state.checkboxes;
+        const item = examDates[key].id;
 
         if (stateArray.length <= 1) {
           this.setState({
-            selectedExamDates: [...result],
+            selectedExamDates: [...stateArray, item],
+            checkboxes: {
+              ...stateCheckboxes,
+              [item]: !stateCheckboxes[item]
+            }
           });
-          this.selectAllCheckboxes(true);
-        } else {
+        }
+        if (stateArray.includes(item)) {
           this.setState({
-            selectedExamDates: []
+            selectedExamDates: stateArray.filter(removable => removable !== item),
+            checkboxes: {
+              ...stateCheckboxes,
+              [item]: !stateCheckboxes[item]
+            }
           });
-          this.selectAllCheckboxes(false);
         }
       }
 
-      const examDateButtons = (
-        <div className={classes.ActionButtons}>
-          <button
-            className={classes.AdditionButton}
-            onClick={() => this.showAddNewExamDateModalHandler()}
-          >
-            Lisää tutkintopäivä
-                    </button>
-          <button
-            className={classes.DeleteButton}
-            onClick={() => console.log('deleted')}
-          >
-            Poista valittuja tutkintopäiviä
-                    </button>
-        </div>
-      );
+      return examDates.map((e, i) => {
+        const registrationEndDateMoment = moment(e.registration_end_date);
 
-      const isAllChecked = Object.values(this.state.checkboxes).every(value => value === true);
+        const finnishOnly =
+          examDates.length === 1 &&
+          e.languages.length === 1 &&
+          e.languages[0].language_code === 'fin';
 
-      const examDateHeaders = (
-        <>
-          <div className={classes.Grid} data-cy="exam-dates-table">
+        const level = finnishOnly
+          ? this.props.t('common.level.middle')
+          : this.props.t('common.level.all');
+
+        const languages = e.languages
+          .map(l => {
+            return languageToString(l.language_code).toLowerCase();
+          })
+          .join(', ');
+
+        return (
+          <React.Fragment key={i}>
             <ControlledCheckbox
-              onChange={() => onSelectAllChange()}
-              checked={isAllChecked}
+              onChange={() => handleCheckboxChange(i)}
+              name={e.id}
+              checked={this.state.checkboxes[e.id]}
             />
-            <h3>{this.props.t('common.examDate')}</h3>
-            <h3>{this.props.t('common.language')}</h3>
-            <h3>{this.props.t('common.level')}</h3>
-          </div>
-          <hr className={classes.GridDivider} />
-        </>
-      );
-
-      const examDateRows = examDates => {
-
-        const handleCheckboxChange = key => {
-          const stateArray = this.state.selectedExamDates;
-          const stateCheckboxes = this.state.checkboxes;
-          const item = examDates[key].id;
-
-          if (stateArray.length <= 1) {
-            this.setState({
-              selectedExamDates: [...stateArray, item],
-              checkboxes: {
-                ...stateCheckboxes,
-                [item]: !stateCheckboxes[item]
-              }
-            });
-          }
-          if (stateArray.includes(item)) {
-            this.setState({
-              selectedExamDates: stateArray.filter(removable => removable !== item),
-              checkboxes: {
-                ...stateCheckboxes,
-                [item]: !stateCheckboxes[item]
-              }
-            });
-          }
-        }
-
-        return examDates.map((e, i) => {
-          const registrationEndDateMoment = moment(e.registration_end_date);
-
-          const finnishOnly =
-            examDates.length === 1 &&
-            e.languages.length === 1 &&
-            e.languages[0].language_code === 'fin';
-
-          const level = finnishOnly
-            ? this.props.t('common.level.middle')
-            : this.props.t('common.level.all');
-
-          const languages = e.languages
-            .map(l => {
-              return languageToString(l.language_code).toLowerCase();
-            })
-            .join(', ');
-
-          return (
-            <React.Fragment key={i}>
-              <ControlledCheckbox
-                onChange={() => handleCheckboxChange(i)}
-                name={e.id}
-                checked={this.state.checkboxes[e.id]}
-              />
-              <p>{moment(e.exam_date).format(DATE_FORMAT)}</p>
-              {/* eslint-disable-next-line */}
-              {/*
+            <p>{moment(e.exam_date).format(DATE_FORMAT)}</p>
+            {/* eslint-disable-next-line */}
+            {/*
               <p><a href="javascript:void(0)" onClick={ () => this.showAddOrEditPostAdmissionModalHandler(e)}>{e.post_admission_end_date ?
                   `${registrationEndDateMoment.add(1, 'days').format(DATE_FORMAT)} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}` :
                   this.props.t('examSession.postAdmission.add')}</a></p>
               */}
-              <p>{languages}</p>
-              <p>{level.toLowerCase()}</p>
-            </React.Fragment>
-          );
-        });
-      };
-
-      const sortedByLanguageASC = [this.sortByLanguageASC];
-      const sortedByLanguageDESC = [this.sortByLanguageDESC];
-
-      return (
-        <>
-          <ExamRegistrationDatesSelector examDates={this.grouped} />
-          {examDateButtons}
-          {examDateHeaders}
-          {/* TODO: function to show date rows based on selected filter --> state object */}
-          {this.grouped.map((dates, i) => {
-            return <div className={classes.Grid} key={i}>{examDateRows(dates)}</div>
-          })}
-        </>
-      )
+            <p>{languages}</p>
+            <p>{level.toLowerCase()}</p>
+          </React.Fragment>
+        );
+      });
     };
 
-    const content = this.props.loading ? (
-      <Spinner />
-    ) : (
-        <div className={classes.ExamSessionList}>
-          <h2>{this.props.t('common.examDates')}</h2>
-          {this.props.examDates.length > 0 ? (
-            examDateTables()
-          ) : (
-              <p>{this.props.t('examDates.noUpcomingExamDates')}</p>
-            )}
-        </div>
-      );
+    const sortedByLanguageASC = [this.sortByLanguageASC];
+    const sortedByLanguageDESC = [this.sortByLanguageDESC];
 
     return (
+      <>
+        <ExamRegistrationDatesSelector examDates={this.grouped} />
+        {examDateButtons}
+        {examDateHeaders}
+        {/* TODO: function to show date rows based on selected filter --> state object */}
+        {this.grouped.map((dates, i) => {
+          return <div className={classes.Grid} key={i}>{examDateRows(dates)}</div>
+        })}
+      </>
+    )
+  };
+
+  const content = this.props.loading ? (
+    <Spinner />
+  ) : (
+      <div className={classes.ExamSessionList}>
+        <h2>{this.props.t('common.examDates')}</h2>
+        {this.props.examDates.length > 0 ? (
+          examDateTables()
+        ) : (
+            <p>{this.props.t('examDates.noUpcomingExamDates')}</p>
+          )}
+      </div>
+    );
+
+  return(
       <Page>
-        <div className={classes.ExamDates}>{content}</div>
-        {addOrEditPostAdmissionModal}
-        {addNewExamDateModal}
-      </Page>
+  <div className={classes.ExamDates}>{content}</div>
+{ addOrEditPostAdmissionModal }
+{ addNewExamDateModal }
+      </Page >
     );
   }
 }

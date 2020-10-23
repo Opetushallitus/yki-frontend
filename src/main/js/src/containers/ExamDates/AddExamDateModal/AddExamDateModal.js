@@ -14,20 +14,20 @@ const AddExamDateModal = (props) => {
     //TODO: move into form and add validation : Formik & yup
     return (
         <div className={classes.Form}>
-            <h3>Tutkintopäivän lisääminen</h3>
-            <label>Valitse ilmoittautumisaika</label>
+            <h3>{t('examDates.addNew.examDate')}</h3>
+            <label>{t('examDates.choose.registrationTime')}</label>
             <ExamRegistrationDatesSelector examDates={props.examDates}/>
-            <label>Valitse tutkintopäivä</label>
+              <label>{t('examDates.choose.examDate')}</label>
             <div className={classes.DatePickerWrapper}>
                 <DatePicker options={{defaultDate: currentDate}} onChange={() => console.log('selected new date')}/>
             </div>
-            <label>Valitse tutkinnon kieli</label>
+            <label>{t('examDates.choose.examLanguage')}</label>
             <select className={classes.ExamLevels}>
                 {LANGUAGES.map((lang) => {
                     return <option key={lang.code}>{lang.name}</option>
                 })}
             </select>
-            <label>Valitse tutkinnon taso</label>
+            <label>{t('registration.select.level')}</label>
             <select className={classes.ExamLevels}>
                 <option>{t(levelTranslations.PERUS)}</option>
                 <option>{t(levelTranslations.KESKI)}</option>
@@ -37,7 +37,7 @@ const AddExamDateModal = (props) => {
                 className={classes.AdditionButton}
                 onClick={() => this.showAddNewExamDateModalHandler()}
             >
-                Lisää tutkintopäivä
+              {t('examDates.addNew.confirm')}
             </button>
         </div>
     )
