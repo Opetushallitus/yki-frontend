@@ -499,7 +499,7 @@ module.exports = function(app) {
       /*
       // all exam dates
       res.send({ dates: examDates.dates });
-       */
+      */
     } catch (err) {
       res.status(404).send(err.message);
     }

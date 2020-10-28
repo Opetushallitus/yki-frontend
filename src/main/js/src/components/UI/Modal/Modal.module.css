@@ -17,8 +17,8 @@
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
-  height: 60vh;
-  width: 30vw;
+  height: 48vh;
+  width: 65vw;
   z-index: 500;
   background-color: hsla(0, 100%, 100%, 1);
   word-wrap: break-word;
