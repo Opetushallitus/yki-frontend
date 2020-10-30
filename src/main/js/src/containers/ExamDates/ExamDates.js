@@ -15,12 +15,11 @@ import * as actions from '../../store/actions/index';
 import { DATE_FORMAT } from '../../common/Constants';
 import { languageToString } from '../../util/util';
 import ControlledCheckbox from '../../components/UI/Checkbox/ControlledCheckbox';
-import AddExamDateModal from './AddExamDateModal/AddExamDateModal';
+import AddOrEditExamDate from './ExamDateModalContent/AddOrEditExamDate';
 import RegistrationPeriodSelector from './RegistrationPeriodSelector/RegistrationPeriodSelector';
 import RegistrationPeriod from "./util/RegistrationPeriod";
 
 import editIcon from '../../assets/svg/edit.svg';
-import { remove } from "ramda";
 
 class ExamDates extends Component {
   constructor(props) {
@@ -28,7 +27,7 @@ class ExamDates extends Component {
 
     this.state = {
       showAddOrEditPostAdmissionModal: false,
-      showAddNewExamDate: false,
+      showAddOrEditExamDate: false,
       selectedExamDate: null,
       selectedExamDateIndex: null,
       selectedExamDates: [],
@@ -46,7 +45,8 @@ class ExamDates extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.selectedRegistrationPeriod !== this.state.selectedRegistrationPeriod) {
+    if (this.state.selectedRegistrationPeriod &&
+      (prevState.selectedRegistrationPeriod !== this.state.selectedRegistrationPeriod)) {
       this.setState({
         selectedExamDates: [],
         checkboxes: this.state.selectedRegistrationPeriod.reduce(
@@ -64,17 +64,17 @@ class ExamDates extends Component {
     }
   };
 
-  showAddOrEditPostAdmissionModalHandler = examDate =>
-    // this.setState({showAddOrEditPostAdmissionModal: true, selectedExamDate: examDate});
-    this.setState({ showAddOrEditPostAdmissionModal: true, selectedExamDate: this.props.examDates[examDate] });
+  showAddOrEditPostAdmissionModalHandler = (examDate, index) => {
+    this.setState({ showAddOrEditPostAdmissionModal: true, selectedExamDate: examDate, selectedExamDateIndex: index });
+  }
 
   closeAddOrEditPostAdmissionModalHandler = () =>
     this.setState({ showAddOrEditPostAdmissionModal: false, selectedExamDateIndex: null });
 
-  showAddNewExamDateModalHandler = () =>
-    this.setState({ showAddNewExamDate: !this.state.showAddNewExamDate });
+  showAddOrEditExamDateModalHandler = () =>
+    this.setState({ showAddOrEditExamDate: !this.state.showAddOrEditExamDate });
 
-  closeAddNewExamDateModal = () => this.setState({ showAddNewExamDate: false });
+  closeAddOrEditExamDateModal = () => this.setState({ showAddOrEditExamDate: false });
 
   selectAllCheckboxes = isSelected => {
     Object.keys(this.state.checkboxes).forEach(checkbox => {
@@ -93,12 +93,12 @@ class ExamDates extends Component {
     });
   }
 
-  // TODO: new filters & groupings to be added if needed
   grouped = R.groupWith(
     (a, b) => a.registration_start_date === b.registration_start_date,
     this.props.examDates,
   );
 
+  // TODO: new filters & groupings to be added if needed
   // sortedByDateASC = [R.sort(R.ascend(R.prop('exam_date')), this.state.selectedRegistrationPeriod)];
   // sortedByDateDESC = [R.sort(R.descend(R.prop('exam_date')), this.state.selectedRegistrationPeriod)];
 
@@ -114,7 +114,7 @@ class ExamDates extends Component {
               <AddOrEditPostAdmissionConfiguration
                 onUpdate={this.closeAddOrEditPostAdmissionModalHandler}
                 loadingExamDates={this.props.loading}
-                examDate={this.props.examDates.find(ed => ed === this.state.selectedExamDate)}
+                examDate={this.state.selectedRegistrationPeriod[this.state.selectedExamDateIndex]}
               />
             </Modal>
           ) :
@@ -125,11 +125,11 @@ class ExamDates extends Component {
 
     const addNewExamDateModal = (
       <>
-        {this.state.showAddNewExamDate ? (
-          <Modal smallModal show={this.state.showAddNewExamDate} modalClosed={this.closeAddNewExamDateModal}>
-            <AddExamDateModal
+        {this.state.showAddOrEditExamDate ? (
+          <Modal smallModal show={this.state.showAddOrEditExamDate} modalClosed={this.closeAddOrEditExamDateModal}>
+            <AddOrEditExamDate
               examDates={this.grouped}
-              showAddNewExamDateModalHandler={this.showAddNewExamDateModalHandler}
+              showAddNewExamDateModalHandler={this.showAddOrEditExamDateModalHandler}
             />
           </Modal>
         ) : null}
@@ -159,7 +159,7 @@ class ExamDates extends Component {
         <div className={classes.ActionButtons}>
           <button
             className={classes.AdditionButton}
-            onClick={() => this.showAddNewExamDateModalHandler()}
+            onClick={() => this.showAddOrEditExamDateModalHandler()}
           >
             {this.props.t('examDates.addNew.confirm')}
           </button>
@@ -168,13 +168,6 @@ class ExamDates extends Component {
             onClick={() => console.log('deleted')}
           >
             {this.props.t('examDates.delete.selected')}
-          </button>
-          {/*TODO: for testing purposes: */}
-          <button
-            style={{ marginLeft: '20px', background: 'black' }}
-            onClick={() => this.showAddOrEditPostAdmissionModalHandler(this.state.selectedExamDates[0])}
-          >
-            Muokkaa jälki-ilmoittautumista [TEST]
           </button>
         </div>
       );
@@ -226,8 +219,8 @@ class ExamDates extends Component {
           }
         }
 
-        return [examDates].map((e, i) => {
-          const registrationEndDateMoment = moment(e.registration_end_date);
+        return examDates.map((e, i) => {
+          // const registrationEndDateMoment = moment(e.registration_end_date);
 
           const finnishOnly =
             examDates.length === 1 &&
@@ -262,7 +255,7 @@ class ExamDates extends Component {
               <p>{level.toLowerCase()}</p>
               <button
                 className={classes.EditButton}
-                onClick={() => this.showAddOrEditPostAdmissionModalHandler(e)}
+                onClick={() => this.showAddOrEditPostAdmissionModalHandler(e, i)}
               >
                 <img src={editIcon} alt={'edit-icon'} />
               </button>
@@ -281,9 +274,11 @@ class ExamDates extends Component {
             return <div className={classes.Grid} key={i}>{examDateRows(dates)}</div>
           })}
           */}
-          {this.state.selectedRegistrationPeriod.map((dates, i) => {
-            return <div className={classes.Grid} key={i}>{examDateRows(dates)}</div>
-          })}
+          {this.state.selectedRegistrationPeriod && (
+            <div className={classes.Grid}>
+              {examDateRows(this.state.selectedRegistrationPeriod)}
+            </div>
+          )}
         </>
       )
     };
@@ -302,13 +297,15 @@ class ExamDates extends Component {
             <p>{this.props.t('common.registrationPeriod.edit')}</p>
             <hr />
           </div>
-          <div className={classes.ExamSessionList}>
-            {(this.state.selectedRegistrationPeriod.length >= 1) && (
-              <div className={classes.ExamDatesListHeader}>
-                <h2>{this.props.t('common.examDates')}</h2>
+          <div>
+            <div className={classes.ExamDatesListHeader}>
+              <h2>{this.props.t('common.examDates')}</h2>
+              {this.state.selectedRegistrationPeriod ? (this.state.selectedRegistrationPeriod.length > 0) && (
                 <RegistrationPeriod period={this.state.selectedRegistrationPeriod} />
-              </div>
-            )}
+              )
+                : null
+              }
+            </div>
             {this.props.examDates.length > 0 ? (
               examDateTables()
             ) : (

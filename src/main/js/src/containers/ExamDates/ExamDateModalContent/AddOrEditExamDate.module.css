@@ -19,7 +19,7 @@
     max-height: 90px;
 }
 
-.LevelGrid {
+.LanguageAndLevelGrid {
     display: grid;
     grid-template-columns: 300px 210px 100px;
     grid-gap: 20px;
