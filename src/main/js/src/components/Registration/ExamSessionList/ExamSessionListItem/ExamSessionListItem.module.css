@@ -1,118 +1,250 @@
 .ExamSessionListItem {
-  background-color: hsl(0, 0%, 96%);
-  margin: 10px 0;
-  font-size: 12px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
+    background: hsla(0, 0%, 100%, 1);
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: 0.7fr 2fr 0.8fr 1fr 0.7fr 1fr;
+    grid-template-areas:
     'location exam'
     'availability button'
     'registrationOpen button';
-  grid-row-gap: 5px;
+    grid-row-gap: 5px;
+    padding: 5px 10px 0 10px;
+    font: normal normal normal 16px/24px PT Sans;
+    letter-spacing: 0;
+    color: hsla(194, 91%, 21%, 1);
+}
+
+.ExamSessionListItem:nth-child(2n + 1) {
+    background: hsla(194, 82%, 43%, 0.2) 0 0 no-repeat padding-box;
 }
 
 .Date {
-  display: none;
-  grid-area: date;
+    display: none;
+    grid-area: date;
 }
 
 .Exam {
-  grid-area: exam;
-  justify-self: end;
+    grid-area: exam;
+    justify-self: end;
 }
 
 .Location {
-  grid-area: location;
-  justify-self: start;
+    grid-area: location;
+    justify-self: start;
 }
 
 .Availability {
-  grid-area: availability;
+    grid-area: availability;
 }
 
 .RegistrationOpen {
-  grid-area: registrationOpen;
+    grid-area: registrationOpen;
 }
 
 .RegistrationOpen span:nth-child(2) {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
 .RegisterButton {
-  grid-area: button;
-  justify-self: end;
-  width: 88px;
-  color: hsl(0, 0%, 100%);
-  border-radius: 2px;
-  cursor: pointer;
+    grid-area: button;
+    justify-self: end;
+    width: 88px;
+    color: hsl(0, 0%, 100%);
+    border-radius: 2px;
+    cursor: pointer;
 }
 
 .RegistrationLocked {
-  height: 35px;
-  color: hsl(0, 0%, 30%);
-  background: hsl(0, 0%, 80%);
-  cursor: pointer;
+    height: 35px;
+    color: hsl(0, 0%, 30%);
+    background: hsl(0, 0%, 80%);
+    cursor: pointer;
 }
 
-.ButtonForSignup {
-  height: 30px;
-  background: hsl(96, 96%, 27%);
-  box-shadow: 0px 1px 3px hsla(0, 0%, 0%, 0.3);
+/* Desktop view */
+@media (min-width: 1024px) {
+    .ExamSessionListItem {
+        background: hsla(0, 0%, 100%, 1);
+        margin: 0;
+        font-size: 14px;
+        grid-template-columns: 0.7fr 2fr 0.8fr 1fr 0.7fr 1fr;
+        grid-template-areas: 'date location exam registrationOpen availability button';
+        align-items: center;
+        justify-items: start;
+        padding: 5px 20px 0 20px;
+    }
+
+    .Date {
+        display: block;
+    }
+
+    .Exam {
+        white-space: nowrap;
+        justify-self: start;
+    }
+
+    .Availability {
+        justify-self: center;
+    }
+
+    .RegistrationOpen {
+        justify-self: center;
+    }
+
+    .HiddenOnDesktop {
+        display: none;
+    }
 }
 
-.ButtonForQueue {
-  height: 55px;
-  background: hsl(0, 0%, 100%);
-  color: hsl(225, 100%, 40%);
-  border: 1px solid hsl(225, 100%, 40%);
-  box-shadow: 0px 1px 3px hsla(0, 0%, 0%, 0.3);
+/* Tablet portrait */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    .ExamSessionListItem {
+        display: block;
+        background: hsla(0, 0%, 100%, 1);
+        margin: 0;
+        padding: 3vh 2vw 1vh 2vw;
+        grid-template-areas: none;
+    }
+    .ExamSessionListItem div {
+        padding: 2px 0 2px 0;
+    }
+    .ExamSessionListItem span strong {
+        margin: 0;
+    }
+    .ExamSessionListItem hr {
+        width: 90%;
+        border: 1px solid hsla(195, 82%, 44%, 0.5);
+    }
+    .ExamSessionListItem button {
+        width: 38vw;
+        height: 10vh !important;
+    }
+    .MobileRow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-left: 5vw;
+    }
+    .Date {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 5vw;
+    }
+    .ExamFee {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 5vw;
+    }
+    .Availability {
+        display: flex;
+    }
+    .Location {
+        display: block;
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .RegistrationOpen {
+        margin-left: 5vw;
+    }
 }
 
-@media (min-width: 620px) {
-  .ExamSessionListItem {
-    background-color: hsl(0, 0%, 98%);
-    height: 70px;
-    margin: 0;
-    padding: 5px 0;
-    font-size: 14px;
-    grid-template-columns: 0.7fr 2fr 0.8fr 1fr 1fr 0.7fr;
-    grid-template-areas: 'date location exam registrationOpen availability button';
-    align-items: center;
-    justify-items: start;
-    border-bottom: 1px solid hsl(0, 0%, 59%);
-  }
+/* Mobile view */
+@media screen and (min-width: 425px) and (max-width: 768px) and (orientation: landscape) {
+    .ExamSessionListItem {
+        display: block;
+        background: hsla(0, 0%, 100%, 1);
+        margin: 0;
+        padding: 3vh 2vw 1vh 2vw;
+        grid-template-areas: none;
+    }
+    .ExamSessionListItem div {
+        padding: 2px 0 2px 0;
+    }
+    .ExamSessionListItem span strong {
+        margin: 0;
+    }
+    .ExamSessionListItem hr {
+        width: 90%;
+        border: 1px solid hsla(195, 82%, 44%, 0.5);
+    }
+    .ExamSessionListItem button {
+        width: 45vw;
+        height: 10vh !important;
+    }
+    .MobileRow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-left: 5vw;
+    }
+    .Date {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 5vw;
+    }
+    .ExamFee {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 5vw;
+    }
+    .Availability {
+        display: flex;
+    }
+    .Location {
+        display: block;
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .RegistrationOpen {
+        margin-left: 5vw;
+    }
+}
 
-  .ExamSessionListItem:hover {
-    background-color: hsl(0, 0%, 96%);
-  }
-
-  .RegisterButton {
-    justify-self: center;
-  }
-
-  .ButtonForSignup:hover {
-    background: hsl(96, 83%, 43%);
-    box-shadow: 0px 2px 3px hsla(0, 0%, 0%, 0.3);
-  }
-
-  .Date {
-    display: block;
-  }
-
-  .Exam {
-    white-space: nowrap;
-    justify-self: start;
-  }
-
-  .Availability {
-    justify-self: center;
-  }
-
-  .RegistrationOpen {
-    justify-self: center;
-  }
-
-  .HiddenOnDesktop {
-    display: none;
-  }
+/* Mobile large landscape */
+@media screen and (min-width: 640px) and (max-width: 1023px) and (orientation: landscape) {
+    .ExamSessionListItem {
+        display: block;
+        background: hsla(0, 0%, 100%, 1);
+        margin: 0;
+        padding: 3vh 2vw 1vh 2vw;
+        grid-template-areas: none;
+    }
+    .ExamSessionListItem div {
+        padding: 2px 0 2px 0;
+    }
+    .ExamSessionListItem span strong {
+        margin: 0;
+    }
+    .ExamSessionListItem hr {
+        width: 90%;
+        border: 1px solid hsla(195, 82%, 44%, 0.5);
+    }
+    .ExamSessionListItem button {
+        width: 45vw;
+        height: 10vh !important;
+    }
+    .MobileRow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-left: 5vw;
+    }
+    .Date {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 5vw;
+    }
+    .ExamFee {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 5vw;
+    }
+    .Availability {
+        display: flex;
+    }
+    .Location {
+        display: block;
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .RegistrationOpen {
+        margin-left: 5vw;
+    }
 }

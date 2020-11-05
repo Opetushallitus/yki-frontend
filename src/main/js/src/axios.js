@@ -10,7 +10,7 @@ instance.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
     'Caller-Id': '1.2.246.562.10.00000000001.yki'
-}
+  };
   config.params = {lang: lang ? lang : 'fi'};
   return config;
 });

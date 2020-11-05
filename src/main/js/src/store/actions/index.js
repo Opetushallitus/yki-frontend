@@ -29,6 +29,10 @@ export {
   fetchExamSession,
   initRegistrationForm,
   submitRegistrationForm,
+  filterExamByAvailability,
+  filteredExamSessionsByOpenRegistration,
+  filteredExamsByAvailabilityAndRegistration
 } from './registration';
 export { fetchExamDates, examDatesFailReset, updatePostAdmissionEndDate, deletePostAdmissionEndDate } from './examDates';
 export { fetchUser } from './user';
+export { initYKILanguage, changeYKILanguage } from './yki';

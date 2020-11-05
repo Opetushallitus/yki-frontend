@@ -68,7 +68,7 @@ export class LoginLink extends Component {
               disabled={!isValid || isSubmitting}
               datacy="button-loginlink-form-submit"
             >
-              {this.props.t('registration.loginlink.button')}
+              {this.props.t('registration.notification.signup.button')}
             </Button>
             {!!status && (
               <div className={classes.SubmitError}>
@@ -82,12 +82,12 @@ export class LoginLink extends Component {
         )}
       </Formik>
     ) : (
-      <React.Fragment>
+      <>
         <p data-cy="loginlink-success">
           {this.props.t('registration.loginlink.success')}{' '}
           <strong>{this.state.email}</strong>
         </p>
-      </React.Fragment>
+      </>
     );
   }
 }

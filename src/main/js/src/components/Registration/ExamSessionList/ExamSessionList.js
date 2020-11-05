@@ -8,9 +8,9 @@ import ExamSessionListItem from './ExamSessionListItem/ExamSessionListItem';
 import { DATE_FORMAT } from '../../../common/Constants';
 
 const examSessionList = ({ examSessions: sessions, language, t, history }) => (
-  <React.Fragment>
+  <>
     {Object.keys(sessions).length !== 0 ? (
-      <React.Fragment>
+      <>
         <div className={classes.ColumnHeaders}>
           <div>{t('registration.list.date')}</div>
           <div>{t('registration.list.place')}</div>
@@ -41,11 +41,11 @@ const examSessionList = ({ examSessions: sessions, language, t, history }) => (
             </div>
           </div>
         ))}
-      </React.Fragment>
+      </>
     ) : (
-      <p>{t('registration.search.noResults')}</p>
+        <p className={classes.NotFound}><b>{t('registration.search.noResults')}</b></p>
     )}
-  </React.Fragment>
+  </>
 );
 
 examSessionList.propTypes = {

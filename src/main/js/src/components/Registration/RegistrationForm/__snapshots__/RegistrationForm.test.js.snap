@@ -14,10 +14,11 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
       "gender": "",
       "lastName": "Parkkonen-Testi",
       "nationality": "246",
+      "personalDataConsent": false,
       "phoneNumber": "",
       "postOffice": "HELSINKI",
-      "ssn": "",
       "streetAddress": "Ateläniitynpolku 29 G",
+      "termsOfUseConsent": false,
       "zip": "00100",
     }
   }
@@ -39,6 +40,8 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
       "_exclusive": Object {},
       "_mutate": undefined,
       "_nodes": Array [
+        "termsOfUseConsent",
+        "personalDataConsent",
         "certificateLang",
         "examLang",
         "birthdate",
@@ -296,6 +299,37 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
             [Function],
           ],
         },
+        "personalDataConsent": BooleanSchema {
+          "_blacklist": RefSet {
+            "list": Set {},
+            "refs": Map {},
+          },
+          "_conditions": Array [],
+          "_deps": Array [],
+          "_exclusive": Object {
+            "required": true,
+          },
+          "_mutate": undefined,
+          "_options": Object {
+            "abortEarly": true,
+            "recursive": true,
+          },
+          "_type": "boolean",
+          "_typeError": [Function],
+          "_whitelist": RefSet {
+            "list": Set {
+              true,
+            },
+            "refs": Map {},
+          },
+          "_whitelistError": [Function],
+          "tests": Array [
+            [Function],
+          ],
+          "transforms": Array [
+            [Function],
+          ],
+        },
         "phoneNumber": StringSchema {
           "_blacklist": RefSet {
             "list": Set {},
@@ -408,6 +442,37 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           },
           "tests": Array [
             [Function],
+            [Function],
+          ],
+          "transforms": Array [
+            [Function],
+          ],
+        },
+        "termsOfUseConsent": BooleanSchema {
+          "_blacklist": RefSet {
+            "list": Set {},
+            "refs": Map {},
+          },
+          "_conditions": Array [],
+          "_deps": Array [],
+          "_exclusive": Object {
+            "required": true,
+          },
+          "_mutate": undefined,
+          "_options": Object {
+            "abortEarly": true,
+            "recursive": true,
+          },
+          "_type": "boolean",
+          "_typeError": [Function],
+          "_whitelist": RefSet {
+            "list": Set {
+              true,
+            },
+            "refs": Map {},
+          },
+          "_whitelistError": [Function],
+          "tests": Array [
             [Function],
           ],
           "transforms": Array [

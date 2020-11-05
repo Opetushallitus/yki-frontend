@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import axios from '../../axios';
 import { withTranslation } from 'react-i18next';
 
-import Header from '../../components/Header/Header';
 import Alert from '../../components/Alert/Alert';
 import classes from './PaymentRedirect.module.css';
 
@@ -61,15 +60,14 @@ export class PaymentRedirect extends Component {
       </form>
     ) : (
       this.state.error && (
-        <React.Fragment>
-          <Header />
+        <>
           <main className={classes.Content}>
             <Alert
               title={this.props.t('payment.redirect.error')}
               optionalText={this.props.t('payment.redirect.error.info')}
             />
           </main>
-        </React.Fragment>
+        </>
       )
     );
   }

@@ -20,13 +20,14 @@
   position: absolute;
   height: 20px;
   width: 20px;
-  border-radius: 2px;
-  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border: 1px solid hsl(0, 0%, 100%);
+  background: hsla(0, 0%, 100%, 1) 0 0 no-repeat padding-box;
 }
 
 /* When the checkbox is checked, add background image */
 .Container input:checked ~ .Checkmark {
-  background: url('../../../assets/svg/checkbox-blue-checkmark.svg') center
+  background: url('../../../assets/svg/checkbox-blue-checkmark.svg') hsla(0, 0%, 100%, 1) center
     center no-repeat;
   background-size: 1.15em;
 }

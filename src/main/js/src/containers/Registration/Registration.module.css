@@ -1,6 +1,7 @@
 .Content {
-  width: calc(100vw - 40px);
-  margin: 0 auto;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  width: auto;
 }
 
 .Content h1 {
@@ -9,16 +10,79 @@
   margin: 0 0 30px 0;
 }
 
+.FilterContainer {
+  height: 40vh;
+  background: hsla(194, 82%, 43%, 0.2) 0 0 no-repeat padding-box;
+}
+
+.FilterContainer hr {
+  margin-top: 8vh;
+  border: 1px solid hsla(194, 82%, 43%, 1);
+}
+
+.FilterContainer p {
+  text-align: left;
+  font: normal normal normal 21px/50px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
+}
+
+.FilterSelectors {
+  padding: 5vh 5vw 0 5vw;
+}
+
 .Upcoming {
   margin: 29px 0 14px 0;
 }
 
 @media (min-width: 620px) {
-  .Content {
-    width: calc(100vw - 200px);
-  }
-
   .Upcoming {
     font-size: 16px;
+  }
+}
+
+/* Tablet portrait */
+@media screen and (max-width: 768px) {
+  .Content {
+    margin: 0;
+  }
+  .FilterContainer {
+    height: 100%;
+  }
+  .FilterContainer hr {
+    margin-top: 3vh;
+  }
+}
+
+/* Tablet landscape */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  .Content {
+    margin: 0 auto;
+  }
+  .FilterContainer {
+    height: 100%;
+  }
+  .FilterContainer p {
+    margin-bottom: 0;
+  }
+  .FilterContainer hr {
+    margin-top: 3vh;
+  }
+}
+
+/* Mobile view */
+@media screen and (max-width: 425px) {
+  .Content {
+    width: 100%;
+    margin: auto;
+  }
+  .FilterContainer {
+    height: 100%;
+  }
+  .FilterContainer hr {
+    margin: 0;
+  }
+  .FilterSelectors {
+    margin-bottom: 10vh;
   }
 }

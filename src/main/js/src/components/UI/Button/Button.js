@@ -8,7 +8,7 @@ const button = props => (
     type={props.type}
     disabled={props.disabled}
     className={[
-      props.isRegistration ? classes.ParticipantButton : classes.Button,
+      props.isRegistration ? 'YkiButton' : classes.Button,
       classes[props.btnType],
     ].join(' ')}
     onClick={props.clicked}

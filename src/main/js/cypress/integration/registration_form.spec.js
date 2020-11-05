@@ -14,6 +14,9 @@ describe('Registration form', () => {
     cy.get('[data-cy=radio-examLang-fi]').focus();
     cy.get('[data-cy=input-error-email]').should('exist');
 
+    cy.get('[data-cy=form-checkbox-terms]').click();
+    cy.get('[data-cy=form-checkbox-personal-data]').click();
+
     cy.get('[data-cy=form-submit-button]').should('not.be.disabled');
   });
 
@@ -95,6 +98,9 @@ describe('Registration form', () => {
     cy.get('[data-cy=input-phoneNumber]').type('+358401234567');
     cy.get('[data-cy=input-email]').type('test@test.com');
     cy.get('[data-cy=input-confirmEmail]').type('test@test.com');
+    cy.get('[data-cy=form-checkbox-terms]').click();
+    cy.get('[data-cy=form-checkbox-personal-data]').click();
+
     cy.get('[data-cy=form-submit-button]').click();
 
     cy.log('form submit failed');
@@ -115,9 +121,12 @@ describe('Registration form', () => {
     cy.log('exam language selection should exist when exam lang is not fi/se');
     cy.get('[data-cy=radio-examLang-sv]').click();
 
+    cy.get('[data-cy=form-checkbox-terms]').click();
+    cy.get('[data-cy=form-checkbox-personal-data]').click();
+
     cy.get('[data-cy=form-submit-button]').click();
 
-    cy.get('[data-cy=registration-success-header]').should('exist');
+    cy.get('[data-cy=registration-success]').should('exist');
   });
 
   it('email authenticated user can fill and submit form', () => {
@@ -134,18 +143,22 @@ describe('Registration form', () => {
 
     cy.get('[data-cy=select-nationality]').select('643');
     cy.get('[data-cy=input-birthdate]').type('10.10.1970');
+    cy.get('[data-cy=select-gender]').select('mies')
     cy.get('[data-cy=radio-certificateLang-en]').click();
 
     cy.log('exam language should not be shown for finnish and swedish');
     cy.get('[data-cy=radio-examLang-fi]').should('not.exist');
     cy.get('[data-cy=input-email]').should('not.exist');
 
+    cy.get('[data-cy=form-checkbox-terms]').click();
+    cy.get('[data-cy=form-checkbox-personal-data]').click();
+
     cy.get('[data-cy=form-submit-button]').click();
 
-    cy.get('[data-cy=registration-success-header]').should('exist');
+    cy.get('[data-cy=registration-success]').should('exist');
     cy.get('[data-cy=exam-details-card').should('exist');
-    cy.get('[data-cy=exam-details-card-extra')
-      .contains('Lisätiedot suomeksi')
+    cy.get('[data-cy=success-details-extra')
+      .contains('Tärkeää!')
       .should('exist');
   });
 });

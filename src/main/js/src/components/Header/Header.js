@@ -1,27 +1,36 @@
 import React from 'react';
 
 import classes from './Header.module.css';
-import Logo from '../UI/Logo/Logo';
 import NavigationItems from './NavigationItems/NavigationItems';
-import LanguageSelect from '../UI/LanguageSelect/LanguageSelect';
-import LogOut from '../UI/LogOut/LogOut';
+import LanguageSelect from '../../containers/LanguageSelect/LanguageSelect';
 
-const header = ({ nav }) =>
-  nav ? (
-    <header className={classes.Header}>
-      <nav>
-        <NavigationItems />
-      </nav>
-    </header>
-  ) : (
-    <header className={classes.RegistrationHeader}>
-      <Logo />
-      <span>Opetushallitus</span>
-      <div className={classes.HeaderLinksContainer}>
-        <LogOut />
-        <LanguageSelect />
-      </div>
-    </header>
-  );
+import OPHLogo from '../../assets/svg/oph-logo-updated.svg';
+
+import NavigationTabs from "./NavigationTabs/NavigationTabs";
+import MobileMenu from "../MobileMenu/MobileMenu";
+import {MOBILE_VIEW, TABLET_VIEW} from "../../common/Constants";
+
+const header = ({nav}) =>
+    nav ? (
+        <header className={classes.Header}>
+          <nav>
+            <NavigationItems/>
+          </nav>
+        </header>
+    ) : (
+        <header className={classes.RegistrationHeader}>
+          <img src={OPHLogo} alt={'OPH-Logo'}/>
+          {MOBILE_VIEW || TABLET_VIEW ?
+              <MobileMenu />
+              :
+              <>
+                <div className={classes.HeaderTabsContainer}>
+                  <NavigationTabs/>
+                </div>
+                <LanguageSelect/>
+              </>
+          }
+        </header>
+    );
 
 export default header;

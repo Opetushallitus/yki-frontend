@@ -1,28 +1,33 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import classes from './ExamDetailsPage.module.css';
 import Spinner from '../../UI/Spinner/Spinner';
 import * as actions from '../../../store/actions/index';
-import Header from '../../Header/Header';
+
 import BackButton from '../BackButton/BackButton';
-import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
+
 import AuthButton from '../AuthButton/AuthButton';
 import NotificationSignup from '../NotificationSignup/NotificationSignup';
 import LoginLink from '../LoginLink/LoginLink';
-import { DATE_FORMAT_WITHOUT_YEAR } from '../../../common/Constants';
-//import { nowBetweenDates } from '../../../util/util';
+import {DATE_FORMAT_WITHOUT_YEAR} from '../../../common/Constants';
+import HeadlineContainer from "../../HeadlineContainer/HeadlineContainer";
+import {levelDescription} from "../../../util/util";
+import ExamDetailsCard from "./ExamDetailsCard/ExamDetailsCard";
+
+import tempHeroImage from '../../../assets/images/ophYki_image2.png'
+// import { nowBetweenDates } from '../../../util/util';
 
 const examDetailsPage = ({
-  session,
-  history,
-  match,
-  onfetchExamSession,
-  loading,
-}) => {
+                           session,
+                           history,
+                           match,
+                           onfetchExamSession,
+                           loading,
+                         }) => {
   const [t] = useTranslation();
   const [showLoginLink, setShowLoginLink] = useState(false);
 
@@ -34,100 +39,127 @@ const examDetailsPage = ({
   }, []);
 
   const registrationOpen = session.open;
-  /*const postAdmissionActive = registrationOpen &&
+  
+  /*
+  const postAdmissionActive = registrationOpen && 
                               session.post_admission_end_date && 
                               session.post_admission_start_date &&
                               session.post_admission_active &&
                               session.post_admission_quota &&
-                              nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));*/
+                              nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
+
+   */
+
+  //const seatsAvailable = postAdmissionActive ? (session.post_admission_quota - session.pa_participants) > 0 : (session.max_participants - session.participants) > 0;
   
   const seatsAvailable = (session.max_participants - session.participants) > 0;
+
   const queueFull = session.queue_full;
   const examSessionId = Number(match.params.examSessionId);
 
   const registrationPeriod = (
-    <div className={classes.InfoText}>
-      <p data-cy="exam-details-registrationPeriod">{`${t(
-        'registration.examDetails.registrationPeriod',
-      )} ${moment(session.registration_start_date).format(
-        DATE_FORMAT_WITHOUT_YEAR,
-      )} ${t('registration.examDetails.card.time')} 10.00 - ${moment(
-        session.registration_end_date,
-      ).format(DATE_FORMAT_WITHOUT_YEAR)} ${t(
-        'registration.examDetails.card.time',
-      )} 16.00`}</p>
-    </div>
+      <div className={classes.InfoText}>
+        <p data-cy="exam-details-registrationPeriod">{`${t(
+            'registration.examDetails.registrationPeriod',
+        )} ${moment(session.registration_start_date).format(
+            DATE_FORMAT_WITHOUT_YEAR,
+        )} ${t('registration.examDetails.card.time')} 10.00 - ${moment(
+            session.registration_end_date,
+        ).format(DATE_FORMAT_WITHOUT_YEAR)} ${t(
+            'registration.examDetails.card.time',
+        )} 16.00`}</p>
+      </div>
   );
 
+  const languageAndLevel = (
+      <p>{`${t(`common.language.${session.language_code}`)}, ${levelDescription(
+          session.level_code,
+      ).toLowerCase()}`}</p>
+  );
+
+  /**
+   TODO: heroimaget headlineImageksi, kun saadaan OPH:n viestinnältä sopivat kuvat:
+    esim enum, joka palauttaa kuvan kielen koodin perusteella:
+    headlineImage={languageHeroImages[session.language_code]}
+   */
   return (
-    <div>
-      <Header />
-      <BackButton
-        clicked={() =>
-          history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
-        }
-      />
-      <main className={classes.Content}>
+      <main>
         {loading ? (
-          <div className={classes.Loading}>
-            <Spinner />
-          </div>
+            <div className={classes.Loading}>
+              <Spinner/>
+            </div>
         ) : (
-          <Fragment>
-            <h2 className={classes.Title} data-cy="exam-details-title">
-              {!registrationOpen
-                ? t('registration.examDetails.registrationClosed')
-                : seatsAvailable
-                ? t('registration.examDetails.title')
-                : queueFull
-                ? t('registration.examDetails.queueFull')
-                : t('registration.examDetails.examFull')}
-            </h2>
-            <ExamDetailsCard exam={session} isFull={!seatsAvailable} />
-            {registrationOpen ? (
-              <Fragment>
-                <div className={classes.InfoText}>
-                  {seatsAvailable && (
-                    <p>{t('registration.examDetails.futureInfo')}</p>
-                  )}
-                </div>
-                <hr />
-                {seatsAvailable ? (
-                  <div className={classes.Identification}>
-                    <p>
-                      <strong>{t('registration.examDetails.identify')}</strong>
-                    </p>
-                    <AuthButton examSessionId={examSessionId} />
-                    {showLoginLink ? (
-                      <LoginLink examSessionId={examSessionId} />
-                    ) : (
-                      <Fragment>
-                        <button
-                          className={classes.EmailIdentificationButton}
-                          data-cy="button-show-login-link"
-                          onClick={() => setShowLoginLink(true)}
-                          role="link"
-                        >
-                          {t('registration.examDetails.identify.withEmail')}
-                        </button>
-                      </Fragment>
-                    )}
-                  </div>
+            <>
+              <HeadlineContainer
+                  headlineTitle={languageAndLevel.props.children.toString()}
+                  headlineContent={<ExamDetailsCard exam={session} isFull={!seatsAvailable}/>}
+                  headlineImage={tempHeroImage}
+              />
+              <div className={classes.Content}>
+                <BackButton
+                    clicked={() =>
+                        history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
+                    }
+                />
+                {registrationOpen ? (
+                    <>
+                      <div className={classes.InfoText}>
+                        {seatsAvailable && (
+                            <p>{t('registration.examDetails.futureInfo')}</p>
+                        )}
+                        {(!seatsAvailable && !queueFull) && (
+                            <p className={classes.InfoText}>
+                              {t('registration.notification.signup.label')}
+                            </p>
+                        )}
+                      </div>
+                      {seatsAvailable ? (
+                          <div className={classes.Identification}>
+                            <p>
+                              <strong>{t('registration.examDetails.identify')}</strong>
+                            </p>
+                            <div className={classes.IdentificationButtons}>
+                              <AuthButton examSessionId={examSessionId}/>
+                              {showLoginLink ? (
+                                  <LoginLink examSessionId={examSessionId}/>
+                              ) : (
+                                  <>
+                                    <button
+                                        className={'YkiButton'}
+                                        data-cy="button-show-login-link"
+                                        onClick={() => setShowLoginLink(true)}
+                                        role="link"
+                                    >
+                                      {t('registration.examDetails.identify.withEmail')}
+                                    </button>
+                                  </>
+                              )}
+                            </div>
+                          </div>
+                      ) : (!queueFull && (
+                              <div className={classes.Identification}>
+                                <NotificationSignup
+                                    examSessionId={match.params.examSessionId}
+                                />
+                              </div>
+                          )
+
+                      )}
+                      {queueFull ? <div className={classes.Identification} style={{paddingBottom: '5vh'}}
+                                        data-cy={'exam-details-title'}><p>
+                        <strong>{t('registration.examDetails.queueFull')}</strong></p></div> : null}
+
+                    </>
                 ) : (
-                  !queueFull && (
-                    <NotificationSignup
-                      examSessionId={match.params.examSessionId}
-                    />
-                  )
+                    <>
+                      {registrationPeriod}
+                      <NotificationSignup examSessionId={match.params.examSessionId}/>
+                    </>
                 )}
-              </Fragment>
-            ) : (
-              registrationPeriod
-            )}
-          </Fragment>
+              </div>
+            </>
         )}
       </main>
-    </div>
   );
 };
 
@@ -141,7 +173,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onfetchExamSession: examSessionId =>
-      dispatch(actions.fetchExamSession(examSessionId)),
+        dispatch(actions.fetchExamSession(examSessionId)),
   };
 };
 
@@ -154,6 +186,6 @@ examDetailsPage.propTypes = {
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
+    mapStateToProps,
+    mapDispatchToProps,
 )(examDetailsPage);
