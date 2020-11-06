@@ -17,7 +17,7 @@ const NavigationTabs = (props) => {
   }
 
   const baseLinks = () => {
-    const onDescriptionPage = location.pathname === '/';
+    const onDescriptionPage = location.pathname === '/' || location.pathname === '/ilmoittautuminen/';
     const divider = (onDescriptionPage && (MOBILE_VIEW || TABLET_VIEW));
     return (
         <>
