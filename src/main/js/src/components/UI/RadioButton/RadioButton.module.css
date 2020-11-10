@@ -1,7 +1,8 @@
 .RadioButton input {
-  margin-bottom: 8px;
   margin-bottom: 0.5rem;
   margin-right: 8px;
+  background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
+  -webkit-appearance: radio;
 }
 
 .RadioButton:hover {
@@ -13,7 +14,6 @@
 }
 
 .RadioButtonDisabled input {
-  margin-bottom: 8px;
   margin-bottom: 0.5rem;
   margin-right: 8px;
 }
@@ -27,4 +27,20 @@
 
 .RadioButtonExtraLabel {
   display: inline-block;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1020px) {
+  .RadioButton {
+    padding-right: 3%;
+    align-items: center;
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1020px) and (orientation: landscape) {
+  .RadioButton {
+    padding-right: 3%;
+    align-items: center;
+    margin-left: 0;
+  }
 }

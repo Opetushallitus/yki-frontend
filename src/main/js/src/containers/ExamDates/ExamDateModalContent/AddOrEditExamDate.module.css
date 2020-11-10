@@ -1,0 +1,81 @@
+.Form {
+    display: grid;
+    grid-gap: 10px;
+    max-width: 30vw;
+    width: 300px;
+}
+
+.Form label {
+    display: block;
+    font-size: 0.875em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.TimeGrid {
+    display: grid;
+    grid-template-columns: 300px 200px;
+    grid-gap: 20px;
+    max-height: 90px;
+}
+
+.LanguageAndLevelGrid {
+    display: grid;
+    grid-template-columns: 300px 210px 100px;
+    grid-gap: 20px;
+    max-height: 80px;
+}
+
+.DatePickerWrapper > input {
+    width: 100%;
+    height: 35px;
+    margin-bottom: 20px;
+    margin-top: 8px;
+    color: hsl(0, 0%, 0%);
+}
+
+.ExamLevels {
+    width: 100%;
+    margin-top: 1vh;
+    cursor: pointer;
+    font: normal normal normal 16px/24px PT Sans;
+    padding: 8px;
+    border: 1px solid hsla(0, 0%, 50%, 0.5);
+    border-radius: 2px;
+}
+
+.AdditionButton {
+    margin-top: 2vh;
+    border: none;
+    padding: 12px;
+    border-radius: 2px;
+    width: 220px;
+    background-color: hsla(199, 77%, 43%, 0.95);
+    margin-bottom: 5vh;
+    color: hsla(0, 0%, 100%, 1);
+}
+
+.LanguageAddition {
+    margin-top: 34px;
+    border: none;
+    padding: 12px;
+    border-radius: 2px;
+    width: 100%;
+    background-color: hsla(199, 77%, 43%, 0.95);
+    margin-bottom: 5vh;
+    color: hsla(0, 0%, 100%, 1);
+}
+
+.AddedLanguages {
+    min-height: 80px;
+    max-height: 100%;
+}
+
+.AddedLanguages span {
+    display: flex;
+    margin: 0 !important;
+}
+
+.AddedLanguages p {
+    margin: 0.2em !important;
+}

@@ -7,6 +7,7 @@ import Alert from '../../Alert/Alert';
 export const registrationError = props => {
   const resolveErrorMessage = () => {
     const error = props.error;
+    console.log('real error: ', error);
     let errorKey = props.defaultKey;
     if (error.data && error.data.error) {
       if (error.data.error.full) {

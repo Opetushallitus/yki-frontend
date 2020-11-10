@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   z-index: 90;
+  border-bottom: 3px solid hsl(195, 82%, 44%);
 }
 
 .Header nav {
@@ -14,28 +15,40 @@
 }
 
 .RegistrationHeader {
-  position: sticky;
   top: 0;
-  display: flex;
-  width: 100vw;
-  height: 40px;
-  align-items: center;
-  color: hsl(0, 0%, 100%);
-  font-size: 0.875em;
+  color: hsl(195, 91%, 22%);
   font-weight: 600;
-  background-color: hsl(96, 96%, 27%);
+  background-color: hsl(0, 0%, 100%);
   background-size: 2.2em;
+  border-bottom: 3px solid hsl(195, 82%, 44%);
+  margin-bottom: 0 !important;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 10px;
+  width: 100%;
+  align-items: center;
+  min-height: 60px;
 }
 
-.HeaderLinksContainer {
-  margin-left: auto;
-  padding-right: 10px;
+.RegistrationHeader img {
+  padding-left: 2vw;
 }
 
-@media (min-width: 620px) {
+.HeaderTabsContainer {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  text-align: center;
+  display: inline-flex;
+}
+
+/* Mobile & Tablet view */
+@media screen and (max-width: 1024px) {
   .RegistrationHeader {
-    height: 80px;
+    grid-template-columns: repeat(2, 1fr);
+    height: 72px;
     font-size: 1.125em;
     background-size: 3.5em;
+    padding-top: 2%;
   }
 }

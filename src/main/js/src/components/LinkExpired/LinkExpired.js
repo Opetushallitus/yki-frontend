@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 
 import classes from './LinkExpired.module.css';
-import Hyperlink from '../UI/Hyperlink/Hyperlink';
-import Header from '../Header/Header';
+import BackButton from "../Registration/BackButton/BackButton";
+import HeadlineContainer from "../HeadlineContainer/HeadlineContainer";
+import YkiImage2 from "../../assets/images/ophYki_image2.png";
 
 export const linkExpired = props => {
+
+  const {history, match} = props;
+
   const key = () => {
-    switch (props.match.path) {
+    switch (match.path) {
       case '/ilmoittautuminen/vanhentunut': {
         return 'registration.expired.loginlink';
       }
@@ -22,21 +26,30 @@ export const linkExpired = props => {
   };
 
   return (
-    <React.Fragment>
-      <Header />
-      <main className={classes.Content}>
-        <h1 data-cy="link-expired-header">{props.t(key())}</h1>
-        <p>{props.t(`${key()}.info`)}</p>
-        <div className={classes.BackButton}>
-          <Hyperlink to={'/yki/'} text={props.t('errorBoundary.return')} />
-        </div>
-      </main>
-    </React.Fragment>
+      <>
+        <main>
+          <HeadlineContainer
+              headlineTitle={props.t(key())}
+              headlineContent={null}
+              headlineImage={YkiImage2}
+              disableContent={true}
+          />
+          <div className={classes.Content}>
+            <BackButton
+                clicked={() =>
+                    history.push('/')
+                }
+            />
+            <p>{props.t(`${key()}.info`)}</p>
+          </div>
+        </main>
+      </>
   );
 };
 
 linkExpired.propTypes = {
   match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default withTranslation()(linkExpired);

@@ -7,8 +7,43 @@
   align-items: center;
 }
 
+/* overrides checkbox border color */
+.ExamDates label span {
+  border: 1px solid hsla(0, 0%, 50%, 0.5) !important;
+}
+
+.ActionButtons {
+  display: flex;
+  margin-bottom: 5vh;
+}
+
+.ActionButtons button {
+  color: hsl(0, 0%, 100%);
+  border: none;
+  padding: 12px;
+  border-radius: 2px;
+  width: 220px;
+}
+
+.AdditionButton {
+  background-color: hsla(199, 77%, 43%, 0.95);
+}
+
+.DeleteButton {
+  background-color: hsla(358, 75%, 57%, 0.85);
+}
+
+.ActionButtons .AdditionButton {
+  margin-right: 2vw;
+}
+
 .Grid {
   display: grid;
+  grid-template-columns: 50px 1fr 1fr 0.7fr 1fr 0.4fr;
+}
+
+.Grid label {
+  margin-top: 0;
   grid-template-columns: repeat(3, minmax(50px, 1fr));
   grid-row-gap: 8px;
 }
@@ -19,8 +54,33 @@
 
 .Grid p {
   margin: 0;
+  padding-bottom: 5vh;
 }
 
 .Heading {
   font-weight: bold;
+}
+
+.GridDivider {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.RegistrationDates {
+  padding-bottom: 40px;
+}
+
+.RegistrationDates hr {
+  border-color: hsl(0, 0%, 0%);
+}
+
+.ExamDatesListHeader {
+  padding-bottom: 20px;
+}
+
+.EditButton {
+  background: none;
+  border: none;
+  width: 2em;
+  height: 2em;
 }

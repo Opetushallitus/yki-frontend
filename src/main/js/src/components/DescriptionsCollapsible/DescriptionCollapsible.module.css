@@ -1,0 +1,20 @@
+.DescriptionsBarOpen {
+    align-items: center;
+    width: 100%;
+    background: url('../../assets/svg/close-sign.svg') no-repeat right 26px top 50%, top left;
+}
+
+.DescriptionsBarClosed {
+    align-items: center;
+    width: 100%;
+    background: url('../../assets/svg/plus-sign.svg') no-repeat right 26px top 50%, top left;
+}
+
+.DescriptionHeader {
+    width: 100%;
+    text-align: left;
+    font: normal normal bold 21px/24px PT Sans;
+    letter-spacing: 0;
+    color: hsla(194, 91%, 21%, 1);
+    opacity: 1;
+}

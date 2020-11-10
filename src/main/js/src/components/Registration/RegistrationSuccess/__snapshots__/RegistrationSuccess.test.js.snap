@@ -1,59 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<RegistrationSuccess /> should render registration success page 1`] = `
-<div
-  className="RegistrationSuccess"
->
-  <div>
-    <h1
-      data-cy="registration-success-header"
-    >
-      registration.success.header
-    </h1>
-    <p>
-      registration.success.info1
-      :
-    </p>
-    <examDetailsCard
-      exam={
-        Object {
-          "exam_fee": "100.00",
-          "language_code": "fin",
-          "level_code": "PERUS",
-          "max_participants": 30,
-          "participants": 0,
-          "registration_end_date": "2025-12-15",
-          "registration_start_date": "2028-03-01",
-          "session_date": "2028-05-30",
+<main>
+  <HeadlineContainer
+    headlineContent={
+      <ExamDetailsCard
+        exam={
+          Object {
+            "exam_fee": "100.00",
+            "language_code": "fin",
+            "level_code": "PERUS",
+            "max_participants": 30,
+            "participants": 0,
+            "registration_end_date": "2025-12-15",
+            "registration_start_date": "2028-03-01",
+            "session_date": "2028-05-30",
+          }
         }
-      }
-      isFull={false}
-    />
-  </div>
-  <div>
-    <p>
-      registration.success.info2
-       
-    </p>
-  </div>
+        isFull={false}
+        successHeader={true}
+      />
+    }
+    headlineImage="ophYki_image2.png"
+    headlineTitle="registration.success.header"
+  />
   <div
-    className="InfoBox"
+    className="RegistrationSuccess"
   >
-    <p>
-      <b>
-        registration.success.info3
-      </b>
-       
-      registration.success.info4
-    </p>
-  </div>
-  <div
-    className="BackButton"
-  >
-    <hyperlink
-      text="errorBoundary.return"
-      to="/yki/"
+    <backButton
+      buttonText="errorBoundary.return"
+      clicked={[Function]}
     />
+    <div
+      data-cy="registration-success"
+    >
+      <p>
+        registration.success.info1
+        : 
+        <b>
+          undefined, undefined
+          .
+        </b>
+      </p>
+    </div>
+    <div>
+      <p>
+        registration.success.info2
+         
+      </p>
+    </div>
+    <div
+      data-cy="success-details-extra"
+    >
+      <p>
+        <b>
+          registration.success.info3
+        </b>
+         
+        registration.success.info4
+      </p>
+    </div>
   </div>
-</div>
+</main>
 `;

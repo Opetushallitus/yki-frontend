@@ -8,7 +8,7 @@ const modal = props => (
   <React.Fragment>
     <Backdrop show={props.show} clicked={props.modalClosed} />
     <div
-      className={classes.Modal}
+      className={props.smallModal ? classes.SmallModal : classes.Modal}
       style={{
         display: props.show ? 'block' : 'none',
       }}
@@ -27,6 +27,7 @@ modal.propTypes = {
   show: PropTypes.bool.isRequired,
   modalClosed: PropTypes.func.isRequired,
   children: PropTypes.any,
+  smallModal: PropTypes.bool
 };
 
 export default modal;

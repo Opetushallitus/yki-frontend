@@ -285,6 +285,20 @@
                     "language_code": "fin"
                 }
             ]
+        },
+        {
+            "id": 23,
+            "exam_date": "2021-01-20",
+            "registration_start_date": "2020-12-01",
+            "registration_end_date": "2020-12-11",
+            "languages": [
+                {
+                    "language_code": "swe"
+                },
+                {
+                    "language_code": "deu"
+                }
+            ]
         }
     ]
 }

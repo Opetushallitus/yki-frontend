@@ -49,6 +49,42 @@ const filterAndGroupByDate = () => {
   };
 };
 
+const filterByAvailability = () => {
+  return {
+    type: actionTypes.FILTER_BY_AVAILABILITY
+  }
+}
+
+export const filterExamByAvailability = () => {
+  return dispatch => {
+    dispatch(filterByAvailability())
+  }
+}
+
+const filterOpenRegistration = () => {
+  return {
+    type: actionTypes.FILTER_BY_OPEN_REGISTRATION
+  }
+}
+
+export const filteredExamSessionsByOpenRegistration = () => {
+  return dispatch => {
+    dispatch(filterOpenRegistration())
+  }
+}
+
+const filterAvailabilityAndRegistration = () => {
+  return {
+    type: actionTypes.FILTER_BY_AVAILABILITY_AND_REGISTRATION
+  }
+}
+
+export const filteredExamsByAvailabilityAndRegistration = () => {
+  return dispatch => {
+    dispatch(filterAvailabilityAndRegistration())
+  }
+}
+
 const fetchExamSessionsStart = () => {
   return {
     type: actionTypes.FETCH_EXAM_SESSIONS_START,

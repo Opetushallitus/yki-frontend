@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import queryString from 'query-string';
 
-import Header from '../../components/Header/Header';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Hyperlink from '../../components/UI/Hyperlink/Hyperlink';
 import classes from './PaymentStatus.module.css';
 import axios from '../../axios';
 import ExamDetailsCard from '../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
+import BackButton from "../../components/Registration/BackButton/BackButton";
+import HeadlineContainer from "../../components/HeadlineContainer/HeadlineContainer";
+
+import YkiImage2 from '../../assets/images/ophYki_image2.png';
 
 export class PaymentStatus extends Component {
   state = {
@@ -19,64 +21,41 @@ export class PaymentStatus extends Component {
 
   componentDidMount() {
     if (!this.state.examSession) {
-      const { id } = queryString.parse(this.props.location.search);
+      const {id} = queryString.parse(this.props.location.search);
       // only get exam session if url contains id query parameter
       if (id) {
         axios
-          .get(`/yki/api/exam-session/${id}`)
-          .then(({ data }) => {
-            this.setState({ examSession: data, loading: false });
-          })
-          .catch(() => this.setState({ loading: false }));
+            .get(`/yki/api/exam-session/${id}`)
+            .then(({data}) => {
+              this.setState({examSession: data, loading: false});
+            })
+            .catch(() => this.setState({loading: false}));
       } else {
-        this.setState({ loading: false });
+        this.setState({loading: false});
       }
     }
   }
 
   render() {
+    const {status} = queryString.parse(this.props.location.search);
+
     const success = this.state.loading ? (
-      <Spinner />
+        <Spinner/>
     ) : (
-      <React.Fragment>
-        <div>
-          <h1 data-cy="payment-status-header">
-            {this.props.t('payment.status.success')}
-          </h1>
-          {this.state.examSession && (
-            <React.Fragment>
-              <p>{this.props.t('payment.status.success.info1')}:</p>
-              <ExamDetailsCard exam={this.state.examSession} isFull={false} />
-            </React.Fragment>
-          )}
-        </div>
-        <div>
-          <p>{this.props.t('payment.status.success.info2')}</p>
-        </div>
-      </React.Fragment>
+        <>
+          <p data-cy="payment-status-text">{this.props.t('payment.status.success.info2')}</p>
+        </>
     );
 
     const cancel = (
-      <div>
-        <h1 data-cy="payment-status-header">
-          {this.props.t('payment.status.cancel')}
-        </h1>
-        <p>{this.props.t('payment.status.cancel.info1')}</p>
-      </div>
+        <p data-cy="payment-status-text">{this.props.t('payment.status.cancel.info1')}</p>
     );
 
     const error = (
-      <div>
-        <h1 data-cy="payment-status-header">
-          {this.props.t('payment.status.error')}
-        </h1>
-        <p>{this.props.t('payment.status.error.info1')}</p>
-      </div>
+        <p data-cy="payment-status-text">{this.props.t('payment.status.error.info1')}</p>
     );
 
     const content = () => {
-      const { status } = queryString.parse(this.props.location.search);
-
       switch (status) {
         case 'payment-success': {
           return success;
@@ -90,19 +69,50 @@ export class PaymentStatus extends Component {
       }
     };
 
-    return (
-      <React.Fragment>
-        <Header />
-        <main className={classes.Content}>
-          <div>{content()}</div>
-          <div className={classes.BackButton}>
-            <Hyperlink
-              to={'/yki/'}
-              text={this.props.t('errorBoundary.return')}
+    const headLine = () => {
+      if (!this.state.loading) {
+        switch (status) {
+          case 'payment-success': {
+            return <HeadlineContainer
+                headlineTitle={`${this.props.t('email.payment_success.subject')}!`}
+                headlineContent={<ExamDetailsCard isFull={false} exam={this.state.examSession} successHeader={true}/>}
+                headlineImage={YkiImage2}
             />
+          }
+          case 'payment-cancel': {
+            return <HeadlineContainer
+                headlineTitle={this.props.t('payment.status.cancel')}
+                headlineContent={null}
+                headlineImage={YkiImage2}
+                disableContent={true}
+            />
+          }
+          default: {
+            return <HeadlineContainer
+                headlineTitle={this.props.t('payment.status.error')}
+                headlineContent={null}
+                headlineImage={YkiImage2}
+                disableContent={true}
+            />
+          }
+        }
+      }
+    };
+
+    return (
+        <>
+          <main>
+            <div>{headLine()}</div>
+            <div className={classes.Content}>
+            <BackButton
+                clicked={() =>
+                    this.props.history.push('/')
+                }
+            />
+            <div>{content()}</div>
           </div>
-        </main>
-      </React.Fragment>
+          </main>
+        </>
     );
   }
 }

@@ -1,0 +1,105 @@
+.InactiveTab {
+    height: 100%;
+    top: 0;
+    width: 258px;
+    font: normal normal bold 20px/26px PT Sans;
+    letter-spacing: 0.6px;
+    color: hsl(195, 91%, 22%);
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.ActiveTab {
+    height: 100%;
+    top: 0;
+    width: 258px;
+    letter-spacing: 0.6px;
+    background: hsl(195, 82%, 44%) 0 0 no-repeat padding-box !important;
+    color: hsla(0, 0%, 100%, 1) !important;
+    font: inherit;
+}
+
+.ActiveTab button {
+    background: none;
+    border: none;
+    margin-top: 2.5vh;
+    color: hsla(0, 0%, 100%, 1) !important;
+    text-decoration: none !important;
+    font: normal normal bold 20px/26px PT Sans;
+    letter-spacing: inherit;
+    padding-bottom: 1vh;
+}
+
+.InactiveTab button {
+    background: none;
+    border: none;
+    margin-top: 2.5vh;
+    color: hsl(195, 91%, 22%);
+    text-decoration: none !important;
+    font: normal normal bold 20px/26px PT Sans;
+    letter-spacing: inherit;
+    padding-bottom: 1vh;
+}
+
+.Divider {
+    width: 90vw;
+    margin-top: 5%;
+    border: 1px solid hsla(195, 82%, 44%, 0.25);
+}
+
+/* Large screens */
+@media screen and (min-width: 1440px) {
+    .ActiveTab {
+        width: 290px;
+    }
+    .InactiveTab {
+        width: 290px;
+    }
+}
+
+/* Tablet view */
+@media screen and (max-width: 1024px) {
+    .ActiveTab {
+        padding-top: 1vh;
+        padding-bottom: 2vh;
+        width: 100%;
+    }
+    .InactiveTab {
+        padding-top: 1vh;
+        padding-bottom: 2vh;
+        width: 100%;
+    }
+    .Divider {
+        width: 80%;
+        border: 1px solid hsla(195, 82%, 44%, 0.25);
+    }
+}
+
+/* Mobile view */
+@media (max-width: 425px) {
+    .LinkButton {
+        padding-top: 2vh;
+        background: none;
+        border: none;
+        font: normal normal bold 21px/24px PT Sans;
+        letter-spacing: 0.6px;
+    }
+    .ActiveTab {
+        padding-top: 5vh;
+        height: 24vw;
+        width: 100%;
+    }
+    .ActiveTab .LinkButton {
+        color: hsla(0, 0%, 100%, 1) !important;
+    }
+    .InactiveTab {
+        padding-top: 5vh;
+        height: 24vw;
+        width: 100%;
+    }
+    .InactiveTab .LinkButton {
+        color: hsl(195, 91%, 22%);
+    }
+}

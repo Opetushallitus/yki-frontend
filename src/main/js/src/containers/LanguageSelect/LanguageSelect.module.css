@@ -1,0 +1,60 @@
+.SelectorContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2vw;
+}
+
+.SelectorContainer img {
+  margin-right: 2%;
+}
+
+.LanguageSelect {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: hsl(195, 91%, 22%);
+  font: normal normal normal 16px/24px PT Sans;
+}
+
+.LanguageSelect:hover {
+  text-decoration-line: underline;
+}
+
+@media screen and (max-width: 1024px) {
+  .SelectorContainer img {
+    display: none;
+  }
+  .MobileMenuItems {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  .LanguageItem {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    width: 100%;
+    top: 0;
+    background: hsla(0, 0%, 100%, 1);
+    border: none;
+    font: normal normal bold 21px/24px PT Sans;
+    letter-spacing: 0.6px;
+    color: hsl(195, 91%, 22%);
+  }
+  .LanguageItemActive {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    width: 100%;
+    top: 0;
+    border: none;
+    letter-spacing: 0.6px;
+    background: hsl(195, 82%, 44%) 0 0 no-repeat padding-box !important;
+    color: hsla(0, 0%, 100%, 1) !important;
+    font: inherit;
+    height: 100%;
+  }
+  .MobileMenuItems hr {
+    width: 70vw;
+    border: 1px solid hsla(194, 82%, 43%, 1);
+  }
+}

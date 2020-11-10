@@ -1,6 +1,8 @@
 .Content {
-  width: calc(100vw - 40px);
-  margin: 0 auto;
+  width: auto;
+  max-width: 100vw;
+  margin: 0 14vw 0 14vw;
+  min-height: 10vh;
 }
 
 .Loading {
@@ -11,43 +13,81 @@
   transform: translate(-50%, -50%);
 }
 
-.Title {
-  text-align: center;
-  font-size: 1.125em;
+.InfoText {
+  text-align: left;
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
 }
 
 .Identification {
-  display: grid;
-  grid-row-gap: 10px;
   justify-items: center;
+  width: 32vw;
 }
 
-.EmailIdentificationButton {
-  border: none;
-  background: none;
-  height: 35px;
-  width: 252px;
-  font-size: 0.875em;
-  color: hsl(225, 100%, 40%);
+.Identification p {
+  text-align: left;
+  font: normal normal bold 28px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 82%, 43%, 1);
 }
 
-@media (min-width: 620px) {
-  .Content {
-    width: calc(100vw - 200px);
-    max-width: 333px;
-    margin: 0 0 0 100px;
-  }
+.IdentificationButtons {
+  display: flex;
+}
 
-  .Loading {
-    left: 20%;
-  }
-
-  .Title {
-    text-align: start;
-  }
-
+/* Mobile view */
+@media screen and (max-width: 425px) {
   .Identification {
-    grid-row-gap: 20px;
-    justify-items: start;
+    width: 100%;
+  }
+  .IdentificationButtons {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+  .IdentificationButtons button {
+    margin-bottom: 5vh;
+    width: 100%;
+    height: 8vh;
+  }
+}
+
+@media screen and (max-width: 768px) and (min-width: 425px) {
+  .Identification {
+    width: 100%;
+  }
+  .IdentificationButtons {
+    display: flex;
+    text-align: center;
+    width: 100%;
+  }
+  .IdentificationButtons :nth-child(2) {
+    margin-right: 20px;
+  }
+  .IdentificationButtons button {
+    margin-bottom: 5vh;
+    max-width: 220px;
+    height: 8vh;
+  }
+}
+
+/* Tablet view landscape */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  .Identification {
+    width: 100%;
+  }
+  .IdentificationButtons {
+    display: flex;
+    text-align: center;
+    width: 100%;
+  }
+  .IdentificationButtons:nth-child(2) {
+    margin-right: 5vw;
+  }
+  .IdentificationButtons button {
+    margin-bottom: 5vh;
+    width: 260px;
+    height: 10vh;
   }
 }

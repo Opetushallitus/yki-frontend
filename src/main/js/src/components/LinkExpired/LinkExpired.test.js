@@ -13,6 +13,7 @@ describe('<LinkExpired />', () => {
       <LinkExpired
         t={key => key}
         match={{ path: '/ilmoittautuminen/vanhentunut' }}
+        history={history}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();
