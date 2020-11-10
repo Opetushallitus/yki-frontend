@@ -5,14 +5,13 @@ import {DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR} from "../../../common/Constants";
 
 import classes from './RegistrationPeriodSelector.module.css';
 import PropTypes from "prop-types";
-import RegistrationPeriod from "../util/RegistrationPeriod";
 
 const RegistrationPeriodSelector = (props) => {
-  const {registrationPeriods, t} = props;
+  const {onIndexSelect, registrationPeriods, stateItem, t} = props;
 
   const onSelect = index => {
     const result = parseInt(index.target.value, 10);
-    return props.onIndexSelect(result);
+    return onIndexSelect(result, stateItem);
   }
 
   return (
@@ -40,6 +39,8 @@ const RegistrationPeriodSelector = (props) => {
 
 RegistrationPeriodSelector.propTypes = {
   registrationPeriods: PropTypes.array.isRequired,
+  onIndexSelect: PropTypes.func.isRequired,
+  stateItem: PropTypes.string.isRequired
 }
 
 export default withTranslation()(RegistrationPeriodSelector);
