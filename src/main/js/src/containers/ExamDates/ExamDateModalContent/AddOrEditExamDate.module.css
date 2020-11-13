@@ -27,11 +27,18 @@
 }
 
 .DatePickerWrapper > input {
-    width: 100%;
+    width: 90%;
     height: 35px;
     margin-bottom: 20px;
     margin-top: 8px;
     color: hsl(0, 0%, 0%);
+}
+
+.DisabledPicker > input {
+    width: 90%;
+    height: 35px;
+    margin-bottom: 20px;
+    color: hsl(0, 0%, 83%);
 }
 
 .ExamLevels {
@@ -51,7 +58,7 @@
     border-radius: 2px;
     width: 220px;
     background-color: hsla(199, 77%, 43%, 0.95);
-    margin-bottom: 5vh;
+    margin-bottom: 1vh;
     color: hsla(0, 0%, 100%, 1);
 }
 
@@ -78,4 +85,34 @@
 
 .AddedLanguages p {
     margin: 0.2em !important;
+}
+
+.EditViewTop {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-gap: 20px;
+}
+
+.PostAdmissionContainer {
+    display: grid;
+    grid-template-columns: 160px 150px 150px 150px;
+    grid-gap: 20px;
+    margin-top: 1em;
+    margin-bottom: 20px;
+}
+
+.Toggle {
+    display: flex;
+}
+
+.PostAdmissionContainer p {
+    margin-block-start: 0.5em;
+    margin-block-end: 0;
+    margin-inline-start: 1em;
+    margin-inline-end: 0;
+    padding-right: 20px;
+}
+
+.PostAdmissionContainer .DatePickerWrapper > input {
+    margin-top: 0 !important;
 }

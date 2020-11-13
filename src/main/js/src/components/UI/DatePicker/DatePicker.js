@@ -21,6 +21,13 @@ class DatePicker extends Component {
 
     this.flatpickr = new Flatpickr(this.node, options);
     this.flatpickr.set('onChange', this.props.onChange);
+
+    if(this.props.disabled === true) {
+        this.flatpickr._input.setAttribute('disabled', 'disabled');
+    } if (this.props.disabled === false) {
+        this.flatpickr._input.removeAttribute('disabled');
+    }
+
   }
 
   componentWillUnmount() {
@@ -58,6 +65,7 @@ DatePicker.propTypes = {
   options: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   tabIndex: PropTypes.string,
+    disabled: PropTypes.bool
 };
 
 export default DatePicker;
