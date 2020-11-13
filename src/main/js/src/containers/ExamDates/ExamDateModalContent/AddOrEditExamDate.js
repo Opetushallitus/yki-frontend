@@ -134,10 +134,10 @@ const AddOrEditExamDate = (props) => {
                 </div>
                 <p className={classes.Label}>Päivämäärät</p>
                 <div className={disabled ? classes.DisabledPicker : classes.DatePickerWrapper}>
-                    <DatePicker disabled={disabled} options={{defaultDate: currentDate}} onChange={() => console.log('changed')}/>
+                    <DatePicker disabled={disabled} options={{defaultDate: currentDate}}
+                                onChange={() => console.log('changed')}/>
                 </div>
                 <div className={disabled ? classes.DisabledPicker : classes.DatePickerWrapper}>
-                    {console.log('is disabled: ', disabled)}
                     <DatePicker
                         id="postAdmissionEnd"
                         disabled={disabled}
