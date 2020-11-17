@@ -39,7 +39,7 @@ const examDetailsPage = ({
   }, []);
 
   const registrationOpen = session.open;
-  
+
   /*
   const postAdmissionActive = registrationOpen && 
                               session.post_admission_end_date && 
@@ -145,15 +145,23 @@ const examDetailsPage = ({
                           )
 
                       )}
-                      {queueFull ? <div className={classes.Identification} style={{paddingBottom: '5vh'}}
-                                        data-cy={'exam-details-title'}><p>
-                        <strong>{t('registration.examDetails.queueFull')}</strong></p></div> : null}
-
+                      {queueFull ?
+                        <div className={classes.Identification}
+                             style={{paddingBottom: '5vh'}}
+                             data-cy={'exam-details-title'}>
+                          <p><strong>{t('registration.examDetails.queueFull')}</strong></p>
+                        </div>
+                        :
+                        null
+                      }
                     </>
                 ) : (
                     <>
                       {registrationPeriod}
-                      <NotificationSignup examSessionId={match.params.examSessionId}/>
+                      <NotificationSignup
+                        examSessionId={match.params.examSessionId}
+                        registrationOpen={registrationOpen}
+                      />
                     </>
                 )}
               </div>
