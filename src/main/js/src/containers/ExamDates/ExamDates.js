@@ -21,6 +21,7 @@ import RegistrationPeriod from "./util/RegistrationPeriod";
 
 import editIcon from '../../assets/svg/edit.svg';
 import RegistrationDatesCollapsible from "./RegistrationDatesCollapsible/RegistrationDatesCollapsible";
+import Checkbox from "../../components/UI/Checkbox/Checkbox";
 
 class ExamDates extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class ExamDates extends Component {
       selectedRegistrationPeriod: [],
       selectedRegistrationPeriodIndex: 0,
       checkboxes: {},
+      fetchExamHistory: false
     }
   }
 
@@ -62,6 +64,10 @@ class ExamDates extends Component {
       this.setState({
         selectedRegistrationPeriod: this.grouped[this.state.selectedRegistrationPeriodIndex]
       });
+    }
+    if (this.state.fetchExamHistory) {
+      const id = this.props.user.identity.oid;
+      this.props.onGetExamDatesHistory(id);
     }
   };
 
@@ -179,19 +185,25 @@ class ExamDates extends Component {
       }
 
       const examDateButtons = (
-        <div className={classes.ActionButtons}>
-          <button
-            className={classes.AdditionButton}
-            onClick={() => this.showAddOrEditExamDateModalHandler()}
-          >
-            {this.props.t('examDates.addNew.confirm')}
-          </button>
-          <button
-            className={classes.DeleteButton}
-            onClick={() => console.log('deleted')}
-          >
-            {this.props.t('examDates.delete.selected')}
-          </button>
+        <div className={classes.ExamDateControls}>
+            <div className={classes.ActionButtons}>
+              <button
+                className={classes.AdditionButton}
+                onClick={() => this.showAddOrEditExamDateModalHandler()}
+              >
+                {this.props.t('examDates.addNew.confirm')}
+              </button>
+              <button
+                className={classes.DeleteButton}
+                onClick={() => console.log('deleted')}
+              >
+                {this.props.t('examDates.delete.selected')}
+              </button>
+            </div>
+            <div className={classes.PastExamDates}>
+              <p>{'Näytä meneet päivät'}</p>
+              <Checkbox onChange={() => this.setState(prev => ({ fetchExamHistory: !prev.fetchExamHistory }))} />
+            </div>
         </div>
       );
 
@@ -356,6 +368,7 @@ const mapStateToProps = state => {
     examDates: state.dates.examDates,
     loading: state.dates.loading,
     error: state.dates.error,
+    user: state.user.user
   };
 };
 
@@ -363,6 +376,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchExamDates: () => dispatch(actions.fetchExamDates()),
     errorConfirmedHandler: () => dispatch(actions.examDatesFailReset()),
+    onGetExamDatesHistory: (oid) => dispatch(actions.GetExamDatesHistory(oid))
   };
 };
 
@@ -372,6 +386,7 @@ ExamDates.propTypes = {
   error: PropTypes.object,
   onFetchExamDates: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
 export default connect(

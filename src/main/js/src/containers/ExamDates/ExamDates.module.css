@@ -84,3 +84,20 @@
   width: 2em;
   height: 2em;
 }
+
+.ExamDateControls {
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.PastExamDates {
+    display: flex;
+    padding-left: 20px;
+    margin-left:auto;
+    margin-right:0;
+}
+
+.PastExamDates > label {
+    margin-top: 14px;
+    margin-left: 10px;
+}
