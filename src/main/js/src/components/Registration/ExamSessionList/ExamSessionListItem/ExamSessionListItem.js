@@ -56,6 +56,7 @@ const examSessionListItem = ({
                               session.post_admission_active &&
                               session.post_admission_quota &&
                               nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
+
   const spotsAvailable = postAdmissionActive ? (session.post_admission_quota - session.pa_participants) : (session.max_participants - session.participants);
   */
 

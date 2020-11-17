@@ -186,24 +186,24 @@ class ExamDates extends Component {
 
       const examDateButtons = (
         <div className={classes.ExamDateControls}>
-            <div className={classes.ActionButtons}>
-              <button
-                className={classes.AdditionButton}
-                onClick={() => this.showAddOrEditExamDateModalHandler()}
-              >
-                {this.props.t('examDates.addNew.confirm')}
-              </button>
-              <button
-                className={classes.DeleteButton}
-                onClick={() => console.log('deleted')}
-              >
-                {this.props.t('examDates.delete.selected')}
-              </button>
-            </div>
-            <div className={classes.PastExamDates}>
-              <p>{'Näytä meneet päivät'}</p>
-              <Checkbox onChange={() => this.setState(prev => ({ fetchExamHistory: !prev.fetchExamHistory }))} />
-            </div>
+          <div className={classes.ActionButtons}>
+            <button
+              className={classes.AdditionButton}
+              onClick={() => this.showAddOrEditExamDateModalHandler()}
+            >
+              {this.props.t('examDates.addNew.confirm')}
+            </button>
+            <button
+              className={classes.DeleteButton}
+              onClick={() => console.log('deleted')}
+            >
+              {this.props.t('examDates.delete.selected')}
+            </button>
+          </div>
+          <div className={classes.PastExamDates}>
+            <p>{'Näytä meneet päivät'}</p>
+            <Checkbox onChange={() => this.setState(prev => ({ fetchExamHistory: !prev.fetchExamHistory }))} />
+          </div>
         </div>
       );
 

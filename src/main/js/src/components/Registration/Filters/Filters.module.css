@@ -17,8 +17,7 @@
   width: 100%;
   padding-left: 7px;
   appearance: none;
-  background: url('../../../assets/svg/down-facing-triangle.svg') 90% no-repeat
-    hsla(0, 0%, 100%, 1);
+  background: url('../../../assets/svg/down-facing-triangle.svg') 98% no-repeat hsla(0, 0%, 100%, 1);
   border: 1px solid hsla(0, 0%, 100%, 1);
   border-radius: 4px;
   text-overflow: ellipsis;

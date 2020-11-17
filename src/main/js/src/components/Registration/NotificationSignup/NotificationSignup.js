@@ -10,7 +10,7 @@ import axios from '../../../axios';
 import Alert from '../../Alert/Alert';
 import {MOBILE_VIEW, TABLET_VIEW} from "../../../common/Constants";
 
-const notificationSignup = ({examSessionId}) => {
+const notificationSignup = ({examSessionId, registrationOpen}) => {
   const [t] = useTranslation();
   const [signup, updateSignup] = useState({});
 
@@ -52,7 +52,11 @@ const notificationSignup = ({examSessionId}) => {
                 }}
                 render={({isValid, status}) => (
                     <Form className={classes.Form}>
-                      <h2>{t('registration.form.header.notify')}</h2>
+                      {registrationOpen === false ?
+                        <h2>{t('registration.form.header.notifyWhenOpen')}</h2>
+                        :
+                        <h2>{t('registration.form.header.notify')}</h2>
+                      }
                       <div className={classes.EmailContainer}>
                         <div>
                           <label htmlFor="email" className={classes.BoldLabel}>
