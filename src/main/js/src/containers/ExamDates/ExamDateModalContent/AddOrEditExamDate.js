@@ -5,7 +5,7 @@ import DatePicker from '../../../components/UI/DatePicker/DatePicker';
 import RegistrationDatesSelector from "../RegistrationPeriodSelector/RegistrationPeriodSelector";
 import {languageToString, levelTranslations} from "../../../util/util";
 import {LANGUAGES} from "../../../common/Constants";
-import closeSign from '../../../assets/svg/close-sign.svg';
+import closeOverlay from '../../../assets/svg/close-overlay.svg';
 import classes from './AddOrEditExamDate.module.css';
 import ToggleSwitch from "../../../components/UI/ToggleSwitch/ToggleSwitch";
 import moment from "moment";
@@ -49,7 +49,7 @@ const AddOrEditExamDate = (props) => {
             {languageAndLevel.map((item, i) => {
                 return (
                     <span key={i}>
-          <img src={closeSign} alt={'delete'} onClick={() => handleRemoveLanguage(i)}/>
+          <img src={closeOverlay} alt={'delete'} onClick={() => handleRemoveLanguage(i)}/>
           <p style={{marginLeft: '10px'}}>{item.language}, {item.level}</p>
          </span>
                 )

@@ -34,10 +34,23 @@ export class ExamSessionPostAdmission extends Component {
       // Possible to create PostAdmission
       if (this.props.examSession.post_admission_start_date) {
         // Show Edit view
-        return <ExamSessionPostAdmissionEdit oid={this.props.oid} postAdmission={postAdmission} examSessionId={this.props.examSession.id} postAdmissionMinDate={this.props.examSession.registration_end_date} postAdmissionEndDate={this.props.examSession.post_admission_end_date} />
+        return <ExamSessionPostAdmissionEdit
+          oid={this.props.oid}
+          postAdmission={postAdmission}
+          examSessionId={this.props.examSession.id}
+          postAdmissionMinDate={this.props.examSession.registration_end_date}
+          postAdmissionEndDate={this.props.examSession.post_admission_end_date}
+          postAdmissionQuota={this.props.examSession.post_admission_quota}
+        />
       } else if (this.state.createMode) {
         // Show Create view
-        return <ExamSessionPostAdmissionCreate oid={this.props.oid} examSessionId={this.props.examSession.id} postAdmissionMinDate={this.props.examSession.registration_end_date} postAdmissionEndDate={this.props.examSession.post_admission_end_date} onCancel={this.toggleCreateMode} />
+        return <ExamSessionPostAdmissionCreate
+          oid={this.props.oid} examSessionId={this.props.examSession.id}
+          postAdmissionMinDate={this.props.examSession.registration_end_date}
+          postAdmissionEndDate={this.props.examSession.post_admission_end_date}
+          postAdmissionQuota={this.props.examSession.post_admission_quota}
+          onCancel={this.toggleCreateMode}
+        />
       } else {
         // Show Create button
         return (
