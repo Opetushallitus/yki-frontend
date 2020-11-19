@@ -1,12 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import moment from 'moment';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import DatePicker from '../../../../components/UI/DatePicker/DatePicker';
-import { addPostAdmission } from '../../../../store/actions/index';
+import {addPostAdmission} from '../../../../store/actions/index';
+import closeSign from '../../../../assets/svg/close-overlay.svg';
 import classes from './ExamSessionPostAdmission.module.css'
 
 const ExamSessionPostAdmissionCreate = props => {
@@ -14,7 +15,7 @@ const ExamSessionPostAdmissionCreate = props => {
   const validationSchema = Yup.object().shape({
     postAdmissionStart: Yup.string().required(t('error.mandatory')),
     postAdmissionEnd: Yup.string().required(t('error.mandatory')),
-    postAdmissionQuota: Yup.number().typeError(t('error.numeric.int')).required(t('error.mandatory')).positive(t('error.numeric.positive')).integer(t('error.numeric.int')),
+    // postAdmissionQuota: Yup.number().typeError(t('error.numeric.int')).required(t('error.mandatory')).positive(t('error.numeric.positive')).integer(t('error.numeric.int')),
   });
 
   const postAdmissionAddHandler = (postadmission) => {
@@ -39,11 +40,18 @@ const ExamSessionPostAdmissionCreate = props => {
 
         postAdmissionAddHandler(submitPayload);
       }}
-      render={({ values, setFieldValue, isValid, handleReset }) => (
+      render={({values, setFieldValue, isValid, handleReset}) => (
         <Form className={classes.Form}>
-          <div data-cy="post-admission-form-create">
+          <div className={classes.FormItem}>
+            <h2>{t('examSession.postAdmission')}</h2>
+            <button className={classes.ExitButton} onClick={props.onCancel} tabIndex='5'>
+              <img src={closeSign} alt={t('common.cancelConfirm')}/>
+            </button>
+          </div>
+          <div className={classes.FormItem} data-cy="post-admission-form-create">
             <div className={classes.DatePickerWrapper}>
-              <label className={classes.Label} htmlFor="postAdmissionStart">{t('examSession.postAdmission.startDate')}</label>
+              <label className={classes.Label}
+                     htmlFor="postAdmissionStart">{t('examSession.postAdmission.startDate')}</label>
               <DatePicker
                 id="postAdmissionStart"
                 options={{
@@ -68,7 +76,11 @@ const ExamSessionPostAdmissionCreate = props => {
               />
             </div>
             <div>
-              <label className={classes.Label} htmlFor="postAdmissionEnd">{t('examSession.postAdmission.endDate')}</label>
+              <label
+                className={classes.Label}
+                htmlFor="postAdmissionEnd">
+                {t('examSession.postAdmission.endDate')}
+              </label>
               <Field
                 id="postAdmissionEnd"
                 className={`${classes.Input} ${classes.Disabled}`}
@@ -78,8 +90,13 @@ const ExamSessionPostAdmissionCreate = props => {
                 disabled
               />
             </div>
+          </div>
+          <div className={classes.FormItem}>
             <div>
-              <label className={classes.Label} htmlFor="postAdmissionQuota">{t('examSession.postAdmission.participantAmount')}</label>
+              <label className={`${classes.Label} ${classes.QuotaLabel}`} htmlFor="postAdmissionQuota">
+                {t('examSession.postAdmission.participantAmount')}: {props.postAdmissionQuota}
+              </label>
+              {/*
               <Field
                 id="postAdmissionQuota"
                 className={classes.Input}
@@ -92,27 +109,25 @@ const ExamSessionPostAdmissionCreate = props => {
                 component="span"
                 className={classes.ErrorMessage}
               />
+              */}
             </div>
             <div className={classes.Buttons}>
-              <button className={`${classes.Button} ${classes.ButtonRight}`} data-cy="button-admission-submit" type="submit" tabIndex="4">
+              <button className={classes.Button} data-cy="button-admission-submit" type="submit" tabIndex="4">
                 {t('examSession.postAdmission.createTemplate')}
-              </button>
-
-              <button className={classes.Action} type="button" onClick={props.onCancel} tabIndex="5">
-                {t('common.cancelConfirm')}
               </button>
             </div>
           </div>
         </Form>
       )}/>
-    )
+  )
 }
 
 ExamSessionPostAdmissionCreate.propTypes = {
   examSessionId: PropTypes.number.isRequired,
   postAdmissionMinDate: PropTypes.string.isRequired,
   postAdmissionEndDate: PropTypes.string.isRequired,
+  postAdmissionQuota: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
 }
 
-export default connect(null, { addPostAdmission })(withTranslation()(ExamSessionPostAdmissionCreate));
+export default connect(null, {addPostAdmission})(withTranslation()(ExamSessionPostAdmissionCreate));

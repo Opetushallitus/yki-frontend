@@ -46,7 +46,7 @@
       "open": true,
       "queue": 0,
       "queue_full": false,
-      "post_admission_quota": null,
+      "post_admission_quota": 10,
       "post_admission_start_date": null,
       "post_admission_end_date": "2019-12-25",
       "post_admission_active": false
