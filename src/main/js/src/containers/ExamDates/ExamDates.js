@@ -36,7 +36,8 @@ class ExamDates extends Component {
       selectedRegistrationPeriod: [],
       selectedRegistrationPeriodIndex: 0,
       checkboxes: {},
-      fetchExamHistory: false
+      fetchExamHistory: false,
+      grouped: []
     }
   }
 
@@ -60,14 +61,30 @@ class ExamDates extends Component {
         )
       });
     }
+
     if (prevState.selectedRegistrationPeriodIndex !== this.state.selectedRegistrationPeriodIndex) {
       this.setState({
-        selectedRegistrationPeriod: this.grouped[this.state.selectedRegistrationPeriodIndex]
+        selectedRegistrationPeriod: this.state.grouped[this.state.selectedRegistrationPeriodIndex]
       });
     }
-    if (this.state.fetchExamHistory) {
-      const id = this.props.user.identity.oid;
-      this.props.onGetExamDatesHistory(id);
+
+    if (prevState.fetchExamHistory !== this.state.fetchExamHistory) {
+      if (this.state.fetchExamHistory) {
+        const id = this.props.user.identity.oid;
+        this.props.onGetExamDatesHistory(id);
+      } else {
+        this.props.onFetchExamDates();
+      }
+    }
+
+    if (prevProps.examDates !== this.props.examDates) {
+      const result = R.groupWith(
+        (a, b) => a.registration_start_date === b.registration_start_date,
+        this.props.examDates,
+      );
+      this.setState({
+        grouped: result
+      })
     }
   };
 
@@ -108,6 +125,12 @@ class ExamDates extends Component {
     this.setState({
       [stateItem]: index
     });
+  }
+
+  onExamDateHistoryFetchChange = () => {
+    this.setState(prev => ({
+      fetchExamHistory: !prev.fetchExamHistory
+    }));
   }
 
   grouped = R.groupWith(
@@ -202,7 +225,7 @@ class ExamDates extends Component {
           </div>
           <div className={classes.PastExamDates}>
             <p>{'Näytä meneet päivät'}</p>
-            <Checkbox onChange={() => this.setState(prev => ({ fetchExamHistory: !prev.fetchExamHistory }))} />
+            <Checkbox onChange={() => this.onExamDateHistoryFetchChange()} checked={this.state.fetchExamHistory} />
           </div>
         </div>
       );
@@ -310,7 +333,8 @@ class ExamDates extends Component {
           {examDateHeaders}
           {this.state.selectedRegistrationPeriod && (
             <div className={classes.Grid}>
-              {examDateRows(this.state.selectedRegistrationPeriod)}
+              {/*{examDateRows(this.state.selectedRegistrationPeriod)}*/}
+              {examDateRows(this.props.examDates)}
             </div>
           )}
         </>
@@ -325,7 +349,8 @@ class ExamDates extends Component {
           <h2>{this.props.t('common.registrationPeriods')}</h2>
           <p>{this.props.t('common.registrationPeriod.selectPeriod')}</p>
           <RegistrationPeriodSelector
-            registrationPeriods={this.grouped}
+            disabled={this.state.fetchExamHistory}
+            registrationPeriods={this.state.grouped}
             onIndexSelect={this.onIndexSelect}
             stateItem={'selectedRegistrationPeriodIndex'}
           />
@@ -338,10 +363,12 @@ class ExamDates extends Component {
         <div>
           <div className={classes.ExamDatesListHeader}>
             <h2>{this.props.t('common.examDates')}</h2>
-            {this.state.selectedRegistrationPeriod ? (this.state.selectedRegistrationPeriod.length > 0) && (
-              <RegistrationPeriod period={this.state.selectedRegistrationPeriod}/>
-            )
-              : null
+            {this.state.selectedRegistrationPeriod ?
+              (this.state.selectedRegistrationPeriod.length > 0 && !this.state.fetchExamHistory) && (
+                <RegistrationPeriod period={this.state.selectedRegistrationPeriod}/>
+              )
+              :
+              null
             }
           </div>
           {this.props.examDates.length > 0 ? (
@@ -349,6 +376,7 @@ class ExamDates extends Component {
           ) : (
             <p>{this.props.t('examDates.noUpcomingExamDates')}</p>
           )}
+          <hr className={classes.GridDivider} />
         </div>
       </>
     );

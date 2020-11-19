@@ -7,7 +7,7 @@ import classes from './RegistrationPeriodSelector.module.css';
 import PropTypes from "prop-types";
 
 const RegistrationPeriodSelector = (props) => {
-  const {onIndexSelect, registrationPeriods, stateItem, t} = props;
+  const {disabled, onIndexSelect, registrationPeriods, stateItem, t} = props;
 
   const onSelect = index => {
     const result = parseInt(index.target.value, 10);
@@ -16,7 +16,7 @@ const RegistrationPeriodSelector = (props) => {
 
   return (
       <>
-        <select className={classes.ExamRegistrationDates} onChange={index => onSelect(index)}>
+        <select className={classes.ExamRegistrationDates} disabled={disabled} onChange={index => onSelect(index)}>
           {registrationPeriods.map((period, i) => {
             return (
                 <option key={i} value={i}>
@@ -40,7 +40,8 @@ const RegistrationPeriodSelector = (props) => {
 RegistrationPeriodSelector.propTypes = {
   registrationPeriods: PropTypes.array.isRequired,
   onIndexSelect: PropTypes.func.isRequired,
-  stateItem: PropTypes.string.isRequired
+  stateItem: PropTypes.string.isRequired,
+  disabled: PropTypes.bool
 }
 
 export default withTranslation()(RegistrationPeriodSelector);

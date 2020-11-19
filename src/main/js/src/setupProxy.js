@@ -495,13 +495,26 @@ module.exports = function(app) {
       const futureExamDates = examDates.dates.filter(d => {
         return moment(d.registration_end_date).isSameOrAfter(moment());
       });
-      // res.send({ dates: futureExamDates });
+      res.send({ dates: futureExamDates });
       // all exam dates
-      res.send({ dates: examDates.dates });
+      // res.send({ dates: examDates.dates });
     } catch (err) {
       res.status(404).send(err.message);
     }
   });
+
+  app.get('/yki/api/virkailija/organizer/:oid/exam-session/history', (req, res) => {
+    try {
+      res.set('Content-Type', 'application/json; charset=utf-8');
+      const pastExamDates = examDates.dates.filter(d => {
+        return moment(d.registration_end_date).isSameOrBefore(moment());
+      });
+      res.send({ dates: pastExamDates });
+    } catch (err) {
+      res.status(404).send(err.message);
+    }
+  });
+
 
   app.post('/yki/api/exam-date/:id/post-admission-end-date', (req, res) => {
     try {
