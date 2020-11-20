@@ -16,11 +16,9 @@ import {DATE_FORMAT} from '../../common/Constants';
 import {languageToString} from '../../util/util';
 import ControlledCheckbox from '../../components/UI/Checkbox/ControlledCheckbox';
 import AddOrEditExamDate from './ExamDateModalContent/AddOrEditExamDate';
-import RegistrationPeriodSelector from './RegistrationPeriodSelector/RegistrationPeriodSelector';
-import RegistrationPeriod from "./util/RegistrationPeriod";
 
 import editIcon from '../../assets/svg/edit.svg';
-import RegistrationDatesCollapsible from "./RegistrationDatesCollapsible/RegistrationDatesCollapsible";
+import RegistrationPeriod from "./util/RegistrationPeriod";
 
 class ExamDates extends Component {
   constructor(props) {
@@ -32,37 +30,17 @@ class ExamDates extends Component {
       selectedExamDate: null,
       selectedExamDateIndex: null,
       selectedExamDates: [],
-      selectedRegistrationPeriod: [],
-      selectedRegistrationPeriodIndex: 0,
-      checkboxes: {},
+      checkboxes: props.examDates.reduce(
+        (items, item) => ({
+          ...items,
+          [item.id]: false
+        }), {}
+      )
     }
   }
 
   componentDidMount = () => {
     this.props.onFetchExamDates();
-    this.setState({
-      selectedRegistrationPeriod: this.grouped[this.state.selectedRegistrationPeriodIndex],
-    })
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.selectedRegistrationPeriod &&
-      (prevState.selectedRegistrationPeriod !== this.state.selectedRegistrationPeriod)) {
-      this.setState({
-        selectedExamDates: [],
-        checkboxes: this.state.selectedRegistrationPeriod.reduce(
-          (items, item) => ({
-            ...items,
-            [item.id]: false
-          }), {}
-        )
-      });
-    }
-    if (prevState.selectedRegistrationPeriodIndex !== this.state.selectedRegistrationPeriodIndex) {
-      this.setState({
-        selectedRegistrationPeriod: this.grouped[this.state.selectedRegistrationPeriodIndex]
-      });
-    }
   };
 
   showAddOrEditPostAdmissionModalHandler = examDate => {
@@ -98,12 +76,6 @@ class ExamDates extends Component {
     });
   };
 
-  onIndexSelect = (index, stateItem) => {
-    this.setState({
-      [stateItem]: index
-    });
-  }
-
   grouped = R.groupWith(
     (a, b) => a.registration_start_date === b.registration_start_date,
     this.props.examDates,
@@ -114,18 +86,27 @@ class ExamDates extends Component {
   // sortedByDateDESC = [R.sort(R.descend(R.prop('exam_date')), this.state.selectedRegistrationPeriod)];
 
   render() {
+    const {examDates, loading, t} = this.props;
+    const {
+      checkboxes,
+      selectedExamDate,
+      selectedExamDates,
+      showAddOrEditExamDate,
+      showAddOrEditPostAdmissionModal
+    } = this.state;
+
     const addOrEditPostAdmissionModal = (
       <>
-        {this.state.showAddOrEditPostAdmissionModal ?
+        {showAddOrEditPostAdmissionModal ?
           (
             <Modal
-              show={this.state.showAddOrEditPostAdmissionModal}
+              show={showAddOrEditPostAdmissionModal}
               modalClosed={this.closeAddOrEditPostAdmissionModalHandler}
             >
               <AddOrEditPostAdmissionConfiguration
                 onUpdate={this.closeAddOrEditPostAdmissionModalHandler}
-                loadingExamDates={this.props.loading}
-                examDate={this.state.selectedExamDate}
+                loadingExamDates={loading}
+                examDate={selectedExamDate}
               />
             </Modal>
           ) :
@@ -135,23 +116,20 @@ class ExamDates extends Component {
     );
 
     //TODO: handle update event
+    // if selectedExamDate === null => add new exam date modal
     const addNewExamDateModal = (
       <>
-        {this.state.showAddOrEditExamDate ? (
-          <Modal smallModal show={this.state.showAddOrEditExamDate} modalClosed={this.closeAddOrEditExamDateModal}>
-            {this.state.selectedExamDate === null ?
+        {showAddOrEditExamDate ? (
+          <Modal smallModal show={showAddOrEditExamDate} modalClosed={this.closeAddOrEditExamDateModal}>
+            {selectedExamDate === null ?
               <AddOrEditExamDate
-                examModal
                 examDates={this.grouped}
                 onUpdate={this.closeAddOrEditExamDateModal}
-                onIndexSelect={this.onIndexSelect}
               />
               :
               <AddOrEditExamDate
-                examModal
-                examDates={[this.state.selectedExamDate]}
+                examDates={[selectedExamDate]}
                 onUpdate={this.closeAddOrEditExamDateModal}
-                onIndexSelect={this.onIndexSelect}
               />
             }
           </Modal>
@@ -160,14 +138,17 @@ class ExamDates extends Component {
     );
 
     const examDateTables = () => {
+      const temp = examDates;
+      let allDates = [];
+
+      temp.forEach(item => {
+        allDates.push(item.id);
+      });
 
       const onSelectAllChange = () => {
-        const stateArray = this.state.selectedRegistrationPeriod;
-        const selected = this.state.selectedExamDates;
-
-        if (selected.length < 1) {
+        if (selectedExamDates.length < 1) {
           this.setState({
-            selectedExamDates: [...stateArray],
+            selectedExamDates: [...allDates],
           });
           this.selectAllCheckboxes(true);
         } else {
@@ -184,18 +165,18 @@ class ExamDates extends Component {
             className={classes.AdditionButton}
             onClick={() => this.showAddOrEditExamDateModalHandler()}
           >
-            {this.props.t('examDates.addNew.confirm')}
+            {t('examDates.addNew.confirm')}
           </button>
           <button
             className={classes.DeleteButton}
             onClick={() => console.log('deleted')}
           >
-            {this.props.t('examDates.delete.selected')}
+            {t('examDates.delete.selected')}
           </button>
         </div>
       );
 
-      const isAllChecked = Object.values(this.state.checkboxes).every(value => value === true);
+      const isAllChecked = Object.values(checkboxes).every(value => value === true);
 
       const examDateHeaders = (
         <>
@@ -204,11 +185,11 @@ class ExamDates extends Component {
               onChange={() => onSelectAllChange()}
               checked={isAllChecked}
             />
-            <h3>{this.props.t('common.examDate')}</h3>
-            <h3>{this.props.t('common.language')}</h3>
-            <h3>{this.props.t('common.level')}</h3>
-            <h3>{this.props.t('common.postAdmission')}</h3>
-            <h3>{this.props.t('common.edit')}</h3>
+            <h3>{`${t('common.language')} & ${t('common.level')}`}</h3>
+            <h3>{t('common.examDate')}</h3>
+            <h3>{t('common.registationPeriod')}</h3>
+            <h3>{t('common.postAdmission')}</h3>
+            <h3>{t('common.edit')}</h3>
           </div>
           <hr className={classes.GridDivider}/>
         </>
@@ -216,28 +197,27 @@ class ExamDates extends Component {
 
       const examDateRows = examDates => {
 
-        const handleCheckboxChange = item => {
-          const stateArray = this.state.selectedRegistrationPeriod;
+        const handleCheckboxChange = key => {
+          const id = key - 1;
           const selectedExamDates = this.state.selectedExamDates;
-          const stateCheckboxes = this.state.checkboxes;
+          const stateCheckboxes = checkboxes;
+          const item = examDates[id].id;
 
-          const result = stateArray.find(element => element.id === item);
-
-          if (selectedExamDates.length <= 1) {
+          if (selectedExamDates.length <= examDates.length) {
             this.setState({
-              selectedExamDates: [...this.state.selectedExamDates, result],
+              selectedExamDates: [...selectedExamDates, item],
               checkboxes: {
                 ...stateCheckboxes,
-                [item]: !stateCheckboxes[item]
+                [key]: !stateCheckboxes[key]
               }
             });
           }
-          if (selectedExamDates.includes(result)) {
+          if (selectedExamDates.includes(item)) {
             this.setState(prev => ({
-              selectedExamDates: prev.selectedExamDates.filter(removable => removable !== result),
+              selectedExamDates: prev.selectedExamDates.filter(removable => removable !== item),
               checkboxes: {
                 ...stateCheckboxes,
-                [item]: !stateCheckboxes[item]
+                [key]: !stateCheckboxes[key]
               }
             }));
           }
@@ -252,8 +232,8 @@ class ExamDates extends Component {
             e.languages[0].language_code === 'fin';
 
           const level = finnishOnly
-            ? this.props.t('common.level.middle')
-            : this.props.t('common.level.all');
+            ? t('common.level.middle')
+            : t('common.level.all');
 
           const languages = e.languages
             .map(l => {
@@ -269,17 +249,17 @@ class ExamDates extends Component {
               <ControlledCheckbox
                 onChange={() => handleCheckboxChange(e.id)}
                 name={e.id}
-                checked={this.state.checkboxes[e.id]}
+                checked={checkboxes[e.id]}
               />
+              <p>{languages}: {level.toLowerCase()}</p>
               <p>{moment(e.exam_date).format(DATE_FORMAT)}</p>
               {/* eslint-disable-next-line */}
               {/*
               <p><a href="javascript:void(0)" onClick={ () => this.showAddOrEditPostAdmissionModalHandler(e)}>{e.post_admission_end_date ?
                   `${registrationEndDateMoment.add(1, 'days').format(DATE_FORMAT)} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}` :
-                  this.props.t('examSession.postAdmission.add')}</a></p>
-                            */}
-              <p>{languages}</p>
-              <p>{level.toLowerCase()}</p>
+                  t('examSession.postAdmission.add')}</a></p>
+              */}
+              <RegistrationPeriod period={e}/>
               <p>{e.post_admission_end_date ? `Auki: ${postAdmissionDate}` : 'Kiinni'}</p>
               <button
                 className={classes.EditButton}
@@ -296,54 +276,35 @@ class ExamDates extends Component {
         <>
           {examDateButtons}
           {examDateHeaders}
-          {this.state.selectedRegistrationPeriod && (
+          {examDates && (
             <div className={classes.Grid}>
-              {examDateRows(this.state.selectedRegistrationPeriod)}
+              {examDateRows(examDates)}
             </div>
           )}
         </>
       )
     };
 
-    const content = this.props.loading ? (
+    const content = loading ? (
       <Spinner/>
     ) : (
       <>
-        <div className={classes.RegistrationDates}>
-          <h2>{this.props.t('common.registrationPeriods')}</h2>
-          <p>{this.props.t('common.registrationPeriod.selectPeriod')}</p>
-          <RegistrationPeriodSelector
-            registrationPeriods={this.grouped}
-            onIndexSelect={this.onIndexSelect}
-            stateItem={'selectedRegistrationPeriodIndex'}
-          />
-          <RegistrationDatesCollapsible
-            headerText={'common.registrationPeriod.edit'}
-            content={this.props.examDates}
-            onIndexSelect={this.onIndexSelect}
-          />
+        <div className={classes.ExamDatesListHeader}>
+          <h2>{t('common.examDates')}</h2>
         </div>
-        <div>
-          <div className={classes.ExamDatesListHeader}>
-            <h2>{this.props.t('common.examDates')}</h2>
-            {this.state.selectedRegistrationPeriod ? (this.state.selectedRegistrationPeriod.length > 0) && (
-              <RegistrationPeriod period={this.state.selectedRegistrationPeriod}/>
-            )
-              : null
-            }
-          </div>
-          {this.props.examDates.length > 0 ? (
-            examDateTables()
-          ) : (
-            <p>{this.props.t('examDates.noUpcomingExamDates')}</p>
-          )}
-        </div>
+        {examDates.length > 0 ? (
+          examDateTables()
+        ) : (
+          <p>{t('examDates.noUpcomingExamDates')}</p>
+        )}
       </>
     );
 
     return (
       <Page>
-        <div className={classes.ExamDates}>{content}</div>
+        <div className={classes.ExamDates}>
+          {content}
+        </div>
         {addOrEditPostAdmissionModal}
         {addNewExamDateModal}
       </Page>
