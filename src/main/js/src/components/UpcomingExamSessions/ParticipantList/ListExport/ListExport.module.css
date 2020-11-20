@@ -1,7 +1,9 @@
 .Button {
   height: 28px;
-  background-color: hsla(195, 82%, 44%, 1);
   color: white;
   font-size: 0.875em;
   margin-right: 20px;
+  background-color: hsla(195, 82%, 44%, 1);
+  border: none;
+  border-radius: 2px;
 }

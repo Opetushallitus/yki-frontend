@@ -56,7 +56,7 @@ export class ExamSessionPostAdmission extends Component {
         return (
           <div data-cy="exam-session-no-post-admission">
             <button
-              className={classes.Button}
+              className={classes.CreatePostAdmissionLinkButton}
               data-cy="button-add-post-admission"
               onClick={() => this.toggleCreateMode()}
             >
