@@ -111,7 +111,7 @@ const ExamSessionPostAdmissionCreate = props => {
               />
               */}
             </div>
-            <div className={classes.Buttons}>
+            <div>
               <button className={classes.Button} data-cy="button-admission-submit" type="submit" tabIndex="4">
                 {t('examSession.postAdmission.createTemplate')}
               </button>

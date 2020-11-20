@@ -18,6 +18,7 @@
   padding: 0 18px;
   border: none;
   border-radius: 2px;
+  width: 100%;
 }
 
 .ExitButton {
@@ -35,7 +36,7 @@
   text-decoration-line: underline;
   background: none;
   border: none;
-  padding: 10px 0px;
+  padding: 10px 0;
 }
 
 .Form {
@@ -44,9 +45,16 @@
 
 .FormItem {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 300px);
   margin-top: 10px;
   grid-gap: 50px;
+}
+
+.FormItem:first-child {
+  margin-block-start: 0;
+}
+.FormItem h2:first-child {
+  margin-block-start: 0;
 }
 
 .Label {
@@ -54,16 +62,17 @@
   font-size: 0.875em;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  width: 100%;
 }
 
 .Input {
-  width: 340px;
+  width: 300px;
   height: 35px;
   margin-bottom: 20px;
 }
 
 .DatePickerWrapper > input {
-  width: 340px;
+  width: 300px;
   height: 35px;
   margin-bottom: 20px;
 }
@@ -80,10 +89,17 @@
 .activityToggleButtonBox {
   border: 1px solid #ff00007d;
   border-radius: 10px;
-  padding: 15px;
-  padding-top: 0px;
+  padding: 0 15px 15px;
 }
 
 .QuotaLabel {
   color: hsla(0, 0%, 58%, 0.8);
+}
+
+.CreatePostAdmissionLinkButton {
+  background: none;
+  border: none;
+  color: hsla(199, 77%, 43%, 0.95);
+  font-size: medium;
+  margin-block-end: 1em;
 }

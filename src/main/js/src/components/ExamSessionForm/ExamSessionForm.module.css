@@ -59,6 +59,9 @@
 
 .Form button {
   float: left;
+  background-color: hsla(199, 77%, 43%, 0.95);
+  border: none;
+  border-radius: 2px;
 }
 
 .ExtraLabel {
