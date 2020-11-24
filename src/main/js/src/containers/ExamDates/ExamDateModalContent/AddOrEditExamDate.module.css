@@ -14,8 +14,20 @@
 
 .TimeGrid {
     display: grid;
-    grid-template-columns: 300px 200px;
+    grid-template-columns: 650px 300px;
+    grid-gap: 30px;
+    max-height: 90px;
+}
+
+.RegistrationDateGrid {
+    display: grid;
+    grid-template-columns: 300px 5px 300px;
     grid-gap: 20px;
+    max-height: 90px;
+}
+
+.ExamDateGrid {
+    display: grid;
     max-height: 90px;
 }
 
@@ -27,7 +39,7 @@
 }
 
 .DatePickerWrapper > input {
-    width: 90%;
+    width: 300px;
     height: 35px;
     margin-bottom: 20px;
     margin-top: 8px;
@@ -35,7 +47,7 @@
 }
 
 .DisabledPicker > input {
-    width: 90%;
+    width: 300px;
     height: 35px;
     margin-bottom: 20px;
     color: hsl(0, 0%, 83%);
@@ -115,4 +127,11 @@
 
 .PostAdmissionContainer .DatePickerWrapper > input {
     margin-top: 0 !important;
+}
+
+.Label {
+    display: block;
+    font-size: 0.875em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
 }

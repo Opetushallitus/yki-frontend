@@ -8,10 +8,12 @@ import closeOverlay from '../../../assets/svg/close-overlay.svg';
 import classes from './AddOrEditExamDate.module.css';
 import ToggleSwitch from "../../../components/UI/ToggleSwitch/ToggleSwitch";
 import moment from "moment";
+import {Form, Formik, ErrorMessage} from "formik";
 
+//TODO: wire-up form
 const AddOrEditExamDate = (props) => {
   const {examDates, onUpdate, t} = props;
-  const currentDate = new Date();
+  const currentDate = moment(new Date()).format('YYYY-MM-DD');
 
   const initializeLanguageArray = () => {
     let languageArray = [];
@@ -26,11 +28,29 @@ const AddOrEditExamDate = (props) => {
     } else return [];
   }
 
+  const initializeLanguage = () => {
+    if (examDates.length === 1) {
+      return languageToString(examDates[0].languages[0].language_code)
+    }
+    return LANGUAGES[0].name
+  }
+
+  const initializeStateDate = (value) => {
+    if (examDates.length === 1) {
+      return examDates[0][value]
+    }
+    return currentDate;
+  }
+
   // useState
   const [languageAndLevel, setLanguageAndLevel] = useState(initializeLanguageArray);
   const [level, setLevel] = useState(t(levelTranslations.PERUS));
-  const [language, setLanguage] = useState(LANGUAGES[0].name);
+  const [language, setLanguage] = useState(initializeLanguage);
   const [disabled, setDisabled] = useState(true);
+
+  const [registrationStartDate, setRegistrationStartDate] = useState(initializeStateDate('registration_start_date'));
+  const [registrationEndDate, setRegistrationEndDate] = useState(initializeStateDate('registration_end_date'));
+  const [examDate, setExamDate] = useState(initializeStateDate('exam_date'));
 
   // language levels
   const PERUS = t(levelTranslations.PERUS);
@@ -56,36 +76,63 @@ const AddOrEditExamDate = (props) => {
     </>
   );
 
-  //TODO handle onChange
-  const examTimeGrid = (
-    <div className={classes.TimeGrid}>
-      <div>
-        <label>{t('examDates.choose.registrationTime')}</label>
-        <DatePicker options={{defaultDate: currentDate}} onChange={() => console.log('selected new date')}/>
-      </div>
-      <div>
-        <label>{t('examDates.choose.examDate')}</label>
-        <div className={classes.DatePickerWrapper}>
-          <DatePicker options={{defaultDate: currentDate}} onChange={() => console.log('selected new date')}/>
+  // TODO: new localizations to be added!
+  const registrationDateGrid = (
+    <div>
+      <label>{t('examDates.choose.registrationTime')}</label>
+      <div className={classes.RegistrationDateGrid}>
+        <div>
+          <div className={classes.DatePickerWrapper}>
+            <DatePicker
+              id="registration_start_date"
+              options={{defaultDate: registrationStartDate}}
+              onChange={d => setRegistrationStartDate(moment(d[0]).format('YYYY-MM-DD'))}
+            />
+          </div>
+        </div>
+        &nbsp;
+        &ndash;
+        &nbsp;
+        <div>
+          <div className={classes.DatePickerWrapper}>
+            <DatePicker
+              id={'registration_end_date'}
+              options={{
+                defaultDate: registrationEndDate,
+                minDate: registrationEndDate,
+              }}
+              onChange={d => setRegistrationEndDate(moment(d[0]).format('YYYY-MM-DD'))}
+            />
+          </div>
         </div>
       </div>
     </div>
   );
 
-  // TODO: new localizations to be added!
-  const registrationTimeGrid = (
-    <div className={classes.TimeGrid}>
-      <div>
-        <label>{t('examDates.choose.registrationTime')}</label>
-        <div className={classes.DatePickerWrapper}>
-          <DatePicker options={{defaultDate: currentDate}} onChange={() => console.log('selected new date')}/>
-        </div>
-      </div>
-      <div>
-        <label>{t('examDates.choose.registrationTime')}</label>
-        <div className={classes.DatePickerWrapper}>
-          <DatePicker options={{defaultDate: currentDate}} onChange={() => console.log('selected new date')}/>
-        </div>
+  //TODO correct date for min and max date
+  const examDateGrid = (
+    <div className={classes.ExamDateGrid}>
+      <label>{t('examDates.choose.examDate')}</label>
+      <div className={classes.DatePickerWrapper}>
+        {examDate === currentDate ?
+          <DatePicker
+            id='exam_date'
+            options={{
+              defaultDate: moment(examDate).add(14, 'day').format('YYYY MM DD'),
+              minDate: moment(examDate).add(14, 'day').format('YYYY MM DD'),
+            }}
+            onChange={d => setExamDate(moment(d[0]).format('YYYY-MM-DD'))}
+          />
+          :
+          <DatePicker
+            id='exam_date'
+            options={{
+              defaultDate: examDate,
+              minDate: examDate,
+            }}
+            onChange={d => setExamDate(moment(d[0]).format('YYYY-MM-DD'))}
+          />
+        }
       </div>
     </div>
   );
@@ -111,14 +158,17 @@ const AddOrEditExamDate = (props) => {
           <option value={YLIN}>{YLIN}</option>
         </select>
       </div>
-      <div>
-        <button
-          className={classes.LanguageAddition}
-          onClick={() => setLanguageAndLevel(prev => [...prev, {language, level}])}
-        >
-          {t('examDates.addNew.addLanguage')}
-        </button>
-      </div>
+      {props.examDates. length === 1 ?
+        null :
+        <div>
+          <button
+            className={classes.LanguageAddition}
+            onClick={() => setLanguageAndLevel(prev => [...prev, {language, level}])}
+          >
+            {t('examDates.addNew.addLanguage')}
+          </button>
+        </div>
+      }
     </div>
   );
 
@@ -132,8 +182,11 @@ const AddOrEditExamDate = (props) => {
         </div>
         <p className={classes.Label}>Päivämäärät</p>
         <div className={disabled ? classes.DisabledPicker : classes.DatePickerWrapper}>
-          <DatePicker disabled={disabled} options={{defaultDate: currentDate}}
-                      onChange={() => console.log('changed')}/>
+          <DatePicker
+            disabled={disabled}
+            options={{defaultDate: currentDate}}
+            onChange={d => console.log('changed to ', d)}
+          />
         </div>
         <div className={disabled ? classes.DisabledPicker : classes.DatePickerWrapper}>
           <DatePicker
@@ -159,6 +212,40 @@ const AddOrEditExamDate = (props) => {
     </>
   );
 
+  const FormFields = () => (
+    <Formik
+      initialValues={{examDate, registrationEndDate, registrationStartDate}}
+      onSubmit={() => console.log('sent values: ')}
+      render={({values, setFieldValue}) => (
+        <Form className={classes.Form}>
+          <div className={classes.TimeGrid}>
+            {registrationDateGrid}
+            {examDateGrid}
+          </div>
+          {languageAndLevelGrid}
+          {props.examDates.length === 1 ?
+            <>
+              {postAdmissionToggle}
+            </>
+            :
+            <div className={classes.AddedLanguages}>
+              {languagesList}
+            </div>
+          }
+          <div>
+            <button
+              className={classes.AdditionButton}
+              onClick={() => onUpdate()}
+            >
+              {t('examDates.addNew.confirm')}
+            </button>
+          </div>
+        </Form>
+      )}
+    />
+  );
+
+  /*
   const editView = () => (
     <div>
       <h3 style={{marginBlockStart: '0'}}>Muokkaa aikaa</h3>
@@ -188,25 +275,19 @@ const AddOrEditExamDate = (props) => {
       </button>
     </div>
   );
+   */
 
-  //TODO: move into form and add validation : Formik & yup
+  const editView = () => (
+    <>
+      <h3 style={{marginBlockStart: '0'}}>Muokkaa aikaa</h3>
+      <FormFields/>
+    </>
+  );
+
   const createView = () => (
     <>
       <h3 style={{marginBlockStart: '0'}}>{t('examDates.addNew.examDate')}</h3>
-      <div className={classes.Form}>
-        {examTimeGrid}
-        {registrationTimeGrid}
-        {languageAndLevelGrid}
-        <div className={classes.AddedLanguages}>
-          {languagesList}
-        </div>
-      </div>
-      <button
-        className={classes.AdditionButton}
-        onClick={() => onUpdate()}
-      >
-        {t('examDates.addNew.confirm')}
-      </button>
+      <FormFields/>
     </>
   );
 

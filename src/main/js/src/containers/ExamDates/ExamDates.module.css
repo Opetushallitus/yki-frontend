@@ -33,6 +33,10 @@
   background-color: hsla(358, 75%, 57%, 0.85);
 }
 
+.DisabledButton {
+    background-color: hsl(0, 0%, 83%);
+}
+
 .ActionButtons .AdditionButton {
   margin-right: 2vw;
 }
