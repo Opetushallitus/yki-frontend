@@ -30,18 +30,26 @@ class ExamDates extends Component {
       selectedExamDate: null,
       selectedExamDateIndex: null,
       selectedExamDates: [],
-      checkboxes: props.examDates.reduce(
-        (items, item) => ({
-          ...items,
-          [item.id]: false
-        }), {}
-      )
+      checkboxes: {}
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.onFetchExamDates();
   };
+
+  componentDidUpdate() {
+    if (Object.keys(this.state.checkboxes).length <= 0) {
+      this.setState({
+        checkboxes: this.props.examDates.reduce(
+          (items, item) => ({
+            ...items,
+            [item.id]: false
+          }), {}
+        )
+      })
+    }
+  }
 
   showAddOrEditPostAdmissionModalHandler = examDate => {
     this.setState({ showAddOrEditPostAdmissionModal: true, selectedExamDate: examDate });
@@ -123,7 +131,7 @@ class ExamDates extends Component {
           <Modal smallModal show={showAddOrEditExamDate} modalClosed={this.closeAddOrEditExamDateModal}>
             {selectedExamDate === null ?
               <AddOrEditExamDate
-                examDates={this.grouped}
+                examDates={[]}
                 onUpdate={this.closeAddOrEditExamDateModal}
               />
               :
@@ -168,7 +176,8 @@ class ExamDates extends Component {
             {t('examDates.addNew.confirm')}
           </button>
           <button
-            className={classes.DeleteButton}
+            className={(selectedExamDates.length <= 0) ? classes.DisabledButton : classes.DeleteButton}
+            disabled={(selectedExamDates.length <= 0)}
             onClick={() => console.log('deleted')}
           >
             {t('examDates.delete.selected')}
