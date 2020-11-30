@@ -282,7 +282,8 @@
             "registration_end_date": "2020-12-11",
             "languages": [
                 {
-                    "language_code": "fin"
+                    "language_code": "fin",
+                    "level_code": "PERUS"
                 }
             ]
         },
@@ -293,12 +294,50 @@
             "registration_end_date": "2020-12-11",
             "languages": [
                 {
-                    "language_code": "swe"
+                    "language_code": "swe",
+                    "level_code": "PERUS"
                 },
                 {
-                    "language_code": "deu"
+                    "language_code": "deu",
+                    "level_code": "YLIN"
                 }
             ]
+        },
+        {
+          "id": 24,
+          "exam_date": "2021-01-12",
+          "registration_start_date": "2020-11-01",
+          "registration_end_date": "2020-11-25",
+          "post_admission_enabled": true,
+          "post_admission_start_date": "2020-11-26",
+          "post_admission_end_date": "2020-12-20",
+          "languages": [
+            {
+              "language_code": "swe",
+              "level_code": "KESKI"
+            }
+          ],
+          "exam_session_count": 1
+        },
+        {
+          "post_admission_end_date": null,
+          "exam_session_count": 0,
+          "post_admission_start_date": null,
+          "exam_date": "2021-06-07",
+          "id": 53,
+          "post_admission_enabled": true,
+          "registration_start_date": "2021-01-01",
+          "languages": [
+            {
+              "language_code": "fin",
+              "level_code": "YLIN"
+            },
+            {
+              "language_code": "eng",
+              "level_code": "YLIN"
+            }
+          ],
+          "registration_end_date": "2021-01-30"
         }
     ]
 }
