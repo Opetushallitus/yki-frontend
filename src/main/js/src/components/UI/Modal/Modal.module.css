@@ -17,8 +17,8 @@
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
-  height: 48vh;
-  width: 65vw;
+  height: 55vh;
+  width: 68vw;
   /* min width if datepickers smaller */
   /*width 55vw;*/
   z-index: 500;

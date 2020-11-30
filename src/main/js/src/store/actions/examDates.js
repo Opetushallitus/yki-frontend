@@ -65,3 +65,19 @@ export const deletePostAdmissionEndDate = examDateId => {
       //TODO: handle error
   }
 }
+
+// TODO: should this be in examSessions actions?
+export const GetExamDatesHistory = (oid) => {
+  return dispatch => {
+    dispatch(fetchExamDatesStart());
+    axios
+      .get(`/yki/api/virkailija/organizer/${oid}/exam-session/history`)
+      .then(res => {
+        // dispatch(fetchExamSessionContent());
+        dispatch(fetchExamDatesSuccess(res.data.dates));
+      })
+      .catch(err => {
+        console.error(err)
+      });
+  }
+}
