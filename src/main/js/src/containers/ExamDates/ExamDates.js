@@ -31,51 +31,26 @@ class ExamDates extends Component {
       selectedExamDate: null,
       selectedExamDateIndex: null,
       selectedExamDates: [],
-      checkboxes: {},
       fetchExamHistory: false,
       grouped: null,
     }
   }
 
   componentDidMount() {
-    this.props.onFetchExamDates();
-    this.setState({
-      checkboxes: this.props.examDates.reduce(
-        (items, item) => ({
-          ...items,
-          [item.id]: false
-        }), {}
-      )
-    });
+   this.props.onFetchExamDates();
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (Object.keys(this.state.checkboxes).length <= 0) {
-      this.setState({
-        checkboxes: this.props.examDates.reduce(
-          (items, item) => ({
-            ...items,
-            [item.id]: false
-          }), {}
-        )
-      })
-    }
-
     if (prevState.grouped === null) {
       this.setState({
         grouped: this.sortByRegistrationDate
-        // grouped: this.sorted
       });
     }
 
-    if (this.state.grouped !== null && prevState.grouped !== this.state.grouped) {
+    if (prevProps.examDates !== this.props.examDates) {
+      const result = R.sortBy(R.prop('registration_start_date'), this.props.examDates);
       this.setState({
-        checkboxes: this.sortByRegistrationDate.reduce(
-          (items, item) => ({
-            ...items,
-            [item.id]: false
-          }), {}
-        )
+        grouped: result
       })
     }
 
@@ -86,13 +61,6 @@ class ExamDates extends Component {
       } else {
         this.props.onFetchExamDates();
       }
-    }
-
-    if (prevProps.examDates !== this.props.examDates) {
-      const result = R.sortBy(R.prop('registration_start_date'), this.props.examDates);
-      this.setState({
-        grouped: result
-      })
     }
   }
 
@@ -118,17 +86,6 @@ class ExamDates extends Component {
     selectedExamDate: null
   });
 
-  selectAllCheckboxes = isSelected => {
-    Object.keys(this.state.checkboxes).forEach(checkbox => {
-      this.setState(prev => ({
-        checkboxes: {
-          ...prev.checkboxes,
-          [checkbox]: isSelected
-        }
-      }));
-    });
-  };
-
   onExamDateHistoryFetchChange = () => {
     this.setState(prev => ({
       fetchExamHistory: !prev.fetchExamHistory
@@ -149,7 +106,6 @@ class ExamDates extends Component {
   render() {
     const {examDates, loading, t} = this.props;
     const {
-      checkboxes,
       selectedExamDate,
       selectedExamDates,
       showAddOrEditExamDate,
@@ -199,29 +155,29 @@ class ExamDates extends Component {
     );
 
     const examDateTables = () => {
-      const temp = examDates;
-      let allDates = [];
-
-      temp.forEach(item => {
-        allDates.push(item.id);
-      });
 
       const onSelectAllChange = () => {
         if (selectedExamDates.length < 1) {
           this.setState({
-            selectedExamDates: [...allDates],
+            selectedExamDates: [...this.state.grouped],
           });
-          this.selectAllCheckboxes(true);
         } else {
           this.setState({
             selectedExamDates: []
           });
-          this.selectAllCheckboxes(false);
         }
       }
 
       const notSelected = selectedExamDates.length <= 0;
-      const hasExamSessions = selectedExamDates.some(obj => Object.keys(obj).includes('exam_session_count'));
+
+      const hasExamSessions = exams => {
+        if (exams.length > 0) {
+          const sessionCount = exams.some(examDate => examDate.exam_session_count);
+          return !!(sessionCount && sessionCount > 0);
+        } else {
+          return !!(exams.exam_session_count && exams.exam_session_count > 0);
+        }
+      }
 
       const examDateButtons = (
         <div className={classes.ExamDateControls}>
@@ -233,8 +189,8 @@ class ExamDates extends Component {
               {t('examDates.addNew.confirm')}
             </button>
             <button
-              className={(notSelected || hasExamSessions) ? classes.DisabledButton : classes.DeleteButton}
-              disabled={(notSelected || hasExamSessions)}
+              className={(notSelected || hasExamSessions(selectedExamDates)) ? classes.DisabledButton : classes.DeleteButton}
+              disabled={(notSelected || hasExamSessions(selectedExamDates))}
               onClick={() => console.log('deleted')}
             >
               {t('examDates.delete.selected')}
@@ -247,7 +203,7 @@ class ExamDates extends Component {
         </div>
       );
 
-      const isAllChecked = Object.values(checkboxes).every(value => value === true);
+      const isAllChecked = R.equals(this.state.grouped, this.state.selectedExamDates);
 
       const examDateHeaders = (
         <>
@@ -270,38 +226,29 @@ class ExamDates extends Component {
 
         const handleCheckboxChange = key => {
           const selectedExamDates = this.state.selectedExamDates;
-          const stateCheckboxes = checkboxes;
-
           const selected = examDates.find(exam => exam.id === key);
 
           if (selectedExamDates.length <= examDates.length) {
             this.setState({
               selectedExamDates: [...selectedExamDates, selected],
-              checkboxes: {
-                ...stateCheckboxes,
-                [key]: !stateCheckboxes[key]
-              }
             });
           }
           if (selectedExamDates.includes(selected)) {
             this.setState(prev => ({
               selectedExamDates: prev.selectedExamDates.filter(removable => removable !== selected),
-              checkboxes: {
-                ...stateCheckboxes,
-                [key]: !stateCheckboxes[key]
-              }
             }));
           }
         }
 
-        const canEditExamDate = (exam) => {
+        const canEditExamDate = exam => {
           const currentDate = moment(new Date()).format('YYYY-MM-DD');
-          return exam.exam_date < currentDate;
+          return (exam.exam_date > currentDate) && !hasExamSessions(exam);
         }
 
         return examDates.map((e, i) => {
           const registrationEndDateMoment = moment(e.registration_end_date);
 
+          /* TODO: remove this block if new design is implemented
           const finnishOnly =
             examDates.length === 1 &&
             e.languages.length === 1 &&
@@ -316,6 +263,7 @@ class ExamDates extends Component {
               return languageToString(l.language_code).toLowerCase();
             })
             .join(', ');
+          */
 
           const languageAndLevel = e.languages.map(lang => {
             const language = languageToString(lang.language_code).toLowerCase();
@@ -323,6 +271,10 @@ class ExamDates extends Component {
              return <li key={language+level}>{language}, {level}</li>;
             //return <p>{language}, {level}</p>;
           });
+
+          const isChecked = id => {
+            return selectedExamDates.find(item => item.id === id)
+          }
 
           const postAdmissionDate = `${registrationEndDateMoment.add(1, 'days').format(DATE_FORMAT)} - 
             ${moment(e.post_admission_end_date).format(DATE_FORMAT)}`;
@@ -332,7 +284,7 @@ class ExamDates extends Component {
               <ControlledCheckbox
                 onChange={() => handleCheckboxChange(e.id)}
                 name={e.id}
-                checked={checkboxes[e.id]}
+                checked={!!isChecked(e.id)}
               />
               <p>{moment(e.exam_date).format(DATE_FORMAT)}</p>
               {/*<p>{languages}: {level.toLowerCase()}</p>*/}
@@ -346,11 +298,11 @@ class ExamDates extends Component {
               <RegistrationPeriod period={e}/>
               <p>{e.post_admission_end_date ? `Auki: ${postAdmissionDate}` : 'Kiinni'}</p>
               <button
-                disabled={canEditExamDate(e)}
+                disabled={!canEditExamDate(e)}
                 className={classes.EditButton}
                 onClick={() => this.showEditExamDateHandler(e)}
               >
-                {canEditExamDate(e) ? null : <img src={editIcon} alt={'edit-icon'}/>}
+                {canEditExamDate(e) ? <img src={editIcon} alt={'edit-icon'}/> : null}
               </button>
             </React.Fragment>
           );

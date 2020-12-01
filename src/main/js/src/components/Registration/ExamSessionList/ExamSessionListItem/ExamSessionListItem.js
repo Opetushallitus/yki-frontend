@@ -4,7 +4,7 @@ import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import PropTypes from 'prop-types';
 
-//import { nowBetweenDates } from '../../../../util/util';
+import { nowBetweenDates } from '../../../../util/util';
 import classes from './ExamSessionListItem.module.css';
 import {getDeviceOrientation, levelDescription} from '../../../../util/util';
 import {
@@ -50,16 +50,12 @@ const examSessionListItem = ({
     </span>
   );
 
-  /*
   const postAdmissionActive = session.post_admission_end_date && 
                               session.post_admission_start_date &&
                               session.post_admission_active &&
                               session.post_admission_quota &&
                               nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
   const spotsAvailable = postAdmissionActive ? (session.post_admission_quota - session.pa_participants) : (session.max_participants - session.participants);
-  */
-
-  const spotsAvailable = (session.max_participants - session.participants);
 
   const spotsAvailableText =
     spotsAvailable === 1
@@ -93,7 +89,7 @@ const examSessionListItem = ({
         )} - ${moment(session.registration_end_date).format(
           DATE_FORMAT_WITHOUT_YEAR,
         )}`}
-        {/*
+
         {
           (session.post_admission_start_date && session.post_admission_end_date && session.post_admission_active) ? (
           <>
@@ -103,7 +99,7 @@ const examSessionListItem = ({
           </>
           ) : null
         }
-        */}
+
       </span>
     </div>
   );
