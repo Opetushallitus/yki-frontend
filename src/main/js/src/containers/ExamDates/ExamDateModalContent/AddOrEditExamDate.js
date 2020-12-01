@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {withTranslation} from 'react-i18next';
 import PropTypes from "prop-types";
 import DatePicker from '../../../components/UI/DatePicker/DatePicker';
@@ -17,7 +17,7 @@ const AddOrEditExamDate = (props) => {
 
   const initializeLanguageArray = () => {
     let languageArray = [];
-    if (examDates[0].languages && examDates[0].languages.length > 0) {
+    if (examDates.length > 0 && examDates[0].languages && examDates[0].languages.length > 0) {
       examDates[0].languages.map((item) => {
         let language_code = item.language_code;
         let level_code = item.level_code;
@@ -31,7 +31,7 @@ const AddOrEditExamDate = (props) => {
     if (examDates.length === 1) {
       return languageToString(examDates[0].languages[0].language_code)
     }
-    return LANGUAGES[0].name
+    return LANGUAGES[0].code
   }
 
   const initializeStateDate = (value) => {
@@ -41,39 +41,15 @@ const AddOrEditExamDate = (props) => {
     return currentDate;
   }
 
-  //FIXME: does not work when create new exam date
-
   // useStates
-  const [languageAndLevel, setLanguageAndLevel] = useState(initializeLanguageArray);
-
-  //set values to temp array and submit array when editing complete
-  const [tempArray, setTempArray] = useState(examDates[0]);
-
-  // TODO: fix form setStates to update array correctly and remove unnecessary states
-  const [level_code, setLevel] = useState(t(levelTranslations.PERUS));
+  const [languageAndLevel, setLanguageAndLevel] = useState(initializeLanguageArray || []);
+  const [level_code, setLevel] = useState('PERUS');
   const [language_code, setLanguage] = useState(initializeLanguage);
-
   const [disabled, setDisabled] = useState(!examDates.post_admission_end_date);
   const [registrationStartDate, setRegistrationStartDate] = useState(initializeStateDate('registration_start_date'));
   const [registrationEndDate, setRegistrationEndDate] = useState(initializeStateDate('registration_end_date'));
   const [examDate, setExamDate] = useState(initializeStateDate('exam_date'));
-
-  const [languagesToAdd, setLanguagesToAdd] = useState([])
   const [newLanguageField, setNewLanguageField] = useState(false);
-
-  // language levels
-  const PERUS = t(levelTranslations.PERUS);
-  const KESKI = t(levelTranslations.KESKI);
-  const YLIN = t(levelTranslations.YLIN);
-
-  useEffect(() => {
-  }, [languagesToAdd])
-
-  const handleSetLanguage = (event) => {
-    console.log(event)
-    const itemToParse = LANGUAGES.filter(item => event === item.name)
-    setLanguage(itemToParse[0].code);
-  }
 
   const handleRemoveLanguage = item => {
     const temp = [...languageAndLevel];
@@ -81,12 +57,190 @@ const AddOrEditExamDate = (props) => {
     setLanguageAndLevel(temp);
   }
 
+  const handleEdit = (key, value, original) => {
+    original[key] = value;
+  }
+
+  const handleAddNewLanguage = () => {
+    setNewLanguageField(!newLanguageField);
+    setLanguageAndLevel(prev => [...prev, {language_code, level_code}]);
+    setLanguage(LANGUAGES[0].code);
+    setLevel('PERUS');
+  }
+
+  // 1st ternary = edit OR add new language
+  // 2nd ternary = adding language on edit OR adding language on new language modal
+  // 3rd ternary = addition button or link button
+  const addOrDeleteLang = (
+    <>
+      {props.examDates.length === 1 ?
+        <>
+          <label>{t('examDates.choose.examLanguage')}</label>
+          <label>{t('registration.select.level')}</label>
+          <span/>
+          <>
+            {languageAndLevel.map((date, i) => {
+              return (
+                <React.Fragment key={date.language_code + i}>
+                  <div>
+                    <>
+                      <select
+                        className={classes.ExamLevels}
+                        defaultValue={date.language_code || language_code}
+                        onChange={e => handleEdit('language_code', e.target.value, date)}
+                      >
+                        {LANGUAGES.map((lang) => {
+                          return <option key={lang.code} value={lang.code}>{lang.name}</option>
+                        })}
+                      </select>
+                    </>
+                  </div>
+                  <div key={date.level_code}>
+                    <>
+                      <select
+                        className={classes.ExamLevels}
+                        defaultValue={date.level_code || level_code}
+                        onChange={e => handleEdit('level_code', e.target.value, date)}
+                      >
+                        <option value={'PERUS'}>{t(levelTranslations.PERUS)}</option>
+                        <option value={'KESKI'}>{t(levelTranslations.KESKI)}</option>
+                        <option value={'YLIN'}>{t(levelTranslations.YLIN)}</option>
+                      </select>
+                    </>
+                  </div>
+                  <div>
+                    <button
+                      type='button'
+                      value={i}
+                      className={`${classes.LanguageButton} ${classes.RemoveLanguageButton}`}
+                      onClick={() => handleRemoveLanguage(i)}
+                    >
+                      {'Poista kieli ja taso'}
+                    </button>
+                  </div>
+                </React.Fragment>
+              )
+            })}
+          </>
+        </>
+        :
+        <>
+          <div>
+            <label>{t('examDates.choose.examLanguage')}</label>
+            <>
+              <select
+                className={classes.ExamLevels}
+                value={language_code}
+                onChange={e => setLanguage(e.target.value)}
+              >
+                {LANGUAGES.map((lang) => {
+                  return <option key={lang.code} value={lang.code}>{lang.name}</option>
+                })}
+              </select>
+            </>
+          </div>
+          <div>
+            <label>{t('registration.select.level')}</label>
+            <>
+              <select
+                className={classes.ExamLevels}
+                value={level_code}
+                onChange={e => setLevel(e.target.value)}
+              >
+                <option value={'PERUS'}>{t(levelTranslations.PERUS)}</option>
+                <option value={'KESKI'}>{t(levelTranslations.KESKI)}</option>
+                <option value={'YLIN'}>{t(levelTranslations.YLIN)}</option>
+              </select>
+            </>
+          </div>
+        </>
+      }
+      {props.examDates.length === 1 ?
+        <>
+          {(newLanguageField === false) ?
+            <div>
+              <button
+                type='button'
+                className={classes.AddNewLanguages}
+                onClick={() => setNewLanguageField(!newLanguageField)}
+              >
+                {'Lisää uusi kieli'}
+              </button>
+            </div>
+            :
+            <div className={classes.LanguageAndLevelGrid}>
+              <div>
+                <select
+                  className={classes.ExamLevels}
+                  value={language_code}
+                  onChange={e => setLanguage(e.target.value)}
+                >
+                  {LANGUAGES.map((lang) => {
+                    return <option key={lang.code} value={lang.code}>{lang.name}</option>
+                  })}
+                </select>
+              </div>
+              <div>
+                <select
+                  className={classes.ExamLevels}
+                  value={level_code}
+                  onChange={e => setLevel(e.target.value)}
+                >
+                  <option value={'PERUS'}>{t(levelTranslations.PERUS)}</option>
+                  <option value={'KESKI'}>{t(levelTranslations.KESKI)}</option>
+                  <option value={'YLIN'}>{t(levelTranslations.YLIN)}</option>
+                </select>
+              </div>
+              <div>
+                <button
+                  type='button'
+                  style={{marginTop: '4px'}}
+                  className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
+                  onClick={() => handleAddNewLanguage()}
+                >
+                  {t('examDates.addNew.addLanguage')}
+                </button>
+              </div>
+            </div>
+          }
+        </>
+        :
+        <div>
+          <button
+            type='button'
+            className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
+            onClick={() => handleAddNewLanguage()}
+          >
+            {t('examDates.addNew.addLanguage')}
+          </button>
+        </div>
+      }
+    </>
+  );
+
   // TODO: new localizations to be added!
   //TODO correct date for min and max date
   const FormFields = () => (
     <Formik
-      initialValues={{examDate, registrationEndDate, registrationStartDate}}
-      onSubmit={() => console.log('sent values: ',)}
+      initialValues={{
+        examDate,
+        registrationEndDate,
+        registrationStartDate,
+        languages: languageAndLevel
+      }}
+      onSubmit={values => {
+        const submitPayload = {
+          exam_date: values.exam_date,
+          registration_end_date: values.registration_end_date,
+          registration_start_date: values.registration_start_date,
+          post_admission_start_date: values.post_admission_start_date,
+          post_admission_end_date: values.post_admission_end_date,
+          languages: languageAndLevel
+        }
+        console.log('sent values: ', submitPayload);
+        //TODO: create redux-action
+        //examDatesHandler(submitPayload);
+      }}
       render={({values, setFieldValue}) => (
         <Form className={classes.Form}>
           <div className={classes.TimeGrid}>
@@ -126,6 +280,7 @@ const AddOrEditExamDate = (props) => {
                   <DatePicker
                     id='exam_date'
                     options={{
+                      value: values.examDate,
                       defaultDate: moment(examDate).add(14, 'day').format('YYYY MM DD'),
                       minDate: moment(examDate).add(14, 'day').format('YYYY MM DD'),
                     }}
@@ -145,145 +300,7 @@ const AddOrEditExamDate = (props) => {
             </div>
           </div>
           <div className={classes.LanguageAndLevelGrid}>
-            {props.examDates.length === 1 ?
-              <>
-                <label>{t('examDates.choose.examLanguage')}</label>
-                <label>{t('registration.select.level')}</label>
-                <span/>
-                <>
-                  {languageAndLevel.map((date, i) => {
-                    return (
-                      <React.Fragment key={date.language_code + i}>
-                        <div>
-                          <>
-                            <select
-                              className={classes.ExamLevels}
-                              defaultValue={languageToString(date.language_code)}
-                              onChange={e => setLanguage(e.target.value)}
-                            >
-                              {LANGUAGES.map((lang) => {
-                                return <option key={lang.code} value={lang.code}>{lang.name}</option>
-                              })}
-                            </select>
-                          </>
-                        </div>
-                        <div key={date.level_code}>
-                          <>
-                            <select
-                              className={classes.ExamLevels}
-                              defaultValue={levelDescription(date.level_code)}
-                              onChange={e => setLevel(e.target.value)}
-                            >
-                              <option value={'PERUS'}>{PERUS}</option>
-                              <option value={'KESKI'}>{KESKI}</option>
-                              <option value={'YLIN'}>{YLIN}</option>
-                            </select>
-                          </>
-                        </div>
-                        <div>
-                          <button
-                            className={`${classes.LanguageButton} ${classes.RemoveLanguageButton}`}
-                            onClick={item => setTempArray(tempArray.filter(removable => removable !== item))}
-                          >
-                            {'Poista kieli ja taso'}
-                          </button>
-                        </div>
-                      </React.Fragment>
-                    )
-                  })}
-                </>
-              </>
-              :
-              <>
-                <div>
-                  <label>{t('examDates.choose.examLanguage')}</label>
-                  <>
-                  <select
-                    className={classes.ExamLevels}
-                    defaultValue={language_code}
-                    onChange={e => setLanguage(e.target.value)}
-                  >
-                    {LANGUAGES.map((lang) => {
-                      return <option key={lang.code} value={lang.name}>{lang.name}</option>
-                    })}
-                  </select>
-                    </>
-                </div>
-                <div>
-                  <label>{t('registration.select.level')}</label>
-                  <>
-                  <select
-                    className={classes.ExamLevels}
-                    defaultValue={level_code}
-                    onChange={e => setLevel(e.target.value)}
-                  >
-                    <option value={'PERUS'}>{PERUS}</option>
-                    <option value={'KESKI'}>{KESKI}</option>
-                    <option value={'YLIN'}>{YLIN}</option>
-                  </select>
-                    </>
-                </div>
-              </>
-            }
-            {props.examDates.length === 1 ?
-              <>
-                {(newLanguageField === false) ?
-                  <div>
-                    <button
-                      className={classes.AddNewLanguages}
-                      data-cy="button-add-post-admission"
-                      onClick={() => setNewLanguageField(!newLanguageField)}
-                    >
-                      {'Lisää uusi kieli'}
-                    </button>
-                  </div>
-                  :
-                  <div className={classes.LanguageAndLevelGrid}>
-                    <div>
-                      <select
-                        className={classes.ExamLevels}
-                        defaultValue={LANGUAGES[0].name}
-                        onChange={e => handleSetLanguage(e.target.value)}
-                      >
-                        {LANGUAGES.map((lang) => {
-                          return <option key={lang.code} value={lang.name}>{lang.name}</option>
-                        })}
-                      </select>
-                    </div>
-                    <div>
-                      <select className={classes.ExamLevels} defaultValue={LANGUAGES[0].code}
-                              onChange={e => setLevel(e.target.value)}>
-                        <option value={'PERUS'}>{PERUS}</option>
-                        <option value={'KESKI'}>{KESKI}</option>
-                        <option value={'YLIN'}>{YLIN}</option>
-                      </select>
-                    </div>
-                    <div>
-                      <button
-                        style={{marginTop: '4px'}}
-                        className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
-                        onClick={() => {
-                          setNewLanguageField(!newLanguageField)
-                          setLanguagesToAdd(prev => [...prev, {language_code, level_code}])
-                        }
-                        }
-                      >
-                        {t('examDates.addNew.addLanguage')}
-                      </button>
-                    </div>
-                  </div>
-                }
-              </>
-              :
-              <div>
-                <button
-                  className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
-                  onClick={() => setLanguageAndLevel(prev => [...prev, {language_code, level_code}])}
-                >
-                  {t('examDates.addNew.addLanguage')}
-                </button>
-              </div>
-            }
+            {addOrDeleteLang}
           </div>
           {props.examDates.length === 1 ?
             <div className={classes.PostAdmission}>
@@ -293,14 +310,14 @@ const AddOrEditExamDate = (props) => {
                   <ToggleSwitch checked={!disabled} onChange={() => setDisabled(!disabled)}/>
                   <p className={classes.Label}>{'Ei avattu'}</p>
                 </div>
-                <p className={classes.Label}>Päivämäärät</p>
+                <p className={classes.Label}>{'Päivämäärät'}</p>
                 <div className={classes.DateGrid}>
                   <div className={disabled ? classes.DisabledPicker : classes.DatePickerWrapper}>
                     <DatePicker
                       id="postAdmissionStart"
                       disabled={disabled}
                       options={{defaultDate: currentDate}}
-                      onChange={d => console.log('changed to ', d)}
+                      onChange={d => setFieldValue('post_admission_start_date', moment(d[0]).format('YYYY-MM-DD'))}
                     />
                   </div>
                   &nbsp;
@@ -312,20 +329,13 @@ const AddOrEditExamDate = (props) => {
                       id="postAdmissionEnd"
                       disabled={disabled}
                       options={{
-                        defaultDate: values.post_admission_end_date || currentDate,
-                        // defaultDate: moment(values.registration_end_date).add(1, 'days').format('YYYY MM DD'),
+                        defaultDate: values.postAdmissionEnd || currentDate,
                         // value: values.postAdmissionEnd,
                         // minDate: moment(values.registration_end_date).add(1, 'days').format('YYYY MM DD'),
-                        // maxDate: moment(values.exam_date).add(-1, 'days').format('YYYY MM DD')
                         minDate: moment(values.post_admission_end_date).add(1, 'days').format('YYYY MM DD'),
-                        // maxDate: moment(values.exam_date).add(-1, 'days').format('YYYY MM DD')
+                        maxDate: moment(examDate).add(-1, 'days').format('YYYY MM DD')
                       }}
-                      onChange={d =>
-                        console.log(
-                          'postAdmissionEnd: ',
-                          moment(d[0]).format('YYYY-MM-DD'),
-                        )
-                      }
+                      onChange={d => setFieldValue('post_admission_end_date', moment(d[0]).format('YYYY-MM-DD'))}
                       locale={props.i18n.language}
                       tabIndex="1"
                     />
@@ -339,7 +349,7 @@ const AddOrEditExamDate = (props) => {
                 return (
                   <span key={i}>
                     <img src={closeOverlay} alt={'delete'} onClick={() => handleRemoveLanguage(i)}/>
-                    <p style={{marginLeft: '10px'}}>{item.language}, {item.level}</p>
+                    <p style={{marginLeft: '10px'}}>{languageToString(item.language_code)}, {levelDescription(item.level_code)}</p>
                   </span>
                 )
               })}
@@ -347,6 +357,7 @@ const AddOrEditExamDate = (props) => {
           }
           <div>
             <button
+              type='submit'
               className={classes.ConfirmButton}
               onClick={() => onUpdate()}
             >
