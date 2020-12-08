@@ -4,14 +4,17 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import classes from './ExamDetailsCard.module.css';
-import {DATE_FORMAT} from '../../../../common/Constants';
+import {DATE_FORMAT, ISO_DATE_FORMAT_SHORT} from '../../../../common/Constants';
 import {getLanguageAndLevel} from "../../../../util/util";
 
 const ExamDetailsCard = ({exam, isFull, successHeader}) => {
   const [t, i18n] = useTranslation();
 
+  const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
+  const registrationClosed = moment(exam.registration_end_date).isBefore(currentDate);
+
   const exceptionStatus = (
-      isFull ? <p className={classes.Exception}
+      isFull || registrationClosed ? <p className={classes.Exception}
                   data-cy={"exam-details-exception-status"}>{t('registration.examSpots.full')}</p>
           : (!exam.open ?
           <p className={classes.Exception}
@@ -68,8 +71,14 @@ const ExamDetailsCard = ({exam, isFull, successHeader}) => {
 
   const availableSeats = (
       <>
-        <p>{t('registration.list.examSpots')}:</p>
-        <p>{`${exam.max_participants - exam.participants} / ${exam.max_participants}`}</p>
+        {!registrationClosed ?
+          <>
+            <p>{t('registration.list.examSpots')}:</p>
+            <p>{`${exam.max_participants - exam.participants} / ${exam.max_participants}`}</p>
+          </>
+          :
+          null
+        }
       </>
   );
 

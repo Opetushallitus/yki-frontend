@@ -9,7 +9,7 @@ import classes from './ExamSessionListItem.module.css';
 import {getDeviceOrientation, levelDescription} from '../../../../util/util';
 import {
   DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR, MOBILE_VIEW
+  DATE_FORMAT_WITHOUT_YEAR, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW
 } from '../../../../common/Constants';
 import * as actions from '../../../../store/actions/index';
 
@@ -39,6 +39,11 @@ const examSessionListItem = ({
     </div>
   );
 
+  const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
+  const registrationClosed = moment(session.registration_end_date).isBefore(currentDate);
+  //TODO: uncomment when postAdmission is added
+  //const postAdmissionClosed = moment(session.session.post_admission_end_date).isBefore(currentDate);
+
   const sessionLocation =
     session.location.find(l => l.lang === i18n.language) || session.location[0];
   const name = sessionLocation.name;
@@ -60,16 +65,18 @@ const examSessionListItem = ({
   const spotsAvailable = postAdmissionActive ? (session.post_admission_quota - session.pa_participants) : (session.max_participants - session.participants);
   */
 
-    const spotsAvailable = (session.max_participants - session.participants);
+  const spotsAvailable = (session.max_participants - session.participants);
 
   const spotsAvailableText =
     spotsAvailable === 1
       ? t('registration.examSpots.singleFree')
       : t('registration.examSpots.free');
+
+  //TODO: add postAdmissionClosed to ternary check when post admission is added
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {spotsAvailable > 0 ? (
+        {spotsAvailable > 0 && !registrationClosed ? (
           <>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
@@ -115,15 +122,25 @@ const examSessionListItem = ({
       ? t('registration.register.queueFull')
       : t('registration.register.forQueue');
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
+
+  //TODO: add to ternary !postAdmissionClosed
   const registerButton = (
-    <button
-      className={'YkiButton'}
-      onClick={selectExamSession}
-      role="link"
-      aria-label={srLabel}
-    >
-      {buttonText}
-    </button>
+    <>
+      {!registrationClosed && !session.queue_full ?
+        <>
+          <button
+            className={'YkiButton'}
+            onClick={selectExamSession}
+            role="link"
+            aria-label={srLabel}
+          >
+            {buttonText}
+          </button>
+        </>
+        :
+        null
+      }
+    </>
   );
 
   const locationOnMobileView = (

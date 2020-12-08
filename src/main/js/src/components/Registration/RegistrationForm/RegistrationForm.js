@@ -441,7 +441,7 @@ export const registrationForm = props => {
             <div className={classes.ConsentContainer}>
               <article>
                 <h4>{props.t('registration.form.personalData.consent.heading')}</h4>
-                <a href={'/consent/fi'} target="_blank" rel="noopener noreferrer">
+                <a href={'https://opintopolku.fi/wp/tietosuojaseloste/'} target="_blank" rel="noopener noreferrer">
                   {props.t('common.yki.consent.link')}
                 </a>
               </article>
