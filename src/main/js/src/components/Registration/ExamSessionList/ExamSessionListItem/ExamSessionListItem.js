@@ -111,21 +111,27 @@ const examSessionListItem = ({
     : t('registration.register.forQueue');
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
   const registerButton = (
-    <button
-      className={[
-        classes.RegisterButton,
-        !session.open || (!spotsAvailable && session.queue_full)
-          ? classes.RegistrationLocked
-          : spotsAvailable
-          ? classes.ButtonForSignup
-          : classes.ButtonForQueue,
-      ].join(' ')}
-      onClick={selectExamSession}
-      role="link"
-      aria-label={srLabel}
-    >
-      {buttonText}
-    </button>
+    <>
+      {!registrationClosed && !session.queue_full ?
+        <button
+          className={[
+            classes.RegisterButton,
+            !session.open || (!spotsAvailable && session.queue_full)
+              ? classes.RegistrationLocked
+              : spotsAvailable
+              ? classes.ButtonForSignup
+              : classes.ButtonForQueue,
+          ].join(' ')}
+          onClick={selectExamSession}
+          role="link"
+          aria-label={srLabel}
+        >
+          {buttonText}
+        </button>
+        :
+        null
+      }
+      </>
   );
 
   return (
