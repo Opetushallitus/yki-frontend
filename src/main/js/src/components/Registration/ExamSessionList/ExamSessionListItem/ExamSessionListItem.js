@@ -127,16 +127,14 @@ const examSessionListItem = ({
   const registerButton = (
     <>
       {!registrationClosed && !session.queue_full ?
-        <>
-          <button
-            className={'YkiButton'}
-            onClick={selectExamSession}
-            role="link"
-            aria-label={srLabel}
-          >
-            {buttonText}
-          </button>
-        </>
+        <button
+          className={'YkiButton'}
+          onClick={selectExamSession}
+          role="link"
+          aria-label={srLabel}
+        >
+          {buttonText}
+        </button>
         :
         null
       }
