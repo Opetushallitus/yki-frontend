@@ -81,7 +81,8 @@ const reducer = (state = initialState, action) => {
 
       for (let i in filteredExams) {
         const item = filteredExams[i];
-        if (item.participants < item.max_participants) {
+        const isOpen = moment(item.registration_end_date).isAfter(currentDate);
+        if (isOpen && item.participants < item.max_participants) {
           filteredArray.push(item);
         }
       }
@@ -104,9 +105,13 @@ const reducer = (state = initialState, action) => {
 
       for (let i in filteredExamsForOpens) {
         const item = filteredExamsForOpens[i];
-          if (item.registration_start_date <= currentDate && item.registration_end_date >= currentDate && !item.queue_full) {
-            filteredOpenExams.push(item);
-          }
+
+        const registrationOpen = moment(item.registration_end_date).isAfter(currentDate);
+        const registrationStarted = moment(item.registration_start_date).isSameOrBefore(currentDate);
+
+        if (registrationOpen && registrationStarted && !item.queue_full) {
+          filteredOpenExams.push(item);
+        }
       }
 
       const groupedOpenSessions = R.groupBy(R.prop('session_date'), filteredOpenExams);

@@ -22,6 +22,9 @@ i18n
 
     backend: {
       loadPath: '/yki/api/localisation?lang={{lng}}',
+      customHeaders: {
+        'Caller-Id': '1.2.246.562.10.00000000001.yki'
+      }
     },
 
     detection: {

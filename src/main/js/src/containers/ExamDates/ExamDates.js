@@ -37,7 +37,7 @@ class ExamDates extends Component {
   }
 
   componentDidMount() {
-   this.props.onFetchExamDates();
+    this.props.onFetchExamDates();
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -198,7 +198,7 @@ class ExamDates extends Component {
           </div>
           <div className={classes.PastExamDates}>
             <p>{'Näytä meneet päivät'}</p>
-            <Checkbox checked={this.state.fetchExamHistory} onChange={() => this.onExamDateHistoryFetchChange()} />
+            <Checkbox checked={this.state.fetchExamHistory} onChange={() => this.onExamDateHistoryFetchChange()}/>
           </div>
         </div>
       );
@@ -268,7 +268,7 @@ class ExamDates extends Component {
           const languageAndLevel = e.languages.map(lang => {
             const language = languageToString(lang.language_code).toLowerCase();
             const level = levelDescription(lang.level_code).toLowerCase();
-             return <li key={language+level}>{language}, {level}</li>;
+            return <li key={language + level}>{language}, {level}</li>;
             //return <p>{language}, {level}</p>;
           });
 
