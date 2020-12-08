@@ -37,6 +37,9 @@ const examSessionListItem = ({
     </div>
   );
 
+  const currentDate = moment().format("YYYY-MM-DD");
+  const registrationClosed = moment(session.registration_end_date).isBefore(currentDate);
+
   const sessionLocation =
     session.location.find(l => l.lang === i18n.language) || session.location[0];
   const name = sessionLocation.name;
@@ -63,8 +66,8 @@ const examSessionListItem = ({
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {spotsAvailable > 0 ? (
-          <Fragment>
+        {spotsAvailable > 0 && !registrationClosed ? (
+            <Fragment>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
               {spotsAvailableText}
