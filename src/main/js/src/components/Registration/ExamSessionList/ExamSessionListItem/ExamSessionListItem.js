@@ -73,7 +73,7 @@ const examSessionListItem = ({
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {spotsAvailable > 0 && !registrationClosed ? (
+        {spotsAvailable > 0 && !registrationClosed || postAdmissionActive ? (
           <>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
