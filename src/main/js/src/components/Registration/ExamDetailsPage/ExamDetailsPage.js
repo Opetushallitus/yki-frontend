@@ -115,9 +115,10 @@ const examDetailsPage = ({
                       </div>
                       {seatsAvailable ? (
                           <div className={classes.Identification}>
-                            <p>
+                            <p className={classes.IdentificationHeader}>
                               <strong>{t('registration.examDetails.identify')}</strong>
                             </p>
+                            <p>{t('registration.examDetails.additional')}</p>
                             <div className={classes.IdentificationButtons}>
                               <AuthButton examSessionId={examSessionId}/>
                               {showLoginLink ? (

@@ -136,7 +136,7 @@
 }
 
 .ConsentContainer article {
-  padding: 0 1vw 0 1vw;
+  padding: 0 10px 0 10px;
 }
 
 .ConsentContainer article h4 {
@@ -146,11 +146,11 @@
 .ConsentCheckbox {
   display: grid;
   grid-template-columns: 30px calc(100% - 30px);
-  padding-left: 1vw;
+  padding-left: 10px;
 }
 
 .ConsentCheckbox p {
-  padding-left: 2vw;
+  padding-left: 10px;
 }
 
 .ConsentCheckbox label span {

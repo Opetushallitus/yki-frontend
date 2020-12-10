@@ -19,7 +19,7 @@ class LanguageSelect extends React.PureComponent {
     }
   }
 
-changeLanguage = lang => {
+  changeLanguage = lang => {
     document.documentElement.lang = lang;
     i18n.changeLanguage(lang);
   };
