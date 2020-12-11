@@ -37,6 +37,9 @@ const examSessionListItem = ({
     </div>
   );
 
+  const currentDate = moment().format("YYYY-MM-DD");
+  const registrationClosed = moment(session.registration_end_date).isBefore(currentDate);
+
   const sessionLocation =
     session.location.find(l => l.lang === i18n.language) || session.location[0];
   const name = sessionLocation.name;
@@ -63,8 +66,8 @@ const examSessionListItem = ({
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {spotsAvailable > 0 ? (
-          <Fragment>
+        {spotsAvailable > 0 && !registrationClosed ? (
+            <Fragment>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
               {spotsAvailableText}
@@ -108,21 +111,27 @@ const examSessionListItem = ({
     : t('registration.register.forQueue');
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
   const registerButton = (
-    <button
-      className={[
-        classes.RegisterButton,
-        !session.open || (!spotsAvailable && session.queue_full)
-          ? classes.RegistrationLocked
-          : spotsAvailable
-          ? classes.ButtonForSignup
-          : classes.ButtonForQueue,
-      ].join(' ')}
-      onClick={selectExamSession}
-      role="link"
-      aria-label={srLabel}
-    >
-      {buttonText}
-    </button>
+    <>
+      {!registrationClosed && !session.queue_full ?
+        <button
+          className={[
+            classes.RegisterButton,
+            !session.open || (!spotsAvailable && session.queue_full)
+              ? classes.RegistrationLocked
+              : spotsAvailable
+              ? classes.ButtonForSignup
+              : classes.ButtonForQueue,
+          ].join(' ')}
+          onClick={selectExamSession}
+          role="link"
+          aria-label={srLabel}
+        >
+          {buttonText}
+        </button>
+        :
+        null
+      }
+      </>
   );
 
   return (

@@ -160,8 +160,8 @@ describe('Registration', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus?language=fin&level=&location=&lang=fi');
 
     cy.get('[data-cy=exam-session-list-item]')
-      .get('button')
-      .contains('Jono täynnä')
+      .get('span')
+      .contains('Täynnä!')
       .should('exist');
   });
 
