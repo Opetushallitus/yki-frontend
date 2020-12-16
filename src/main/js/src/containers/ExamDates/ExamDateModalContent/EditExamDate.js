@@ -48,7 +48,6 @@ const EditExamDate = (props) => {
   }
 
 
-  // TODO: new localizations to be added!
   const FormFields = () => (
     <Formik
       initialValues={{
@@ -73,7 +72,6 @@ const EditExamDate = (props) => {
         <Form className={classes.Form}>
           <div className={classes.TimeGrid}>
             <div>
-              <label>{t('examDates.choose.registrationTime')}</label>
               <div className={classes.DateGrid}>
                 <div>
                   <div className={classes.DisabledPicker}>
@@ -103,7 +101,6 @@ const EditExamDate = (props) => {
               </div>
             </div>
             <div className={classes.ExamDateGrid}>
-              <label>{t('examDates.choose.examDate')}</label>
               <div className={classes.DisabledPicker}>
                 <DatePicker
                   options={{
@@ -125,13 +122,13 @@ const EditExamDate = (props) => {
           </div>
           {examDate ?
             <div className={classes.PostAdmission}>
-              <label>{'Järjestäjien jälki-ilmoittautuminen'}</label>
+              <label>{t('examDates.edit.postAdmission.title')}</label>
               <div className={classes.PostAdmissionContainer}>
                 <div className={classes.Toggle}>
                   <ToggleSwitch checked={postAdmissionEnabled} onChange={() => setPostAdmissionEnabled(!postAdmissionEnabled)} />
-                  <p className={classes.Label}>{'Salli'}</p>
+                  <p className={classes.Label}>{t('examDates.edit.postAdmission.allow')}</p>
                 </div>
-                <p className={classes.Label}>{'Päivämäärät'}</p>
+                <p className={classes.Label}>{t('examDates.edit.postAdmission.dates')}</p>
                 <div className={classes.DateGrid}>
                   <div className={postAdmissionEnabled ? classes.DatePickerWrapper : classes.DisabledPicker}>
                     <DatePicker
@@ -182,7 +179,7 @@ const EditExamDate = (props) => {
               type='submit'
               className={classes.ConfirmButton}
             >
-              {t('examDates.addNew.confirm')}
+              {t('examDates.edit.save')}
             </button>
           </div>
         </Form>
@@ -193,7 +190,7 @@ const EditExamDate = (props) => {
 
   return (
     <>
-      <h3 style={{ marginBlockStart: '0' }}>Muokkaa aikaa</h3>
+      <h3 style={{ marginBlockStart: '0' }}>{t('examDates.edit.title')}</h3>
       <FormFields />
     </>
   );
