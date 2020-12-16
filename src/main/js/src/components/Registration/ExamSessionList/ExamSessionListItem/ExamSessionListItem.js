@@ -1,12 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { nowBetweenDates } from '../../../../util/util';
 import classes from './ExamSessionListItem.module.css';
-import {getDeviceOrientation, levelDescription} from '../../../../util/util';
+import { getDeviceOrientation, levelDescription } from '../../../../util/util';
 import {
   DATE_FORMAT,
   DATE_FORMAT_WITHOUT_YEAR, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW
@@ -14,11 +14,11 @@ import {
 import * as actions from '../../../../store/actions/index';
 
 const examSessionListItem = ({
-                               examSession: session,
-                               language,
-                               onSelectExamSession,
-                               history,
-                             }) => {
+  examSession: session,
+  language,
+  onSelectExamSession,
+  history,
+}) => {
   const [t, i18n] = useTranslation();
 
   const selectExamSession = () => {
@@ -49,7 +49,7 @@ const examSessionListItem = ({
   const city = sessionLocation.post_office.toUpperCase() || '';
   const location = (
     <span className={classes.Location}>
-      {name} <br/> {address} <br/> {session.location[0].zip} <strong>{city}</strong>
+      {name} <br /> {address} <br /> {session.location[0].zip} <strong>{city}</strong>
     </span>
   );
 
@@ -73,16 +73,16 @@ const examSessionListItem = ({
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {spotsAvailable > 0 && !registrationClosed || postAdmissionActive ? (
+        {(spotsAvailable > 0 && !registrationClosed) || postAdmissionActive ? (
           <>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
-                  {spotsAvailableText}
-                </span>
+              {spotsAvailableText}
+            </span>
           </>
         ) : (
-          <span>{t('registration.examSpots.full')}</span>
-        )}
+            <span>{t('registration.examSpots.full')}</span>
+          )}
       </strong>
     </div>
   );
@@ -137,12 +137,12 @@ const examSessionListItem = ({
 
   const locationOnMobileView = (
     <div className={classes.Location}>
-        <span>
-          {name}<br/>{address}<br/>
-        </span>
       <span>
-          {session.location[0].zip}{' '}{city}
-        </span>
+        {name}<br />{address}<br />
+      </span>
+      <span>
+        {session.location[0].zip}{' '}{city}
+      </span>
     </div>
   );
 
@@ -159,14 +159,14 @@ const examSessionListItem = ({
             <div>{exam}</div>
             <div>{date}</div>
           </div>
-          <hr/>
+          <hr />
           <div>{registrationOpen}</div>
-          <hr/>
+          <hr />
           <div className={classes.MobileRow}>
             <div>{availability}</div>
             {session.queue_full ? null : <div className={classes.ExamFee}>{examFee}</div>}
           </div>
-          <hr/>
+          <hr />
           <div>
             {locationOnMobileView}
             {registerButton}

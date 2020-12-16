@@ -74,7 +74,7 @@ const LanguageLevelSelector = (props) => {
 											className={`${classes.LanguageButton} ${classes.RemoveLanguageButton}`}
 											onClick={() => handleRemoveLanguage(i)}
 										>
-											{'Poista kieli ja taso'}
+											{t('examDates.languages.delete')}
 										</button>
 									</div>
 								</React.Fragment>
@@ -123,7 +123,7 @@ const LanguageLevelSelector = (props) => {
 								className={classes.AddNewLanguages}
 								onClick={() => setNewLanguageField(!newLanguageField)}
 							>
-								{'Lisää uusi kieli'}
+								{t('examDates.languages.add')}
 							</button>
 						</div>
 						:

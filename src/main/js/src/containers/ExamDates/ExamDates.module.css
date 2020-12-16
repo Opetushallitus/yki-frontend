@@ -41,6 +41,30 @@
   margin-right: 2vw;
 }
 
+
+.ConfirmText {
+  font-weight: bold;
+  margin-bottom: 4vh;
+  max-height: 300px;
+}
+
+.ConfirmButtons button {
+  color: hsl(0, 0%, 100%);
+  border: none;
+  padding: 12px;
+  border-radius: 2px;
+  width: 150px;
+}
+
+.ConfirmButton {
+  background-color: hsla(199, 77%, 43%, 0.95);
+}
+
+.CancelButton {
+  background-color: hsla(358, 75%, 57%, 0.85);
+  margin-right: 2vw;
+}
+
 .Grid {
   display: grid;
   grid-template-columns: 50px 1fr 1fr 1fr 1fr 0.4fr;
@@ -125,4 +149,12 @@
 .LanguageList li::marker {
     margin-top: 4px;
     content: "› ";
+}
+
+.DeleteModal {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
