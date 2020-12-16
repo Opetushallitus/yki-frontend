@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {withTranslation} from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import * as R from 'ramda';
 
@@ -12,10 +12,11 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import AddOrEditPostAdmissionConfiguration from './PostAdmission/AddOrEditPostAdmissionConfiguration';
 import * as actions from '../../store/actions/index';
-import {DATE_FORMAT} from '../../common/Constants';
-import {languageToString, levelDescription} from '../../util/util';
+import { DATE_FORMAT } from '../../common/Constants';
+import { languageToString, levelDescription } from '../../util/util';
 import ControlledCheckbox from '../../components/UI/Checkbox/ControlledCheckbox';
 import AddOrEditExamDate from './ExamDateModalContent/AddOrEditExamDate';
+import EditExamDate from './ExamDateModalContent/EditExamDate';
 
 import editIcon from '../../assets/svg/edit.svg';
 import RegistrationPeriod from "./util/RegistrationPeriod";
@@ -35,9 +36,8 @@ class ExamDates extends Component {
       grouped: null,
     }
   }
-
   componentDidMount() {
-   this.props.onFetchExamDates();
+    this.props.user && this.props.user.identity && this.props.onFetchExamDates(this.props.user.identity.oid);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -55,24 +55,24 @@ class ExamDates extends Component {
     }
 
     if (prevState.fetchExamHistory !== this.state.fetchExamHistory) {
+      const id = this.props.user.identity.oid;
       if (this.state.fetchExamHistory) {
-        const id = this.props.user.identity.oid;
         this.props.onGetExamDatesHistory(id);
       } else {
-        this.props.onFetchExamDates();
+        this.props.onFetchExamDates(id);
       }
     }
   }
 
   showAddOrEditPostAdmissionModalHandler = examDate => {
-    this.setState({showAddOrEditPostAdmissionModal: true, selectedExamDate: examDate});
+    this.setState({ showAddOrEditPostAdmissionModal: true, selectedExamDate: examDate });
   }
 
   closeAddOrEditPostAdmissionModalHandler = () =>
-    this.setState({showAddOrEditPostAdmissionModal: false, selectedExamDateIndex: null});
+    this.setState({ showAddOrEditPostAdmissionModal: false, selectedExamDateIndex: null });
 
   showAddOrEditExamDateModalHandler = () =>
-    this.setState({showAddOrEditExamDate: !this.state.showAddOrEditExamDate});
+    this.setState({ showAddOrEditExamDate: !this.state.showAddOrEditExamDate });
 
   showEditExamDateHandler = selectedDate => {
     this.setState(prev => ({
@@ -92,6 +92,25 @@ class ExamDates extends Component {
     }));
   }
 
+  createExamDateHandler = examDate => {
+    this.props.onAddExamDate(
+      examDate,
+      this.props.user.identity.oid,
+    );
+    this.closeAddOrEditExamDateModal();
+  };
+
+  editExamDateHandler = payload => {
+    this.props.onUpdateConfiguration(
+      payload.postAdmission,
+      payload.languages,
+      this.props.user.identity.oid,
+      payload.examDateId
+    );
+    this.closeAddOrEditExamDateModal();
+  };
+
+
   sortByRegistrationDate = R.sortBy(R.prop('registration_start_date'), this.props.examDates);
 
   grouped = R.groupWith(
@@ -104,7 +123,10 @@ class ExamDates extends Component {
   // sortedByDateDESC = [R.sort(R.descend(R.prop('exam_date')), this.state.selectedRegistrationPeriod)];
 
   render() {
-    const {examDates, loading, t} = this.props;
+    const { examDates, loading, t } = this.props;
+    const usedDates = examDates.map(ed => ed.exam_date)
+    const currentDate = moment(new Date()).format('YYYY-MM-DD');
+
     const {
       selectedExamDate,
       selectedExamDates,
@@ -112,25 +134,6 @@ class ExamDates extends Component {
       showAddOrEditPostAdmissionModal
     } = this.state;
 
-    const addOrEditPostAdmissionModal = (
-      <>
-        {showAddOrEditPostAdmissionModal ?
-          (
-            <Modal
-              show={showAddOrEditPostAdmissionModal}
-              modalClosed={this.closeAddOrEditPostAdmissionModalHandler}
-            >
-              <AddOrEditPostAdmissionConfiguration
-                onUpdate={this.closeAddOrEditPostAdmissionModalHandler}
-                loadingExamDates={loading}
-                examDate={selectedExamDate}
-              />
-            </Modal>
-          ) :
-          null
-        }
-      </>
-    );
 
     //TODO: handle update event
     // if selectedExamDate === null => add new exam date modal
@@ -138,15 +141,16 @@ class ExamDates extends Component {
       <>
         {showAddOrEditExamDate ? (
           <Modal smallModal show={showAddOrEditExamDate} modalClosed={this.closeAddOrEditExamDateModal}>
-            {selectedExamDate === null ?
-              <AddOrEditExamDate
-                examDates={[]}
-                onUpdate={this.closeAddOrEditExamDateModal}
+            {!!selectedExamDate ?
+              <EditExamDate
+                examDate={selectedExamDate}
+                onSubmit={this.editExamDateHandler}
               />
               :
               <AddOrEditExamDate
-                examDates={[selectedExamDate]}
-                onUpdate={this.closeAddOrEditExamDateModal}
+                examDates={[]}
+                onSubmit={this.createExamDateHandler}
+                disabledDates={usedDates}
               />
             }
           </Modal>
@@ -157,6 +161,10 @@ class ExamDates extends Component {
     const examDateTables = () => {
 
       const onSelectAllChange = () => {
+        /*         
+        TODO: Decide if the feature should be kept or not.
+        Disabled for now to simplify the delete feature.
+
         if (selectedExamDates.length < 1) {
           this.setState({
             selectedExamDates: [...this.state.grouped],
@@ -165,7 +173,7 @@ class ExamDates extends Component {
           this.setState({
             selectedExamDates: []
           });
-        }
+        } */
       }
 
       const notSelected = selectedExamDates.length <= 0;
@@ -203,14 +211,16 @@ class ExamDates extends Component {
         </div>
       );
 
-      const isAllChecked = R.equals(this.state.grouped, this.state.selectedExamDates);
+      // Hidden until decided if this should exist
+      //const isAllChecked = R.equals(this.state.grouped, this.state.selectedExamDates);
 
       const examDateHeaders = (
         <>
           <div className={classes.Grid} data-cy="exam-dates-table">
             <ControlledCheckbox
               onChange={() => onSelectAllChange()}
-              checked={isAllChecked}
+              hidden // Hidden until decided if this should exist
+            //checked={isAllChecked}
             />
             <h3>{t('common.examDate')}</h3>
             <h3>{`${t('common.language')} & ${t('common.level')}`}</h3>
@@ -218,7 +228,7 @@ class ExamDates extends Component {
             <h3>{t('common.postAdmission')}</h3>
             <h3>{t('common.edit')}</h3>
           </div>
-          <hr className={classes.GridDivider}/>
+          <hr className={classes.GridDivider} />
         </>
       );
 
@@ -240,13 +250,15 @@ class ExamDates extends Component {
           }
         }
 
+        const cannotDeleteExamDate = exam => {
+          return (exam.exam_date < currentDate) || hasExamSessions(exam);
+        }
+
         const canEditExamDate = exam => {
-          const currentDate = moment(new Date()).format('YYYY-MM-DD');
-          return (exam.exam_date > currentDate) && !hasExamSessions(exam);
+          return (exam.exam_date > currentDate);
         }
 
         return examDates.map((e, i) => {
-          const registrationEndDateMoment = moment(e.registration_end_date);
 
           /* TODO: remove this block if new design is implemented
           const finnishOnly =
@@ -268,7 +280,7 @@ class ExamDates extends Component {
           const languageAndLevel = e.languages.map(lang => {
             const language = languageToString(lang.language_code).toLowerCase();
             const level = levelDescription(lang.level_code).toLowerCase();
-             return <li key={language+level}>{language}, {level}</li>;
+            return <li key={language + level}>{language}, {level}</li>;
             //return <p>{language}, {level}</p>;
           });
 
@@ -276,7 +288,7 @@ class ExamDates extends Component {
             return selectedExamDates.find(item => item.id === id)
           }
 
-          const postAdmissionDate = `${registrationEndDateMoment.add(1, 'days').format(DATE_FORMAT)} - 
+          const postAdmissionDate = `${moment(e.post_admission_start_date).format(DATE_FORMAT)} - 
             ${moment(e.post_admission_end_date).format(DATE_FORMAT)}`;
 
           return (
@@ -285,6 +297,7 @@ class ExamDates extends Component {
                 onChange={() => handleCheckboxChange(e.id)}
                 name={e.id}
                 checked={!!isChecked(e.id)}
+                disabled={cannotDeleteExamDate(e)}
               />
               <p>{moment(e.exam_date).format(DATE_FORMAT)}</p>
               {/*<p>{languages}: {level.toLowerCase()}</p>*/}
@@ -295,14 +308,14 @@ class ExamDates extends Component {
                   `${registrationEndDateMoment.add(1, 'days').format(DATE_FORMAT)} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}` :
                   t('examSession.postAdmission.add')}</a></p>
               */}
-              <RegistrationPeriod period={e}/>
-              <p>{e.post_admission_end_date ? `Auki: ${postAdmissionDate}` : 'Kiinni'}</p>
+              <RegistrationPeriod period={e} />
+              <p>{e.post_admission_enabled ? `${postAdmissionDate}` : 'Kiinni'}</p>
               <button
                 disabled={!canEditExamDate(e)}
                 className={classes.EditButton}
                 onClick={() => this.showEditExamDateHandler(e)}
               >
-                {canEditExamDate(e) ? <img src={editIcon} alt={'edit-icon'}/> : null}
+                {canEditExamDate(e) ? <img src={editIcon} alt={'edit-icon'} /> : null}
               </button>
             </React.Fragment>
           );
@@ -323,27 +336,25 @@ class ExamDates extends Component {
     };
 
     const content = loading ? (
-      <Spinner/>
+      <Spinner />
     ) : (
-      <>
-        <div className={classes.ExamDatesListHeader}>
-          <h2>{t('common.examDates')}</h2>
-        </div>
-        {examDates.length > 0 ? (
-          examDateTables()
-        ) : (
-          <p>{t('examDates.noUpcomingExamDates')}</p>
-        )}
-        <hr className={classes.GridDivider}/>
-      </>
-    );
-
+        <>
+          <div className={classes.ExamDatesListHeader}>
+            <h2>{t('common.examDates')}</h2>
+          </div>
+          {examDates.length > 0 ? (
+            examDateTables()
+          ) : (
+              <p>{t('examDates.noUpcomingExamDates')}</p>
+            )}
+          <hr className={classes.GridDivider} />
+        </>
+      );
     return (
       <Page>
         <div className={classes.ExamDates}>
           {content}
         </div>
-        {addOrEditPostAdmissionModal}
         {addNewExamDateModal}
       </Page>
     );
@@ -361,9 +372,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchExamDates: () => dispatch(actions.fetchExamDates()),
+    onAddExamDate: (examDate, oid) => dispatch(actions.addExamDate(examDate, oid)),
+    onFetchExamDates: (oid) => dispatch(actions.fetchExamDates(oid)),
     errorConfirmedHandler: () => dispatch(actions.examDatesFailReset()),
-    onGetExamDatesHistory: (oid) => dispatch(actions.GetExamDatesHistory(oid))
+    onGetExamDatesHistory: (oid) => dispatch(actions.GetExamDatesHistory(oid)),
+    onUpdateConfiguration: (postAdmission, languages, oid, examDateId) => dispatch(actions.updateExamDateConfigurations(postAdmission, languages, oid, examDateId)),
+    onDeleteExamDate: (oid, examDateId) => dispatch(actions.deleteExamDate(oid, examDateId))
   };
 };
 
@@ -374,6 +388,9 @@ ExamDates.propTypes = {
   onFetchExamDates: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
   onGetExamDatesHistory: PropTypes.func.isRequired,
+  onAddExamDate: PropTypes.func.isRequired,
+  onUpdateConfiguration: PropTypes.func.isRequired,
+  onDeleteExamDate: PropTypes.func.isRequired,
   user: PropTypes.object
 };
 

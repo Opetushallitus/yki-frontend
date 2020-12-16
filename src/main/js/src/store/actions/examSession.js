@@ -6,7 +6,7 @@ import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 
 const flattenOrganizationHierarchy = (orgChildrenResponse) => {
   const mapConcatOrgs = (orgs) => {
-    return orgs.map(o => [{nimi: o.nimi, oid: o.oid }].concat(mapConcatOrgs(o.children)));
+    return orgs.map(o => [{ nimi: o.nimi, oid: o.oid }].concat(mapConcatOrgs(o.children)));
   }
 
   return mapConcatOrgs(orgChildrenResponse).flat(20);
@@ -50,16 +50,14 @@ export const fetchExamSessionContent = () => {
               `/organisaatio-service/rest/organisaatio/v4/${organizer.oid}`,
             ),
             axios.get(
-              `/organisaatio-service/rest/organisaatio/v4/hierarkia/hae?aktiiviset=true&suunnitellut=true&lakkautetut=false&oid=${
-                organizer.oid
+              `/organisaatio-service/rest/organisaatio/v4/hierarkia/hae?aktiiviset=true&suunnitellut=true&lakkautetut=false&oid=${organizer.oid
               }`,
             ),
             axios.get(
-              `/yki/api/virkailija/organizer/${
-                organizer.oid
+              `/yki/api/virkailija/organizer/${organizer.oid
               }/exam-session?from=${today}`,
             ),
-            axios.get('/yki/api/exam-date'),
+            axios.get(`/yki/api/virkailija/organizer/${organizer.oid}/exam-date`),
           ])
             .then(
               ([
@@ -443,15 +441,15 @@ export const ResendPaymentEmail = (orgId, examSessionId, registrationId, emailLa
   return dispatch => {
     dispatch(ResendPaymentEmailStart());
     axios
-    .post(`/yki/api/virkailija/organizer/${orgId}/exam-session/${examSessionId}/registration/${registrationId}/resendConfirmation?emailLang=${emailLang}`)
-    .then(() => {
-      dispatch(ResendPaymentEmailSuccess());
-      alert("OK");
-    })
-    .catch(err => {
-      dispatch(ResendPaymentEmailFailure());
-      alert("Error");
-      console.error(err);
-    });
+      .post(`/yki/api/virkailija/organizer/${orgId}/exam-session/${examSessionId}/registration/${registrationId}/resendConfirmation?emailLang=${emailLang}`)
+      .then(() => {
+        dispatch(ResendPaymentEmailSuccess());
+        alert("OK");
+      })
+      .catch(err => {
+        dispatch(ResendPaymentEmailFailure());
+        alert("Error");
+        console.error(err);
+      });
   }
 }

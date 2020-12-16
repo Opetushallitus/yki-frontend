@@ -27,8 +27,8 @@
 
 /* When the checkbox is checked, add background image */
 .Container input:checked ~ .Checkmark {
-  background: url('../../../assets/svg/checkbox-blue-checkmark.svg') hsla(0, 0%, 100%, 1) center
-    center no-repeat;
+  background: url('../../../assets/svg/checkbox-blue-checkmark.svg')
+    hsla(0, 0%, 100%, 1) center center no-repeat;
   background-size: 1.15em;
 }
 
@@ -42,4 +42,9 @@
 /* Show the checkmark when checked */
 .Container input:checked ~ .Checkmark:after {
   display: block;
+}
+
+.Container input:disabled ~ .Checkmark {
+  background-color: hsl(0, 0%, 85%);
+  cursor: default;
 }
