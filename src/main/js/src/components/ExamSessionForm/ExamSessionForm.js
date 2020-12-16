@@ -16,6 +16,7 @@ import {
   levelTranslations,
 } from '../../util/util';
 import { getLocalizedName } from '../../util/registryUtil';
+import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 
 const examSessionForm = props => {
@@ -149,21 +150,17 @@ const examSessionForm = props => {
     });
   };
 
-  const examDateFields = (examDates, selectedLanguage) => {
+  const examDateFields = (examDates, selectedLanguage, selectedLevel) => {
     return examDates
       .filter(e => {
         return moment(e.exam_date).isBefore(moment().add(1, 'year'));
       })
       .map(examDate => {
         const enabled = R.includes(
-          { language_code: selectedLanguage },
+          { language_code: selectedLanguage, level_code: selectedLevel },
           examDate.languages,
         );
-        const languages = examDate.languages
-          .map(l => {
-            return languageToString(l.language_code).toLowerCase();
-          })
-          .join(', ');
+        const languages = getLanguagesWithLevelDescriptions(examDate.languages).join(', ');
         return (
           <Field
             component={RadioButtonComponent}
@@ -197,8 +194,8 @@ const examSessionForm = props => {
   };
 
   // FIXME: no need for organizer param
-  const organizationSelection = (organizer, children, lang) => 
-    children.map(c => 
+  const organizationSelection = (organizer, children, lang) =>
+    children.map(c =>
       <option value={c.oid} key={c.oid}>
         {`${getLocalizedName(c.nimi, lang)} (${c.oid ? c.oid : ''})`}
       </option>
@@ -224,8 +221,8 @@ const examSessionForm = props => {
       onSubmit={values => {
         const office = values.officeOid
           ? props.examSessionContent.organizationChildren.find(
-              o => o.oid === values.officeOid,
-            )
+            o => o.oid === values.officeOid,
+          )
           : null;
         const orgOrOfficeName = office
           ? office.nimi

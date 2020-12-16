@@ -76,7 +76,7 @@ export const fetchExamSessionContent = (days = null) => {
               `/yki/api/virkailija/organizer/${organizer.oid
               }/exam-session?from=${today}${daysParam}`,
             ),
-            axios.get('/yki/api/exam-date'),
+            axios.get(`/yki/api/virkailija/organizer/${organizer.oid}/exam-date`),
           ])
             .then(
               ([

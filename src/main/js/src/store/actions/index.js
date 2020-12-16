@@ -35,7 +35,14 @@ export {
   filteredExamsByAvailabilityAndRegistration
 } from './registration';
 export {
-  fetchExamDates, examDatesFailReset, updatePostAdmissionEndDate, deletePostAdmissionEndDate, GetExamDatesHistory
+  addExamDate,
+  fetchExamDates,
+  examDatesFailReset,
+  updatePostAdmissionEndDate,
+  deletePostAdmissionEndDate,
+  updateExamDateConfigurations,
+  deleteExamDate,
+  GetExamDatesHistory
 } from './examDates';
-export {fetchUser} from './user';
-export {initYKILanguage, changeYKILanguage} from './yki';
+export { fetchUser } from './user';
+export { initYKILanguage, changeYKILanguage } from './yki';
