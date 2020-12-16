@@ -9,7 +9,7 @@ import classes from './ExamSessionListItem.module.css';
 import {getDeviceOrientation, levelDescription} from '../../../../util/util';
 import {
   DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR, MOBILE_VIEW
+  DATE_FORMAT_WITHOUT_YEAR, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW
 } from '../../../../common/Constants';
 import * as actions from '../../../../store/actions/index';
 
@@ -39,6 +39,9 @@ const examSessionListItem = ({
     </div>
   );
 
+  const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
+  const registrationClosed = moment(session.registration_end_date).isBefore(currentDate);
+
   const sessionLocation =
     session.location.find(l => l.lang === i18n.language) || session.location[0];
   const name = sessionLocation.name;
@@ -50,21 +53,27 @@ const examSessionListItem = ({
     </span>
   );
 
-  const postAdmissionActive = session.post_admission_end_date && 
-                              session.post_admission_start_date &&
-                              session.post_admission_active &&
-                              session.post_admission_quota &&
-                              nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
+  const postAdmissionActive = session.post_admission_end_date &&
+    session.post_admission_start_date &&
+    session.post_admission_active &&
+    session.post_admission_quota &&
+    nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
+
+  const postAdmissionClosed = moment(session.post_admission_end_date).isBefore(currentDate);
+
   const spotsAvailable = postAdmissionActive ? (session.post_admission_quota - session.pa_participants) : (session.max_participants - session.participants);
 
   const spotsAvailableText =
     spotsAvailable === 1
       ? t('registration.examSpots.singleFree')
       : t('registration.examSpots.free');
+
+  const postAdmissionActiveAndClosed = (postAdmissionActive && !postAdmissionClosed);
+
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {spotsAvailable > 0 ? (
+        {spotsAvailable > 0 && !registrationClosed || postAdmissionActive ? (
           <>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
@@ -89,17 +98,15 @@ const examSessionListItem = ({
         )} - ${moment(session.registration_end_date).format(
           DATE_FORMAT_WITHOUT_YEAR,
         )}`}
-
         {
           (session.post_admission_start_date && session.post_admission_end_date && session.post_admission_active) ? (
-          <>
-            <br />
-            <span>{`${moment(session.post_admission_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} -
+            <>
+              <br />
+              <span>{`${moment(session.post_admission_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} -
                     ${moment(session.post_admission_end_date).format(DATE_FORMAT_WITHOUT_YEAR)}`}</span>
-          </>
+            </>
           ) : null
         }
-
       </span>
     </div>
   );
@@ -110,15 +117,22 @@ const examSessionListItem = ({
       ? t('registration.register.queueFull')
       : t('registration.register.forQueue');
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
+
   const registerButton = (
-    <button
-      className={'YkiButton'}
-      onClick={selectExamSession}
-      role="link"
-      aria-label={srLabel}
-    >
-      {buttonText}
-    </button>
+    <>
+      {(!registrationClosed && !session.queue_full) || postAdmissionActiveAndClosed ?
+        <button
+          className={'YkiButton'}
+          onClick={selectExamSession}
+          role="link"
+          aria-label={srLabel}
+        >
+          {buttonText}
+        </button>
+        :
+        null
+      }
+    </>
   );
 
   const locationOnMobileView = (

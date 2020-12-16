@@ -30,7 +30,7 @@ class ExamSessionPostAdmissionEdit extends React.Component {
     const validationSchema = Yup.object().shape({
       postAdmissionStart: Yup.string().required(t('error.mandatory')),
       postAdmissionEnd: Yup.string().required(t('error.mandatory')),
-      // postAdmissionQuota: Yup.number().typeError(t('error.numeric.int')).required(t('error.mandatory')).positive(t('error.numeric.positive')).integer(t('error.numeric.int')),
+      postAdmissionQuota: Yup.number().typeError(t('error.numeric.int')).required(t('error.mandatory')).positive(t('error.numeric.positive')).integer(t('error.numeric.int')),
     });
 
     const confirmActivityChangeButtons = (
@@ -137,9 +137,8 @@ class ExamSessionPostAdmissionEdit extends React.Component {
               <div>
                 <div>
                   <label className={`${classes.Label} ${classes.QuotaLabel}`} htmlFor="postAdmissionQuota">
-                    {t('examSession.postAdmission.participantAmount')}: {this.props.postAdmissionQuota}
+                    {t('examSession.postAdmission.participantAmount')}:
                   </label>
-                  {/*
                   <Field
                     id="postAdmissionQuota"
                     className={classes.Input}
@@ -152,7 +151,6 @@ class ExamSessionPostAdmissionEdit extends React.Component {
                     component="span"
                     className={classes.ErrorMessage}
                   />
-                  */}
                 </div>
                 <div className={classes.ButtonGroup}>
                   <button
@@ -181,22 +179,21 @@ class ExamSessionPostAdmissionEdit extends React.Component {
                 {t('examSession.postAdmission.startDate')}
               </label>
               <input className={`${classes.Input} ${classes.Disabled}`} data-cy="input-admission-startDate"
-                     value={moment(this.props.postAdmission.post_admission_start_date).format('D.M.YYYY')} disabled/>
+                     value={moment(this.props.postAdmission.post_admission_start_date).format('D.M.YYYY')} disabled />
             </div>
             <div>
               <label className={classes.Label}>
                 {t('examSession.postAdmission.endDate')}
               </label>
               <input className={`${classes.Input} ${classes.Disabled}`} data-cy="input-admission-endDate"
-                     value={moment(this.props.postAdmissionEndDate).format('D.M.YYYY')} disabled/>
+                     value={moment(this.props.postAdmissionEndDate).format('D.M.YYYY')} disabled />
             </div>
           </div>
-          {/*
           <label className={classes.Label}>
             {t('examSession.postAdmission.participantAmount')}
           </label>
-          <input className={`${classes.Input} ${classes.Disabled}`} data-cy="input-admission-quota" value={this.props.postAdmission.post_admission_quota} disabled />
-          */}
+          <input className={`${classes.Input} ${classes.Disabled}`} data-cy="input-admission-quota"
+                 value={this.props.postAdmission.post_admission_quota} disabled />
           <label className={`${classes.Label} ${classes.QuotaLabel}`} htmlFor="postAdmissionQuota">
             {t('examSession.postAdmission.participantAmount')}: {this.props.postAdmissionQuota}
           </label>

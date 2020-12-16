@@ -15,7 +15,7 @@ const ExamSessionPostAdmissionCreate = props => {
   const validationSchema = Yup.object().shape({
     postAdmissionStart: Yup.string().required(t('error.mandatory')),
     postAdmissionEnd: Yup.string().required(t('error.mandatory')),
-    // postAdmissionQuota: Yup.number().typeError(t('error.numeric.int')).required(t('error.mandatory')).positive(t('error.numeric.positive')).integer(t('error.numeric.int')),
+    postAdmissionQuota: Yup.number().typeError(t('error.numeric.int')).required(t('error.mandatory')).positive(t('error.numeric.positive')).integer(t('error.numeric.int')),
   });
 
   const postAdmissionAddHandler = (postadmission) => {
@@ -93,10 +93,9 @@ const ExamSessionPostAdmissionCreate = props => {
           </div>
           <div className={classes.FormItem}>
             <div>
-              <label className={`${classes.Label} ${classes.QuotaLabel}`} htmlFor="postAdmissionQuota">
-                {t('examSession.postAdmission.participantAmount')}: {props.postAdmissionQuota}
+              <label className={classes.Label} htmlFor="postAdmissionQuota">
+                {t('examSession.postAdmission.participantAmount')}
               </label>
-              {/*
               <Field
                 id="postAdmissionQuota"
                 className={classes.Input}
@@ -109,7 +108,6 @@ const ExamSessionPostAdmissionCreate = props => {
                 component="span"
                 className={classes.ErrorMessage}
               />
-              */}
             </div>
             <div>
               <button className={classes.Button} data-cy="button-admission-submit" type="submit" tabIndex="4">
@@ -126,7 +124,6 @@ ExamSessionPostAdmissionCreate.propTypes = {
   examSessionId: PropTypes.number.isRequired,
   postAdmissionMinDate: PropTypes.string.isRequired,
   postAdmissionEndDate: PropTypes.string.isRequired,
-  postAdmissionQuota: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
 }
 

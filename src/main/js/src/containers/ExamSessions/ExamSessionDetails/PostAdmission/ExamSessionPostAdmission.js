@@ -40,7 +40,6 @@ export class ExamSessionPostAdmission extends Component {
           examSessionId={this.props.examSession.id}
           postAdmissionMinDate={this.props.examSession.registration_end_date}
           postAdmissionEndDate={this.props.examSession.post_admission_end_date}
-          postAdmissionQuota={this.props.examSession.post_admission_quota}
         />
       } else if (this.state.createMode) {
         // Show Create view
@@ -48,7 +47,6 @@ export class ExamSessionPostAdmission extends Component {
           oid={this.props.oid} examSessionId={this.props.examSession.id}
           postAdmissionMinDate={this.props.examSession.registration_end_date}
           postAdmissionEndDate={this.props.examSession.post_admission_end_date}
-          postAdmissionQuota={this.props.examSession.post_admission_quota}
           onCancel={this.toggleCreateMode}
         />
       } else {
