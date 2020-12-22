@@ -73,15 +73,20 @@
     border-radius: 2px;
 }
 
-.ConfirmButton {
-    margin-top: 2vh;
+.ActionButtons button {
+    color: hsl(0, 0%, 100%);
     border: none;
     padding: 12px;
     border-radius: 2px;
     width: 220px;
+  }
+
+.ConfirmButton {
     background-color: hsla(199, 77%, 43%, 0.95);
-    margin-bottom: 1vh;
-    color: hsla(0, 0%, 100%, 1);
+}
+
+.DisabledButton {
+    background-color: hsl(0, 0%, 83%);
 }
 
 .LanguageButton {

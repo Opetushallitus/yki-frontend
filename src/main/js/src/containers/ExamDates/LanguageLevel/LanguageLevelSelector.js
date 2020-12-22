@@ -44,6 +44,7 @@ const LanguageLevelSelector = (props) => {
 									<div>
 										<>
 											<select
+												data-cy="exam-date-languages-select-language"
 												className={classes.ExamLevels}
 												defaultValue={date.language_code || language_code}
 												onChange={e => handleEdit('language_code', e.target.value, date)}
@@ -57,6 +58,7 @@ const LanguageLevelSelector = (props) => {
 									<div key={date.level_code}>
 										<>
 											<select
+												data-cy="exam-date-languages-select-level"
 												className={classes.ExamLevels}
 												defaultValue={date.level_code || level_code}
 												onChange={e => handleEdit('level_code', e.target.value, date)}
@@ -69,6 +71,7 @@ const LanguageLevelSelector = (props) => {
 									</div>
 									<div>
 										<button
+											data-cy={`exam-date-languages-button-delete-${date.language_code}-${date.level_code}`}
 											type='button'
 											value={i}
 											className={`${classes.LanguageButton} ${classes.RemoveLanguageButton}`}
@@ -88,6 +91,7 @@ const LanguageLevelSelector = (props) => {
 						<label>{t('examDates.choose.examLanguage')}</label>
 						<>
 							<select
+								data-cy="exam-date-languages-select-language"
 								className={classes.ExamLevels}
 								value={language_code}
 								onChange={e => setLanguage(e.target.value)}
@@ -102,6 +106,7 @@ const LanguageLevelSelector = (props) => {
 						<label>{t('registration.select.level')}</label>
 						<>
 							<select
+								data-cy="exam-date-languages-select-level"
 								className={classes.ExamLevels}
 								value={level_code}
 								onChange={e => setLevel(e.target.value)}
@@ -114,65 +119,71 @@ const LanguageLevelSelector = (props) => {
 					</div>
 				</>
 			}
-			{modify ?
-				<>
-					{(newLanguageField === false) ?
-						<div>
-							<button
-								type='button'
-								className={classes.AddNewLanguages}
-								onClick={() => setNewLanguageField(!newLanguageField)}
-							>
-								{t('examDates.languages.add')}
-							</button>
-						</div>
-						:
-						<div className={classes.LanguageAndLevelGrid}>
-							<div>
-								<select
-									className={classes.ExamLevels}
-									value={language_code}
-									onChange={e => setLanguage(e.target.value)}
-								>
-									{LANGUAGES.map((lang) => {
-										return <option key={lang.code} value={lang.code}>{lang.name}</option>
-									})}
-								</select>
-							</div>
-							<div>
-								<select
-									className={classes.ExamLevels}
-									value={level_code}
-									onChange={e => setLevel(e.target.value)}
-								>
-									<option value={'PERUS'}>{t(levelTranslations.PERUS)}</option>
-									<option value={'KESKI'}>{t(levelTranslations.KESKI)}</option>
-									<option value={'YLIN'}>{t(levelTranslations.YLIN)}</option>
-								</select>
-							</div>
+			{
+				modify ?
+					<>
+						{(newLanguageField === false) ?
 							<div>
 								<button
+									data-cy="exam-date-languages-add-row"
 									type='button'
-									style={{ marginTop: '4px' }}
-									className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
-									onClick={() => handleAddNewLanguage()}
+									className={classes.AddNewLanguages}
+									onClick={() => setNewLanguageField(!newLanguageField)}
 								>
-									{t('examDates.addNew.addLanguage')}
+									{t('examDates.languages.add')}
 								</button>
 							</div>
-						</div>
-					}
-				</>
-				:
-				<div>
-					<button
-						type='button'
-						className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
-						onClick={() => handleAddNewLanguage()}
-					>
-						{t('examDates.addNew.addLanguage')}
-					</button>
-				</div>
+							:
+							<div className={classes.LanguageAndLevelGrid}>
+								<div>
+									<select
+										data-cy="exam-date-languages-select-language-new"
+										className={classes.ExamLevels}
+										value={language_code}
+										onChange={e => setLanguage(e.target.value)}
+									>
+										{LANGUAGES.map((lang) => {
+											return <option key={lang.code} value={lang.code}>{lang.name}</option>
+										})}
+									</select>
+								</div>
+								<div>
+									<select
+										data-cy="exam-date-languages-select-level-new"
+										className={classes.ExamLevels}
+										value={level_code}
+										onChange={e => setLevel(e.target.value)}
+									>
+										<option value={'PERUS'}>{t(levelTranslations.PERUS)}</option>
+										<option value={'KESKI'}>{t(levelTranslations.KESKI)}</option>
+										<option value={'YLIN'}>{t(levelTranslations.YLIN)}</option>
+									</select>
+								</div>
+								<div>
+									<button
+										data-cy="exam-date-languages-button-add"
+										type='button'
+										style={{ marginTop: '4px' }}
+										className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
+										onClick={() => handleAddNewLanguage()}
+									>
+										{t('examDates.addNew.addLanguage')}
+									</button>
+								</div>
+							</div>
+						}
+					</>
+					:
+					<div>
+						<button
+							data-cy="exam-date-languages-add-new"
+							type='button'
+							className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
+							onClick={() => handleAddNewLanguage()}
+						>
+							{t('examDates.addNew.addLanguage')}
+						</button>
+					</div>
 			}
 		</>
 	);

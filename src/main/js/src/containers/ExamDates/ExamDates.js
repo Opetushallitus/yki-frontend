@@ -166,15 +166,17 @@ class ExamDates extends Component {
         {this.state.showDeleteConfirmation ? (
           <Modal confirmationModal show={this.state.showDeleteConfirmation} modalClosed={this.closeDeleteConfirmationHandler}>
             <div className={classes.DeleteModal}>
-              <div className={classes.ConfirmText}>Haluatko varmasti poistaa tutkintopäivän?</div>
+              <div className={classes.ConfirmText}>{t('examDates.delete.confirm')}</div>
               <div className={classes.ConfirmButtons}>
                 <button
+                  data-cy="exam-dates-delete-cancel"
                   className={classes.CancelButton}
                   onClick={this.closeDeleteConfirmationHandler}
                 >
                   {t('common.cancelConfirm')}
                 </button>
                 <button
+                  data-cy="exam-dates-delete-confirm"
                   className={classes.ConfirmButton}
                   onClick={() =>
                     this.deleteExamDateHandler(this.state.checkedExamDate)
@@ -231,12 +233,14 @@ class ExamDates extends Component {
         <div className={classes.ExamDateControls}>
           <div className={classes.ActionButtons}>
             <button
+              data-cy="exam-dates-button-add-new"
               className={classes.AdditionButton}
               onClick={() => this.showAddOrEditExamDateModalHandler()}
             >
               {t('examDates.addNew.confirm')}
             </button>
             <button
+              data-cy="exam-dates-button-delete"
               className={!checked || hasExamSessions(checked) ? classes.DisabledButton : classes.DeleteButton}
               disabled={(!checked || hasExamSessions(checked))}
               onClick={this.showDeleteConfirmationHandler}
@@ -256,7 +260,7 @@ class ExamDates extends Component {
 
       const examDateHeaders = (
         <>
-          <div className={classes.Grid} data-cy="exam-dates-table">
+          <div className={classes.Grid} data-cy="exam-dates-table-headers">
             <ControlledCheckbox
               onChange={() => onSelectAllChange()}
               hidden // Hidden until decided if this should exist
@@ -329,7 +333,8 @@ class ExamDates extends Component {
           const languageAndLevel = e.languages.map(lang => {
             const language = languageToString(lang.language_code).toLowerCase();
             const level = levelDescription(lang.level_code).toLowerCase();
-            return <li key={language + level}>{language}, {level}</li>;
+            const dataId = e.exam_date + '-' + lang.language_code + '-' + lang.level_code;
+            return <li data-cy={`exam-dates-row-language-${dataId}`} key={language + level}>{language}, {level}</li>;
           });
 
           const isChecked = id => {
@@ -337,22 +342,29 @@ class ExamDates extends Component {
             return id === this.state.checkedExamDate.id
           }
 
-          const postAdmissionDate = `${moment(e.post_admission_start_date).format(DATE_FORMAT)} - 
-            ${moment(e.post_admission_end_date).format(DATE_FORMAT)}`;
+          const postAdmissionDate = (e.post_admission_start_date && e.post_admission_start_date)
+            ? `${moment(e.post_admission_start_date).format(DATE_FORMAT)} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}`
+            : '';
 
           return (
             <React.Fragment key={i}>
               <ControlledCheckbox
+                dataCy={`exam-dates-list-checkbox-${e.exam_date}`}
                 onChange={() => handleCheckboxChange(e.id)}
                 name={e.id}
                 checked={!!isChecked(e.id)}
                 disabled={cannotDeleteExamDate(e)}
               />
-              <p>{moment(e.exam_date).format(DATE_FORMAT)}</p>
-              <ul className={classes.LanguageList}>{languageAndLevel}</ul>
+              <p data-cy={`exam-dates-list-date-${e.exam_date}`}>{moment(e.exam_date).format(DATE_FORMAT)}</p>
+              <ul data-cy={`exam-dates-list-languages-${e.exam_date}`} className={classes.LanguageList}>{languageAndLevel}</ul>
               <RegistrationPeriod period={e} />
-              <p>{e.post_admission_enabled ? `${postAdmissionDate}` : 'Kiinni'}</p>
+              <p data-cy={`exam-dates-list-post-admission-${e.exam_date}`}>
+                {e.post_admission_enabled
+                  ? `${postAdmissionDate}`
+                  : t('examDates.postAdmission.closed')}
+              </p>
               <button
+                data-cy={`exam-dates-edit-button-${e.exam_date}`}
                 disabled={!canEditExamDate(e)}
                 className={classes.EditButton}
                 onClick={() => this.showEditExamDateHandler(e)}
@@ -369,7 +381,7 @@ class ExamDates extends Component {
           {examDateButtons}
           {examDateHeaders}
           {this.state.grouped !== null && (
-            <div className={classes.Grid}>
+            <div className={classes.Grid} data-cy="exam-dates-table-rows">
               {examDateRows(this.state.grouped)}
             </div>
           )}
