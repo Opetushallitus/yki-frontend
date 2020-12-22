@@ -22,7 +22,7 @@ class DatePicker extends Component {
     this.flatpickr = new Flatpickr(this.node, options);
     this.flatpickr.set('onChange', this.props.onChange);
 
-    if(this.props.disabled === true) {
+    if (this.props.disabled === true) {
       this.flatpickr._input.setAttribute('disabled', 'disabled');
     } if (this.props.disabled === false) {
       this.flatpickr._input.removeAttribute('disabled');
@@ -50,7 +50,7 @@ class DatePicker extends Component {
 }
 
 const selectLocale = tag => {
-  switch(tag) {
+  switch (tag) {
     case 'sv':
       return Swedish;
     case 'fi':
@@ -65,7 +65,7 @@ DatePicker.propTypes = {
   options: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   tabIndex: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 export default DatePicker;

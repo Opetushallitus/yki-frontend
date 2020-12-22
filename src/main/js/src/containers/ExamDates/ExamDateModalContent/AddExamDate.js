@@ -12,7 +12,6 @@ import { Form, Formik } from "formik";
 
 const AddExamDate = (props) => {
   const { examDates, disabledDates, t } = props;
-  const currentDate = moment(new Date()).format('YYYY-MM-DD');
 
   const initializeLanguageArray = () => {
     let languageArray = [];
@@ -33,19 +32,26 @@ const AddExamDate = (props) => {
     return LANGUAGES[0].code
   }
 
-  const initializeStateDate = (value) => {
+  const initializeStartDate = () => {
     if (examDates.length === 1) {
-      return examDates[0][value]
+      return examDates[0].registration_start_date;
     }
-    return currentDate;
+    return moment(new Date()).format('YYYY-MM-DD');
+  }
+
+  const initializeEndDate = () => {
+    if (examDates.length === 1) {
+      return examDates[0].registration_end_date;
+    }
+    return moment(new Date()).add(1, 'days').format('YYYY-MM-DD');
   }
 
 
 
   // useStates
   const [languageAndLevel, setLanguageAndLevel] = useState(initializeLanguageArray || []);
-  const [registrationStartDate, setRegistrationStartDate] = useState(initializeStateDate('registration_start_date'));
-  const [registrationEndDate, setRegistrationEndDate] = useState(initializeStateDate('registration_end_date'));
+  const [registrationStartDate, setRegistrationStartDate] = useState(initializeStartDate());
+  const [registrationEndDate, setRegistrationEndDate] = useState(initializeEndDate());
 
   const [examDate, setExamDate] = useState((registrationEndDate && moment(registrationEndDate).add(1, 'days').format('YYYY-MM-DD')) || moment(new Date()).add(1, 'days').format('YYYY-MM-DD'));
 
@@ -56,6 +62,11 @@ const AddExamDate = (props) => {
     temp.splice(item, 1);
     setLanguageAndLevel(temp);
   }
+
+  const isValid =
+    moment(registrationEndDate).isAfter(registrationStartDate, 'day')
+    && moment(examDate).isAfter(registrationEndDate, 'day')
+    && (languageAndLevel && languageAndLevel.length > 0);
 
 
 
@@ -87,9 +98,11 @@ const AddExamDate = (props) => {
                 <div>
                   <div className={classes.DatePickerWrapper}>
                     <DatePicker
+                      data-cy="exam-date-new-registration-start"
                       id="registrationStartDate"
                       options={{ defaultDate: registrationStartDate }}
                       onChange={d => setRegistrationStartDate(moment(d[0]).format('YYYY-MM-DD'))}
+                      locale={props.i18n.language}
                     />
                   </div>
                 </div>
@@ -99,12 +112,14 @@ const AddExamDate = (props) => {
                 <div>
                   <div className={classes.DatePickerWrapper}>
                     <DatePicker
+                      data-cy="exam-date-new-registration-end"
                       id="registrationEndDate"
                       options={{
                         defaultDate: registrationEndDate,
                         minDate: registrationStartDate,
                       }}
                       onChange={d => setRegistrationEndDate(moment(d[0]).format('YYYY-MM-DD'))}
+                      locale={props.i18n.language}
                     />
                   </div>
                 </div>
@@ -114,6 +129,7 @@ const AddExamDate = (props) => {
               <label>{t('examDates.choose.examDate')}</label>
               <div className={classes.DatePickerWrapper}>
                 <DatePicker
+                  data-cy="exam-date-new-exam-date"
                   id='exam_date'
                   options={{
                     defaultDate: examDate,
@@ -121,6 +137,7 @@ const AddExamDate = (props) => {
                     disable: disabledDates || []
                   }}
                   onChange={d => setExamDate(moment(d[0]).format('YYYY-MM-DD'))}
+                  locale={props.i18n.language}
                 />
               </div>
             </div>
@@ -142,10 +159,12 @@ const AddExamDate = (props) => {
               )
             })}
           </div>
-          <div>
+          <div className={classes.ActionButtons}>
             <button
+              data-cy="exam-dates-button-save-new"
               type='submit'
-              className={classes.ConfirmButton}
+              className={isValid ? classes.ConfirmButton : classes.DisabledButton}
+              disabled={!isValid}
             >
               {t('examDates.addNew.confirm')}
             </button>

@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from "prop-types";
 import DatePicker from '../../../components/UI/DatePicker/DatePicker';
-import { languageToString, levelDescription } from "../../../util/util";
 import { LANGUAGES } from "../../../common/Constants";
-import closeOverlay from '../../../assets/svg/close-overlay.svg';
 import classes from './AddOrEditExamDate.module.css';
 import ToggleSwitch from "../../../components/UI/ToggleSwitch/ToggleSwitch";
 import LanguageLevelSelector from '../LanguageLevel/LanguageLevelSelector';
@@ -40,12 +38,6 @@ const EditExamDate = (props) => {
   const [postAdmissionEnabled, setPostAdmissionEnabled] = useState(examDate.post_admission_enabled);
   const [postAdmissionStartDate, setPostAdmissionStartDate] = useState(examDate.post_admission_start_date || minDate);
   const [postAdmissionEndDate, setPostAdmissionEndDate] = useState(examDate.post_admission_end_date || maxDate);
-
-  const handleRemoveLanguage = item => {
-    const temp = [...languageAndLevel];
-    temp.splice(item, 1);
-    setLanguageAndLevel(temp);
-  }
 
 
   const FormFields = () => (
@@ -120,62 +112,58 @@ const EditExamDate = (props) => {
               modify={!!examDate}
             />
           </div>
-          {examDate ?
-            <div className={classes.PostAdmission}>
-              <label>{t('examDates.edit.postAdmission.title')}</label>
-              <div className={classes.PostAdmissionContainer}>
-                <div className={classes.Toggle}>
-                  <ToggleSwitch checked={postAdmissionEnabled} onChange={() => setPostAdmissionEnabled(!postAdmissionEnabled)} />
-                  <p className={classes.Label}>{t('examDates.edit.postAdmission.allow')}</p>
+
+          <div className={classes.PostAdmission}>
+            <label>{t('examDates.edit.postAdmission.title')}</label>
+            <div className={classes.PostAdmissionContainer}>
+              <div className={classes.Toggle}>
+                <ToggleSwitch
+                  dataCy="exam-dates-modify-post-admission-toggle"
+                  checked={postAdmissionEnabled}
+                  onChange={() => setPostAdmissionEnabled(!postAdmissionEnabled)}
+                />
+                <p className={classes.Label}>{t('examDates.edit.postAdmission.allow')}</p>
+              </div>
+              <p className={classes.Label}>{t('examDates.edit.postAdmission.dates')}</p>
+              <div className={classes.DateGrid}>
+                <div className={postAdmissionEnabled ? classes.DatePickerWrapper : classes.DisabledPicker}>
+                  <DatePicker
+                    id="postAdmissionStartDate"
+                    data-cy="exam-dates-modify-post-admission-start-date"
+                    disabled={!postAdmissionEnabled}
+                    options={{
+                      defaultDate: postAdmissionStartDate,
+                      minDate,
+                      maxDate,
+                    }}
+                    locale={props.i18n.language}
+                    onChange={d => setPostAdmissionStartDate(moment(d[0]).format('YYYY-MM-DD'))}
+                  />
                 </div>
-                <p className={classes.Label}>{t('examDates.edit.postAdmission.dates')}</p>
-                <div className={classes.DateGrid}>
-                  <div className={postAdmissionEnabled ? classes.DatePickerWrapper : classes.DisabledPicker}>
-                    <DatePicker
-                      id="postAdmissionStartDate"
-                      disabled={!postAdmissionEnabled}
-                      options={{
-                        defaultDate: postAdmissionStartDate,
-                        minDate,
-                        maxDate,
-                      }}
-                      onChange={d => setPostAdmissionStartDate(moment(d[0]).format('YYYY-MM-DD'))}
-                    />
-                  </div>
                   &nbsp;
                   &ndash;
                   &nbsp;
                   <div className={postAdmissionEnabled ? classes.DatePickerWrapper : classes.DisabledPicker}>
-                    <DatePicker
-                      id="postAdmissionEndDate"
-                      disabled={!postAdmissionEnabled}
-                      options={{
-                        defaultDate: postAdmissionEndDate,
-                        minDate: (postAdmissionStartDate && moment(postAdmissionStartDate).add(1, 'days').format('YYYY-MM-DD')) || minDate,
-                        maxDate
-                      }}
-                      onChange={d => setPostAdmissionEndDate(moment(d[0]).format('YYYY-MM-DD'))}
-                      locale={props.i18n.language}
-                      tabIndex="1"
-                    />
-                  </div>
+                  <DatePicker
+                    id="postAdmissionEndDate"
+                    data-cy="exam-dates-modify-post-admission-end-date"
+                    disabled={!postAdmissionEnabled}
+                    options={{
+                      defaultDate: postAdmissionEndDate,
+                      minDate: (postAdmissionStartDate && moment(postAdmissionStartDate).add(1, 'days').format('YYYY-MM-DD')) || minDate,
+                      maxDate
+                    }}
+                    onChange={d => setPostAdmissionEndDate(moment(d[0]).format('YYYY-MM-DD'))}
+                    locale={props.i18n.language}
+                    tabIndex="1"
+                  />
                 </div>
               </div>
             </div>
-            :
-            <div className={classes.AddedLanguages}>
-              {languageAndLevel.map((item, i) => {
-                return (
-                  <span key={i}>
-                    <img src={closeOverlay} alt={'delete'} onClick={() => handleRemoveLanguage(i)} />
-                    <p style={{ marginLeft: '10px' }}>{languageToString(item.language_code)}, {levelDescription(item.level_code)}</p>
-                  </span>
-                )
-              })}
-            </div>
-          }
-          <div>
+          </div>
+          <div className={classes.ActionButtons}>
             <button
+              data-cy="exam-dates-modify-save"
               type='submit'
               className={classes.ConfirmButton}
             >
