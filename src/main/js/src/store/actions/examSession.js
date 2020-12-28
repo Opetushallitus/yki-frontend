@@ -393,7 +393,7 @@ const relocateExamSessionFail = error => {
 export const addPostAdmission = (orgOid, examSessionId, postAdmission) => {
   return dispatch => {
     axios
-      .post(`/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission`, postAdmission)
+      .post(`/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/activate`, postAdmission)
       .then(() => {
         dispatch(fetchExamSessionContent());
       })
