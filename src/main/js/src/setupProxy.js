@@ -466,6 +466,20 @@ module.exports = function (app) {
         : mockCall();
     });
 
+  app.post(
+    '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/post-admission/activate',
+    (req, res) => {
+      proxyPostCall(req, res)
+    },
+  );
+
+  app.post(
+    '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/post-admission/deactivate',
+    (req, res) => {
+      proxyPostCall(req, res)
+    },
+  );
+
   app.delete(
     '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id',
     (req, res) => {

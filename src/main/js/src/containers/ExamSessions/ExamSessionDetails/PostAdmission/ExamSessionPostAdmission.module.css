@@ -11,7 +11,7 @@
 }
 
 .Button {
-  height: 41px;
+  height: 41px; 
   background-color: hsla(199, 77%, 43%, 0.95);
   color: white;
   font-size: 1em;
@@ -19,6 +19,10 @@
   border: none;
   border-radius: 2px;
   width: 100%;
+}
+
+.DisabledButton {
+  background-color: hsl(0, 0%, 83%);
 }
 
 .ExitButton {
