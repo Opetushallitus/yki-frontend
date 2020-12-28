@@ -9,6 +9,8 @@ export {
   confirmPayment,
   relocateExamSession,
   addPostAdmission,
+  activatePostAdmission,
+  deactivatePostAdmission,
   ResendPaymentEmail,
 } from './examSession';
 export {

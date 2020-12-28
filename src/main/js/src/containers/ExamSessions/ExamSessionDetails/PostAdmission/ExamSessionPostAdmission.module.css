@@ -26,11 +26,6 @@
   background-color: hsl(0, 0%, 83%);
 }
 
-.ExitButton {
-  background: none;
-  border: none;
-  text-align: right;
-}
 
 .CancelButton {
   background-color: hsla(358, 75%, 57%, 0.85);
@@ -62,12 +57,31 @@
   margin-block-start: 0;
 }
 
+.ExitItem {
+  display: grid;
+  grid-template-columns: 630px auto;
+  margin-top: 10px;
+}
+
+
+.ExitItem:first-child {
+  text-align: right;
+  cursor: pointer;
+}
+
+.ExitButton {
+  background: none;
+  border: none;
+  text-align: left;
+  align-self: end; 
+}
+
 .Label {
   display: block;
   font-size: 0.875em;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  width: 100%;
+  align-self: end;
 }
 
 .Input {

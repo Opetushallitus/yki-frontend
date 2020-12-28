@@ -169,6 +169,7 @@
   "examSession.postAdmission.createTemplate": "Luo pohja",
   "examSession.postAdmission.endDate": "Lopetusajankohta",
   "examSession.postAdmission.hide": "Piiloita ilmoittautuminen",
+  "examSession.postAdmission.close": "Sulje ilmoittautuminen",
   "examSession.postAdmission.inactive": "Ei käytössä",
   "examSession.postAdmission.notAllowed": "Jälki-ilmoittautuminen ei ole sallittu tälle tutkintopäivälle",
   "examSession.postAdmission.participantAmount": "Paikkojen määrä",
