@@ -5,20 +5,20 @@ import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import DatePicker from '../../../../components/UI/DatePicker/DatePicker';
-import { addPostAdmission } from '../../../../store/actions/index';
+import { activatePostAdmission } from '../../../../store/actions/index';
 import closeSign from '../../../../assets/svg/close-overlay.svg';
 import classes from './ExamSessionPostAdmission.module.css'
 
-const ExamSessionPostAdmissionCreate = props => {
+const ExamSessionPostAdmissionForm = props => {
+
   const t = props.t;
   const validationSchema = Yup.object().shape({
     postAdmissionQuota: Yup.number().typeError(t('error.numeric.int')).required(t('error.mandatory')).positive(t('error.numeric.positive')).integer(t('error.numeric.int')),
   });
 
   const postAdmissionAddHandler = (postadmission) => {
-    props.addPostAdmission(props.oid, props.examSessionId, postadmission);
-    props.onCancel();
+    props.activatePostAdmission(props.oid, props.examSessionId, postadmission);
+    props.onClose();
   }
 
   const getSaveButtonStyle = (isValid) => isValid
@@ -31,7 +31,7 @@ const ExamSessionPostAdmissionCreate = props => {
       initialValues={{
         postAdmissionStart: moment(props.postAdmissionStartDate).format('D.M.YYYY'),
         postAdmissionEnd: moment(props.postAdmissionEndDate).format('D.M.YYYY'),
-        postAdmissionQuota: '',
+        postAdmissionQuota: props.postAdmissionQuota || '',
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
@@ -40,11 +40,14 @@ const ExamSessionPostAdmissionCreate = props => {
         }
         postAdmissionAddHandler(submitPayload);
       }}
-      render={({ values, setFieldValue, isValid, handleReset }) => (
+      render={({ values, setFieldValue, isValid, dirty, handleReset }) => (
         <Form className={classes.Form}>
-          <div className={classes.FormItem}>
-            <h2>{t('examSession.postAdmission')}</h2>
-            <button className={classes.ExitButton} onClick={props.onCancel} tabIndex='5'>
+          <div className={classes.ExitItem}>
+            <div onClick={props.onClose}>{t('common.close')}</div>
+            <button
+              onClick={props.onClose}
+              className={classes.ExitButton}
+              tabIndex='5'>
               <img src={closeSign} alt={t('common.cancelConfirm')} />
             </button>
           </div>
@@ -99,7 +102,7 @@ const ExamSessionPostAdmissionCreate = props => {
             </div>
             <div className={classes.ButtonGroupButtons}>
               <button
-                disabled={isValid}
+                disabled={!(isValid && dirty)}
                 className={getSaveButtonStyle(isValid)}
                 data-cy="button-admission-submit"
                 type="submit" tabIndex="4">
@@ -112,12 +115,13 @@ const ExamSessionPostAdmissionCreate = props => {
   )
 }
 
-ExamSessionPostAdmissionCreate.propTypes = {
+ExamSessionPostAdmissionForm.propTypes = {
+  oid: PropTypes.string.isRequired,
   examSessionId: PropTypes.number.isRequired,
   postAdmissionStartDate: PropTypes.string.isRequired,
   postAdmissionEndDate: PropTypes.string.isRequired,
-  postAdmissionQuota: PropTypes.number.isRequired,
-  onCancel: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  activateAdmissionQuota: PropTypes.number,
 }
 
-export default connect(null, { addPostAdmission })(withTranslation()(ExamSessionPostAdmissionCreate));
+export default connect(null, { activatePostAdmission })(withTranslation()(ExamSessionPostAdmissionForm));

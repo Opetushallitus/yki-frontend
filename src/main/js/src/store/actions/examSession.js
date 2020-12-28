@@ -422,10 +422,22 @@ export const addPostAdmission = (orgOid, examSessionId, postAdmission) => {
   }
 }
 
-export const togglePostAdmissionActivation = (orgId, examSessionId, activeState) => {
+export const activatePostAdmission = (orgOid, examSessionId, postAdmission) => {
   return dispatch => {
     axios
-      .post(`/yki/api/virkailija/organizer/${orgId}/exam-session/${examSessionId}/post-admission/activation`, activeState)
+      .post(`/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/activate`, postAdmission)
+      .then(() => {
+        dispatch(fetchExamSessionContent());
+      })
+      .catch(err => {
+        console.error(err)
+      });
+  }
+}
+export const deactivatePostAdmission = (orgOid, examSessionId) => {
+  return dispatch => {
+    axios
+      .post(`/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/deactivate`)
       .then(() => {
         dispatch(fetchExamSessionContent());
       })
