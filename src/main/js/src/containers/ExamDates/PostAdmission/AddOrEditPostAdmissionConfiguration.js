@@ -12,6 +12,10 @@ import { languageToString } from '../../../util/util';
 import classes from './AddOrEditPostAdmissionConfiguration.module.css';
 import * as actions from '../../../store/actions';
 
+// NO LONGER IN USE
+// Can be removed when post admission feature is confirmed to work
+// and no more stuff needs to be saved.
+
 const AddOrEditPostAdmissionConfiguration = (props) => {
   const t = props.t;
   const validationSchema = Yup.object().shape({

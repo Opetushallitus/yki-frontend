@@ -34,6 +34,7 @@ class ExamSessionPostAdmissionEdit extends React.Component {
         <div className={classes.ButtonGroup}>
           <button
             className={`${classes.Button} ${classes.CancelButton}`}
+            data-cy="exam-session-post-admission-cancel"
             type="button"
             onClick={e => this.setState({ confirmActiveToggle: !this.state.confirmActiveToggle })}
             tabIndex="5"
@@ -41,7 +42,8 @@ class ExamSessionPostAdmissionEdit extends React.Component {
             {t('common.cancelConfirm')}
           </button>
           <button
-            className={classes.Button} data-cy="button-admission-activity-confirm"
+            className={classes.Button}
+            data-cy="exam-session-post-admission-confirm"
             type="button"
             onClick={this.deactivatePostAdmission}
           >
@@ -54,12 +56,12 @@ class ExamSessionPostAdmissionEdit extends React.Component {
 
     const modifyFormState = (
       <div className={classes.ButtonGroup}>
-        <button className={classes.Button} data-cy="button-admission-modify" type="button" tabIndex="1"
+        <button className={classes.Button} data-cy="exam-session-post-admission-modify-button" type="button" tabIndex="1"
           onClick={e => this.setState({ edit: !this.state.edit })}>
           {t('common.modify')}
         </button>
         <button className={`${classes.Button} ${active ? null : classes.ButtonRight}`}
-          data-cy="button-admission-toggle-active" type="button" tabIndex="2"
+          data-cy="exam-session-post-admission-deactivate-button" type="button" tabIndex="2"
           onClick={e => this.setState({ confirmActiveToggle: !this.state.confirmActiveToggle })}>
           {active ? t('examSession.postAdmission.close') : t('examSession.postAdmission.publish')}
         </button>
@@ -86,14 +88,14 @@ class ExamSessionPostAdmissionEdit extends React.Component {
               <label className={classes.Label}>
                 {t('examSession.postAdmission.startDate')}
               </label>
-              <input className={`${classes.Input} ${classes.Disabled}`} data-cy="input-admission-startDate"
+              <input className={`${classes.Input} ${classes.Disabled}`} data-cy="exam-session-post-admission-input-startDate"
                 value={moment(this.props.postAdmission.post_admission_start_date).format('D.M.YYYY')} disabled />
             </div>
             <div>
               <label className={classes.Label}>
                 {t('examSession.postAdmission.endDate')}
               </label>
-              <input className={`${classes.Input} ${classes.Disabled}`} data-cy="input-admission-endDate"
+              <input className={`${classes.Input} ${classes.Disabled}`} data-cy="exam-session-post-admission-input-endDate"
                 value={moment(this.props.postAdmission.post_admission_end_date).format('D.M.YYYY')} disabled />
             </div>
           </div>
@@ -103,7 +105,7 @@ class ExamSessionPostAdmissionEdit extends React.Component {
           </label>
           <input
             className={`${classes.Input} ${classes.Disabled}`}
-            data-cy="input-admission-quota"
+            data-cy="exam-session-post-admission-input-quota"
             value={this.state.quota}
             disabled />
           <div className={classes.Buttons}>
