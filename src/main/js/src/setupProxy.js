@@ -467,16 +467,50 @@ module.exports = function (app) {
     });
 
   app.post(
-    '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/post-admission/activate',
+    '/yki/api/virkailija/organizer/:oid/exam-session/:id/post-admission/activate',
     (req, res) => {
-      proxyPostCall(req, res)
+      const mockCall = () => {
+        try {
+          const { id } = req.params;
+          const index = examSessions.exam_sessions.findIndex(x => x.id == id);
+          examSessions.exam_sessions[index] = {
+            ...examSessions.exam_sessions[index],
+            ...req.body,
+            post_admission_active: true
+          }
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      }
+
+      useLocalProxy
+        ? proxyPostCall(req, res)
+        : mockCall();
     },
   );
 
   app.post(
-    '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/post-admission/deactivate',
+    '/yki/api/virkailija/organizer/:oid/exam-session/:id/post-admission/deactivate',
     (req, res) => {
-      proxyPostCall(req, res)
+      const mockCall = () => {
+        try {
+          const { id } = req.params;
+          const index = examSessions.exam_sessions.findIndex(x => x.id == id);
+          examSessions.exam_sessions[index] = {
+            ...examSessions.exam_sessions[index],
+            post_admission_active: false
+          }
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      }
+      useLocalProxy
+        ? proxyPostCall(req, res)
+        : mockCall();
     },
   );
 

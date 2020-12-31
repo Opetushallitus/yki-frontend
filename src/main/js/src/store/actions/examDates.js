@@ -193,6 +193,7 @@ const deleteExamDateFail = error => {
 };
 
 
+// NOT IN USE
 export const updatePostAdmissionEndDate = (examDateId, endDate) => {
   return dispatch => {
     axios
@@ -204,6 +205,7 @@ export const updatePostAdmissionEndDate = (examDateId, endDate) => {
   }
 }
 
+// NOT IN USE
 export const deletePostAdmissionEndDate = examDateId => {
   return dispatch => {
     axios

@@ -45,13 +45,14 @@ const ExamSessionPostAdmissionForm = props => {
           <div className={classes.ExitItem}>
             <div onClick={props.onClose}>{t('common.close')}</div>
             <button
+              data-cy="exam-session-post-admission-close-button"
               onClick={props.onClose}
               className={classes.ExitButton}
               tabIndex='5'>
               <img src={closeSign} alt={t('common.cancelConfirm')} />
             </button>
           </div>
-          <div className={classes.FormItem} data-cy="post-admission-form-create">
+          <div className={classes.FormItem} data-cy="exam-session-post-admission-form-create">
             <div className={classes.DatePickerWrapper}>
               <label className={classes.Label}
                 htmlFor="postAdmissionStart">{t('examSession.postAdmission.startDate')}</label>
@@ -59,7 +60,7 @@ const ExamSessionPostAdmissionForm = props => {
                 id="postAdmissionEnd"
                 className={`${classes.Input} ${classes.Disabled}`}
                 name="postAdmissionStart"
-                data-cy="input-admission-endDate"
+                data-cy="exam-session-post-admission-input-startDate"
                 tabIndex="3"
                 disabled
               />
@@ -74,7 +75,7 @@ const ExamSessionPostAdmissionForm = props => {
                 id="postAdmissionEnd"
                 className={`${classes.Input} ${classes.Disabled}`}
                 name="postAdmissionEnd"
-                data-cy="input-admission-endDate"
+                data-cy="exam-session-post-admission-input-endDate"
                 tabIndex="3"
                 disabled
               />
@@ -89,7 +90,7 @@ const ExamSessionPostAdmissionForm = props => {
                 id="postAdmissionQuota"
                 className={classes.Input}
                 name="postAdmissionQuota"
-                data-cy="input-admission-quota"
+                data-cy="exam-session-post-admission-input-quota"
                 tabIndex="3"
               />
               <ErrorMessage
@@ -102,7 +103,7 @@ const ExamSessionPostAdmissionForm = props => {
               <button
                 disabled={!(isValid && dirty)}
                 className={getSaveButtonStyle(isValid)}
-                data-cy="button-admission-submit"
+                data-cy="exam-session-post-admission-submit-button"
                 type="submit" tabIndex="4">
                 {t('examSession.postAdmission.publish')}
               </button>

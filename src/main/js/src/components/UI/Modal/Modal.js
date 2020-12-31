@@ -20,6 +20,7 @@ const modal = props => (
       }}
     >
       <button
+        data-cy={props.show && "modal-close-button"}
         aria-label="Close"
         className={classes.ModalClose}
         onClick={props.modalClosed}
