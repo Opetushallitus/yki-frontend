@@ -60,20 +60,23 @@ const examSessionListItem = ({
     nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
 
   const postAdmissionClosed = moment(session.post_admission_end_date).isBefore(currentDate);
+  const postAdmissionSpots = session.post_admission_quota - session.pa_participants
 
-  const spotsAvailable = postAdmissionActive ? (session.post_admission_quota - session.pa_participants) : (session.max_participants - session.participants);
+  const spotsAvailable = postAdmissionActive ? postAdmissionSpots : (session.max_participants - session.participants);
 
   const spotsAvailableText =
     spotsAvailable === 1
       ? t('registration.examSpots.singleFree')
       : t('registration.examSpots.free');
 
-  const postAdmissionActiveAndClosed = (postAdmissionActive && !postAdmissionClosed);
+  const canSignupForPostAdmission = postAdmissionActive && !postAdmissionClosed && postAdmissionSpots > 0;
+
+
 
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {(spotsAvailable > 0 && !registrationClosed) || postAdmissionActive ? (
+        {spotsAvailable > 0 && (postAdmissionActive || !registrationClosed) ? (
           <>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
@@ -120,7 +123,7 @@ const examSessionListItem = ({
 
   const registerButton = (
     <>
-      {(!registrationClosed && !session.queue_full) || postAdmissionActiveAndClosed ?
+      {(!registrationClosed && !session.queue_full) || canSignupForPostAdmission ?
         <button
           className={'YkiButton'}
           onClick={selectExamSession}

@@ -815,119 +815,153 @@ module.exports = function (app) {
   });
 
   app.post('/yki/api/registration/init', (req, res) => {
-    try {
-      req.body.exam_session_id === 2
-        ? res.send(initRegistrationEmailAuth)
-        : res.send(initRegistration);
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        req.body.exam_session_id === 2
+          ? res.send(initRegistrationEmailAuth)
+          : res.send(initRegistration);
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/api/exam-session', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      const monthFromNow = moment()
-        .add(1, 'months')
-        .format('YYYY-MM-DD');
-      const twoMonthFromNow = moment()
-        .add(2, 'months')
-        .format('YYYY-MM-DD');
-      const weekInPast = moment()
-        .subtract(1, 'weeks')
-        .format('YYYY-MM-DD');
-      const weekFromNow = moment()
-        .add(1, 'weeks')
-        .format('YYYY-MM-DD');
-      const weekAndOneDayFromNow = moment()
-        .add(1, 'weeks')
-        .add(1, 'days')
-        .format('YYYY-MM-DD');
-      const monthMinusThreeDaysPast = moment()
-        .add(1, 'months')
-        .subtract(3, 'days')
-        .format('YYYY-MM-DD');
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        const monthFromNow = moment()
+          .add(1, 'months')
+          .format('YYYY-MM-DD');
+        const twoMonthFromNow = moment()
+          .add(2, 'months')
+          .format('YYYY-MM-DD');
+        const weekInPast = moment()
+          .subtract(1, 'weeks')
+          .format('YYYY-MM-DD');
+        const weekFromNow = moment()
+          .add(1, 'weeks')
+          .format('YYYY-MM-DD');
+        const weekAndOneDayFromNow = moment()
+          .add(1, 'weeks')
+          .add(1, 'days')
+          .format('YYYY-MM-DD');
+        const monthMinusThreeDaysPast = moment()
+          .add(1, 'months')
+          .subtract(3, 'days')
+          .format('YYYY-MM-DD');
 
-      allExamSessions.exam_sessions.forEach(es => {
-        if (es.session_date === '2019-04-06') {
-          es.session_date = monthFromNow;
-          es.registration_start_date = weekInPast;
-          es.registration_end_date = weekFromNow;
-          es.post_admission_start_date = weekAndOneDayFromNow;
-          es.post_admission_end_date = monthMinusThreeDaysPast;
-        }
-        if (es.session_date === '2019-05-26') {
-          es.session_date = twoMonthFromNow;
-        }
+        allExamSessions.exam_sessions.forEach(es => {
+          if (es.session_date === '2019-04-06') {
+            es.session_date = monthFromNow;
+            es.registration_start_date = weekInPast;
+            es.registration_end_date = weekFromNow;
+            es.post_admission_start_date = weekAndOneDayFromNow;
+            es.post_admission_end_date = monthMinusThreeDaysPast;
+          }
+          if (es.session_date === '2019-05-26') {
+            es.session_date = twoMonthFromNow;
+          }
 
-        // postadmission active
-        if (es.session_date === '2039-12-29') {
-          const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
-          const today = moment().format('YYYY-MM-DD');
+          // postadmission active
+          if (es.session_date === '2039-12-29') {
+            const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+            const today = moment().format('YYYY-MM-DD');
 
-          es.session_date = monthFromNow;
-          es.registration_start_date = monthMinusThreeDaysPast;
-          es.registration_end_date = yesterday;
-          es.post_admission_start_date = today;
-          es.post_admission_end_date = weekFromNow;
-        }
-      });
-      res.send(allExamSessions);
-    } catch (err) {
-      res.status(404).send(err.message);
+            es.session_date = monthFromNow;
+            es.registration_start_date = monthMinusThreeDaysPast;
+            es.registration_end_date = yesterday;
+            es.post_admission_start_date = today;
+            es.post_admission_end_date = weekFromNow;
+          }
+        });
+        res.send(allExamSessions);
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
     }
+
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/api/exam-session/:id', (req, res) => {
-    try {
-      const session = allExamSessions.exam_sessions.find(
-        e => e.id === Number(req.params.id),
-      );
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(session);
-    } catch (err) {
-      printError(req, err);
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        const session = allExamSessions.exam_sessions.find(
+          e => e.id === Number(req.params.id),
+        );
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send(session);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.post('/yki/api/exam-session/:id/queue', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send({ success: true });
-    } catch (err) {
-      printError(req, err);
-      res.status(404).send(err.message);
+    const mockCAll = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
   });
 
   app.post('/yki/api/registration/:id/submit', (req, res) => {
-    try {
-      res.send({ success: true });
-    } catch (err) {
-      printError(req, err);
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+
   });
 
   app.get('/yki/api/code/maatjavaltiot2', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(countries);
-    } catch (err) {
-      printError(req, err);
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send(countries);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/api/code/sukupuoli', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(genders);
-    } catch (err) {
-      printError(req, err);
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send(genders);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/api/code/posti/:id', (req, res) => {
