@@ -330,7 +330,7 @@ class ExamDates extends Component {
             .join(', ');
           */
 
-          const languageAndLevel = e.languages.map(lang => {
+          const languageAndLevel = e.languages && e.languages.map(lang => {
             const language = languageToString(lang.language_code).toLowerCase();
             const level = levelDescription(lang.level_code).toLowerCase();
             const dataId = e.exam_date + '-' + lang.language_code + '-' + lang.level_code;

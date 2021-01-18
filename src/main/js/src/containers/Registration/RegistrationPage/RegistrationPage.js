@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as actions from '../../../store/actions/index';
@@ -12,10 +12,10 @@ import RegistrationError from '../../../components/Registration/RegistrationErro
 import ExamDetailsCard from '../../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
 import YkiImage2 from "../../../assets/images/ophYki_image2.png";
 import HeadlineContainer from "../../../components/HeadlineContainer/HeadlineContainer";
-import {getLanguageAndLevel} from "../../../util/util";
+import { getLanguageAndLevel } from "../../../util/util";
 
 export const RegistrationPage = props => {
-  const {initData, initDataLoading, history, match} = props;
+  const { initData, initDataLoading, history, match } = props;
 
   useEffect(() => {
     if (!initData && !initDataLoading) {
@@ -25,39 +25,39 @@ export const RegistrationPage = props => {
   }, []);
 
   const initError = props.initDataError ? (
-      <RegistrationError
-          error={props.initDataError}
-          defaultKey={'registration.init.error.generic'}
-      />
+    <RegistrationError
+      error={props.initDataError}
+      defaultKey={'registration.init.error.generic'}
+    />
   ) : null;
 
   const successPage = props.submitSuccess ? (
-      <RegistrationSuccess initData={initData} formData={props.formData}/>
+    <RegistrationSuccess initData={initData} formData={props.formData} />
   ) : null;
 
   const registrationPage = props.initDataLoading ? (
-      <Spinner/>
+    <Spinner />
   ) : initData ? (
-      <>
-        <HeadlineContainer
-            headlineTitle={getLanguageAndLevel(initData.exam_session)}
-            headlineContent={<ExamDetailsCard exam={initData.exam_session} isFull={false}/>}
-            headlineImage={YkiImage2}
-        />
-        <div className={classes.RegistrationPage}>
-          <BackButton clicked={() => history.push('/')}/>
-          <RegistrationForm {...props} />
-        </div>
-      </>
+    <>
+      <HeadlineContainer
+        headlineTitle={getLanguageAndLevel(initData.exam_session)}
+        headlineContent={<ExamDetailsCard exam={initData.exam_session} isFull={false} />}
+        headlineImage={YkiImage2}
+      />
+      <div className={classes.RegistrationPage}>
+        <BackButton clicked={() => history.push('/')} />
+        <RegistrationForm {...props} />
+      </div>
+    </>
   ) : null;
 
   return (
-      <>
-        {!successPage}
-        <main>
-          {initError ? initError : successPage ? successPage : registrationPage}
-        </main>
-      </>
+    <>
+      {!successPage}
+      <main>
+        {initError ? initError : successPage ? successPage : registrationPage}
+      </main>
+    </>
   );
 };
 
@@ -77,11 +77,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onInitRegistrationForm: examSessionId =>
-        dispatch(actions.initRegistrationForm(examSessionId)),
+      dispatch(actions.initRegistrationForm(examSessionId)),
     onSubmitRegistrationForm: (registrationId, registrationForm) =>
-        dispatch(
-            actions.submitRegistrationForm(registrationId, registrationForm),
-        ),
+      dispatch(
+        actions.submitRegistrationForm(registrationId, registrationForm),
+      ),
   };
 };
 
@@ -90,6 +90,6 @@ RegistrationPage.propTypes = {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(RegistrationPage);

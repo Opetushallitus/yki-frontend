@@ -13,24 +13,6 @@ import { Form, Formik } from "formik";
 const AddExamDate = (props) => {
   const { examDates, disabledDates, t } = props;
 
-  const initializeLanguageArray = () => {
-    let languageArray = [];
-    if (examDates.length > 0 && examDates[0].languages && examDates[0].languages.length > 0) {
-      examDates[0].languages.map((item) => {
-        let language_code = item.language_code;
-        let level_code = item.level_code;
-        return languageArray.push({ language_code, level_code });
-      });
-      return languageArray;
-    } else return [];
-  }
-
-  const initializeLanguage = () => {
-    if (examDates.length === 1) {
-      return languageToString(examDates[0].languages[0].language_code)
-    }
-    return LANGUAGES[0].code
-  }
 
   const initializeStartDate = () => {
     if (examDates.length === 1) {
@@ -46,12 +28,46 @@ const AddExamDate = (props) => {
     return moment(new Date()).add(1, 'days').format('YYYY-MM-DD');
   }
 
-
-
   // useStates
   const [languageAndLevel, setLanguageAndLevel] = useState(initializeLanguageArray || []);
   const [registrationStartDate, setRegistrationStartDate] = useState(initializeStartDate());
   const [registrationEndDate, setRegistrationEndDate] = useState(initializeEndDate());
+
+  const initializeLanguageArray = () => {
+    let languageArray = [];
+    if (examDates.length > 0 && examDates[0].languages && examDates[0].languages.length > 0) {
+      examDates[0].languages.map((item) => {
+        let language_code = item.language_code;
+        let level_code = item.level_code;
+        return languageArray.push({ language_code, level_code });
+      });
+      return languageArray;
+    } else return [];
+  }
+
+
+  const initializeLanguageAndLevel = () => {
+    if (examDates.length === 1) {
+      const langs = examDates[0].languages;
+      return {
+        language_code: languageToString(langs[langs.length - 1].language_code),
+        level_code: langs[langs.length - 1].level_code
+      }
+    }
+    if (languageAndLevel.length > 0) {
+      const lastItem = languageAndLevel[languageAndLevel.length - 1]
+      return {
+        language_code: lastItem.language_code,
+        level_code: lastItem.level_code
+      }
+    }
+    return {
+      language_code: LANGUAGES[0].code,
+      level_code: 'PERUS'
+    }
+  }
+
+  const { language_code, level_code } = initializeLanguageAndLevel();
 
   const [examDate, setExamDate] = useState((registrationEndDate && moment(registrationEndDate).add(1, 'days').format('YYYY-MM-DD')) || moment(new Date()).add(1, 'days').format('YYYY-MM-DD'));
 
@@ -144,7 +160,8 @@ const AddExamDate = (props) => {
           </div>
           <div className={classes.LanguageAndLevelGrid}>
             <LanguageLevelSelector
-              initialLanguageCode={initializeLanguage()}
+              initialLanguageCode={language_code}
+              initialLevelCode={level_code}
               languages={languageAndLevel}
               setLanguages={setLanguageAndLevel}
             />

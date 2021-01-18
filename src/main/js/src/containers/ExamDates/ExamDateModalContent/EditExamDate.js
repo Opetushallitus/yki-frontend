@@ -28,16 +28,38 @@ const EditExamDate = (props) => {
   }
 
   const initializeLanguage = () => {
-    if (examDate) {
+    if (examDate && examDate.languages && examDate.languages.length > 1) {
       return examDate.languages[0].language_code
     }
     return LANGUAGES[0].code
+  }
+
+  const initializeLanguageAndLevel = () => {
+    if (examDate && examDate.languages && examDate.languages.length > 1) {
+      const langs = examDate.languages;
+      return {
+        language_code: langs[langs.length - 1].language_code,
+        level_code: langs[langs.length - 1].level_code
+      }
+    }
+    if (languageAndLevel.length > 0) {
+      const lastItem = languageAndLevel[languageAndLevel.length - 1]
+      return {
+        language_code: lastItem.language_code,
+        level_code: lastItem.level_code
+      }
+    }
+    return {
+      language_code: LANGUAGES[0].code,
+      level_code: 'PERUS'
+    }
   }
 
   const [languageAndLevel, setLanguageAndLevel] = useState(initializeLanguageArray || []);
   const [postAdmissionEnabled, setPostAdmissionEnabled] = useState(examDate.post_admission_enabled);
   const [postAdmissionStartDate, setPostAdmissionStartDate] = useState(examDate.post_admission_start_date || minDate);
   const [postAdmissionEndDate, setPostAdmissionEndDate] = useState(examDate.post_admission_end_date || maxDate);
+  const { language_code, level_code } = initializeLanguageAndLevel();
 
 
   const FormFields = () => (
@@ -106,7 +128,8 @@ const EditExamDate = (props) => {
           </div>
           <div className={classes.LanguageAndLevelGrid}>
             <LanguageLevelSelector
-              initialLanguageCode={initializeLanguage()}
+              initialLanguageCode={language_code}
+              inititialLevelCode={level_code}
               languages={languageAndLevel}
               setLanguages={setLanguageAndLevel}
               modify={!!examDate}
