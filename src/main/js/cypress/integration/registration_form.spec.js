@@ -143,7 +143,8 @@ describe('Registration form', () => {
 
     cy.get('[data-cy=select-nationality]').select('643');
     cy.get('[data-cy=input-birthdate]').type('10.10.1970');
-    cy.get('[data-cy=select-gender]').select('mies')
+    cy.get('[data-cy=select-gender]').select('mies');
+    cy.get('[data-cy=input-ssn]').type('101070-991J');
     cy.get('[data-cy=radio-certificateLang-en]').click();
 
     cy.log('exam language should not be shown for finnish and swedish');

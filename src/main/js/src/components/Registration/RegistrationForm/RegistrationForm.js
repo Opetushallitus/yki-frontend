@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import {Formik, Form, Field, ErrorMessage} from 'formik';
-import {withTranslation} from 'react-i18next';
-import {parsePhoneNumberFromString} from 'libphonenumber-js';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { withTranslation } from 'react-i18next';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import moment from 'moment';
-import {FinnishSSN} from 'finnish-ssn';
+import { FinnishSSN } from 'finnish-ssn';
 
 import classes from './RegistrationForm.module.css';
 import Button from '../../UI/Button/Button';
@@ -13,7 +13,7 @@ import RadioButton from '../../UI/RadioButton/RadioButton';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
 import ZipAndPostOffice from '../../ZipAndPostOffice/ZipAndPostOffice';
 import GenderSelect from './GenderSelect/GenderSelect';
-import {DATE_FORMAT, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW, TABLET_VIEW} from '../../../common/Constants';
+import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW, TABLET_VIEW } from '../../../common/Constants';
 import RegistrationError from '../RegistrationError/RegistrationError';
 import Checkbox from "../../UI/Checkbox/Checkbox";
 
@@ -43,10 +43,10 @@ export const registrationForm = props => {
       if (date.isValid() || date.isBefore(moment())) {
         return true;
       } else {
-        return this.createError({message: props.t('error.birthdate')});
+        return this.createError({ message: props.t('error.birthdate') });
       }
     } else {
-      return this.createError({message: mandatoryErrorMsg});
+      return this.createError({ message: mandatoryErrorMsg });
     }
   }
 
@@ -105,11 +105,11 @@ export const registrationForm = props => {
   });
 
   const RadioButtonComponent = ({
-                                  field: {name, value, onChange},
-                                  id,
-                                  checkedValue,
-                                  label,
-                                }) => {
+    field: { name, value, onChange },
+    id,
+    checkedValue,
+    label,
+  }) => {
     return (
       <RadioButton
         name={name}
@@ -123,13 +123,13 @@ export const registrationForm = props => {
   };
 
   const RadioButtonGroup = ({
-                              value,
-                              id,
-                              label,
-                              className,
-                              children,
-                              error,
-                            }) => {
+    value,
+    id,
+    label,
+    className,
+    children,
+    error,
+  }) => {
     return (
       <div className={className} id={id}>
         <h3>{label}</h3>
@@ -141,7 +141,7 @@ export const registrationForm = props => {
     );
   };
 
-  const CheckboxComponent = ({field: {name, value, onChange}, datacy}) => {
+  const CheckboxComponent = ({ field: { name, value, onChange }, datacy }) => {
     return (
       <Checkbox
         name={name}
@@ -180,8 +180,8 @@ export const registrationForm = props => {
         <span>{initialValues[name]}</span>
       </>
     ) : (
-      inputField(name, null, null, type)
-    );
+        inputField(name, null, null, type)
+      );
 
   const showExamLang = () => {
     const lang = props.initData.exam_session.language_code;
@@ -212,6 +212,7 @@ export const registrationForm = props => {
         nationality: props.initData.user.nationalities
           ? props.initData.user.nationalities[0]
           : '',
+        ssn: emptyIfAbsent(props.initData.user.ssn),
         birthdate: '',
         gender: '',
         phoneNumber: '',
@@ -251,7 +252,7 @@ export const registrationForm = props => {
         };
         props.onSubmitRegistrationForm(props.initData.registration_id, payload);
       }}
-      render={({values, isValid, errors, initialValues, setFieldValue}) => (
+      render={({ values, isValid, errors, initialValues, setFieldValue }) => (
         <Form className={classes.Form}>
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
@@ -272,7 +273,7 @@ export const registrationForm = props => {
                 </div>
                 <div className={classes.InputFieldGrid}>
                   <div className={classes.FormElement}>
-                    <ZipAndPostOffice values={values} setFieldValue={setFieldValue}/>
+                    <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
                   </div>
                 </div>
               </>
@@ -282,7 +283,7 @@ export const registrationForm = props => {
                   {inputField('streetAddress')}
                 </div>
                 <div className={classes.FormElement}>
-                  <ZipAndPostOffice values={values} setFieldValue={setFieldValue}/>
+                  <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
                 </div>
               </div>
             }
@@ -343,6 +344,10 @@ export const registrationForm = props => {
                       genders={props.initData.genders}
                       className={classes.GenderSelect}
                     />
+                  </div>
+                  <div className={classes.FormElement}>
+                    {inputField('ssn')}
+                    <p> {props.t('registration.form.ssn.text')}</p>
                   </div>
                 </div>
               </div>

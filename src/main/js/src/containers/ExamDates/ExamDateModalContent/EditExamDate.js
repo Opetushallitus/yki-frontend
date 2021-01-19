@@ -27,13 +27,6 @@ const EditExamDate = (props) => {
     } else return [];
   }
 
-  const initializeLanguage = () => {
-    if (examDate && examDate.languages && examDate.languages.length > 1) {
-      return examDate.languages[0].language_code
-    }
-    return LANGUAGES[0].code
-  }
-
   const initializeLanguageAndLevel = () => {
     if (examDate && examDate.languages && examDate.languages.length > 1) {
       const langs = examDate.languages;

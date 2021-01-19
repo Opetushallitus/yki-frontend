@@ -28,11 +28,6 @@ const AddExamDate = (props) => {
     return moment(new Date()).add(1, 'days').format('YYYY-MM-DD');
   }
 
-  // useStates
-  const [languageAndLevel, setLanguageAndLevel] = useState(initializeLanguageArray || []);
-  const [registrationStartDate, setRegistrationStartDate] = useState(initializeStartDate());
-  const [registrationEndDate, setRegistrationEndDate] = useState(initializeEndDate());
-
   const initializeLanguageArray = () => {
     let languageArray = [];
     if (examDates.length > 0 && examDates[0].languages && examDates[0].languages.length > 0) {
@@ -44,6 +39,12 @@ const AddExamDate = (props) => {
       return languageArray;
     } else return [];
   }
+
+
+  // useStates
+  const [languageAndLevel, setLanguageAndLevel] = useState(initializeLanguageArray || []);
+  const [registrationStartDate, setRegistrationStartDate] = useState(initializeStartDate());
+  const [registrationEndDate, setRegistrationEndDate] = useState(initializeEndDate());
 
 
   const initializeLanguageAndLevel = () => {

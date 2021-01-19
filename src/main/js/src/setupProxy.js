@@ -931,6 +931,9 @@ module.exports = function (app) {
         res.status(404).send(err.message);
       }
     }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
 
   });
 
