@@ -8,7 +8,7 @@ import {
   canSignupForPostAdmission,
   admissionNotStarted,
   showAvailableSpots,
-  canSignupForAdmission,
+  admissionActiveAndQueueNotFull,
   spotsAvailableForSession,
 } from '../../../../util/examSessionUtil';
 import classes from './ExamSessionListItem.module.css';
@@ -119,7 +119,7 @@ const examSessionListItem = ({
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
 
   const showRegisterButton = admissionNotStarted(session) ||
-    canSignupForAdmission(session) ||
+    admissionActiveAndQueueNotFull(session) ||
     canSignupForPostAdmission(session);
 
   const registerButton = (

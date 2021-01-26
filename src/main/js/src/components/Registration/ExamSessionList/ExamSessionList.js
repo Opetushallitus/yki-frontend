@@ -18,9 +18,9 @@ const examSessionList = ({ examSessions: sessions, language, t, history }) => (
         </div>
         <div className={classes.Date}>
           <div className={classes.List}>
-            {sessions.map(e => (
+            {sessions.map((e, i) => (
               <ExamSessionListItem
-                key={e.published_at}
+                key={e.published_at + i}
                 examSession={e}
                 language={language}
                 history={history}

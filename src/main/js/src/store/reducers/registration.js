@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { signupPossible } from '../../util/examSessionUtil';
+import { signupPossible, admissionActiveAndQueueNotFull } from '../../util/examSessionUtil';
 import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
 import moment from "moment";
 
@@ -57,11 +57,19 @@ const sortSessionsByDate = (sessionA, sessionB) => {
 const sortSessionsByOpenSignups = (sessionA, sessionB) => {
   const isOpenA = signupPossible(sessionA);
   const isOpenB = signupPossible(sessionB);
+  const queueSpaceA = admissionActiveAndQueueNotFull(sessionA);
+  const queueSpaceB = admissionActiveAndQueueNotFull(sessionB);
 
   if (isOpenA && !isOpenB) {
     return -1;
   }
   if (!isOpenA && isOpenB) {
+    return 1;
+  }
+  if (queueSpaceA && !queueSpaceB) {
+    return -1;
+  }
+  if (!queueSpaceA && queueSpaceB) {
     return 1;
   }
   return 0;
