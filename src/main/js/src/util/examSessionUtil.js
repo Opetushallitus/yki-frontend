@@ -45,7 +45,7 @@ export const spotsAvailableForSession = session => {
 		: admissionOpenSpots(session);
 }
 
-export const canSignupForAdmission = session => {
+export const admissionActiveAndQueueNotFull = session => {
 	return isAdmissionActive(session) && !session.queue_full;
 }
 

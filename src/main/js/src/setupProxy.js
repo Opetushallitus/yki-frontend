@@ -908,7 +908,7 @@ module.exports = function (app) {
   });
 
   app.post('/yki/api/exam-session/:id/queue', (req, res) => {
-    const mockCAll = () => {
+    const mockCall = () => {
       try {
         res.set('Content-Type', 'application/json; charset=utf-8');
         res.send({ success: true });
