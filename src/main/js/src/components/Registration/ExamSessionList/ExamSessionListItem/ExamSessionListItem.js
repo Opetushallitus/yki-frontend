@@ -4,7 +4,13 @@ import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { nowBetweenDates } from '../../../../util/util';
+import {
+  canSignupForPostAdmission,
+  admissionNotStarted,
+  showAvailableSpots,
+  canSignupForAdmission,
+  spotsAvailableForSession,
+} from '../../../../util/examSessionUtil';
 import classes from './ExamSessionListItem.module.css';
 import { getDeviceOrientation, levelDescription } from '../../../../util/util';
 import {
@@ -111,6 +117,10 @@ const examSessionListItem = ({
       ? t('registration.register.queueFull')
       : t('registration.register.forQueue');
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
+
+  const showRegisterButton = admissionNotStarted(session) ||
+    canSignupForAdmission(session) ||
+    canSignupForPostAdmission(session);
 
   const registerButton = (
     <>

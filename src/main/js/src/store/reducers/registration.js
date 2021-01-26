@@ -1,15 +1,14 @@
-import * as R from 'ramda';
-
 import * as actionTypes from '../actions/actionTypes';
-import {ISO_DATE_FORMAT_SHORT, LANGUAGES} from '../../common/Constants';
+import { signupPossible } from '../../util/examSessionUtil';
+import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
 import moment from "moment";
 
 const initialState = {
   examSessions: [],
-  filteredExamSessionsGroupedByDate: {},
-  filteredExamSessionsByAvailability: {},
-  filteredExamSessionsByOpenRegistration: {},
-  filteredExamsByAvailabilityAndRegistration: {},
+  filteredExamSessionsGroupedByDate: [],
+  filteredExamSessionsByAvailability: [],
+  filteredExamSessionsByOpenRegistration: [],
+  filteredExamsByAvailabilityAndRegistration: [],
   language: LANGUAGES[0],
   level: '',
   location: '',
@@ -31,16 +30,50 @@ const initialState = {
 
 const filteredSessions = (state) => {
   return state.examSessions
-      .filter(e =>
-          state.location === ''
-              ? true
-              : e.location[0].post_office
-                  .toLowerCase()
-                  .endsWith(state.location.toLowerCase()),
-      )
-      .filter(e => (state.level === '' ? true : e.level_code === state.level))
-      .filter(e => e.language_code === state.language.code);
+    .filter(e =>
+      state.location === ''
+        ? true
+        : e.location[0].post_office
+          .toLowerCase()
+          .endsWith(state.location.toLowerCase()),
+    )
+    .filter(e => (state.level === '' ? true : e.level_code === state.level))
+    .filter(e => e.language_code === state.language.code);
 }
+
+const sortSessionsByDate = (sessionA, sessionB) => {
+  const sessionDateA = moment(sessionA.session_date);
+  const sessionDateB = moment(sessionB.session_date);
+
+  if (sessionDateA.isAfter(sessionDateB)) {
+    return 1;
+  }
+  if (sessionDateB.isAfter(sessionDateA)) {
+    return -1;
+  }
+  return 0;
+}
+
+const sortSessionsByOpenSignups = (sessionA, sessionB) => {
+  const isOpenA = signupPossible(sessionA);
+  const isOpenB = signupPossible(sessionB);
+
+  if (isOpenA && !isOpenB) {
+    return -1;
+  }
+  if (!isOpenA && isOpenB) {
+    return 1;
+  }
+  return 0;
+}
+
+const sortSessions = sessions => {
+  if (!sessions || sessions.length === 0) return [];
+  sessions.sort(sortSessionsByDate);
+  sessions.sort(sortSessionsByOpenSignups);
+  return sessions;
+}
+
 
 const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
 
@@ -51,28 +84,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+
     case actionTypes.FETCH_EXAM_SESSIONS_SUCCESS:
       return {
         ...state,
         loading: false,
-        examSessions: action.examSessions,
+        examSessions: sortSessions(action.examSessions),
       };
+
     case actionTypes.FETCH_EXAM_SESSIONS_FAIL:
       return {
         ...state,
         loading: false,
         error: action.error,
       };
+
     case actionTypes.FILTER_AND_GROUP_BY_DATE:
       const filtered = filteredSessions(state);
-      const groupedByDate = R.groupBy(R.prop('session_date'), filtered);
-      const orderedByDate = {};
-      Object.keys(groupedByDate)
-        .sort()
-        .map(k => (orderedByDate[k] = groupedByDate[k]));
       return {
         ...state,
-        filteredExamSessionsGroupedByDate: orderedByDate,
+        filteredExamSessionsGroupedByDate: filtered,
+
       };
 
     case actionTypes.FILTER_BY_AVAILABILITY:
@@ -86,17 +118,9 @@ const reducer = (state = initialState, action) => {
           filteredArray.push(item);
         }
       }
-
-      const groupedAvailableSessions = R.groupBy(R.prop('session_date'), filteredArray);
-      let availableExams = {};
-
-      Object.keys(groupedAvailableSessions)
-          .sort()
-          .map(k => (availableExams[k] = groupedAvailableSessions[k]));
-
       return {
         ...state,
-        filteredExamSessionsByAvailability: availableExams
+        filteredExamSessionsByAvailability: sortSessions(filteredArray)
       }
 
     case actionTypes.FILTER_BY_OPEN_REGISTRATION:
@@ -114,16 +138,9 @@ const reducer = (state = initialState, action) => {
         }
       }
 
-      const groupedOpenSessions = R.groupBy(R.prop('session_date'), filteredOpenExams);
-      let openRegistration = {};
-
-      Object.keys(groupedOpenSessions)
-          .sort()
-          .map(k => (openRegistration[k] = groupedOpenSessions[k]));
-
       return {
         ...state,
-        filteredExamSessionsByOpenRegistration: openRegistration
+        filteredExamSessionsByOpenRegistration: sortSessions(filteredOpenExams)
       }
 
     case actionTypes.FILTER_BY_AVAILABILITY_AND_REGISTRATION:
@@ -146,16 +163,9 @@ const reducer = (state = initialState, action) => {
         }
       }
 
-      const filteredExamsByAvailabilityAndRegistration = {};
-      const groupedData = R.groupBy(R.prop('session_date'), filteredAvailableAndOpen);
-
-      Object.keys(groupedData)
-          .sort()
-          .map(k => (filteredExamsByAvailabilityAndRegistration[k] = groupedData[k]));
-
       return {
         ...state,
-        filteredExamsByAvailabilityAndRegistration: filteredExamsByAvailabilityAndRegistration,
+        filteredExamsByAvailabilityAndRegistration: sortSessions(filteredAvailableAndOpen),
       };
 
     case actionTypes.ADD_EXAM_LOCATIONS:
