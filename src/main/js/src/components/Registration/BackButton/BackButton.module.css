@@ -1,12 +1,14 @@
 .Return {
-  width: 100px;
+  text-align: left;
+  font: normal normal bold 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
   height: 40px;
   margin: 15px 0 20px 0;
-  font-size: 0.75em;
   border: none;
   cursor: pointer;
-  padding-left: 30px;
-  background: url('../../../assets/svg/chevron-black.svg') no-repeat 20px center;
+  padding-left: 15px;
+  background: url('../../../assets/svg/chevron-blue.svg') no-repeat 0 center;
 }
 
 .Return:hover,

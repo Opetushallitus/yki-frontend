@@ -1,0 +1,43 @@
+.DescriptionItem {
+    display: block;
+}
+
+.DescriptionItem h3 {
+    margin: 0 0 9px 0;
+    font: normal normal bold 21px/24px PT Sans;
+    letter-spacing: 0;
+    color: hsla(194, 91%, 21%, 1);
+}
+
+.DescriptionItem article {
+    text-align: left;
+    font: normal normal normal 16px/24px PT Sans;
+    letter-spacing: 0;
+    color: hsla(194, 91%, 21%, 1);
+}
+
+.LanguageLevel {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+}
+
+.RowItem {
+    display: flex;
+    margin-bottom: 5%;
+}
+
+.RowItem article {
+    margin-right: 4vw;
+}
+
+.DescriptionItem hr {
+    border: 1px solid hsla(194, 82%, 43%, 1);
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 425px) {
+    .RowItem article {
+        margin-right: 25px;
+    }
+}

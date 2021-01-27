@@ -10,6 +10,7 @@ import Alert from '../../components/Alert/Alert';
 class Init extends Component {
   componentDidMount() {
     this.props.onFetchUser();
+    this.props.onInitYkiLanguage();
   }
 
   render() {
@@ -32,12 +33,14 @@ const mapStateToProps = state => {
     user: state.user.user,
     loading: state.user.loading,
     error: state.user.error,
+    yki: state.yki.ykiLanguage
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onFetchUser: () => dispatch(actions.fetchUser()),
+    onInitYkiLanguage: () => dispatch(actions.initYKILanguage())
   };
 };
 

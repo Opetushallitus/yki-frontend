@@ -1,30 +1,90 @@
-.Card {
-  width: 100%;
-  margin: 24px 0;
-  display: grid;
-  align-items: center;
-  grid-gap: 5px;
+.DetailsContainer {
+    display: block;
+    margin-top: 2vh;
+    margin-right: 1vw;
 }
 
-.Card > p {
-  margin: 0;
-  font-weight: 600;
+.Exception {
+    text-align: left;
+    font: normal normal bold 27px/34px PT Sans Narrow !important;
+    letter-spacing: 0.62px !important;
+    text-transform: uppercase;
+    margin: 2vh 0 3vh 0;
 }
 
-.Card > p:nth-child(2),
-.Card > p:nth-child(4),
-.Card > p:nth-child(5) {
-  margin-bottom: 12px;
+.DetailsCard {
+    letter-spacing: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-column-gap: 2vw;
 }
 
-@media (min-width: 620px) {
-  .Card {
-    max-width: 333px;
-    padding: 10px;
-    background-color: hsl(0, 0%, 96%);
-  }
+.DetailsCard p {
+    font: normal normal normal 16px/24px PT Sans;
+    margin: 0 !important;
+    box-sizing: border-box;
+    display: inline-block
+}
 
-  .Card > p {
-    margin-left: 4px;
-  }
+.DetailsCard p:nth-child(2n) {
+    font: normal normal bold 16px/24px PT Sans !important;
+}
+
+.DetailsCard article p {
+    font: normal normal bold 16px/24px PT Sans !important;
+}
+
+.SuccessDetailsCard {
+    display: block;
+}
+
+.SuccessDetailsCard p {
+    font: normal normal bold 16px/24px PT Sans;
+    margin: 0 !important;
+    box-sizing: border-box;
+}
+
+.SuccessDetailsCard article p {
+    font: normal normal bold 16px/24px PT Sans !important;
+}
+
+/* Tablet view portrait */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .Exception {
+        margin: 0 0 1vh 0;
+    }
+    .Exception p {
+        margin-top: 0 !important;
+    }
+}
+
+/* Tablet view landscape */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    .Exception {
+        margin: 0 0 1vh 0;
+    }
+    .Exception p {
+        margin-top: 0 !important;
+    }
+}
+
+/* Mobile view */
+@media screen and (max-width: 425px) {
+    .Exception {
+        margin: 2vh 5vw 3vh 5vw;
+    }
+    .DetailsCard {
+        text-align: left;
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .DetailsCard p:nth-child(2n) {
+        padding-left: 2vw;
+    }
+    .DetailsCard article {
+        padding-left: 2vw;
+    }
+    .SuccessDetailsCard article {
+        display: block;
+    }
 }

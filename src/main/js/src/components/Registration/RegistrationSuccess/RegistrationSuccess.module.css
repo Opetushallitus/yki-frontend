@@ -1,19 +1,16 @@
 .RegistrationSuccess {
-  margin: 38px 0 34px 20px;
+  width: auto;
+  max-width: 100vw;
+  margin: 0 14vw 10vh 14vw;
+  min-height: 10vh;
 }
 
-.InfoBox {
-  border: 1px solid hsla(36, 98%, 61%, 1);
-  border-radius: 2px;
-  background-color: hsla(36, 100%, 95%, 1);
-  max-width: 480px;
+.RegistrationSuccess p {
+  font: normal normal normal 16px/24px PT Sans;
+  color: hsla(194, 91%, 21%, 1);
 }
 
 .InfoBox p {
   margin-left: 8px;
   margin-right: 8px;
-}
-
-.BackButton {
-  margin-top: 20px;
 }

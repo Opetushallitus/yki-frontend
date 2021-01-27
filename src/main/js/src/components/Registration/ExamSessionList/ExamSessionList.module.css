@@ -8,27 +8,44 @@
   justify-content: space-between;
   border-bottom: 1px solid hsl(0, 0%, 59%);
   font-size: 14px;
+  padding: 5px 5px 5px 20px;
 }
 
 .ColumnHeaders {
-  display: none;
+  background: hsla(194, 82%, 43%, 1) 0 0 no-repeat padding-box;
+  text-align: left;
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(0, 0%, 100%, 1);
+  padding: 5px 10px 0 10px;
 }
 
-@media (min-width: 620px) {
+.NotFound {
+  font: normal normal bold 16px/24px PT Sans;
+  color: hsla(194, 91%, 21%, 1);
+}
+
+/* desktop */
+@media (min-width: 1440px) {
   .Date {
     margin-bottom: -2px;
   }
 
+  .Date:last-child {
+    margin-bottom: 0;
+  }
+
   .ExamsOnDate {
-    display: none;
+    display: flex;
   }
 
   .ColumnHeaders {
-    height: 38px;
+    height: 4vh;
     font-size: 14px;
     display: grid;
-    grid-template-columns: 0.7fr 2fr 0.8fr 1fr 1fr 0.7fr;
+    grid-template-columns: 0.7fr 2fr 0.8fr 1fr 0.7fr 1fr;
     align-items: end;
+    padding: 5px 10px 0 10px;
   }
 
   .ColumnHeaders > div:nth-child(4),
@@ -39,8 +56,31 @@
   .List {
     display: grid;
   }
+}
 
-  .List > div:first-child {
-    border-top: 1px solid hsl(0, 0%, 59%);
+/* Tablet landscape */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  .ExamsOnDate {
+    display: none;
+  }
+  .ColumnHeaders {
+    height: 6vh;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 0.6fr 1.9fr 0.9fr 0.9fr 0.6fr 1fr;
+    align-items: end;
+    text-align: left;
+    padding: 5px 20px 5px 20px;
+  }
+}
+
+/* Mobile screens landscape */
+@media screen and (max-width: 1023px) {
+  .ColumnHeaders {
+    display: none;
+  }
+  .ExamsOnDate {
+    display: none;
+    padding-left: 5vw;
   }
 }

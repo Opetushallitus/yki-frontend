@@ -71,7 +71,7 @@ class ExamDates extends Component {
             </h3>
             <div className={classes.Grid} key={i} data-cy="exam-dates-table">
               <h3>{this.props.t('common.examDate')}</h3>
-        {/*<h3>Jälki-ilmoittautumisen jakso</h3>*/}
+              {/*<h3>Jälki-ilmoittautumisen jakso</h3>*/}
               <h3>{this.props.t('common.language')}</h3>
               <h3>{this.props.t('common.level')}</h3>
               {examDateRows(dates)}
@@ -105,7 +105,7 @@ class ExamDates extends Component {
           <React.Fragment key={i}>
             <p>{moment(e.exam_date).format(DATE_FORMAT)}</p>
             {/* eslint-disable-next-line */}
-          {/*<p><a href="javascript:void(0)" onClick={() => this.showAddOrEditPostAdmissionModalHandler(e)}>{e.post_admission_end_date ?
+            {/*<p><a href="javascript:void(0)" onClick={() => this.showAddOrEditPostAdmissionModalHandler(e)}>{e.post_admission_end_date ?
                   `${registrationEndDateMoment.add(1, 'days').format(DATE_FORMAT)} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}` :
                   this.props.t('examSession.postAdmission.add')}</a></p>*/}
             <p>{languages}</p>
@@ -131,7 +131,7 @@ class ExamDates extends Component {
     return (
       <Page>
         <div className={classes.ExamDates}>{content}</div>
-    {/*{addOrEditPostAdmissionModal}*/}
+        {/*{addOrEditPostAdmissionModal}*/}
       </Page>
     );
   }

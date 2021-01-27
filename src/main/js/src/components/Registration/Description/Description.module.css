@@ -1,65 +1,138 @@
-.Content {
-  width: calc(100vw - 40px);
-  margin: 32px auto;
+.ArticleContent {
+  text-align: left;
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
+  margin-bottom: 10%;
 }
 
-.Content h1 {
+.Container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 1;
+}
+
+.ArticleContent h1 {
   font-weight: 400;
   font-size: 1.5em;
   margin: 32px 0;
 }
 
-.Content p {
-  margin-bottom: 20px;
+.ArticleContent p {
+  margin-bottom: 0 !important;
 }
 
-.Content p:nth-of-type(5),
-.Content p:nth-of-type(6),
-.Content p:nth-of-type(7) {
-  margin: 0px;
+.Container h2 {
+  text-align: left;
+  font: normal normal bold 28px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 82%, 43%, 1);
+  opacity: 1;
 }
 
-.Content p:last-of-type {
+.ArticleContent p:nth-of-type(5),
+.ArticleContent p:nth-of-type(6),
+.ArticleContent p:nth-of-type(7) {
+  margin: 0;
+}
+
+.ArticleContent p:last-of-type {
   margin-top: 20px;
 }
 
-.ContinueButton {
-  display: block;
-  width: 252px;
-  height: 50px;
-  margin: 32px auto;
-  border-radius: 2px;
-  box-shadow: 0px 0px 4px hsla(0, 0%, 0%, 0.5);
-  color: hsl(0, 0%, 100%);
-  text-align: center;
-  font-size: 0.875em;
-  background-color: hsl(96, 96%, 27%);
+.InnerContainer {
+  padding-right: 4vw;
+  width: 50vw;
 }
 
-.Tutorial {
-  margin: 28px 0 0 0;
+.InnerContainer hr {
+  border: 1px solid hsla(194, 82%, 43%, 1);
+  opacity: 0.5;
 }
 
-@media (min-width: 620px) {
-  .Content {
-    width: calc(100vw - 200px);
-    max-width: 457px;
-    margin: 0 0 88px 100px;
+.TutorialVideo {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 25px;
+  height: 0;
+  margin: 0 10px 40px 10px;
+  overflow: auto;
+}
+
+.TutorialVideo iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Tablet view */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .Container {
+    justify-content: left;
+  }
+  .InnerContainer {
+    margin: 2vh 3vw 2vh 3vw;
+    width: 60vw;
+  }
+}
+
+
+/* Mobile view */
+@media screen and (max-width: 425px) and (orientation: portrait) {
+  .InnerContainer {
+    padding-right: 3vw;
+    padding-left: 4vw;
   }
 
-  .Content p {
+  .ArticleContent {
+    max-width: 425px;
+  }
+
+  .ArticleContent p {
     margin-bottom: 25px;
   }
 
-  .Content p:nth-child(2) {
+  .ArticleContent p:nth-child(2) {
     margin-bottom: 50px;
   }
 
-  .Content p:last-child {
+  .ArticleContent p:last-child {
     margin-bottom: 50px;
   }
 
-  .ContinueButton {
+  .YkiButton {
+    margin-left: 90px;
+  }
+
+  .InstructionsVideo {
+    min-width: 100%;
+  }
+}
+
+
+/* Mobile view */
+@media screen and (max-width: 760px) and (orientation: landscape) {
+  .InnerContainer {
+    width: 100%;
+    margin-left: 4vw;
+  }
+
+  .ArticleContent p {
+    margin-bottom: 25px;
+  }
+
+  .ArticleContent p:nth-child(2) {
+    margin-bottom: 50px;
+  }
+
+  .ArticleContent p:last-child {
+    margin-bottom: 50px;
+  }
+
+  .YkiButton {
     margin-left: 90px;
   }
 }

@@ -17,7 +17,8 @@ describe('<PaymentStatus />', () => {
         location={{ search: '?status=payment-success' }}
       />,
     );
-    expect(wrapper.find('h1').text()).toBe('payment.status.success');
+    const wrapperHeader = wrapper.find('HeadlineContainer');
+    expect(wrapperHeader.props().headlineTitle).toBe('email.payment_success.subject!');
   });
   it('should render exam details when url contains id query param', () => {
     const wrapper = shallow(
@@ -28,11 +29,12 @@ describe('<PaymentStatus />', () => {
       />,
     );
     expect(wrapper.find(Spinner).exists()).toBeTruthy();
-
     wrapper.setState({ loading: false, examSession: {} });
     expect(wrapper.find(Spinner).exists()).toBeFalsy();
-    expect(wrapper.find('h1').text()).toBe('payment.status.success');
-    expect(wrapper.find(ExamDetailsCard).exists()).toBeTruthy();
+
+    const wrapperHeader = wrapper.find('HeadlineContainer');
+    expect(wrapperHeader.props().headlineContent.type.name).toBe('ExamDetailsCard');
+    expect(wrapperHeader.props().headlineTitle).toBe('email.payment_success.subject!');
   });
   it('should render payment status error', () => {
     const wrapper = shallow(
@@ -41,7 +43,9 @@ describe('<PaymentStatus />', () => {
         location={{ search: '?status=payment-error' }}
       />,
     );
-    expect(wrapper.find('h1').text()).toBe('payment.status.error');
+    const wrapperHeader = wrapper.find('HeadlineContainer');
+
+    expect(wrapperHeader.props().headlineTitle).toBe('payment.status.error');
   });
   it('should render payment status cancel', () => {
     const wrapper = shallow(
@@ -50,6 +54,8 @@ describe('<PaymentStatus />', () => {
         location={{ search: '?status=payment-cancel' }}
       />,
     );
-    expect(wrapper.find('h1').text()).toBe('payment.status.cancel');
+    const wrapperHeader = wrapper.find('HeadlineContainer');
+
+    expect(wrapperHeader.props().headlineTitle).toBe('payment.status.cancel');
   });
 });

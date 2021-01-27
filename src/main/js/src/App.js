@@ -14,9 +14,6 @@ import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Description from './components/Registration/Description/Description';
 import LinkExpired from './components/LinkExpired/LinkExpired';
-import LanguageSelection from './containers/Registration/LanguageSelection/LanguageSelection';
-import LevelSelection from './containers/Registration/LevelSelection/LevelSelection';
-import LocationSelection from './containers/Registration/LocationSelection/LocationSelection';
 import Registration from './containers/Registration/Registration';
 import NotFound from './components/NotFound/NotFound';
 import PaymentRedirect from './containers/PaymentRedirect/PaymentRedirect';
@@ -25,6 +22,9 @@ import Init from './containers/Init/Init';
 import ExamDates from './containers/ExamDates/ExamDates';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
 import ExamDetailsPage from './components/Registration/ExamDetailsPage/ExamDetailsPage';
+
+import RegistrationRoute from "./hoc/RegistrationRoute/RegistrationRoute";
+import ykiReducer from './store/reducers/ykiReducer';
 
 const Registry = lazy(() => import('./containers/Registry/Registry'));
 const ExamSessions = lazy(() =>
@@ -37,6 +37,7 @@ const rootReducer = combineReducers({
   registration: registrationReducer,
   user: userReducer,
   dates: examDatesReducer,
+  yki: ykiReducer,
 });
 
 const store = createStore(
@@ -53,39 +54,27 @@ const app = () => (
         <Router basename={'/yki'}>
           <Switch>
             <ErrorBoundary>
-              <Route exact path="/" component={Description} />
-              <Route exact path="/ilmoittautuminen" component={Description} />
-              <Route
-                path="/ilmoittautuminen/valitse-kieli"
-                component={LanguageSelection}
-              />
-              <Route
-                path="/ilmoittautuminen/valitse-taso"
-                component={LevelSelection}
-              />
-              <Route
-                path="/ilmoittautuminen/valitse-paikkakunta"
-                component={LocationSelection}
-              />
-              <Route
+              <RegistrationRoute exact path="/" component={Description} />
+              <RegistrationRoute exact path="/ilmoittautuminen" component={Description} />
+              <RegistrationRoute
                 path="/ilmoittautuminen/valitse-tutkintotilaisuus"
                 component={Registration}
               />
-              <Route
+              <RegistrationRoute
                 path="/tutkintotilaisuus/:examSessionId"
                 component={ExamDetailsPage}
               />
-              <Route
+              <RegistrationRoute
                 path="/ilmoittautuminen/tutkintotilaisuus/:examSessionId"
                 component={RegistrationPage}
               />
-              <Route
+              <RegistrationRoute
                 path="/ilmoittautuminen/vanhentunut"
                 component={LinkExpired}
               />
-              <Route path="/maksu/vanhentunut" component={LinkExpired} />
-              <Route path="/maksu/tila" component={PaymentStatus} />
-              <Route
+              <RegistrationRoute path="/maksu/vanhentunut" component={LinkExpired} />
+              <RegistrationRoute path="/maksu/tila" component={PaymentStatus} />
+              <RegistrationRoute
                 path="/maksu/ilmoittautuminen/:registrationId"
                 component={PaymentRedirect}
               />
@@ -93,9 +82,8 @@ const app = () => (
                 path="/tutkintotilaisuudet"
                 render={() => <ExamSessions />}
               />
-              {/* TODO: change back to use component={Component} after react-router-dom updates version */}
-              <Route path="/jarjestajarekisteri" render={() => <Registry />} />
-              <Route path="/tutkintopaivat" render={() => <ExamDates />} />
+              <Route path="/jarjestajarekisteri" component={Registry} />
+              <Route path="/tutkintopaivat" component={ExamDates} />
             </ErrorBoundary>
             <Route component={NotFound} />
           </Switch>

@@ -448,13 +448,13 @@ exports[`<LoginLink /> should render login link page 1`] = `
             type="submit"
           >
             <button
-              className="ParticipantButton undefined"
+              className="YkiButton undefined"
               data-cy="button-loginlink-form-submit"
               disabled={true}
               role="link"
               type="submit"
             >
-              registration.loginlink.button
+              registration.notification.signup.button
             </button>
           </button>
         </form>

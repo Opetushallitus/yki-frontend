@@ -1,12 +1,14 @@
 .Filters {
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 5px;
-  max-width: 520px;
+  grid-gap: 3vw;
 }
 
 .Filters label {
-  font-size: 12px;
+  text-align: left;
+  font: normal normal bold 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
 }
 
 .Filters select {
@@ -15,21 +17,95 @@
   width: 100%;
   padding-left: 7px;
   appearance: none;
-  background: url('../../../assets/svg/down-facing-triangle.svg') 90% no-repeat
-    hsl(0, 0%, 100%);
-  border: 1px solid hsl(0, 0%, 70%);
-  border-radius: 2px;
-  font-size: 14px;
+  background: url('../../../assets/svg/down-facing-triangle.svg') 98% no-repeat hsla(0, 0%, 100%, 1);
+  border: 1px solid hsla(0, 0%, 100%, 1);
+  border-radius: 4px;
   text-overflow: ellipsis;
+  text-align: left;
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
 }
 
-@media (min-width: 620px) {
-  .Filters {
-    grid-gap: 20px;
-  }
+.FilterCheckboxes {
+  display: flex;
+  margin-top: 5vh;
+  text-align: left;
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
+}
 
+.CheckBox {
+  display: inherit;
+  margin-right: 5vw;
+}
+
+.CheckBox label:last-child {
+  margin-left: 1vw;
+}
+
+/* Mobile */
+@media screen and (max-width: 425px) {
+  .Filters {
+    display: block;
+  }
   .Filters select {
     background: url('../../../assets/svg/down-facing-triangle.svg') 95%
-      no-repeat hsl(0, 0%, 100%);
+    no-repeat hsl(0, 0%, 100%);
+  }
+  .Filters select {
+    margin-bottom: 4vh;
+  }
+  .FilterCheckboxes {
+    display: block;
+  }
+  .CheckBox {
+    display: flex;
+    padding-bottom: 4vh;
+  }
+  .CheckBox label:nth-child(2) {
+    margin-left: 5vw;
+  }
+}
+
+/* Mobile landscape */
+@media screen and (max-width: 640px) and (max-width: 760px) and (orientation: landscape) {
+  .Filters {
+    display: block;
+  }
+  .Filters select {
+    background: url('../../../assets/svg/down-facing-triangle.svg') 95%
+    no-repeat hsl(0, 0%, 100%);
+  }
+  .Filters select {
+    margin-bottom: 8vh;
+  }
+  .FilterCheckboxes {
+    display: block;
+    padding-top: 5vh;
+    padding-bottom: 5vw;
+  }
+  .CheckBox {
+    display: flex;
+  }
+  .CheckBox label:nth-child(2) {
+    margin-left: 5vw;
+  }
+  .CheckBox:first-child {
+    padding-bottom: 15vh;
+  }
+}
+
+/* Mobile large landscape */
+@media screen and (min-width: 640px) and (max-width: 1023px) and (orientation: landscape) {
+  .Filters select {
+    background: url('../../../assets/svg/down-facing-triangle.svg') 95%
+    no-repeat hsl(0, 0%, 100%);
+    margin-bottom: 8vh;
+  }
+  .CheckBox {
+    display: flex;
+    padding-bottom: 4vh;
   }
 }

@@ -13,16 +13,18 @@ describe('Registration', () => {
     cy.contains('Yleiset kielitutkinnot');
   });
 
-  it('Return button returns user back to description page', () => {
+  it('Navigation button returns user back to front page', () => {
     cy.get('[data-cy=continue-button]').click();
     cy.contains('Suomi').click();
     cy.contains('Perustaso').click();
     cy.contains('Koko maa').click();
-    cy.contains('Takaisin').click();
-    cy.contains('Takaisin').click();
-    cy.contains('Takaisin').click();
-    cy.contains('Takaisin').click();
+    cy.contains('Esittely ja hinnasto').click();
     cy.contains('Yleiset kielitutkinnot');
+  });
+
+  it('Navigation button takes user to registration page', () => {
+    cy.contains('Ilmoittautuminen').click();
+    cy.contains('Haettava tutkinto');
   });
 
   it('Navigation works using browser history', () => {
@@ -30,9 +32,6 @@ describe('Registration', () => {
     cy.contains('Suomi').click();
     cy.contains('Perustaso').click();
     cy.contains('Koko maa').click();
-    cy.go('back');
-    cy.go('back');
-    cy.go('back');
     cy.go('back');
     cy.contains('Yleiset kielitutkinnot');
   });
@@ -65,7 +64,7 @@ describe('Registration', () => {
 
   it('Filters can handle page refresh and direct links', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
-    cy.get('[data-cy=exam-session-list-item]').should('have.length', 6);
+    cy.get('[data-cy=exam-session-list-item]').should('have.length', 7);
     cy.get('[data-cy=language-filter]').select('Saksa');
     cy.get('[data-cy=level-filter]').select('Ylin taso');
     cy.get('[data-cy=location-filter]').select('Jyväskylä');
@@ -84,16 +83,18 @@ describe('Registration', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.get('[data-cy=language-filter]').contains('Suomi');
     cy.get('[data-cy=location-filter]').contains('Tampere');
-    cy.contains('på svenska').click();
+    cy.get('[data-cy=language-select]').select('på svenska');
     cy.get('[data-cy=language-filter]').contains('Finska');
     cy.get('[data-cy=location-filter]').contains('Tammerfors');
   });
 
   it('Show exam session details page after selecting exam', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
+    cy.get('[data-cy=exam-availability-checkbox]').click();
     cy.contains('Ilmoittaudu').click();
-    cy.contains('Olet ilmoittautumassa tutkintotilaisuuteen');
+    cy.contains('Suomi');
     cy.contains('Tunnistaudu Suomi.fi:n kautta');
+    cy.contains('Tunnistaudu sähköpostilla');
   });
 
   it('Exam session details page return button returns to exam session listing', () => {
@@ -106,25 +107,26 @@ describe('Registration', () => {
   it('Exam session details page shows notification signup information', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.contains('Ilmoittaudu varasijalle').click();
-    cy.contains('Tutkintotilaisuus on täynnä!');
+    cy.contains('Täynnä!');
   });
 
   it('Notification signup works', () => {
     cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
     cy.contains('Ilmoittaudu varasijalle').click();
     cy.get('input#email').type('test@test.com');
+    cy.get('input#confirmEmail').type('test@test.com');
     cy.contains('Lähetä').click();
     cy.contains('test@test.com');
   });
 
   it('Login link expired page exists', () => {
     cy.visit('/ilmoittautuminen/vanhentunut');
-    cy.get('[data-cy=link-expired-header]').should('exist');
+    cy.contains('Tunnistautumislinkki on vanhentunut.');
   });
 
   it('Payment link expired page exists', () => {
     cy.visit('/maksu/vanhentunut');
-    cy.get('[data-cy=link-expired-header]').should('exist');
+    cy.contains('Maksulinkki on vanhentunut.');
   });
 
   it('Login link can be send from exam session details page', () => {
@@ -132,6 +134,7 @@ describe('Registration', () => {
     cy.get('select').contains('Suomi');
     cy.get('select').contains('Kaikki tasot');
     cy.get('select').contains('Koko maa');
+    cy.get('[data-cy=exam-availability-checkbox]').click();
     cy.get('[data-cy=exam-session-list-item]')
       .get('button')
       .contains('Ilmoittaudu')
@@ -150,8 +153,8 @@ describe('Registration', () => {
     cy.visit('/tutkintotilaisuus/10');
     cy.wait('@getExamSession');
 
-    cy.get('[data-cy=exam-details-title]')
-      .contains('Ilmoittautuminen ei ole avoinna tutkintotilaisuuteen:')
+    cy.get('[data-cy=exam-details-exception-status]')
+      .contains('Ilmoittautuminen ei ole vielä alkanut')
       .should('exist');
   });
 
@@ -174,5 +177,13 @@ describe('Registration', () => {
     cy.get('[data-cy=exam-details-title]')
       .contains('Tutkintotilaisuus ja jono ovat täynnä!')
       .should('exist');
+  });
+
+  it('Should only show exams that has available registration spots', () => {
+    cy.visit('/ilmoittautuminen/valitse-tutkintotilaisuus');
+    cy.get('[data-cy=exam-availability-checkbox]').click();
+    cy.get('[data-cy=exam-session-list-item]')
+        .contains('Täynnä!')
+        .should('not.exist');
   });
 });

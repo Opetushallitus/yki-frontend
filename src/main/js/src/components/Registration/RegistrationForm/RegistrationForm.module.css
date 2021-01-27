@@ -1,10 +1,12 @@
 .RadiobuttonGroup {
-  margin: 0px 0 27px 0;
+  margin: 0 0 27px 0;
 }
 
 .TextInput {
   width: 200px;
   height: 28px;
+  border: 1px solid hsla(194, 82%, 43%, 1);
+  border-radius: 4px;
 }
 
 .FormElement {
@@ -12,15 +14,24 @@
   margin-bottom: 20px;
 }
 
+.FormElement span {
+  color: hsla(194, 91%, 21%, 1);
+}
+
 .Form h2 {
-  font-size: 1.25em;
-  line-height: 28px;
-  margin: 8px 0px 14px 0px;
+  margin: 8px 0 14px 0;
+  text-align: left;
+  font: normal normal bold 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
+  font-weight: bold;
 }
 
 .Form h3 {
-  margin: 0px 0px 8px 0px;
-  line-height: 19px;
+  margin: 0 0 8px 0;
+  font: normal normal bold 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
 }
 
 .Form label {
@@ -31,20 +42,36 @@
   font-size: 0.875em;
 }
 
+.Form p {
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
+}
+
 .Form input {
-  color: hsla(0, 0%, 0%, 1);
+  font: normal normal normal 16px/24px PT Sans;
+  color: hsla(194, 91%, 21%, 1);
 }
 
 .Form input:focus {
-  outline: 1px solid hsla(195, 100%, 47%, 1);
+  outline: 1px solid hsla(194, 82%, 43%, 1);
+}
+
+.Form button {
+  width: 17vw;
+  margin-top: 5vh !important;
+}
+
+.InputFieldGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 24vw);
 }
 
 .GenderSelect {
   height: 32px;
   width: 80px;
-  border: 1px solid hsl(0, 0%, 68%);
-  border-radius: 2px;
-  background-color: hsl(0, 0%, 100%);
+  border: 1px solid hsla(194, 82%, 43%, 1);
+  border-radius: 4px;
 }
 
 .Birthdate {
@@ -55,6 +82,8 @@
 .Birthdate input {
   width: 108px;
   height: 28px;
+  border: 1px solid hsla(194, 82%, 43%, 1);
+  border-radius: 4px;
 }
 
 .Birthdate span {
@@ -75,14 +104,13 @@
 .NationalitySelect {
   height: 32px;
   width: 200px;
-  border: 1px solid hsl(0, 0%, 68%);
-  border-radius: 2px;
-  background-color: hsl(0, 0%, 100%);
+  border: 1px solid hsla(194, 82%, 43%, 1);
+  border-radius: 4px;
 }
 
 .ErrorMessage {
   display: block;
-  color: hsla(15, 100%, 40%, 1);
+  color: hsla(15, 100%, 40%, 1) !important;
   margin: 14px 0px 14px 0px;
 }
 
@@ -90,8 +118,86 @@
   margin: 14px 0px 14px 0px;
 }
 
-@media (min-width: 620px) {
+.RadioButtons {
+  display: flex;
+  color: hsla(194, 91%, 21%, 1);
+}
+
+.RadioButtons div {
+  margin-right: 1vw;
+}
+
+.ConsentContainer {
+  padding-top: 1vh;
+  margin-top: 5vh;
+  border: 1px solid hsla(0, 0%, 83%, 0.2);
+  border-radius: 4px;
+  background: hsla(0, 0%, 83%, 0.2);
+}
+
+.ConsentContainer article {
+  padding: 0 10px 0 10px;
+}
+
+.ConsentContainer article h4 {
+  margin-block-start: 0;
+}
+
+.ConsentCheckbox {
+  display: grid;
+  grid-template-columns: 30px calc(100% - 30px);
+  padding-left: 10px;
+}
+
+.ConsentCheckbox p {
+  padding-left: 10px;
+}
+
+.ConsentCheckbox label span {
+  border: 1px solid hsla(194, 82%, 43%, 1) !important;
+}
+
+.ConsentCheckbox .ErrorMessage {
+  margin-top: 0;
+}
+
+@media (min-width: 1440px) {
   .Form button {
     margin: 0 40px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .InputFieldGrid {
+    grid-template-columns: none;
+  }
+
+  .RadiobuttonGroup {
+    display: flex;
+  }
+
+  .RadioButtons div {
+    display: grid;
+    grid-template-columns: repeat(2, 30px);
+    margin-right: 35px;
+  }
+
+  .ConsentContainer {
+    margin-top: 35px;
+  }
+
+  .FormElement input {
+    width: 100%;
+  }
+
+  .Form Button {
+    width: 100%;
+    height: 15vh;
+  }
+}
+
+@media only screen and (max-width: 1023px) and (orientation: landscape) {
+  .FormElement input {
+    width: 100%;
   }
 }

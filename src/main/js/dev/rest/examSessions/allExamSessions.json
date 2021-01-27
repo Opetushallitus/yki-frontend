@@ -335,6 +335,53 @@
       "open": true,
       "queue_full": true,
       "post_admission": null
+    },
+    {
+      "level_code": "KESKI",
+      "max_participants": 20,
+      "language_code": "fin",
+      "participants": 10,
+      "pa_participants": 0,
+      "office_oid": "1.2.246.562.5.22724043777",
+      "published_at": "2019-01-17T12:32:00.001Z",
+      "session_date": "2021-01-06",
+      "organizer_oid": "1.2.246.562.10.39706139523",
+      "id": 16,
+      "registration_start_date": "2020-11-01",
+      "location": [
+        {
+          "lang": "fi",
+          "extra_information": null,
+          "name": "Helsingin aikuisopisto",
+          "other_location_info": "Sali Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINKI",
+          "zip": "00250"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "name": "Helsingin aikuisopisto",
+          "other_location_info": "Hall Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINGFORSS",
+          "zip": "00250"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "name": "Helsingin aikuisopisto",
+          "other_location_info": "Hall Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINKI",
+          "zip": "00250"
+        }
+      ],
+      "exam_fee": "123.00",
+      "registration_end_date": "2020-12-02",
+      "open": true,
+      "queue_full": true,
+      "post_admission": null
     }
   ]
 }

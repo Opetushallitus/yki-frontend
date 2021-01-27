@@ -53,3 +53,5 @@ export const LANGUAGES = [
     levels: ['PERUS', 'KESKI'],
   },
 ];
+export const MOBILE_VIEW = window.innerWidth < 426;
+export const TABLET_VIEW = window.innerWidth < 1025;
