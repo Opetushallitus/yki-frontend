@@ -20,7 +20,7 @@ const PriceContainer = () => {
                 <div className={classes.MobilePriceBox}>
                     <p>{t(levelTranslations.PERUS)}</p>
                     <div className={onMobileEN ?  classes.PriceTagEN : classes.PriceTag}>
-                        <div className={classes.Price}>100</div>
+                        <div className={classes.Price}>120</div>
                         <div className={classes.Currency}>{'€'}</div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@ const PriceContainer = () => {
                 <div className={classes.MobilePriceBox}>
                     <p>{t(levelTranslations.KESKI)}</p>
                     <div className={classes.PriceTag}>
-                        <div className={classes.Price}>123</div>
+                        <div className={classes.Price}>140</div>
                         <div className={classes.Currency}>{'€'}</div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ const PriceContainer = () => {
                 <div className={classes.MobilePriceBox}>
                     <p>{t(levelTranslations.YLIN)}</p>
                     <div className={classes.PriceTag}>
-                        <div className={classes.Price}>160</div>
+                        <div className={classes.Price}>180</div>
                         <div className={classes.Currency}>{'€'}</div>
                     </div>
                 </div>
