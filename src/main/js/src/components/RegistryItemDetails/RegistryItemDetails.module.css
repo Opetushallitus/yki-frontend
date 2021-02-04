@@ -23,17 +23,25 @@
   line-height: 1.625em;
 }
 
+.LinkStyle {
+  color: hsla(195, 82%, 44%, 1);
+  font-size: 0.875em;
+  line-height: 1.625em;
+  letter-spacing: -0.3px;
+}
+
+.InspectExamSessions {
+  grid-area: row-end;
+  text-align: right;
+  cursor: pointer;
+}
+
 .Update {
   position: absolute;
   top: 20px;
   right: 20px;
   background: none;
   border: none;
-  font-size: 0.875em;
-  line-height: 1.625em;
-  letter-spacing: -0.3px;
-  text-decoration-line: underline;
-  color: hsla(195, 82%, 44%, 1);
 }
 
 .AgreementExpired > p {

@@ -16,7 +16,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   if (action.type.includes('POST_ADMISSION')) {
-    switch(action.type) {
+    switch (action.type) {
       case actionTypes.ADD_POST_ADMISSION_START:
         return {
           ...state,
@@ -32,7 +32,7 @@ const reducer = (state = initialState, action) => {
           ...state,
           loading: false,
         }
-      default: 
+      default:
         return state;
     }
   }

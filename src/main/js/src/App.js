@@ -10,6 +10,7 @@ import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
 import userReducer from './store/reducers/user';
 import examDatesReducer from './store/reducers/examDates';
+import organizationSessionsReducer from './store/reducers/orgExamSession';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Description from './components/Registration/Description/Description';
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   dates: examDatesReducer,
   yki: ykiReducer,
+  orgDetails: organizationSessionsReducer,
 });
 
 const store = createStore(
