@@ -52,10 +52,13 @@ export class ExamSessionUpdateForm extends Component {
     };
 
     const deleteButton = examSession => {
-      const registrationStarted = moment().isAfter(
+      // It is possible to delete the exam session on the registration start day before 10am
+      const registrationNotStarted = moment().subtract(1, 'days').isBefore(
         moment(examSession.registration_start_date),
       );
-      return registrationStarted ? null : (
+
+      const canBeDeleted = !examSession.open && examSession.participants === 0 && registrationNotStarted;
+      return canBeDeleted ? (
         <div className={classes.ActionButton}>
           <ActionButton
             onClick={this.props.onDelete}
@@ -65,7 +68,7 @@ export class ExamSessionUpdateForm extends Component {
             cancelText={t('common.cancelConfirm')}
           />
         </div>
-      );
+      ) : null;
     };
 
     const getLocationByLang = lang => {
