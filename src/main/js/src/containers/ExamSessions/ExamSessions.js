@@ -80,6 +80,11 @@ class ExamSessions extends Component {
     this.closeExamSessionDetailsModalHandler();
   };
 
+  togglePastExamSessionsHandler = () => {
+    const days = !this.props.showPastSessionsFromDays ? 180 : null;
+    this.props.toggleAndFetchPastExamSessions(days);
+  }
+
   render() {
     const addExamSessionModal = (
       <React.Fragment>
@@ -127,9 +132,10 @@ class ExamSessions extends Component {
             )}
           </h1>
           <UpcomingExamSessions
-            organizer={this.props.examSessionContent.organizer}
             examSessions={this.props.examSessionContent.examSessions}
             examSessionSelected={this.openExamSessionDetailsModalHandler}
+            showPastExamSessions={!!this.props.showPastSessionsFromDays}
+            togglePastExamSessions={this.togglePastExamSessionsHandler}
           />
           <div
             className={classes.AddExamSessionButton}
@@ -146,8 +152,8 @@ class ExamSessions extends Component {
         </div>
       </div>
     ) : (
-      <p>{this.props.t('examSessions.agreementNotFound')}</p>
-    );
+          <p>{this.props.t('examSessions.agreementNotFound')}</p>
+        );
 
     return (
       <Page>
@@ -156,7 +162,7 @@ class ExamSessions extends Component {
           {examSessionDetailsModal}
           {content}
         </div>
-      </Page>
+      </Page >
     );
   }
 }
@@ -166,6 +172,7 @@ const mapStateToProps = state => {
     examSessionContent: state.exam.examSessionContent,
     loading: state.exam.loading,
     error: state.exam.error,
+    showPastSessionsFromDays: state.exam.showPastSessionsFromDays,
   };
 };
 
@@ -180,6 +187,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.updateExamSession(examSession, oid)),
     onDeleteExamSession: (oid, examSessionId) =>
       dispatch(actions.deleteExamSession(oid, examSessionId)),
+    toggleAndFetchPastExamSessions: (activeState) =>
+      dispatch(actions.toggleAndFetchPastExamSessions(activeState)),
   };
 };
 
@@ -192,6 +201,7 @@ ExamSessions.propTypes = {
   onAddExamSession: PropTypes.func.isRequired,
   onUpdateExamSession: PropTypes.func.isRequired,
   onDeleteExamSession: PropTypes.func.isRequired,
+  toggleAndFetchPastExamSessions: PropTypes.func.isRequired,
 };
 
 export default connect(

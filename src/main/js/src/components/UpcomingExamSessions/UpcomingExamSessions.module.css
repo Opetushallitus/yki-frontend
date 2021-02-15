@@ -30,6 +30,24 @@
   cursor: pointer;
 }
 
+.TitleRow {
+  display: grid;
+  grid-template-columns: 80% auto 20px;
+  column-gap: 10px;
+  justify-content: start;
+  justify-items: stretch;
+}
+
+.ShowPastSessionsItem {
+  align-self: center;
+}
+
+
+.ShowPastSessionsItem label span {
+  border: 1px solid hsla(194, 82%, 43%, 1) !important;
+}
+
+
 @media (max-width: 900px) {
   .DesktopOnly {
     display: none;

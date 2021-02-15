@@ -6,6 +6,7 @@ import moment from 'moment';
 import classes from './UpcomingExamSessions.module.css';
 import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
 import { languageToString, levelDescription } from '../../util/util';
+import Checkbox from "../UI/Checkbox/Checkbox";
 
 export const upcomingExamSessions = props => {
   const examSessionRows = props.examSessions.map((e, i) => {
@@ -37,9 +38,28 @@ export const upcomingExamSessions = props => {
     );
   });
 
+  const togglePastCheckbox = (
+    <>
+      {props.togglePastExamSessions &&
+        <>
+          <div className={classes.ShowPastSessionsItem}>{props.t('examSessions.showPastSessions')}</div>
+          <div className={classes.ShowPastSessionsItem}>
+            <Checkbox
+              checked={props.showPastExamSessions}
+              datacy="exam-sessions-toggle-past-checkbox"
+              onChange={() => props.togglePastExamSessions()}
+            />
+          </div>
+        </>}
+    </>
+  )
+
   return (
     <div className={classes.ExamSessionList}>
-      <h2>{props.t('examSession.upcomingExamSessions')}</h2>
+      <div className={classes.TitleRow}>
+        <h2>{props.t('examSession.upcomingExamSessions')}</h2>
+        {togglePastCheckbox}
+      </div>
       {props.examSessions.length > 0 ? (
         <div className={classes.Grid} data-cy="exam-sessions-table">
           <h3>{props.t('common.examDate')}</h3>
@@ -52,8 +72,8 @@ export const upcomingExamSessions = props => {
           {examSessionRows}
         </div>
       ) : (
-        <p>{props.t('examSession.noPlannedSessions')}</p>
-      )}
+          <p>{props.t('examSession.noPlannedSessions')}</p>
+        )}
     </div>
   );
 };
@@ -61,6 +81,7 @@ export const upcomingExamSessions = props => {
 upcomingExamSessions.propTypes = {
   examSessions: PropTypes.array.isRequired,
   examSessionSelected: PropTypes.func.isRequired,
+  showPastExamSessions: PropTypes.bool,
+  togglePastExamSessions: PropTypes.func,
 };
-
 export default withTranslation()(upcomingExamSessions);

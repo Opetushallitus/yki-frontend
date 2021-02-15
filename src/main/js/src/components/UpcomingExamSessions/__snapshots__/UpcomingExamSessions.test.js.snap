@@ -4,9 +4,13 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
 <div
   className="ExamSessionList"
 >
-  <h2>
-    examSession.upcomingExamSessions
-  </h2>
+  <div
+    className="TitleRow"
+  >
+    <h2>
+      examSession.upcomingExamSessions
+    </h2>
+  </div>
   <div
     className="Grid"
     data-cy="exam-sessions-table"
