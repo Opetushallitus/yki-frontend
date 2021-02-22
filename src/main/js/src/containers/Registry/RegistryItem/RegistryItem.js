@@ -7,7 +7,6 @@ import Collapsible from '../../../components/UI/Collapsible/Collapsible';
 import RegistryItemDetails from '../../../components/RegistryItemDetails/RegistryItemDetails';
 import { languagesToString } from '../../../util/util';
 import { nowBetweenDates } from '../../../util/util';
-import RegistryOrgModal from '../RegistryOrgModal/RegistryOrgModal';
 
 class RegistryItem extends PureComponent {
   state = {
@@ -30,17 +29,6 @@ class RegistryItem extends PureComponent {
 
 
   render() {
-    const orgSessionsModal = (
-      <>
-        {this.state.selectedOid && <RegistryOrgModal
-          organization={this.props.item}
-          showModal={this.state.showModal}
-          closeModal={this.closeModalHandler}
-        />}
-      </>
-    );
-
-
 
     const languages = languagesToString(this.props.item.languages);
     const agreementActive = nowBetweenDates(
@@ -53,7 +41,7 @@ class RegistryItem extends PureComponent {
       this.props.item.merchant.merchant_secret;
     return (
       <>
-        {orgSessionsModal}
+        {/*  {orgSessionsModal} */}
         <div
           className={
             this.state.show

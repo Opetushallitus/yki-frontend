@@ -7,14 +7,14 @@ import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 
 const fetchExamSessionsStart = () => {
   return {
-    type: actionTypes.FETCH_ORG_EXAM_SESSIONS_START,
+    type: actionTypes.FETCH_REGISTRY_EXAM_SESSIONS_START,
     loadingExamSessions: true,
   };
 };
 
 const fetchExamSessionsSuccess = examSessions => {
   return {
-    type: actionTypes.FETCH_ORG_EXAM_SESSIONS_SUCCESS,
+    type: actionTypes.FETCH_REGISTRY_EXAM_SESSIONS_SUCCESS,
     examSessions,
     loadingExamSessions: false,
   };
@@ -22,7 +22,7 @@ const fetchExamSessionsSuccess = examSessions => {
 
 const fetchExamSessionsFail = error => {
   return {
-    type: actionTypes.FETCH_ORG_EXAM_SESSIONS_FAIL,
+    type: actionTypes.FETCH_REGISTRY_EXAM_SESSIONS_FAIL,
     error: Object.assign(error, { key: 'error.examSession.fetchFailed' }),
     loadingExamsessions: false,
   };
@@ -30,25 +30,25 @@ const fetchExamSessionsFail = error => {
 
 const fetchExamSessionParticipantsStart = () => {
   return {
-    type: actionTypes.FETCH_ORG_EXAM_SESSION_PARTICIPANTS_START
+    type: actionTypes.FETCH_REGISTRY_EXAM_SESSION_PARTICIPANTS_START
   };
 };
 
 const fetchExamSessionParticipantsSuccess = participants => {
   return {
-    type: actionTypes.FETCH_ORG_EXAM_SESSION_PARTICIPANTS_SUCCESS,
+    type: actionTypes.FETCH_REGISTRY_EXAM_SESSION_PARTICIPANTS_SUCCESS,
     participants
   };
 };
 
 const fetchExamSessionParticipantsFail = error => {
   return {
-    type: actionTypes.FETCH_ORG_EXAM_SESSION_PARTICIPANTS_FAIL,
+    type: actionTypes.FETCH_REGISTRY_EXAM_SESSION_PARTICIPANTS_FAIL,
     error: Object.assign(error, { key: 'error.examSession.fetchFailed' })
   };
 };
 
-export const fetchOrgExamSessions = oid => {
+export const fetchRegistryExamSessions = oid => {
   return dispatch => {
     dispatch(fetchExamSessionsStart());
     const today = moment().format(ISO_DATE_FORMAT_SHORT);
@@ -64,7 +64,7 @@ export const fetchOrgExamSessions = oid => {
   };
 };
 
-export const fetchOrgExamSessionParticipants = (organizerOid, examSessionId) => {
+export const fetchRegistryExamSessionParticipants = (organizerOid, examSessionId) => {
   return dispatch => {
     dispatch(fetchExamSessionParticipantsStart());
     axios

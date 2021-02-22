@@ -273,13 +273,12 @@ export const participantList = props => {
         confirmText={props.t('examSession.registration.cancel.confirm')}
         cancelText={props.t('examSession.registration.cancel.cancel')}
       />
-    );
+    )
   };
 
   const participantRows = participants => {
     return sortParticipantsFn(participants).map((p, i) => (
       <React.Fragment key={i}>
-        {console.log('participant: ', p.form)}
         <div
           className={[
             classes.ItemHeader,
@@ -307,9 +306,9 @@ export const participantList = props => {
         </div>
         <div className={classes.StateItem}>{props.t('examSession.registration')}</div>
         <div className={classes.FirstShowOnHover}>
-          {p.state === 'SUBMITTED'
+          {p.state === 'SUBMITTED' && !props.disableControls
             ? confirmPaymentButton(p)
-            : p.state === 'COMPLETED'
+            : p.state === 'COMPLETED' && !props.disableControls
               ? relocateButton(p)
               : null}
         </div>
@@ -325,7 +324,7 @@ export const participantList = props => {
         </div>
         <div className={classes.Item}> {p.form.email}</div>
         <div className={classes.ShowOnHover}>
-          {p.state === 'SUBMITTED' || p.state === 'COMPLETED'
+          {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') && !props.disableControls
             ? cancelRegistrationButton(p)
             : null}
         </div>
@@ -346,7 +345,6 @@ export const participantList = props => {
       </h2>
     );
   }
-
   return (
     <div data-cy="participant-list">
       {participantsHeader()}
@@ -381,6 +379,7 @@ participantList.propTypes = {
   onConfirmPayment: PropTypes.func.isRequired,
   onRelocate: PropTypes.func.isRequired,
   onResendLink: PropTypes.func.isRequired,
+  disableControls: PropTypes.bool,
 };
 
 export default withTranslation()(participantList);

@@ -139,6 +139,7 @@ class ExamSessions extends Component {
               {this.props.t('examSession.addExamSession')}
             </Button>
           </div>
+          <h2 className={classes.ContractTitle}>{this.props.t('common.agreement')}</h2>
           <ExamSessionOrganizer
             organizer={this.props.examSessionContent.organizer}
             organization={this.props.examSessionContent.organization}
@@ -146,8 +147,8 @@ class ExamSessions extends Component {
         </div>
       </div>
     ) : (
-      <p>{this.props.t('examSessions.agreementNotFound')}</p>
-    );
+          <p>{this.props.t('examSessions.agreementNotFound')}</p>
+        );
 
     return (
       <Page>

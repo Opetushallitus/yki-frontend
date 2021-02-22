@@ -7,6 +7,7 @@ import classes from './RegistryItemDetails.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
+import { Link } from 'react-router-dom';
 
 const registryItemDetails = props => {
   const languages = (
@@ -79,9 +80,14 @@ const registryItemDetails = props => {
         {agreement}
         {extra}
       </div>
-      <div className={[classes.Grid, classes.LinkStyle].join(" ")}>
+      <Link
+        to={{
+          pathname: `/jarjestajarekisteri/${props.item.oid}/tutkintotilaisuudet`
+        }}
+        className={[classes.Grid, classes.LinkStyle].join(" ")}
+      >
         {inspectExamSessions}
-      </div>
+      </Link>
       <button className={[classes.Update, classes.LinkStyle].join(" ")} onClick={props.modify}>
         {props.t('common.modify')}
       </button>

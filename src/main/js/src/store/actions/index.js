@@ -14,9 +14,9 @@ export {
   ResendPaymentEmail,
 } from './examSession';
 export {
-  fetchOrgExamSessions,
-  fetchOrgExamSessionParticipants
-} from './orgExamSession';
+  fetchRegistryExamSessions,
+  fetchRegistryExamSessionParticipants
+} from './registryExamSession';
 export {
   fetchRegistryContent,
   fetchOrganizations,
