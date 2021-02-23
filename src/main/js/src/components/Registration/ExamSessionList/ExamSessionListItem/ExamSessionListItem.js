@@ -1,24 +1,29 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-//import { nowBetweenDates } from '../../../../util/util';
+import {
+  showAvailableSpots,
+  spotsAvailableForSession,
+  isAdmissionActive,
+  admissionClosed,
+} from '../../../../util/examSessionUtil'
 import classes from './ExamSessionListItem.module.css';
-import {getDeviceOrientation, levelDescription} from '../../../../util/util';
+import { getDeviceOrientation, levelDescription } from '../../../../util/util';
 import {
   DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW
+  DATE_FORMAT_WITHOUT_YEAR, MOBILE_VIEW
 } from '../../../../common/Constants';
 import * as actions from '../../../../store/actions/index';
 
 const examSessionListItem = ({
-                               examSession: session,
-                               language,
-                               onSelectExamSession,
-                               history,
-                             }) => {
+  examSession: session,
+  language,
+  onSelectExamSession,
+  history,
+}) => {
   const [t, i18n] = useTranslation();
 
   const selectExamSession = () => {
@@ -39,11 +44,6 @@ const examSessionListItem = ({
     </div>
   );
 
-  const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
-  const registrationClosed = moment(session.registration_end_date).isBefore(currentDate);
-  //TODO: uncomment when postAdmission is added
-  //const postAdmissionClosed = moment(session.session.post_admission_end_date).isBefore(currentDate);
-
   const sessionLocation =
     session.location.find(l => l.lang === i18n.language) || session.location[0];
   const name = sessionLocation.name;
@@ -51,41 +51,30 @@ const examSessionListItem = ({
   const city = sessionLocation.post_office.toUpperCase() || '';
   const location = (
     <span className={classes.Location}>
-      {name} <br/> {address} <br/> {session.location[0].zip} <strong>{city}</strong>
+      {name} <br /> {address} <br /> {session.location[0].zip} <strong>{city}</strong>
     </span>
   );
 
-  /*
-  const postAdmissionActive = session.post_admission_end_date && 
-                              session.post_admission_start_date &&
-                              session.post_admission_active &&
-                              session.post_admission_quota &&
-                              nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
-
-  const spotsAvailable = postAdmissionActive ? (session.post_admission_quota - session.pa_participants) : (session.max_participants - session.participants);
-  */
-
-  const spotsAvailable = (session.max_participants - session.participants);
+  const spotsAvailable = spotsAvailableForSession(session);
 
   const spotsAvailableText =
     spotsAvailable === 1
       ? t('registration.examSpots.singleFree')
       : t('registration.examSpots.free');
 
-  //TODO: add postAdmissionClosed to ternary check when post admission is added
   const availability = (
     <div className={classes.Availability}>
       <strong>
-        {spotsAvailable > 0 && !registrationClosed ? (
+        {showAvailableSpots(session) ? (
           <>
             <span>{spotsAvailable}</span>{' '}
             <span className={classes.HiddenOnDesktop}>
-                  {spotsAvailableText}
-                </span>
+              {spotsAvailableText}
+            </span>
           </>
         ) : (
-          <span>{t('registration.examSpots.full')}</span>
-        )}
+            <span>{t('registration.examSpots.full')}</span>
+          )}
       </strong>
     </div>
   );
@@ -123,15 +112,15 @@ const examSessionListItem = ({
       : t('registration.register.forQueue');
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
 
-  //TODO: add to ternary !postAdmissionClosed
   const registerButton = (
     <>
-      {!registrationClosed && !session.queue_full ?
+      {!admissionClosed(session) && !session.queue_full ?
         <button
           className={'YkiButton'}
           onClick={selectExamSession}
           role="link"
           aria-label={srLabel}
+          disabled={!isAdmissionActive(session)}
         >
           {buttonText}
         </button>
@@ -140,15 +129,14 @@ const examSessionListItem = ({
       }
     </>
   );
-
   const locationOnMobileView = (
     <div className={classes.Location}>
-        <span>
-          {name}<br/>{address}<br/>
-        </span>
       <span>
-          {session.location[0].zip}{' '}{city}
-        </span>
+        {name}<br />{address}<br />
+      </span>
+      <span>
+        {session.location[0].zip}{' '}{city}
+      </span>
     </div>
   );
 
@@ -165,14 +153,14 @@ const examSessionListItem = ({
             <div>{exam}</div>
             <div>{date}</div>
           </div>
-          <hr/>
+          <hr />
           <div>{registrationOpen}</div>
-          <hr/>
+          <hr />
           <div className={classes.MobileRow}>
             <div>{availability}</div>
             {session.queue_full ? null : <div className={classes.ExamFee}>{examFee}</div>}
           </div>
-          <hr/>
+          <hr />
           <div>
             {locationOnMobileView}
             {registerButton}
