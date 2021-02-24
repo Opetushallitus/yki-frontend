@@ -48,11 +48,10 @@ const description = ({history}) => {
     }
   ];
 
-  /* TODO: add when new version of the tutorial video is released
   const tutorialVideo = (
     <div className={classes.TutorialVideo}>
       <iframe
-        src="https://www.youtube-nocookie.com//embed/pUVgdF-KBWQ"
+        src="https://www.youtube-nocookie.com//embed/tRZidlUIzrc"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
@@ -63,7 +62,6 @@ const description = ({history}) => {
       />
     </div>
   );
-   */
 
   const desktopContent = (
     <>
