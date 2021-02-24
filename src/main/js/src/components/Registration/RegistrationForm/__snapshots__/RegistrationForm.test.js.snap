@@ -17,6 +17,7 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
       "personalDataConsent": false,
       "phoneNumber": "",
       "postOffice": "HELSINKI",
+      "ssn": "260553-959D",
       "streetAddress": "Ateläniitynpolku 29 G",
       "termsOfUseConsent": false,
       "zip": "00100",

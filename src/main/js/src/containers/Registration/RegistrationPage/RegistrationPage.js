@@ -15,10 +15,10 @@ import HeadlineContainer from "../../../components/HeadlineContainer/HeadlineCon
 import {getLanguageAndLevel} from "../../../util/util";
 
 export const RegistrationPage = props => {
-  const {initData, history, match} = props;
+  const {initData, initDataLoading, history, match} = props;
 
   useEffect(() => {
-    if (!initData) {
+    if (!initData && !initDataLoading) {
       const examSessionId = match.params.examSessionId;
       props.onInitRegistrationForm(examSessionId);
     }

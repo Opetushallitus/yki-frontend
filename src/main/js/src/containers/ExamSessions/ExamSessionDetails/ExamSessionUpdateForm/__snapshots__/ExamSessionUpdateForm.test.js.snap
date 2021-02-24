@@ -167,17 +167,6 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
     <div
       class="Buttons"
     >
-      <div
-        class="ActionButton"
-      >
-        <button
-          class="Action"
-          data-cy="button-action"
-          type="button"
-        >
-          examSession.delete
-        </button>
-      </div>
       <button
         class="Button undefined"
         disabled=""

@@ -10,6 +10,7 @@ export {
   relocateExamSession,
   addPostAdmission,
   ResendPaymentEmail,
+  toggleAndFetchPastExamSessions,
 } from './examSession';
 export {
   fetchRegistryContent,

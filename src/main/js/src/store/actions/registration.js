@@ -22,21 +22,19 @@ export const fetchExamSessions = () => {
       });
   };
 };
-const locationByLang = (examSession, lang)=> {
-  return capitalize(
-    examSession.location.find(l => l.lang === lang).post_office,
-  );
+const locationByLang = (examSession, lang) => {
+  const language = examSession.location.find(l => l.lang === lang)
+  return language && language.post_office ? capitalize(language.post_office) : null;
 };
 
 const extractExamLocations = examSessions => {
   const getUniqueLocations = (locations, examSession) => {
-    const location = {fi: locationByLang(examSession, 'fi'), sv: locationByLang(examSession, 'sv')};
+    const location = { fi: locationByLang(examSession, 'fi'), sv: locationByLang(examSession, 'sv') };
     return R.includes(location, locations) ? locations : R.append(location, locations);
   };
 
-  const unique = R.reduce(getUniqueLocations, []); 
+  const unique = R.reduce(getUniqueLocations, []);
   const sortByFi = R.sort(R.prop('fi'));
-
   return {
     type: actionTypes.ADD_EXAM_LOCATIONS,
     locations: R.compose(sortByFi, unique)(examSessions),
