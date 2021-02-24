@@ -71,7 +71,7 @@ const description = ({history}) => {
           <p>{t('registration.description.text3')}</p>
           <p>{t('registration.description.text4')}</p>
         </article>
-        {/*{tutorialVideo}*/}
+        {tutorialVideo}
         <>
           <h2>{t('registration.description.examLevels')}</h2>
           <DescriptionCollapsible headerText={levelTranslations.PERUS} content={basicLevel}/>
@@ -102,7 +102,7 @@ const description = ({history}) => {
           <p>{t('registration.description.text3')}</p>
           <p>{t('registration.description.text4')}</p>
         </article>
-        {/*{tutorialVideo}*/}
+        {tutorialVideo}
         <div style={{width: `calc(${window.screen.availWidth}px - 20px)`, padding: '0 2px'}}>
           <h2>{t('registration.description.examLevels')}</h2>
           <DescriptionCollapsible headerText={levelTranslations.PERUS} content={basicLevel}/>
