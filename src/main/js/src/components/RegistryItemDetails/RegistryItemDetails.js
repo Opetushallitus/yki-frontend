@@ -7,6 +7,7 @@ import classes from './RegistryItemDetails.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
+import { Link } from 'react-router-dom';
 
 const registryItemDetails = props => {
   const languages = (
@@ -18,9 +19,8 @@ const registryItemDetails = props => {
     </div>
   );
 
-  const address = `${props.item.address.street}, ${
-    props.item.address.zipCode
-  } ${props.item.address.city}`;
+  const address = `${props.item.address.street}, ${props.item.address.zipCode
+    } ${props.item.address.city}`;
 
   const contact = (
     <div className={classes.Contact}>
@@ -36,9 +36,8 @@ const registryItemDetails = props => {
   const agreementPdf = props.item.attachmentId ? (
     <div>
       <a
-        href={`/yki/api/virkailija/organizer/${props.item.oid}/file/${
-          props.item.attachmentId
-        }`}
+        href={`/yki/api/virkailija/organizer/${props.item.oid}/file/${props.item.attachmentId
+          }`}
         className={classes.PdfLink}
         download
       >
@@ -65,6 +64,14 @@ const registryItemDetails = props => {
     </div>
   );
 
+  const placeholder = "Tarkastele järjestäjän näkymää"
+
+  const inspectExamSessions = (
+    <div className={classes.InspectExamSessions} onClick={() => props.openSessions(props.item.oid)}>
+      <p>{placeholder}</p>
+    </div>
+  );
+
   return (
     <div className={classes.RegistryItemDetails}>
       <div className={classes.Grid}>
@@ -73,7 +80,15 @@ const registryItemDetails = props => {
         {agreement}
         {extra}
       </div>
-      <button className={classes.Update} onClick={props.clicked}>
+      <Link
+        to={{
+          pathname: `/jarjestajarekisteri/${props.item.oid}/tutkintotilaisuudet`
+        }}
+        className={[classes.Grid, classes.LinkStyle].join(" ")}
+      >
+        {inspectExamSessions}
+      </Link>
+      <button className={[classes.Update, classes.LinkStyle].join(" ")} onClick={props.modify}>
         {props.t('common.modify')}
       </button>
     </div>
@@ -82,7 +97,8 @@ const registryItemDetails = props => {
 
 registryItemDetails.propTypes = {
   item: PropTypes.object.isRequired,
-  clicked: PropTypes.func.isRequired,
+  modify: PropTypes.func.isRequired,
+  openSessions: PropTypes.func.isRequired,
 };
 
 export default withTranslation()(registryItemDetails);

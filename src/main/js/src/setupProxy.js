@@ -17,7 +17,7 @@ const printError = (req, err) => {
     + '\n' + req.body
     + '\n From ' + (err.config && err.config.url)
     + '\n Message: ' + err.message
-    + '\n Response data: ' + (err.response && err.response.data));
+    + '\n Response data: ' + (err.response && JSON.stringify(err.response.data)));
 }
 
 const useLocalProxy = process.env.REACT_APP_USE_LOCAL_PROXY_BACKEND === "true";
@@ -59,6 +59,14 @@ const getRegistrations = () => {
     fs.readFileSync('./dev/rest/examSessions/registrations.json'),
   );
 };
+
+const findByOids = () => {
+  return JSON.parse(
+    fs.readFileSync('./dev/rest/organization/findbyoids.json'),
+  );
+}
+
+let organizations = findByOids();
 
 let registrations = {
   1: getRegistrations(),
@@ -253,6 +261,7 @@ module.exports = function (app) {
   app.get('/yki/reset-mocks', (req, res) => {
     examSessions = getExamSessions();
     examDates = getExamDates();
+    organizations = findByOids();
 
     registrations = {
       1: getRegistrations(),
@@ -307,13 +316,18 @@ module.exports = function (app) {
   app.get(
     '/yki/api/virkailija/organizer/:oid/exam-session/:id/registration',
     (req, res) => {
-      try {
-        const { id } = req.params;
-        res.send(registrations[id] || { participants: [] });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
+      const mockCall = () => {
+        try {
+          const { id } = req.params;
+          res.send(registrations[id] || { participants: [] });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
       }
+      useLocalProxy
+        ? proxyGetCall(req, res)
+        : mockCall();
     },
   );
 
@@ -572,7 +586,7 @@ module.exports = function (app) {
   app.post(
     '/organisaatio-service/rest/organisaatio/v3/findbyoids',
     (req, res) => {
-      axios
+      const organisaatioServiceCall = () => axios
         .post(
           'https://virkailija.untuvaopintopolku.fi/organisaatio-service/rest/organisaatio/v4/findbyoids',
           req.body,
@@ -584,6 +598,18 @@ module.exports = function (app) {
           printError(req, err);
           res.status(404).send(err.message);
         });
+
+      const mockCall = () => {
+        try {
+          res.send(organizations);
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      }
+      useLocalProxy
+        ? mockCall()
+        : organisaatioServiceCall();
     },
   );
 

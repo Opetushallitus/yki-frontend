@@ -13,14 +13,14 @@ import classes from './ParticipantList.module.css';
 import { ActionButton } from '../../UI/ActionButton/ActionButton';
 import ListExport from './ListExport/ListExport';
 
-const stateComparator = () => (a,b) => {
+const stateComparator = () => (a, b) => {
   if (a.state === 'COMPLETED')
     return -1;
   if (b.state === 'COMPLETED')
     return 1;
   if (a.state === "SUBMITTED")
     return -1;
-  if(b.state === "SUBMITTED")
+  if (b.state === "SUBMITTED")
     return 1;
 
   return 0;
@@ -135,6 +135,13 @@ export const participantList = props => {
     return form.ssn ? form.ssn : moment(form.birthdate).format(DATE_FORMAT);
   };
 
+  const getPhoneNumber = participant => {
+    const asNumber = parsePhoneNumberFromString(
+      participant.form.phone_number,
+    );
+    return asNumber ? asNumber.formatInternational() : '';
+  }
+
   const confirmPaymentButton = participant => {
     const confirmPayment = (
       <React.Fragment>
@@ -211,7 +218,7 @@ export const participantList = props => {
 
   const handleFilterChange = event => {
     switch (event.target.value) {
-      case 'name': 
+      case 'name':
         setSortParticipantsFn(() => R.sortBy(R.path(['form', 'first_name'])));
         break;
       case 'state':
@@ -266,7 +273,7 @@ export const participantList = props => {
         confirmText={props.t('examSession.registration.cancel.confirm')}
         cancelText={props.t('examSession.registration.cancel.cancel')}
       />
-    );
+    )
   };
 
   const participantRows = participants => {
@@ -299,11 +306,11 @@ export const participantList = props => {
         </div>
         <div className={classes.StateItem}>{props.t('examSession.registration')}</div>
         <div className={classes.FirstShowOnHover}>
-          {p.state === 'SUBMITTED'
+          {p.state === 'SUBMITTED' && !props.disableControls
             ? confirmPaymentButton(p)
-            : p.state === 'COMPLETED'
-            ? relocateButton(p)
-            : null}
+            : p.state === 'COMPLETED' && !props.disableControls
+              ? relocateButton(p)
+              : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
@@ -313,13 +320,11 @@ export const participantList = props => {
           {p.form.post_office}
         </div>
         <div className={classes.Item}>
-          {parsePhoneNumberFromString(
-            p.form.phone_number,
-          ).formatInternational()}
+          {getPhoneNumber(p)}
         </div>
         <div className={classes.Item}> {p.form.email}</div>
         <div className={classes.ShowOnHover}>
-          {p.state === 'SUBMITTED' || p.state === 'COMPLETED'
+          {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') && !props.disableControls
             ? cancelRegistrationButton(p)
             : null}
         </div>
@@ -330,7 +335,7 @@ export const participantList = props => {
   };
 
   const participantsHeader = () => {
-    const post_admission_quota = 
+    const post_admission_quota =
       (props.examSession.post_admission_quota && props.examSession.post_admission_active) ? props.examSession.post_admission_quota : 0;
     return (
       <h2>
@@ -340,7 +345,6 @@ export const participantList = props => {
       </h2>
     );
   }
-
   return (
     <div data-cy="participant-list">
       {participantsHeader()}
@@ -375,6 +379,7 @@ participantList.propTypes = {
   onConfirmPayment: PropTypes.func.isRequired,
   onRelocate: PropTypes.func.isRequired,
   onResendLink: PropTypes.func.isRequired,
+  disableControls: PropTypes.bool,
 };
 
 export default withTranslation()(participantList);

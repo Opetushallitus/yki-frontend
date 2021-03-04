@@ -86,7 +86,6 @@ const ExamSessionPostAdmissionForm = props => {
               <label className={`${classes.Label} ${classes.QuotaLabel}`} htmlFor="postAdmissionQuota">
                 {t('examSession.postAdmission.participantAmount')}: {props.postAdmissionQuota}
               </label>
-              {/*
               <Field
                 id="postAdmissionQuota"
                 className={classes.Input}
@@ -99,7 +98,6 @@ const ExamSessionPostAdmissionForm = props => {
                 component="span"
                 className={classes.ErrorMessage}
               />
-              */}
             </div>
             <div className={classes.ButtonGroupButtons}>
               <button

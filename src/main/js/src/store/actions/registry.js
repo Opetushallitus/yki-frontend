@@ -28,7 +28,7 @@ export const fetchRegistryContent = () => {
         }
         for (const key in fetchedOrganizers) {
           const organization = fetchedOrganizations.find(
-            organization => organization.oid === fetchedOrganizers[key].oid,
+            org => org.oid === fetchedOrganizers[key].oid,
           );
           registry.push({
             organizer: fetchedOrganizers[key],

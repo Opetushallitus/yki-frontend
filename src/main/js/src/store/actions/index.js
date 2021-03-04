@@ -15,6 +15,10 @@ export {
   toggleAndFetchPastExamSessions,
 } from './examSession';
 export {
+  fetchRegistryExamSessions,
+  fetchRegistryExamSessionParticipants
+} from './registryExamSession';
+export {
   fetchRegistryContent,
   fetchOrganizations,
   addRegistryItem,

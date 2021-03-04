@@ -49,13 +49,14 @@ export const examSessionOrganizer = props => {
       className={classes.ExamSessionOrganizer}
       data-cy="exam-session-organizer-agreement"
     >
-      <h2>{props.t('common.agreement')}</h2>
       <div className={classes.AgreementGrid}>
         {languages}
         {agreement}
       </div>
-      <h2>{props.t('registryItem.contact')}</h2>
-      <div>{contact}</div>
+      {!props.hideContact && <>
+        <h2>{props.t('registryItem.contact')}</h2>
+        <div>{contact}</div>
+      </>}
     </div>
   );
 };
@@ -63,6 +64,7 @@ export const examSessionOrganizer = props => {
 examSessionOrganizer.propTypes = {
   organizer: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
+  hideContact: PropTypes.bool
 };
 
 export default withTranslation()(examSessionOrganizer);

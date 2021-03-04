@@ -99,7 +99,6 @@ class ExamSessionPostAdmissionEdit extends React.Component {
                 value={moment(this.props.postAdmission.post_admission_end_date).format('D.M.YYYY')} disabled />
             </div>
           </div>
-          {/*
           <label className={classes.Label}>
             {t('examSession.postAdmission.participantAmount')}
           </label>

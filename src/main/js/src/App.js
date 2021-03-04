@@ -10,6 +10,7 @@ import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
 import userReducer from './store/reducers/user';
 import examDatesReducer from './store/reducers/examDates';
+import organizationSessionsReducer from './store/reducers/registryExamSession';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Description from './components/Registration/Description/Description';
@@ -22,6 +23,7 @@ import Init from './containers/Init/Init';
 import ExamDates from './containers/ExamDates/ExamDates';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
 import ExamDetailsPage from './components/Registration/ExamDetailsPage/ExamDetailsPage';
+import RegistryExamSessions from './containers/RegistryExamSessions/RegistryExamSessions';
 
 import RegistrationRoute from "./hoc/RegistrationRoute/RegistrationRoute";
 import ykiReducer from './store/reducers/ykiReducer';
@@ -33,6 +35,7 @@ const ExamSessions = lazy(() =>
 
 const rootReducer = combineReducers({
   registry: registryReducer,
+  registryDetails: organizationSessionsReducer,
   exam: examSessionReducer,
   registration: registrationReducer,
   user: userReducer,
@@ -82,7 +85,9 @@ const app = () => (
                 path="/tutkintotilaisuudet"
                 render={() => <ExamSessions />}
               />
-              <Route path="/jarjestajarekisteri" component={Registry} />
+              <Route exact path="/jarjestajarekisteri" component={Registry} />
+              <Route path="/jarjestajarekisteri/:oid/tutkintotilaisuudet" component={RegistryExamSessions} />
+
               <Route path="/tutkintopaivat" component={ExamDates} />
             </ErrorBoundary>
             <Route component={NotFound} />
