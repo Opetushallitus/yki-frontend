@@ -15,7 +15,7 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
       "lastName": "Parkkonen-Testi",
       "nationality": "246",
       "personalDataConsent": false,
-      "phoneNumber": "",
+      "phoneNumber": "358",
       "postOffice": "HELSINKI",
       "ssn": "260553-959D",
       "streetAddress": "Ateläniitynpolku 29 G",
