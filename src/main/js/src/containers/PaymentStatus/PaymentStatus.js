@@ -41,10 +41,10 @@ export class PaymentStatus extends Component {
     const success = this.state.loading ? (
       <Spinner />
     ) : (
-        <>
-          <p data-cy="payment-status-text">{this.props.t('payment.status.success.info2')}</p>
-        </>
-      );
+      <>
+        <p data-cy="payment-status-text">{this.props.t('payment.status.success.info2')}</p>
+      </>
+    );
 
     const cancel = (
       <p data-cy="payment-status-text">{this.props.t('payment.status.cancel.info1')}</p>
@@ -112,7 +112,7 @@ export class PaymentStatus extends Component {
           <div className={classes.Content}>
             <BackButton
               clicked={() =>
-                this.props.history.push('/')
+                this.props.history && this.props.history.push('/')
               }
             />
             <div>{content()}</div>
