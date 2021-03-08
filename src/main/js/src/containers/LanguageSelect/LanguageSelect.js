@@ -7,7 +7,6 @@ import classes from './LanguageSelect.module.css';
 import i18n from "../../i18n";
 import { capitalize } from "../../util/util";
 import { MOBILE_VIEW, TABLET_VIEW } from "../../common/Constants";
-import { withTranslation } from "react-i18next";
 
 const texts = { fi: 'suomeksi', sv: 'på svenska', en: 'in english' };
 const languages = ['fi', 'sv', 'en'];

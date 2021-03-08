@@ -10,6 +10,8 @@ import {
   showAvailableSpots,
   admissionActiveAndQueueNotFull,
   spotsAvailableForSession,
+  isAdmissionActive,
+  isPostAdmissionActive,
 } from '../../../../util/examSessionUtil';
 import classes from './ExamSessionListItem.module.css';
 import { getDeviceOrientation, levelDescription } from '../../../../util/util';
@@ -75,8 +77,8 @@ const examSessionListItem = ({
             </span>
           </>
         ) : (
-            <span>{t('registration.examSpots.full')}</span>
-          )}
+          <span>{t('registration.examSpots.full')}</span>
+        )}
       </strong>
     </div>
   );
@@ -118,13 +120,13 @@ const examSessionListItem = ({
 
   const registerButton = (
     <>
-      {!admissionClosed(session) && !session.queue_full ?
+      {showRegisterButton ?
         <button
           className={'YkiButton'}
           onClick={selectExamSession}
           role="link"
           aria-label={srLabel}
-          disabled={!isAdmissionActive(session)}
+          disabled={!isAdmissionActive(session) && !isPostAdmissionActive(session)}
         >
           {buttonText}
         </button>
