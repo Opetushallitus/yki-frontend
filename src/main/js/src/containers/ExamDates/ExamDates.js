@@ -19,7 +19,6 @@ import EditExamDate from './ExamDateModalContent/EditExamDate';
 
 import editIcon from '../../assets/svg/edit.svg';
 import RegistrationPeriod from "./util/RegistrationPeriod";
-import Checkbox from "../../components/UI/Checkbox/Checkbox";
 
 class ExamDates extends Component {
   constructor(props) {
@@ -248,10 +247,12 @@ class ExamDates extends Component {
               {t('examDates.delete.selected')}
             </button>
           </div>
-          <div className={classes.PastExamDates}>
+          {/*         
+    // Hidden until decided if this should exist
+    <div className={classes.PastExamDates}>
             <p>{'Näytä meneet päivät'}</p>
             <Checkbox checked={this.state.fetchExamHistory} onChange={() => this.onExamDateHistoryFetchChange()} />
-          </div>
+          </div> */}
         </div>
       );
 
@@ -392,18 +393,18 @@ class ExamDates extends Component {
     const content = loading ? (
       <Spinner />
     ) : (
-        <>
-          <div className={classes.ExamDatesListHeader}>
-            <h2>{t('common.examDates')}</h2>
-          </div>
-          {examDates.length > 0 ? (
-            examDateTables()
-          ) : (
-              <p>{t('examDates.noUpcomingExamDates')}</p>
-            )}
-          <hr className={classes.GridDivider} />
-        </>
-      );
+      <>
+        <div className={classes.ExamDatesListHeader}>
+          <h2>{t('common.examDates')}</h2>
+        </div>
+        {examDates.length > 0 ? (
+          examDateTables()
+        ) : (
+          <p>{t('examDates.noUpcomingExamDates')}</p>
+        )}
+        <hr className={classes.GridDivider} />
+      </>
+    );
     return (
       <Page>
         <div className={classes.ExamDates}>
