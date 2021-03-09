@@ -15,6 +15,7 @@ public class YkiController {
             "/tutkintotilaisuudet",
             "/maksu",
             "/tutkintotilaisuus",
+            "/saavutettavuus",
             "/ilmoittautuminen/**",
             "/tutkintopaivat/**",
             "/jarjestajarekisteri/**",

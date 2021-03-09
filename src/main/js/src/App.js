@@ -90,7 +90,7 @@ const app = () => (
               <Route path="/jarjestajarekisteri/:oid/tutkintotilaisuudet" component={RegistryExamSessions} />
 
               <Route path="/tutkintopaivat" component={ExamDates} />
-              <Route path="/saavutettavuusseloste" component={AccessibilityStatement} />
+              <Route path="/saavutettavuus" component={AccessibilityStatement} />
             </ErrorBoundary>
             <Route component={NotFound} />
           </Switch>
