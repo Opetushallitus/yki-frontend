@@ -172,14 +172,14 @@ export const participantList = props => {
       language_code,
       level_code,
       session_date,
-      office_oid,
+      organizer_oid,
     } = props.examSession;
     const canBeRelocatedTo = e => {
       return (
         moment(e.session_date).isAfter(moment(session_date)) &&
         e.level_code === level_code &&
         e.language_code === language_code &&
-        e.office_oid === office_oid &&
+        e.organizer_oid === organizer_oid &&
         e.max_participants > e.participants
       );
     };
