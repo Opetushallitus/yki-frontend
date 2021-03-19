@@ -465,5 +465,9 @@ const examSessionForm = props => {
   );
 };
 
+examSessionForm.propTypes = {
+  examSessionContent: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default withTranslation()(examSessionForm);
