@@ -196,9 +196,15 @@ const examSessionForm = props => {
     }
   };
 
+  const initialOfficeOid = props.examSessionContent
+    && props.examSessionContent.organizationChildren
+    && props.examSessionContent.organizationChildren.length > 0
+    ? props.examSessionContent.organizationChildren[0].oid
+    : '';
+
   // FIXME: no need for organizer param
-  const organizationSelection = (organizer, children, lang) => 
-    children.map(c => 
+  const organizationSelection = (organizer, children, lang) =>
+    children.map(c =>
       <option value={c.oid} key={c.oid}>
         {`${getLocalizedName(c.nimi, lang)} (${c.oid ? c.oid : ''})`}
       </option>
@@ -207,7 +213,7 @@ const examSessionForm = props => {
   return (
     <Formik
       initialValues={{
-        officeOid: '',
+        officeOid: initialOfficeOid,
         language: '',
         level: '',
         examDate: '',
@@ -224,8 +230,8 @@ const examSessionForm = props => {
       onSubmit={values => {
         const office = values.officeOid
           ? props.examSessionContent.organizationChildren.find(
-              o => o.oid === values.officeOid,
-            )
+            o => o.oid === values.officeOid,
+          )
           : null;
         const orgOrOfficeName = office
           ? office.nimi
@@ -459,9 +465,5 @@ const examSessionForm = props => {
   );
 };
 
-examSessionForm.propTypes = {
-  examSessionContent: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default withTranslation()(examSessionForm);
