@@ -170,7 +170,7 @@ export const participantList = props => {
     } = props.examSession;
 
     const matchingOids = nextSession => {
-      if (nextExamSession.organizer_oid === organizer_oid) {
+      if (nextSession.organizer_oid === organizer_oid) {
         if (!nextSession.office_oid || !office_oid) return true;
         if (nextSession.office_oid === office_oid) return true;
       }
