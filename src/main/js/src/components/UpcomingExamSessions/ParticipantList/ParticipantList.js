@@ -13,14 +13,14 @@ import classes from './ParticipantList.module.css';
 import { ActionButton } from '../../UI/ActionButton/ActionButton';
 import ListExport from './ListExport/ListExport';
 
-const stateComparator = () => (a,b) => {
+const stateComparator = () => (a, b) => {
   if (a.state === 'COMPLETED')
     return -1;
   if (b.state === 'COMPLETED')
     return 1;
   if (a.state === "SUBMITTED")
     return -1;
-  if(b.state === "SUBMITTED")
+  if (b.state === "SUBMITTED")
     return 1;
 
   return 0;
@@ -166,16 +166,27 @@ export const participantList = props => {
       level_code,
       session_date,
       office_oid,
+      organizer_oid,
     } = props.examSession;
+
+    const matchingOids = nextSession => {
+      if (nextSession.organizer_oid === organizer_oid) {
+        if (!nextSession.office_oid || !office_oid) return true;
+        if (nextSession.office_oid === office_oid) return true;
+      }
+      return false;
+    }
+
     const canBeRelocatedTo = e => {
       return (
         moment(e.session_date).isAfter(moment(session_date)) &&
         e.level_code === level_code &&
         e.language_code === language_code &&
-        e.office_oid === office_oid &&
+        matchingOids(e) &&
         e.max_participants > e.participants
       );
     };
+
     const getNextSession = R.compose(
       R.head,
       R.sortBy(R.prop('session_date')),
@@ -211,7 +222,7 @@ export const participantList = props => {
 
   const handleFilterChange = event => {
     switch (event.target.value) {
-      case 'name': 
+      case 'name':
         setSortParticipantsFn(() => R.sortBy(R.path(['form', 'first_name'])));
         break;
       case 'state':
@@ -302,8 +313,8 @@ export const participantList = props => {
           {p.state === 'SUBMITTED'
             ? confirmPaymentButton(p)
             : p.state === 'COMPLETED'
-            ? relocateButton(p)
-            : null}
+              ? relocateButton(p)
+              : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
@@ -330,7 +341,7 @@ export const participantList = props => {
   };
 
   const participantsHeader = () => {
-    const post_admission_quota = 
+    const post_admission_quota =
       (props.examSession.post_admission_quota && props.examSession.post_admission_active) ? props.examSession.post_admission_quota : 0;
     return (
       <h2>
