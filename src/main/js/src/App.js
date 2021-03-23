@@ -10,6 +10,7 @@ import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
 import userReducer from './store/reducers/user';
 import examDatesReducer from './store/reducers/examDates';
+import AccessibilityStatement from './components/AccessibilityStatement/AccessibilityStatement';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import Spinner from './components/UI/Spinner/Spinner';
 import Description from './components/Registration/Description/Description';
@@ -84,6 +85,7 @@ const app = () => (
               />
               <Route path="/jarjestajarekisteri" component={Registry} />
               <Route path="/tutkintopaivat" component={ExamDates} />
+              <Route path="/saavutettavuus" component={AccessibilityStatement} />
             </ErrorBoundary>
             <Route component={NotFound} />
           </Switch>

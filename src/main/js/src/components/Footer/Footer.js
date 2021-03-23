@@ -1,12 +1,12 @@
 import React from 'react';
-import {useStore} from "react-redux";
-import {useTranslation} from "react-i18next";
+import { useStore } from "react-redux";
+import { useTranslation } from "react-i18next";
 import OPHFooterLogo from '../../assets/images/OPH_Su_Ru_vaaka_nega.png';
 
 import classes from './Footer.module.css';
 
 const Footer = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const store = useStore();
 
   const ykiHomePage = () => {
@@ -22,7 +22,7 @@ const Footer = () => {
           YKI Hemsida</a>
       case 'en':
         return <a href={'https://www.oph.fi/en/national-certificates-language-proficiency-yki'} target="_blank"
-                  rel="noopener noreferrer">YKI Homepage</a>
+          rel="noopener noreferrer">YKI Homepage</a>
       default:
         return <a
           href={'https://www.oph.fi/fi/koulutus-ja-tutkinnot/kieli-ja-kaantajatutkinnot/yleiset-kielitutkinnot-yki'}
@@ -30,11 +30,18 @@ const Footer = () => {
     }
   }
 
+  const accessibilityStatetment = () => {
+    return <a id='accessibility-statement-link' href={`/yki/saavutettavuus`} target="_blank" rel="noopener noreferrer">
+      {t('footer.yki.accessibility.link')}
+    </a>
+  }
+
   return (
     <footer className={classes.Footer}>
       <div className={classes.FooterLinks}>
         <a href={'https://opintopolku.fi/'}>Opintopolku.fi</a>
         {ykiHomePage()}
+        {accessibilityStatetment()}
         <div className={classes.AdditionalInfo}>
           <p>{t('footer.yki.contact.info')}</p>
           <a href={'mailto:yki@oph.fi'}>yki@oph.fi</a>
@@ -43,15 +50,15 @@ const Footer = () => {
       </div>
       <div className={classes.FooterContact}>
         <p>{t('common.oph.address')}
-          <br/>
+          <br />
           {t('common.oph.zip')}</p>
         <p>{`${t('common.phone')}`}{' '}<a href={"tel: +358 29 533 1000"}>+358 29 533 1000</a>
-          <br/>
+          <br />
           {`${t('common.fax')}`}{' '}<a href={"tel: +358 29 533 1035"}>+358 29 533 1035</a>
         </p>
       </div>
       <div className={classes.FooterLogo}>
-        <img src={OPHFooterLogo} alt={'OPH-logo'}/>
+        <img src={OPHFooterLogo} alt={'OPH-logo'} />
       </div>
     </footer>
   )
