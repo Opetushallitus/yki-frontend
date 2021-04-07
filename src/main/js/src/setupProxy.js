@@ -12,9 +12,23 @@ const getCurrentTime = () => {
   return localISOTime;
 };
 
-const examDates = JSON.parse(
-  fs.readFileSync('./dev/rest/examSessions/examDates.json'),
-);
+const printError = (req, err) => {
+  console.log('\n Error in: ' + req.method + ': ' + req.originalUrl
+    + '\n' + req.body
+    + '\n From ' + (err.config && err.config.url)
+    + '\n Message: ' + err.message
+    + '\n Response data: ' + (err.response && JSON.stringify(err.response.data)));
+}
+
+const useLocalProxy = process.env.REACT_APP_USE_LOCAL_PROXY_BACKEND === "true";
+
+const getExamDates = () => {
+  return JSON.parse(
+    fs.readFileSync('./dev/rest/examSessions/examDates.json'),
+  );
+}
+
+let examDates = getExamDates();
 
 const initRegistration = JSON.parse(
   fs.readFileSync('./dev/rest/registration/registrationInit.json'),
@@ -45,6 +59,14 @@ const getRegistrations = () => {
     fs.readFileSync('./dev/rest/examSessions/registrations.json'),
   );
 };
+
+const findByOids = () => {
+  return JSON.parse(
+    fs.readFileSync('./dev/rest/organization/findbyoids.json'),
+  );
+}
+
+let organizations = findByOids();
 
 let registrations = {
   1: getRegistrations(),
@@ -177,7 +199,37 @@ const upload = multer({
 
 let uploadedFile;
 
-module.exports = function(app) {
+module.exports = function (app) {
+
+  const getUrl = req => {
+    console.log('--> Forward to: ' + process.env.REACT_APP_LOCAL_PROXY + req.originalUrl)
+    return process.env.REACT_APP_LOCAL_PROXY + req.originalUrl
+  }
+
+  const resolveCall = (call, req, res) => {
+    call.then(response => {
+      res.send(response.data);
+    }).catch(err => {
+      printError(req, err);
+      res.status(404).send(err.message);
+    })
+  }
+
+  const proxyGetCall = (req, res) => {
+    resolveCall(axios.get(getUrl(req), req.body), req, res);
+  }
+  const proxyPostCall = (req, res) => {
+    resolveCall(axios.post(getUrl(req), req.body), req, res);
+  }
+
+  const proxyPutCall = (req, res) => {
+    resolveCall(axios.put(getUrl(req), req.body), req, res);
+  }
+
+  const proxyDeleteCall = (req, res) => {
+    resolveCall(axios.delete(getUrl(req), req.body), req, res);
+  }
+
   app.use(bodyParser.json({ limit: '5mb' }));
   app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
 
@@ -208,6 +260,8 @@ module.exports = function(app) {
 
   app.get('/yki/reset-mocks', (req, res) => {
     examSessions = getExamSessions();
+    examDates = getExamDates();
+    organizations = findByOids();
 
     registrations = {
       1: getRegistrations(),
@@ -219,64 +273,91 @@ module.exports = function(app) {
   });
 
   app.get('/yki/api/virkailija/organizer', (req, res) => {
-    try {
-      res.send({ organizers: organizers });
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.send({ organizers: organizers });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
+
 
   app.post('/yki/api/virkailija/organizer', (req, res) => {
     try {
       organizers.push(req.body);
       res.send({ success: true });
     } catch (err) {
+      printError(req, err);
       res.status(404).send(err.message);
     }
   });
 
   app.get('/yki/api/virkailija/organizer/:oid/exam-session', (req, res) => {
-    try {
-      res.send(examSessions);
-    } catch (err) {
-      console.log(err);
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.send(examSessions);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.get(
     '/yki/api/virkailija/organizer/:oid/exam-session/:id/registration',
     (req, res) => {
-      try {
-        const { id } = req.params;
-        res.send(registrations[id] || { participants: [] });
-      } catch (err) {
-        console.log(err);
-        res.status(404).send(err.message);
+      const mockCall = () => {
+        try {
+          const { id } = req.params;
+          res.send(registrations[id] || { participants: [] });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
       }
+      useLocalProxy
+        ? proxyGetCall(req, res)
+        : mockCall();
     },
   );
 
   app.post('/yki/api/virkailija/organizer/:oid/exam-session', (req, res) => {
-    try {
-      const id = getNumberBetween(1000, 100000);
-      const examSession = req.body;
-      const examDate = examDates.dates.find(
-        d => d.exam_date === examSession.session_date,
-      );
-      const backendData = {
-        id: id,
-        participants: 0,
-        registration_start_date: examDate.registration_start_date,
-        registration_end_date: examDate.registration_end_date,
-        organizer_oid: req.params.oid,
-      };
 
-      examSessions.exam_sessions.push(Object.assign(examSession, backendData));
-      res.send({ id: id });
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        const id = getNumberBetween(1000, 100000);
+        const examSession = req.body;
+        const examDate = examDates.dates.find(
+          d => d.exam_date === examSession.session_date,
+        );
+        const backendData = {
+          id: id,
+          participants: 0,
+          registration_start_date: examDate.registration_start_date,
+          registration_end_date: examDate.registration_end_date,
+          organizer_oid: req.params.oid,
+        };
+        examSessions.exam_sessions.push(Object.assign(examSession, backendData));
+        res.send({ id: id });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall()
   });
 
   app.post('/yki/api/virkailija/organizer/:oid/exam-session/:id/post-admission', (req, res) => {
@@ -293,6 +374,7 @@ module.exports = function(app) {
       res.send({ success: true });
     }
     catch (err) {
+      printError(req, err);
       res.status(404).send(err.message);
     }
   });
@@ -309,15 +391,17 @@ module.exports = function(app) {
       res.send({ success: true });
     }
     catch (err) {
+      printError(req, err);
       res.status(404).send(err.message);
     }
   });
 
-  app.post('/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id/resendConfirmation', (req,res) => {
+  app.post('/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id/resendConfirmation', (req, res) => {
     try {
       res.send({ success: true });
     }
     catch (err) {
+      printError(req, err);
       res.status(404).send(err.message);
     }
   });
@@ -336,6 +420,7 @@ module.exports = function(app) {
         uploadedFile = req.file;
         res.send({ success: true });
       } catch (err) {
+        printError(req, err);
         res.status(404).send(err.message);
       }
     },
@@ -355,29 +440,91 @@ module.exports = function(app) {
   });
 
   app.put('/yki/api/virkailija/organizer/:oid/exam-session/:id', (req, res) => {
-    try {
-      const { id } = req.params;
-      const foundIndex = examSessions.exam_sessions.findIndex(x => x.id == id);
-      examSessions.exam_sessions[foundIndex] = req.body;
-      res.send({ success: true });
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        const { id } = req.params;
+        const foundIndex = examSessions.exam_sessions.findIndex(x => x.id == id);
+        examSessions.exam_sessions[foundIndex] = req.body;
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+
+    useLocalProxy
+      ? proxyPutCall(req, res)
+      : mockCall();
   });
 
   app.delete(
     '/yki/api/virkailija/organizer/:oid/exam-session/:id',
     (req, res) => {
-      try {
-        const { id } = req.params;
-        const foundIndex = examSessions.exam_sessions.findIndex(
-          x => x.id == id,
-        );
-        examSessions.exam_sessions.splice(foundIndex, 1);
-        res.send({ success: true });
-      } catch (err) {
-        res.status(404).send(err.message);
+
+      const mockCall = () => {
+        try {
+          const { id } = req.params;
+          const foundIndex = examSessions.exam_sessions.findIndex(
+            x => x.id == id,
+          );
+          examSessions.exam_sessions.splice(foundIndex, 1);
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
       }
+
+      useLocalProxy
+        ? proxyDeleteCall(req, res)
+        : mockCall();
+    });
+
+  app.post(
+    '/yki/api/virkailija/organizer/:oid/exam-session/:id/post-admission/activate',
+    (req, res) => {
+      const mockCall = () => {
+        try {
+          const { id } = req.params;
+          const index = examSessions.exam_sessions.findIndex(x => x.id == id);
+          examSessions.exam_sessions[index] = {
+            ...examSessions.exam_sessions[index],
+            ...req.body,
+            post_admission_active: true
+          }
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      }
+
+      useLocalProxy
+        ? proxyPostCall(req, res)
+        : mockCall();
+    },
+  );
+
+  app.post(
+    '/yki/api/virkailija/organizer/:oid/exam-session/:id/post-admission/deactivate',
+    (req, res) => {
+      const mockCall = () => {
+        try {
+          const { id } = req.params;
+          const index = examSessions.exam_sessions.findIndex(x => x.id == id);
+          examSessions.exam_sessions[index] = {
+            ...examSessions.exam_sessions[index],
+            post_admission_active: false
+          }
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      }
+      useLocalProxy
+        ? proxyPostCall(req, res)
+        : mockCall();
     },
   );
 
@@ -393,6 +540,7 @@ module.exports = function(app) {
         registrations[examSessionId].participants.splice(foundIndex, 1);
         res.send({ success: true });
       } catch (err) {
+        printError(req, err);
         res.status(404).send(err.message);
       }
     },
@@ -412,6 +560,7 @@ module.exports = function(app) {
         registrations[examSessionId].participants.splice(foundIndex, 1);
         res.send({ success: true });
       } catch (err) {
+        printError(req, err);
         res.status(404).send(err.message);
       }
     },
@@ -420,16 +569,22 @@ module.exports = function(app) {
   app.post(
     '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id/confirm-payment',
     (req, res) => {
-      try {
-        const { id } = req.params;
-        const registration = registrations.participants.find(
-          x => x.registration_id == id,
-        );
-        registration.state = 'COMPLETED';
-        res.send({ success: true });
-      } catch (err) {
-        res.status(404).send(err.message);
+      const mockCall = () => {
+        try {
+          const { id } = req.params;
+          const registration = registrations.participants.find(
+            x => x.registration_id == id,
+          );
+          registration.state = 'COMPLETED';
+          res.send({ success: true });
+        } catch (err) {
+          res.status(404).send(err.message);
+        }
       }
+
+      useLocalProxy
+        ? proxyPostCall(req, res)
+        : mockCall();
     },
   );
 
@@ -437,7 +592,7 @@ module.exports = function(app) {
   app.post(
     '/organisaatio-service/rest/organisaatio/v3/findbyoids',
     (req, res) => {
-      axios
+      const organisaatioServiceCall = () => axios
         .post(
           'https://virkailija.untuvaopintopolku.fi/organisaatio-service/rest/organisaatio/v4/findbyoids',
           req.body,
@@ -446,9 +601,21 @@ module.exports = function(app) {
           res.send(response.data);
         })
         .catch(err => {
-          console.log(err);
+          printError(req, err);
           res.status(404).send(err.message);
         });
+
+      const mockCall = () => {
+        try {
+          res.send(organizations);
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      }
+      useLocalProxy
+        ? mockCall()
+        : organisaatioServiceCall();
     },
   );
 
@@ -459,7 +626,7 @@ module.exports = function(app) {
       organizers[index] = req.body;
       res.send({ success: true });
     } catch (err) {
-      console.log(err);
+      printError(req, err);
       res.status(404).send('Organizer not found');
     }
   });
@@ -471,7 +638,7 @@ module.exports = function(app) {
       organizers.splice(index, 1);
       res.send({ success: true });
     } catch (err) {
-      console.log(err);
+      printError(req, err);
       res.status(404).send('Organizer not found');
     }
   });
@@ -485,17 +652,134 @@ module.exports = function(app) {
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(data);
     } catch (err) {
+      printError(req, err);
       res.status(404).send(err.message);
     }
   });
 
+  app.get('/yki/api/virkailija/organizer/:oid/exam-date', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        const futureExamDates = examDates.dates.filter(d => {
+          // return moment(d.registration_end_date).isSameOrAfter(moment());
+          return moment(d.exam_date).isSameOrAfter(moment());
+        });
+        res.send({ dates: futureExamDates });
+        // all exam dates
+        // res.send({ dates: examDates.dates });
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
+    }
+
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
+  });
+
+  app.post('/yki/api/virkailija/organizer/:oid/exam-date', (req, res) => {
+    const mockCall = () => {
+      try {
+        examDates.dates.push(req.body)
+        const id = getNumberBetween(100, 1000);
+        res.send({ id: id });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
+  });
+
+  app.post('/yki/api/virkailija/organizer/:oid/exam-date/:id/post-admission', (req, res) => {
+    const mockCall = () => {
+      try {
+        const { id } = req.params;
+        const index = examDates.dates.findIndex(x => x.id == id);
+        examDates.dates[index] = {
+          ...examDates.dates[index],
+          ...req.body
+        }
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
+  });
+
+  app.post('/yki/api/virkailija/organizer/:oid/exam-date/:id/languages', (req, res) => {
+    const mockCall = () => {
+      try {
+        const { id } = req.params;
+        const index = examDates.dates.findIndex(x => x.id == id);
+        examDates.dates[index] = {
+          ...examDates.dates[index],
+          languages: req.body
+        }
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
+  });
+
+  app.delete('/yki/api/virkailija/organizer/:oid/exam-date/:id/', (req, res) => {
+    const mockCall = () => {
+      try {
+        const { id } = req.params;
+        const index = examDates.dates.findIndex(x => x.id == id);
+        examDates.dates.splice(index, 1);
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    }
+    useLocalProxy
+      ? proxyDeleteCall(req, res)
+      : mockCall();
+  });
+
   app.get('/yki/api/exam-date', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        const futureExamDates = examDates.dates.filter(d => {
+          // return moment(d.registration_end_date).isSameOrAfter(moment());
+          return moment(d.exam_date).isSameOrAfter(moment());
+        });
+        res.send({ dates: futureExamDates });
+        // all exam dates
+        // res.send({ dates: examDates.dates });
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
+    }
+
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
+  });
+
+  app.get('/yki/api/virkailija/organizer/:oid/exam-session/history', (req, res) => {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
-      const futureExamDates = examDates.dates.filter(d => {
-        return moment(d.registration_end_date).isSameOrAfter(moment());
+      const pastExamDates = examDates.dates.filter(d => {
+        // return moment(d.registration_end_date).isSameOrBefore(moment());
+        return moment(d.exam_date).isSameOrBefore(moment());
       });
-      res.send({ dates: futureExamDates });
+      res.send({ dates: pastExamDates });
     } catch (err) {
       res.status(404).send(err.message);
     }
@@ -513,6 +797,7 @@ module.exports = function(app) {
       examDates.dates[edIndex] = copyOfEd;
       res.send({ success: true });
     } catch (e) {
+      printError(req, err);
       res.status(404).send(e.message)
     }
   });
@@ -525,19 +810,29 @@ module.exports = function(app) {
       examDate.post_admission_end_date = null;
 
       examDates.dates[examDateIndex] = examDate;
-      res.send({ success: true});
-    } catch(e) {
+      res.send({ success: true });
+    } catch (e) {
+      printError(req, err);
       res.status(404).send(e.message);
     }
   })
 
   app.get('/yki/payment/formdata', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(paymentFormData);
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        console.log('get payment form data')
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send(paymentFormData);
+        //res.send(paymentFormData);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/auth/user', (req, res) => {
@@ -545,135 +840,184 @@ module.exports = function(app) {
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(adminUser);
     } catch (err) {
+      printError(req, err);
       res.status(404).send(err.message);
     }
   });
 
+
   app.post('/yki/api/login-link', (req, res) => {
-    try {
-      res.send({ success: true });
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
   });
 
   app.post('/yki/api/registration/init', (req, res) => {
-    try {
-      req.body.exam_session_id === 2
-        ? res.send(initRegistrationEmailAuth)
-        : res.send(initRegistration);
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        req.body.exam_session_id === 2
+          ? res.send(initRegistrationEmailAuth)
+          : res.send(initRegistration);
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/api/exam-session', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      const monthFromNow = moment()
-        .add(1, 'months')
-        .format('YYYY-MM-DD');
-      const twoMonthFromNow = moment()
-        .add(2, 'months')
-        .format('YYYY-MM-DD');
-      const weekInPast = moment()
-        .subtract(1, 'weeks')
-        .format('YYYY-MM-DD');
-      const weekFromNow = moment()
-        .add(1, 'weeks')
-        .format('YYYY-MM-DD');
-      const weekAndOneDayFromNow = moment()
-        .add(1, 'weeks')
-        .add(1, 'days')
-        .format('YYYY-MM-DD');
-      const monthMinusThreeDaysPast = moment()
-        .add(1, 'months')
-        .subtract(3, 'days')
-        .format('YYYY-MM-DD');
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        const monthFromNow = moment()
+          .add(1, 'months')
+          .format('YYYY-MM-DD');
+        const twoMonthFromNow = moment()
+          .add(2, 'months')
+          .format('YYYY-MM-DD');
+        const weekInPast = moment()
+          .subtract(1, 'weeks')
+          .format('YYYY-MM-DD');
+        const weekFromNow = moment()
+          .add(1, 'weeks')
+          .format('YYYY-MM-DD');
+        const weekAndOneDayFromNow = moment()
+          .add(1, 'weeks')
+          .add(1, 'days')
+          .format('YYYY-MM-DD');
+        const monthMinusThreeDaysPast = moment()
+          .add(1, 'months')
+          .subtract(3, 'days')
+          .format('YYYY-MM-DD');
 
-      allExamSessions.exam_sessions.forEach(es => {
-        if (es.session_date === '2019-04-06') {
-          es.session_date = monthFromNow;
-          es.registration_start_date = weekInPast;
-          es.registration_end_date = weekFromNow;
-          es.post_admission_start_date = weekAndOneDayFromNow;
-          es.post_admission_end_date = monthMinusThreeDaysPast;
-        }
-        if (es.session_date === '2019-05-26') {
-          es.session_date = twoMonthFromNow;
-        }
+        allExamSessions.exam_sessions.forEach(es => {
+          if (es.session_date === '2019-04-06') {
+            es.session_date = monthFromNow;
+            es.registration_start_date = weekInPast;
+            es.registration_end_date = weekFromNow;
+            es.post_admission_start_date = weekAndOneDayFromNow;
+            es.post_admission_end_date = monthMinusThreeDaysPast;
+          }
+          if (es.session_date === '2019-05-26') {
+            es.session_date = twoMonthFromNow;
+          }
 
-        // postadmission active
-        if(es.session_date === '2039-12-29') {
-          const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
-          const today = moment().format('YYYY-MM-DD');
+          // postadmission active
+          if (es.session_date === '2039-12-29') {
+            const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+            const today = moment().format('YYYY-MM-DD');
 
-          es.session_date = monthFromNow;
-          es.registration_start_date = monthMinusThreeDaysPast;
-          es.registration_end_date = yesterday;
-          es.post_admission_start_date = today;
-          es.post_admission_end_date = weekFromNow;
-        }
-      });
-      res.send(allExamSessions);
-    } catch (err) {
-      res.status(404).send(err.message);
+            es.session_date = monthFromNow;
+            es.registration_start_date = monthMinusThreeDaysPast;
+            es.registration_end_date = yesterday;
+            es.post_admission_start_date = today;
+            es.post_admission_end_date = weekFromNow;
+          }
+        });
+        res.send(allExamSessions);
+      } catch (err) {
+        res.status(404).send(err.message);
+      }
     }
+
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/api/exam-session/:id', (req, res) => {
-    try {
-      const session = allExamSessions.exam_sessions.find(
-        e => e.id === Number(req.params.id),
-      );
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(session);
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        const session = allExamSessions.exam_sessions.find(
+          e => e.id === Number(req.params.id),
+        );
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send(session);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.post('/yki/api/exam-session/:id/queue', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send({ success: true });
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
   });
 
   app.post('/yki/api/registration/:id/submit', (req, res) => {
-    try {
-      res.send({ success: true });
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyPostCall(req, res)
+      : mockCall();
+
   });
 
   app.get('/yki/api/code/maatjavaltiot2', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(countries);
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send(countries);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/api/code/sukupuoli', (req, res) => {
-    try {
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(genders);
-    } catch (err) {
-      res.status(404).send(err.message);
+    const mockCall = () => {
+      try {
+        res.set('Content-Type', 'application/json; charset=utf-8');
+        res.send(genders);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
     }
+    useLocalProxy
+      ? proxyGetCall(req, res)
+      : mockCall();
   });
 
   app.get('/yki/api/code/posti/:id', (req, res) => {
     try {
       axios
         .get(
-          `https://virkailija.untuvaopintopolku.fi/yki/api/code/posti/${
-            req.params.id
+          `https://virkailija.untuvaopintopolku.fi/yki/api/code/posti/${req.params.id
           }`,
           req.body,
         )
@@ -681,11 +1025,12 @@ module.exports = function(app) {
           res.send(response.data);
         })
         .catch(err => {
-          console.log(err);
+          printError(req, err);
           res.status(404).send(err.message);
         });
     } catch (err) {
       res.status(404).send(err.message);
     }
   });
+
 };
