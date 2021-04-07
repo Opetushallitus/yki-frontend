@@ -237,7 +237,7 @@ Valintaruuduissa kelvottomia arvoja.                                        </p>
 					<h3>
 						Verkkolomakkeella                        </h3>
 					<p>
-						<a href="https://opintopolku.fi/wp/palautetta-opintopolusta" target="_blank"> Anna saavutettavuuspalautetta tällä verkkolomakkeella </a>
+						<a href="https://opintopolku.fi/wp/palautetta-opintopolusta" target="_blank" rel="noopener noreferrer"> Anna saavutettavuuspalautetta tällä verkkolomakkeella </a>
 					</p>
 
 					<h3>
@@ -251,7 +251,7 @@ Valintaruuduissa kelvottomia arvoja.                                        </p>
 					<h2>
 						Valvontaviranomainen            </h2>
 					<p>
-						Jos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href="https://www.saavutettavuusvaatimukset.fi/oikeutesi/" target="_blank">voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon <span class="screen-reader-text">Avautuu uuteen ikkunaan</span></a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.            </p>
+						Jos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href="https://www.saavutettavuusvaatimukset.fi/oikeutesi/" target="_blank" rel="noopener noreferrer">voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon <span class="screen-reader-text">Avautuu uuteen ikkunaan</span></a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.            </p>
 
 					<h2>
 						Valvontaviranomaisen yhteystiedot            </h2>
