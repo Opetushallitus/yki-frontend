@@ -14,26 +14,27 @@ const AccessibilityStatement = () => (
 			<article>
 				<header>
 					<h1>
-						Tervetuloa, tämä on organisaation Opetushallitus saavutettavuusseloste
-					</h1>
+						Tämä on organisaation Opetushallitus saavutettavuusseloste                </h1>
 				</header>
 				<section class="statement__section">
 					<p>
-						Tämä saavutettavuusseloste koskee palvelua https://yki.opintopolku.fi/yki/ ja on laadittu / päivitetty 24.02.2021. Palvelua koskee laki digitaalisten palvelujen tarjoamisesta, jossa edellytetään, että julkisten verkkopalvelujen on oltava saavutettavia.                </p>
+						Tämä saavutettavuusseloste koskee yleisten kielitutkintojen ilmoittautumisjärjestelmää https://yki.opintopolku.fi/yki ja se on päivitetty 24.02.2021. Palvelua koskee laki digitaalisten palvelujen tarjoamisesta, jossa edellytetään, että julkisten verkkopalvelujen on oltava saavutettavia.                </p>
 					<p>
 						Palvelun saavutettavuuden on arvioinut ulkopuolinen asiantuntijaorganisaatio                </p>
 				</section>
+
 				<section class="statement__section">
 					<h2>
-						Digipalvelun saavutettavuuden tila
-					</h2>
+						Digipalvelun saavutettavuuden tila                    </h2>
 					<p>
-						Täyttää saavutettavuusvaatimukset osittain.
-					</p>
+						Täyttää saavutettavuusvaatimukset osittain.                    </p>
 				</section>
+
 				<h2>
-					Ei-saavutettava sisältö
-				</h2>
+					Ei-saavutettava sisältö                </h2>
+
+
+
 				<section class="statement__section">
 					<section class="statement__inaccessible">
 						<h3>
@@ -217,8 +218,7 @@ const AccessibilityStatement = () => (
 									Saavuttamaton sisältö ja sen puutteet                                        </h5>
 								<p>
 									Alert atribuutilta puuttuu sille kuuluva rooli.<br />
-									Valintaruuduissa kelvottomia arvoja.
-								</p>
+Valintaruuduissa kelvottomia arvoja.                                        </p>
 								<h5>
 									Saavutettavuusvaatimukset jotka eivät täyty                                        </h5>
 								<ul class="flaw__wcag">
@@ -229,37 +229,56 @@ const AccessibilityStatement = () => (
 						</ul>
 					</section>
 				</section>
+
 				<section class="statement__section">
-					<h2>Huomasitko saavutettavuuspuutteen digipalvelussamme? Kerro se meille ja teemme parhaamme puutteen korjaamiseksi</h2>
-					<h3> Verkkolomakkeella </h3>
+					<h2>
+						Huomasitko saavutettavuuspuutteen digipalvelussamme? Kerro se meille ja teemme parhaamme puutteen korjaamiseksi                    </h2>
+
+					<h3>
+						Verkkolomakkeella                        </h3>
 					<p>
-						<a href="https://opintopolku.fi/wp/palautetta-opintopolusta"> Anna saavutettavuuspalautetta tällä verkkolomakkeella </a>
+						<a href="https://opintopolku.fi/wp/palautetta-opintopolusta" target="_blank"> Anna saavutettavuuspalautetta tällä verkkolomakkeella </a>
 					</p>
 
-					<h3>Sähköpostilla</h3>
-					<p>palaute@opintopolku.fi</p>
+					<h3>
+						Sähköpostilla                        </h3>
+					<p>
+						palaute@opintopolku.fi                        </p>
 
-				</section>
-				<section class="statement__section">
-					<h2>Valvontaviranomainen</h2>
-					<p>Jos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href="https://www.saavutettavuusvaatimukset.fi/oikeutesi/" target="_blank" rel="noopener noreferrer">voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon <span class="screen-reader-text">Avautuu uuteen ikkunaan</span></a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.</p>
-					<h2>Valvontaviranomaisen yhteystiedot</h2>
-					<p>Etelä-Suomen aluehallintovirasto<br />
-						Saavutettavuuden valvonnan yksikkö<br />
-						www.saavutettavuusvaatimukset.fi  <br />
-						saavutettavuus(at)avi.fi<br />
-						puhelinnumero vaihde 0295 016 000</p>
 				</section>
 
 				<section class="statement__section">
-					<h2>Teemme jatkuvasti työtä saavutettavuuden parantamiseksi</h2>
-					<h3>Tarjoamme tukea käyttäjille joille digipalvelut eivät ole saavutettavissa</h3>
-					<p>Olemme sitoutuneet digipalveluiden saavutettavuuden parantamiseen. <br />
-						Huomasitko saavutettavuuspuutteen? Kerro se meille ja teemme parhaamme puutteen korjaamiseksi.<br />
+					<h2>
+						Valvontaviranomainen            </h2>
+					<p>
+						Jos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href="https://www.saavutettavuusvaatimukset.fi/oikeutesi/" target="_blank">voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon <span class="screen-reader-text">Avautuu uuteen ikkunaan</span></a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.            </p>
+
+					<h2>
+						Valvontaviranomaisen yhteystiedot            </h2>
+					<p>
+						Etelä-Suomen aluehallintovirasto<br />
+Saavutettavuuden valvonnan yksikkö<br />
+www.saavutettavuusvaatimukset.fi  <br />
+saavutettavuus(at)avi.fi<br />
+puhelinnumero vaihde 0295 016 000            </p>
+				</section>
+
+				<section class="statement__section">
+					<h2>
+						Teemme jatkuvasti työtä saavutettavuuden parantamiseksi                </h2>
+
+
+
+					<h3>
+						Tarjoamme tukea käyttäjille joille digipalvelut eivät ole saavutettavissa                    </h3>
+					<p>
+						Olemme sitoutuneet digipalveluiden saavutettavuuden parantamiseen. <br />
+Huomasitko saavutettavuuspuutteen? Kerro se meille ja teemme parhaamme puutteen korjaamiseksi.<br />
 					</p>
+
+
 				</section>
 			</article>
-
 		</body>
 
 	</html>
