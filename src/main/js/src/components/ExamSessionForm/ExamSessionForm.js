@@ -16,10 +16,12 @@ import {
   levelTranslations,
 } from '../../util/util';
 import { getLocalizedName } from '../../util/registryUtil';
-import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
+import { getLanguagesWithLevelDescriptions } from '../../util/util';
+import SessionContact from '../SessionContact/SessionContact';
 
 const examSessionForm = props => {
+  const { contact_name, contact_email, contact_phone_number } = props.examSessionContent && props.examSessionContent.organizer
   function validateDuplicateExamSession() {
     let duplicateFound = false;
     const examDate = this.parent.examDate;
@@ -65,6 +67,11 @@ const examSessionForm = props => {
     extraFi: Yup.string(),
     extraSv: Yup.string(),
     extraEn: Yup.string(),
+    contactName: Yup.string().required(props.t('error.mandatory')),
+    contactEmail: Yup.string()
+      .email(props.t('error.email')),
+
+    contactPhoneNumber: Yup.string(),
   });
 
   const RadioButtonComponent = ({
@@ -196,18 +203,24 @@ const examSessionForm = props => {
     }
   };
 
-  // FIXME: no need for organizer param
-  const organizationSelection = (organizer, children, lang) =>
-    children.map(c =>
+  const initialOfficeOid = props.examSessionContent
+    && props.examSessionContent.organizationChildren
+    && props.examSessionContent.organizationChildren.length > 0
+    ? props.examSessionContent.organizationChildren[0].oid
+    : '';
+
+  const organizationSelection = (children, lang) =>
+    children && children.map(c =>
       <option value={c.oid} key={c.oid}>
         {`${getLocalizedName(c.nimi, lang)} (${c.oid ? c.oid : ''})`}
       </option>
     );
 
+
   return (
     <Formik
       initialValues={{
-        officeOid: '',
+        officeOid: initialOfficeOid,
         language: '',
         level: '',
         examDate: '',
@@ -219,6 +232,9 @@ const examSessionForm = props => {
         extraFi: '',
         extraSv: '',
         extraEn: '',
+        contactName: contact_name,
+        contactEmail: contact_email,
+        contactPhoneNumber: contact_phone_number,
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
@@ -237,6 +253,11 @@ const examSessionForm = props => {
           office_oid: values.officeOid ? values.officeOid : null,
           max_participants: Number.parseInt(values.maxParticipants),
           published_at: moment().toISOString(),
+          contact: [{
+            name: values.contactName,
+            email: values.contactEmail,
+            phone_number: values.contactPhoneNumber
+          }],
           location: [
             {
               name: getLocalizedName(orgOrOfficeName, 'fi'),
@@ -289,7 +310,6 @@ const examSessionForm = props => {
                 data-cy="select-officeOid"
               >
                 {organizationSelection(
-                  props.examSessionContent.organization,
                   // fixme: not actually just children, its the whole hierarchy
                   props.examSessionContent.organizationChildren,
                   props.i18n.lang,
@@ -386,6 +406,7 @@ const examSessionForm = props => {
                 className={classes.ErrorMessage}
               />
             </div>
+            <SessionContact />
             <div className={classes.FormElement}>
               <h3>{props.t('common.extra')}</h3>
               <label className={classes.ExtraLabel}>

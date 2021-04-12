@@ -102,6 +102,49 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
     </div>
   </div>
   <div>
+    <div
+      class="FormElement"
+    >
+      <h3>
+        examSession.contact.title
+      </h3>
+      <label
+        class="ExtraLabel"
+      >
+        examSession.contact.name.label
+      </label>
+      <input
+        class="TextInput"
+        id="contactName"
+        name="contactName"
+        placeholder="examSession.contact.name.placeholder"
+        value=""
+      />
+      <label
+        class="ExtraLabel"
+      >
+        examSession.contact.email.label
+      </label>
+      <input
+        class="TextInput"
+        id="contactEmail"
+        name="contactEmail"
+        placeholder="examSession.contact.email.placeholder"
+        value=""
+      />
+      <label
+        class="ExtraLabel"
+      >
+        examSession.contact.phoneNumber.label
+      </label>
+      <input
+        class="TextInput"
+        id="contactPhoneNumber"
+        name="contactPhoneNumber"
+        placeholder="examSession.contact.phoneNumber.placeholder"
+        value=""
+      />
+    </div>
     <div>
       <div
         class="FormElement"
