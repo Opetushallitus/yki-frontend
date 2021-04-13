@@ -1,148 +1,148 @@
 .PriceContainer {
-    text-align: center;
+  text-align: center;
 }
 
 .PriceContainer h2 {
-    font-size: 28px;
-    color: hsla(194, 82%, 43%, 1);
-    text-align: center;
+  font-size: 28px;
+  color: hsla(194, 82%, 43%, 1);
+  text-align: center;
 }
 
-.PriceBox  {
-    width: 160px;
-    background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 16px hsla(0, 0%, 0%, 0.1);
-    border-radius: 8px;
-    opacity: 1;
-    text-align: center;
-    padding: 5%;
-    margin-left: 5%;
+.PriceBox {
+  width: 160px;
+  background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 16px hsla(0, 0%, 0%, 0.1);
+  border-radius: 8px;
+  opacity: 1;
+  text-align: center;
+  padding: 5%;
+  margin-left: 5%;
 }
 
 .PriceBox hr {
-    text-align: center;
-    width: 70%;
-    border: 1px solid hsla(0, 0%, 86%, 1);
-    opacity: 1;
+  text-align: center;
+  width: 70%;
+  border: 1px solid hsla(0, 0%, 86%, 1);
+  opacity: 1;
 }
 
 .PriceTag {
-    display: inline-flex;
-    padding-bottom: 1vh;
+  display: inline-flex;
+  padding-bottom: 1vh;
 }
 
 .Price {
-    color: hsla(194, 82%, 43%, 1) !important;
-    font: normal normal bold 37px/34px PT Sans !important;
+  color: hsla(194, 82%, 43%, 1) !important;
+  font: normal normal bold 37px/34px PT Sans !important;
 }
 
 .Currency {
-    text-align: left;
-    font: normal normal bold 27px/34px PT Sans;
-    letter-spacing: 0;
-    color: hsla(194, 91%, 21%, 1);
-    padding-left: 1vw;
+  text-align: left;
+  font: normal normal bold 27px/34px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
+  padding-left: 1vw;
 }
 
 .PriceBox p {
-    color: hsla(194, 91%, 21%, 1);
-    font: normal normal bold 21px/27px PT Sans;
-    letter-spacing: 0;
-    margin-bottom: 1vh;
+  color: hsla(194, 91%, 21%, 1);
+  font: normal normal bold 21px/27px PT Sans;
+  letter-spacing: 0;
+  margin-bottom: 1vh;
 }
 
 .PriceBox span {
-    text-align: left;
-    font: normal normal bold 37px/34px PT Sans;
-    letter-spacing: 0;
-    color: hsla(194, 82%, 43%, 1);
+  text-align: left;
+  font: normal normal bold 37px/34px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 82%, 43%, 1);
 }
 
 @media (max-width: 1400px) {
-    .PriceContainer h2 {
-        padding-left: 1vw;
-    }
+  .PriceContainer h2 {
+    padding-left: 1vw;
+  }
 }
 
 /* Tablet view */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-    .PriceContainer {
-        padding: 2vh 2vw 2vh 2vw;
-    }
+  .PriceContainer {
+    padding: 2vh 2vw 2vh 2vw;
+  }
 }
 
 /* Mobile view */
 @media screen and (max-width: 767px) and (orientation: landscape) {
-    .PriceBox {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
-        box-shadow: 0 3px 16px hsla(0, 0%, 0%, 0.1);
-        border-radius: 8px;
-        opacity: 1;
-        text-align: center;
-        width: 90vw;
-        padding: 0 2vw 2vh 2vw;
-        margin: 0 2vw 3vh 2vw;
-    }
-    .PriceBox hr {
-        height: 75px;
-        width: 0 !important;
-        margin-top: 3vh;
-        text-align: center;
-        border: 1px solid hsla(0, 0%, 86%, 1);
-        opacity: 1;
-    }
-    .MobilePriceBox {
-        display: block;
-    }
+  .PriceBox {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
+    box-shadow: 0 3px 16px hsla(0, 0%, 0%, 0.1);
+    border-radius: 8px;
+    opacity: 1;
+    text-align: center;
+    width: 90vw;
+    padding: 0 2vw 2vh 2vw;
+    margin: 0 2vw 3vh 2vw;
+  }
+  .PriceBox hr {
+    height: 75px;
+    width: 0 !important;
+    margin-top: 3vh;
+    text-align: center;
+    border: 1px solid hsla(0, 0%, 86%, 1);
+    opacity: 1;
+  }
+  .MobilePriceBox {
+    display: block;
+  }
 }
 
 /* Mobile view */
 @media screen and (max-width: 425px) and (orientation: portrait) {
-    .PriceBox {
-        display: grid;
-        grid-template-columns: 100px 20px 100px 20px 100px;
-        background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
-        box-shadow: 0 3px 16px hsla(0, 0%, 0%, 0.1);
-        border-radius: 8px;
-        opacity: 1;
-        text-align: center;
-        width: 90vw;
-        padding: 0 2vw 2vh 2vw;
-        margin-right: 2vw;
-        margin-left: 2vw;
-    }
+  .PriceBox {
+    display: grid;
+    grid-template-columns: 100px 20px 100px 20px 100px;
+    background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
+    box-shadow: 0 3px 16px hsla(0, 0%, 0%, 0.1);
+    border-radius: 8px;
+    opacity: 1;
+    text-align: center;
+    width: 90vw;
+    padding: 0 2vw 2vh 2vw;
+    margin-right: 2vw;
+    margin-left: 2vw;
+  }
 
-    .PriceBoxSV {
-        display: grid;
-        grid-template-columns: 1fr 0.2fr 1fr 0.2fr 1fr;
-        background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
-        box-shadow: 0 3px 16px hsla(0, 0%, 0%, 0.1);
-        border-radius: 8px;
-        opacity: 1;
-        text-align: center;
-        width: 90vw;
-        padding: 0 2vw 2vh 2vw;
-        margin-right: 2vw;
-        margin-left: 2vw;
-    }
+  .PriceBoxSV {
+    display: grid;
+    grid-template-columns: 1fr 0.2fr 1fr 0.2fr 1fr;
+    background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
+    box-shadow: 0 3px 16px hsla(0, 0%, 0%, 0.1);
+    border-radius: 8px;
+    opacity: 1;
+    text-align: center;
+    width: 90vw;
+    padding: 0 2vw 2vh 2vw;
+    margin-right: 2vw;
+    margin-left: 2vw;
+  }
 
-    .PriceTagEN {
-        display: inline-flex;
-        padding-top: 3vh;
-    }
+  .PriceTagEN {
+    display: inline-flex;
+    padding-top: 3vh;
+  }
 
-    .PriceBox hr {
-        height: 75px;
-        width: 0 !important;
-        margin-top: 3vh;
-        text-align: center;
-        border: 1px solid hsla(0, 0%, 86%, 1);
-        opacity: 1;
-    }
+  .PriceBox hr {
+    height: 75px;
+    width: 0 !important;
+    margin-top: 3vh;
+    text-align: center;
+    border: 1px solid hsla(0, 0%, 86%, 1);
+    opacity: 1;
+  }
 
-    .MobilePriceBox {
-        display: block;
-    }
+  .MobilePriceBox {
+    display: block;
+  }
 }

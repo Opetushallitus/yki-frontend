@@ -57,6 +57,8 @@
   "common.postAdmission": "Jälki-ilmoittautuminen",
   "common.price": "Hinta",
   "common.priceList": "Hinnasto",
+  "common.price.reeval.first": "Tarkistusarviointi ",
+  "common.price.reeval.last": " / tutkinnon osa ",
   "common.registationPeriod": "Ilmoittautumisaika",
   "common.registration": "Ilmoittautuminen",
   "common.registration.root": "Esittely ja hinnasto",

@@ -1,48 +1,44 @@
 import React from 'react';
-import {levelTranslations} from '../../util/util';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
+import { MOBILE_VIEW } from '../../common/Constants';
+import { levelTranslations } from '../../util/util';
 import classes from './PriceContainer.module.css';
-import {useSelector} from "react-redux";
-import {MOBILE_VIEW} from "../../common/Constants";
 
-const PriceContainer = () => {
-    const {t} = useTranslation();
+const PriceContainer = props => {
+  const { t } = useTranslation();
+  const { elements } = props;
 
-    const state = useSelector(state => state);
-    const onMobileSV = (state.yki.ykiLanguage === 'sv' && MOBILE_VIEW);
-    const onMobileEN = (state.yki.ykiLanguage === 'en' && MOBILE_VIEW);
+  const state = useSelector(state => state);
+  const onMobileSV = state.yki.ykiLanguage === 'sv' && MOBILE_VIEW;
+  const onMobileEN = state.yki.ykiLanguage === 'en' && MOBILE_VIEW;
+  const childLength = elements.length;
 
-    return (
-        <div className={classes.PriceContainer}>
-            <h2>{t('common.priceList')}</h2>
-             <div className={onMobileSV || onMobileEN ? classes.PriceBoxSV : classes.PriceBox}>
-                <div className={classes.MobilePriceBox}>
-                    <p>{t(levelTranslations.PERUS)}</p>
-                    <div className={onMobileEN ?  classes.PriceTagEN : classes.PriceTag}>
-                        <div className={classes.Price}>120</div>
-                        <div className={classes.Currency}>{'€'}</div>
-                    </div>
-                </div>
-                <hr/>
-                <div className={classes.MobilePriceBox}>
-                    <p>{t(levelTranslations.KESKI)}</p>
-                    <div className={classes.PriceTag}>
-                        <div className={classes.Price}>140</div>
-                        <div className={classes.Currency}>{'€'}</div>
-                    </div>
-                </div>
-                <hr/>
-                <div className={classes.MobilePriceBox}>
-                    <p>{t(levelTranslations.YLIN)}</p>
-                    <div className={classes.PriceTag}>
-                        <div className={classes.Price}>180</div>
-                        <div className={classes.Currency}>{'€'}</div>
-                    </div>
-                </div>
+  return (
+    <div className={classes.PriceContainer}>
+      <h2>{t('common.priceList')}</h2>
+      <div
+        className={
+          onMobileSV || onMobileEN ? classes.PriceBoxSV : classes.PriceBox
+        }
+      >
+        {elements.map((el, i) => {
+          return (
+            <div className={classes.MobilePriceBox}>
+              <p>{t(el.title)}</p>
+              <div className={classes.PriceTag}>
+                <div className={classes.Price}>{el.price}</div>
+                <div className={classes.Currency}>{'€'}</div>
+              </div>
+              <p style={{ margin: '0px' }}>{t(el.extraText)}</p>
+              {i + 1 !== childLength ? <hr /> : null}
             </div>
-        </div>
-    );
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default PriceContainer;

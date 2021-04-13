@@ -116,9 +116,7 @@ const description = ({ history }) => {
             className={'YkiButton'}
             style={{ width: '50%' }}
             data-cy="re-eval-button"
-            onClick={() =>
-              history.push(t('/ilmoittautuminen/valitse-tutkintotilaisuus'))
-            }
+            onClick={() => history.push(t('/#'))}
             role="link"
             aria-label={t('registration.reeval')}
           >
@@ -126,7 +124,18 @@ const description = ({ history }) => {
           </button>
         </>
       </div>
-      <PriceContainer />
+      <PriceContainer
+        elements={[
+          { title: levelTranslations.PERUS, price: '120' },
+          { title: levelTranslations.KESKI, price: '140' },
+          { title: levelTranslations.YLIN, price: '180' },
+          {
+            title: 'common.price.reeval.first',
+            price: '50',
+            extraText: 'common.price.reeval.last',
+          },
+        ]}
+      />
     </>
   );
 
@@ -164,7 +173,7 @@ const description = ({ history }) => {
         </div>
       </div>
       <>
-        <PriceContainer />
+        {/* <PriceContainer /> */}
         <button
           className={'YkiButton'}
           data-cy="continue-button"
@@ -193,6 +202,18 @@ const description = ({ history }) => {
               </>
             );
           })}
+          <>
+            <button
+              className={'YkiButton'}
+              style={{ width: '50%' }}
+              data-cy="re-eval-button"
+              onClick={() => history.push(t('/#'))}
+              role="link"
+              aria-label={t('registration.reeval')}
+            >
+              {t('registration.reeval')}
+            </button>
+          </>
         </div>
       </>
     </>
