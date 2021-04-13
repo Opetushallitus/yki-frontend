@@ -11,6 +11,22 @@ import classes from './Description.module.css';
 
 const description = ({ history }) => {
   const { t } = useTranslation();
+  const levelPrices = [
+    { title: levelTranslations.PERUS, price: '120' },
+    { title: levelTranslations.KESKI, price: '140' },
+    { title: levelTranslations.YLIN, price: '180' },
+  ];
+
+  const evaluationTexts = [
+    'registration.description.read',
+    'registration.description.write',
+    'registration.description.listen',
+    'registration.description.speak',
+  ];
+
+  const evaluationPrizeElements = evaluationTexts.map(et => {
+    return { title: et, price: '50' };
+  });
 
   document.title = 'YKI';
 
@@ -100,12 +116,10 @@ const description = ({ history }) => {
         </>
         <div className={classes.InnerContainer}>
           <h2>{t('registration.description.reEvaluation')}</h2>
-          {['read', 'write', 'listen', 'speak'].map(el => {
+          {evaluationTexts.map(el => {
             return (
               <>
-                <h3 className={classes.ReEvalHeader}>
-                  {t(`registration.description.${el}`)}
-                </h3>
+                <h3 className={classes.ReEvalHeader}>{t(el)}</h3>
                 <hr />
               </>
             );
@@ -125,16 +139,11 @@ const description = ({ history }) => {
         </>
       </div>
       <PriceContainer
-        elements={[
-          { title: levelTranslations.PERUS, price: '120' },
-          { title: levelTranslations.KESKI, price: '140' },
-          { title: levelTranslations.YLIN, price: '180' },
-          {
-            title: 'common.price.reeval.first',
-            price: '50',
-            extraText: 'common.price.reeval.last',
-          },
-        ]}
+        elements={levelPrices.concat({
+          title: 'common.price.reeval.first',
+          price: '50',
+          extraText: 'common.price.reeval.last',
+        })}
       />
     </>
   );
@@ -173,7 +182,7 @@ const description = ({ history }) => {
         </div>
       </div>
       <>
-        {/* <PriceContainer /> */}
+        <PriceContainer elements={levelPrices} />
         <button
           className={'YkiButton'}
           data-cy="continue-button"
@@ -184,38 +193,37 @@ const description = ({ history }) => {
         >
           {t('registration.register')}
         </button>
-        <div
-          className={classes.InnerContainer}
-          style={{
-            width: `calc(${window.screen.availWidth}px - 20px)`,
-            padding: '1rem',
-          }}
-        >
-          <h2>{t('registration.description.reEvaluation')}</h2>
-          {['read', 'write', 'listen', 'speak'].map(el => {
-            return (
-              <>
-                <h3 className={classes.ReEvalHeader}>
-                  {t(`registration.description.${el}`)}
-                </h3>
-                <hr />
-              </>
-            );
-          })}
-          <>
-            <button
-              className={'YkiButton'}
-              style={{ width: '50%' }}
-              data-cy="re-eval-button"
-              onClick={() => history.push(t('/#'))}
-              role="link"
-              aria-label={t('registration.reeval')}
-            >
-              {t('registration.reeval')}
-            </button>
-          </>
-        </div>
       </>
+      <div
+        className={classes.InnerContainer}
+        style={{
+          width: `calc(${window.screen.availWidth}px - 20px)`,
+          padding: '1rem',
+        }}
+      >
+        <h2>{t('registration.description.reEvaluation')}</h2>
+        {evaluationTexts.map(el => {
+          return (
+            <>
+              <h3 className={classes.ReEvalHeader}>{t(el)}</h3>
+              <hr />
+            </>
+          );
+        })}
+        <>
+          <PriceContainer elements={evaluationPrizeElements} />
+          <button
+            className={'YkiButton'}
+            style={{ width: '50%' }}
+            data-cy="re-eval-button"
+            onClick={() => history.push(t('/#'))}
+            role="link"
+            aria-label={t('registration.reeval')}
+          >
+            {t('registration.reeval')}
+          </button>
+        </>
+      </div>
     </>
   );
 

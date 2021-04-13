@@ -25,15 +25,21 @@ const PriceContainer = props => {
       >
         {elements.map((el, i) => {
           return (
-            <div className={classes.MobilePriceBox}>
-              <p>{t(el.title)}</p>
-              <div className={classes.PriceTag}>
-                <div className={classes.Price}>{el.price}</div>
-                <div className={classes.Currency}>{'€'}</div>
+            <>
+              <div className={classes.MobilePriceBox}>
+                <p>{t(el.title)}</p>
+                <div
+                  className={onMobileEN ? classes.PriceTagEN : classes.PriceTag}
+                >
+                  <div className={classes.Price}>{el.price}</div>
+                  <div className={classes.Currency}>{'€'}</div>
+                </div>
+                {el.extraText && (
+                  <p style={{ margin: '0px' }}>{t(el.extraText)}</p>
+                )}
               </div>
-              <p style={{ margin: '0px' }}>{t(el.extraText)}</p>
-              {i + 1 !== childLength ? <hr /> : null}
-            </div>
+              {i + 1 !== childLength && <hr />}
+            </>
           );
         })}
       </div>
