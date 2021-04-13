@@ -68,6 +68,16 @@
   height: 100%;
 }
 
+.ReEvalHeader {
+  width: 100%;
+  text-align: left;
+  font: normal normal bold 21px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(194, 91%, 21%, 1);
+  opacity: 1;
+  padding: 0.2rem 0;
+}
+
 /* Tablet view */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .Container {
