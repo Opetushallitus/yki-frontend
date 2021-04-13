@@ -58,7 +58,7 @@ Under is an example of a post request, which returns a mockup success response, 
 ```
 
 Read more about proxying API requests in development from [React's documentation](https://create-react-app.dev/docs/proxying-api-requests-in-development/).
-```
+
 
 ## E2E Tests
 
