@@ -2,16 +2,33 @@
   width: 350px
 }
 
+.ButtonGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 50px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
 .Button {
-  height: 41px;
-  background-color: hsla(195, 82%, 44%, 1);
+  height: 41px; 
+  background-color: hsla(199, 77%, 43%, 0.95);
   color: white;
   font-size: 1em;
   padding: 0 18px;
+  border: none;
+  border-radius: 2px;
+  width: 100%;
+  margin-top: 25px;
 }
 
-.ButtonRight {
-  float: right;
+.DisabledButton {
+  background-color: hsl(0, 0%, 83%);
+}
+
+
+.CancelButton {
+  background-color: hsla(358, 75%, 57%, 0.85);
 }
 
 .Action {
@@ -19,12 +36,44 @@
   text-decoration-line: underline;
   background: none;
   border: none;
-  padding: 10px 0px;
+  padding: 10px 0;
 }
 
 .Form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+}
+
+.FormItem {
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  margin-top: 10px;
+  grid-gap: 50px;
+}
+
+.FormItem:first-child {
+  margin-block-start: 0;
+}
+.FormItem h2:first-child {
+  margin-block-start: 0;
+}
+
+.ExitItem {
+  display: grid;
+  grid-template-columns: 630px auto;
+  margin-top: 10px;
+}
+
+
+.ExitItem:first-child {
+  text-align: right;
+  cursor: pointer;
+}
+
+.ExitButton {
+  background: none;
+  border: none;
+  text-align: left;
+  align-self: end; 
 }
 
 .Label {
@@ -32,16 +81,17 @@
   font-size: 0.875em;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  align-self: end;
 }
 
 .Input {
-  width: 340px;
+  width: 300px;
   height: 35px;
   margin-bottom: 20px;
 }
 
 .DatePickerWrapper > input {
-  width: 340px;
+  width: 300px;
   height: 35px;
   margin-bottom: 20px;
 }
@@ -58,6 +108,17 @@
 .activityToggleButtonBox {
   border: 1px solid #ff00007d;
   border-radius: 10px;
-  padding: 15px;
-  padding-top: 0px;
+  padding: 0 15px 15px;
+}
+
+.QuotaLabel {
+  color: hsla(0, 0%, 58%, 0.8);
+}
+
+.CreatePostAdmissionLinkButton {
+  background: none;
+  border: none;
+  color: hsla(199, 77%, 43%, 0.95);
+  font-size: medium;
+  margin-block-end: 1em;
 }

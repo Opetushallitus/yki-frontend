@@ -13,16 +13,19 @@ import {
   DATE_FORMAT_WITHOUT_YEAR,
 } from '../../../../common/Constants';
 import ZipAndPostOffice from '../../../../components/ZipAndPostOffice/ZipAndPostOffice';
+import SessionContact from '../../../../components/SessionContact/SessionContact';
 
 export class ExamSessionUpdateForm extends Component {
   render() {
-    const t = this.props.t;
+    const { t, examSession } = this.props;
+    const contact = examSession.contact && examSession.contact[0];
+
     const validationSchema = Yup.object().shape({
       maxParticipants: Yup.number()
         .typeError(t('error.numeric'))
         .required(t('error.mandatory'))
         .min(
-          this.props.examSession.participants,
+          examSession.participants,
           t('examSession.maxParticipants.lessThan.participants'),
         )
         .integer(),
@@ -72,10 +75,10 @@ export class ExamSessionUpdateForm extends Component {
     };
 
     const getLocationByLang = lang => {
-      const location = this.props.examSession.location.find(
+      const location = examSession.location.find(
         l => l.lang === lang,
       );
-      return location ? location : this.props.examSession.location[0];
+      return location ? location : examSession.location[0];
     };
 
     const getLocationExtraByLang = lang => {
@@ -97,25 +100,35 @@ export class ExamSessionUpdateForm extends Component {
       )}/yki/tutkintotilaisuus/${examSessionId}`;
     };
 
+
     return (
       <Formik
         initialValues={{
-          maxParticipants: this.props.examSession.max_participants,
+          maxParticipants: examSession.max_participants,
           streetAddress: getLocationByLang(this.props.i18n.language)
             .street_address,
           postOffice: getLocationByLang(this.props.i18n.language).post_office,
-          zip: this.props.examSession.location[0].zip,
+          zip: examSession.location[0].zip,
           location: getLocationByLang(this.props.i18n.language)
             .other_location_info,
           extraFi: getLocationExtraByLang('fi'),
           extraSv: getLocationExtraByLang('sv'),
           extraEn: getLocationExtraByLang('en'),
+          contactName: contact ? contact.name : "",
+          contactEmail: contact ? contact.email : "",
+          contactPhoneNumber: contact ? contact.phone_number : "",
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
           const payload = {
-            ...this.props.examSession,
+            ...examSession,
             max_participants: Number.parseInt(values.maxParticipants),
+            contact: values.contactName || values.contactEmail || values.contactPhoneNumber
+              ? [{
+                name: values.contactName,
+                email: values.contactEmail,
+                phone_number: values.contactPhoneNumber
+              }] : null,
             location: [
               {
                 name: getLocationNameByLang('fi'),
@@ -159,12 +172,12 @@ export class ExamSessionUpdateForm extends Component {
             <div>
               <div className={classes.FormElement}>
                 <h3>{t('common.registationPeriod')}</h3>
-                {registrationPediod(this.props.examSession)}
+                {registrationPediod(examSession)}
               </div>
               <div className={classes.FormElement}>
                 <h3>{t('examSession.registrationLink')}</h3>
                 <label data-cy="registration-link">
-                  {createRegistrationUrl(this.props.examSession.id)}
+                  {createRegistrationUrl(examSession.id)}
                 </label>
               </div>
               <div className={classes.FormElement}>
@@ -218,6 +231,7 @@ export class ExamSessionUpdateForm extends Component {
               </div>
             </div>
             <div>
+              <SessionContact />
               <div>
                 <div className={classes.FormElement}>
                   <h3>{t('common.extra')}</h3>
@@ -286,7 +300,7 @@ export class ExamSessionUpdateForm extends Component {
               </div>
 
               <div className={classes.Buttons}>
-                {deleteButton(this.props.examSession)}
+                {deleteButton(examSession)}
                 <Button
                   type="submit"
                   disabled={!isValid}

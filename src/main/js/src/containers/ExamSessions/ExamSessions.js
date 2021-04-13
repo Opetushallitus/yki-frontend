@@ -145,6 +145,7 @@ class ExamSessions extends Component {
               {this.props.t('examSession.addExamSession')}
             </Button>
           </div>
+          <h2 className={classes.ContractTitle}>{this.props.t('common.agreement')}</h2>
           <ExamSessionOrganizer
             organizer={this.props.examSessionContent.organizer}
             organization={this.props.examSessionContent.organization}

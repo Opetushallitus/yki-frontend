@@ -75,8 +75,8 @@ export class Registry extends Component {
                 onClose={this.closeModalHandler}
               />
             ) : (
-              <NewRegistryItem onClose={this.closeModalHandler} />
-            )}
+                <NewRegistryItem onClose={this.closeModalHandler} />
+              )}
           </Modal>
         ) : null}
       </React.Fragment>

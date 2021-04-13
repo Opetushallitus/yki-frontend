@@ -23,8 +23,8 @@ export const fetchExamSessions = () => {
   };
 };
 const locationByLang = (examSession, lang) => {
-  const language = examSession.location.find(l => l.lang === lang)
-  return language && language.post_office ? capitalize(language.post_office) : null;
+  const location = examSession.location.find(l => l.lang === lang);
+  return location && location.post_office ? capitalize(location.post_office) : null;
 };
 
 const extractExamLocations = examSessions => {
@@ -32,7 +32,6 @@ const extractExamLocations = examSessions => {
     const location = { fi: locationByLang(examSession, 'fi'), sv: locationByLang(examSession, 'sv') };
     return R.includes(location, locations) ? locations : R.append(location, locations);
   };
-
   const unique = R.reduce(getUniqueLocations, []);
   const sortByFi = R.sort(R.prop('fi'));
   return {
@@ -90,6 +89,7 @@ const fetchExamSessionsStart = () => {
 };
 
 const fetchExamSessionsSuccess = examSessions => {
+  console.log('trigger fetch exam session success')
   return {
     type: actionTypes.FETCH_EXAM_SESSIONS_SUCCESS,
     examSessions: examSessions,

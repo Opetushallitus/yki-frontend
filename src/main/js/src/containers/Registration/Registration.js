@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {withTranslation} from 'react-i18next';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import queryString from 'query-string';
 
 import classes from './Registration.module.css';
-import {LANGUAGES, MOBILE_VIEW} from '../../common/Constants';
+import { LANGUAGES, MOBILE_VIEW } from '../../common/Constants';
 import Filters from '../../components/Registration/Filters/Filters';
 import ExamSessionList from '../../components/Registration/ExamSessionList/ExamSessionList';
 
@@ -12,7 +12,7 @@ import * as actions from '../../store/actions/index';
 
 import HeadlineContainer from "../../components/HeadlineContainer/HeadlineContainer";
 import YkiImage1 from '../../assets/images/ophYki_image1.png';
-import {getObjectValuesCount} from "../../util/util";
+import { getObjectValuesCount } from "../../util/util";
 
 class Registration extends Component {
   constructor(props) {
@@ -24,17 +24,17 @@ class Registration extends Component {
   }
 
   componentDidMount() {
-    const {language, level, location} = queryString.parse(
-        this.props.history.location.search,
+    const { language, level, location } = queryString.parse(
+      this.props.history.location.search,
     );
     const lang = LANGUAGES.find(l => l.code === language);
     document.title = this.props.t('registration.document.title');
 
     const allQueryParamsExist = language && level && location;
     const paramsAreDifferent =
-        (lang && this.props.language.name !== lang.name) ||
-        this.props.level !== level ||
-        this.props.location !== location;
+      (lang && this.props.language.name !== lang.name) ||
+      this.props.level !== level ||
+      this.props.location !== location;
     // if redux state is different from query params user has probably refreshed the page
     if (allQueryParamsExist !== undefined && paramsAreDifferent) {
       // set query params to redux state
@@ -100,42 +100,42 @@ class Registration extends Component {
 
   render() {
     return (
-        <>
-          <HeadlineContainer
-              headlineTitle={this.props.t('registration.title')}
-              headlineContent={ <p>{this.props.t('registration.times.info')}</p> }
-              headlineImage={YkiImage1}
-          />
-          <div className={classes.Content}>
-            <div className={classes.FilterContainer}>
-              <div className={classes.FilterSelectors}>
-                <Filters
-                    language={this.props.language}
-                    onLanguageChange={this.onLanguageChange}
-                    level={this.props.level}
-                    onLevelChange={this.onLevelChange}
-                    location={this.props.location}
-                    onLocationChange={this.onLocationChange}
-                    locations={this.props.locations}
-                    history={this.props.history}
-                    onAvailabilityFilterChange={this.onAvailabilityChange}
-                    onRegistrationFilterChange={this.onRegistrationFilterChange}
-                />
-                <hr />
-                <p>
-                  <strong>{`${getObjectValuesCount(this.getValuesOnFilterChange())}`}</strong>{' '}
-                  {`${this.props.t('common.searchResults')}`}
-                </p>
-              </div>
-            </div>
-            {(MOBILE_VIEW || window.innerWidth < 1024) ? <div style={{paddingTop: '30px'}} /> : null}
-            <ExamSessionList
-                examSessions={this.getValuesOnFilterChange()}
+      <>
+        <HeadlineContainer
+          headlineTitle={this.props.t('registration.title')}
+          headlineContent={<p>{this.props.t('registration.times.info')}</p>}
+          headlineImage={YkiImage1}
+        />
+        <div className={classes.Content}>
+          <div className={classes.FilterContainer}>
+            <div className={classes.FilterSelectors}>
+              <Filters
                 language={this.props.language}
+                onLanguageChange={this.onLanguageChange}
+                level={this.props.level}
+                onLevelChange={this.onLevelChange}
+                location={this.props.location}
+                onLocationChange={this.onLocationChange}
+                locations={this.props.locations}
                 history={this.props.history}
-            />
+                onAvailabilityFilterChange={this.onAvailabilityChange}
+                onRegistrationFilterChange={this.onRegistrationFilterChange}
+              />
+              <hr />
+              <p>
+                <strong>{`${getObjectValuesCount(this.getValuesOnFilterChange())}`}</strong>{' '}
+                {`${this.props.t('common.searchResults')}`}
+              </p>
+            </div>
           </div>
-        </>
+          {(MOBILE_VIEW || window.innerWidth < 1024) ? <div style={{ paddingTop: '30px' }} /> : null}
+          <ExamSessionList
+            examSessions={this.getValuesOnFilterChange()}
+            language={this.props.language}
+            history={this.props.history}
+          />
+        </div>
+      </>
     );
   }
 }
@@ -161,7 +161,7 @@ const mapDispatchToProps = dispatch => {
     onSelectLanguage: language => dispatch(actions.selectLanguage(language)),
     onSelectLocation: location => dispatch(actions.selectLocation(location)),
     onSetAll: (language, level, location) =>
-        dispatch(actions.setAll(language, level, location)),
+      dispatch(actions.setAll(language, level, location)),
     onAvailabilitySelect: () => dispatch(actions.filterExamByAvailability()),
     onRegistrationSelect: () => dispatch(actions.filteredExamSessionsByOpenRegistration()),
     onFilterAvailableAndRegistration: () => dispatch(actions.filteredExamsByAvailabilityAndRegistration())
@@ -169,6 +169,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(withTranslation()(Registration));

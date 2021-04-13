@@ -12,3 +12,16 @@
   margin-top: 30px;
   margin-bottom: 39px;
 }
+
+.AddExamSessionButton Button {
+  background-color: hsla(199, 77%, 43%, 0.95);
+  border: none;
+  border-radius: 2px;
+}
+
+.ContractTitle {
+  position: relative;
+  display: block;
+  margin-bottom: 10px;
+  width: 50%;
+}
