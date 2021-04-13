@@ -1,15 +1,13 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import HeadlineContainer from "../../HeadlineContainer/HeadlineContainer";
-import DescriptionCollapsible from "../../DescriptionsCollapsible/DescriptionCollapsible";
-
 import YkiImage1 from '../../../assets/images/ophYki_image1.png';
-
-import classes from './Description.module.css';
-import {getDeviceOrientation, levelTranslations} from "../../../util/util";
-import PriceContainer from "../../PriceContainer/PriceContainer";
 import {MOBILE_VIEW} from "../../../common/Constants";
+import {getDeviceOrientation, levelTranslations} from "../../../util/util";
+import DescriptionCollapsible from "../../DescriptionsCollapsible/DescriptionCollapsible";
+import HeadlineContainer from "../../HeadlineContainer/HeadlineContainer";
+import PriceContainer from "../../PriceContainer/PriceContainer";
+import classes from './Description.module.css';
 
 const description = ({history}) => {
   const {t} = useTranslation();
@@ -89,6 +87,32 @@ const description = ({history}) => {
             {t('registration.register')}
           </button>
         </>
+                <div className={classes.InnerContainer}>
+          <h2>{t('registration.description.reEvaluation')}</h2>
+          {['read', 'write', 'listen', 'speak'].map(el => {
+            return (
+              <>
+                <h3 className={classes.ReEvalHeader}>
+                  {t(`registration.description.${el}`)}
+                </h3>
+                <hr />
+              </>
+            );
+          })}
+        </div>
+        <>
+          <button
+            className={'YkiButton'}
+            data-cy="re-eval-button"
+            onClick={() =>
+              history.push(t('/ilmoittautuminen/valitse-tutkintotilaisuus'))
+            }
+            role="link"
+            aria-label={t('registration.reeval')}
+          >
+            {t('registration.reeval')}
+          </button>
+        </>
       </div>
       <PriceContainer/>
     </>
@@ -120,6 +144,25 @@ const description = ({history}) => {
         >
           {t('registration.register')}
         </button>
+        <div
+          className={classes.InnerContainer}
+          style={{
+            width: `calc(${window.screen.availWidth}px - 20px)`,
+            padding: '1rem',
+          }}
+        >
+          <h2>{t('registration.description.reEvaluation')}</h2>
+          {['read', 'write', 'listen', 'speak'].map(el => {
+            return (
+              <>
+                <h3 className={classes.ReEvalHeader}>
+                  {t(`registration.description.${el}`)}
+                </h3>
+                <hr />
+              </>
+            );
+          })}
+        </div>
       </>
     </>
   )
