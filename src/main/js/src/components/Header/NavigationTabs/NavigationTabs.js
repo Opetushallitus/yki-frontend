@@ -22,50 +22,40 @@ const NavigationTabs = props => {
       location.pathname === '/ilmoittautuminen' ||
       location.pathname === '/ilmoittautuminen/';
 
+    const linkArray = [
+      { title: 'common.registration.root', url: '/' },
+      {
+        title: 'common.registration',
+        url: '/ilmoittautuminen/valitse-tutkintotilaisuus',
+        secondary: '/ilmoittautuminen/',
+      },
+      { title: 'common.reeval', url: '/tarkistusarviointi' },
+    ];
+
     const divider = onDescriptionPage && (MOBILE_VIEW || TABLET_VIEW);
     return (
       <>
-        <div
-          className={
-            onDescriptionPage ? classes.ActiveTab : classes.InactiveTab
-          }
-        >
-          <button
-            className={classes.LinkButton}
-            onClick={() => history.push('/')}
-            role="link"
-          >
-            {t('common.registration.root')}
-          </button>
-        </div>
-        <div
-          className={
-            onDescriptionPage ? classes.InactiveTab : classes.ActiveTab
-          }
-        >
-          <button
-            className={classes.LinkButton}
-            onClick={() =>
-              history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
-            }
-            role="link"
-          >
-            {t('common.registration')}
-          </button>
-        </div>
-        <div
-          className={
-            onDescriptionPage ? classes.InactiveTab : classes.ActiveTab
-          }
-        >
-          <button
-            className={classes.LinkButton}
-            onClick={() => history.push('/tarkistusarviointi')}
-            role="link"
-          >
-            {t('common.reeval')}
-          </button>
-        </div>
+        {linkArray.map((link, i) => {
+          const isActive =
+            location.pathname === link.url ||
+            (link.secondary && location.pathname === link.secondary);
+          return (
+            <div
+              key={link.title}
+              className={isActive ? classes.ActiveTab : classes.InactiveTab}
+            >
+              <button
+                className={classes.LinkButton}
+                onClick={() => {
+                  history.push(link.url);
+                }}
+                role="link"
+              >
+                {t(link.title)}
+              </button>
+            </div>
+          );
+        })}
         {divider ? <hr className={classes.Divider} /> : null}
       </>
     );

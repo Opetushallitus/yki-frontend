@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import YkiImage1 from '../../../assets/images/ophYki_image1.png';
+import YkiImage2 from '../../../assets/images/ophYki_image2.png';
 import { MOBILE_VIEW } from '../../../common/Constants';
 import { getDeviceOrientation, levelTranslations } from '../../../util/util';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
@@ -28,7 +28,7 @@ const ReEvaluation = ({ history }) => {
         <HeadlineContainer
           headlineTitle={t('registration.description.title')}
           headlineContent={<p>{t('registration.description.text1')}</p>}
-          headlineImage={YkiImage1}
+          headlineImage={YkiImage2}
         />
         {MOBILE_VIEW ||
         (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
