@@ -51,6 +51,16 @@
   opacity: 0.5;
 }
 
+.DescriptionAndText {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid hsla(0, 0%, 86%, 1);
+  padding-bottom: 2rem;
+}
+.MainContent {
+  padding: 1rem 0;
+}
+
 .TutorialVideo {
   position: relative;
   padding-bottom: 56.25%;

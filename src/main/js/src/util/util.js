@@ -12,6 +12,20 @@ export const levelTranslations = {
   YLIN: 'common.level.high',
 };
 
+export const evaluationTexts = [
+  'registration.description.read',
+  'registration.description.write',
+  'registration.description.listen',
+  'registration.description.speak',
+];
+
+export const evaluationPriceElements = [
+  { title: evaluationTexts[0], price: '50' },
+  { title: evaluationTexts[2], price: '50' },
+  { title: evaluationTexts[1], price: '50' },
+  { title: evaluationTexts[3], price: '50' },
+];
+
 export const levelDescription = level => {
   return i18next.t(levelTranslations[level]);
 };
@@ -60,7 +74,7 @@ export const nowBetweenDates = (startDate, endDate) => {
   return now.isBetween(startDate, endDate, 'day', '[]');
 };
 
-export const getObjectValuesCount = (object) => {
+export const getObjectValuesCount = object => {
   const valuesArray = Object.values(object);
   let result = 0;
 
@@ -78,19 +92,19 @@ export const getArraySize = array => {
   return array.length;
 }
 
-export const getLanguageAndLevel = (sessionData) => {
-  return (
-    `${i18next.t(`common.language.${sessionData.language_code}`)}, ${levelDescription(
-      sessionData.level_code,
-    )}`
-  );
+export const getLanguageAndLevel = sessionData => {
+  return `${i18next.t(
+    `common.language.${sessionData.language_code}`,
+  )}, ${levelDescription(sessionData.level_code)}`;
 };
 
 export const getDeviceOrientation = () => {
   if (window.screen.orientation) {
-    return window.screen.orientation.type.includes('landscape') ? 'landscape' : 'portrait';
+    return window.screen.orientation.type.includes('landscape')
+      ? 'landscape'
+      : 'portrait';
   }
 
   // iOS/safari
   return Math.abs(+window.orientation) === 90 ? 'landscape' : 'portrait';
-}
+};

@@ -3,7 +3,12 @@ import { useTranslation } from 'react-i18next';
 
 import YkiImage1 from '../../../assets/images/ophYki_image1.png';
 import { MOBILE_VIEW } from '../../../common/Constants';
-import { getDeviceOrientation, levelTranslations } from '../../../util/util';
+import {
+  evaluationPriceElements,
+  evaluationTexts,
+  getDeviceOrientation,
+  levelTranslations,
+} from '../../../util/util';
 import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCollapsible';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
@@ -15,20 +20,6 @@ const description = ({ history }) => {
     { title: levelTranslations.PERUS, price: '120' },
     { title: levelTranslations.KESKI, price: '140' },
     { title: levelTranslations.YLIN, price: '180' },
-  ];
-
-  const evaluationTexts = [
-    'registration.description.read',
-    'registration.description.write',
-    'registration.description.listen',
-    'registration.description.speak',
-  ];
-
-  const evaluationPrizeElements = [
-    { title: evaluationTexts[0], price: '50' },
-    { title: evaluationTexts[2], price: '50' },
-    { title: evaluationTexts[1], price: '50' },
-    { title: evaluationTexts[3], price: '50' },
   ];
 
   document.title = 'YKI';
@@ -214,7 +205,7 @@ const description = ({ history }) => {
           );
         })}
         <div style={{ margin: '2rem 0 0 0' }}>
-          <PriceContainer elements={evaluationPrizeElements} />
+          <PriceContainer elements={evaluationPriceElements} />
           <button
             className={'YkiButton'}
             style={{ width: '50%' }}
