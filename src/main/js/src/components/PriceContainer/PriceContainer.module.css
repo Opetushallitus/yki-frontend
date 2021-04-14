@@ -96,13 +96,16 @@
   .MobilePriceBox {
     display: block;
   }
+  .PriceContainer {
+    margin: 1vh 0;
+  }
 }
 
 /* Mobile view */
 @media screen and (max-width: 425px) and (orientation: portrait) {
   .PriceBox {
     display: grid;
-    grid-template-columns: 100px 20px 100px 20px 100px;
+    grid-template-rows: auto;
     background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
     box-shadow: 0 3px 16px hsla(0, 0%, 0%, 0.1);
     border-radius: 8px;
@@ -138,11 +141,17 @@
     width: 0 !important;
     margin-top: 3vh;
     text-align: center;
-    border: 1px solid hsla(0, 0%, 86%, 1);
+    border: 1px solid hsla(0, 0%, 86%, 1) !important;
     opacity: 1;
   }
 
   .MobilePriceBox {
     display: block;
+    margin: 0 10px;
+    /* border-bottom: 1px solid hsla(0, 0%, 86%, 1) !important; */
+  }
+
+  .PriceContainer {
+    margin: 1rem 0 0 0;
   }
 }

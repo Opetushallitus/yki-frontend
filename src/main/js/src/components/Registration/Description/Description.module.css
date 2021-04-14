@@ -89,7 +89,6 @@
   }
 }
 
-
 /* Mobile view */
 @media screen and (max-width: 425px) and (orientation: portrait) {
   .InnerContainer {
@@ -121,7 +120,6 @@
     min-width: 100%;
   }
 }
-
 
 /* Mobile view */
 @media screen and (max-width: 760px) and (orientation: landscape) {

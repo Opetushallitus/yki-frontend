@@ -24,9 +24,12 @@ const description = ({ history }) => {
     'registration.description.speak',
   ];
 
-  const evaluationPrizeElements = evaluationTexts.map(et => {
-    return { title: et, price: '50' };
-  });
+  const evaluationPrizeElements = [
+    { title: evaluationTexts[0], price: '50' },
+    { title: evaluationTexts[2], price: '50' },
+    { title: evaluationTexts[1], price: '50' },
+    { title: evaluationTexts[3], price: '50' },
+  ];
 
   document.title = 'YKI';
 
@@ -118,10 +121,10 @@ const description = ({ history }) => {
           <h2>{t('registration.description.reEvaluation')}</h2>
           {evaluationTexts.map(el => {
             return (
-              <>
+              <React.Fragment key={el}>
                 <h3 className={classes.ReEvalHeader}>{t(el)}</h3>
                 <hr />
-              </>
+              </React.Fragment>
             );
           })}
         </div>
@@ -204,13 +207,13 @@ const description = ({ history }) => {
         <h2>{t('registration.description.reEvaluation')}</h2>
         {evaluationTexts.map(el => {
           return (
-            <>
+            <React.Fragment key={el}>
               <h3 className={classes.ReEvalHeader}>{t(el)}</h3>
               <hr />
-            </>
+            </React.Fragment>
           );
         })}
-        <>
+        <div style={{ margin: '2rem 0 0 0' }}>
           <PriceContainer elements={evaluationPrizeElements} />
           <button
             className={'YkiButton'}
@@ -222,7 +225,7 @@ const description = ({ history }) => {
           >
             {t('registration.reeval')}
           </button>
-        </>
+        </div>
       </div>
     </>
   );
