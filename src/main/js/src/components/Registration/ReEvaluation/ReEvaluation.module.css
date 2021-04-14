@@ -104,6 +104,12 @@
   .InnerContainer {
     padding-right: 3vw;
     padding-left: 4vw;
+    width: 100%;
+  }
+
+  .DescriptionAndText {
+    flex-direction: column;
+    align-items: center;
   }
 
   .ArticleContent {

@@ -30,9 +30,18 @@ const ReEvaluation = ({ history }) => {
   );
 
   const mobileContent = (
-    <>
-      <h1>Mobile</h1>
-    </>
+    <div className={classes.MainContent}>
+      <div className={classes.DescriptionAndText}>
+        <div className={classes.InnerContainer}>
+          <article className={classes.ArticleContent}>
+            <p>{t('registration.reeval.text2')}</p>
+            <p>{t('registration.reeval.text3')}</p>
+            <p>{t('registration.reeval.text4')}</p>
+          </article>
+        </div>
+        <PriceContainer elements={evaluationPriceElements} />
+      </div>
+    </div>
   );
 
   return (
