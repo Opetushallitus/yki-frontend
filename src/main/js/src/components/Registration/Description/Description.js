@@ -219,7 +219,7 @@ const description = ({ history }) => {
             className={'YkiButton'}
             style={{ width: '50%' }}
             data-cy="re-eval-button"
-            onClick={() => history.push(t('/#'))}
+            onClick={() => history.push(t('/tarkistusarviointi'))}
             role="link"
             aria-label={t('registration.reeval')}
           >
