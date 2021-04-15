@@ -18,9 +18,7 @@ const PriceContainer = props => {
 
   return (
     <div className={classes.PriceContainer}>
-      <h2 style={{ textAlign: MOBILE_VIEW ? 'center' : 'start' }}>
-        {t('common.priceList')}
-      </h2>
+      <h2 style={{ textAlign: 'center' }}>{t('common.priceList')}</h2>
       <div
         className={
           onMobileSV || onMobileEN ? classes.PriceBoxSV : classes.PriceBox
