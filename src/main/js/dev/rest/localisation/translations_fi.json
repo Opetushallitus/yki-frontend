@@ -278,6 +278,7 @@
   "registration.init.error.session.full": "Tutkintotilaisuus on täynnä.",
   "registration.init.error.session.multiple": "Voit ilmoittautua vain yhteen tutkintotilaisuuteen.",
   "registration.list.date": "Päivämäärä",
+  "registration.list.evalPossible": "Tarkistusarvioinnin tilaaminen mahdollista",
   "registration.list.exam": "Tutkinto",
   "registration.list.examSpots": "Paikkoja vapaana",
   "registration.list.place": "Oppilaitos",

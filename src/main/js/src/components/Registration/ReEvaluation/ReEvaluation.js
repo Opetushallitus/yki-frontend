@@ -9,6 +9,7 @@ import {
 } from '../../../util/util';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
+import ReEvaluationList from '../ReEvaluationList/ReEvaluationList';
 import classes from './ReEvaluation.module.css';
 
 const ReEvaluation = ({ history }) => {
@@ -26,6 +27,7 @@ const ReEvaluation = ({ history }) => {
         </div>
         <PriceContainer elements={evaluationPriceElements} />
       </div>
+      <ReEvaluationList />
     </div>
   );
 

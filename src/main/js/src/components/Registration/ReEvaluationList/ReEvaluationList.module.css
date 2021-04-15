@@ -1,23 +1,51 @@
+.Sort {
+  text-align: left;
+  font: normal normal bold 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: white;
+  margin: 15px 0 20px 0;
+  border: none;
+  cursor: pointer;
+  padding-left: 15px;
+  background-color: hsla(194, 91%, 21%, 1);
+}
+
+.Sort:hover {
+  text-decoration: underline;
+}
+
 .Date {
   margin-bottom: 20px;
 }
 
-.ExamsOnDate {
+.HeaderColumn,
+.TableColumn {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  border-bottom: 1px solid hsl(0, 0%, 59%);
-  font-size: 14px;
-  padding: 5px 5px 5px 20px;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid hsla(194, 82%, 43%, 1);
 }
 
 .ColumnHeaders {
-  background: hsla(194, 82%, 43%, 1) 0 0 no-repeat padding-box;
-  text-align: left;
+  background: hsla(194, 91%, 21%, 1) 0 0 no-repeat padding-box;
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
   color: hsla(0, 0%, 100%, 1);
-  padding: 5px 10px 0 10px;
+  padding: 0px 10px 0 10px;
+}
+
+.SortIcon {
+  width: 10px;
+}
+
+.TableColumn:last-child,
+.HeaderColumn:last-child {
+  border-right: none;
+}
+
+.List:nth-child(odd) {
+  background-color: hsla(194, 82%, 43%, 0.2);
 }
 
 .NotFound {
@@ -25,7 +53,10 @@
   color: hsla(194, 91%, 21%, 1);
 }
 
-/* desktop */
+.List {
+  padding: 0 0.5rem;
+}
+
 @media (min-width: 1024px) {
   .Date {
     margin-bottom: -2px;
@@ -40,12 +71,11 @@
   }
 
   .ColumnHeaders {
-    height: 4vh;
     font-size: 14px;
     display: grid;
-    grid-template-columns: 0.7fr 2fr 0.8fr 1fr 0.7fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr 1.25fr;
     align-items: end;
-    padding: 5px 10px 0 10px;
+    padding: 0px 10px 0 10px;
   }
 
   .ColumnHeaders > div:nth-child(4),
@@ -53,8 +83,13 @@
     justify-self: center;
   }
 
+  .HeaderColumn {
+    height: 4vh;
+  }
+
   .List {
     display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1.25fr;
   }
 }
 
@@ -67,10 +102,14 @@
     height: 6vh;
     font-size: 14px;
     display: grid;
-    grid-template-columns: 0.6fr 1.9fr 0.9fr 0.9fr 0.6fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr 1fr;
     align-items: end;
     text-align: left;
-    padding: 5px 20px 5px 20px;
+    padding: 0px 20px 0px 20px;
+  }
+  .List {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr;
   }
 }
 
@@ -82,5 +121,9 @@
   .ExamsOnDate {
     display: none;
     padding-left: 5vw;
+  }
+  .List {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr;
   }
 }
