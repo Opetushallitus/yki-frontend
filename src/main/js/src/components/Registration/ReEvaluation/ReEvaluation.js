@@ -43,6 +43,7 @@ const ReEvaluation = ({ history }) => {
         </div>
         <PriceContainer elements={evaluationPriceElements} />
       </div>
+      <ReEvaluationList />
     </div>
   );
 

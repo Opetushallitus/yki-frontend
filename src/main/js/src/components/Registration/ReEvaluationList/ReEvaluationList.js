@@ -70,7 +70,7 @@ const ReEvaluationList = props => {
     );
   };
 
-  const dataRow = session => {
+  const dataRowDesktop = session => {
     const examLanguage = t(`common.language.${session.language_code}`);
     const examLevel = levelDescription(session.level_code).toLowerCase();
     const examDate = moment(session.exam_date).format(DATE_FORMAT);
@@ -107,24 +107,84 @@ const ReEvaluationList = props => {
     );
   };
 
+  const dataRowMobile = session => {
+    const examLanguage = t(`common.language.${session.language_code}`);
+    const examLevel = levelDescription(session.level_code).toLowerCase();
+    const examDate = moment(session.exam_date).format(DATE_FORMAT);
+    const evaluationStartDate = moment(session.evaluation_start_date).format(
+      DATE_FORMAT,
+    );
+    const evaluationEndDate = moment(session.evaluation_end_date).format(
+      DATE_FORMAT,
+    );
+    return (
+      <div className={classes.List}>
+        <div className={classes.MobileRow}>
+          <div
+            className={classes.TableColumn}
+          >{`${examLanguage}, ${examLevel}`}</div>
+          <div className={classes.TableColumn}>{examDate}</div>
+        </div>
+        <div className={classes.MobileRow}>
+          <div className={classes.TableColumn}>
+            {t('registration.list.evalPossible')}
+          </div>
+          <div className={classes.TableColumn}>
+            {evaluationStartDate} - {evaluationEndDate}
+          </div>
+        </div>
+
+        <button
+          onClick={() => console.log('button clicked')}
+          role="link"
+          className="YkiButton"
+          style={{
+            backgroundColor: 'hsla(194, 91%, 21%, 1)',
+            padding: '0.25rem',
+          }}
+        >
+          {t('registration.reeval')}
+        </button>
+      </div>
+    );
+  };
+
   return (
     <>
       {sessions && sessions.length !== 0 ? (
         <>
-          <div>{headerRow()}</div>
-          <div className={classes.Date}>
-            {sessions.map((session, i) => {
-              {
-                /* <ExamSessionListItem
+          {MOBILE_VIEW ? (
+            <div className={classes.Date}>
+              {sessions.map((session, i) => {
+                {
+                  /* <ExamSessionListItem
                 key={e.published_at + i}
                 examSession={e}
                 language={language}
                 history={history}
               /> */
-              }
-              return dataRow(session);
-            })}
-          </div>
+                }
+                return dataRowMobile(session);
+              })}
+            </div>
+          ) : (
+            <>
+              <div>{headerRow()}</div>
+              <div className={classes.Date}>
+                {sessions.map((session, i) => {
+                  {
+                    /* <ExamSessionListItem
+                key={e.published_at + i}
+                examSession={e}
+                language={language}
+                history={history}
+              /> */
+                  }
+                  return dataRowDesktop(session);
+                })}
+              </div>
+            </>
+          )}
         </>
       ) : (
         <p className={classes.NotFound}>

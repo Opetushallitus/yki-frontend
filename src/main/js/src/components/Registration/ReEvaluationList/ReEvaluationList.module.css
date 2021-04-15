@@ -32,7 +32,6 @@
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
   color: hsla(0, 0%, 100%, 1);
-  padding: 0px 10px 0 10px;
 }
 
 .SortIcon {
@@ -44,6 +43,10 @@
   border-right: none;
 }
 
+.List {
+  display: block;
+}
+
 .List:nth-child(odd) {
   background-color: hsla(194, 82%, 43%, 0.2);
 }
@@ -53,8 +56,17 @@
   color: hsla(194, 91%, 21%, 1);
 }
 
-.List {
-  padding: 0 0.5rem;
+.MobileRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid hsla(194, 82%, 43%, 1);
+}
+
+.MobileRow:nth-child(2) {
+  justify-content: end;
 }
 
 @media (min-width: 1024px) {
@@ -62,20 +74,11 @@
     margin-bottom: -2px;
   }
 
-  .Date:last-child {
-    margin-bottom: 0;
-  }
-
-  .ExamsOnDate {
-    display: flex;
-  }
-
   .ColumnHeaders {
     font-size: 14px;
     display: grid;
     grid-template-columns: 1fr 1fr 2fr 1.25fr;
     align-items: end;
-    padding: 0px 10px 0 10px;
   }
 
   .ColumnHeaders > div:nth-child(4),
@@ -95,9 +98,6 @@
 
 /* Tablet landscape */
 @media screen and (max-width: 1024px) and (orientation: landscape) {
-  .ExamsOnDate {
-    display: none;
-  }
   .ColumnHeaders {
     height: 6vh;
     font-size: 14px;
@@ -118,12 +118,11 @@
   .ColumnHeaders {
     display: none;
   }
-  .ExamsOnDate {
-    display: none;
-    padding-left: 5vw;
+  .TableColumn {
+    border-right: none;
   }
   .List {
-    display: grid;
-    grid-template-columns: 1fr 1fr 2fr 1fr;
+    display: block;
+    padding: 1rem;
   }
 }
