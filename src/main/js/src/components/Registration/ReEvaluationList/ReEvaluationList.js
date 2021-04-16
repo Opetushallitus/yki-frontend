@@ -1,9 +1,11 @@
-import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DATE_FORMAT, MOBILE_VIEW } from '../../../common/Constants';
-import { levelDescription } from '../../../util/util';
+import { MOBILE_VIEW } from '../../../common/Constants';
+import {
+  examLanguageAndLevel,
+  formatDate,
+} from '../../../util/examSessionUtil';
 import classes from './ReEvaluationList.module.css';
 
 const ReEvaluationList = props => {
@@ -37,20 +39,15 @@ const ReEvaluationList = props => {
   };
 
   const dataRowDesktop = session => {
-    const examLanguage = t(`common.language.${session.language_code}`);
-    const examLevel = levelDescription(session.level_code).toLowerCase();
-    const examDate = moment(session.exam_date).format(DATE_FORMAT);
-    const evaluationStartDate = moment(session.evaluation_start_date).format(
-      DATE_FORMAT,
-    );
-    const evaluationEndDate = moment(session.evaluation_end_date).format(
-      DATE_FORMAT,
-    );
+    const langAndLvl = examLanguageAndLevel(session);
+    const examDate = formatDate(session, 'exam_date');
+    const evaluationStartDate = formatDate(session, 'evaluation_start_date');
+    const evaluationEndDate = formatDate(session, 'evaluation_end_date');
 
     return (
       <div className={classes.List} key={session.id}>
         <div className={classes.TableColumn}>
-          <strong>{`${examLanguage}, ${examLevel}`}</strong>
+          <strong>{langAndLvl}</strong>
         </div>
         <div className={classes.TableColumn}>{examDate}</div>
         <div className={classes.TableColumn}>
@@ -74,22 +71,15 @@ const ReEvaluationList = props => {
   };
 
   const dataRowMobile = session => {
-    const examLanguage = t(`common.language.${session.language_code}`);
-    const examLevel = levelDescription(session.level_code).toLowerCase();
-    const examDate = moment(session.exam_date).format(DATE_FORMAT);
-    const evaluationStartDate = moment(session.evaluation_start_date).format(
-      DATE_FORMAT,
-    );
-    const evaluationEndDate = moment(session.evaluation_end_date).format(
-      DATE_FORMAT,
-    );
+    const langAndLvl = examLanguageAndLevel(session);
+    const examDate = formatDate(session, 'exam_date');
+    const evaluationStartDate = formatDate(session, 'evaluation_start_date');
+    const evaluationEndDate = formatDate(session, 'evaluation_end_date');
 
     return (
       <div className={classes.List} key={session.id}>
         <div className={classes.MobileRow}>
-          <div
-            className={classes.TableColumn}
-          >{`${examLanguage}, ${examLevel}`}</div>
+          <div className={classes.TableColumn}>{langAndLvl}</div>
           <div className={classes.TableColumn}>{examDate}</div>
         </div>
         <div className={classes.MobileRow}>
