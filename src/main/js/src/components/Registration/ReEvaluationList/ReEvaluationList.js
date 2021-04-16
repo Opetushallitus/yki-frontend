@@ -152,7 +152,7 @@ const ReEvaluationList = props => {
   return (
     <>
       {sessions && sessions.length !== 0 ? (
-        <>
+        <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
           {MOBILE_VIEW ? (
             <div className={classes.Date}>
               {sessions.map((session, i) => {
@@ -185,7 +185,7 @@ const ReEvaluationList = props => {
               </div>
             </>
           )}
-        </>
+        </div>
       ) : (
         <p className={classes.NotFound}>
           <b>{t('registration.search.noResults')}</b>
