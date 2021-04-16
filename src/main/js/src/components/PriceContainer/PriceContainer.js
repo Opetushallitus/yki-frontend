@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { MOBILE_VIEW } from '../../common/Constants';
-import { levelTranslations } from '../../util/util';
 import classes from './PriceContainer.module.css';
 
 const PriceContainer = props => {

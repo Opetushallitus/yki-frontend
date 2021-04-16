@@ -1,48 +1,14 @@
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR,
-  MOBILE_VIEW,
-} from '../../../common/Constants';
+import { DATE_FORMAT, MOBILE_VIEW } from '../../../common/Constants';
 import { levelDescription } from '../../../util/util';
 import classes from './ReEvaluationList.module.css';
 
 const ReEvaluationList = props => {
   const { t } = useTranslation();
-  //   const {sessions, headers} = props;
-
-  const headers = [
-    { title: 'registration.list.exam', key: 'exam', sortable: true },
-    { title: 'registration.list.date', key: 'date', sortable: true },
-    {
-      title: 'registration.list.evalPossible',
-      key: 'evalTimeFrame',
-      sortable: true,
-    },
-    { title: '', key: 'actionButton', sortable: false },
-  ];
-  const sessions = [
-    {
-      exam_date: '2021-04-02',
-      language_code: 'fin',
-      level_code: 'KESKI',
-      evaluation_start_date: '2021-04-01',
-      evaluation_end_date: '2021-05-30',
-      open: true,
-    },
-    {
-      exam_date: '2021-04-01',
-      language_code: 'fin',
-      level_code: 'PERUS',
-      evaluation_start_date: '2041-08-01',
-      evaluation_end_date: '2041-08-15',
-      open: false,
-    },
-  ];
+  const { sessions, headers, history } = props;
 
   const headerRow = () => {
     return (
@@ -54,12 +20,12 @@ const ReEvaluationList = props => {
                 {t(header.title)}
                 <button
                   onClick={() => console.log('sortClicked')}
-                  role="button"
                   className={classes.Sort}
                 >
                   <img
                     src={require('../../../assets/svg/chevron-white.svg')}
                     className={classes.SortIcon}
+                    alt=""
                   />
                 </button>
               </div>
@@ -82,7 +48,7 @@ const ReEvaluationList = props => {
     );
 
     return (
-      <div className={classes.List}>
+      <div className={classes.List} key={session.id}>
         <div className={classes.TableColumn}>
           <strong>{`${examLanguage}, ${examLevel}`}</strong>
         </div>
@@ -92,7 +58,7 @@ const ReEvaluationList = props => {
         </div>
         <div className={classes.TableColumn}>
           <button
-            onClick={() => console.log('button clicked')}
+            onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
             role="link"
             className="YkiButton"
             style={{
@@ -117,8 +83,9 @@ const ReEvaluationList = props => {
     const evaluationEndDate = moment(session.evaluation_end_date).format(
       DATE_FORMAT,
     );
+
     return (
-      <div className={classes.List}>
+      <div className={classes.List} key={session.id}>
         <div className={classes.MobileRow}>
           <div
             className={classes.TableColumn}
@@ -135,7 +102,7 @@ const ReEvaluationList = props => {
         </div>
 
         <button
-          onClick={() => console.log('button clicked')}
+          onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
           role="link"
           className="YkiButton"
           style={{
@@ -155,15 +122,7 @@ const ReEvaluationList = props => {
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
           {MOBILE_VIEW ? (
             <div className={classes.Date}>
-              {sessions.map((session, i) => {
-                {
-                  /* <ExamSessionListItem
-                key={e.published_at + i}
-                examSession={e}
-                language={language}
-                history={history}
-              /> */
-                }
+              {sessions.map(session => {
                 return dataRowMobile(session);
               })}
             </div>
@@ -171,15 +130,7 @@ const ReEvaluationList = props => {
             <>
               <div>{headerRow()}</div>
               <div className={classes.Date}>
-                {sessions.map((session, i) => {
-                  {
-                    /* <ExamSessionListItem
-                key={e.published_at + i}
-                examSession={e}
-                language={language}
-                history={history}
-              /> */
-                  }
+                {sessions.map(session => {
                   return dataRowDesktop(session);
                 })}
               </div>

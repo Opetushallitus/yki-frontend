@@ -12,6 +12,37 @@ import PriceContainer from '../../PriceContainer/PriceContainer';
 import ReEvaluationList from '../ReEvaluationList/ReEvaluationList';
 import classes from './ReEvaluation.module.css';
 
+const headers = [
+  { title: 'registration.list.exam', key: 'exam', sortable: true },
+  { title: 'registration.list.date', key: 'date', sortable: true },
+  {
+    title: 'registration.list.evalPossible',
+    key: 'evalTimeFrame',
+    sortable: true,
+  },
+  { title: '', key: 'actionButton', sortable: false },
+];
+const sessions = [
+  {
+    id: '1',
+    exam_date: '2021-04-02',
+    language_code: 'fin',
+    level_code: 'KESKI',
+    evaluation_start_date: '2021-04-01',
+    evaluation_end_date: '2021-05-30',
+    open: true,
+  },
+  {
+    id: '2',
+    exam_date: '2021-04-01',
+    language_code: 'fin',
+    level_code: 'PERUS',
+    evaluation_start_date: '2041-08-01',
+    evaluation_end_date: '2041-08-15',
+    open: false,
+  },
+];
+
 const ReEvaluation = ({ history }) => {
   const { t } = useTranslation();
 
@@ -27,7 +58,11 @@ const ReEvaluation = ({ history }) => {
         </div>
         <PriceContainer elements={evaluationPriceElements} />
       </div>
-      <ReEvaluationList />
+      <ReEvaluationList
+        history={history}
+        headers={headers}
+        sessions={sessions}
+      />
     </div>
   );
 
@@ -43,7 +78,11 @@ const ReEvaluation = ({ history }) => {
         </div>
         <PriceContainer elements={evaluationPriceElements} />
       </div>
-      <ReEvaluationList />
+      <ReEvaluationList
+        history={history}
+        headers={headers}
+        sessions={sessions}
+      />
     </div>
   );
 

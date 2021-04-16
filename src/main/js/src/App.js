@@ -11,6 +11,7 @@ import NotFound from './components/NotFound/NotFound';
 import Description from './components/Registration/Description/Description';
 import ExamDetailsPage from './components/Registration/ExamDetailsPage/ExamDetailsPage';
 import ReEvaluation from './components/Registration/ReEvaluation/ReEvaluation';
+import ReEvaluationForm from './components/Registration/ReEvaluationForm/ReEvaluationForm';
 import Spinner from './components/UI/Spinner/Spinner';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import ExamDates from './containers/ExamDates/ExamDates';
@@ -68,6 +69,11 @@ const app = () => (
                 exact
                 path="/tarkistusarviointi"
                 component={ReEvaluation}
+              />
+              <RegistrationRoute
+                exact
+                path="/tarkistusarviointi/:id"
+                component={ReEvaluationForm}
               />
               <RegistrationRoute
                 path="/ilmoittautuminen/valitse-tutkintotilaisuus"
