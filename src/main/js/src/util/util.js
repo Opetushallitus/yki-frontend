@@ -12,19 +12,25 @@ export const levelTranslations = {
   YLIN: 'common.level.high',
 };
 
-export const evaluationTexts = [
-  'registration.description.read',
-  'registration.description.write',
-  'registration.description.listen',
-  'registration.description.speak',
-];
+export const evaluationTexts = {
+  READING: 'registration.description.read',
+  WRITING: 'registration.description.write',
+  LISTENING: 'registration.description.listen',
+  SPEAKING: 'registration.description.speak',
+};
 
-export const evaluationPriceElements = [
-  { title: evaluationTexts[0], price: '50' },
-  { title: evaluationTexts[2], price: '50' },
-  { title: evaluationTexts[1], price: '50' },
-  { title: evaluationTexts[3], price: '50' },
-];
+export const formatPriceObject = (pricesObj, translationObj) => {
+  const priceArray = [];
+  for (const key in pricesObj) {
+    if (Object.hasOwnProperty.call(pricesObj, key)) {
+      priceArray.push({
+        title: i18next.t(translationObj[key]),
+        price: parseInt(pricesObj[key]),
+      });
+    }
+  }
+  return priceArray;
+};
 
 export const levelDescription = level => {
   return i18next.t(levelTranslations[level]);

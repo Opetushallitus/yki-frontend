@@ -1,7 +1,11 @@
-import * as actionTypes from '../actions/actionTypes';
-import { signupPossible, admissionActiveAndQueueNotFull } from '../../util/examSessionUtil';
+import moment from 'moment';
+
 import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
-import moment from "moment";
+import {
+  admissionActiveAndQueueNotFull,
+  signupPossible,
+} from '../../util/examSessionUtil';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   examSessions: [],
@@ -28,6 +32,7 @@ const initialState = {
     submitError: null,
     submitSuccess: false,
   },
+  prices: {},
 };
 
 const filteredSessions = (state) => {
@@ -55,7 +60,7 @@ const sortSessionsByDate = (sessionA, sessionB) => {
     return -1;
   }
   return 0;
-}
+};
 
 const sortSessionsByOpenSignups = (sessionA, sessionB) => {
   const isOpenA = signupPossible(sessionA);
@@ -76,7 +81,7 @@ const sortSessionsByOpenSignups = (sessionA, sessionB) => {
     return 1;
   }
   return 0;
-}
+};
 
 const sortSessions = sessions => {
   if (!sessions || sessions.length === 0) return [];
@@ -193,9 +198,25 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filteredExamSessionsGroupedByDate: filtered,
-
       };
-
+    case actionTypes.FETCH_PRICES_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.FETCH_PRICES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        prices: action.prices,
+      };
+    case actionTypes.FETCH_PRICES_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    }
     case actionTypes.CHANGE_SESSION_SELECTOR:
       const allFiltered = filteredSessions(state);
       if (state.availabilityFilter && state.openRegistrationFilter) {

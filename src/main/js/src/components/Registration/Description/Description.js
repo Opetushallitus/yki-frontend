@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import YkiImage1 from '../../../assets/images/ophYki_image1.png';
 import { MOBILE_VIEW } from '../../../common/Constants';
 import {
-  evaluationPriceElements,
   evaluationTexts,
+  formatPriceObject,
   getDeviceOrientation,
   levelTranslations,
 } from '../../../util/util';
@@ -14,13 +15,21 @@ import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import classes from './Description.module.css';
 
-const description = ({ history }) => {
+const mapStateToProps = state => {
+  return {
+    prices: state.registration.prices,
+  };
+};
+
+const description = ({ history, prices }) => {
   const { t } = useTranslation();
-  const levelPrices = [
-    { title: levelTranslations.PERUS, price: '120' },
-    { title: levelTranslations.KESKI, price: '140' },
-    { title: levelTranslations.YLIN, price: '180' },
-  ];
+
+  const examPrices = prices && prices['exam-prices'];
+  const evalPrices = prices && prices['evaluation-prices'];
+
+  const levelPrices = formatPriceObject(examPrices, levelTranslations);
+
+  const evaluationPrices = formatPriceObject(evalPrices, evaluationTexts);
 
   document.title = 'YKI';
 
@@ -110,10 +119,12 @@ const description = ({ history }) => {
         </>
         <div className={classes.InnerContainer}>
           <h2>{t('registration.description.reEvaluation')}</h2>
-          {evaluationTexts.map(el => {
+          {Object.keys(evaluationTexts).map(el => {
             return (
               <React.Fragment key={el}>
-                <h3 className={classes.ReEvalHeader}>{t(el)}</h3>
+                <h3 className={classes.ReEvalHeader}>
+                  {t(evaluationTexts[el])}
+                </h3>
                 <hr />
               </React.Fragment>
             );
@@ -124,7 +135,7 @@ const description = ({ history }) => {
             className={'YkiButton'}
             style={{ width: '50%' }}
             data-cy="re-eval-button"
-            onClick={() => history.push(t('/#'))}
+            onClick={() => history.push(t('/tarkistusarviointi'))}
             role="link"
             aria-label={t('registration.reeval')}
           >
@@ -196,16 +207,16 @@ const description = ({ history }) => {
         }}
       >
         <h2>{t('registration.description.reEvaluation')}</h2>
-        {evaluationTexts.map(el => {
+        {Object.keys(evaluationTexts).map(el => {
           return (
             <React.Fragment key={el}>
-              <h3 className={classes.ReEvalHeader}>{t(el)}</h3>
+              <h3 className={classes.ReEvalHeader}>{t(evaluationTexts[el])}</h3>
               <hr />
             </React.Fragment>
           );
         })}
         <div style={{ margin: '2rem 0 0 0' }}>
-          <PriceContainer elements={evaluationPriceElements} />
+          <PriceContainer elements={evaluationPrices} />
           <button
             className={'YkiButton'}
             style={{ width: '50%' }}
@@ -240,4 +251,4 @@ const description = ({ history }) => {
   );
 };
 
-export default description;
+export default connect(mapStateToProps)(description);

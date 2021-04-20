@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
 import queryString from 'query-string';
+import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
-import classes from './Registration.module.css';
-import { LANGUAGES, MOBILE_VIEW } from '../../common/Constants';
-import Filters from '../../components/Registration/Filters/Filters';
-import ExamSessionList from '../../components/Registration/ExamSessionList/ExamSessionList';
-
-import * as actions from '../../store/actions/index';
-
-import HeadlineContainer from "../../components/HeadlineContainer/HeadlineContainer";
 import YkiImage1 from '../../assets/images/ophYki_image1.png';
+import { LANGUAGES, MOBILE_VIEW } from '../../common/Constants';
+import HeadlineContainer from '../../components/HeadlineContainer/HeadlineContainer';
+import ExamSessionList from '../../components/Registration/ExamSessionList/ExamSessionList';
+import Filters from '../../components/Registration/Filters/Filters';
+import * as actions from '../../store/actions/index';
 import { getArraySize } from "../../util/util";
+import classes from './Registration.module.css';
 
 class Registration extends Component {
   componentDidMount() {
@@ -21,7 +19,6 @@ class Registration extends Component {
     );
     const lang = LANGUAGES.find(l => l.code === language);
     document.title = this.props.t('registration.document.title');
-
     const allQueryParamsExist = language && level && location;
     const paramsAreDifferent =
       (lang && this.props.language.name !== lang.name) ||
@@ -82,11 +79,10 @@ class Registration extends Component {
     }
     if (this.props.openRegistrationFilter) {
       return this.props.filteredExamSessionsByOpenRegistration;
-    }
-    else {
+    } else {
       return this.props.filteredExamSessionsGroupedByDate;
     }
-  }
+  };
 
   render() {
     return (
@@ -118,7 +114,9 @@ class Registration extends Component {
               </p>
             </div>
           </div>
-          {(MOBILE_VIEW || window.innerWidth < 1024) ? <div style={{ paddingTop: '30px' }} /> : null}
+          {MOBILE_VIEW || window.innerWidth < 1024 ? (
+            <div style={{ paddingTop: '30px' }} />
+          ) : null}
           <ExamSessionList
             examSessions={this.getValuesOnFilterChange()}
             language={this.props.language}
@@ -159,8 +157,10 @@ const mapDispatchToProps = dispatch => {
     onToggleOpenRegistrationFilter: checked => dispatch(actions.toggleOpenRegistrationFilter(checked)),
     onClearFilters: () => dispatch(actions.filterByPathParams()),
     onAvailabilitySelect: () => dispatch(actions.filterExamByAvailability()),
-    onRegistrationSelect: () => dispatch(actions.filteredExamSessionsByOpenRegistration()),
-    onFilterAvailableAndRegistration: () => dispatch(actions.filteredExamsByAvailabilityAndRegistration())
+    onRegistrationSelect: () =>
+      dispatch(actions.filteredExamSessionsByOpenRegistration()),
+    onFilterAvailableAndRegistration: () =>
+      dispatch(actions.filteredExamsByAvailabilityAndRegistration()),
   };
 };
 

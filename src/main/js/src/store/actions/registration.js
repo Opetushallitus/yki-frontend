@@ -1,10 +1,10 @@
-import * as actionTypes from './actionTypes';
-import axios from '../../axios';
 import moment from 'moment';
 import * as R from 'ramda';
 
+import axios from '../../axios';
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 import { capitalize } from '../../util/util';
+import * as actionTypes from './actionTypes';
 
 export const fetchExamSessions = () => {
   return dispatch => {
@@ -24,13 +24,20 @@ export const fetchExamSessions = () => {
 };
 const locationByLang = (examSession, lang) => {
   const location = examSession.location.find(l => l.lang === lang);
-  return location && location.post_office ? capitalize(location.post_office) : null;
+  return location && location.post_office
+    ? capitalize(location.post_office)
+    : null;
 };
 
 const extractExamLocations = examSessions => {
   const getUniqueLocations = (locations, examSession) => {
-    const location = { fi: locationByLang(examSession, 'fi'), sv: locationByLang(examSession, 'sv') };
-    return R.includes(location, locations) ? locations : R.append(location, locations);
+    const location = {
+      fi: locationByLang(examSession, 'fi'),
+      sv: locationByLang(examSession, 'sv'),
+    };
+    return R.includes(location, locations)
+      ? locations
+      : R.append(location, locations);
   };
   const unique = R.reduce(getUniqueLocations, []);
   const sortByFi = R.sort(R.prop('fi'));
@@ -60,39 +67,39 @@ const changeSessionSelector = () => {
 
 const filterByAvailability = () => {
   return {
-    type: actionTypes.FILTER_BY_AVAILABILITY
-  }
-}
+    type: actionTypes.FILTER_BY_AVAILABILITY,
+  };
+};
 
 export const filterExamByAvailability = () => {
   return dispatch => {
-    dispatch(filterByAvailability())
-  }
-}
+    dispatch(filterByAvailability());
+  };
+};
 
 const filterOpenRegistration = () => {
   return {
-    type: actionTypes.FILTER_BY_OPEN_REGISTRATION
-  }
-}
+    type: actionTypes.FILTER_BY_OPEN_REGISTRATION,
+  };
+};
 
 export const filteredExamSessionsByOpenRegistration = () => {
   return dispatch => {
-    dispatch(filterOpenRegistration())
-  }
-}
+    dispatch(filterOpenRegistration());
+  };
+};
 
 const filterAvailabilityAndRegistration = () => {
   return {
-    type: actionTypes.FILTER_BY_AVAILABILITY_AND_REGISTRATION
-  }
-}
+    type: actionTypes.FILTER_BY_AVAILABILITY_AND_REGISTRATION,
+  };
+};
 
 export const filteredExamsByAvailabilityAndRegistration = () => {
   return dispatch => {
-    dispatch(filterAvailabilityAndRegistration())
-  }
-}
+    dispatch(filterAvailabilityAndRegistration());
+  };
+};
 
 const fetchExamSessionsStart = () => {
   return {
@@ -307,5 +314,45 @@ const submitRegistrationFormFail = error => {
   return {
     type: actionTypes.SUBMIT_REGISTRATION_FORM_FAIL,
     error: error,
+  };
+};
+
+export const fetchPrices = () => {
+  return dispatch => {
+    dispatch(fetchPricesStart());
+    //TODO add axios fetch;
+    dispatch(
+      fetchPricesSuccess({
+        'exam-prices': {
+          PERUS: '120.00',
+          KESKI: '140.00',
+          YLIN: '180.00',
+        },
+        'evaluation-prices': {
+          READING: '50.00',
+          LISTENING: '50.00',
+          WRITING: '50.00',
+          SPEAKING: '50.00',
+        },
+      }),
+    );
+  };
+};
+
+const fetchPricesStart = () => {
+  return { type: actionTypes.FETCH_PRICES_START };
+};
+
+const fetchPricesSuccess = prices => {
+  return {
+    type: actionTypes.FETCH_PRICES_SUCCESS,
+    prices,
+  };
+};
+
+const fetchPricesFail = error => {
+  return {
+    type: actionTypes.FETCH_PRICES_FAIL,
+    error,
   };
 };

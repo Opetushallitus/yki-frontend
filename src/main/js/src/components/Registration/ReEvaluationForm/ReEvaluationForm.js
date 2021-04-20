@@ -8,6 +8,7 @@ import {
   formatDate,
 } from '../../../util/examSessionUtil';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
+// import { evaluationPriceElements } from '../';
 import classes from './ReEvaluationForm.module.css';
 
 const session = {
@@ -34,24 +35,28 @@ const ReEvaluationForm = ({ history, match }) => {
           headlineContent={<p>{t('registration.reeval.text1')}</p>}
           headlineImage={YkiImage2}
         />
-        <h2>{t('registration.reeval.formpage.title1')}</h2>
-        <div>
-          {langAndLvl}
-          {examDate}
+        <div className={classes.MainContent}>
+          <div className={classes.InnerContainer}>
+            <h2>{t('registration.reeval.formpage.title1')}</h2>
+            <div className={classes.BasicInfoRow}>
+              <p>{langAndLvl}</p>
+              <p>{examDate}</p>
+            </div>
+          </div>
+          <h2>{t('registration.reeval.formpage.title2')}</h2>
+          <p>{t('registration.reeval.formpage.text')}</p>
+          <h2>{t('registration.reeval.formpage.title3')}</h2>
+          <button
+            role="link"
+            className="YkiButton"
+            style={{
+              backgroundColor: 'hsla(194, 91%, 21%, 1)',
+              padding: '0.25rem',
+            }}
+          >
+            {t('registration.reeval.formpage.button')}
+          </button>
         </div>
-        <h2>{t('registration.reeval.formpage.title2')}</h2>
-        <p>{t('registration.reeval.formpage.text')}</p>
-        <h2>{t('registration.reeval.formpage.title3')}</h2>
-        <button
-          role="link"
-          className="YkiButton"
-          style={{
-            backgroundColor: 'hsla(194, 91%, 21%, 1)',
-            padding: '0.25rem',
-          }}
-        >
-          {t('registration.reeval.formpage.button')}
-        </button>
       </main>
     </>
   );

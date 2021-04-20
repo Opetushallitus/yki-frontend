@@ -1,10 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { connect as connectRedux } from 'react-redux';
 
 import YkiImage2 from '../../../assets/images/ophYki_image2.png';
 import { MOBILE_VIEW } from '../../../common/Constants';
 import {
-  evaluationPriceElements,
+  evaluationTexts,
+  formatPriceObject,
   getDeviceOrientation,
 } from '../../../util/util';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
@@ -43,8 +45,18 @@ const sessions = [
   },
 ];
 
-const ReEvaluation = ({ history }) => {
+const mapStateToProps = state => {
+  return {
+    prices: state.registration.prices,
+  };
+};
+
+const ReEvaluation = ({ history, prices }) => {
   const { t } = useTranslation();
+
+  const evalPrices = prices && prices['evaluation-prices'];
+
+  const evaluationPrices = formatPriceObject(evalPrices, evaluationTexts);
 
   const desktopContent = (
     <div className={classes.MainContent}>
@@ -56,7 +68,7 @@ const ReEvaluation = ({ history }) => {
             <p>{t('registration.reeval.text4')}</p>
           </article>
         </div>
-        <PriceContainer elements={evaluationPriceElements} />
+        <PriceContainer elements={evaluationPrices} />
       </div>
       <ReEvaluationList
         history={history}
@@ -76,7 +88,7 @@ const ReEvaluation = ({ history }) => {
             <p>{t('registration.reeval.text4')}</p>
           </article>
         </div>
-        <PriceContainer elements={evaluationPriceElements} />
+        <PriceContainer elements={evaluationPrices} />
       </div>
       <ReEvaluationList
         history={history}
@@ -105,4 +117,4 @@ const ReEvaluation = ({ history }) => {
   );
 };
 
-export default ReEvaluation;
+export default connectRedux(mapStateToProps)(ReEvaluation);
