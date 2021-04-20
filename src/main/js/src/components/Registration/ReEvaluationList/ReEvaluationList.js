@@ -59,7 +59,6 @@ const ReEvaluationList = props => {
             role="link"
             className="YkiButton"
             style={{
-              backgroundColor: 'hsla(194, 91%, 21%, 1)',
               padding: '0.25rem',
             }}
           >
@@ -96,7 +95,6 @@ const ReEvaluationList = props => {
           role="link"
           className="YkiButton"
           style={{
-            backgroundColor: 'hsla(194, 91%, 21%, 1)',
             padding: '0.25rem',
           }}
         >
