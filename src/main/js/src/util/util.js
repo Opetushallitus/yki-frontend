@@ -1,7 +1,11 @@
 import i18next from 'i18next';
 import moment from 'moment';
 
-import { LANGUAGES } from '../common/Constants';
+import {
+  DATE_FORMAT,
+  ISO_DATE_FORMAT_SHORT,
+  LANGUAGES,
+} from '../common/Constants';
 
 export const capitalize = s =>
   s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
@@ -115,3 +119,6 @@ export const getDeviceOrientation = () => {
   // iOS/safari
   return Math.abs(+window.orientation) === 90 ? 'landscape' : 'portrait';
 };
+
+export const isoFormatDate = stringDate =>
+  moment(stringDate, DATE_FORMAT).format(ISO_DATE_FORMAT_SHORT);

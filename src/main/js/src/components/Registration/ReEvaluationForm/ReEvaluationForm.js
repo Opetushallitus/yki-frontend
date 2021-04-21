@@ -1,122 +1,130 @@
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import * as Yup from 'yup';
 
-import YkiImage2 from '../../../assets/images/ophYki_image2.png';
-import { DATE_FORMAT, MOBILE_VIEW } from '../../../common/Constants';
-import {
-  examLanguageAndLevel,
-  formatDate,
-} from '../../../util/examSessionUtil';
-import { evaluationTexts, formatPriceObject } from '../../../util/util';
-import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
-import TextAndButton from '../../TextAndButton/TextAndButton';
+import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
+import { isoFormatDate } from '../../../util/util';
 import classes from './ReEvaluationForm.module.css';
 
-const session = {
-  id: '1',
-  exam_date: '2021-04-02',
-  language_code: 'fin',
-  level_code: 'KESKI',
-  evaluation_start_date: '2021-04-01',
-  evaluation_end_date: '2021-05-30',
-  open: true,
-};
-
-const mapStateToProps = state => {
-  return {
-    prices: state.registration.prices,
-  };
-};
-
-const ReEvaluationForm = ({ history, match, prices }) => {
-  const examId = match.params.id;
+const ReEvaluationForm = props => {
+  const { externalState } = props;
   const { t } = useTranslation();
-  const langAndLvl = examLanguageAndLevel(session);
-  const examDate = formatDate(session, 'exam_date');
-  const evalPrices = prices && prices['evaluation-prices'];
-  const [subtests, setSubtests] = useState([]);
-  const evaluationPrices = formatPriceObject(evalPrices, evaluationTexts);
+  const mandatoryErrorMsg = t('error.mandatory');
 
-  const toggleSelect = key => {
-    const subtestsCopy = subtests.slice();
-    const foundIndex = subtestsCopy.findIndex(x => x === key);
-    if (foundIndex !== -1) {
-      subtestsCopy.splice(foundIndex, 1);
+  function validateBirthDate(value) {
+    if (value) {
+      const date = moment(value, DATE_FORMAT, true);
+      if (date.isValid() && date.isBefore(moment())) {
+        return true;
+      } else {
+        return this.createError({
+          message: t('error.birthdate'),
+        });
+      }
     } else {
-      subtestsCopy.push(key);
-    }
-    setSubtests(subtestsCopy);
-  };
-
-  const priceElement = price => {
-    const active = subtests.findIndex(x => x === price.key) > -1;
-    return (
-      <React.Fragment key={price.key}>
-        <TextAndButton
-          text1={price.title}
-          text2={`${price.price} €`}
-          elementKey={price.key}
-          active={active}
-          buttonLabel={t('registration.reeval.order')}
-          onClick={() => toggleSelect(price.key)}
-        />
-      </React.Fragment>
-    );
-  };
-
-  const calculatePrice = () => {
-    let total = 0;
-    if (subtests.length > 0) {
-      subtests.forEach(subtest => {
-        const item = evaluationPrices.find(x => x.key === subtest);
-        total += item.price;
+      return this.createError({
+        message: mandatoryErrorMsg,
       });
     }
-    return total;
+  }
+
+  const inputField = (
+    name,
+    placeholder = '',
+    extra,
+    type = 'text',
+    noLabel = false,
+  ) => (
+    <>
+      {!noLabel && <h3>{t(`registration.form.${name}`)}</h3>}
+      <Field
+        name={name}
+        data-cy={`input-${name}`}
+        placeholder={placeholder}
+        className={classes.TextInput}
+        type={type}
+        aria-label={`registration.form.aria.${name}`}
+      />
+      {extra && <span>{extra}</span>}
+      <ErrorMessage
+        name={name}
+        data-cy={`input-error-${name}`}
+        component="span"
+        className={classes.ErrorMessage}
+      />
+    </>
+  );
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email(t('error.email')),
+    firstName: Yup.string(),
+    lastName: Yup.string(),
+    birthdate: Yup.string().test(
+      'invalid-birthdate',
+      t('error.birthdate'),
+      validateBirthDate,
+    ),
+    consent: Yup.boolean()
+      .required(mandatoryErrorMsg)
+      .oneOf([true], mandatoryErrorMsg),
+  });
+
+  const onSubmit = values => {
+    const payload = {
+      ...values,
+      ...externalState,
+    };
+    if (values.birthdate) payload.birthdate = isoFormatDate(values.birthdate);
+
+    console.log('SUBMIT', payload);
   };
 
   return (
-    <>
-      <main className={classes.Container}>
-        <HeadlineContainer
-          headlineTitle={t('registration.reeval.title')}
-          headlineContent={<p>{t('registration.reeval.text1')}</p>}
-          headlineImage={YkiImage2}
-        />
-        <div className={classes.MainContent}>
-          <div className={classes.InnerContainer}>
-            <h2>{t('registration.reeval.formpage.title1')}</h2>
-            <div className={classes.BasicInfoRow}>
-              <p>{langAndLvl}</p>
-              <p>{examDate}</p>
-            </div>
-          </div>
-          <div className={classes.InnerContainer}>
-            <h2>{t('registration.reeval.formpage.title2')}</h2>
-            {evaluationPrices.map(price => {
-              return priceElement(price);
-            })}
-            <div className={classes.Total}>
-              <strong>{t('registration.reeval.total')}:</strong>
-              <strong>{calculatePrice()} €</strong>
-            </div>
-            <p>{t('registration.reeval.formpage.text')}</p>
-          </div>
-          <h2>{t('registration.reeval.formpage.title3')}</h2>
-          <button
-            role="link"
-            className="YkiButton"
-            style={{
-              padding: '0.25rem',
-            }}
-          >
-            {t('registration.reeval.formpage.button')}
-          </button>
-        </div>
-      </main>
-    </>
+    <Formik
+      initialValues={{
+        firstName: '',
+        lastName: '',
+        birthdate: '',
+        email: '',
+        consent: false,
+      }}
+      validationSchema={validationSchema}
+      onSubmit={values => {
+        onSubmit(values);
+      }}
+      render={({ values, isValid, errors, setFieldValue }) => {
+        console.log(isValid, errors, values);
+        return (
+          <Form>
+            {inputField('firstName')}
+            {inputField('lastName')}
+            {inputField('birthdate')}
+            {inputField('email')}
+            {inputField(
+              'consent',
+              '',
+              t('registration.form.consent.confirm'),
+              'checkbox',
+              true,
+            )}
+
+            <button
+              role="link"
+              className="YkiButton"
+              style={{
+                padding: '0.25rem',
+              }}
+            >
+              {t('registration.reeval.formpage.button')}
+            </button>
+          </Form>
+        );
+      }}
+    />
   );
 };
 
-export default connect(mapStateToProps)(ReEvaluationForm);
+export default ReEvaluationForm;

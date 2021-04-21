@@ -1,4 +1,5 @@
-.Form input, textarea {
+.Form input,
+textarea {
   color: hsla(0, 0%, 16%, 1);
 }
 

@@ -58,7 +58,7 @@ button {
   border: none;
   opacity: 1;
   text-align: center;
-  font: normal normal normal 16px/20px PT Sans;
+  font: normal normal bold 16px/20px PT Sans;
   letter-spacing: 0.32px;
   color: hsl(0, 0%, 100%);
   text-transform: uppercase;
