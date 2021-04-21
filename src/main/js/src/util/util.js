@@ -26,6 +26,7 @@ export const formatPriceObject = (pricesObj, translationObj) => {
       priceArray.push({
         title: i18next.t(translationObj[key]),
         price: parseInt(pricesObj[key]),
+        key,
       });
     }
   }

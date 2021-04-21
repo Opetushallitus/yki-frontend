@@ -67,7 +67,7 @@ button {
 }
 
 .YkiButton:disabled {
-  color: #8b8b8b;
-  background-color: hsl(0, 0%, 100%);
+  background-color: #8b8b8b;
+  color: hsl(0, 0%, 100%);
   cursor: default;
 }

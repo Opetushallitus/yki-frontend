@@ -1,6 +1,12 @@
-.Button {
+.Button,
+.ButtonInActive {
   width: 8.5rem;
   margin: 0 0 0 3rem;
+}
+
+.ButtonInActive {
+  background-color: #8b8b8b;
+  color: hsl(0, 0%, 100%);
 }
 
 .MainContainer {
@@ -24,4 +30,16 @@
   width: 23.75rem;
   align-items: center;
   justify-content: space-between;
+}
+
+/* Mobile view */
+@media screen and (max-width: 425px) and (orientation: portrait) {
+  .Button,
+  .ButtonInActive {
+    margin: 0 0 0 1rem;
+  }
+}
+
+/* Mobile view */
+@media screen and (max-width: 760px) and (orientation: landscape) {
 }
