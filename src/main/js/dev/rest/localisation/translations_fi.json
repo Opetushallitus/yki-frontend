@@ -116,6 +116,7 @@
   "error.registration.cancelFailed": "Osallistumisen peruminen epäonnistui",
   "error.registrationForm.submitFailed": "Lomakkeen lähetys epäonnistui",
   "error.ssn.invalid": "Väärän muotoinen henkilötunnus",
+  "error.nosubtasks": "Tutkinnonosia ei valittu",
   "error.tryAgain": "Yritä uudelleen",
   "error.zip": "Postinumero on väärän muotoinen",
   "errorBoundary.return": "Palaa etusivulle",

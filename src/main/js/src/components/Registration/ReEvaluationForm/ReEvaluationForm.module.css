@@ -1,12 +1,30 @@
 .TextInput {
-  width: 200px;
   height: 28px;
   border: 1px solid hsla(194, 82%, 43%, 1);
   border-radius: 4px;
+  width: 16.25rem;
+  margin-bottom: 1rem;
+}
+
+.FieldRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.FieldColumn {
+  margin-right: 1rem;
 }
 
 .ErrorMessage {
   display: block;
   color: hsla(15, 100%, 40%, 1);
   margin: 14px 0px 14px 0px;
+}
+
+.CheckBoxInput {
+  margin-right: 1.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  vertical-align: middle;
 }
