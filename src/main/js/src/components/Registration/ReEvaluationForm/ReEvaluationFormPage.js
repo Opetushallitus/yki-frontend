@@ -1,10 +1,8 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import YkiImage2 from '../../../assets/images/ophYki_image2.png';
-import { DATE_FORMAT, MOBILE_VIEW } from '../../../common/Constants';
 import {
   examLanguageAndLevel,
   formatDate,
@@ -101,7 +99,9 @@ const ReEvaluationFormPage = ({ history, match, prices }) => {
             })}
             <div className={classes.Total}>
               <strong>{t('registration.reeval.total')}:</strong>
-              <strong>{calculatePrice()} €</strong>
+              <strong data-cy="reeval-subtest-total">
+                {calculatePrice()} €
+              </strong>
             </div>
             <p>{t('registration.reeval.formpage.text')}</p>
           </div>

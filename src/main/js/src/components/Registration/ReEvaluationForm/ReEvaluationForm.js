@@ -2,7 +2,6 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
 import { DATE_FORMAT } from '../../../common/Constants';
@@ -95,6 +94,7 @@ const ReEvaluationForm = props => {
 
   return (
     <Formik
+      data-cy="reeval-form"
       initialValues={{
         firstName: '',
         lastName: '',
@@ -128,10 +128,13 @@ const ReEvaluationForm = props => {
               )}
             </div>
             {subtestsFail && (
-              <p className={classes.ErrorMessage}>{t('error.nosubtasks')}</p>
+              <p className={classes.ErrorMessage} data-cy="subtest-error">
+                {t('error.nosubtasks')}
+              </p>
             )}
             <button
               role="link"
+              data-cy="reeval-form-submit-button"
               disabled={
                 !isValid ||
                 (externalState.subtests && externalState.subtests.length < 1)
