@@ -320,22 +320,10 @@ const submitRegistrationFormFail = error => {
 export const fetchPrices = () => {
   return dispatch => {
     dispatch(fetchPricesStart());
-    //TODO add axios fetch;
-    dispatch(
-      fetchPricesSuccess({
-        'exam-prices': {
-          PERUS: '120.00',
-          KESKI: '140.00',
-          YLIN: '180.00',
-        },
-        'evaluation-prices': {
-          READING: '50.00',
-          LISTENING: '50.00',
-          WRITING: '50.00',
-          SPEAKING: '50.00',
-        },
-      }),
-    );
+    axios
+      .get('/yki/api/exam-session/pricing')
+      .then(res => dispatch(fetchPricesSuccess(res.data)))
+      .catch(err => dispatch(fetchPricesFail(err)));
   };
 };
 
@@ -353,6 +341,34 @@ const fetchPricesSuccess = prices => {
 const fetchPricesFail = error => {
   return {
     type: actionTypes.FETCH_PRICES_FAIL,
+    error,
+  };
+};
+
+export const fetchReEvaluationExams = () => {
+  return dispatch => {
+    dispatch(fetchReEvaluationExamsStart());
+    axios
+      .get('/yki/api/evaluation')
+      .then(res => dispatch(fetchReEvaluationExamsSuccess(res.data)))
+      .catch(err => dispatch(fetchReEvaluationExamsFail(err)));
+  };
+};
+
+const fetchReEvaluationExamsStart = () => {
+  return { type: actionTypes.FETCH_REEVALUATION_EXAMS_START };
+};
+
+const fetchReEvaluationExamsSuccess = evaluationPeriods => {
+  return {
+    type: actionTypes.FETCH_REEVALUATION_EXAMS_SUCCESS,
+    evaluationPeriods,
+  };
+};
+
+const fetchReEvaluationExamsFail = error => {
+  return {
+    type: actionTypes.FETCH_REEVALUATION_EXAMS_FAIL,
     error,
   };
 };

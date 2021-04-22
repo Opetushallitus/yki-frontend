@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect as connectRedux } from 'react-redux';
 
 import YkiImage2 from '../../../assets/images/ophYki_image2.png';
 import { MOBILE_VIEW } from '../../../common/Constants';
+import { fetchReEvaluationExams } from '../../../store/actions/index';
 import {
   evaluationTexts,
   formatPriceObject,
@@ -24,40 +25,36 @@ const headers = [
   },
   { title: '', key: 'actionButton', sortable: false },
 ];
-const sessions = [
-  {
-    id: '1',
-    exam_date: '2021-04-02',
-    language_code: 'fin',
-    level_code: 'KESKI',
-    evaluation_start_date: '2021-04-01',
-    evaluation_end_date: '2021-05-30',
-    open: true,
-  },
-  {
-    id: '2',
-    exam_date: '2021-04-01',
-    language_code: 'fin',
-    level_code: 'PERUS',
-    evaluation_start_date: '2041-08-01',
-    evaluation_end_date: '2041-08-15',
-    open: false,
-  },
-];
 
 const mapStateToProps = state => {
   return {
     prices: state.registration.prices,
+    evaluationPeriods: state.registration.evaluationPeriods,
   };
 };
 
-const ReEvaluation = ({ history, prices }) => {
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchEvaluationPeriods: () => dispatch(fetchReEvaluationExams()),
+  };
+};
+
+const ReEvaluation = ({
+  history,
+  prices,
+  evaluationPeriods,
+  onFetchEvaluationPeriods,
+}) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    onFetchEvaluationPeriods();
+  }, []);
 
   const evalPrices = prices && prices['evaluation-prices'];
 
   const evaluationPrices = formatPriceObject(evalPrices, evaluationTexts);
-
+  console.log(evaluationPeriods);
   const desktopContent = (
     <div className={classes.MainContent}>
       <div className={classes.DescriptionAndText}>
@@ -73,7 +70,7 @@ const ReEvaluation = ({ history, prices }) => {
       <ReEvaluationList
         history={history}
         headers={headers}
-        sessions={sessions}
+        sessions={evaluationPeriods}
       />
     </div>
   );
@@ -93,7 +90,7 @@ const ReEvaluation = ({ history, prices }) => {
       <ReEvaluationList
         history={history}
         headers={headers}
-        sessions={sessions}
+        sessions={evaluationPeriods}
       />
     </div>
   );
@@ -117,4 +114,4 @@ const ReEvaluation = ({ history, prices }) => {
   );
 };
 
-export default connectRedux(mapStateToProps)(ReEvaluation);
+export default connectRedux(mapStateToProps, mapDispatchToProps)(ReEvaluation);

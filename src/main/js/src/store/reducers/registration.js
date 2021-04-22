@@ -33,6 +33,7 @@ const initialState = {
     submitSuccess: false,
   },
   prices: {},
+  evaluationPeriods: [],
 };
 
 const filteredSessions = (state) => {
@@ -217,6 +218,25 @@ const reducer = (state = initialState, action) => {
         error: action.error,
       };
     }
+    case actionTypes.FETCH_REEVALUATION_EXAMS_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.FETCH_REEVALUATION_EXAMS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        evaluationPeriods: action.evaluationPeriods.evaluation_periods,
+      };
+    case actionTypes.FETCH_REEVALUATION_EXAMS_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    }
+
     case actionTypes.CHANGE_SESSION_SELECTOR:
       const allFiltered = filteredSessions(state);
       if (state.availabilityFilter && state.openRegistrationFilter) {
