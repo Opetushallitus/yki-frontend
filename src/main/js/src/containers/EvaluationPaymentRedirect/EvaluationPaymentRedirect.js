@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from '../../axios';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
+import axios from '../../axios';
 import Alert from '../../components/Alert/Alert';
 import classes from './EvaluationPaymentRedirect.module.css';
 
@@ -19,7 +19,9 @@ export class PaymentRedirect extends Component {
       match: { params },
     } = this.props;
     axios
-      .get(`/yki/evaluation-payment/formdata?evaluation-order-id=${params.evaluationOrderId}`)
+      .get(
+        `/yki/evaluation-payment/formdata?evaluation-order-id=${params.evaluationOrderId}`,
+      )
       .then(({ data }) => {
         this.setState({ formData: data });
       })
@@ -45,19 +47,10 @@ export class PaymentRedirect extends Component {
       >
         {formData.params.PARAMS_IN.split(',').map((p, i) => {
           return (
-            <input
-              key={i}
-              name={p}
-              type="hidden"
-              value={formData.params[p]}
-            />
+            <input key={i} name={p} type="hidden" value={formData.params[p]} />
           );
         })}
-        <input
-          name="AUTHCODE"
-          type="hidden"
-          value={formData.params.AUTHCODE}
-        />
+        <input name="AUTHCODE" type="hidden" value={formData.params.AUTHCODE} />
       </form>
     ) : (
       this.state.error && (

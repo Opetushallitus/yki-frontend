@@ -14,6 +14,7 @@ import ReEvaluation from './components/Registration/ReEvaluation/ReEvaluation';
 import ReEvaluationFormPage from './components/Registration/ReEvaluationForm/ReEvaluationFormPage';
 import Spinner from './components/UI/Spinner/Spinner';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
+import EvaluationPaymentRedirect from './containers/EvaluationPaymentRedirect/EvaluationPaymentRedirect';
 import ExamDates from './containers/ExamDates/ExamDates';
 import Init from './containers/Init/Init';
 import PaymentRedirect from './containers/PaymentRedirect/PaymentRedirect';
@@ -114,6 +115,14 @@ const app = () => (
               <Route
                 path="/saavutettavuus"
                 component={AccessibilityStatement}
+              />
+              <Route
+                path="/tarkistusarviointi/maksu/tila"
+                component={PaymentStatus}
+              />
+              <Route
+                path="/tarkistusarviointi/tilaus/:evaluationOrderId"
+                component={EvaluationPaymentRedirect}
               />
             </ErrorBoundary>
             <Route component={NotFound} />

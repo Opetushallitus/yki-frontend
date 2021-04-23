@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MOBILE_VIEW } from '../../../common/Constants';
@@ -6,11 +6,15 @@ import {
   examLanguageAndLevel,
   formatDate,
 } from '../../../util/examSessionUtil';
+import { sortObjectArray } from '../../../util/util';
 import classes from './ReEvaluationList.module.css';
 
 const ReEvaluationList = props => {
   const { t } = useTranslation();
   const { sessions, headers, history } = props;
+  const [sortedSessions, setSortedSessions] = useState(sessions);
+  const [sortToggleAsc, setSortToggleAsc] = useState(true);
+  useEffect(() => setSortedSessions(sessions), [sessions]);
 
   const headerRow = () => {
     return (
@@ -21,7 +25,14 @@ const ReEvaluationList = props => {
               <div key={header.key} className={classes.HeaderColumn}>
                 {t(header.title)}
                 <button
-                  onClick={() => console.log('sortClicked')}
+                  onClick={() => {
+                    const sessionCopy = sortedSessions.slice();
+
+                    setSortedSessions(
+                      sortObjectArray(sessionCopy, header.key, sortToggleAsc),
+                    );
+                    setSortToggleAsc(!sortToggleAsc);
+                  }}
                   className={classes.Sort}
                 >
                   <img
@@ -106,11 +117,11 @@ const ReEvaluationList = props => {
 
   return (
     <>
-      {sessions && sessions.length !== 0 ? (
+      {sortedSessions && sortedSessions.length !== 0 ? (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
           {MOBILE_VIEW ? (
             <div className={classes.Date}>
-              {sessions.map(session => {
+              {sortedSessions.map(session => {
                 return dataRowMobile(session);
               })}
             </div>
@@ -118,7 +129,7 @@ const ReEvaluationList = props => {
             <>
               <div>{headerRow()}</div>
               <div className={classes.Date}>
-                {sessions.map(session => {
+                {sortedSessions.map(session => {
                   return dataRowDesktop(session);
                 })}
               </div>

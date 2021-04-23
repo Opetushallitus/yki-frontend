@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import moment from 'moment';
+import { sortBy } from 'ramda';
 
 import {
   DATE_FORMAT,
@@ -122,3 +123,11 @@ export const getDeviceOrientation = () => {
 
 export const isoFormatDate = stringDate =>
   moment(stringDate, DATE_FORMAT).format(ISO_DATE_FORMAT_SHORT);
+
+export const sortObjectArray = (arr, sortBy, asc) => {
+  const sortedArray = arr.sort((a, b) =>
+    a[sortBy] > b[sortBy] ? 1 : b[sortBy] > a[sortBy] ? -1 : 0,
+  );
+
+  return asc ? sortedArray : sortedArray.reverse();
+};

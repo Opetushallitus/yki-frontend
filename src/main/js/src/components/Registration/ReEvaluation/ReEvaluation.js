@@ -16,11 +16,11 @@ import ReEvaluationList from '../ReEvaluationList/ReEvaluationList';
 import classes from './ReEvaluation.module.css';
 
 const headers = [
-  { title: 'registration.list.exam', key: 'exam', sortable: true },
-  { title: 'registration.list.date', key: 'date', sortable: true },
+  { title: 'registration.list.exam', key: 'language_code', sortable: true },
+  { title: 'registration.list.date', key: 'exam_date', sortable: true },
   {
     title: 'registration.list.evalPossible',
-    key: 'evalTimeFrame',
+    key: 'evaluation_start_date',
     sortable: true,
   },
   { title: '', key: 'actionButton', sortable: false },
