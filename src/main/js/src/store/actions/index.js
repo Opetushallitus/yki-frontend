@@ -43,7 +43,8 @@ export {
   filteredExamSessionsByOpenRegistration,
   filteredExamsByAvailabilityAndRegistration,
   fetchPrices,
-  fetchReEvaluationExams,
+  fetchReEvaluationPeriods,
+  fetchReEvaluationPeriod,
 } from './registration';
 export {
   addExamDate,

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import YkiImage2 from '../../../assets/images/ophYki_image2.png';
+import { fetchReEvaluationPeriod } from '../../../store/actions';
 import {
   examLanguageAndLevel,
   formatDate,
@@ -13,27 +14,36 @@ import TextAndButton from '../../TextAndButton/TextAndButton';
 import ReEvaluationForm from './ReEvaluationForm';
 import classes from './ReEvaluationFormPage.module.css';
 
-const session = {
-  id: '1',
-  exam_date: '2021-04-02',
-  language_code: 'fin',
-  level_code: 'KESKI',
-  evaluation_start_date: '2021-04-01',
-  evaluation_end_date: '2021-05-30',
-  open: true,
-};
-
 const mapStateToProps = state => {
   return {
     prices: state.registration.prices,
+    evaluationPeriod: state.registration.evaluationPeriod,
   };
 };
 
-const ReEvaluationFormPage = ({ history, match, prices }) => {
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchEvaluationPeriod: examId =>
+      dispatch(fetchReEvaluationPeriod(examId)),
+  };
+};
+
+const ReEvaluationFormPage = ({
+  history,
+  match,
+  prices,
+  onFetchEvaluationPeriod,
+  evaluationPeriod,
+}) => {
   const examId = match.params.id;
   const { t } = useTranslation();
-  const langAndLvl = examLanguageAndLevel(session);
-  const examDate = formatDate(session, 'exam_date');
+  useEffect(() => {
+    onFetchEvaluationPeriod(examId);
+  }, []);
+
+  const langAndLvl = evaluationPeriod && examLanguageAndLevel(evaluationPeriod);
+  const examDate =
+    evaluationPeriod && formatDate(evaluationPeriod, 'exam_date');
   const evalPrices = prices && prices['evaluation-prices'];
   const [subtests, setSubtests] = useState([]);
   const evaluationPrices = formatPriceObject(evalPrices, evaluationTexts);
@@ -115,4 +125,7 @@ const ReEvaluationFormPage = ({ history, match, prices }) => {
   );
 };
 
-export default connect(mapStateToProps)(ReEvaluationFormPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ReEvaluationFormPage);

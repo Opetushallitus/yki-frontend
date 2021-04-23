@@ -4,7 +4,7 @@ import { connect as connectRedux } from 'react-redux';
 
 import YkiImage2 from '../../../assets/images/ophYki_image2.png';
 import { MOBILE_VIEW } from '../../../common/Constants';
-import { fetchReEvaluationExams } from '../../../store/actions/index';
+import { fetchReEvaluationPeriods } from '../../../store/actions/index';
 import {
   evaluationTexts,
   formatPriceObject,
@@ -35,7 +35,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchEvaluationPeriods: () => dispatch(fetchReEvaluationExams()),
+    onFetchEvaluationPeriods: () => dispatch(fetchReEvaluationPeriods()),
   };
 };
 
@@ -54,7 +54,7 @@ const ReEvaluation = ({
   const evalPrices = prices && prices['evaluation-prices'];
 
   const evaluationPrices = formatPriceObject(evalPrices, evaluationTexts);
-  console.log(evaluationPeriods);
+
   const desktopContent = (
     <div className={classes.MainContent}>
       <div className={classes.DescriptionAndText}>

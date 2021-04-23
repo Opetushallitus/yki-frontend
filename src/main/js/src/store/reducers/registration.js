@@ -34,6 +34,7 @@ const initialState = {
   },
   prices: {},
   evaluationPeriods: [],
+  evaluationPeriod: {},
 };
 
 const filteredSessions = (state) => {
@@ -218,18 +219,36 @@ const reducer = (state = initialState, action) => {
         error: action.error,
       };
     }
-    case actionTypes.FETCH_REEVALUATION_EXAMS_START:
+    case actionTypes.FETCH_REEVALUATION_PERIODS_START:
       return {
         ...state,
         loading: true,
       };
-    case actionTypes.FETCH_REEVALUATION_EXAMS_SUCCESS:
+    case actionTypes.FETCH_REEVALUATION_PERIODS_SUCCESS:
       return {
         ...state,
         loading: false,
         evaluationPeriods: action.evaluationPeriods.evaluation_periods,
       };
-    case actionTypes.FETCH_REEVALUATION_EXAMS_FAIL: {
+    case actionTypes.FETCH_REEVALUATION_PERIODS_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    }
+    case actionTypes.FETCH_REEVALUATION_PERIOD_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.FETCH_REEVALUATION_PERIOD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        evaluationPeriod: action.evaluationPeriod,
+      };
+    case actionTypes.FETCH_REEVALUATION_PERIOD_FAIL: {
       return {
         ...state,
         loading: false,

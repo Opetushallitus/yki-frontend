@@ -345,30 +345,60 @@ const fetchPricesFail = error => {
   };
 };
 
-export const fetchReEvaluationExams = () => {
+export const fetchReEvaluationPeriods = () => {
   return dispatch => {
-    dispatch(fetchReEvaluationExamsStart());
+    dispatch(fetchReEvaluationPeriodsStart());
     axios
       .get('/yki/api/evaluation')
-      .then(res => dispatch(fetchReEvaluationExamsSuccess(res.data)))
-      .catch(err => dispatch(fetchReEvaluationExamsFail(err)));
+      .then(res => dispatch(fetchReEvaluationPeriodsSuccess(res.data)))
+      .catch(err => dispatch(fetchReEvaluationPeriodsFail(err)));
   };
 };
 
-const fetchReEvaluationExamsStart = () => {
-  return { type: actionTypes.FETCH_REEVALUATION_EXAMS_START };
+const fetchReEvaluationPeriodsStart = () => {
+  return { type: actionTypes.FETCH_REEVALUATION_PERIODS_START };
 };
 
-const fetchReEvaluationExamsSuccess = evaluationPeriods => {
+const fetchReEvaluationPeriodsSuccess = evaluationPeriods => {
   return {
-    type: actionTypes.FETCH_REEVALUATION_EXAMS_SUCCESS,
+    type: actionTypes.FETCH_REEVALUATION_PERIODS_SUCCESS,
     evaluationPeriods,
   };
 };
 
-const fetchReEvaluationExamsFail = error => {
+const fetchReEvaluationPeriodsFail = error => {
   return {
-    type: actionTypes.FETCH_REEVALUATION_EXAMS_FAIL,
+    type: actionTypes.FETCH_REEVALUATION_PERIODS_FAIL,
+    error,
+  };
+};
+
+export const fetchReEvaluationPeriod = examId => {
+  return dispatch => {
+    dispatch(fetchReEvaluationPeriodStart());
+    axios
+      .get(`/yki/api/evaluation/${examId}`)
+      .then(res => {
+        dispatch(fetchReEvaluationPeriodSuccess(res.data));
+      })
+      .catch(err => dispatch(fetchReEvaluationPeriodFail(err)));
+  };
+};
+
+const fetchReEvaluationPeriodStart = () => {
+  return { type: actionTypes.FETCH_REEVALUATION_PERIOD_START };
+};
+
+const fetchReEvaluationPeriodSuccess = evaluationPeriod => {
+  return {
+    type: actionTypes.FETCH_REEVALUATION_PERIOD_SUCCESS,
+    evaluationPeriod,
+  };
+};
+
+const fetchReEvaluationPeriodFail = error => {
+  return {
+    type: actionTypes.FETCH_REEVALUATION_PERIOD_FAIL,
     error,
   };
 };

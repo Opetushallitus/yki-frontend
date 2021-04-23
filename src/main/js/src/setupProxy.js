@@ -89,6 +89,10 @@ const prices = JSON.parse(
   fs.readFileSync('./dev/rest/registration/prices.json'),
 );
 
+const evaluationPeriods = JSON.parse(
+  fs.readFileSync('./dev/rest/registration/evaluationPeriods.json'),
+);
+
 let organizers = [
   {
     oid: '1.2.246.562.10.28646781493',
@@ -1070,7 +1074,19 @@ module.exports = function(app) {
   app.get('/yki/api/evaluation', (req, res) => {
     const mockCall = () => {
       try {
-        res.send({ success: true });
+        res.send(evaluationPeriods);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  });
+
+  app.get('/yki/api/evaluation/:id', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send(evaluationPeriods[0]);
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
