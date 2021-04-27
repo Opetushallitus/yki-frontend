@@ -96,14 +96,24 @@ const app = () => (
                 path="/maksu/vanhentunut"
                 component={LinkExpired}
               />
-              <RegistrationRoute path="/maksu/tila" component={PaymentStatus} />
+              <Route
+                path="/maksu/tila"
+                render={props => (
+                  <PaymentStatus
+                    {...props}
+                    infoUrl={'/yki/api/exam-session/'}
+                    returnUrl="/"
+                  />
+                )}
+              />
+              {/* <RegistrationRoute path="/maksu/tila" component={PaymentStatus} /> */}
               <RegistrationRoute
                 path="/maksu/ilmoittautuminen/:registrationId"
                 component={PaymentRedirect}
               />
-              <Route
+              <RegistrationRoute
                 path="/tutkintotilaisuudet"
-                render={() => <ExamSessions />}
+                component={() => <ExamSessions something={'something'} />}
               />
               <Route exact path="/jarjestajarekisteri" component={Registry} />
               <Route
@@ -118,7 +128,13 @@ const app = () => (
               />
               <Route
                 path="/tarkistusarviointi/maksu/tila"
-                component={PaymentStatus}
+                render={props => (
+                  <PaymentStatus
+                    {...props}
+                    infoUrl={'/yki/api/evaluation/order/'}
+                    returnUrl="/tarkistusarviointi"
+                  />
+                )}
               />
               <Route
                 path="/tarkistusarviointi/tilaus/:evaluationOrderId"

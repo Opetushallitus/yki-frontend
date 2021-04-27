@@ -93,6 +93,17 @@ const evaluationPeriods = JSON.parse(
   fs.readFileSync('./dev/rest/registration/evaluationPeriods.json'),
 );
 
+const evaluationOrder = {
+  id: 1,
+  language_code: 'fin',
+  level_code: 'PERUS',
+  exam_date: '2021-05-27',
+  amount: 50,
+  lang: 'fi',
+  state: 'UNPAID',
+  subtests: ['READING'],
+};
+
 let organizers = [
   {
     oid: '1.2.246.562.10.28646781493',
@@ -1087,6 +1098,18 @@ module.exports = function(app) {
     const mockCall = () => {
       try {
         res.send(evaluationPeriods[0]);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  });
+
+  app.get('/yki/api/evaluation/order/:id', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send(evaluationOrder);
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
