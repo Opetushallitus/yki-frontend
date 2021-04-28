@@ -67,8 +67,4 @@ export class PaymentRedirect extends Component {
   }
 }
 
-PaymentRedirect.propTypes = {
-  formData: PropTypes.object.isRequired,
-};
-
 export default withTranslation()(PaymentRedirect);

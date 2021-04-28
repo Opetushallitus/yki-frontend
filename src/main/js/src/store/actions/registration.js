@@ -402,3 +402,39 @@ const fetchReEvaluationPeriodFail = error => {
     error,
   };
 };
+
+export const submitEvaluationForm = (examId, formData, history) => {
+  return dispatch => {
+    dispatch(submitEvaluationFormStart());
+    axios
+      .post(`/yki/api/evaluation/${examId}/order`, formData)
+      .then(res => {
+        dispatch(submitEvaluationFormSuccess(res.data.evaluation_order_id));
+      })
+      .catch(error => {
+        dispatch(submitEvaluationFormFail(error));
+      });
+  };
+};
+
+const submitEvaluationFormStart = () => {
+  return { type: actionTypes.SUBMIT_EVALUATION_FORM_START };
+};
+
+const submitEvaluationFormSuccess = evaluationOrderId => {
+  return {
+    type: actionTypes.SUBMIT_EVALUATION_FORM_SUCCESS,
+    evaluationOrderId,
+  };
+};
+
+const submitEvaluationFormFail = error => {
+  return {
+    type: actionTypes.SUBMIT_EVALUATION_FORM_FAIL,
+    error,
+  };
+};
+
+export const evaluationFailReset = () => {
+  return { type: actionTypes.SUBMIT_EVALUATION_FORM_FAIL_RESET };
+};

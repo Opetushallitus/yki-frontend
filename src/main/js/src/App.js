@@ -106,7 +106,6 @@ const app = () => (
                   />
                 )}
               />
-              {/* <RegistrationRoute path="/maksu/tila" component={PaymentStatus} /> */}
               <RegistrationRoute
                 path="/maksu/ilmoittautuminen/:registrationId"
                 component={PaymentRedirect}

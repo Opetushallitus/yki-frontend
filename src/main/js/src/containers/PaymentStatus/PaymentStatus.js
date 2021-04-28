@@ -142,9 +142,9 @@ export class PaymentStatus extends Component {
   }
 }
 
-// PaymentStatus.propTypes = {
-//   location: PropTypes.object.isRequired,
-// };
+PaymentStatus.propTypes = {
+  location: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = state => {
   return {

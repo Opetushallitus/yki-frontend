@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import YkiImage2 from '../../../assets/images/ophYki_image2.png';
-import { fetchReEvaluationPeriod } from '../../../store/actions';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import {
+  evaluationFailReset,
+  fetchReEvaluationPeriod,
+} from '../../../store/actions';
 import {
   examLanguageAndLevel,
   formatDate,
@@ -18,6 +23,7 @@ const mapStateToProps = state => {
   return {
     prices: state.registration.prices,
     evaluationPeriod: state.registration.evaluationPeriod,
+    error: state.registration.error,
   };
 };
 
@@ -25,6 +31,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchEvaluationPeriod: examId =>
       dispatch(fetchReEvaluationPeriod(examId)),
+    errorConfirmedHandler: () => dispatch(evaluationFailReset()),
   };
 };
 
@@ -32,11 +39,12 @@ const ReEvaluationFormPage = ({
   history,
   match,
   prices,
+  error,
   onFetchEvaluationPeriod,
   evaluationPeriod,
+  t,
 }) => {
   const examId = match.params.id;
-  const { t } = useTranslation();
   useEffect(() => {
     onFetchEvaluationPeriod(examId);
   }, []);
@@ -117,7 +125,10 @@ const ReEvaluationFormPage = ({
           </div>
           <div className={classes.InnerContainer}>
             <h2>{t('registration.reeval.formpage.title3')}</h2>
-            <ReEvaluationForm externalState={{ id: examId, subtests }} />
+            <ReEvaluationForm
+              externalState={{ id: examId, subtests }}
+              pageHistory={history}
+            />
           </div>
         </div>
       </main>
@@ -128,4 +139,4 @@ const ReEvaluationFormPage = ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ReEvaluationFormPage);
+)(withTranslation()(withErrorHandler(ReEvaluationFormPage)));

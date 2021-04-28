@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import moment from 'moment';
-import { sortBy } from 'ramda';
 
 import {
   DATE_FORMAT,
@@ -130,4 +129,12 @@ export const sortObjectArray = (arr, sortBy, asc) => {
   );
 
   return asc ? sortedArray : sortedArray.reverse();
+};
+
+export const checkTodayIsBetween = (before, after) => {
+  const today = moment();
+  const formatBefore = moment(before);
+  const formatAfter = moment(after);
+
+  return today >= formatBefore && today <= formatAfter;
 };

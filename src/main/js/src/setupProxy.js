@@ -1140,6 +1140,7 @@ module.exports = function(app) {
     };
     useLocalProxy ? proxyPostCall(req, res) : mockCall();
   });
+
   app.get('/yki/evaluation-payment/formdata', (req, res) => {
     const mockCall = () => {
       try {

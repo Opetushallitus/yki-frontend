@@ -2,14 +2,29 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
 import { DATE_FORMAT } from '../../../common/Constants';
+import * as actions from '../../../store/actions/index';
 import { isoFormatDate } from '../../../util/util';
 import classes from './ReEvaluationForm.module.css';
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmitForm: (examId, formData) =>
+      dispatch(actions.submitEvaluationForm(examId, formData)),
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    evaluationOrderId: state.registration.evaluationOrderId,
+  };
+};
+
 const ReEvaluationForm = props => {
-  const { externalState } = props;
+  const { externalState, onSubmitForm, evaluationOrderId, pageHistory } = props;
   const { t } = useTranslation();
   const mandatoryErrorMsg = t('error.mandatory');
   const [subtestsFail, setSubTestsFail] = useState(false);
@@ -35,6 +50,15 @@ const ReEvaluationForm = props => {
     if (externalState.subtests && externalState.subtests.length >= 1)
       setSubTestsFail(false);
   }, [externalState.subtests]);
+
+  useEffect(() => {
+    console.log(pageHistory, evaluationOrderId);
+    if (evaluationOrderId) {
+      pageHistory.push({
+        pathname: `/tarkistusarviointi/tilaus/${evaluationOrderId}`,
+      });
+    }
+  }, [evaluationOrderId]);
 
   const inputField = (
     name,
@@ -86,10 +110,13 @@ const ReEvaluationForm = props => {
 
   const onSubmit = values => {
     const payload = {
-      ...values,
-      ...externalState,
+      first_names: values.firstName,
+      last_name: values.lastName,
+      email: values.email,
+      subtests: externalState.subtests,
     };
     if (values.birthdate) payload.birthdate = isoFormatDate(values.birthdate);
+    onSubmitForm(externalState.id, payload);
   };
 
   return (
@@ -153,4 +180,4 @@ const ReEvaluationForm = props => {
   );
 };
 
-export default ReEvaluationForm;
+export default connect(mapStateToProps, mapDispatchToProps)(ReEvaluationForm);

@@ -45,6 +45,8 @@ export {
   fetchPrices,
   fetchReEvaluationPeriods,
   fetchReEvaluationPeriod,
+  submitEvaluationForm,
+  evaluationFailReset,
 } from './registration';
 export {
   addExamDate,

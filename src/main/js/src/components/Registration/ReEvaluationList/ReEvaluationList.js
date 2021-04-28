@@ -6,7 +6,7 @@ import {
   examLanguageAndLevel,
   formatDate,
 } from '../../../util/examSessionUtil';
-import { sortObjectArray } from '../../../util/util';
+import { checkTodayIsBetween, sortObjectArray } from '../../../util/util';
 import classes from './ReEvaluationList.module.css';
 
 const ReEvaluationList = props => {
@@ -15,6 +15,7 @@ const ReEvaluationList = props => {
   const [sortedSessions, setSortedSessions] = useState(sessions);
   const [sortToggleAsc, setSortToggleAsc] = useState(true);
   useEffect(() => setSortedSessions(sessions), [sessions]);
+  const today = new Date();
 
   const headerRow = () => {
     return (
@@ -54,6 +55,10 @@ const ReEvaluationList = props => {
     const examDate = formatDate(session, 'exam_date');
     const evaluationStartDate = formatDate(session, 'evaluation_start_date');
     const evaluationEndDate = formatDate(session, 'evaluation_end_date');
+    const enabled = checkTodayIsBetween(
+      session.evaluation_start_date,
+      session.evaluation_end_date,
+    );
 
     return (
       <div className={classes.List} key={session.id}>
@@ -68,6 +73,7 @@ const ReEvaluationList = props => {
           <button
             onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
             role="link"
+            disabled={!enabled}
             className="YkiButton"
             style={{
               padding: '0.25rem',
@@ -85,6 +91,10 @@ const ReEvaluationList = props => {
     const examDate = formatDate(session, 'exam_date');
     const evaluationStartDate = formatDate(session, 'evaluation_start_date');
     const evaluationEndDate = formatDate(session, 'evaluation_end_date');
+    const enabled = checkTodayIsBetween(
+      session.evaluation_start_date,
+      session.evaluation_end_date,
+    );
 
     return (
       <div className={classes.List} key={session.id}>
@@ -105,6 +115,7 @@ const ReEvaluationList = props => {
           onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
           role="link"
           className="YkiButton"
+          disabled={!enabled}
           style={{
             padding: '0.25rem',
           }}

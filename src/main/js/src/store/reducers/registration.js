@@ -35,6 +35,7 @@ const initialState = {
   prices: {},
   evaluationPeriods: [],
   evaluationPeriod: {},
+  evaluationOrderId: null,
 };
 
 const filteredSessions = (state) => {
@@ -387,6 +388,31 @@ const reducer = (state = initialState, action) => {
           submitting: false,
           submitError: action.error.response,
         },
+      };
+    case actionTypes.SUBMIT_EVALUATION_FORM_START:
+      return {
+        ...state,
+        loading: true,
+        evaluationOrderId: null,
+        error: null,
+      };
+    case actionTypes.SUBMIT_EVALUATION_FORM_SUCCESS:
+      return {
+        ...state,
+        evaluationOrderId: action.evaluationOrderId,
+        loading: false,
+        error: null,
+      };
+    case actionTypes.SUBMIT_EVALUATION_FORM_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    case actionTypes.SUBMIT_EVALUATION_FORM_FAIL_RESET:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
