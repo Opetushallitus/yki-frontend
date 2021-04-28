@@ -52,7 +52,6 @@ const ReEvaluationForm = props => {
   }, [externalState.subtests]);
 
   useEffect(() => {
-    console.log(pageHistory, evaluationOrderId);
     if (evaluationOrderId) {
       pageHistory.push({
         pathname: `/tarkistusarviointi/tilaus/${evaluationOrderId}`,

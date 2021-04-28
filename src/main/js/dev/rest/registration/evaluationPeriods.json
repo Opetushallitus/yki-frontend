@@ -14,8 +14,8 @@
             "exam_date": "2021-04-20",
             "language_code": "fin",
             "level_code": "PERUS",
-            "evaluation_start_date": "2021-04-21",
-            "evaluation_end_date": "2021-05-30",
+            "evaluation_start_date": "2060-04-21",
+            "evaluation_end_date": "2060-05-30",
             "open": true
         }
     ]

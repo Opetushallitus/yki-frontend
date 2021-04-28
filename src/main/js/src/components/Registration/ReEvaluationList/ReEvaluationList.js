@@ -13,9 +13,11 @@ const ReEvaluationList = props => {
   const { t } = useTranslation();
   const { sessions, headers, history } = props;
   const [sortedSessions, setSortedSessions] = useState(sessions);
-  const [sortToggleAsc, setSortToggleAsc] = useState(true);
-  useEffect(() => setSortedSessions(sessions), [sessions]);
-  const today = new Date();
+  const [sortToggleAsc, setSortToggleAsc] = useState(false);
+
+  useEffect(() => {
+    setSortedSessions(sortObjectArray(sessions, 'language_code', true));
+  }, [sessions]);
 
   const headerRow = () => {
     return (
@@ -61,7 +63,11 @@ const ReEvaluationList = props => {
     );
 
     return (
-      <div className={classes.List} key={session.id}>
+      <div
+        className={classes.List}
+        key={session.id}
+        data-cy={`evaluation-period-${session.id}`}
+      >
         <div className={classes.TableColumn}>
           <strong>{langAndLvl}</strong>
         </div>
@@ -72,6 +78,7 @@ const ReEvaluationList = props => {
         <div className={classes.TableColumn}>
           <button
             onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
+            data-cy={`evaluation-period-button-${session.id}`}
             role="link"
             disabled={!enabled}
             className="YkiButton"
@@ -97,7 +104,11 @@ const ReEvaluationList = props => {
     );
 
     return (
-      <div className={classes.List} key={session.id}>
+      <div
+        className={classes.List}
+        key={session.id}
+        data-cy={`evaluation-period-${session.id}`}
+      >
         <div className={classes.MobileRow}>
           <div className={classes.TableColumn}>{langAndLvl}</div>
           <div className={classes.TableColumn}>{examDate}</div>
@@ -113,6 +124,7 @@ const ReEvaluationList = props => {
 
         <button
           onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
+          data-cy={`evaluation-period-button-${session.id}`}
           role="link"
           className="YkiButton"
           disabled={!enabled}

@@ -984,6 +984,18 @@ module.exports = function(app) {
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   });
 
+  app.get('/yki/api/exam-session/pricing', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send(prices);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  });
+
   app.get('/yki/api/exam-session/:id', (req, res) => {
     const mockCall = () => {
       try {
@@ -1068,18 +1080,6 @@ module.exports = function(app) {
     } catch (err) {
       res.status(404).send(err.message);
     }
-  });
-
-  app.get('/yki/api/exam-session/pricing', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send(prices);
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
   });
 
   app.get('/yki/api/evaluation', (req, res) => {

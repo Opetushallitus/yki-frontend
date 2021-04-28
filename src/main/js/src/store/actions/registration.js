@@ -322,7 +322,9 @@ export const fetchPrices = () => {
     dispatch(fetchPricesStart());
     axios
       .get('/yki/api/exam-session/pricing')
-      .then(res => dispatch(fetchPricesSuccess(res.data)))
+      .then(res => {
+        dispatch(fetchPricesSuccess(res.data));
+      })
       .catch(err => dispatch(fetchPricesFail(err)));
   };
 };

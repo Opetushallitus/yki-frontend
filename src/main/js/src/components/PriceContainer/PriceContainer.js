@@ -16,7 +16,7 @@ const PriceContainer = props => {
   const threePerRow = childLength % 3 === 0;
 
   return (
-    <div className={classes.PriceContainer}>
+    <div className={classes.PriceContainer} data-cy="price-container">
       <h2 style={{ textAlign: 'center' }}>{t('common.priceList')}</h2>
       <div
         className={
@@ -25,8 +25,8 @@ const PriceContainer = props => {
         style={{
           gridTemplateColumns: MOBILE_VIEW
             ? threePerRow
-              ? '100px 20px 100px 20px 100px'
-              : '150px 20px 150px'
+              ? '30% 5% 30% 5% 30%'
+              : '45% 10% 45%'
             : null,
         }}
       >
@@ -43,8 +43,9 @@ const PriceContainer = props => {
             : i === childLength - 1 || i === childLength - 2;
 
           return (
-            <React.Fragment key={el.title}>
+            <React.Fragment key={`${el.key}-${el.title}`}>
               <div
+                data-cy={`price-element-${el.key}`}
                 className={classes.MobilePriceBox}
                 style={{
                   borderBottom:
