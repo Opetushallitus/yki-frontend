@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
-import editIcon from '../../assets/svg/edit.svg';
 import { DATE_FORMAT } from '../../common/Constants';
 import ControlledCheckbox from '../../components/UI/Checkbox/ControlledCheckbox';
 import Modal from '../../components/UI/Modal/Modal';
@@ -14,6 +13,7 @@ import Page from '../../hoc/Page/Page';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 import { languageToString, levelDescription } from '../../util/util';
+import AddEvaluationPeriod from './ExamDateModalContent/AddEvaluationPeriod';
 import AddExamDate from './ExamDateModalContent/AddExamDate';
 import EditExamDate from './ExamDateModalContent/EditExamDate';
 import classes from './ExamDates.module.css';
@@ -31,6 +31,7 @@ class ExamDates extends Component {
       fetchExamHistory: false,
       grouped: null,
       checkedExamDate: null,
+      showAddEvaluationPeriod: false,
       //selectedExamDates: [], // Use if multiple dates need to be deleted at the same time
     };
   }
@@ -77,6 +78,14 @@ class ExamDates extends Component {
     }));
   };
 
+  showAddEvaluationPeriodHandler = selected => {
+    console.log('E ', selected);
+    this.setState(prev => ({
+      showAddEvaluationPeriod: !prev.showAddEvaluationPeriod,
+      selectedExamDate: selected,
+    }));
+  };
+
   showDeleteConfirmationHandler = () => {
     this.setState({
       showDeleteConfirmation: !this.state.showDeleteConfirmation,
@@ -90,6 +99,7 @@ class ExamDates extends Component {
     this.setState({
       showAddOrEditExamDate: false,
       selectedExamDate: null,
+      showAddEvaluationPeriod: false,
     });
 
   onExamDateHistoryFetchChange = () => {
@@ -137,7 +147,21 @@ class ExamDates extends Component {
     const usedDates = examDates.map(ed => ed.exam_date);
     const currentDate = moment(new Date()).format('YYYY-MM-DD');
 
-    const { selectedExamDate, showAddOrEditExamDate } = this.state;
+    const {
+      selectedExamDate,
+      showAddOrEditExamDate,
+      showAddEvaluationPeriod,
+    } = this.state;
+
+    const addEvaluationPeriodModal = (
+      <Modal
+        confirmationModal
+        show={showAddEvaluationPeriod}
+        modalClosed={this.closeAddOrEditExamDateModal}
+      >
+        <AddEvaluationPeriod exam={selectedExamDate} />
+      </Modal>
+    );
 
     const addNewExamDateModal = (
       <>
@@ -404,9 +428,22 @@ class ExamDates extends Component {
                   ? `${postAdmissionDate}`
                   : t('examDates.postAdmission.closed')}
               </p>
-              <p data-cy={`exam-dates-list-re-evaluation-${e.exam_date}`}>
-                {e.post_admission_enabled ? `${reEvaluationDate}` : 'button'}
-              </p>
+
+              {reEvaluationDate ? (
+                <p data-cy={`exam-dates-add-eval-text-${e.exam_date}`}>
+                  {reEvaluationDate}
+                </p>
+              ) : (
+                <button
+                  data-cy={`exam-dates-add-eval-button-${e.exam_date}`}
+                  className={classes.EditButton}
+                  style={{ width: '90%' }}
+                  onClick={() => this.showAddEvaluationPeriodHandler(e)}
+                >
+                  {t('examDates.add.evaluation.period')}
+                </button>
+              )}
+
               <button
                 data-cy={`exam-dates-edit-button-${e.exam_date}`}
                 disabled={!canEditExamDate(e)}
@@ -453,6 +490,7 @@ class ExamDates extends Component {
       <Page>
         <div className={classes.ExamDates}>{content}</div>
         {addNewExamDateModal}
+        {addEvaluationPeriodModal}
         {addDeleteConfirmationModal}
       </Page>
     );
