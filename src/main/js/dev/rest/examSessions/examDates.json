@@ -331,8 +331,8 @@
             "post_admission_enabled": true,
             "post_admission_start_date": "2080-11-26",
             "post_admission_end_date": "2080-12-20",
-            "evaluation_period_start": "2081-01-13",
-            "evaluation_period_end": "2081-02-13",
+            "evaluation_start_date": "2081-01-13",
+            "evaluation_end_date": "2081-02-13",
             "languages": [
                 {
                     "language_code": "swe",

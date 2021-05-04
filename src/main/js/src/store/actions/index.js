@@ -57,6 +57,7 @@ export {
   updateExamDateConfigurations,
   deleteExamDate,
   GetExamDatesHistory,
+  addEvaluationPeriod,
 } from './examDates';
 export { fetchUser } from './user';
 export { initYKILanguage, changeYKILanguage } from './yki';

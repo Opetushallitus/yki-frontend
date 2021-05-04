@@ -30,7 +30,7 @@
 .EvaluationDateGrid {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 50%;
   align-items: center;
   justify-content: space-between;
 }
@@ -103,7 +103,7 @@
 }
 
 .ConfirmButton {
-  background-color: hsla(199, 77%, 43%, 0.95);
+  background-color: #00516b;
   color: white;
 }
 

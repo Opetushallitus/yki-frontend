@@ -8,21 +8,18 @@ import { compareDates } from '../../../util/util';
 import classes from './AddOrEditExamDate.module.css';
 
 const AddEvaluationPeriod = props => {
-  const { exam, t, i18n, oid } = props;
-  console.log(exam);
+  const { exam, t, i18n, onSubmit } = props;
   const [evaluationStartDate, setEvaluationStartDate] = useState(
-    moment().format('YYYY-MM-DD'),
+    moment(exam.exam_date).format('YYYY-MM-DD'),
   );
   const [evaluationEndDate, setEvaluationEndDate] = useState(
-    moment().format('YYYY-MM-DD'),
+    moment(exam.exam_date).format('YYYY-MM-DD'),
   );
 
   useEffect(() => {
     const endDateOk = compareDates(evaluationStartDate, evaluationEndDate);
     if (!endDateOk) setEvaluationEndDate(evaluationStartDate);
   }, [evaluationStartDate]);
-
-  console.log(evaluationEndDate);
 
   return (
     <Formik
@@ -33,12 +30,11 @@ const AddEvaluationPeriod = props => {
       onSubmit={values => {
         const payload = {
           id: exam.id,
-          oid: oid,
           evaluation_start_date: evaluationStartDate,
-          evaluaton_end_date: evaluationEndDate,
+          evaluation_end_date: evaluationEndDate,
         };
 
-        console.log('submit');
+        onSubmit(payload);
       }}
       render={() => (
         <Form>
@@ -52,7 +48,10 @@ const AddEvaluationPeriod = props => {
                 <DatePicker
                   data-cy="exam-date-new-registration-start"
                   id="evaluationStartDate"
-                  options={{ defaultDate: evaluationStartDate }}
+                  options={{
+                    defaultDate: evaluationStartDate,
+                    minDate: moment(exam.exam_date).format('YYYY-MM-DD'),
+                  }}
                   onChange={d => {
                     setEvaluationStartDate(moment(d[0]).format('YYYY-MM-DD'));
                   }}
@@ -85,10 +84,7 @@ const AddEvaluationPeriod = props => {
               className={classes.ActionButtons}
               style={{ position: 'absolute', bottom: '2rem' }}
             >
-              <button
-                className={classes.ConfirmButton}
-                onClick={() => console.log('sending request!')}
-              >
+              <button className={classes.ConfirmButton}>
                 {t('examDates.add.evaluation.period')}
               </button>
             </div>

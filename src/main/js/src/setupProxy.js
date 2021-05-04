@@ -766,6 +766,28 @@ module.exports = function(app) {
   );
 
   app.post(
+    '/yki/api/virkailija/organizer/:oid/exam-date/:id/evaluation',
+    (req, res) => {
+      const mockCall = () => {
+        console.log(req.body);
+        try {
+          const { id } = req.params;
+          const index = examDates.dates.findIndex(x => x.id == id);
+          examDates.dates[index] = {
+            ...examDates.dates[index],
+            ...req.body,
+          };
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      };
+      useLocalProxy ? proxyPostCall(req, res) : mockCall();
+    },
+  );
+
+  app.post(
     '/yki/api/virkailija/organizer/:oid/exam-date/:id/languages',
     (req, res) => {
       const mockCall = () => {

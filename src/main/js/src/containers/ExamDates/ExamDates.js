@@ -128,7 +128,11 @@ class ExamDates extends Component {
   };
 
   addEvaluationPeriodHandler = payload => {
-    this.props.onAddEvaluationPeriod();
+    this.props.onAddEvaluationPeriod({
+      ...payload,
+      oid: this.props.user.identity.oid,
+    });
+    this.closeAddOrEditExamDateModal();
   };
 
   sortByRegistrationDate = R.sortBy(
@@ -166,7 +170,7 @@ class ExamDates extends Component {
           >
             <AddEvaluationPeriod
               exam={selectedExamDate}
-              oid={this.props.user.identity.oid}
+              onSubmit={this.addEvaluationPeriodHandler}
             />
           </Modal>
         ) : null}
@@ -410,7 +414,7 @@ class ExamDates extends Component {
           const reEvaluationDate =
             e.evaluation_start_date &&
             e.evaluation_end_date &&
-            `${moment(e.evaluation_start_dat).format(DATE_FORMAT)} - ${moment(
+            `${moment(e.evaluation_start_date).format(DATE_FORMAT)} - ${moment(
               e.evaluation_end_date,
             ).format(DATE_FORMAT)}`;
 
@@ -534,6 +538,8 @@ const mapDispatchToProps = dispatch => {
       ),
     onDeleteExamDate: (oid, examDateId) =>
       dispatch(actions.deleteExamDate(oid, examDateId)),
+    onAddEvaluationPeriod: payload =>
+      dispatch(actions.addEvaluationPeriod(payload)),
   };
 };
 
