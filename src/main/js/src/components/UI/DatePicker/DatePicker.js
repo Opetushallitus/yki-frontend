@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import 'flatpickr/dist/themes/airbnb.css';
+
 import Flatpickr from 'flatpickr';
+import { english } from 'flatpickr/dist/l10n/default';
 import { Finnish } from 'flatpickr/dist/l10n/fi.js';
 import { Swedish } from 'flatpickr/dist/l10n/sv.js';
-import { english } from 'flatpickr/dist/l10n/default';
-import 'flatpickr/dist/themes/airbnb.css';
 import moment from 'moment';
-import { DATE_FORMAT } from '../../../common/Constants';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
+import { DATE_FORMAT } from '../../../common/Constants';
 import classes from './DatePicker.module.css';
 
 class DatePicker extends Component {
@@ -24,10 +25,15 @@ class DatePicker extends Component {
 
     if (this.props.disabled === true) {
       this.flatpickr._input.setAttribute('disabled', 'disabled');
-    } if (this.props.disabled === false) {
+    }
+    if (this.props.disabled === false) {
       this.flatpickr._input.removeAttribute('disabled');
     }
+  }
 
+  componentDidUpdate() {
+    this.flatpickr.set('defaultDate', this.props.options.defaultDate);
+    this.flatpickr.set('minDate', this.props.options.minDate);
   }
 
   componentWillUnmount() {
@@ -58,7 +64,7 @@ const selectLocale = tag => {
     default:
       return english;
   }
-}
+};
 
 DatePicker.propTypes = {
   id: PropTypes.string,

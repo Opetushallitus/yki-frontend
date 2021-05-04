@@ -138,3 +138,10 @@ export const checkTodayIsBetween = (before, after) => {
 
   return today >= formatBefore && today <= formatAfter;
 };
+
+export const compareDates = (a, b) => {
+  const start = moment(a);
+  const end = moment(b);
+
+  return end >= start;
+};

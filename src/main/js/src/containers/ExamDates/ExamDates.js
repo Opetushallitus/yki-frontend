@@ -79,7 +79,6 @@ class ExamDates extends Component {
   };
 
   showAddEvaluationPeriodHandler = selected => {
-    console.log('E ', selected);
     this.setState(prev => ({
       showAddEvaluationPeriod: !prev.showAddEvaluationPeriod,
       selectedExamDate: selected,
@@ -128,6 +127,10 @@ class ExamDates extends Component {
     this.closeDeleteConfirmationHandler();
   };
 
+  addEvaluationPeriodHandler = payload => {
+    this.props.onAddEvaluationPeriod();
+  };
+
   sortByRegistrationDate = R.sortBy(
     R.prop('registration_start_date'),
     this.props.examDates,
@@ -154,13 +157,20 @@ class ExamDates extends Component {
     } = this.state;
 
     const addEvaluationPeriodModal = (
-      <Modal
-        confirmationModal
-        show={showAddEvaluationPeriod}
-        modalClosed={this.closeAddOrEditExamDateModal}
-      >
-        <AddEvaluationPeriod exam={selectedExamDate} />
-      </Modal>
+      <>
+        {showAddEvaluationPeriod ? (
+          <Modal
+            confirmationModal
+            show={showAddEvaluationPeriod}
+            modalClosed={this.closeAddOrEditExamDateModal}
+          >
+            <AddEvaluationPeriod
+              exam={selectedExamDate}
+              oid={this.props.user.identity.oid}
+            />
+          </Modal>
+        ) : null}
+      </>
     );
 
     const addNewExamDateModal = (
@@ -398,11 +408,11 @@ class ExamDates extends Component {
               : '';
 
           const reEvaluationDate =
-            e.evaluation_period_start &&
-            e.evaluation_period_end &&
-            `${moment(e.post_admission_start_date).format(
-              DATE_FORMAT,
-            )} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}`;
+            e.evaluation_start_date &&
+            e.evaluation_end_date &&
+            `${moment(e.evaluation_start_dat).format(DATE_FORMAT)} - ${moment(
+              e.evaluation_end_date,
+            ).format(DATE_FORMAT)}`;
 
           return (
             <React.Fragment key={i}>
