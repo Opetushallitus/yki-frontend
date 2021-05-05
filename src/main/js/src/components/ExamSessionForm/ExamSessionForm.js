@@ -18,7 +18,7 @@ import {
 import { getLocalizedName } from '../../util/registryUtil';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
-import SessionContact from '../SessionContact/SessionContact';
+//import SessionContact from '../SessionContact/SessionContact';
 
 const examSessionForm = props => {
   const { contact_name, contact_email, contact_phone_number } = props.examSessionContent && props.examSessionContent.organizer
@@ -253,11 +253,12 @@ const examSessionForm = props => {
           office_oid: values.officeOid ? values.officeOid : null,
           max_participants: Number.parseInt(values.maxParticipants),
           published_at: moment().toISOString(),
-          contact: [{
-            name: values.contactName,
-            email: values.contactEmail,
-            phone_number: values.contactPhoneNumber
-          }],
+          /*           contact: [{
+                      name: values.contactName,
+                      email: values.contactEmail,
+                      phone_number: values.contactPhoneNumber
+                    }], */
+          contact: null,
           location: [
             {
               name: getLocalizedName(orgOrOfficeName, 'fi'),
@@ -406,7 +407,8 @@ const examSessionForm = props => {
                 className={classes.ErrorMessage}
               />
             </div>
-            <SessionContact />
+            {/*             Commented out beacause setting is not reflected to exam session list yet
+            <SessionContact /> */}
             <div className={classes.FormElement}>
               <h3>{props.t('common.extra')}</h3>
               <label className={classes.ExtraLabel}>
