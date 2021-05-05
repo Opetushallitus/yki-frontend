@@ -44,9 +44,11 @@ const AddEvaluationPeriod = props => {
           <div>
             <label>{t('examDates.choose.evaluationTime')}</label>
             <div className={classes.EvaluationDateGrid}>
-              <div className={classes.EvaluationDatePickerWrapper}>
+              <div
+                className={classes.EvaluationDatePickerWrapper}
+                data-cy="exam-date-new-registration-start"
+              >
                 <DatePicker
-                  data-cy="exam-date-new-registration-start"
                   id="evaluationStartDate"
                   options={{
                     defaultDate: evaluationStartDate,
@@ -65,9 +67,11 @@ const AddEvaluationPeriod = props => {
                 -
               </div>
 
-              <div className={classes.EvaluationDatePickerWrapper}>
+              <div
+                className={classes.EvaluationDatePickerWrapper}
+                data-cy="exam-date-new-registration-end"
+              >
                 <DatePicker
-                  data-cy="exam-date-new-registration-end"
                   id="evaluationEndDate"
                   options={{
                     defaultDate: evaluationEndDate,
