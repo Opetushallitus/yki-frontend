@@ -147,7 +147,7 @@ const ReEvaluationForm = props => {
               {inputField(
                 'consent',
                 '',
-                t('registration.form.consent.confirm'),
+                t('registration.reeval.formpage.confirm'),
                 'checkbox',
                 true,
                 classes.CheckBoxInput,

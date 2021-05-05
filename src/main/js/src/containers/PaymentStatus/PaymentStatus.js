@@ -26,7 +26,6 @@ export class PaymentStatus extends Component {
         axios
           .get(`${this.props.infoUrl}${id}`)
           .then(({ data }) => {
-            console.log(data);
             this.setState({ examSession: data, loading: false });
           })
           .catch(() => this.setState({ loading: false }));

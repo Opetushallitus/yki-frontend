@@ -7,6 +7,7 @@ import {
   formatDate,
 } from '../../../util/examSessionUtil';
 import { checkTodayIsBetween, sortObjectArray } from '../../../util/util';
+import AuthButton from '../AuthButton/AuthButton';
 import classes from './ReEvaluationList.module.css';
 
 const ReEvaluationList = props => {
@@ -83,7 +84,8 @@ const ReEvaluationList = props => {
             disabled={!enabled}
             className="YkiButton"
             style={{
-              padding: '0.25rem',
+              width: 'auto',
+              padding: '0 1rem',
             }}
           >
             {t('registration.reeval')}

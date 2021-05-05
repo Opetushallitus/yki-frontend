@@ -98,7 +98,12 @@ const ReEvaluationFormPage = ({
       <main className={classes.Container}>
         <HeadlineContainer
           headlineTitle={t('registration.reeval.title')}
-          headlineContent={<p>{t('registration.reeval.text1')}</p>}
+          headlineContent={
+            <>
+              <p>{t('registration.reeval.banner.text1')}</p>
+              <p>{t('registration.reeval.banner.text2')}</p>
+            </>
+          }
           headlineImage={YkiImage2}
         />
         <div className={classes.MainContent}>

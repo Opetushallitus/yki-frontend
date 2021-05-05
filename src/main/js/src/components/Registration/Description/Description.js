@@ -133,7 +133,7 @@ const description = ({ history, prices }) => {
         <>
           <button
             className={'YkiButton'}
-            style={{ width: '50%' }}
+            style={{ width: 'auto', padding: '0 1rem' }}
             data-cy="re-eval-button"
             onClick={() => history.push(t('/tarkistusarviointi'))}
             role="link"
@@ -219,7 +219,7 @@ const description = ({ history, prices }) => {
           <PriceContainer elements={evaluationPrices} />
           <button
             className={'YkiButton'}
-            style={{ width: '50%' }}
+            style={{ width: 'auto', padding: '0 1rem' }}
             data-cy="re-eval-button"
             onClick={() => history.push(t('/tarkistusarviointi'))}
             role="link"

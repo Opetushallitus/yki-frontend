@@ -63,6 +63,8 @@ const ReEvaluation = ({
             <p>{t('registration.reeval.text2')}</p>
             <p>{t('registration.reeval.text3')}</p>
             <p>{t('registration.reeval.text4')}</p>
+            <p>{t('registration.reeval.text5')}</p>
+            <p>{t('registration.reeval.text6')}</p>
           </article>
         </div>
         <PriceContainer elements={evaluationPrices} />
@@ -83,6 +85,8 @@ const ReEvaluation = ({
             <p>{t('registration.reeval.text2')}</p>
             <p>{t('registration.reeval.text3')}</p>
             <p>{t('registration.reeval.text4')}</p>
+            <p>{t('registration.reeval.text5')}</p>
+            <p>{t('registration.reeval.text6')}</p>
           </article>
         </div>
         <PriceContainer elements={evaluationPrices} />
@@ -100,7 +104,12 @@ const ReEvaluation = ({
       <main className={classes.Container}>
         <HeadlineContainer
           headlineTitle={t('registration.reeval.title')}
-          headlineContent={<p>{t('registration.reeval.text1')}</p>}
+          headlineContent={
+            <>
+              <p>{t('registration.reeval.banner.text1')}</p>
+              <p>{t('registration.reeval.banner.text2')}</p>
+            </>
+          }
           headlineImage={YkiImage2}
         />
         {MOBILE_VIEW ||

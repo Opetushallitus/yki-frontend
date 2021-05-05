@@ -104,13 +104,20 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
         {organizer}
         {address}
       </article>
-      {exam.subtests &&
-        exam.subtests.map(s => {
-          return <p>{t(evaluationTexts[s])}</p>;
-        })}
-      <p>{`${t('registration.examDetails.card.price')} ${exam.exam_fee ||
-        exam.amount ||
-        ''} €`}</p>
+      {exam.subtests ? (
+        <>
+          {exam.subtests.map(s => {
+            return <p>{t(evaluationTexts[s])}</p>;
+          })}
+          <p>{`${t('registration.examDetails.card.reeval.price')} ${
+            exam.amount
+          } €`}</p>
+        </>
+      ) : (
+        <p>{`${t('registration.examDetails.card.price')} ${
+          exam.exam_fee
+        } €`}</p>
+      )}
     </div>
   );
 
