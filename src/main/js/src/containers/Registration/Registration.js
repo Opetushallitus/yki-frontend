@@ -12,17 +12,9 @@ import * as actions from '../../store/actions/index';
 
 import HeadlineContainer from "../../components/HeadlineContainer/HeadlineContainer";
 import YkiImage1 from '../../assets/images/ophYki_image1.png';
-import { getObjectValuesCount } from "../../util/util";
+import { getArraySize } from "../../util/util";
 
 class Registration extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      availabilityFilter: false,
-      openRegistrationFilter: false
-    }
-  }
-
   componentDidMount() {
     const { language, level, location } = queryString.parse(
       this.props.history.location.search,
@@ -45,14 +37,6 @@ class Registration extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // see if both checkboxes are checked to apply both filters
-    const prev = prevState.availabilityFilter && prevState.openRegistrationFilter;
-    const current = this.state.availabilityFilter && this.state.openRegistrationFilter;
-    if (prev !== current) {
-      return this.props.onFilterAvailableAndRegistration();
-    }
-  }
 
   onLanguageChange = event => {
     const language = LANGUAGES.find(l => l.name === event.target.value);
@@ -67,30 +51,36 @@ class Registration extends Component {
     this.props.onSelectLocation(event.target.value);
   };
 
+  triggerFilters = (availability, open) => {
+    if (availability && open) {
+      this.props.onFilterAvailableAndRegistration();
+    } else if (availability && !open) {
+      this.props.onAvailabilitySelect();
+    } else if (!availability && open) {
+      this.props.onRegistrationSelect();
+    } else {
+      this.props.onClearFilters();
+    }
+  }
+
   onAvailabilityChange = () => {
-    this.setState((prev) => ({
-      ...prev,
-      availabilityFilter: !this.state.availabilityFilter
-    }));
-    this.props.onAvailabilitySelect();
+    this.triggerFilters(!this.props.availabilityFilter, this.props.openRegistrationFilter);
+    this.props.onToggleAvailabilityFilter(!this.props.availabilityFilter);
   }
 
   onRegistrationFilterChange = () => {
-    this.setState((prev) => ({
-      ...prev,
-      openRegistrationFilter: !this.state.openRegistrationFilter
-    }));
-    this.props.onRegistrationSelect();
+    this.triggerFilters(this.props.availabilityFilter, !this.props.openRegistrationFilter);
+    this.props.onToggleOpenRegistrationFilter(!this.props.openRegistrationFilter);
   }
 
   getValuesOnFilterChange = () => {
-    if (this.state.availabilityFilter && this.state.openRegistrationFilter) {
+    if (this.props.availabilityFilter && this.props.openRegistrationFilter) {
       return this.props.filteredExamsByAvailabilityAndRegistration;
     }
-    if (this.state.availabilityFilter) {
+    if (this.props.availabilityFilter) {
       return this.props.filteredExamSessionsByAvailability;
     }
-    if (this.state.openRegistrationFilter) {
+    if (this.props.openRegistrationFilter) {
       return this.props.filteredExamSessionsByOpenRegistration;
     }
     else {
@@ -123,7 +113,7 @@ class Registration extends Component {
               />
               <hr />
               <p>
-                <strong>{`${getObjectValuesCount(this.getValuesOnFilterChange())}`}</strong>{' '}
+                <strong>{`${getArraySize(this.getValuesOnFilterChange())}`}</strong>{' '}
                 {`${this.props.t('common.searchResults')}`}
               </p>
             </div>
@@ -148,6 +138,8 @@ const mapStateToProps = state => {
     level: state.registration.level,
     location: state.registration.location,
     locations: state.registration.locations,
+    availabilityFilter: state.registration.availabilityFilter,
+    openRegistrationFilter: state.registration.openRegistrationFilter,
     filteredExamSessionsByAvailability: state.registration.filteredExamSessionsByAvailability,
     filteredExamSessionsByOpenRegistration: state.registration.filteredExamSessionsByOpenRegistration,
     filteredExamsByAvailabilityAndRegistration: state.registration.filteredExamsByAvailabilityAndRegistration,
@@ -162,6 +154,9 @@ const mapDispatchToProps = dispatch => {
     onSelectLocation: location => dispatch(actions.selectLocation(location)),
     onSetAll: (language, level, location) =>
       dispatch(actions.setAll(language, level, location)),
+    onToggleAvailabilityFilter: checked => dispatch(actions.toggleAvailabilityFilter(checked)),
+    onToggleOpenRegistrationFilter: checked => dispatch(actions.toggleOpenRegistrationFilter(checked)),
+    onClearFilters: () => dispatch(actions.filterByPathParams()),
     onAvailabilitySelect: () => dispatch(actions.filterExamByAvailability()),
     onRegistrationSelect: () => dispatch(actions.filteredExamSessionsByOpenRegistration()),
     onFilterAvailableAndRegistration: () => dispatch(actions.filteredExamsByAvailabilityAndRegistration())

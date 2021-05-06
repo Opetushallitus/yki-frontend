@@ -46,6 +46,18 @@ const filterAndGroupByDate = () => {
   };
 };
 
+export const filterByPathParams = () => {
+  return dispatch => {
+    dispatch(filterAndGroupByDate())
+  }
+}
+
+const changeSessionSelector = () => {
+  return {
+    type: actionTypes.CHANGE_SESSION_SELECTOR,
+  };
+};
+
 const filterByAvailability = () => {
   return {
     type: actionTypes.FILTER_BY_AVAILABILITY
@@ -89,7 +101,6 @@ const fetchExamSessionsStart = () => {
 };
 
 const fetchExamSessionsSuccess = examSessions => {
-  console.log('trigger fetch exam session success')
   return {
     type: actionTypes.FETCH_EXAM_SESSIONS_SUCCESS,
     examSessions: examSessions,
@@ -106,7 +117,7 @@ const fetchExamSessionsFail = error => {
 export const selectLanguage = language => {
   return dispatch => {
     dispatch(setLanguage(language));
-    dispatch(filterAndGroupByDate());
+    dispatch(changeSessionSelector());
   };
 };
 
@@ -120,7 +131,7 @@ const setLanguage = language => {
 export const selectLevel = level => {
   return dispatch => {
     dispatch(setLevel(level));
-    dispatch(filterAndGroupByDate());
+    dispatch(changeSessionSelector());
   };
 };
 
@@ -142,7 +153,7 @@ export const setAll = (language, level, location) => {
 export const selectLocation = location => {
   return dispatch => {
     dispatch(setLocation(location));
-    dispatch(filterAndGroupByDate());
+    dispatch(changeSessionSelector());
   };
 };
 
@@ -152,6 +163,32 @@ const setLocation = location => {
     location: location,
   };
 };
+
+export const toggleAvailabilityFilter = checked => {
+  return dispatch => {
+    dispatch(setAvailabilityFilter(checked));
+  }
+}
+
+const setAvailabilityFilter = checked => {
+  return {
+    type: actionTypes.TOGGLE_AVAILABILITY_FILTER,
+    availabilityFilter: checked
+  }
+}
+
+export const toggleOpenRegistrationFilter = checked => {
+  return dispatch => {
+    dispatch(setOpenRegistrationFilter(checked));
+  }
+}
+
+const setOpenRegistrationFilter = checked => {
+  return {
+    type: actionTypes.TOGGLE_OPEN_REGISTRATION_FILTER,
+    openRegistrationFilter: checked
+  }
+}
 
 export const selectExamSession = examSession => {
   return {
