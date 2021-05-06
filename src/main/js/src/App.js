@@ -112,7 +112,7 @@ const app = () => (
               />
               <RegistrationRoute
                 path="/tutkintotilaisuudet"
-                component={() => <ExamSessions something={'something'} />}
+                component={() => <ExamSessions />}
               />
               <Route exact path="/jarjestajarekisteri" component={Registry} />
               <Route
