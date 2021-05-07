@@ -7,6 +7,8 @@
   float: right;
   padding: 0 12px;
   cursor: pointer;
+  border: none;
+  border-radius: 2px;
 }
 
 .ParticipantButton {

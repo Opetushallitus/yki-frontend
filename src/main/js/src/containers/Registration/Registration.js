@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {withTranslation} from 'react-i18next';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import queryString from 'query-string';
 
 import classes from './Registration.module.css';
-import {LANGUAGES, MOBILE_VIEW} from '../../common/Constants';
+import { LANGUAGES, MOBILE_VIEW } from '../../common/Constants';
 import Filters from '../../components/Registration/Filters/Filters';
 import ExamSessionList from '../../components/Registration/ExamSessionList/ExamSessionList';
 
@@ -12,29 +12,21 @@ import * as actions from '../../store/actions/index';
 
 import HeadlineContainer from "../../components/HeadlineContainer/HeadlineContainer";
 import YkiImage1 from '../../assets/images/ophYki_image1.png';
-import {getObjectValuesCount} from "../../util/util";
+import { getArraySize } from "../../util/util";
 
 class Registration extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      availabilityFilter: false,
-      openRegistrationFilter: false
-    }
-  }
-
   componentDidMount() {
-    const {language, level, location} = queryString.parse(
-        this.props.history.location.search,
+    const { language, level, location } = queryString.parse(
+      this.props.history.location.search,
     );
     const lang = LANGUAGES.find(l => l.code === language);
     document.title = this.props.t('registration.document.title');
 
     const allQueryParamsExist = language && level && location;
     const paramsAreDifferent =
-        (lang && this.props.language.name !== lang.name) ||
-        this.props.level !== level ||
-        this.props.location !== location;
+      (lang && this.props.language.name !== lang.name) ||
+      this.props.level !== level ||
+      this.props.location !== location;
     // if redux state is different from query params user has probably refreshed the page
     if (allQueryParamsExist !== undefined && paramsAreDifferent) {
       // set query params to redux state
@@ -45,14 +37,6 @@ class Registration extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // see if both checkboxes are checked to apply both filters
-    const prev = prevState.availabilityFilter && prevState.openRegistrationFilter;
-    const current = this.state.availabilityFilter && this.state.openRegistrationFilter;
-    if (prev !== current) {
-      return this.props.onFilterAvailableAndRegistration();
-    }
-  }
 
   onLanguageChange = event => {
     const language = LANGUAGES.find(l => l.name === event.target.value);
@@ -67,30 +51,36 @@ class Registration extends Component {
     this.props.onSelectLocation(event.target.value);
   };
 
+  triggerFilters = (availability, open) => {
+    if (availability && open) {
+      this.props.onFilterAvailableAndRegistration();
+    } else if (availability && !open) {
+      this.props.onAvailabilitySelect();
+    } else if (!availability && open) {
+      this.props.onRegistrationSelect();
+    } else {
+      this.props.onClearFilters();
+    }
+  }
+
   onAvailabilityChange = () => {
-    this.setState((prev) => ({
-      ...prev,
-      availabilityFilter: !this.state.availabilityFilter
-    }));
-    this.props.onAvailabilitySelect();
+    this.triggerFilters(!this.props.availabilityFilter, this.props.openRegistrationFilter);
+    this.props.onToggleAvailabilityFilter(!this.props.availabilityFilter);
   }
 
   onRegistrationFilterChange = () => {
-    this.setState((prev) => ({
-      ...prev,
-      openRegistrationFilter: !this.state.openRegistrationFilter
-    }));
-    this.props.onRegistrationSelect();
+    this.triggerFilters(this.props.availabilityFilter, !this.props.openRegistrationFilter);
+    this.props.onToggleOpenRegistrationFilter(!this.props.openRegistrationFilter);
   }
 
   getValuesOnFilterChange = () => {
-    if (this.state.availabilityFilter && this.state.openRegistrationFilter) {
+    if (this.props.availabilityFilter && this.props.openRegistrationFilter) {
       return this.props.filteredExamsByAvailabilityAndRegistration;
     }
-    if (this.state.availabilityFilter) {
+    if (this.props.availabilityFilter) {
       return this.props.filteredExamSessionsByAvailability;
     }
-    if (this.state.openRegistrationFilter) {
+    if (this.props.openRegistrationFilter) {
       return this.props.filteredExamSessionsByOpenRegistration;
     }
     else {
@@ -100,42 +90,42 @@ class Registration extends Component {
 
   render() {
     return (
-        <>
-          <HeadlineContainer
-              headlineTitle={this.props.t('registration.title')}
-              headlineContent={ <p>{this.props.t('registration.times.info')}</p> }
-              headlineImage={YkiImage1}
-          />
-          <div className={classes.Content}>
-            <div className={classes.FilterContainer}>
-              <div className={classes.FilterSelectors}>
-                <Filters
-                    language={this.props.language}
-                    onLanguageChange={this.onLanguageChange}
-                    level={this.props.level}
-                    onLevelChange={this.onLevelChange}
-                    location={this.props.location}
-                    onLocationChange={this.onLocationChange}
-                    locations={this.props.locations}
-                    history={this.props.history}
-                    onAvailabilityFilterChange={this.onAvailabilityChange}
-                    onRegistrationFilterChange={this.onRegistrationFilterChange}
-                />
-                <hr />
-                <p>
-                  <strong>{`${getObjectValuesCount(this.getValuesOnFilterChange())}`}</strong>{' '}
-                  {`${this.props.t('common.searchResults')}`}
-                </p>
-              </div>
-            </div>
-            {(MOBILE_VIEW || window.innerWidth < 1024) ? <div style={{paddingTop: '30px'}} /> : null}
-            <ExamSessionList
-                examSessions={this.getValuesOnFilterChange()}
+      <>
+        <HeadlineContainer
+          headlineTitle={this.props.t('registration.title')}
+          headlineContent={<p>{this.props.t('registration.times.info')}</p>}
+          headlineImage={YkiImage1}
+        />
+        <div className={classes.Content}>
+          <div className={classes.FilterContainer}>
+            <div className={classes.FilterSelectors}>
+              <Filters
                 language={this.props.language}
+                onLanguageChange={this.onLanguageChange}
+                level={this.props.level}
+                onLevelChange={this.onLevelChange}
+                location={this.props.location}
+                onLocationChange={this.onLocationChange}
+                locations={this.props.locations}
                 history={this.props.history}
-            />
+                onAvailabilityFilterChange={this.onAvailabilityChange}
+                onRegistrationFilterChange={this.onRegistrationFilterChange}
+              />
+              <hr />
+              <p>
+                <strong>{`${getArraySize(this.getValuesOnFilterChange())}`}</strong>{' '}
+                {`${this.props.t('common.searchResults')}`}
+              </p>
+            </div>
           </div>
-        </>
+          {(MOBILE_VIEW || window.innerWidth < 1024) ? <div style={{ paddingTop: '30px' }} /> : null}
+          <ExamSessionList
+            examSessions={this.getValuesOnFilterChange()}
+            language={this.props.language}
+            history={this.props.history}
+          />
+        </div>
+      </>
     );
   }
 }
@@ -148,6 +138,8 @@ const mapStateToProps = state => {
     level: state.registration.level,
     location: state.registration.location,
     locations: state.registration.locations,
+    availabilityFilter: state.registration.availabilityFilter,
+    openRegistrationFilter: state.registration.openRegistrationFilter,
     filteredExamSessionsByAvailability: state.registration.filteredExamSessionsByAvailability,
     filteredExamSessionsByOpenRegistration: state.registration.filteredExamSessionsByOpenRegistration,
     filteredExamsByAvailabilityAndRegistration: state.registration.filteredExamsByAvailabilityAndRegistration,
@@ -161,7 +153,10 @@ const mapDispatchToProps = dispatch => {
     onSelectLanguage: language => dispatch(actions.selectLanguage(language)),
     onSelectLocation: location => dispatch(actions.selectLocation(location)),
     onSetAll: (language, level, location) =>
-        dispatch(actions.setAll(language, level, location)),
+      dispatch(actions.setAll(language, level, location)),
+    onToggleAvailabilityFilter: checked => dispatch(actions.toggleAvailabilityFilter(checked)),
+    onToggleOpenRegistrationFilter: checked => dispatch(actions.toggleOpenRegistrationFilter(checked)),
+    onClearFilters: () => dispatch(actions.filterByPathParams()),
     onAvailabilitySelect: () => dispatch(actions.filterExamByAvailability()),
     onRegistrationSelect: () => dispatch(actions.filteredExamSessionsByOpenRegistration()),
     onFilterAvailableAndRegistration: () => dispatch(actions.filteredExamsByAvailabilityAndRegistration())
@@ -169,6 +164,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(withTranslation()(Registration));

@@ -17,8 +17,11 @@ import {
 } from '../../util/util';
 import { getLocalizedName } from '../../util/registryUtil';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
+import { getLanguagesWithLevelDescriptions } from '../../util/util';
+//import SessionContact from '../SessionContact/SessionContact';
 
 const examSessionForm = props => {
+  const { contact_name, contact_email, contact_phone_number } = props.examSessionContent && props.examSessionContent.organizer
   function validateDuplicateExamSession() {
     let duplicateFound = false;
     const examDate = this.parent.examDate;
@@ -64,6 +67,11 @@ const examSessionForm = props => {
     extraFi: Yup.string(),
     extraSv: Yup.string(),
     extraEn: Yup.string(),
+    contactName: Yup.string().required(props.t('error.mandatory')),
+    contactEmail: Yup.string()
+      .email(props.t('error.email')),
+
+    contactPhoneNumber: Yup.string(),
   });
 
   const RadioButtonComponent = ({
@@ -149,21 +157,20 @@ const examSessionForm = props => {
     });
   };
 
-  const examDateFields = (examDates, selectedLanguage) => {
+  const examDateFields = (examDates, selectedLanguage, selectedLevel) => {
+    // Disable date filtering in development because test data is not dynamic
     return examDates
       .filter(e => {
-        return moment(e.exam_date).isBefore(moment().add(1, 'year'));
+        return process.env.NODE_ENV !== 'development'
+          ? moment(e.exam_date).isBefore(moment().add(1, 'year'))
+          : e.exam_date;
       })
       .map(examDate => {
         const enabled = R.includes(
-          { language_code: selectedLanguage },
+          { language_code: selectedLanguage, level_code: selectedLevel },
           examDate.languages,
         );
-        const languages = examDate.languages
-          .map(l => {
-            return languageToString(l.language_code).toLowerCase();
-          })
-          .join(', ');
+        const languages = getLanguagesWithLevelDescriptions(examDate.languages).join(', ');
         return (
           <Field
             component={RadioButtonComponent}
@@ -202,13 +209,13 @@ const examSessionForm = props => {
     ? props.examSessionContent.organizationChildren[0].oid
     : '';
 
-  // FIXME: no need for organizer param
-  const organizationSelection = (organizer, children, lang) =>
-    children.map(c =>
+  const organizationSelection = (children, lang) =>
+    children && children.map(c =>
       <option value={c.oid} key={c.oid}>
         {`${getLocalizedName(c.nimi, lang)} (${c.oid ? c.oid : ''})`}
       </option>
     );
+
 
   return (
     <Formik
@@ -225,6 +232,9 @@ const examSessionForm = props => {
         extraFi: '',
         extraSv: '',
         extraEn: '',
+        contactName: contact_name,
+        contactEmail: contact_email,
+        contactPhoneNumber: contact_phone_number,
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
@@ -243,6 +253,12 @@ const examSessionForm = props => {
           office_oid: values.officeOid ? values.officeOid : null,
           max_participants: Number.parseInt(values.maxParticipants),
           published_at: moment().toISOString(),
+          /*           contact: [{
+                      name: values.contactName,
+                      email: values.contactEmail,
+                      phone_number: values.contactPhoneNumber
+                    }], */
+          contact: null,
           location: [
             {
               name: getLocalizedName(orgOrOfficeName, 'fi'),
@@ -295,7 +311,6 @@ const examSessionForm = props => {
                 data-cy="select-officeOid"
               >
                 {organizationSelection(
-                  props.examSessionContent.organization,
                   // fixme: not actually just children, its the whole hierarchy
                   props.examSessionContent.organizationChildren,
                   props.i18n.lang,
@@ -392,6 +407,8 @@ const examSessionForm = props => {
                 className={classes.ErrorMessage}
               />
             </div>
+            {/*             Commented out beacause setting is not reflected to exam session list yet
+            <SessionContact /> */}
             <div className={classes.FormElement}>
               <h3>{props.t('common.extra')}</h3>
               <label className={classes.ExtraLabel}>

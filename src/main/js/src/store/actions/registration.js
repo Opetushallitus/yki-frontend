@@ -23,8 +23,8 @@ export const fetchExamSessions = () => {
   };
 };
 const locationByLang = (examSession, lang) => {
-  const language = examSession.location.find(l => l.lang === lang)
-  return language && language.post_office ? capitalize(language.post_office) : null;
+  const location = examSession.location.find(l => l.lang === lang);
+  return location && location.post_office ? capitalize(location.post_office) : null;
 };
 
 const extractExamLocations = examSessions => {
@@ -32,7 +32,6 @@ const extractExamLocations = examSessions => {
     const location = { fi: locationByLang(examSession, 'fi'), sv: locationByLang(examSession, 'sv') };
     return R.includes(location, locations) ? locations : R.append(location, locations);
   };
-
   const unique = R.reduce(getUniqueLocations, []);
   const sortByFi = R.sort(R.prop('fi'));
   return {
@@ -44,6 +43,18 @@ const extractExamLocations = examSessions => {
 const filterAndGroupByDate = () => {
   return {
     type: actionTypes.FILTER_AND_GROUP_BY_DATE,
+  };
+};
+
+export const filterByPathParams = () => {
+  return dispatch => {
+    dispatch(filterAndGroupByDate())
+  }
+}
+
+const changeSessionSelector = () => {
+  return {
+    type: actionTypes.CHANGE_SESSION_SELECTOR,
   };
 };
 
@@ -106,7 +117,7 @@ const fetchExamSessionsFail = error => {
 export const selectLanguage = language => {
   return dispatch => {
     dispatch(setLanguage(language));
-    dispatch(filterAndGroupByDate());
+    dispatch(changeSessionSelector());
   };
 };
 
@@ -120,7 +131,7 @@ const setLanguage = language => {
 export const selectLevel = level => {
   return dispatch => {
     dispatch(setLevel(level));
-    dispatch(filterAndGroupByDate());
+    dispatch(changeSessionSelector());
   };
 };
 
@@ -142,7 +153,7 @@ export const setAll = (language, level, location) => {
 export const selectLocation = location => {
   return dispatch => {
     dispatch(setLocation(location));
-    dispatch(filterAndGroupByDate());
+    dispatch(changeSessionSelector());
   };
 };
 
@@ -152,6 +163,32 @@ const setLocation = location => {
     location: location,
   };
 };
+
+export const toggleAvailabilityFilter = checked => {
+  return dispatch => {
+    dispatch(setAvailabilityFilter(checked));
+  }
+}
+
+const setAvailabilityFilter = checked => {
+  return {
+    type: actionTypes.TOGGLE_AVAILABILITY_FILTER,
+    availabilityFilter: checked
+  }
+}
+
+export const toggleOpenRegistrationFilter = checked => {
+  return dispatch => {
+    dispatch(setOpenRegistrationFilter(checked));
+  }
+}
+
+const setOpenRegistrationFilter = checked => {
+  return {
+    type: actionTypes.TOGGLE_OPEN_REGISTRATION_FILTER,
+    openRegistrationFilter: checked
+  }
+}
 
 export const selectExamSession = examSession => {
   return {

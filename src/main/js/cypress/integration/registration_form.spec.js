@@ -95,7 +95,7 @@ describe('Registration form', () => {
         error: { expired: true },
       },
     });
-    cy.get('[data-cy=input-phoneNumber]').type('+358401234567');
+    cy.get('[data-cy=input-phoneNumber]').type('401234567');
     cy.get('[data-cy=input-email]').type('test@test.com');
     cy.get('[data-cy=input-confirmEmail]').type('test@test.com');
     cy.get('[data-cy=form-checkbox-terms]').click();
@@ -114,7 +114,7 @@ describe('Registration form', () => {
   it('suomi.fi authenticated user can fill and submit form', () => {
     cy.get('[data-cy=exam-details-card').should('exist');
 
-    cy.get('[data-cy=input-phoneNumber]').type('+358401234567');
+    cy.get('[data-cy=input-phoneNumber]').type('401234567');
     cy.get('[data-cy=input-email]').type('test@test.com');
     cy.get('[data-cy=input-confirmEmail]').type('test@test.com');
 
@@ -129,6 +129,23 @@ describe('Registration form', () => {
     cy.get('[data-cy=registration-success]').should('exist');
   });
 
+  it('can enter phone numbers with most common country codes', () => {
+    cy.visit('/ilmoittautuminen/tutkintotilaisuus/2');
+
+    const testPhoneNumber = phone => {
+      cy.get('[data-cy=input-phoneNumber]').clear();
+      cy.get('[data-cy=input-phoneNumber]').type(phone);
+      cy.get('[data-cy=input-error-phoneNumber').should('not.exist');
+    }
+
+    testPhoneNumber('+358401234567');
+    testPhoneNumber('+46766920672');
+    testPhoneNumber('+3726028451');
+    testPhoneNumber('+74991132056');
+    testPhoneNumber('+37180005608');
+    testPhoneNumber('+37052060031');
+  });
+
   it('email authenticated user can fill and submit form', () => {
     cy.visit('/ilmoittautuminen/tutkintotilaisuus/2');
 
@@ -139,11 +156,12 @@ describe('Registration form', () => {
     cy.get('[data-cy=input-streetAddress]').type('Somestreet 11 A');
     cy.get('[data-cy=input-zip]').type('1234');
     cy.get('[data-cy=input-postOffice]').type('Somewhere');
-    cy.get('[data-cy=input-phoneNumber]').type('+358401234567');
+    cy.get('[data-cy=input-phoneNumber]').type('401234567');
 
     cy.get('[data-cy=select-nationality]').select('643');
     cy.get('[data-cy=input-birthdate]').type('10.10.1970');
-    cy.get('[data-cy=select-gender]').select('mies')
+    cy.get('[data-cy=select-gender]').select('mies');
+    cy.get('[data-cy=input-ssn]').type('101070-991J');
     cy.get('[data-cy=radio-certificateLang-en]').click();
 
     cy.log('exam language should not be shown for finnish and swedish');

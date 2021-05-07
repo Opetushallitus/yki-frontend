@@ -70,3 +70,7 @@ export const loadOrganizationsByFreeText = searchText => {
     `organisaatio-service/rest/organisaatio/v2/hae/tyyppi?searchStr=${searchText}&aktiiviset=true&suunnitellut=true&lakkautetut=false`,
   );
 };
+
+export const localization = () => {
+  return apiGet('LOAD_LOCALIZATION', '/yki/api/localization?lang={{lng}}')
+}

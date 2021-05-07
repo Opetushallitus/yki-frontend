@@ -1,0 +1,181 @@
+.Form {
+    display: grid;
+    grid-gap: 10px;
+    max-width: 30vw;
+    width: 300px;
+}
+
+.Form label {
+    display: block;
+    font-size: 0.875em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.TimeGrid {
+    display: grid;
+    grid-template-columns: 650px 300px;
+    grid-gap: 30px;
+    max-height: 90px;
+}
+
+/* TODO: only one grid */
+.DateGrid {
+    display: grid;
+    grid-template-columns: 300px 5px 300px;
+    grid-gap: 20px;
+    max-height: 90px;
+}
+
+.ExamDateGrid {
+    display: grid;
+    max-height: 90px;
+}
+
+.LanguageAndLevelGrid {
+    display: grid;
+    /*grid-template-columns: 300px 210px 100px;*/
+    /*grid-gap: 20px;*/
+    grid-template-columns: 310px 310px 150px;
+    grid-column-gap: 30px;
+    grid-row-gap: 10px;
+}
+
+.LanguageAndLevelGrid:first-child {
+    grid-row-gap: 0 !important;
+}
+
+.DatePickerWrapper > input {
+    width: 300px;
+    height: 35px;
+    margin-bottom: 20px;
+    margin-top: 8px;
+    color: hsl(0, 0%, 0%);
+}
+
+/*TODO: exam sessions disabled action buttons */
+.DisabledPicker > input {
+    width: 300px;
+    height: 35px;
+    margin-bottom: 20px;
+    /*margin-top: 8px;*/
+    color: hsl(0, 0%, 83%);
+}
+
+.ExamLevels {
+    /*width: 100%;*/
+    width: 310px;
+    margin-top: 1vh;
+    cursor: pointer;
+    font: normal normal normal 16px/24px PT Sans;
+    padding: 8px;
+    border: 1px solid hsla(0, 0%, 50%, 0.5);
+    border-radius: 2px;
+}
+
+.ActionButtons button {
+    color: hsl(0, 0%, 100%);
+    border: none;
+    padding: 12px;
+    border-radius: 2px;
+    width: 220px;
+  }
+
+.ConfirmButton {
+    background-color: hsla(199, 77%, 43%, 0.95);
+}
+
+.DisabledButton {
+    background-color: hsl(0, 0%, 83%);
+}
+
+.LanguageButton {
+    /*margin-top: 34px;*/
+    border: none;
+    padding: 12px;
+    border-radius: 2px;
+    width: 100%;
+    /*margin-bottom: 5vh;*/
+    color: hsla(0, 0%, 100%, 1);
+}
+
+.LanguageAdditionButton {
+    margin-top: 34px;
+    background-color: hsla(199, 77%, 43%, 0.95);
+}
+
+.RemoveLanguageButton {
+    margin-top: 4px;
+    background-color: hsla(358, 75%, 57%, 0.85) !important;
+}
+
+.AddedLanguages {
+    min-height: 80px;
+    max-height: 100%;
+}
+
+.AddedLanguages span {
+    display: flex;
+    margin: 0 !important;
+}
+
+.AddedLanguages p {
+    margin: 0.2em !important;
+}
+
+.EditViewTop {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-gap: 20px;
+}
+
+.PostAdmission {
+    margin-top: 1em;
+}
+
+.PostAdmissionContainer {
+    display: grid;
+    /*grid-template-columns: 160px 150px 150px 5px 150px;*/
+    /*grid-template-columns: 160px 110px 300px 5px 300px;*/
+    grid-template-columns: 160px 110px 650px;
+    grid-gap: 20px;
+    margin-top: 1em;
+    margin-bottom: 20px;
+    max-height: 90px;
+}
+
+.Toggle {
+    display: flex;
+}
+
+.Toggle p {
+    font-size: 14px;
+}
+
+.PostAdmissionContainer label {
+    margin-block-start: 12px;
+}
+
+.PostAdmissionContainer p {
+    margin-block-start: 20px;
+    margin-block-end: 0;
+    margin-inline-start: 1em;
+    margin-inline-end: 0;
+    padding-right: 20px;
+}
+
+.Label {
+    display: block;
+    font-size: 0.875em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.AddNewLanguages {
+    background: none;
+    border: none;
+    color: hsla(199, 77%, 43%, 0.95);
+    font-size: medium;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}

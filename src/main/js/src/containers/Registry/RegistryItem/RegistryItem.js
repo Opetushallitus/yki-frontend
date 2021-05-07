@@ -11,6 +11,8 @@ import { nowBetweenDates } from '../../../util/util';
 class RegistryItem extends PureComponent {
   state = {
     show: false,
+    showModal: false,
+    selectedOid: null,
   };
 
   toggleHandler = () => {
@@ -19,7 +21,15 @@ class RegistryItem extends PureComponent {
     }));
   };
 
+  openModalHandler = orgId => this.setState({ showModal: true, selectedOid: orgId });
+
+  closeModalHandler = () =>
+    this.setState({ showModal: false, selectedOid: null });
+
+
+
   render() {
+
     const languages = languagesToString(this.props.item.languages);
     const agreementActive = nowBetweenDates(
       this.props.item.agreement.start,
@@ -30,47 +40,51 @@ class RegistryItem extends PureComponent {
       this.props.item.merchant.merchant_id &&
       this.props.item.merchant.merchant_secret;
     return (
-      <div
-        className={
-          this.state.show
-            ? classes.RegistryItemWithDetails
-            : classes.RegistryItem
-        }
-        data-cy="registry-item"
-      >
-        <Collapsible
-          show={this.state.show}
-          clicked={this.toggleHandler}
-          className={classes.Collapsible}
+      <>
+        {/*  {orgSessionsModal} */}
+        <div
+          className={
+            this.state.show
+              ? classes.RegistryItemWithDetails
+              : classes.RegistryItem
+          }
+          data-cy="registry-item"
         >
-          <div className={classes.HeaderText}>
-            <div>
-              <strong>{this.props.item.name}</strong>
-            </div>
-            {agreementActive ? (
-              hasPaymentInfo ? (
-                <div className={classes.HeaderLanguages}>{languages}</div>
-              ) : (
-                <div className={classes.AgreementExpired}>
-                  {this.props.t('registryItem.paymentInfoMissing')}
-                </div>
-              )
-            ) : (
-              <div className={classes.AgreementExpired}>
-                {this.props.t('registryItem.agreementExpired')}
+          <Collapsible
+            show={this.state.show}
+            clicked={this.toggleHandler}
+            className={classes.Collapsible}
+          >
+            <div className={classes.HeaderText}>
+              <div>
+                <strong>{this.props.item.name}</strong>
               </div>
-            )}
-            <div className={classes.HeaderCity}>
-              {this.props.item.address.city}
+              {agreementActive ? (
+                hasPaymentInfo ? (
+                  <div className={classes.HeaderLanguages}>{languages}</div>
+                ) : (
+                    <div className={classes.AgreementExpired}>
+                      {this.props.t('registryItem.paymentInfoMissing')}
+                    </div>
+                  )
+              ) : (
+                  <div className={classes.AgreementExpired}>
+                    {this.props.t('registryItem.agreementExpired')}
+                  </div>
+                )}
+              <div className={classes.HeaderCity}>
+                {this.props.item.address.city}
+              </div>
             </div>
-          </div>
-          <RegistryItemDetails
-            item={this.props.item}
-            clicked={this.props.update}
-            agreementActive={agreementActive}
-          />
-        </Collapsible>
-      </div>
+            <RegistryItemDetails
+              item={this.props.item}
+              modify={this.props.update}
+              openSessions={this.openModalHandler}
+              agreementActive={agreementActive}
+            />
+          </Collapsible>
+        </div>
+      </>
     );
   }
 }

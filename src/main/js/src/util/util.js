@@ -40,8 +40,8 @@ export const getLanguagesWithLevelDescriptions = array => {
         levels.length === language.levels.length
           ? i18next.t('common.level.all')
           : levels
-              .map(l => levelDescription(l))
-              .join(` ${i18next.t('common.and')} `);
+            .map(l => levelDescription(l))
+            .join(` ${i18next.t('common.and')} `);
       list.push(`${language.name} - ${capitalize(description)}`);
     }
   }
@@ -72,6 +72,11 @@ export const getObjectValuesCount = (object) => {
   }
   return result;
 };
+
+export const getArraySize = array => {
+  if (!array) return 0;
+  return array.length;
+}
 
 export const getLanguageAndLevel = (sessionData) => {
   return (

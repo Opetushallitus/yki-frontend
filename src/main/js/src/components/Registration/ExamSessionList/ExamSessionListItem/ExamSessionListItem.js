@@ -5,16 +5,20 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import {
+  canSignupForPostAdmission,
+  admissionNotStarted,
   showAvailableSpots,
+  admissionActiveAndQueueNotFull,
   spotsAvailableForSession,
   isAdmissionActive,
-  admissionClosed,
-} from '../../../../util/examSessionUtil'
+  isPostAdmissionActive,
+} from '../../../../util/examSessionUtil';
 import classes from './ExamSessionListItem.module.css';
 import { getDeviceOrientation, levelDescription } from '../../../../util/util';
 import {
   DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR, MOBILE_VIEW
+  DATE_FORMAT_WITHOUT_YEAR,
+  MOBILE_VIEW
 } from '../../../../common/Constants';
 import * as actions from '../../../../store/actions/index';
 
@@ -73,8 +77,8 @@ const examSessionListItem = ({
             </span>
           </>
         ) : (
-            <span>{t('registration.examSpots.full')}</span>
-          )}
+          <span>{t('registration.examSpots.full')}</span>
+        )}
       </strong>
     </div>
   );
@@ -90,17 +94,15 @@ const examSessionListItem = ({
         )} - ${moment(session.registration_end_date).format(
           DATE_FORMAT_WITHOUT_YEAR,
         )}`}
-        {/*
         {
           (session.post_admission_start_date && session.post_admission_end_date && session.post_admission_active) ? (
-          <>
-            <br />
-            <span>{`${moment(session.post_admission_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} -
+            <>
+              <br />
+              <span>{`${moment(session.post_admission_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} -
                     ${moment(session.post_admission_end_date).format(DATE_FORMAT_WITHOUT_YEAR)}`}</span>
-          </>
+            </>
           ) : null
         }
-        */}
       </span>
     </div>
   );
@@ -112,15 +114,19 @@ const examSessionListItem = ({
       : t('registration.register.forQueue');
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
 
+  const showRegisterButton = admissionNotStarted(session) ||
+    admissionActiveAndQueueNotFull(session) ||
+    canSignupForPostAdmission(session);
+
   const registerButton = (
     <>
-      {!admissionClosed(session) && !session.queue_full ?
+      {showRegisterButton ?
         <button
           className={'YkiButton'}
           onClick={selectExamSession}
           role="link"
           aria-label={srLabel}
-          disabled={!isAdmissionActive(session)}
+          disabled={!isAdmissionActive(session) && !isPostAdmissionActive(session)}
         >
           {buttonText}
         </button>

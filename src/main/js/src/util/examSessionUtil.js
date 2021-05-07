@@ -18,7 +18,7 @@ const postAdmissionAvailable = session => {
 
 export const isPostAdmissionActive = session => {
 	return postAdmissionAvailable(session) &&
-		nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
+		nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date)) && session.open;
 }
 
 export const isAdmissionActive = session => {

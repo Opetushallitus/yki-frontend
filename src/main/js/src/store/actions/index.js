@@ -9,9 +9,15 @@ export {
   confirmPayment,
   relocateExamSession,
   addPostAdmission,
+  activatePostAdmission,
+  deactivatePostAdmission,
   ResendPaymentEmail,
   toggleAndFetchPastExamSessions,
 } from './examSession';
+export {
+  fetchRegistryExamSessions,
+  fetchRegistryExamSessionParticipants
+} from './registryExamSession';
 export {
   fetchRegistryContent,
   fetchOrganizations,
@@ -27,6 +33,9 @@ export {
   selectLocation,
   selectExamSession,
   setAll,
+  filterByPathParams,
+  toggleAvailabilityFilter,
+  toggleOpenRegistrationFilter,
   fetchExamSession,
   initRegistrationForm,
   submitRegistrationForm,
@@ -34,6 +43,15 @@ export {
   filteredExamSessionsByOpenRegistration,
   filteredExamsByAvailabilityAndRegistration
 } from './registration';
-export { fetchExamDates, examDatesFailReset, updatePostAdmissionEndDate, deletePostAdmissionEndDate } from './examDates';
+export {
+  addExamDate,
+  fetchExamDates,
+  examDatesFailReset,
+  updatePostAdmissionEndDate,
+  deletePostAdmissionEndDate,
+  updateExamDateConfigurations,
+  deleteExamDate,
+  GetExamDatesHistory
+} from './examDates';
 export { fetchUser } from './user';
 export { initYKILanguage, changeYKILanguage } from './yki';

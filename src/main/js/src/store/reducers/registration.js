@@ -1,15 +1,14 @@
-import * as R from 'ramda';
-
 import * as actionTypes from '../actions/actionTypes';
-import {ISO_DATE_FORMAT_SHORT, LANGUAGES} from '../../common/Constants';
+import { signupPossible, admissionActiveAndQueueNotFull } from '../../util/examSessionUtil';
+import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
 import moment from "moment";
 
 const initialState = {
   examSessions: [],
-  filteredExamSessionsGroupedByDate: {},
-  filteredExamSessionsByAvailability: {},
-  filteredExamSessionsByOpenRegistration: {},
-  filteredExamsByAvailabilityAndRegistration: {},
+  filteredExamSessionsGroupedByDate: [],
+  filteredExamSessionsByAvailability: [],
+  filteredExamSessionsByOpenRegistration: [],
+  filteredExamsByAvailabilityAndRegistration: [],
   language: LANGUAGES[0],
   level: '',
   location: '',
@@ -17,6 +16,8 @@ const initialState = {
   examSession: {},
   loading: false,
   error: null,
+  availabilityFilter: false,
+  openRegistrationFilter: false,
   form: {
     initData: null,
     initDataLoading: false,
@@ -30,17 +31,138 @@ const initialState = {
 };
 
 const filteredSessions = (state) => {
-  return state.examSessions
-      .filter(e =>
-          state.location === ''
-              ? true
-              : e.location[0].post_office
-                  .toLowerCase()
-                  .endsWith(state.location.toLowerCase()),
-      )
-      .filter(e => (state.level === '' ? true : e.level_code === state.level))
-      .filter(e => e.language_code === state.language.code);
+  const filteredSessions = state.examSessions
+    .filter(e =>
+      state.location === ''
+        ? true
+        : e.location[0].post_office
+          .toLowerCase()
+          .endsWith(state.location.toLowerCase()),
+    )
+    .filter(e => (state.level === '' ? true : e.level_code === state.level))
+    .filter(e => e.language_code === state.language.code);
+  return filteredSessions;
 }
+
+const sortSessionsByDate = (sessionA, sessionB) => {
+  const sessionDateA = moment(sessionA.session_date);
+  const sessionDateB = moment(sessionB.session_date);
+
+  if (sessionDateA.isAfter(sessionDateB)) {
+    return 1;
+  }
+  if (sessionDateB.isAfter(sessionDateA)) {
+    return -1;
+  }
+  return 0;
+}
+
+const sortSessionsByOpenSignups = (sessionA, sessionB) => {
+  const isOpenA = signupPossible(sessionA);
+  const isOpenB = signupPossible(sessionB);
+  const queueSpaceA = admissionActiveAndQueueNotFull(sessionA);
+  const queueSpaceB = admissionActiveAndQueueNotFull(sessionB);
+
+  if (isOpenA && !isOpenB) {
+    return -1;
+  }
+  if (!isOpenA && isOpenB) {
+    return 1;
+  }
+  if (queueSpaceA && !queueSpaceB) {
+    return -1;
+  }
+  if (!queueSpaceA && queueSpaceB) {
+    return 1;
+  }
+  return 0;
+}
+
+const sortSessions = sessions => {
+  if (!sessions || sessions.length === 0) return [];
+  sessions.sort(sortSessionsByDate);
+  sessions.sort(sortSessionsByOpenSignups);
+  return sessions;
+}
+
+const getStateFilteredByAvailalbility = state => {
+  const filteredExams = filteredSessions(state);
+  let filteredArray = [];
+
+  for (let i in filteredExams) {
+    const item = filteredExams[i];
+
+    // Not open yet or opening today, filter in spots left
+    if (moment(item.registration_start_date).isSameOrAfter(currentDate)) {
+      if (item.participants < item.max_participants) {
+        filteredArray.push(item);
+      }
+    }
+
+    else if (item.open && !item.queue_full) {
+      // Check if admission or post admission. Filter in the corresponding spots
+      if (moment(item.registration_end_date).isSameOrAfter(currentDate)) {
+        if (item.participants < item.max_participants) {
+          filteredArray.push(item);
+        }
+      } else if (item.post_admission_end_date && moment(item.post_admission_end_date).isSameOrAfter(currentDate)) {
+        if (item.post_admission_quota && (item.pa_participants < item.post_admission_quota)) {
+          filteredArray.push(item);
+        }
+      }
+    }
+  }
+  return {
+    ...state,
+    filteredExamSessionsByAvailability: sortSessions(filteredArray)
+  }
+}
+
+const getStateFilteredByOpenRegistration = state => {
+  const filteredExamsForOpens = filteredSessions(state);
+  let filteredOpenExams = [];
+
+  for (let i in filteredExamsForOpens) {
+    const item = filteredExamsForOpens[i];
+
+    if (item.open && !item.queue_full) {
+      filteredOpenExams.push(item);
+    }
+  }
+
+  return {
+    ...state,
+    filteredExamSessionsByOpenRegistration: sortSessions(filteredOpenExams)
+  }
+}
+
+const getStateFilteredByAvailabilityAndRegistration = state => {
+  const filteredExamData = filteredSessions(state);
+
+  let filteredAvailableAndOpen = []
+
+  for (let i in filteredExamData) {
+    const item = filteredExamData[i];
+    if (item.open && !item.queue_full) {
+      if (moment(item.registration_end_date).isSameOrAfter(currentDate)) {
+        if (item.participants < item.max_participants) {
+          filteredAvailableAndOpen.push(item);
+        }
+      } else if (item.post_admission_end_date && moment(item.post_admission_end_date).isSameOrAfter(currentDate)) {
+        if (item.post_admission_quota && (item.pa_participants < item.post_admission_quota)) {
+          filteredAvailableAndOpen.push(item);
+        }
+      }
+    }
+  }
+
+
+  return {
+    ...state,
+    filteredExamsByAvailabilityAndRegistration: sortSessions(filteredAvailableAndOpen),
+  };
+}
+
 
 const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
 
@@ -51,112 +173,53 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+
     case actionTypes.FETCH_EXAM_SESSIONS_SUCCESS:
       return {
         ...state,
         loading: false,
-        examSessions: action.examSessions,
+        examSessions: sortSessions(action.examSessions),
       };
+
     case actionTypes.FETCH_EXAM_SESSIONS_FAIL:
       return {
         ...state,
         loading: false,
         error: action.error,
       };
+
     case actionTypes.FILTER_AND_GROUP_BY_DATE:
       const filtered = filteredSessions(state);
-      const groupedByDate = R.groupBy(R.prop('session_date'), filtered);
-      const orderedByDate = {};
-      Object.keys(groupedByDate)
-        .sort()
-        .map(k => (orderedByDate[k] = groupedByDate[k]));
       return {
         ...state,
-        filteredExamSessionsGroupedByDate: orderedByDate,
+        filteredExamSessionsGroupedByDate: filtered,
+
       };
+
+    case actionTypes.CHANGE_SESSION_SELECTOR:
+      const allFiltered = filteredSessions(state);
+      if (state.availabilityFilter && state.openRegistrationFilter) {
+        return getStateFilteredByAvailabilityAndRegistration(state);
+      }
+      if (state.availabilityFilter) {
+        return getStateFilteredByAvailalbility(state);
+      }
+      if (state.openRegistrationFilter) {
+        return getStateFilteredByOpenRegistration(state);
+      }
+      return {
+        ...state,
+        filteredExamSessionsGroupedByDate: allFiltered,
+      }
 
     case actionTypes.FILTER_BY_AVAILABILITY:
-      const filteredExams = filteredSessions(state);
-      let filteredArray = [];
-
-      for (let i in filteredExams) {
-        const item = filteredExams[i];
-        const isOpen = moment(item.registration_end_date).isAfter(currentDate);
-        if (isOpen && item.participants < item.max_participants) {
-          filteredArray.push(item);
-        }
-      }
-
-      const groupedAvailableSessions = R.groupBy(R.prop('session_date'), filteredArray);
-      let availableExams = {};
-
-      Object.keys(groupedAvailableSessions)
-          .sort()
-          .map(k => (availableExams[k] = groupedAvailableSessions[k]));
-
-      return {
-        ...state,
-        filteredExamSessionsByAvailability: availableExams
-      }
+      return getStateFilteredByAvailalbility(state);
 
     case actionTypes.FILTER_BY_OPEN_REGISTRATION:
-      const filteredExamsForOpens = filteredSessions(state);
-      let filteredOpenExams = [];
-
-      for (let i in filteredExamsForOpens) {
-        const item = filteredExamsForOpens[i];
-
-        const registrationOpen = moment(item.registration_end_date).isAfter(currentDate);
-        const registrationStarted = moment(item.registration_start_date).isSameOrBefore(currentDate);
-
-        if (registrationOpen && registrationStarted && !item.queue_full) {
-          filteredOpenExams.push(item);
-        }
-      }
-
-      const groupedOpenSessions = R.groupBy(R.prop('session_date'), filteredOpenExams);
-      let openRegistration = {};
-
-      Object.keys(groupedOpenSessions)
-          .sort()
-          .map(k => (openRegistration[k] = groupedOpenSessions[k]));
-
-      return {
-        ...state,
-        filteredExamSessionsByOpenRegistration: openRegistration
-      }
+      return getStateFilteredByOpenRegistration(state);
 
     case actionTypes.FILTER_BY_AVAILABILITY_AND_REGISTRATION:
-      const filteredExamData = filteredSessions(state);
-
-      let filteredAvailable = [];
-      for (let i in filteredExamData) {
-        const item = filteredExamData[i];
-        if (item.registration_start_date <= currentDate && item.registration_end_date >= currentDate && !item.queue_full) {
-          filteredAvailable.push(item);
-        }
-      }
-
-      let filteredAvailableAndOpen = []
-
-      for (let i in filteredAvailable) {
-        const item = filteredAvailable[i];
-        if (item.participants < item.max_participants) {
-          filteredAvailableAndOpen.push(item);
-        }
-      }
-
-      const filteredExamsByAvailabilityAndRegistration = {};
-      const groupedData = R.groupBy(R.prop('session_date'), filteredAvailableAndOpen);
-
-      Object.keys(groupedData)
-          .sort()
-          .map(k => (filteredExamsByAvailabilityAndRegistration[k] = groupedData[k]));
-
-      return {
-        ...state,
-        filteredExamsByAvailabilityAndRegistration: filteredExamsByAvailabilityAndRegistration,
-      };
+      return getStateFilteredByAvailabilityAndRegistration(state);
 
     case actionTypes.ADD_EXAM_LOCATIONS:
       return {
@@ -178,6 +241,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         location: action.location,
       };
+    case actionTypes.TOGGLE_OPEN_REGISTRATION_FILTER:
+      return {
+        ...state,
+        openRegistrationFilter: action.openRegistrationFilter
+      }
+    case actionTypes.TOGGLE_AVAILABILITY_FILTER:
+      return {
+        ...state,
+        availabilityFilter: action.availabilityFilter
+      }
     case actionTypes.SELECT_EXAM_SESSION:
       return {
         ...state,

@@ -135,6 +135,13 @@ export const participantList = props => {
     return form.ssn ? form.ssn : moment(form.birthdate).format(DATE_FORMAT);
   };
 
+  const getPhoneNumber = participant => {
+    const asNumber = parsePhoneNumberFromString(
+      participant.form.phone_number,
+    );
+    return asNumber ? asNumber.formatInternational() : '';
+  }
+
   const confirmPaymentButton = participant => {
     const confirmPayment = (
       <React.Fragment>
@@ -277,7 +284,7 @@ export const participantList = props => {
         confirmText={props.t('examSession.registration.cancel.confirm')}
         cancelText={props.t('examSession.registration.cancel.cancel')}
       />
-    );
+    )
   };
 
   const participantRows = participants => {
@@ -310,9 +317,9 @@ export const participantList = props => {
         </div>
         <div className={classes.StateItem}>{props.t('examSession.registration')}</div>
         <div className={classes.FirstShowOnHover}>
-          {p.state === 'SUBMITTED'
+          {p.state === 'SUBMITTED' && !props.disableControls
             ? confirmPaymentButton(p)
-            : p.state === 'COMPLETED'
+            : p.state === 'COMPLETED' && !props.disableControls
               ? relocateButton(p)
               : null}
         </div>
@@ -324,13 +331,11 @@ export const participantList = props => {
           {p.form.post_office}
         </div>
         <div className={classes.Item}>
-          {parsePhoneNumberFromString(
-            p.form.phone_number,
-          ).formatInternational()}
+          {getPhoneNumber(p)}
         </div>
         <div className={classes.Item}> {p.form.email}</div>
         <div className={classes.ShowOnHover}>
-          {p.state === 'SUBMITTED' || p.state === 'COMPLETED'
+          {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') && !props.disableControls
             ? cancelRegistrationButton(p)
             : null}
         </div>
@@ -351,7 +356,6 @@ export const participantList = props => {
       </h2>
     );
   }
-
   return (
     <div data-cy="participant-list">
       {participantsHeader()}
@@ -386,6 +390,7 @@ participantList.propTypes = {
   onConfirmPayment: PropTypes.func.isRequired,
   onRelocate: PropTypes.func.isRequired,
   onResendLink: PropTypes.func.isRequired,
+  disableControls: PropTypes.bool,
 };
 
 export default withTranslation()(participantList);

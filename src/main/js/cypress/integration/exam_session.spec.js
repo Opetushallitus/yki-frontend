@@ -10,7 +10,7 @@ describe('Exam sessions', () => {
   const fillExamSessionForm = () => {
     cy.get('[data-cy=radio-fin]').click();
     cy.get('[data-cy=radio-PERUS]').click();
-    cy.get('[data-cy=radio-2021-01-30]').click();
+    cy.get('[data-cy=radio-2081-01-30]').click();
     cy.get('[data-cy=input-max-participants]').type('100');
     cy.get('[data-cy=input-streetAddress]').type('address');
     cy.get('[data-cy=input-zip]').type('00100');
@@ -20,7 +20,7 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=exam-session-header]');
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 3);
+      .should('have.length', 5);
   });
 
   it('front page contains agreement data', () => {
@@ -195,49 +195,64 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=participant-1]').should('exist');
   });
 
-  const fillPostAdmissionForm = (daySelector, quota) => {
-    cy.get('#postAdmissionStart').click();
-    cy.get('.dayContainer').children().not('.flatpickr-disabled').eq(daySelector).click();
-    cy.get('[data-cy=input-admission-quota]').clear().type('-1').blur();
-    cy.contains('Arvon pitää olla positiivinen').should('exist');
-    cy.get('[data-cy=input-admission-quota]').clear().type('a').blur();
-    cy.contains('Arvon pitää olla kokonaisluku').should('exist');
-    cy.get('[data-cy=input-admission-quota]').clear().blur();
-    cy.contains('Pakollinen').should('exist');
-    cy.get('[data-cy=input-admission-quota]').clear().type(quota).blur();
-    cy.contains('Pakollinen').should('not.exist');
+  const paKey = (key) => `[data-cy=exam-session-post-admission-${key}]`
 
-    cy.get('[data-cy=button-admission-submit]').click();
+  const fillPostAdmissionForm = (quota) => {
+    cy.get(paKey('input-quota'))
+      .clear()
+      .type(quota)
+      .blur();
+    cy.get(paKey('submit-button')).click();
   };
 
-  const postAdmissionFieldsValidate = (date, quota) => {
-    cy.get('[data-cy=input-admission-startDate]').should('be.disabled').and('have.value', date);
-    cy.get('[data-cy=input-admission-endDate]').should('be.disabled');
-    cy.get('[data-cy=input-admission-quota]').should('be.disabled').and('have.value', quota);
+  const postAdmissionFieldsValidate = (startDate, endDate, quota) => {
+    cy.get(paKey('input-startDate'))
+      .should('be.disabled')
+      .and('have.value', startDate);
+    cy.get(paKey('input-endDate'))
+      .should('be.disabled')
+      .and('have.value', endDate);
+    cy.get(paKey('input-quota'))
+      .should('be.disabled')
+      .and('have.value', quota);
   };
 
-  const postAdmissionToggleActivity = () => {
-    cy.get('[data-cy=button-admission-toggle-active]').click();
-    cy.get('[data-cy=h3-admission-confirm-text]').should('exist');
-    cy.get('[data-cy=button-admission-activity-confirm]').click();
-  }
+  it('post admission can be activated', () => {
+    const quota = '5';
 
-  it('new post admission can be created', () => {
-    cy.get('[data-cy=exam-sessions-table-row-0]').click();
-    cy.get('[data-cy=button-add-post-admission]').click();
+    cy.get('[data-cy=exam-sessions-table-row-3]').click();
+    cy.get(paKey('add-button')).click();
+    fillPostAdmissionForm(quota);
+    postAdmissionFieldsValidate('26.11.2080', '20.12.2080', quota);
 
-    fillPostAdmissionForm(0, 15);
-    postAdmissionFieldsValidate('16.12.2019', '15');
+    cy.get('[data-cy=modal-close-button]').click();
+    cy.get('[data-cy=exam-sessions-table-row-3]').click();
+    postAdmissionFieldsValidate('26.11.2080', '20.12.2080', quota);
 
-    cy.get('[data-cy=button-admission-modify]').click();
+  })
 
-    fillPostAdmissionForm(1, 10);
-    postAdmissionFieldsValidate('17.12.2019', '10');
+  it('post admission quota can be edited', () => {
+    const newQuota = '15';
 
-    postAdmissionToggleActivity();
-    cy.get('[data-cy=button-admission-modify]').should('not.exist');
+    cy.get('[data-cy=exam-sessions-table-row-4]').click();
+    cy.get(paKey('modify-button')).click();
+    fillPostAdmissionForm(newQuota);
+    postAdmissionFieldsValidate('30.11.2080', '25.12.2080', newQuota);
 
-    postAdmissionToggleActivity();
-    cy.get('[data-cy=button-admission-modify]').should('exist');
+  })
+
+  it('post admission can be deactivated', () => {
+    cy.get('[data-cy=exam-sessions-table-row-4]').click();
+
+    // Can be cancelled
+    cy.get(paKey('deactivate-button')).click();
+    cy.get(paKey('cancel')).click();
+    postAdmissionFieldsValidate('30.11.2080', '25.12.2080', '10');
+
+    // Can be deleted
+    cy.get(paKey('deactivate-button')).click();
+    cy.get(paKey('confirm')).click();
+    cy.get(paKey('add-button')).should('exist');
+
   })
 });

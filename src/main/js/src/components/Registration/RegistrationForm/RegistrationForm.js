@@ -16,6 +16,7 @@ import GenderSelect from './GenderSelect/GenderSelect';
 import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW, TABLET_VIEW } from '../../../common/Constants';
 import RegistrationError from '../RegistrationError/RegistrationError';
 import Checkbox from "../../UI/Checkbox/Checkbox";
+import PhoneNumberInput from "../../PhoneNumberInput/PhoneNumberInput";
 
 export const registrationForm = props => {
   const mandatoryErrorMsg = props.t('error.mandatory');
@@ -140,7 +141,6 @@ export const registrationForm = props => {
       </div>
     );
   };
-
   const CheckboxComponent = ({ field: { name, value, onChange }, datacy }) => {
     return (
       <Checkbox
@@ -151,6 +151,45 @@ export const registrationForm = props => {
       />
     );
   };
+
+  const PhoneNumberComponent = ({ field: { name, value }, datacy, setFieldValue, setTouched, touched }) => {
+    return (
+      <PhoneNumberInput
+        name={name}
+        current={value}
+        datacy={datacy}
+        nationalities={props.initData.nationalities}
+        onChange={(n) => {
+          setFieldValue(name, n);
+          setTouched({
+            ...touched,
+            [name]: true
+          }, true);
+        }}
+      />
+    );
+  };
+
+  const phoneNumberInputField = (setFieldValue, setTouched, touched) => (
+    <> <h3>{props.t(`registration.form.phoneNumber`)}</h3>
+      <Field
+        component={PhoneNumberComponent}
+        name={'phoneNumber'}
+        value={'phoneNumber'}
+        datacy={"input-phoneNumber"}
+        setFieldValue={setFieldValue}
+        setTouched={setTouched}
+        touched={touched}
+        type='tel'
+        aria-label={props.t(`registration.form.aria.phoneNumber`)}
+      />
+      <ErrorMessage
+        name={'phoneNumber'}
+        data-cy={`input-error-phoneNumber`}
+        component="span"
+        className={classes.ErrorMessage}
+      /></>
+  )
 
   const inputField = (name, placeholder = '', extra, type = 'text') => (
     <>
@@ -215,7 +254,7 @@ export const registrationForm = props => {
         ssn: emptyIfAbsent(props.initData.user.ssn),
         birthdate: '',
         gender: '',
-        phoneNumber: '',
+        phoneNumber: '358',
         email: emptyIfAbsent(props.initData.user.email),
         confirmEmail: emptyIfAbsent(props.initData.user.email),
         examLang:
@@ -252,7 +291,7 @@ export const registrationForm = props => {
         };
         props.onSubmitRegistrationForm(props.initData.registration_id, payload);
       }}
-      render={({ values, isValid, errors, initialValues, setFieldValue }) => (
+      render={({ values, isValid, errors, initialValues, setFieldValue, setTouched, touched }) => (
         <Form className={classes.Form}>
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
@@ -291,7 +330,7 @@ export const registrationForm = props => {
               <>
                 <div className={classes.InputFieldGrid}>
                   <div className={classes.FormElement}>
-                    {inputField('phoneNumber', '(+358)', null, 'tel')}
+                    {phoneNumberInputField(setFieldValue, setTouched, touched)}
                   </div>
                 </div>
                 <div className={classes.InputFieldGrid}>
@@ -310,7 +349,7 @@ export const registrationForm = props => {
               :
               <div className={classes.InputFieldGrid}>
                 <div className={classes.FormElement}>
-                  {inputField('phoneNumber', '(+358)', null, 'tel')}
+                  {phoneNumberInputField(setFieldValue, setTouched, touched)}
                 </div>
                 <div className={classes.FormElement}>
                   {readonlyWhenExistsInput('email', initialValues, 'email')}

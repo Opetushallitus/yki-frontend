@@ -5,12 +5,16 @@ import PropTypes from 'prop-types';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { withTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import DatePicker from '../../components/UI/DatePicker/DatePicker';
-import ActionButton from '../../components/UI/ActionButton/ActionButton';
-import { DATE_FORMAT } from '../../common/Constants';
-import { languageToString } from '../../util/util';
+import DatePicker from '../../../components/UI/DatePicker/DatePicker';
+import ActionButton from '../../../components/UI/ActionButton/ActionButton';
+import { DATE_FORMAT } from '../../../common/Constants';
+import { languageToString } from '../../../util/util';
 import classes from './AddOrEditPostAdmissionConfiguration.module.css';
-import * as actions from '../../store/actions/index';
+import * as actions from '../../../store/actions';
+
+// NO LONGER IN USE
+// Can be removed when post admission feature is confirmed to work
+// and no more stuff needs to be saved.
 
 const AddOrEditPostAdmissionConfiguration = (props) => {
   const t = props.t;

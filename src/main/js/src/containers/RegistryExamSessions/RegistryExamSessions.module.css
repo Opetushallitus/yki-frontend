@@ -1,0 +1,22 @@
+.Content {
+	margin: auto;
+	margin-top: 20px;
+	width: calc(100% - 170px);
+	max-width: 1440px;
+	min-width: 300px;
+	height: 100%;
+	align-items: center;
+  }
+
+  .LinkStyle {
+	color: hsla(195, 82%, 44%, 1);
+	font-size: 0.875em;
+	line-height: 1.625em;
+	letter-spacing: -0.3px;
+	text-decoration: none;
+  }
+  
+
+  .SubTitle {
+	  margin: 0;
+  }
