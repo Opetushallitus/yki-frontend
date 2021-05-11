@@ -96,6 +96,25 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
     </>
   );
 
+  const contactDetails = (
+    <>
+      {exam.contact &&
+        exam.contact.length > 0 &&
+        exam.contact.map(c => {
+          return (
+            <>
+              <p>{t('registration.list.contact')}</p>
+              <article>
+                {c.name}
+                <br /> {c.email}
+                <br /> {c.phone_number}
+              </article>
+            </>
+          );
+        })}
+    </>
+  );
+
   const registrationSuccessContent = (
     <div data-cy="exam-details-card" className={classes.SuccessDetailsCard}>
       <p>{getLanguageAndLevel(exam)}</p>
@@ -118,6 +137,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
           exam.exam_fee
         } €`}</p>
       )}
+      {contactDetails}
     </div>
   );
 
@@ -139,6 +159,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
               })}
             {price}
             {availableSeats}
+            {contactDetails}
           </div>
         </>
       )}
