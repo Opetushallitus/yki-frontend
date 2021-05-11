@@ -460,7 +460,6 @@ class ExamDates extends Component {
                 data-cy={`exam-dates-edit-button-${e.exam_date}`}
                 disabled={!canEditExamDate(e)}
                 className={classes.EditButton}
-                disabled={!canEditExamDate(e)}
                 onClick={() => this.showEditExamDateHandler(e)}
               >
                 {t('common.edit')}

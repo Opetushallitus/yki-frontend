@@ -7,7 +7,6 @@ import {
   formatDate,
 } from '../../../util/examSessionUtil';
 import { checkTodayIsBetween, sortObjectArray } from '../../../util/util';
-import AuthButton from '../AuthButton/AuthButton';
 import classes from './ReEvaluationList.module.css';
 
 const ReEvaluationList = props => {

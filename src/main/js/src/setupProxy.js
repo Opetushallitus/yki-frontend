@@ -714,11 +714,14 @@ module.exports = function(app) {
   app.get('/yki/api/virkailija/organizer/:oid/exam-date', (req, res) => {
     const mockCall = () => {
       try {
+        const history = req.query.from;
         res.set('Content-Type', 'application/json; charset=utf-8');
-        const futureExamDates = examDates.dates.filter(d => {
-          // return moment(d.registration_end_date).isSameOrAfter(moment());
-          return moment(d.exam_date).isSameOrAfter(moment());
-        });
+        const futureExamDates = history
+          ? examDates.dates
+          : examDates.dates.filter(d => {
+              // return moment(d.registration_end_date).isSameOrAfter(moment());
+              return moment(d.exam_date).isSameOrAfter(moment());
+            });
         res.send({ dates: futureExamDates });
         // all exam dates
         // res.send({ dates: examDates.dates });
