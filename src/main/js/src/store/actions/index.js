@@ -56,7 +56,7 @@ export {
   deletePostAdmissionEndDate,
   updateExamDateConfigurations,
   deleteExamDate,
-  GetExamDatesHistory,
+  // GetExamDatesHistory,
   addEvaluationPeriod,
 } from './examDates';
 export { fetchUser } from './user';

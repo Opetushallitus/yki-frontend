@@ -6,6 +6,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import { DATE_FORMAT } from '../../common/Constants';
+import Checkbox from '../../components/UI/Checkbox/Checkbox';
 import ControlledCheckbox from '../../components/UI/Checkbox/ControlledCheckbox';
 import Modal from '../../components/UI/Modal/Modal';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -60,11 +61,7 @@ class ExamDates extends Component {
 
     if (prevState.fetchExamHistory !== this.state.fetchExamHistory) {
       const id = this.props.user.identity.oid;
-      if (this.state.fetchExamHistory) {
-        this.props.onGetExamDatesHistory(id);
-      } else {
-        this.props.onFetchExamDates(id);
-      }
+      this.props.onFetchExamDates(id, this.state.fetchExamHistory);
     }
   }
 
@@ -297,12 +294,13 @@ class ExamDates extends Component {
               {t('examDates.delete.selected')}
             </button>
           </div>
-          {/*         
-    // Hidden until decided if this should exist
-    <div className={classes.PastExamDates}>
-            <p>{'Näytä meneet päivät'}</p>
-            <Checkbox checked={this.state.fetchExamHistory} onChange={() => this.onExamDateHistoryFetchChange()} />
-          </div> */}
+          <div className={classes.PastExamDates}>
+            <p>{t('examDates.show.pastDates')}</p>
+            <Checkbox
+              checked={this.state.fetchExamHistory}
+              onChange={() => this.onExamDateHistoryFetchChange()}
+            />
+          </div>
         </div>
       );
 
@@ -524,9 +522,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddExamDate: (examDate, oid) =>
       dispatch(actions.addExamDate(examDate, oid)),
-    onFetchExamDates: oid => dispatch(actions.fetchExamDates(oid)),
+    onFetchExamDates: (oid, fetchHistory) =>
+      dispatch(actions.fetchExamDates(oid, fetchHistory)),
     errorConfirmedHandler: () => dispatch(actions.examDatesFailReset()),
-    onGetExamDatesHistory: oid => dispatch(actions.GetExamDatesHistory(oid)),
     onUpdateConfiguration: (postAdmission, languages, oid, examDateId) =>
       dispatch(
         actions.updateExamDateConfigurations(
@@ -549,7 +547,6 @@ ExamDates.propTypes = {
   error: PropTypes.object,
   onFetchExamDates: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
-  onGetExamDatesHistory: PropTypes.func.isRequired,
   onAddExamDate: PropTypes.func.isRequired,
   onUpdateConfiguration: PropTypes.func.isRequired,
   onDeleteExamDate: PropTypes.func.isRequired,

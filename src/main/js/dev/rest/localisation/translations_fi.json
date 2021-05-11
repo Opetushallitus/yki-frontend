@@ -132,6 +132,7 @@
   "examDates.choose.registrationTime": "Valitse ilmoittautumisaika",
   "examDates.delete.selected": "Poista valittuja tutkintopäiviä",
   "examDates.postAdmission": "Jälki-ilmoittautuminen",
+  "examDates.show.pastDates": "Näytä menneet päivät",
   "examSession": "Tutkintotilaisuus",
   "examSession.add.header": "Luo uusi tutkintotilaisuus",
   "examSession.add.subHeader": "Tutkintotilaisuuden tiedot",

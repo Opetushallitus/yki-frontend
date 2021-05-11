@@ -1,4 +1,7 @@
+import moment from 'moment';
+
 import axios from '../../axios';
+import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 import * as actionTypes from './actionTypes';
 
 const fetchExamDatesStart = () => {
@@ -30,11 +33,14 @@ export const examDatesFailReset = () => {
   };
 };
 
-export const fetchExamDates = oid => {
+export const fetchExamDates = (oid, daysParam) => {
   return dispatch => {
     dispatch(fetchExamDatesStart());
+    const today = moment().format(ISO_DATE_FORMAT_SHORT);
+    const baseUrl = `/yki/api/virkailija/organizer/${oid}/exam-date`;
+    const url = daysParam ? `${baseUrl}?from=${today}&days=180` : baseUrl;
     axios
-      .get(`/yki/api/virkailija/organizer/${oid}/exam-date`)
+      .get(url)
       .then(res => {
         dispatch(fetchExamDatesSuccess(res.data.dates));
       })
@@ -226,22 +232,6 @@ export const deletePostAdmissionEndDate = examDateId => {
         dispatch(fetchExamDates());
       });
     //TODO: handle error
-  };
-};
-
-// TODO: should this be in examSessions actions?
-export const GetExamDatesHistory = oid => {
-  return dispatch => {
-    dispatch(fetchExamDatesStart());
-    axios
-      .get(`/yki/api/virkailija/organizer/${oid}/exam-session/history`)
-      .then(res => {
-        // dispatch(fetchExamSessionContent());
-        dispatch(fetchExamDatesSuccess(res.data.dates));
-      })
-      .catch(err => {
-        console.error(err);
-      });
   };
 };
 
