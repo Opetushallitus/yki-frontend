@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
-import classes from './RegistryItemForm.module.css';
+import { DATE_FORMAT } from '../../common/Constants';
 import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
 import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
-import { DATE_FORMAT } from '../../common/Constants';
 import AgreementPdf from './AgreementPdf/AgreementPdf';
+import classes from './RegistryItemForm.module.css';
 
 const registryItemForm = props => {
   const validationSchema = Yup.object().shape({

@@ -96,6 +96,7 @@ class ExamDates extends Component {
       showAddOrEditExamDate: false,
       selectedExamDate: null,
       showAddEvaluationPeriod: false,
+      fetchExamHistory: false,
     });
 
   onExamDateHistoryFetchChange = () => {

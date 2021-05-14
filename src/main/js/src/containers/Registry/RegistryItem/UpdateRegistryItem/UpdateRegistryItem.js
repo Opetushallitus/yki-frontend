@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
-import classes from './UpdateRegistryItem.module.css';
 import RegistryItemForm from '../../../../components/RegistryItemForm/RegistryItemForm';
 import ActionButton from '../../../../components/UI/ActionButton/ActionButton';
-import { capitalize } from '../../../../util/util';
 import * as actions from '../../../../store/actions/index';
+import { capitalize } from '../../../../util/util';
+import classes from './UpdateRegistryItem.module.css';
 
 class UpdateRegistryItem extends Component {
   deleteRegistryItemHandler = oid => {

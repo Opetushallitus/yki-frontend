@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useCallback, useState } from 'react';
+import Dropzone from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
-import { useDropzone } from 'react-dropzone';
 
 import axios from '../../../axios';
 import classes from './AgreementPdf.module.css';
@@ -16,6 +16,7 @@ const agreementPdf = props => {
     if (acceptedFiles.length > 0) {
       const formData = new FormData();
       formData.append('file', acceptedFiles[0]);
+
       setSuccess(null);
       axios
         .post(`/yki/api/virkailija/organizer/${props.oid}/file`, formData, {
@@ -24,31 +25,36 @@ const agreementPdf = props => {
         .then(() => {
           setSuccess(true);
         })
-        .catch(() => {
+        .catch(e => {
+          console.log(e);
           setSuccess(false);
         });
     }
   }, []);
 
-  const { getRootProps, getInputProps, rejectedFiles } = useDropzone({
-    noDrag: true,
-    onDrop: onFileSelect,
-    accept: 'application/pdf',
-    minSize: 0,
-    maxSize: maxSize,
-  });
-
-  const fileRejected = rejectedFiles.length > 0;
-
   return (
     <div className={classes.AgreementPdf}>
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        <button className={classes.UploadButton}>
-          {t('registryItem.agreement.addPdf')}
-        </button>
-      </div>
-      {(success === false || fileRejected) && (
+      <Dropzone
+        accept="application/pdf"
+        minSize={0}
+        maxSize={maxSize}
+        noDrag={true}
+        onDropAccepted={acceptedFiles => {
+          onFileSelect(acceptedFiles);
+        }}
+        onDropRejected={() => setSuccess(false)}
+      >
+        {({ getRootProps, getInputProps }) => (
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            <p className={classes.UploadButton}>
+              {t('registryItem.agreement.addPdf')}
+            </p>
+          </div>
+        )}
+      </Dropzone>
+
+      {success === false && (
         <p className={classes.ErrorMessage}>
           {t('registryItem.agreement.addPdfFailed')}
         </p>

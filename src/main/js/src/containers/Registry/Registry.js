@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
-import classes from './Registry.module.css';
-import Page from '../../hoc/Page/Page';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import Modal from '../../components/UI/Modal/Modal';
-import Button from '../../components/UI/Button/Button';
-import * as actions from '../../store/actions/index';
 import RegistryFilter from '../../components/RegistryFilter/RegistryFilter';
-import { collectRegistryItemDetails } from '../../util/registryUtil';
-import RegistryItem from './RegistryItem/RegistryItem';
-import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
-import UpdateRegistryItem from './RegistryItem/UpdateRegistryItem/UpdateRegistryItem';
+import Button from '../../components/UI/Button/Button';
+import Modal from '../../components/UI/Modal/Modal';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import Page from '../../hoc/Page/Page';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../store/actions/index';
+import { collectRegistryItemDetails } from '../../util/registryUtil';
+import classes from './Registry.module.css';
+import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
+import RegistryItem from './RegistryItem/RegistryItem';
+import UpdateRegistryItem from './RegistryItem/UpdateRegistryItem/UpdateRegistryItem';
 
 export class Registry extends Component {
   state = {
@@ -38,8 +38,9 @@ export class Registry extends Component {
 
   openModalHandler = () => this.setState({ showModal: true });
 
-  closeModalHandler = () =>
+  closeModalHandler = () => {
     this.setState({ showModal: false, updating: false });
+  };
 
   updateRegistryItemHandler = item =>
     this.setState({ showModal: true, updating: true, selectedItem: item });
@@ -75,8 +76,8 @@ export class Registry extends Component {
                 onClose={this.closeModalHandler}
               />
             ) : (
-                <NewRegistryItem onClose={this.closeModalHandler} />
-              )}
+              <NewRegistryItem onClose={this.closeModalHandler} />
+            )}
           </Modal>
         ) : null}
       </React.Fragment>
