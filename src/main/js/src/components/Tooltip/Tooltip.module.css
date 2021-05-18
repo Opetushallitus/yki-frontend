@@ -1,0 +1,41 @@
+/* .ShowOnHover {
+  display: none;
+} */
+
+/* .Item:hover > .ShowOnHover {
+  display: block;
+} */
+
+.Item {
+  margin-left: 1rem;
+}
+
+.Item > span {
+  cursor: pointer;
+}
+
+.TooltipText {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  font-size: 14px;
+  color: white;
+  padding: 2px 5px;
+  background-color: black;
+  opacity: 0.6;
+  border: 1px solid black;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.TooltipClose {
+  background: none !important;
+  color: white;
+  margin-left: 5px;
+}
+/* .ShowOnHover:hover {
+  display: block;
+} */

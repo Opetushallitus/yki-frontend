@@ -1,27 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
-import { withTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
-import classes from './ExamSessionForm.module.css';
-import Button from '../UI/Button/Button';
-import RadioButton from '../UI/RadioButton/RadioButton';
 import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
+import { getLocalizedName } from '../../util/registryUtil';
 import {
   languageToString,
   levelDescription,
   levelTranslations,
 } from '../../util/util';
-import { getLocalizedName } from '../../util/registryUtil';
-import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
+import Tooltip from '../Tooltip/Tooltip';
+import Button from '../UI/Button/Button';
+import RadioButton from '../UI/RadioButton/RadioButton';
+import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
+import classes from './ExamSessionForm.module.css';
+
 //import SessionContact from '../SessionContact/SessionContact';
 
 const examSessionForm = props => {
-  const { contact_name, contact_email, contact_phone_number } = props.examSessionContent && props.examSessionContent.organizer
+  const { contact_name, contact_email, contact_phone_number } =
+    props.examSessionContent && props.examSessionContent.organizer;
   function validateDuplicateExamSession() {
     let duplicateFound = false;
     const examDate = this.parent.examDate;
@@ -68,8 +71,7 @@ const examSessionForm = props => {
     extraSv: Yup.string(),
     extraEn: Yup.string(),
     contactName: Yup.string().required(props.t('error.mandatory')),
-    contactEmail: Yup.string()
-      .email(props.t('error.email')),
+    contactEmail: Yup.string().email(props.t('error.email')),
 
     contactPhoneNumber: Yup.string(),
   });
@@ -103,10 +105,15 @@ const examSessionForm = props => {
     className,
     children,
     error,
+    tooltip,
   }) => {
     return (
       <div className={className} id={id}>
-        <h3>{label}</h3>
+        <div style={{ display: 'flex', width: '100%' }}>
+          <h3>{label}</h3>
+          {tooltip && <Tooltip triggerText={'i'} text={tooltip} />}
+        </div>
+
         {children}
         {error && value ? (
           <span className={classes.ErrorMessage}>{error}</span>
@@ -116,10 +123,7 @@ const examSessionForm = props => {
   };
 
   const languageFields = languages => {
-    const uniqueLanguageCodes = R.compose(
-      R.uniq,
-      R.pluck('language_code'),
-    );
+    const uniqueLanguageCodes = R.compose(R.uniq, R.pluck('language_code'));
 
     return uniqueLanguageCodes(languages).map(c => {
       return (
@@ -170,7 +174,9 @@ const examSessionForm = props => {
           { language_code: selectedLanguage, level_code: selectedLevel },
           examDate.languages,
         );
-        const languages = getLanguagesWithLevelDescriptions(examDate.languages).join(', ');
+        const languages = getLanguagesWithLevelDescriptions(
+          examDate.languages,
+        ).join(', ');
         return (
           <Field
             component={RadioButtonComponent}
@@ -203,19 +209,20 @@ const examSessionForm = props => {
     }
   };
 
-  const initialOfficeOid = props.examSessionContent
-    && props.examSessionContent.organizationChildren
-    && props.examSessionContent.organizationChildren.length > 0
-    ? props.examSessionContent.organizationChildren[0].oid
-    : '';
+  const initialOfficeOid =
+    props.examSessionContent &&
+    props.examSessionContent.organizationChildren &&
+    props.examSessionContent.organizationChildren.length > 0
+      ? props.examSessionContent.organizationChildren[0].oid
+      : '';
 
   const organizationSelection = (children, lang) =>
-    children && children.map(c =>
+    children &&
+    children.map(c => (
       <option value={c.oid} key={c.oid}>
         {`${getLocalizedName(c.nimi, lang)} (${c.oid ? c.oid : ''})`}
       </option>
-    );
-
+    ));
 
   return (
     <Formik
@@ -240,8 +247,8 @@ const examSessionForm = props => {
       onSubmit={values => {
         const office = values.officeOid
           ? props.examSessionContent.organizationChildren.find(
-            o => o.oid === values.officeOid,
-          )
+              o => o.oid === values.officeOid,
+            )
           : null;
         const orgOrOfficeName = office
           ? office.nimi
@@ -320,6 +327,7 @@ const examSessionForm = props => {
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="language"
+                tooltip={props.t('common.language.tooltip')}
                 label={`${props.t('common.language')} *`}
                 value={values.language}
                 error={errors.language}
