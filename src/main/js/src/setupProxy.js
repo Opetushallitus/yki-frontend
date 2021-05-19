@@ -15,17 +15,17 @@ const getCurrentTime = () => {
 const printError = (req, err) => {
   console.log(
     '\n Error in: ' +
-      req.method +
-      ': ' +
-      req.originalUrl +
-      '\n' +
-      req.body +
-      '\n From ' +
-      (err.config && err.config.url) +
-      '\n Message: ' +
-      err.message +
-      '\n Response data: ' +
-      (err.response && JSON.stringify(err.response.data)),
+    req.method +
+    ': ' +
+    req.originalUrl +
+    '\n' +
+    req.body +
+    '\n From ' +
+    (err.config && err.config.url) +
+    '\n Message: ' +
+    err.message +
+    '\n Response data: ' +
+    (err.response && JSON.stringify(err.response.data)),
   );
 };
 
@@ -247,7 +247,7 @@ const upload = multer({
 
 let uploadedFile;
 
-module.exports = function(app) {
+module.exports = function (app) {
   const getUrl = req => {
     console.log(
       '--> Forward to: ' + process.env.REACT_APP_LOCAL_PROXY + req.originalUrl,
@@ -719,9 +719,9 @@ module.exports = function(app) {
         const futureExamDates = history
           ? examDates.dates
           : examDates.dates.filter(d => {
-              // return moment(d.registration_end_date).isSameOrAfter(moment());
-              return moment(d.exam_date).isSameOrAfter(moment());
-            });
+            // return moment(d.registration_end_date).isSameOrAfter(moment());
+            return moment(d.exam_date).isSameOrAfter(moment());
+          });
         res.send({ dates: futureExamDates });
         // all exam dates
         // res.send({ dates: examDates.dates });
@@ -1166,7 +1166,7 @@ module.exports = function(app) {
     useLocalProxy ? proxyPostCall(req, res) : mockCall();
   });
 
-  app.get('/yki/evaluation-payment/formdata', (req, res) => {
+  app.get('/yki/api/evaluation-payment/formdata', (req, res) => {
     const mockCall = () => {
       try {
         console.log('get payment form data');

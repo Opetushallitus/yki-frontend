@@ -19,7 +19,7 @@ export class PaymentRedirect extends Component {
     } = this.props;
     axios
       .get(
-        `/yki/evaluation-payment/formdata?evaluation-order-id=${params.evaluationOrderId}`,
+        `/yki/api/evaluation-payment/formdata?evaluation-order-id=${params.evaluationOrderId}`,
       )
       .then(({ data }) => {
         this.setState({ formData: data });
