@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import classes from './Tooltip.module.css';
 
+
 const Tooltip = props => {
   const { icon, triggerText, text } = props;
 
@@ -13,7 +14,7 @@ const Tooltip = props => {
         id="tooltip-trigger"
         aria-describedby="tooltip-trigger"
         role="tooltip"
-        tabIndex={0}
+            tabIndex={0}
         className={classes.Item}
         onTouchStart={() => setShowToolTip(!showToolTip)}
         onMouseEnter={() => setShowToolTip(true)}
