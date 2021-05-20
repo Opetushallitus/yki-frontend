@@ -1,31 +1,27 @@
 import React, { useState } from 'react';
 
+import InfoButton from '../../assets/svg/info.svg'
 import classes from './Tooltip.module.css';
 
-
 const Tooltip = props => {
-  const { icon, triggerText, text } = props;
+  const { text } = props;
 
   const [showToolTip, setShowToolTip] = useState(false);
 
   return (
-    <div style={{ position: 'relative' }}>
-      <div
+    <div style={{ position: 'relative', width: '50%' }}>
+      <img src={InfoButton}
+        width={20}
+        height={20}
+        alt="info icon"
         id="tooltip-trigger"
         aria-describedby="tooltip-trigger"
         role="tooltip"
-            tabIndex={0}
+        tabIndex={0}
         className={classes.Item}
         onTouchStart={() => setShowToolTip(!showToolTip)}
         onMouseEnter={() => setShowToolTip(true)}
-        onKeyDown={() => setShowToolTip(!showToolTip)}
-      >
-        {icon ? (
-          <image src={icon} width={20} height={20} />
-        ) : (
-          <div>{triggerText}</div>
-        )}
-      </div>
+        onKeyDown={() => setShowToolTip(!showToolTip)} />
       <div
         className={[classes.ShowOnHover, classes.TooltipText].join('')}
         style={{ display: showToolTip ? 'flex' : 'none' }}

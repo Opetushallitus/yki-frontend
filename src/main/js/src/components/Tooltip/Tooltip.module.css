@@ -16,8 +16,8 @@
 
 .TooltipText {
   position: absolute;
-  left: 1rem;
-  top: 0;
+  left: 2.3rem;
+  top: -1rem;
   font-size: 14px;
   color: white;
   padding: 2px 5px;

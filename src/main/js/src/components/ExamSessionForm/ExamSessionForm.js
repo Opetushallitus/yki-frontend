@@ -111,7 +111,7 @@ const examSessionForm = props => {
       <div className={className} id={id}>
         <div style={{ display: 'flex', width: '100%' }}>
           <h3>{label}</h3>
-          {tooltip && <Tooltip triggerText={'i'} text={tooltip} />}
+          {tooltip && <Tooltip text={tooltip} />}
         </div>
 
         {children}
@@ -211,8 +211,8 @@ const examSessionForm = props => {
 
   const initialOfficeOid =
     props.examSessionContent &&
-    props.examSessionContent.organizationChildren &&
-    props.examSessionContent.organizationChildren.length > 0
+      props.examSessionContent.organizationChildren &&
+      props.examSessionContent.organizationChildren.length > 0
       ? props.examSessionContent.organizationChildren[0].oid
       : '';
 
@@ -247,8 +247,8 @@ const examSessionForm = props => {
       onSubmit={values => {
         const office = values.officeOid
           ? props.examSessionContent.organizationChildren.find(
-              o => o.oid === values.officeOid,
-            )
+            o => o.oid === values.officeOid,
+          )
           : null;
         const orgOrOfficeName = office
           ? office.nimi
@@ -339,6 +339,7 @@ const examSessionForm = props => {
               <RadioButtonGroup
                 id="level"
                 label={`${props.t('common.level')} *`}
+                tooltip={props.t('common.level.tooltip')}
                 value={values.level}
                 error={errors.level}
               >
@@ -352,6 +353,7 @@ const examSessionForm = props => {
               <RadioButtonGroup
                 id="examDate"
                 label={`${props.t('common.date')} *`}
+                tooltip={props.t('common.date.tooltip')}
                 value={values.examDate}
                 error={errors.examDate}
               >
