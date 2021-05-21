@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import InfoButton from '../../assets/svg/info.svg'
+import InfoButton from '../../assets/svg/info.svg';
 import classes from './Tooltip.module.css';
 
 const Tooltip = props => {
@@ -10,18 +10,25 @@ const Tooltip = props => {
 
   return (
     <div style={{ position: 'relative', width: '50%' }}>
-      <img src={InfoButton}
-        width={20}
-        height={20}
-        alt="info icon"
+      <button
         id="tooltip-trigger"
         aria-describedby="tooltip-trigger"
         role="tooltip"
         tabIndex={0}
+        type="button"
         className={classes.Item}
         onTouchStart={() => setShowToolTip(!showToolTip)}
         onMouseEnter={() => setShowToolTip(true)}
-        onKeyDown={() => setShowToolTip(!showToolTip)} />
+        onKeyDown={e => {
+          // Can be triggered with any key except 'Tab'
+          if (e.key !== 'Tab') {
+            e.preventDefault();
+            setShowToolTip(!showToolTip);
+          }
+        }}
+      >
+        <img src={InfoButton} width={20} height={20} alt="info icon" />
+      </button>
       <div
         className={[classes.ShowOnHover, classes.TooltipText].join('')}
         style={{ display: showToolTip ? 'flex' : 'none' }}
