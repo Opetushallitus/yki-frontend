@@ -1154,7 +1154,7 @@ module.exports = function (app) {
     };
     useLocalProxy ? proxyPostCall(req, res) : mockCall();
   });
-  app.post('/yki/api/evaluation-payment/:evaluationOrderId', (req, res) => {
+  app.post('/yki/evaluation-payment/:evaluationOrderId', (req, res) => {
     const mockCall = () => {
       try {
         res.send({ success: true });
@@ -1166,7 +1166,7 @@ module.exports = function (app) {
     useLocalProxy ? proxyPostCall(req, res) : mockCall();
   });
 
-  app.get('/yki/api/evaluation-payment/formdata', (req, res) => {
+  app.get('/yki/evaluation-payment/formdata', (req, res) => {
     const mockCall = () => {
       try {
         console.log('get payment form data');
