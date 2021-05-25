@@ -29,6 +29,7 @@
   letter-spacing: 0;
   color: var(--secondary-blue);
   opacity: 1;
+  margin: 1rem auto;
 }
 
 .ArticleContent p:nth-of-type(5),
@@ -47,8 +48,7 @@
 }
 
 .InnerContainer hr {
-  border: 1px solid var(--secondary-blue);
-  opacity: 0.5;
+  border: 1px solid var(--decoration-blue);
 }
 
 .TutorialVideo {

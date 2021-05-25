@@ -1,17 +1,17 @@
 import React from 'react';
 
-import classes from './DescriptionDetail.module.css'
+import classes from './DescriptionDetail.module.css';
 
-const DescriptionDetail = (props) => {
+const DescriptionDetail = props => {
   const { content } = props;
 
-  const lineBreak = (index) => {
-    if (index < content.length -1) {
-      return <hr/>
+  const lineBreak = index => {
+    if (index < content.length - 1) {
+      return <hr />;
     }
-  }
+  };
 
-  const levelBaseNumber = (level) => {
+  const levelBaseNumber = level => {
     switch (level.charAt(0)) {
       case 'A':
         return 1;
@@ -22,29 +22,30 @@ const DescriptionDetail = (props) => {
       default:
         return null;
     }
-  }
+  };
 
   return (
-     <div className={classes.DescriptionItem}>
-       {content.map((item, i) => {
-         const addition = levelBaseNumber(item.languageLevel);
-         const headerNum = i + addition;
+    <div className={classes.DescriptionItem}>
+      {content.map((item, i) => {
+        const addition = levelBaseNumber(item.languageLevel);
+        const headerNum = i + addition;
 
-         return (
-             <div key={i}>
-               <div className={classes.RowItem}>
-                 <div className={classes.LanguageLevel}>
-                   <h3>{headerNum}</h3>
-                   <hr />
-                   <h3>{item.languageLevel}</h3>
-                 </div>
-                 <article>{item.descriptionText}</article>
-               </div>
-                {lineBreak(i)}
+        return (
+          <div key={i}>
+            <div className={classes.RowItem}>
+              <div className={classes.LanguageLevel}>
+                <h4>
+                  {headerNum} <hr className={classes.LevelHr} />
+                  {item.languageLevel}
+                </h4>
               </div>
-         )
-       })}
-     </div>
+              <article>{item.descriptionText}</article>
+            </div>
+            {lineBreak(i)}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 
