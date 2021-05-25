@@ -2,7 +2,7 @@
   text-align: left;
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
+  color: var(--primary-blue);
   margin-bottom: 10%;
 }
 
@@ -27,7 +27,7 @@
   text-align: left;
   font: normal normal bold 28px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(194, 82%, 43%, 1);
+  color: var(--secondary-blue);
   opacity: 1;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .InnerContainer hr {
-  border: 1px solid hsla(194, 82%, 43%, 1);
+  border: 1px solid var(--secondary-blue);
   opacity: 0.5;
 }
 
