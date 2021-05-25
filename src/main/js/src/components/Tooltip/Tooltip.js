@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import InfoButton from '../../assets/svg/info.svg';
 import classes from './Tooltip.module.css';
 
 const Tooltip = props => {
   const { text } = props;
+  const t = useTranslation();
 
   const [showToolTip, setShowToolTip] = useState(false);
 
@@ -13,6 +15,7 @@ const Tooltip = props => {
       <button
         id="tooltip-trigger"
         aria-describedby="tooltip-trigger"
+        aria-label={t('common.tooltip.ariaLabel')}
         role="tooltip"
         tabIndex={0}
         type="button"

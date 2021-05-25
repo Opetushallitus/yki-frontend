@@ -72,6 +72,7 @@
   "common.searchResult": "hakutulos",
   "common.searchResults": "hakutulosta",
   "common.searchTooManyResults": ". Tarkenna hakua.",
+  "common.tooltip.ariaLabel": "Näytä/piilota ohje",
   "common.validityPeriod": "Voimassaoloaika",
   "common.yki.consent.link": "Lue henkilötietojen käsittelyn ehdot",
   "email.examSession.prequeue.content.line1": "Ilmoittautuminen tutkintotilaisuuteen aukeaa pian",
