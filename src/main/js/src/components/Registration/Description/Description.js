@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import YkiImage1 from '../../../assets/images/ophYki_image1.png';
 import { MOBILE_VIEW } from '../../../common/Constants';
+import { fetchPrices } from '../../../store/actions/index';
 import {
   evaluationTexts,
   formatPriceObject,
@@ -14,12 +16,11 @@ import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCol
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import classes from './Description.module.css';
-import { fetchPrices } from '../../../store/actions/index';
 
 const mapStateToProps = state => {
   return {
     prices: state.registration.prices,
-    loadingPrices: state.registration.loadingPrices
+    loadingPrices: state.registration.loadingPrices,
   };
 };
 
@@ -33,8 +34,8 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices()
-  }, [])
+    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices();
+  }, []);
 
   const examPrices = prices && prices['exam-prices'];
   const evalPrices = prices && prices['evaluation-prices'];
@@ -92,43 +93,49 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
     </div>
   );
 
+  const registerButton = (
+    <Link
+      onKeyPress={() =>
+        history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
+      }
+      to={{
+        pathname: '/ilmoittautuminen/valitse-tutkintotilaisuus',
+      }}
+      className={'YkiButton'}
+      data-cy="continue-button"
+    >
+      {t('registration.register')}
+    </Link>
+  );
+
   const desktopContent = (
-    <>
-      <div className={classes.InnerContainer}>
-        <article className={classes.ArticleContent}>
-          <p>{t('registration.description.text2')}</p>
-          <p>{t('registration.description.text3')}</p>
-          <p>{t('registration.description.text4')}</p>
-        </article>
-        {tutorialVideo}
-        <>
-          <h2>{t('registration.description.examLevels')}</h2>
-          <DescriptionCollapsible
-            headerText={levelTranslations.PERUS}
-            content={basicLevel}
-          />
-          <DescriptionCollapsible
-            headerText={levelTranslations.KESKI}
-            content={middleLevel}
-          />
-          <DescriptionCollapsible
-            headerText={levelTranslations.YLIN}
-            content={upperLevel}
-          />
-        </>
-        <>
-          <button
-            className={'YkiButton'}
-            data-cy="continue-button"
-            onClick={() =>
-              history.push(t('/ilmoittautuminen/valitse-tutkintotilaisuus'))
-            }
-            role="link"
-            aria-label={t('registration.register')}
-          >
-            {t('registration.register')}
-          </button>
-        </>
+    <div className={classes.InnerContainer}>
+      <div style={{ display: 'flex' }}>
+        <div style={{ marginRight: '1rem' }}>
+          <article className={classes.ArticleContent}>
+            <p>{t('registration.description.text2')}</p>
+            <p>{t('registration.description.text3')}</p>
+            <p>{t('registration.description.text4')}</p>
+          </article>
+          {tutorialVideo}
+        </div>
+        <PriceContainer />
+      </div>
+      <div>
+        <h2>{t('registration.description.examLevels')}</h2>
+        <DescriptionCollapsible
+          headerText={levelTranslations.PERUS}
+          content={basicLevel}
+        />
+        <DescriptionCollapsible
+          headerText={levelTranslations.KESKI}
+          content={middleLevel}
+        />
+        <DescriptionCollapsible
+          headerText={levelTranslations.YLIN}
+          content={upperLevel}
+        />
+        <>{registerButton}</>
         <div className={classes.InnerContainer}>
           <h2>{t('registration.description.reEvaluation')}</h2>
           {Object.keys(evaluationTexts).map(el => {
@@ -162,7 +169,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           extraText: 'common.price.reeval.last',
         })}
       />
-    </>
+    </div>
   );
 
   const mobileContent = (
@@ -199,17 +206,8 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
         </div>
       </div>
       <>
-        <PriceContainer elements={levelPrices} />
-        <button
-          className={'YkiButton'}
-          data-cy="continue-button"
-          onClick={() =>
-            history.push(t('/ilmoittautuminen/valitse-tutkintotilaisuus'))
-          }
-          role="link"
-        >
-          {t('registration.register')}
-        </button>
+        <PriceContainer />
+        {registerButton}
       </>
       <div
         className={classes.InnerContainer}
@@ -253,7 +251,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           headlineImage={YkiImage1}
         />
         {MOBILE_VIEW ||
-          (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
+        (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
           <>{mobileContent}</>
         ) : (
           <>{desktopContent}</>

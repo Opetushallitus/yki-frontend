@@ -61,7 +61,7 @@ button {
 }
 
 .YkiButton {
-  display: block;
+  display: flex;
   margin: 32px auto;
   width: 182px;
   background: var(--primary-blue) 0 0 no-repeat padding-box;
@@ -76,6 +76,9 @@ button {
   text-transform: uppercase;
   min-height: 40px;
   max-height: 50px;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
 }
 
 .YkiButton:disabled {
