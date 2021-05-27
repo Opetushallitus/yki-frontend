@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import YkiImage1 from '../../../assets/images/ophYki_image1.png';
-import { MOBILE_VIEW } from '../../../common/Constants';
 import { fetchPrices } from '../../../store/actions/index';
 import {
   evaluationTexts,
@@ -12,6 +11,9 @@ import {
   getDeviceOrientation,
   levelTranslations,
 } from '../../../util/util';
+
+import { useMobileView } from '../../../util/customHooks';
+
 import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCollapsible';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
@@ -31,7 +33,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
+  const { history } = props;
   const { t } = useTranslation();
+
+  const isMobile = useMobileView(true);
 
   useEffect(() => {
     Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices();
@@ -95,6 +100,8 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
 
   const registerButton = (
     <Link
+      tabIndex={0}
+      role="link"
       onKeyPress={() =>
         history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
       }
@@ -250,8 +257,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           headlineContent={<p>{t('registration.description.text1')}</p>}
           headlineImage={YkiImage1}
         />
-        {MOBILE_VIEW ||
-        (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
+        {isMobile || (isMobile && getDeviceOrientation() === 'landscape') ? (
           <>{mobileContent}</>
         ) : (
           <>{desktopContent}</>

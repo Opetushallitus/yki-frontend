@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { MOBILE_VIEW, TABLET_VIEW } from '../../../common/Constants';
 import LanguageSelect from '../../../containers/LanguageSelect/LanguageSelect';
+import { useMobileView } from '../../../util/customHooks';
 import classes from './NavigationTabs.module.css';
 
 const NavigationTabs = props => {
@@ -11,6 +11,8 @@ const NavigationTabs = props => {
   const location = useLocation();
   const { t } = useTranslation();
   const history = useHistory();
+
+  const isMobileOrTablet = useMobileView(true, true);
 
   const handleOnClick = () => {
     setLanguageMenuShow(!showLanguagesMenu);
@@ -32,7 +34,7 @@ const NavigationTabs = props => {
       { title: 'common.reeval', url: '/tarkistusarviointi' },
     ];
 
-    const divider = onDescriptionPage && (MOBILE_VIEW || TABLET_VIEW);
+    const divider = onDescriptionPage && isMobileOrTablet;
     return (
       <>
         {linkArray.map((link, i) => {
@@ -71,7 +73,7 @@ const NavigationTabs = props => {
       ) : (
         <>
           {baseLinks()}
-          {MOBILE_VIEW || TABLET_VIEW ? (
+          {isMobileOrTablet ? (
             <div onClick={() => handleOnClick()}>
               <p className={classes.InactiveTab}>
                 {t('common.registration.select.language')}

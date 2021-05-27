@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { levelTranslations } from '../../util/util';
 import classes from './PriceContainer.module.css';
 
-import { MOBILE_VIEW } from '../../common/Constants';
-
+import { useMobileView } from '../../util/customHooks';
+import { levelTranslations } from '../../util/util';
 import classes from './PriceContainer.module.css';
 
 const PriceContainer = props => {
@@ -13,8 +13,10 @@ const PriceContainer = props => {
   const { elements } = props;
 
   const state = useSelector(state => state);
-  const onMobileSV = state.yki.ykiLanguage === 'sv' && MOBILE_VIEW;
-  const onMobileEN = state.yki.ykiLanguage === 'en' && MOBILE_VIEW;
+
+  const mobile = useMobileView(true, false);
+  const onMobileSV = state.yki.ykiLanguage === 'sv' && mobile;
+  const onMobileEN = state.yki.ykiLanguage === 'en' && mobile;
   const childLength = elements.length;
   const threePerRow = childLength % 3 === 0;
 

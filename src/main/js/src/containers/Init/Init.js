@@ -11,7 +11,27 @@ class Init extends Component {
   componentDidMount() {
     this.props.onFetchUser();
     this.props.onInitYkiLanguage();
+    this.props.onSetWindowWidth(window.innerWidth);
+    window.addEventListener('resize', this.debouncedHandleResize);
   }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.debouncedHandleResize);
+  }
+
+  debounce(fn, ms) {
+    let timer;
+    return _ => {
+      clearTimeout(timer);
+      timer = setTimeout(_ => {
+        timer = null;
+        fn.apply(this, arguments);
+      }, ms);
+    };
+  }
+
+  debouncedHandleResize = this.debounce(function handleResize() {
+    this.props.onSetWindowWidth(window.innerWidth);
+  }, 500);
 
   render() {
     return !this.props.error && this.props.loading ? (
@@ -40,7 +60,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchUser: () => dispatch(actions.fetchUser()),
-    onInitYkiLanguage: () => dispatch(actions.initYKILanguage())
+    onInitYkiLanguage: () => dispatch(actions.initYKILanguage()),
+    onSetWindowWidth: width => dispatch(actions.setWindowWidth(width)),
   };
 };
 

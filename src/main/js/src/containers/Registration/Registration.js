@@ -4,15 +4,22 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import YkiImage1 from '../../assets/images/ophYki_image1.png';
-import { LANGUAGES, MOBILE_VIEW } from '../../common/Constants';
+import { LANGUAGES, MOBILE_WIDTH, TABLET_WIDTH } from '../../common/Constants';
 import HeadlineContainer from '../../components/HeadlineContainer/HeadlineContainer';
 import ExamSessionList from '../../components/Registration/ExamSessionList/ExamSessionList';
 import Filters from '../../components/Registration/Filters/Filters';
 import * as actions from '../../store/actions/index';
-import { getArraySize } from "../../util/util";
+import { getArraySize } from '../../util/util';
 import classes from './Registration.module.css';
 
 class Registration extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      windowWidth: props.windowWidth,
+    };
+  }
+
   componentDidMount() {
     const { language, level, location } = queryString.parse(
       this.props.history.location.search,
@@ -34,6 +41,11 @@ class Registration extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.windowWidth !== this.props.windowWidth) {
+      this.setState({ windowWidth: this.props.windowWidth });
+    }
+  }
 
   onLanguageChange = event => {
     const language = LANGUAGES.find(l => l.name === event.target.value);
@@ -58,17 +70,25 @@ class Registration extends Component {
     } else {
       this.props.onClearFilters();
     }
-  }
+  };
 
   onAvailabilityChange = () => {
-    this.triggerFilters(!this.props.availabilityFilter, this.props.openRegistrationFilter);
+    this.triggerFilters(
+      !this.props.availabilityFilter,
+      this.props.openRegistrationFilter,
+    );
     this.props.onToggleAvailabilityFilter(!this.props.availabilityFilter);
-  }
+  };
 
   onRegistrationFilterChange = () => {
-    this.triggerFilters(this.props.availabilityFilter, !this.props.openRegistrationFilter);
-    this.props.onToggleOpenRegistrationFilter(!this.props.openRegistrationFilter);
-  }
+    this.triggerFilters(
+      this.props.availabilityFilter,
+      !this.props.openRegistrationFilter,
+    );
+    this.props.onToggleOpenRegistrationFilter(
+      !this.props.openRegistrationFilter,
+    );
+  };
 
   getValuesOnFilterChange = () => {
     if (this.props.availabilityFilter && this.props.openRegistrationFilter) {
@@ -85,6 +105,10 @@ class Registration extends Component {
   };
 
   render() {
+    const mobileOrTablet =
+      this.state.windowWidth < MOBILE_WIDTH ||
+      this.state.windowWidth < TABLET_WIDTH;
+
     return (
       <>
         <HeadlineContainer
@@ -109,23 +133,21 @@ class Registration extends Component {
               />
               <hr />
               <p>
-                <strong>{`${getArraySize(this.getValuesOnFilterChange())}`}</strong>{' '}
+                <strong>{`${getArraySize(
+                  this.getValuesOnFilterChange(),
+                )}`}</strong>{' '}
                 {`${this.props.t('common.searchResults')}`}
               </p>
             </div>
           </div>
-          {MOBILE_VIEW || window.innerWidth < 1024 ? (
-            <div style={{ paddingTop: '30px' }} />
-          ) : null}
+          {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
           <ExamSessionList
             examSessions={this.getValuesOnFilterChange()}
             language={this.props.language}
             history={this.props.history}
           />
         </div>
-      </>
-    );
-  }
+      </  }
 }
 
 const mapStateToProps = state => {
@@ -139,9 +161,13 @@ const mapStateToProps = state => {
     locations: state.registration.locations,
     availabilityFilter: state.registration.availabilityFilter,
     openRegistrationFilter: state.registration.openRegistrationFilter,
-    filteredExamSessionsByAvailability: state.registration.filteredExamSessionsByAvailability,
-    filteredExamSessionsByOpenRegistration: state.registration.filteredExamSessionsByOpenRegistration,
-    filteredExamsByAvailabilityAndRegistration: state.registration.filteredExamsByAvailabilityAndRegistration,
+    filteredExamSessionsByAvailability:
+      state.registration.filteredExamSessionsByAvailability,
+    filteredExamSessionsByOpenRegistration:
+      state.registration.filteredExamSessionsByOpenRegistration,
+    filteredExamsByAvailabilityAndRegistration:
+      state.registration.filteredExamsByAvailabilityAndRegistration,
+    windowWidth: state.yki.windowWidth,
   };
 };
 
@@ -153,8 +179,10 @@ const mapDispatchToProps = dispatch => {
     onSelectLocation: location => dispatch(actions.selectLocation(location)),
     onSetAll: (language, level, location) =>
       dispatch(actions.setAll(language, level, location)),
-    onToggleAvailabilityFilter: checked => dispatch(actions.toggleAvailabilityFilter(checked)),
-    onToggleOpenRegistrationFilter: checked => dispatch(actions.toggleOpenRegistrationFilter(checked)),
+    onToggleAvailabilityFilter: checked =>
+      dispatch(actions.toggleAvailabilityFilter(checked)),
+    onToggleOpenRegistrationFilter: checked =>
+      dispatch(actions.toggleOpenRegistrationFilter(checked)),
     onClearFilters: () => dispatch(actions.filterByPathParams()),
     onAvailabilitySelect: () => dispatch(actions.filterExamByAvailability()),
     onRegistrationSelect: () =>

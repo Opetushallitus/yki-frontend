@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { MOBILE_VIEW } from '../../common/Constants';
+import { useMobileView } from '../../util/customHooks';
 import { getDeviceOrientation } from '../../util/util';
 import classes from './HeadlineContainer.module.css';
 
@@ -18,13 +18,15 @@ const HeadlineContainer = props => {
     disableContent,
   } = props;
 
-  const mobileLandscape =
-    window.screen.availWidth < 768 && getDeviceOrientation() === 'landscape';
+  const landscape = useMobileView(false, false, true);
+  const mobileLandscape = landscape;
+
+  const mobile = useMobileView(true, false);
 
   return (
     <div className={classes.Headline}>
       <div className={classes.BaseContainer}>
-        {MOBILE_VIEW || mobileLandscape ? (
+        {mobile || mobileLandscape ? (
           <>
             <div
               className={classes.HeadlineText}
@@ -53,7 +55,7 @@ const HeadlineContainer = props => {
           </div>
         )}
       </div>
-      {MOBILE_VIEW || mobileLandscape ? null : (
+      {mobile || mobileLandscape ? null : (
         <div className={classes.BaseContainer}>
           <div className={classes.ImageContainer} aria-disabled>
             <img aria-disabled src={headlineImage} alt={'headline'} />

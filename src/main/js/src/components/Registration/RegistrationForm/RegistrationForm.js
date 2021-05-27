@@ -1,26 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { withTranslation } from 'react-i18next';
+import { FinnishSSN } from 'finnish-ssn';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import moment from 'moment';
-import { FinnishSSN } from 'finnish-ssn';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
-import classes from './RegistrationForm.module.css';
+import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
+import { useMobileView } from '../../../util/customHooks';
+import PhoneNumberInput from '../../PhoneNumberInput/PhoneNumberInput';
 import Button from '../../UI/Button/Button';
+import Checkbox from '../../UI/Checkbox/Checkbox';
 import RadioButton from '../../UI/RadioButton/RadioButton';
-import NationalitySelect from './NationalitySelect/NationalitySelect';
 import ZipAndPostOffice from '../../ZipAndPostOffice/ZipAndPostOffice';
 import GenderSelect from './GenderSelect/GenderSelect';
-import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW, TABLET_VIEW, PRIVACY_POLICY_LINK } from '../../../common/Constants';
+import {
+  DATE_FORMAT,
+  ISO_DATE_FORMAT_SHORT,
+  MOBILE_VIEW,
+  TABLET_VIEW,
+  PRIVACY_POLICY_LINK,
+} from '../../../common/Constants';
 import RegistrationError from '../RegistrationError/RegistrationError';
-import Checkbox from "../../UI/Checkbox/Checkbox";
-import PhoneNumberInput from "../../PhoneNumberInput/PhoneNumberInput";
+import GenderSelect from './GenderSelect/GenderSelect';
+import NationalitySelect from './NationalitySelect/NationalitySelect';
+import classes from './RegistrationForm.module.css';
 
 export const registrationForm = props => {
   const mandatoryErrorMsg = props.t('error.mandatory');
   const maxErrorMsg = props.t('error.max');
+  const mobileOrTablet = useMobileView(true, true);
 
   function validatePhoneNumber(value) {
     if (value) {
@@ -83,12 +93,11 @@ export const registrationForm = props => {
       .required(mandatoryErrorMsg)
       .max(64, maxErrorMsg),
     nationality: Yup.string().required(mandatoryErrorMsg),
-    ssn: Yup.string()
-      .test(
-        'invalid-ssn',
-        props.t('error.ssn.invalid'),
-        validateSsn,
-      ),
+    ssn: Yup.string().test(
+      'invalid-ssn',
+      props.t('error.ssn.invalid'),
+      validateSsn,
+    ),
     confirmEmail: Yup.string().test(
       'same-email',
       props.t('error.confirmEmail'),
@@ -101,8 +110,12 @@ export const registrationForm = props => {
     ),
     examLang: Yup.string().required(mandatoryErrorMsg),
     certificateLang: Yup.string().required(mandatoryErrorMsg),
-    personalDataConsent: Yup.boolean().required(mandatoryErrorMsg).oneOf([true], mandatoryErrorMsg),
-    termsOfUseConsent: Yup.boolean().required(mandatoryErrorMsg).oneOf([true], mandatoryErrorMsg),
+    personalDataConsent: Yup.boolean()
+      .required(mandatoryErrorMsg)
+      .oneOf([true], mandatoryErrorMsg),
+    termsOfUseConsent: Yup.boolean()
+      .required(mandatoryErrorMsg)
+      .oneOf([true], mandatoryErrorMsg),
   });
 
   const RadioButtonComponent = ({
@@ -152,35 +165,46 @@ export const registrationForm = props => {
     );
   };
 
-  const PhoneNumberComponent = ({ field: { name, value }, datacy, setFieldValue, setTouched, touched }) => {
+  const PhoneNumberComponent = ({
+    field: { name, value },
+    datacy,
+    setFieldValue,
+    setTouched,
+    touched,
+  }) => {
     return (
       <PhoneNumberInput
         name={name}
         current={value}
         datacy={datacy}
         nationalities={props.initData.nationalities}
-        onChange={(n) => {
+        onChange={n => {
           setFieldValue(name, n);
-          setTouched({
-            ...touched,
-            [name]: true
-          }, true);
+          setTouched(
+            {
+              ...touched,
+              [name]: true,
+            },
+            true,
+          );
         }}
       />
     );
   };
 
   const phoneNumberInputField = (setFieldValue, setTouched, touched) => (
-    <> <h3>{props.t(`registration.form.phoneNumber`)}</h3>
+    <>
+      {' '}
+      <h3>{props.t(`registration.form.phoneNumber`)}</h3>
       <Field
         component={PhoneNumberComponent}
         name={'phoneNumber'}
         value={'phoneNumber'}
-        datacy={"input-phoneNumber"}
+        datacy={'input-phoneNumber'}
         setFieldValue={setFieldValue}
         setTouched={setTouched}
         touched={touched}
-        type='tel'
+        type="tel"
         aria-label={props.t(`registration.form.aria.phoneNumber`)}
       />
       <ErrorMessage
@@ -188,8 +212,9 @@ export const registrationForm = props => {
         data-cy={`input-error-phoneNumber`}
         component="span"
         className={classes.ErrorMessage}
-      /></>
-  )
+      />
+    </>
+  );
 
   const inputField = (name, placeholder = '', extra, type = 'text') => (
     <>
@@ -273,8 +298,8 @@ export const registrationForm = props => {
           ssn: props.initData.user.ssn || values.ssn,
           birthdate: values.birthdate
             ? moment(values.birthdate, DATE_FORMAT).format(
-              ISO_DATE_FORMAT_SHORT,
-            )
+                ISO_DATE_FORMAT_SHORT,
+              )
             : null,
           gender: values.gender,
           certificate_lang: values.certificateLang,
@@ -291,7 +316,15 @@ export const registrationForm = props => {
         };
         props.onSubmitRegistrationForm(props.initData.registration_id, payload);
       }}
-      render={({ values, isValid, errors, initialValues, setFieldValue, setTouched, touched }) => (
+      render={({
+        values,
+        isValid,
+        errors,
+        initialValues,
+        setFieldValue,
+        setTouched,
+        touched,
+      }) => (
         <Form className={classes.Form}>
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
@@ -303,7 +336,7 @@ export const registrationForm = props => {
                 {readonlyWhenExistsInput('lastName', initialValues)}
               </div>
             </div>
-            {MOBILE_VIEW || TABLET_VIEW ?
+            {mobileOrTablet ? (
               <>
                 <div className={classes.InputFieldGrid}>
                   <div className={classes.FormElement}>
@@ -312,21 +345,27 @@ export const registrationForm = props => {
                 </div>
                 <div className={classes.InputFieldGrid}>
                   <div className={classes.FormElement}>
-                    <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
+                    <ZipAndPostOffice
+                      values={values}
+                      setFieldValue={setFieldValue}
+                    />
                   </div>
                 </div>
               </>
-              :
+            ) : (
               <div className={classes.InputFieldGrid}>
                 <div className={classes.FormElement}>
                   {inputField('streetAddress')}
                 </div>
                 <div className={classes.FormElement}>
-                  <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
+                  <ZipAndPostOffice
+                    values={values}
+                    setFieldValue={setFieldValue}
+                  />
                 </div>
               </div>
-            }
-            {MOBILE_VIEW || TABLET_VIEW ?
+            )}
+            {mobileOrTablet ? (
               <>
                 <div className={classes.InputFieldGrid}>
                   <div className={classes.FormElement}>
@@ -346,7 +385,7 @@ export const registrationForm = props => {
                   </div>
                 )}
               </>
-              :
+            ) : (
               <div className={classes.InputFieldGrid}>
                 <div className={classes.FormElement}>
                   {phoneNumberInputField(setFieldValue, setTouched, touched)}
@@ -360,7 +399,7 @@ export const registrationForm = props => {
                   </div>
                 )}
               </div>
-            }
+            )}
             {!initialValues.nationality && (
               <div className={classes.FormElement}>
                 <NationalitySelect
@@ -394,9 +433,10 @@ export const registrationForm = props => {
             <div className={classes.InputFieldGrid}>
               {showExamLang() && (
                 <div
-                  className={[classes.FormElement, classes.RadiobuttonGroup].join(
-                    ' ',
-                  )}
+                  className={[
+                    classes.FormElement,
+                    classes.RadiobuttonGroup,
+                  ].join(' ')}
                 >
                   <RadioButtonGroup
                     label={props.t('registration.form.examLang')}
@@ -472,7 +512,7 @@ export const registrationForm = props => {
                   component={CheckboxComponent}
                   name={'termsOfUseConsent'}
                   value={'termsOfUseConsent'}
-                  datacy={"form-checkbox-terms"}
+                  datacy={'form-checkbox-terms'}
                 />
                 <p>{props.t('registration.form.consent.confirm')}</p>
                 <ErrorMessage
@@ -484,8 +524,14 @@ export const registrationForm = props => {
             </div>
             <div className={classes.ConsentContainer}>
               <article>
-                <h4>{props.t('registration.form.personalData.consent.heading')}</h4>
-                <a href={PRIVACY_POLICY_LINK} target="_blank" rel="noopener noreferrer">
+                <h4>
+                  {props.t('registration.form.personalData.consent.heading')}
+                </h4>
+                <a
+                  href={'https://opintopolku.fi/wp/tietosuojaseloste/'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {props.t('common.yki.consent.link')}
                 </a>
               </article>
@@ -494,9 +540,11 @@ export const registrationForm = props => {
                   component={CheckboxComponent}
                   name={'personalDataConsent'}
                   value={'personalDataConsent'}
-                  datacy={"form-checkbox-personal-data"}
+                  datacy={'form-checkbox-personal-data'}
                 />
-                <p>{props.t('registration.form.personalData.consent.confirm')}</p>
+                <p>
+                  {props.t('registration.form.personalData.consent.confirm')}
+                </p>
                 <ErrorMessage
                   name={'personalDataConsent'}
                   component="span"
