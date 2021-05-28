@@ -69,19 +69,18 @@ class LanguageSelect extends React.PureComponent {
   languageLinks = () => (
     <div className={classes.MobileMenuItems}>
       {languages.map(lang => (
-        <div key={`LINK-${lang}`}>
-          <button
-            className={
-              this.state.ykiLanguage === lang
-                ? classes.LanguageItemActive
-                : classes.LanguageItem
-            }
-            value={lang}
-            onClick={e => this.handleLanguageChange(e)}
-          >
-            {capitalize(texts[lang])}
-          </button>
-        </div>
+        <button
+          key={`LINK-${lang}`}
+          className={
+            this.state.ykiLanguage === lang
+              ? classes.LanguageItemActive
+              : classes.LanguageItem
+          }
+          value={lang}
+          onClick={e => this.handleLanguageChange(e)}
+        >
+          {capitalize(texts[lang])}
+        </button>
       ))}
     </div>
   );
@@ -97,7 +96,12 @@ class LanguageSelect extends React.PureComponent {
           <>{this.languageLinks()}</>
         ) : (
           <div className={classes.SelectorContainer}>
-            <img src={globe} aria-disabled alt={'globe-icon'} />
+            <img
+              src={globe}
+              aria-disabled
+              alt={'globe-icon'}
+              style={{ width: 20 }}
+            />
             {this.languageSelector()}
           </div>
         )}

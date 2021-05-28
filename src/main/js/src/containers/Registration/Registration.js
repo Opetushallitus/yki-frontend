@@ -116,45 +116,57 @@ class Registration extends Component {
           headlineContent={<p>{this.props.t('registration.times.info')}</p>}
           headlineImage={YkiImage1}
         />
-        <div className={classes.Content}>
-          <div className={classes.FilterContainer}>
-            <div className={classes.FilterSelectors}>
-              <Filters
-                language={this.props.language}
-                onLanguageChange={this.onLanguageChange}
-                level={this.props.level}
-                onLevelChange={this.onLevelChange}
-                location={this.props.location}
-                onLocationChange={this.onLocationChange}
-                locations={this.props.locations}
-                history={this.props.history}
-                onAvailabilityFilterChange={this.onAvailabilityChange}
-                onRegistrationFilterChange={this.onRegistrationFilterChange}
-              />
-              <hr />
-              <p>
-                <strong>{`${getArraySize(
-                  this.getValuesOnFilterChange(),
-                )}`}</strong>{' '}
-                {`${this.props.t('common.searchResults')}`}
-              </p>
+        <main id="main">
+          <div className={classes.Content}>
+            <div className={classes.FilterContainer}>
+              <div className={classes.FilterSelectors}>
+                <Filters
+                  language={this.props.language}
+                  onLanguageChange={this.onLanguageChange}
+                  level={this.props.level}
+                  onLevelChange={this.onLevelChange}
+                  location={this.props.location}
+                  onLocationChange={this.onLocationChange}
+                  locations={this.props.locations}
+                  history={this.props.history}
+                  onAvailabilityFilterChange={this.onAvailabilityChange}
+                  onRegistrationFilterChange={this.onRegistrationFilterChange}
+                />
+                <hr />
+                <p>
+                  <strong>{`${getArraySize(
+                    this.getValuesOnFilterChange(),
+                  )}`}</strong>{' '}
+                  {`${this.props.t('common.searchResults')}`}
+                </p>
+              </div>
             </div>
+            {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
+            <ExamSessionList
+              examSessions={this.getValuesOnFilterChange()}
+              language={this.props.language}
+              history={this.props.history}
+            />
+
+            {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
+            <ExamSessionList
+              examSessions={this.getValuesOnFilterChange()}
+              language={this.props.language}
+              history={this.props.history}
+            />
           </div>
-          {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
-          <ExamSessionList
-            examSessions={this.getValuesOnFilterChange()}
-            language={this.props.language}
-            history={this.props.history}
-          />
-        </div>
-      </  }
+        </main>
+      </>
+    );
+  }
 }
 
 const mapStateToProps = state => {
   return {
     examSessions: state.registration.examSessions,
     loading: state.registration.loading,
-    filteredExamSessionsGroupedByDate: state.registration.filteredExamSessionsGroupedByDate,
+    filteredExamSessionsGroupedByDate:
+      state.registration.filteredExamSessionsGroupedByDate,
     language: state.registration.language,
     level: state.registration.level,
     location: state.registration.location,

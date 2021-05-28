@@ -65,22 +65,30 @@ const NavigationTabs = props => {
 
   return (
     <>
-      {showLanguagesMenu ? (
-        <LanguageSelect
-          isOpen={props.isOpen}
-          setCollapsibleOpen={props.setCollapsibleOpen}
-        />
-      ) : (
+      {!isMobileOrTablet ? (
         <>
           {baseLinks()}
-          {isMobileOrTablet ? (
-            <div onClick={() => handleOnClick()}>
-              <p className={classes.InactiveTab}>
-                {t('common.registration.select.language')}
-              </p>
-            </div>
-          ) : null}
         </>
+      ) : (
+        <div className={classes.ScrollableMenuWrapper}>
+          {baseLinks()}
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleOnClick()}
+            onKeyPress={() => handleOnClick()}
+          >
+            <p className={classes.InactiveTab}>
+              {t('common.registration.select.language')}
+            </p>
+          </div>
+          {showLanguagesMenu && (
+            <LanguageSelect
+              isOpen={props.isOpen}
+              setCollapsibleOpen={props.setCollapsibleOpen}
+            />
+          )}
+        </div>
       )}
     </>
   );

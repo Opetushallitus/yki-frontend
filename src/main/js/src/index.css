@@ -28,6 +28,10 @@
   --tablet-width: 1024px;
 }
 
+:focus {
+  outline: 3px solid var(--secondary-blue);
+}
+
 body {
   height: 100vh;
   margin: 0;
