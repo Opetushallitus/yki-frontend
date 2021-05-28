@@ -33,6 +33,13 @@
   text-decoration-line: underline;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .LanguageItem,
+  .LanguageItemActive {
+    height: 9vw !important;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .SelectorContainer img {
     display: none;
@@ -44,28 +51,27 @@
     margin-bottom: 0;
   }
 
-  .LanguageItem {
-    padding-top: 5vh;
-    padding-bottom: 5vh;
+  .LanguageItem,
+  .LanguageItemActive {
+    height: 10vh;
     width: 85%;
-    top: 0;
-    background: var(--white);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2vh;
     border: none;
-    font: normal normal bold 21px/24px PT Sans;
     letter-spacing: 0.6px;
+    font: normal normal bold 21px/24px PT Sans;
+  }
+
+  .LanguageItem {
+    background: var(--white);
     color: var(--primary-blue);
   }
   .LanguageItemActive {
-    padding-top: 5vh;
-    padding-bottom: 5vh;
-    width: 85%;
-    top: 0;
-    border: none;
-    letter-spacing: 0.6px;
     background: var(--primary-blue) 0 0 no-repeat padding-box !important;
     color: var(--white) !important;
-    font: inherit;
-    height: 100%;
   }
   .MobileMenuItems hr {
     width: 70vw;

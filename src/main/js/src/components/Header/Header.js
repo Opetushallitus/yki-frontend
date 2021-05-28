@@ -31,6 +31,7 @@ const header = props => {
     </header>
   ) : (
     <header className={classes.RegistrationHeader}>
+      {skipToContentLink}
       <img src={OPHLogo} alt={'OPH-Logo'} />
       {isMobileOrTablet ? (
         <MobileMenu />

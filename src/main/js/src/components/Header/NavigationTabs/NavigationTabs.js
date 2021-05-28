@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import LanguageSelect from '../../../containers/LanguageSelect/LanguageSelect';
 import { useMobileView } from '../../../util/customHooks';
@@ -46,7 +46,7 @@ const NavigationTabs = props => {
               key={link.title}
               className={isActive ? classes.ActiveTab : classes.InactiveTab}
             >
-              <button
+              <Link
                 className={classes.LinkButton}
                 onClick={() => {
                   history.push(link.url);
@@ -54,7 +54,7 @@ const NavigationTabs = props => {
                 role="link"
               >
                 {t(link.title)}
-              </button>
+              </Link>
             </div>
           );
         })}
@@ -66,22 +66,26 @@ const NavigationTabs = props => {
   return (
     <>
       {!isMobileOrTablet ? (
-        <>
-          {baseLinks()}
-        </>
+        <>{baseLinks()}</>
       ) : (
         <div className={classes.ScrollableMenuWrapper}>
           {baseLinks()}
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => handleOnClick()}
-            onKeyPress={() => handleOnClick()}
-          >
-            <p className={classes.InactiveTab}>
-              {t('common.registration.select.language')}
-            </p>
-          </div>
+          <>
+            <div className={classes.InactiveTab}>
+              <button
+                role="button"
+                onClick={() => handleOnClick()}
+                onKeyPress={e => {
+                  e.preventDefault();
+                  handleOnClick();
+                }}
+                className={classes.LinkButton}
+              >
+                {t('common.registration.select.language')}
+              </button>
+            </div>
+            <hr className={classes.LanguageHr} />
+          </>
           {showLanguagesMenu && (
             <LanguageSelect
               isOpen={props.isOpen}
