@@ -5,6 +5,7 @@
   background-color: var(--primary-blue);
   color: var(--white);
   text-align: right;
+  max-height: 500px;
 }
 
 .BaseContainer {

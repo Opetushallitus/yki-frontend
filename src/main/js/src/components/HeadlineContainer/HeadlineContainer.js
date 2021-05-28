@@ -25,7 +25,7 @@ const HeadlineContainer = props => {
 
   return (
     <div className={classes.Headline}>
-      <div className={classes.BaseContainer}>
+      <div className={classes.BaseContainer} style={{ overflow: 'auto' }}>
         {mobile || mobileLandscape ? (
           <>
             <div

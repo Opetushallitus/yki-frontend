@@ -47,8 +47,12 @@ const NavigationTabs = props => {
               className={isActive ? classes.ActiveTab : classes.InactiveTab}
             >
               <Link
+                aria-current={isActive}
                 className={classes.LinkButton}
                 onClick={() => {
+                  history.push(link.url);
+                }}
+                onKeyPress={() => {
                   history.push(link.url);
                 }}
                 role="link"
@@ -58,7 +62,7 @@ const NavigationTabs = props => {
             </div>
           );
         })}
-        {divider ? <hr className={classes.Divider} /> : null}
+        {divider && <hr className={classes.Divider} />}
       </>
     );
   };
@@ -73,9 +77,8 @@ const NavigationTabs = props => {
           <>
             <div className={classes.InactiveTab}>
               <button
-                role="button"
                 onClick={() => handleOnClick()}
-                onKeyPress={e => {
+                onKeyDown={e => {
                   e.preventDefault();
                   handleOnClick();
                 }}

@@ -42,10 +42,12 @@ class LanguageSelect extends React.PureComponent {
     const selected = e.target.value;
     this.props.onYkiLanguageChange(selected);
     i18n.changeLanguage(selected);
+    document.documentElement.lang = selected;
   };
 
   languageSelector = () => (
     <select
+      tabIndex={0}
       name="language"
       className={classes.LanguageSelect}
       onChange={e => this.handleLanguageChange(e)}
