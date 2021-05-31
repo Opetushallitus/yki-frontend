@@ -122,7 +122,7 @@ const EditExamDate = (props) => {
           <div className={classes.LanguageAndLevelGrid}>
             <LanguageLevelSelector
               initialLanguageCode={language_code}
-              inititialLevelCode={level_code}
+              initialLevelCode={level_code}
               languages={languageAndLevel}
               setLanguages={setLanguageAndLevel}
               modify={!!examDate}
