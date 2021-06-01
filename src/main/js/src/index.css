@@ -16,7 +16,7 @@
 :root {
   --primary-blue: #05526b;
   --secondary-blue: #149ecb;
-  --decoration-blue: #149ecb40;
+  --decoration-blue: #d0ecf5;
   --primary-gray: #8b8b8b;
   --secondary-gray: #aaaaaa;
   --shadow-blue: #05526b26;
@@ -92,4 +92,54 @@ button {
   color: var(--white);
   background-color: var(--primary-gray);
   cursor: default;
+}
+
+.Container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 1;
+}
+
+.Container h2 {
+  text-align: left;
+  font: normal normal bold 28px/24px PT Sans;
+  letter-spacing: 0;
+  color: var(--secondary-blue);
+  opacity: 1;
+  margin: 1rem auto;
+}
+
+.InnerContainer {
+  padding-right: 4vw;
+  width: 60vw;
+}
+
+.InnerContainer hr {
+  border: 1px solid var(--decoration-blue);
+}
+
+@media screen and (min-width: 426px) and (max-width: 1024px) {
+  .InnerContainer {
+    margin: 2vh 3vw 2vh 3vw;
+    width: 100vw;
+  }
+
+  .Container {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 425px) and (orientation: portrait) {
+  .InnerContainer {
+    padding-right: 3vw;
+    padding-left: 4vw;
+  }
+}
+
+@media screen and (max-width: 760px) and (orientation: landscape) {
+  .InnerContainer {
+    width: 100%;
+    margin-left: 4vw;
+  }
 }

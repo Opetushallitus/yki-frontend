@@ -6,13 +6,6 @@
   margin-bottom: 10%;
 }
 
-.Container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  z-index: 1;
-}
-
 .ArticleContent h1 {
   font-weight: 400;
   font-size: 1.5em;
@@ -23,15 +16,6 @@
   margin-bottom: 0 !important;
 }
 
-.Container h2 {
-  text-align: left;
-  font: normal normal bold 28px/24px PT Sans;
-  letter-spacing: 0;
-  color: var(--secondary-blue);
-  opacity: 1;
-  margin: 1rem auto;
-}
-
 .ArticleContent p:nth-of-type(5),
 .ArticleContent p:nth-of-type(6),
 .ArticleContent p:nth-of-type(7) {
@@ -40,15 +24,6 @@
 
 .ArticleContent p:last-of-type {
   margin-top: 20px;
-}
-
-.InnerContainer {
-  padding-right: 4vw;
-  width: 50vw;
-}
-
-.InnerContainer hr {
-  border: 1px solid var(--decoration-blue);
 }
 
 .TutorialVideo {
@@ -73,7 +48,7 @@
   text-align: left;
   font: normal normal bold 21px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
+  color: var(--primary-blue);
   opacity: 1;
   padding: 0.2rem 0;
 }
@@ -91,11 +66,6 @@
 
 /* Mobile view */
 @media screen and (max-width: 425px) and (orientation: portrait) {
-  .InnerContainer {
-    padding-right: 3vw;
-    padding-left: 4vw;
-  }
-
   .ArticleContent {
     max-width: 425px;
   }
@@ -123,11 +93,6 @@
 
 /* Mobile view */
 @media screen and (max-width: 760px) and (orientation: landscape) {
-  .InnerContainer {
-    width: 100%;
-    margin-left: 4vw;
-  }
-
   .ArticleContent p {
     margin-bottom: 25px;
   }

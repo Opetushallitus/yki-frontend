@@ -47,6 +47,7 @@ const MobileMenu = () => {
       <div
         tabIndex={0}
         role="button"
+        aria-label={isOpen ? t('common.nav.close') : t('common.nav.open')}
         className={classes.MenuIcon}
         onClick={() => setCollapsibleOpen(!isOpen)}
         onKeyPress={() => setCollapsibleOpen(!isOpen)}

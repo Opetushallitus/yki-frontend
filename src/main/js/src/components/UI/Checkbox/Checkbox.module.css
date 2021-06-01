@@ -1,50 +1,45 @@
 .Container {
+  position: relative;
   display: block;
   cursor: pointer;
   user-select: none;
-  height: 20px;
-  width: 20px;
   margin: auto 0;
 }
 
-/* Hide the browser's default checkbox */
-.Container input {
+/** Hide default checkbox */
+.CbInput {
   position: absolute;
-  opacity: 0;
-  height: 0;
-  width: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
 }
 
-/* Create a custom checkbox */
-.Checkmark {
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  border-radius: 4px;
-  border: 1px solid hsl(0, 0%, 100%);
-  background: hsla(0, 0%, 100%, 1) 0 0 no-repeat padding-box;
+.Container input:focus + .CbLabel {
+  outline: 3px solid var(--secondary-blue);
 }
 
-/* When the checkbox is checked, add background image */
-.Container input:checked ~ .Checkmark {
-  background: url('../../../assets/svg/checkbox-blue-checkmark.svg')
-    hsla(0, 0%, 100%, 1) center center no-repeat;
-  background-size: 1.15em;
+.CbLabel {
+  cursor: pointer;
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
-.Checkmark:after {
-  display: none;
-  position: absolute;
+.CbLabel::before {
   content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+  border: 1px solid var(--white);
+  background-color: var(--white);
+  margin-right: 1rem;
 }
 
-/* Show the checkmark when checked */
-.Container input:checked ~ .Checkmark:after {
-  display: block;
-}
-
-.Container input:disabled ~ .Checkmark {
-  background-color: hsl(0, 0%, 85%);
-  cursor: default;
+.Container input:checked + .CbLabel:before {
+  background: url('../../../assets/svg/checkbox-blue-checkmark.svg') center/12px
+    no-repeat;
+  background-color: var(--white);
+  background-size: 1.15em;
 }

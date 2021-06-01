@@ -116,10 +116,10 @@ class Registration extends Component {
           headlineContent={<p>{this.props.t('registration.times.info')}</p>}
           headlineImage={YkiImage1}
         />
-        <main id="main">
-          <div className={classes.Content}>
-            <div className={classes.FilterContainer}>
-              <div className={classes.FilterSelectors}>
+        <main id="main" className={'Container'}>
+          <>
+            <div className={'InnerContainer'}>
+              <div className={classes.FilterContainer}>
                 <Filters
                   language={this.props.language}
                   onLanguageChange={this.onLanguageChange}
@@ -133,13 +133,19 @@ class Registration extends Component {
                   onRegistrationFilterChange={this.onRegistrationFilterChange}
                 />
                 <hr />
-                <p>
+                <p className={classes.ResultCount}>
                   <strong>{`${getArraySize(
                     this.getValuesOnFilterChange(),
                   )}`}</strong>{' '}
                   {`${this.props.t('common.searchResults')}`}
                 </p>
               </div>
+              {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
+              <ExamSessionList
+                examSessions={this.getValuesOnFilterChange()}
+                language={this.props.language}
+                history={this.props.history}
+              />
             </div>
             {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
             <ExamSessionList
@@ -154,7 +160,7 @@ class Registration extends Component {
               language={this.props.language}
               history={this.props.history}
             />
-          </div>
+          </>
         </main>
       </>
     );

@@ -116,73 +116,74 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
   );
 
   const desktopContent = (
-    <div className={classes.InnerContainer}>
-      <div style={{ display: 'flex' }}>
-        <div style={{ marginRight: '1rem' }}>
-          <article className={classes.ArticleContent}>
-            <p>{t('registration.description.text2')}</p>
-            <p>{t('registration.description.text3')}</p>
-            <p>{t('registration.description.text4')}</p>
-          </article>
-          {tutorialVideo}
+    <>
+      <div className={'InnerContainer'}>
+        <div style={{ display: 'flex' }}>
+          <div style={{ marginRight: '1rem' }}>
+            <article className={classes.ArticleContent}>
+              <p>{t('registration.description.text2')}</p>
+              <p>{t('registration.description.text3')}</p>
+              <p>{t('registration.description.text4')}</p>
+            </article>
+            {tutorialVideo}
+          </div>
+          <PriceContainer
+            elements={levelPrices.concat({
+              title: 'common.price.reeval.first',
+              price: '50',
+              extraText: 'common.price.reeval.last',
+            })}
+          />
         </div>
-        <PriceContainer />
-      </div>
-      <div>
-        <h2>{t('registration.description.examLevels')}</h2>
-        <DescriptionCollapsible
-          headerText={levelTranslations.PERUS}
-          content={basicLevel}
-        />
-        <DescriptionCollapsible
-          headerText={levelTranslations.KESKI}
-          content={middleLevel}
-        />
-        <DescriptionCollapsible
-          headerText={levelTranslations.YLIN}
-          content={upperLevel}
-        />
-        <>{registerButton}</>
-        <div className={classes.InnerContainer}>
-          <h2>{t('registration.description.reEvaluation')}</h2>
-          {Object.keys(evaluationTexts).map(el => {
-            return (
-              <React.Fragment key={el}>
-                <h3 className={classes.ReEvalHeader}>
-                  {t(evaluationTexts[el])}
-                </h3>
-                <hr />
-              </React.Fragment>
-            );
-          })}
+        <div>
+          <h2>{t('registration.description.examLevels')}</h2>
+          <DescriptionCollapsible
+            headerText={levelTranslations.PERUS}
+            content={basicLevel}
+          />
+          <DescriptionCollapsible
+            headerText={levelTranslations.KESKI}
+            content={middleLevel}
+          />
+          <DescriptionCollapsible
+            headerText={levelTranslations.YLIN}
+            content={upperLevel}
+          />
+          <>{registerButton}</>
+          <div className={classes.InnerContainer}>
+            <h2>{t('registration.description.reEvaluation')}</h2>
+            {Object.keys(evaluationTexts).map(el => {
+              return (
+                <React.Fragment key={el}>
+                  <h3 className={classes.ReEvalHeader}>
+                    {t(evaluationTexts[el])}
+                  </h3>
+                  <hr />
+                </React.Fragment>
+              );
+            })}
+          </div>
+          <>
+            <button
+              className={'YkiButton'}
+              style={{ width: 'auto', padding: '0 1rem' }}
+              data-cy="re-eval-button"
+              onClick={() => history.push(t('/tarkistusarviointi'))}
+              role="link"
+              aria-label={t('registration.reeval')}
+            >
+              {t('registration.reeval')}
+            </button>
+          </>
         </div>
-        <>
-          <button
-            className={'YkiButton'}
-            style={{ width: 'auto', padding: '0 1rem' }}
-            data-cy="re-eval-button"
-            onClick={() => history.push(t('/tarkistusarviointi'))}
-            role="link"
-            aria-label={t('registration.reeval')}
-          >
-            {t('registration.reeval')}
-          </button>
-        </>
       </div>
-      <PriceContainer
-        elements={levelPrices.concat({
-          title: 'common.price.reeval.first',
-          price: '50',
-          extraText: 'common.price.reeval.last',
-        })}
-      />
-    </div>
+    </>
   );
 
   const mobileContent = (
     <>
       <div
-        className={classes.InnerContainer}
+        className={'InnerContainer'}
         style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}
       >
         <article className={classes.ArticleContent}>
@@ -251,7 +252,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
 
   return (
     <>
-      <main className={classes.Container}>
+      <main className={'Container'}>
         <HeadlineContainer
           headlineTitle={t('registration.description.title')}
           headlineContent={<p>{t('registration.description.text1')}</p>}
