@@ -1,18 +1,18 @@
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import * as actions from '../../../store/actions/index';
-import RegistrationForm from '../../../components/Registration/RegistrationForm/RegistrationForm';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+import YkiImage2 from '../../../assets/images/ophYki_image2.png';
+import HeadlineContainer from '../../../components/HeadlineContainer/HeadlineContainer';
 import BackButton from '../../../components/Registration/BackButton/BackButton';
-import classes from './RegistrationPage.module.css';
-import RegistrationSuccess from '../../../components/Registration/RegistrationSuccess/RegistrationSuccess';
-import RegistrationError from '../../../components/Registration/RegistrationError/RegistrationError';
 import ExamDetailsCard from '../../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
-import YkiImage2 from "../../../assets/images/ophYki_image2.png";
-import HeadlineContainer from "../../../components/HeadlineContainer/HeadlineContainer";
-import { getLanguageAndLevel } from "../../../util/util";
+import RegistrationError from '../../../components/Registration/RegistrationError/RegistrationError';
+import RegistrationForm from '../../../components/Registration/RegistrationForm/RegistrationForm';
+import RegistrationSuccess from '../../../components/Registration/RegistrationSuccess/RegistrationSuccess';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import * as actions from '../../../store/actions/index';
+import { getLanguageAndLevel } from '../../../util/util';
+import classes from './RegistrationPage.module.css';
 
 export const RegistrationPage = props => {
   const { initData, initDataLoading, history, match } = props;
@@ -41,7 +41,9 @@ export const RegistrationPage = props => {
     <>
       <HeadlineContainer
         headlineTitle={getLanguageAndLevel(initData.exam_session)}
-        headlineContent={<ExamDetailsCard exam={initData.exam_session} isFull={false} />}
+        headlineContent={
+          <ExamDetailsCard exam={initData.exam_session} isFull={false} />
+        }
         headlineImage={YkiImage2}
       />
       <div className={classes.RegistrationPage}>
@@ -54,7 +56,7 @@ export const RegistrationPage = props => {
   return (
     <>
       {!successPage}
-      <main>
+      <main id="main">
         {initError ? initError : successPage ? successPage : registrationPage}
       </main>
     </>
@@ -89,7 +91,4 @@ RegistrationPage.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(RegistrationPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationPage);

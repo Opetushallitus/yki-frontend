@@ -1,26 +1,23 @@
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import queryString from 'query-string';
 
-import classes from './ExamDetailsPage.module.css';
-import Spinner from '../../UI/Spinner/Spinner';
-import * as actions from '../../../store/actions/index';
-
-import BackButton from '../BackButton/BackButton';
-
-import AuthButton from '../AuthButton/AuthButton';
-import NotificationSignup from '../NotificationSignup/NotificationSignup';
-import LoginLink from '../LoginLink/LoginLink';
+import tempHeroImage from '../../../assets/images/ophYki_image2.png';
 import { DATE_FORMAT_WITHOUT_YEAR } from '../../../common/Constants';
-import HeadlineContainer from "../../HeadlineContainer/HeadlineContainer";
-import { levelDescription } from "../../../util/util";
-import ExamDetailsCard from "./ExamDetailsCard/ExamDetailsCard";
-
-import tempHeroImage from '../../../assets/images/ophYki_image2.png'
+import * as actions from '../../../store/actions/index';
+import { levelDescription } from '../../../util/util';
 import { nowBetweenDates } from '../../../util/util';
+import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
+import Spinner from '../../UI/Spinner/Spinner';
+import AuthButton from '../AuthButton/AuthButton';
+import BackButton from '../BackButton/BackButton';
+import LoginLink from '../LoginLink/LoginLink';
+import NotificationSignup from '../NotificationSignup/NotificationSignup';
+import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
+import classes from './ExamDetailsPage.module.css';
 
 const examDetailsPage = ({
   location,
@@ -45,14 +42,20 @@ const examDetailsPage = ({
 
   const registrationOpen = session.open;
 
-  const postAdmissionActive = registrationOpen &&
+  const postAdmissionActive =
+    registrationOpen &&
     session.post_admission_end_date &&
     session.post_admission_start_date &&
     session.post_admission_active &&
     session.post_admission_quota &&
-    nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date));
+    nowBetweenDates(
+      moment(session.post_admission_start_date),
+      moment(session.post_admission_end_date),
+    );
 
-  const seatsAvailable = postAdmissionActive ? (session.post_admission_quota - session.pa_participants) > 0 : (session.max_participants - session.participants) > 0;
+  const seatsAvailable = postAdmissionActive
+    ? session.post_admission_quota - session.pa_participants > 0
+    : session.max_participants - session.participants > 0;
 
   const queueFull = session.queue_full;
   const examSessionId = Number(match.params.examSessionId);
@@ -83,7 +86,7 @@ const examDetailsPage = ({
     headlineImage={languageHeroImages[session.language_code]}
    */
   return (
-    <main>
+    <main id="main">
       {loading ? (
         <div className={classes.Loading}>
           <Spinner />
@@ -92,24 +95,30 @@ const examDetailsPage = ({
         <>
           <HeadlineContainer
             headlineTitle={languageAndLevel.props.children.toString()}
-            headlineContent={<ExamDetailsCard exam={session} isFull={!seatsAvailable} />}
+            headlineContent={
+              <ExamDetailsCard exam={session} isFull={!seatsAvailable} />
+            }
             headlineImage={tempHeroImage}
           />
           <div className={classes.Content}>
             <BackButton
               clicked={() =>
-                history && history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
+                history &&
+                history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
               }
             />
             {registrationOpen ? (
               <>
-                {validationFailed && <div className={classes.NotifyText}>
-                  {t('registration.examDetails.validationError.info')}</div>}
+                {validationFailed && (
+                  <div className={classes.NotifyText}>
+                    {t('registration.examDetails.validationError.info')}
+                  </div>
+                )}
                 <div className={classes.InfoText}>
                   {seatsAvailable && (
                     <p>{t('registration.examDetails.futureInfo')}</p>
                   )}
-                  {(!seatsAvailable && !queueFull) && (
+                  {!seatsAvailable && !queueFull && (
                     <p className={classes.InfoText}>
                       {t('registration.notification.signup.label')}
                     </p>
@@ -139,24 +148,26 @@ const examDetailsPage = ({
                       )}
                     </div>
                   </div>
-                ) : (!queueFull && (
-                  <div className={classes.Identification}>
-                    <NotificationSignup
-                      examSessionId={match.params.examSessionId}
-                    />
-                  </div>
-                )
-
+                ) : (
+                  !queueFull && (
+                    <div className={classes.Identification}>
+                      <NotificationSignup
+                        examSessionId={match.params.examSessionId}
+                      />
+                    </div>
+                  )
                 )}
-                {queueFull ?
-                  <div className={classes.Identification}
+                {queueFull ? (
+                  <div
+                    className={classes.Identification}
                     style={{ paddingBottom: '5vh' }}
-                    data-cy={'exam-details-title'}>
-                    <p><strong>{t('registration.examDetails.queueFull')}</strong></p>
+                    data-cy={'exam-details-title'}
+                  >
+                    <p>
+                      <strong>{t('registration.examDetails.queueFull')}</strong>
+                    </p>
                   </div>
-                  :
-                  null
-                }
+                ) : null}
               </>
             ) : (
               <>
@@ -199,7 +210,4 @@ examDetailsPage.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(examDetailsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(examDetailsPage);

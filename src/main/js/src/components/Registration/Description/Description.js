@@ -252,7 +252,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
 
   return (
     <>
-      <main className={'Container'}>
+      <main id="main" className={'Container'}>
         <HeadlineContainer
           headlineTitle={t('registration.description.title')}
           headlineContent={<p>{t('registration.description.text1')}</p>}

@@ -26,7 +26,7 @@ export const linkExpired = props => {
 
   return (
     <>
-      <main>
+      <main id="main">
         <HeadlineContainer
           headlineTitle={props.t(key())}
           headlineContent={null}

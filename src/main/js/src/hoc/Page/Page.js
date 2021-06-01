@@ -1,13 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import classes from './Page.module.css';
 import Header from '../../components/Header/Header';
+import classes from './Page.module.css';
 
 const page = props => (
   <React.Fragment>
     <Header nav />
-    <main className={classes.Content}>{props.children}</main>
+    <main id="main" className={classes.Content}>
+      {props.children}
+    </main>
   </React.Fragment>
 );
 

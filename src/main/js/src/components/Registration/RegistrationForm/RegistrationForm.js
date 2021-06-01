@@ -154,13 +154,34 @@ export const registrationForm = props => {
       </div>
     );
   };
-  const CheckboxComponent = ({ field: { name, value, onChange }, datacy }) => {
+  const CheckboxComponent = ({
+    field: { name, value },
+    setFieldValue,
+    setTouched,
+    datacy,
+    label,
+    ariaLabel,
+    checkboxId,
+    touched,
+  }) => {
     return (
       <Checkbox
         name={name}
         checked={value}
         datacy={datacy}
-        onChange={onChange}
+        onChange={() => {
+          setFieldValue(name, !value);
+          setTouched(
+            {
+              ...touched,
+              [name]: true,
+            },
+            true,
+          );
+        }}
+        checkboxId={checkboxId}
+        label={label}
+        ariaLabel={ariaLabel}
       />
     );
   };
@@ -512,9 +533,14 @@ export const registrationForm = props => {
                   component={CheckboxComponent}
                   name={'termsOfUseConsent'}
                   value={'termsOfUseConsent'}
+                  checkboxId={'termsOfUseConsent'}
                   datacy={'form-checkbox-terms'}
+                  setFieldValue={setFieldValue}
+                  touched={touched}
+                  setTouched={setTouched}
+                  label={props.t('registration.form.consent.confirm')}
+                  ariaLabel={props.t('registration.form.consent.confirm')}
                 />
-                <p>{props.t('registration.form.consent.confirm')}</p>
                 <ErrorMessage
                   name={'termsOfUseConsent'}
                   component="span"
@@ -540,11 +566,24 @@ export const registrationForm = props => {
                   component={CheckboxComponent}
                   name={'personalDataConsent'}
                   value={'personalDataConsent'}
-                  datacy={'form-checkbox-personal-data'}
+                  checkboxId={'personalDataConsent'}
+                  setTouched={setTouched}
+                  touched={touched}
+                  setFieldValue={setFieldValue}
+                  datacy={'form-checkbox-terms'}
+                  onClick={() =>
+                    setFieldValue(
+                      'personalDataConsent',
+                      !values.personalDataConsent,
+                    )
+                  }
+                  label={props.t(
+                    'registration.form.personalData.consent.confirm',
+                  )}
+                  ariaLabel={props.t(
+                    'registration.form.personalData.consent.confirm',
+                  )}
                 />
-                <p>
-                  {props.t('registration.form.personalData.consent.confirm')}
-                </p>
                 <ErrorMessage
                   name={'personalDataConsent'}
                   component="span"

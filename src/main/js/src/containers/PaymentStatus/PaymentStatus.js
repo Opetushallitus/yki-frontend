@@ -128,7 +128,7 @@ export class PaymentStatus extends Component {
 
     return (
       <>
-        <main>
+        <main id="main">
           <div>{headLine()}</div>
           <div className={classes.Content}>
             <BackButton

@@ -12,25 +12,23 @@ const checkbox = props => {
     datacy,
     checkboxId,
     label,
+    checkBoxClass,
   } = props;
 
   return (
-    <div className={classes.Container}>
+    <div className={`${classes.Container} ${checkBoxClass}`}>
       <input
         id={checkboxId}
         name={name}
         type="checkbox"
         tabIndex={0}
-        checked={checked}
         className={classes.CbInput}
-        onChange={e => {
-          onChange();
-        }}
+        onChange={onChange}
         defaultChecked={checked || false}
         aria-label={ariaLabel || null}
       />
 
-      <label className={classes.CbLabel} for={checkboxId}>
+      <label data-cy={datacy} className={classes.CbLabel} htmlFor={checkboxId}>
         {label}
       </label>
     </div>
@@ -43,7 +41,7 @@ checkbox.propTypes = {
   ariaLabel: PropTypes.string,
   datacy: PropTypes.string,
   name: PropTypes.string,
-  checkboxId: PropTypes.string.isRequired,
+  checkboxId: PropTypes.string,
   label: PropTypes.string,
 };
 

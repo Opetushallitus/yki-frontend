@@ -1,9 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
-import classes from './LanguageCheckboxes.module.css';
 import { LANGUAGES } from '../../common/Constants';
 import Checkbox from '../UI/Checkbox/Checkbox';
+import classes from './LanguageCheckboxes.module.css';
 
 const languageCheckboxes = props => {
   const toggleChecked = (code, level) => {
@@ -41,11 +41,15 @@ const languageCheckboxes = props => {
       {l.levels.map(ll => (
         <Checkbox
           key={ll}
-          className={classes.Checkbox}
+          name={ll}
+          checkboxId={`${l.code}-${ll}`}
+          checkBoxClass={classes.Checkbox}
           languageCode={l.code}
           languageLevel={ll}
           checked={isSelected(l.code, ll)}
-          onChange={() => toggleChecked(l.code, ll)}
+          onChange={() => {
+            toggleChecked(l.code, ll);
+          }}
         />
       ))}
     </div>
