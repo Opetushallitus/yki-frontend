@@ -32,7 +32,7 @@ const examSessionListItem = ({
     history.push(`/tutkintotilaisuus/${session.id}`);
   };
   const examDate = moment(session.session_date).format(DATE_FORMAT);
-  const date = <td className={classes.Date}>{examDate}</td>;
+  const date = <div className={classes.Date}>{examDate}</div>;
   const mobile = useMobileView(true, false);
   const tablet = useMobileView(false, true);
 
@@ -41,9 +41,9 @@ const examSessionListItem = ({
   const examLanguage = t(`common.language.${language.code}`);
   const examLevel = levelDescription(session.level_code).toLowerCase();
   const exam = (
-    <td className={classes.Exam}>
+    <div className={classes.Exam}>
       <strong>{`${examLanguage}, ${examLevel}`}</strong>
-    </td>
+    </div>
   );
 
   const sessionLocation =
@@ -52,12 +52,12 @@ const examSessionListItem = ({
   const address = sessionLocation.street_address || '';
   const city = sessionLocation.post_office.toUpperCase() || '';
   const location = (
-    <td>
+    <div>
       <span className={classes.Location}>
         {name} <br /> {address} <br /> {session.location[0].zip}{' '}
         <strong>{city}</strong>
       </span>
-    </td>
+    </div>
   );
 
   const spotsAvailable = spotsAvailableForSession(session);
@@ -68,7 +68,7 @@ const examSessionListItem = ({
       : t('registration.examSpots.free');
 
   const availability = (
-    <td className={classes.Availability}>
+    <div className={classes.Availability}>
       <strong>
         {showAvailableSpots(session) ? (
           <>
@@ -81,39 +81,65 @@ const examSessionListItem = ({
           <span>{t('registration.examSpots.full')}</span>
         )}
       </strong>
-    </td>
+    </div>
   );
 
-  const registrationOpen = (
-    <td className={classes.RegistrationOpen}>
-      <span className={classes.HiddenOnDesktop}>
-        {t('registration.list.signupOpen')}
-      </span>{' '}
-      <span>
-        {session.post_admission_start_date &&
-        session.post_admission_end_date &&
-        session.post_admission_active ? (
-          <>
-            <p>{`${moment(session.post_admission_start_date).format(
-              DATE_FORMAT,
-            )} -
+  const registrationOpenDesktop = (
+    <div>
+      {session.post_admission_start_date &&
+      session.post_admission_end_date &&
+      session.post_admission_active ? (
+        <>
+          <p>{`${moment(session.post_admission_start_date).format(
+            DATE_FORMAT,
+          )} -
                     ${moment(session.post_admission_end_date).format(
                       DATE_FORMAT,
                     )}`}</p>
-            <p>{t('registration.postregistrationOnGoing')}</p>
-          </>
-        ) : (
-          <>
-            <p>{`${moment(session.registration_start_date).format(
-              DATE_FORMAT,
-            )} - ${moment(session.registration_end_date).format(
-              DATE_FORMAT,
-            )}`}</p>
-            <p>{t('registration.open')}</p>
-          </>
+          <p>{t('registration.postregistrationOnGoing')}</p>
+        </>
+      ) : (
+        <>
+          <p>{`${moment(session.registration_start_date).format(
+            DATE_FORMAT,
+          )} - ${moment(session.registration_end_date).format(
+            DATE_FORMAT,
+          )}`}</p>
+          <p>{t('registration.open')}</p>
+        </>
+      )}
+    </div>
+  );
+
+  const registrationOpenMobile = (
+    <div style={{ display: 'block' }}>
+      <div className={classes.RegistrationOpen}>
+        {t('registration.list.signupOpen')}
+        {':'}
+
+        <span style={{ marginLeft: 5 }}>{`${moment(
+          session.registration_start_date,
+        ).format(DATE_FORMAT)} - ${moment(session.registration_end_date).format(
+          DATE_FORMAT,
+        )}`}</span>
+      </div>
+      {session.post_admission_start_date &&
+        session.post_admission_end_date &&
+        session.post_admission_active && (
+          <div className={classes.RegistrationOpen}>
+            {t('examSession.postAdmission')}
+            {':'}
+            <span style={{ marginLeft: 5 }}>
+              {`${moment(session.post_admission_start_date).format(
+                DATE_FORMAT,
+              )} -
+                    ${moment(session.post_admission_end_date).format(
+                      DATE_FORMAT,
+                    )}`}
+            </span>
+          </div>
         )}
-      </span>
-    </td>
+    </div>
   );
 
   const buttonText = spotsAvailable
@@ -121,7 +147,24 @@ const examSessionListItem = ({
     : session.queue_full
     ? t('registration.register.queueFull')
     : t('registration.register.forQueue');
-  const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
+
+  const registrationOpenText =
+    session.post_admission_start_date &&
+    session.post_admission_end_date &&
+    session.post_admission_active
+      ? `${t('examSession.postAdmission')}:  ${moment(
+          session.post_admission_start_date,
+        ).format(DATE_FORMAT)} -
+                    ${moment(session.post_admission_end_date).format(
+                      DATE_FORMAT,
+                    )} `
+      : `${t('registration.list.signupOpen')}: ${moment(
+          session.registration_start_date,
+        ).format(DATE_FORMAT)} - ${moment(session.registration_end_date).format(
+          DATE_FORMAT,
+        )}`;
+
+  const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${spotsAvailable} ${spotsAvailableText}.`;
 
   const showRegisterButton =
     admissionNotStarted(session) ||
@@ -129,7 +172,7 @@ const examSessionListItem = ({
     canSignupForPostAdmission(session);
 
   const registerButton = (
-    <td>
+    <div>
       {showRegisterButton ? (
         <button
           className={`YkiButton ${classes.RegisterButton}`}
@@ -143,7 +186,7 @@ const examSessionListItem = ({
           {buttonText}
         </button>
       ) : null}
-    </td>
+    </div>
   );
   const locationOnMobileView = (
     <div className={classes.Location}>
@@ -164,40 +207,38 @@ const examSessionListItem = ({
       {mobile ||
       tablet ||
       (tablet && getDeviceOrientation() === 'landscape') ? (
-        <div
+        <tr
           className={classes.ExamSessionListItem}
           data-cy="exam-session-list-item"
         >
-          <div className={classes.MobileRow}>
+          <td className={classes.MobileRow}>
             <div>{exam}</div>
             <div>{date}</div>
-          </div>
-          <hr />
-          <div>{registrationOpen}</div>
-          <hr />
-          <div className={classes.MobileRow}>
+          </td>
+          <td>{registrationOpenMobile}</td>
+
+          <td className={classes.MobileRow}>
             <div>{availability}</div>
             {session.queue_full ? null : (
               <div className={classes.ExamFee}>{examFee}</div>
             )}
-          </div>
-          <hr />
-          <div>
+          </td>
+          <td>
             {locationOnMobileView}
             {registerButton}
-          </div>
-        </div>
+          </td>
+        </tr>
       ) : (
         <tr
           className={classes.ExamSessionListItem}
           data-cy="exam-session-list-item"
         >
-          {exam}
-          {date}
-          {location}
-          {registrationOpen}
-          {availability}
-          {registerButton}
+          <td>{exam}</td>
+          <td>{date}</td>
+          <td>{location}</td>
+          <td>{registrationOpenDesktop}</td>
+          <td>{availability}</td>
+          <td>{registerButton}</td>
         </tr>
       )}
     </>

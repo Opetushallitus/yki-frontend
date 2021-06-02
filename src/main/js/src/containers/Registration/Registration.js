@@ -140,7 +140,7 @@ class Registration extends Component {
                   {`${this.props.t('common.searchResults')}`}
                 </p>
               </div>
-              {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
+              {mobileOrTablet && <div className={classes.MobileSeparator} />}
               <ExamSessionList
                 examSessions={this.getValuesOnFilterChange()}
                 language={this.props.language}

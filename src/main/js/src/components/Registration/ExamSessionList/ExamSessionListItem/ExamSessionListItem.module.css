@@ -14,11 +14,11 @@
 }
 
 .ExamSessionListItem:nth-child(2n + 1) {
-  background: hsla(194, 82%, 43%, 0.2) 0 0 no-repeat padding-box;
+  background: var(--decoration-blue) 0 0 no-repeat padding-box;
 }
 
 td {
-  border-left: 2px solid var(--secondary-blue);
+  border-left: 1px solid var(--secondary-blue);
   padding: 5px;
   display: flex;
   justify-content: center;
@@ -35,175 +35,32 @@ td:first-child {
   width: -webkit-fill-available !important;
 }
 
-.RegistrationLocked {
-  height: 35px;
-  color: hsl(0, 0%, 30%);
-  background: hsl(0, 0%, 80%);
-  cursor: pointer;
-}
-
-.HiddenOnDesktop {
-  display: none;
-}
-
 /* Tablet portrait */
-@media screen and (max-width: 768px) and (orientation: portrait) {
+@media screen and (max-width: 1024px) {
   .ExamSessionListItem {
     display: block;
-    background: hsla(0, 0%, 100%, 1);
+    background: var(--white);
     margin: 0;
-    padding: 3vh 2vw 1vh 2vw;
-    grid-template-areas: none;
+    padding: 1rem 1rem 1rem 2rem;
+    font-size: 18px;
   }
-  .ExamSessionListItem div {
-    padding: 2px 0 2px 0;
-  }
-  .ExamSessionListItem span strong {
-    margin: 0;
-  }
-  .ExamSessionListItem hr {
-    width: 90%;
-    border: 1px solid hsla(195, 82%, 44%, 0.5);
-  }
-  .ExamSessionListItem button {
-    width: 38vw;
-    height: 10vh !important;
-  }
-  .MobileRow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-left: 5vw;
-  }
-  .Date {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 5vw;
-  }
-  .ExamFee {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 5vw;
-  }
-  .Availability {
-    display: flex;
-  }
-  .Location {
-    display: block;
-    margin-left: 5vw;
-    margin-right: 5vw;
-  }
-  .RegistrationOpen {
-    margin-left: 5vw;
-  }
-  .HiddenOnDesktop {
-    display: block;
-  }
-}
 
-/* Mobile view */
-@media screen and (min-width: 425px) and (max-width: 768px) and (orientation: landscape) {
-  .ExamSessionListItem {
-    display: block;
-    background: hsla(0, 0%, 100%, 1);
-    margin: 0;
-    padding: 3vh 2vw 1vh 2vw;
-    grid-template-areas: none;
-  }
-  .ExamSessionListItem div {
-    padding: 2px 0 2px 0;
-  }
-  .ExamSessionListItem span strong {
-    margin: 0;
-  }
-  .ExamSessionListItem hr {
-    width: 90%;
-    border: 1px solid hsla(195, 82%, 44%, 0.5);
-  }
-  .ExamSessionListItem button {
-    width: 45vw;
-    height: 10vh !important;
-  }
-  .MobileRow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-left: 5vw;
-  }
-  .Date {
+  td {
+    border-left: none;
+    border-bottom: 1px solid var(--secondary-blue);
     display: flex;
-    justify-content: flex-end;
-    margin-right: 5vw;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem 0;
   }
-  .ExamFee {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 5vw;
-  }
-  .Availability {
-    display: flex;
-  }
-  .Location {
-    display: block;
-    margin-left: 5vw;
-    margin-right: 5vw;
-  }
-  .RegistrationOpen {
-    margin-left: 5vw;
-  }
-  .HiddenOnDesktop {
-    display: block;
-  }
-}
 
-/* Mobile large landscape */
-@media screen and (min-width: 640px) and (max-width: 1023px) and (orientation: landscape) {
-  .ExamSessionListItem {
-    display: block;
-    background: hsla(0, 0%, 100%, 1);
-    margin: 0;
-    padding: 3vh 2vw 1vh 2vw;
-    grid-template-areas: none;
-  }
-  .ExamSessionListItem div {
-    padding: 2px 0 2px 0;
-  }
-  .ExamSessionListItem span strong {
-    margin: 0;
-  }
-  .ExamSessionListItem hr {
-    width: 90%;
-    border: 1px solid hsla(195, 82%, 44%, 0.5);
-  }
-  .ExamSessionListItem button {
-    width: 45vw;
-    height: 10vh !important;
-  }
-  .MobileRow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-left: 5vw;
-  }
-  .Date {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 5vw;
-  }
-  .ExamFee {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 5vw;
-  }
-  .Availability {
-    display: flex;
-  }
-  .Location {
-    display: block;
-    margin-left: 5vw;
-    margin-right: 5vw;
-  }
   .RegistrationOpen {
-    margin-left: 5vw;
+    display: flex;
+    flex-direction: row;
   }
-  .HiddenOnDesktop {
-    display: block;
+
+  .RegisterButton {
+    width: auto;
+    padding: 0.75rem;
   }
 }

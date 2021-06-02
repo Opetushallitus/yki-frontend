@@ -1,10 +1,10 @@
 .MainContainer {
-  background-color: var(--decoration-blue);
   padding-right: 0;
 }
 
 .FilterContainer {
   padding: 1.5rem;
+  background-color: var(--decoration-blue);
 }
 
 .FilterContainer hr {
@@ -20,6 +20,11 @@
   margin: 29px 0 14px 0;
 }
 
+.MobileSeparator {
+  padding-top: 30px;
+  background-color: var(--white);
+}
+
 @media (min-width: 620px) {
   .Upcoming {
     font-size: 16px;
@@ -27,47 +32,13 @@
 }
 
 /* Tablet portrait */
-@media screen and (max-width: 768px) {
-  .Content {
+@media screen and (max-width: 1024px) {
+  .FilterContainer hr {
+    margin-top: 3vh;
+  }
+  .MainContainer {
     margin: 0;
-  }
-  .FilterContainer {
-    height: 100%;
-  }
-  .FilterContainer hr {
-    margin-top: 3vh;
-  }
-}
-
-/* Tablet landscape */
-@media screen and (max-width: 1024px) and (orientation: landscape) {
-  .Content {
-    margin: 0 auto;
-  }
-  .FilterContainer {
-    height: 100%;
-  }
-  .FilterContainer p {
-    margin-bottom: 0;
-  }
-  .FilterContainer hr {
-    margin-top: 3vh;
-  }
-}
-
-/* Mobile view */
-@media screen and (max-width: 425px) {
-  .Content {
     width: 100%;
-    margin: auto;
-  }
-  .FilterContainer {
-    height: 100%;
-  }
-  .FilterContainer hr {
-    margin: 0;
-  }
-  .FilterSelectors {
-    margin-bottom: 10vh;
+    padding-left: 0;
   }
 }

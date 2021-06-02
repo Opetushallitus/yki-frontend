@@ -19,7 +19,7 @@ const examSessionList = ({ examSessions: sessions, language, t, history }) => (
             <th />
           </tr>
         </thead>
-        <tbody className={`${classes.Date} ${classes.List}`}>
+        <tbody className={classes.List}>
           {sessions.map((e, i) => (
             <ExamSessionListItem
               key={e.published_at + i}
