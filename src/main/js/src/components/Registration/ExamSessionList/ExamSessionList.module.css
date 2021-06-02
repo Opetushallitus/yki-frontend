@@ -6,56 +6,54 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid hsl(0, 0%, 59%);
+  border-bottom: 1px solid var(--primary-gray);
   font-size: 14px;
   padding: 5px 5px 5px 20px;
 }
 
 .ColumnHeaders {
-  background: hsla(194, 82%, 43%, 1) 0 0 no-repeat padding-box;
+  background: var(--primary-blue) 0 0 no-repeat padding-box;
   text-align: left;
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(0, 0%, 100%, 1);
-  padding: 5px 10px 0 10px;
+  color: var(--white);
+  padding: 0px 10px;
+  display: grid;
+  grid-template-columns: 0.7fr 0.7fr 1.5fr 1.2fr 0.6fr 1fr;
+  grid-row-gap: 5px;
+  padding: 0px 10px;
+}
+
+th {
+  border-left: 2px solid var(--secondary-blue);
+  padding: 5px 5px 5px 10px;
+  display: flex;
+  align-items: center;
+}
+
+th:first-child {
+  border-left: none;
 }
 
 .NotFound {
   font: normal normal bold 16px/24px PT Sans;
-  color: hsla(194, 91%, 21%, 1);
+  color: var(--primary-blue);
 }
 
-/* desktop */
-@media (min-width: 1024px) {
-  .Date {
+/* .Date {
     margin-bottom: -2px;
   }
 
   .Date:last-child {
     margin-bottom: 0;
-  }
+  } */
 
-  .ExamsOnDate {
-    display: flex;
-  }
+.ExamsOnDate {
+  display: flex;
+}
 
-  .ColumnHeaders {
-    height: 4vh;
-    font-size: 14px;
-    display: grid;
-    grid-template-columns: 0.7fr 2fr 0.8fr 1fr 0.7fr 1fr;
-    align-items: end;
-    padding: 5px 10px 0 10px;
-  }
-
-  .ColumnHeaders > div:nth-child(4),
-  .ColumnHeaders > div:nth-child(5) {
-    justify-self: center;
-  }
-
-  .List {
-    display: grid;
-  }
+.List {
+  display: grid;
 }
 
 /* Tablet landscape */
@@ -72,6 +70,10 @@
     text-align: left;
     padding: 5px 20px 5px 20px;
   }
+
+  .List {
+    display: block;
+  }
 }
 
 /* Mobile screens landscape */
@@ -83,4 +85,10 @@
     display: none;
     padding-left: 5vw;
   }
+<<<<<<< HEAD
+=======
+  .List {
+    display: block;
+  }
+>>>>>>> e39a9ba (desktop view fixed)
 }

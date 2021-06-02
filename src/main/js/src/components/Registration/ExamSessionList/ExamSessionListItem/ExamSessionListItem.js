@@ -4,10 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
-import {
-  DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR,
-} from '../../../../common/Constants';
+import { DATE_FORMAT } from '../../../../common/Constants';
 import * as actions from '../../../../store/actions/index';
 import { useMobileView } from '../../../../util/customHooks';
 import {
@@ -34,9 +31,8 @@ const examSessionListItem = ({
     onSelectExamSession(session);
     history.push(`/tutkintotilaisuus/${session.id}`);
   };
-
   const examDate = moment(session.session_date).format(DATE_FORMAT);
-  const date = <div className={classes.Date}>{examDate}</div>;
+  const date = <td className={classes.Date}>{examDate}</td>;
   const mobile = useMobileView(true, false);
   const tablet = useMobileView(false, true);
 
@@ -45,9 +41,9 @@ const examSessionListItem = ({
   const examLanguage = t(`common.language.${language.code}`);
   const examLevel = levelDescription(session.level_code).toLowerCase();
   const exam = (
-    <div className={classes.Exam}>
+    <td className={classes.Exam}>
       <strong>{`${examLanguage}, ${examLevel}`}</strong>
-    </div>
+    </td>
   );
 
   const sessionLocation =
@@ -56,10 +52,12 @@ const examSessionListItem = ({
   const address = sessionLocation.street_address || '';
   const city = sessionLocation.post_office.toUpperCase() || '';
   const location = (
-    <span className={classes.Location}>
-      {name} <br /> {address} <br /> {session.location[0].zip}{' '}
-      <strong>{city}</strong>
-    </span>
+    <td>
+      <span className={classes.Location}>
+        {name} <br /> {address} <br /> {session.location[0].zip}{' '}
+        <strong>{city}</strong>
+      </span>
+    </td>
   );
 
   const spotsAvailable = spotsAvailableForSession(session);
@@ -70,7 +68,7 @@ const examSessionListItem = ({
       : t('registration.examSpots.free');
 
   const availability = (
-    <div className={classes.Availability}>
+    <td className={classes.Availability}>
       <strong>
         {showAvailableSpots(session) ? (
           <>
@@ -83,35 +81,39 @@ const examSessionListItem = ({
           <span>{t('registration.examSpots.full')}</span>
         )}
       </strong>
-    </div>
+    </td>
   );
 
   const registrationOpen = (
-    <div className={classes.RegistrationOpen}>
+    <td className={classes.RegistrationOpen}>
       <span className={classes.HiddenOnDesktop}>
         {t('registration.list.signupOpen')}
       </span>{' '}
       <span>
-        {`${moment(session.registration_start_date).format(
-          DATE_FORMAT_WITHOUT_YEAR,
-        )} - ${moment(session.registration_end_date).format(
-          DATE_FORMAT_WITHOUT_YEAR,
-        )}`}
         {session.post_admission_start_date &&
         session.post_admission_end_date &&
         session.post_admission_active ? (
           <>
-            <br />
-            <span>{`${moment(session.post_admission_start_date).format(
-              DATE_FORMAT_WITHOUT_YEAR,
+            <p>{`${moment(session.post_admission_start_date).format(
+              DATE_FORMAT,
             )} -
                     ${moment(session.post_admission_end_date).format(
-                      DATE_FORMAT_WITHOUT_YEAR,
-                    )}`}</span>
+                      DATE_FORMAT,
+                    )}`}</p>
+            <p>{t('registration.postregistrationOnGoing')}</p>
           </>
-        ) : null}
+        ) : (
+          <>
+            <p>{`${moment(session.registration_start_date).format(
+              DATE_FORMAT,
+            )} - ${moment(session.registration_end_date).format(
+              DATE_FORMAT,
+            )}`}</p>
+            <p>{t('registration.open')}</p>
+          </>
+        )}
       </span>
-    </div>
+    </td>
   );
 
   const buttonText = spotsAvailable
@@ -127,10 +129,10 @@ const examSessionListItem = ({
     canSignupForPostAdmission(session);
 
   const registerButton = (
-    <>
+    <td>
       {showRegisterButton ? (
         <button
-          className={'YkiButton'}
+          className={`YkiButton ${classes.RegisterButton}`}
           onClick={selectExamSession}
           role="link"
           aria-label={srLabel}
@@ -141,7 +143,7 @@ const examSessionListItem = ({
           {buttonText}
         </button>
       ) : null}
-    </>
+    </td>
   );
   const locationOnMobileView = (
     <div className={classes.Location}>
@@ -186,17 +188,17 @@ const examSessionListItem = ({
           </div>
         </div>
       ) : (
-        <div
+        <tr
           className={classes.ExamSessionListItem}
           data-cy="exam-session-list-item"
         >
+          {exam}
           {date}
           {location}
-          {exam}
-          {availability}
           {registrationOpen}
+          {availability}
           {registerButton}
-        </div>
+        </tr>
       )}
     </>
   );

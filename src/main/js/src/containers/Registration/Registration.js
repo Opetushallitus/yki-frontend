@@ -118,7 +118,7 @@ class Registration extends Component {
         />
         <main id="main" className={'Container'}>
           <>
-            <div className={'InnerContainer'}>
+            <div className={`InnerContainer ${classes.MainContainer}`}>
               <div className={classes.FilterContainer}>
                 <Filters
                   language={this.props.language}

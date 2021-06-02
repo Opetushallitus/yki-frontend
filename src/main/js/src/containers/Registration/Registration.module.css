@@ -1,17 +1,9 @@
-.Content {
-  margin-left: 5vw;
-  margin-right: 5vw;
-  width: auto;
-}
-
-.Content h1 {
-  font-size: 18px;
-  font-weight: 400;
-  margin: 0 0 30px 0;
+.MainContainer {
+  background-color: var(--decoration-blue);
+  padding-right: 0;
 }
 
 .FilterContainer {
-  background-color: var(--decoration-blue);
   padding: 1.5rem;
 }
 
@@ -23,17 +15,6 @@
 .ResultCount {
   font-size: 21px;
 }
-
-/* .FilterContainer p {
-  text-align: left;
-  font: normal normal normal 21px/50px PT Sans;
-  letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
-} */
-
-/* .FilterSelectors {
-  padding: 5vh 5vw 0 5vw;
-} */
 
 .Upcoming {
   margin: 29px 0 14px 0;
