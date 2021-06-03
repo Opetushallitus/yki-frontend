@@ -32,7 +32,7 @@ class Registration extends Component {
       // set query params to redux state
       this.props.onSetAll(lang, level, location);
     }
-    if (this.props.examSessions.length === 0) {
+    if (this.props.examSessions.length === 0 && !this.props.loading) {
       this.props.onFetchExamSessions();
     }
   }
@@ -133,6 +133,7 @@ class Registration extends Component {
 const mapStateToProps = state => {
   return {
     examSessions: state.registration.examSessions,
+    loading: state.registration.loading,
     filteredExamSessionsGroupedByDate: state.registration.filteredExamSessionsGroupedByDate,
     language: state.registration.language,
     level: state.registration.level,
