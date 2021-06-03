@@ -216,6 +216,7 @@
   "registration.examDetails.registrationClosed": "Ilmoittautuminen ei ole avoinna tutkintotilaisuuteen:",
   "registration.examDetails.registrationPeriod": "Ilmoittautumisaika on",
   "registration.examDetails.title": "Olet ilmoittautumassa tutkintotilaisuuteen:",
+  "registration.examDetails.validationError.info": "Olemme vastaanottaneet tunnistautumisesi, mutta sen käsittely on ruuhkautunut. Voit edetä valitsemalla tunnistautumisen uudelleen tai valitsemalla toisen tunnistautumistavan.",
   "registration.examSpots.free": "vapaata paikkaa",
   "registration.examSpots.full": "Täynnä!",
   "registration.examSpots.notOpen": "Ilmoittautuminen ei ole vielä alkanut",

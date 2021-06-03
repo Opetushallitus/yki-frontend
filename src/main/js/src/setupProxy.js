@@ -549,20 +549,26 @@ module.exports = function (app) {
   app.post(
     '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id/relocate',
     (req, res) => {
-      try {
-        const { id, examSessionId } = req.params;
-        const toId = req.body.to_exam_session_id;
-        const foundIndex = registrations[examSessionId].participants.findIndex(
-          x => x.registration_id == id,
-        );
-        const reg = registrations[examSessionId].participants[foundIndex];
-        registrations[toId].participants.push(reg);
-        registrations[examSessionId].participants.splice(foundIndex, 1);
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
+      const mockCall = () => {
+        try {
+          const { id, examSessionId } = req.params;
+          const toId = req.body.to_exam_session_id;
+          const foundIndex = registrations[examSessionId].participants.findIndex(
+            x => x.registration_id == id,
+          );
+          const reg = registrations[examSessionId].participants[foundIndex];
+          registrations[toId].participants.push(reg);
+          registrations[examSessionId].participants.splice(foundIndex, 1);
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
       }
+
+      useLocalProxy
+        ? proxyPostCall(req, res)
+        : mockCall();
     },
   );
 
