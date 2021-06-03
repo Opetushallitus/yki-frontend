@@ -4,8 +4,7 @@
   width: 100%;
   background-color: var(--primary-blue);
   color: var(--white);
-  text-align: right;
-  max-height: 500px;
+  min-height: 300px;
 }
 
 .BaseContainer {
@@ -40,18 +39,6 @@
   margin: 0 0 3vh 0 !important;
 }
 
-.ImageContainer {
-  overflow: hidden;
-  height: 450px;
-  display: contents;
-}
-
-.ImageContainer img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 /* Tablet portrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .BaseContainer {
@@ -76,6 +63,8 @@
 @media screen and (min-width: 426px) and (max-width: 767px) {
   .HeadlineText {
     padding-top: 1vh;
+    padding-bottom: 1vh;
+    min-height: 200px;
     text-align: center;
     margin: 0 0vw 2vh 0vw;
     width: 100%;

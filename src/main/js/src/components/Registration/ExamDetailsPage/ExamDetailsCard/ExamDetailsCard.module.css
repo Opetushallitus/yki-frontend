@@ -15,23 +15,13 @@
 .DetailsCard {
   letter-spacing: 0 !important;
   display: block;
-  /* grid-template-columns: repeat(2, auto);
-  grid-column-gap: 2vw; */
   padding-bottom: 1rem;
 }
 
 .DetailsCard p {
   font-size: 18px;
-  margin: 0 !important;
+  white-space: pre-wrap;
   width: 100%;
-}
-
-.DetailsCard p:nth-child(2n) {
-  font-weight: bold !important;
-}
-
-.DetailsCard article p {
-  font: normal normal bold 16px/24px PT Sans !important;
 }
 
 .SuccessDetailsCard {
@@ -42,10 +32,6 @@
   font: normal normal bold 16px/24px PT Sans;
   margin: 0 !important;
   box-sizing: border-box;
-}
-
-.SuccessDetailsCard article p {
-  font: normal normal bold 16px/24px PT Sans !important;
 }
 
 /* Tablet view portrait */
@@ -77,14 +63,5 @@
     text-align: left;
     margin-left: 5vw;
     margin-right: 5vw;
-  }
-  .DetailsCard p:nth-child(2n) {
-    padding-left: 2vw;
-  }
-  .DetailsCard article {
-    padding-left: 2vw;
-  }
-  .SuccessDetailsCard article {
-    display: block;
   }
 }

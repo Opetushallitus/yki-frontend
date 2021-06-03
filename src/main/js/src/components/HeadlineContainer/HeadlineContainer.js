@@ -56,11 +56,15 @@ const HeadlineContainer = props => {
         )}
       </div>
       {mobile || mobileLandscape ? null : (
-        <div className={classes.BaseContainer}>
-          <div className={classes.ImageContainer} aria-disabled>
-            <img src={headlineImage} alt={'headline'} />
-          </div>
-        </div>
+        <div
+          className={classes.BaseContainer}
+          style={{
+            background: `url(${headlineImage})`,
+            backgroundSize: '100%',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}
+        ></div>
       )}
     </div>
   );
