@@ -14,21 +14,20 @@
 
 .DetailsCard {
   letter-spacing: 0 !important;
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  grid-column-gap: 2vw;
+  display: block;
+  /* grid-template-columns: repeat(2, auto);
+  grid-column-gap: 2vw; */
   padding-bottom: 1rem;
 }
 
 .DetailsCard p {
-  font: normal normal normal 16px/24px PT Sans;
+  font-size: 18px;
   margin: 0 !important;
-  box-sizing: border-box;
-  display: inline-block;
+  width: 100%;
 }
 
 .DetailsCard p:nth-child(2n) {
-  font: normal normal bold 16px/24px PT Sans !important;
+  font-weight: bold !important;
 }
 
 .DetailsCard article p {

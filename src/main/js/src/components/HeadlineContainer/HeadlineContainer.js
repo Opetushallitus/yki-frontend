@@ -25,7 +25,7 @@ const HeadlineContainer = props => {
 
   return (
     <div className={classes.Headline}>
-      <div className={classes.BaseContainer} style={{ overflow: 'auto' }}>
+      <div className={classes.BaseContainer}>
         {mobile || mobileLandscape ? (
           <>
             <div
@@ -58,7 +58,7 @@ const HeadlineContainer = props => {
       {mobile || mobileLandscape ? null : (
         <div className={classes.BaseContainer}>
           <div className={classes.ImageContainer} aria-disabled>
-            <img aria-disabled src={headlineImage} alt={'headline'} />
+            <img src={headlineImage} alt={'headline'} />
           </div>
         </div>
       )}

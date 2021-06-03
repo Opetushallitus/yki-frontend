@@ -30,7 +30,9 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email(t('registration.notification.signup.validation')),
+    email: Yup.string()
+      .email(t('registration.notification.signup.validation'))
+      .required(t('error.mandatory')),
     confirmEmail: Yup.string()
       .oneOf([Yup.ref('email'), null], t('error.confirmEmail'))
       .required(t('registration.form.confirmEmail')),
@@ -68,17 +70,18 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
                     type="input"
                     id="email"
                     name="email"
+                    aria-required
                     placeholder="essi@esimerkki.fi"
-                    autoFocus
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className={classes.BoldLabel}>
+                  <label htmlFor="confirmEmail" className={classes.BoldLabel}>
                     {t('registration.form.confirmEmail')}
                   </label>
                   <Field
                     className={classes.Field}
                     type="input"
+                    aria-required
                     id="confirmEmail"
                     name="confirmEmail"
                     placeholder="essi@esimerkki.fi"

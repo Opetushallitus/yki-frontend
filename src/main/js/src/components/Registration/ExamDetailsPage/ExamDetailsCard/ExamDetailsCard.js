@@ -29,10 +29,9 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
   ) : null;
 
   const date = (
-    <>
-      <p>{t('common.examDate')}:</p>
-      <p>{moment(exam.session_date).format(DATE_FORMAT)}</p>
-    </>
+    <p>
+      {t('common.examDate')}: {moment(exam.session_date).format(DATE_FORMAT)}
+    </p>
   );
 
   const location =
@@ -45,10 +44,9 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
   const locationDetails = (
     <>
       <p>{t('common.address')}:</p>
-      <article>
-        {organizer}
-        <br /> {address}
-      </article>
+      <p>
+        {organizer} {address}
+      </p>
     </>
   );
 

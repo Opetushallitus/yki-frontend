@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import classes from './Button.module.css';
 
@@ -14,7 +14,7 @@ const button = props => (
     onClick={props.clicked}
     tabIndex={props.tabIndex}
     data-cy={props.datacy}
-    role="link"
+    role="button"
     aria-label={props.ariaLabel}
   >
     {props.children}
