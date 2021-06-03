@@ -47,7 +47,7 @@ export const RegistrationPage = props => {
         headlineImage={YkiImage2}
       />
       <div className={classes.RegistrationPage}>
-        <BackButton clicked={() => history && history.push('/')} />
+        <BackButton href="/" />
         <RegistrationForm {...props} />
       </div>
     </>

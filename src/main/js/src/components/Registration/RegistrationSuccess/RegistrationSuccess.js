@@ -24,10 +24,7 @@ export const registrationSuccess = ({ initData, formData, history, t }) => {
         headlineImage={YkiImage3}
       />
       <div className={classes.RegistrationSuccess}>
-        <BackButton
-          clicked={() => history && history.push('/yki/')}
-          buttonText={t('errorBoundary.return')}
-        />
+        <BackButton href="/yki/" buttonText={t('errorBoundary.return')} />
         <div data-cy="registration-success">
           <p>
             {t('registration.success.info1')}:{' '}

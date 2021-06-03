@@ -101,12 +101,7 @@ const examDetailsPage = ({
             headlineImage={tempHeroImage}
           />
           <div className={classes.Content}>
-            <BackButton
-              clicked={() =>
-                history &&
-                history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
-              }
-            />
+            <BackButton href="/ilmoittautuminen/valitse-tutkintotilaisuus" />
             {registrationOpen ? (
               <>
                 {validationFailed && (

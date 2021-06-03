@@ -131,12 +131,7 @@ export class PaymentStatus extends Component {
         <main id="main">
           <div>{headLine()}</div>
           <div className={classes.Content}>
-            <BackButton
-              clicked={() =>
-                this.props.history &&
-                this.props.history.push(this.props.returnUrl)
-              }
-            />
+            <BackButton href={this.props.returnUrl} />
             <div>{content()}</div>
           </div>
         </main>
