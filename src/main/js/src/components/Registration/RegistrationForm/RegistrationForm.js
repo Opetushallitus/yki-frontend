@@ -145,8 +145,8 @@ export const registrationForm = props => {
     error,
   }) => {
     return (
-      <div className={className} id={id}>
-        <h3>{label}</h3>
+      <div id={id}>
+        <label>{label}</label>
         {children}
         {error && value ? (
           <span className={classes.ErrorMessage}>{error}</span>
@@ -216,7 +216,7 @@ export const registrationForm = props => {
   const phoneNumberInputField = (setFieldValue, setTouched, touched) => (
     <>
       {' '}
-      <h3>{props.t(`registration.form.phoneNumber`)}</h3>
+      <label>{props.t(`registration.form.phoneNumber`)}</label>
       <Field
         component={PhoneNumberComponent}
         name={'phoneNumber'}
@@ -239,9 +239,14 @@ export const registrationForm = props => {
 
   const inputField = (name, placeholder = '', extra, type = 'text') => (
     <>
-      <h3>{props.t(`registration.form.${name}`)}</h3>
+      <label id={`${name}-label`} htmlFor={name}>
+        {props.t(`registration.form.${name}`)} *
+      </label>
       <Field
+        id={name}
         name={name}
+        aria-required
+        aria-labelledby={`${name}-label`}
         data-cy={`input-${name}`}
         placeholder={placeholder}
         className={classes.TextInput}
@@ -261,7 +266,7 @@ export const registrationForm = props => {
   const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
       <>
-        <h3>{props.t(`registration.form.${name}`)}</h3>
+        <p className={classes.Label}>{props.t(`registration.form.${name}`)}</p>
         <span>{initialValues[name]}</span>
       </>
     ) : (
@@ -349,24 +354,19 @@ export const registrationForm = props => {
         <Form className={classes.Form}>
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
-            <div className={classes.InputFieldGrid}>
-              <div className={classes.FormElement}>
-                {readonlyWhenExistsInput('firstName', initialValues)}
-              </div>
-              <div className={classes.FormElement}>
-                {readonlyWhenExistsInput('lastName', initialValues)}
-              </div>
+            <div className={classes.InputGroup}>
+              <div>{readonlyWhenExistsInput('firstName', initialValues)}</div>
+              <div>{readonlyWhenExistsInput('lastName', initialValues)}</div>
             </div>
             {mobileOrTablet ? (
               <>
-                <div className={classes.InputFieldGrid}>
-                  <div className={classes.FormElement}>
-                    {inputField('streetAddress')}
-                  </div>
+                <div className={classes.InputGroup}>
+                  <div>{inputField('streetAddress')}</div>
                 </div>
-                <div className={classes.InputFieldGrid}>
-                  <div className={classes.FormElement}>
+                <div className={classes.InputGroup}>
+                  <div>
                     <ZipAndPostOffice
+                      mandatory
                       values={values}
                       setFieldValue={setFieldValue}
                     />
@@ -374,12 +374,11 @@ export const registrationForm = props => {
                 </div>
               </>
             ) : (
-              <div className={classes.InputFieldGrid}>
-                <div className={classes.FormElement}>
-                  {inputField('streetAddress')}
-                </div>
-                <div className={classes.FormElement}>
+              <div className={classes.InputGroup}>
+                <div>{inputField('streetAddress')}</div>
+                <div>
                   <ZipAndPostOffice
+                    mandatory
                     values={values}
                     setFieldValue={setFieldValue}
                   />
@@ -388,41 +387,37 @@ export const registrationForm = props => {
             )}
             {mobileOrTablet ? (
               <>
-                <div className={classes.InputFieldGrid}>
-                  <div className={classes.FormElement}>
+                <div className={classes.InputGroup}>
+                  <div>
                     {phoneNumberInputField(setFieldValue, setTouched, touched)}
                   </div>
                 </div>
-                <div className={classes.InputFieldGrid}>
-                  <div className={classes.FormElement}>
+                <div className={classes.InputGroup}>
+                  <div>
                     {readonlyWhenExistsInput('email', initialValues, 'email')}
                   </div>
                 </div>
                 {!props.initData.user.email && (
-                  <div className={classes.InputFieldGrid}>
-                    <div className={classes.FormElement}>
-                      {inputField('confirmEmail', null, null, 'email')}
-                    </div>
+                  <div className={classes.InputGroup}>
+                    <div>{inputField('confirmEmail', null, null, 'email')}</div>
                   </div>
                 )}
               </>
             ) : (
-              <div className={classes.InputFieldGrid}>
-                <div className={classes.FormElement}>
+              <div className={classes.InputGroup}>
+                <div>
                   {phoneNumberInputField(setFieldValue, setTouched, touched)}
                 </div>
-                <div className={classes.FormElement}>
+                <div>
                   {readonlyWhenExistsInput('email', initialValues, 'email')}
                 </div>
                 {!props.initData.user.email && (
-                  <div className={classes.FormElement}>
-                    {inputField('confirmEmail', null, null, 'email')}
-                  </div>
+                  <div>{inputField('confirmEmail', null, null, 'email')}</div>
                 )}
               </div>
             )}
             {!initialValues.nationality && (
-              <div className={classes.FormElement}>
+              <div>
                 <NationalitySelect
                   nationalities={props.initData.nationalities}
                   className={classes.NationalitySelect}
@@ -430,8 +425,8 @@ export const registrationForm = props => {
               </div>
             )}
             {!props.initData.user.ssn && (
-              <div className={classes.InputFieldGrid}>
-                <div className={classes.FormElement}>
+              <div className={classes.InputGroup}>
+                <div>
                   <div className={classes.Birthdate}>
                     {inputField(
                       'birthdate',
@@ -444,82 +439,71 @@ export const registrationForm = props => {
                       className={classes.GenderSelect}
                     />
                   </div>
-                  <div className={classes.FormElement}>
+                  <div>
                     {inputField('ssn')}
                     <p> {props.t('registration.form.ssn.text')}</p>
                   </div>
                 </div>
               </div>
             )}
-            <div className={classes.InputFieldGrid}>
+            <div className={classes.InputGroup}>
               {showExamLang() && (
-                <div
-                  className={[
-                    classes.FormElement,
-                    classes.RadiobuttonGroup,
-                  ].join(' ')}
-                >
-                  <RadioButtonGroup
-                    label={props.t('registration.form.examLang')}
-                    value={values.examLang}
-                    error={errors.examLang}
-                  >
-                    <div className={classes.RadioButtons}>
-                      <Field
-                        component={RadioButtonComponent}
-                        name="examLang"
-                        id={'examLang-fi'}
-                        checkedValue={'fi'}
-                        label={props.t('common.language.fin')}
-                      />
-                      <Field
-                        component={RadioButtonComponent}
-                        name="examLang"
-                        id={'examLang-sv'}
-                        checkedValue={'sv'}
-                        label={props.t('common.language.swe')}
-                      />
-                    </div>
-                  </RadioButtonGroup>
-                </div>
-              )}
-              <div
-                className={[classes.FormElement, classes.RadiobuttonGroup].join(
-                  ' ',
-                )}
-              >
                 <RadioButtonGroup
-                  label={props.t('registration.form.certificateLang')}
-                  value={values.certificateLang}
-                  error={errors.certificateLang}
+                  label={props.t('registration.form.examLang')}
+                  value={values.examLang}
+                  error={errors.examLang}
                 >
                   <div className={classes.RadioButtons}>
                     <Field
                       component={RadioButtonComponent}
-                      name="certificateLang"
-                      id={'certificateLang-fi'}
+                      name="examLang"
+                      id={'examLang-fi'}
                       checkedValue={'fi'}
                       label={props.t('common.language.fin')}
                     />
                     <Field
                       component={RadioButtonComponent}
-                      name="certificateLang"
-                      id={'certificateLang-sv'}
+                      name="examLang"
+                      id={'examLang-sv'}
                       checkedValue={'sv'}
                       label={props.t('common.language.swe')}
                     />
-                    <Field
-                      component={RadioButtonComponent}
-                      name="certificateLang"
-                      id={'certificateLang-en'}
-                      checkedValue={'en'}
-                      label={props.t('common.language.eng')}
-                    />
                   </div>
                 </RadioButtonGroup>
-              </div>
+              )}
+
+              <RadioButtonGroup
+                label={props.t('registration.form.certificateLang')}
+                value={values.certificateLang}
+                error={errors.certificateLang}
+              >
+                <div className={classes.RadioButtons}>
+                  <Field
+                    component={RadioButtonComponent}
+                    name="certificateLang"
+                    id={'certificateLang-fi'}
+                    checkedValue={'fi'}
+                    label={props.t('common.language.fin')}
+                  />
+                  <Field
+                    component={RadioButtonComponent}
+                    name="certificateLang"
+                    id={'certificateLang-sv'}
+                    checkedValue={'sv'}
+                    label={props.t('common.language.swe')}
+                  />
+                  <Field
+                    component={RadioButtonComponent}
+                    name="certificateLang"
+                    id={'certificateLang-en'}
+                    checkedValue={'en'}
+                    label={props.t('common.language.eng')}
+                  />
+                </div>
+              </RadioButtonGroup>
             </div>
           </div>
+
           <p>{props.t('registration.form.specialArrangements.info')}</p>
           <p>{props.t('registration.form.summary.info')}</p>
           <>

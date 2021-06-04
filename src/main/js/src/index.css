@@ -52,15 +52,27 @@ main {
 }
 
 input {
-  font-size: 0.875em;
+  height: 30px;
+  width: 260px;
+  font-size: 1rem;
+  background: var(--white) 0 0 no-repeat padding-box;
+  border: 1px solid var(--secondary-blue);
+  border-radius: 4px;
   color: var(--black);
   padding-left: 5px;
-  border: 1px solid var(--secondary-blue);
+  margin-top: 5px;
+}
+
+label {
+  font: normal normal bold 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: var(--primary-blue);
+  margin-bottom: 5px;
 }
 
 textarea {
-  font-size: 0.875em;
-  color: --black;
+  font-size: 1rem;
+  color: var(--black);
   padding-left: 5px;
   border: 1px solid var(--secondary-blue);
   border-radius: 2px;

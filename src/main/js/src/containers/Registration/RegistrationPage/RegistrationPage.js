@@ -12,7 +12,6 @@ import RegistrationSuccess from '../../../components/Registration/RegistrationSu
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import * as actions from '../../../store/actions/index';
 import { getLanguageAndLevel } from '../../../util/util';
-import classes from './RegistrationPage.module.css';
 
 export const RegistrationPage = props => {
   const { initData, initDataLoading, history, match } = props;
@@ -46,7 +45,7 @@ export const RegistrationPage = props => {
         }
         headlineImage={YkiImage2}
       />
-      <div className={classes.RegistrationPage}>
+      <div className={'InnerContainer'}>
         <BackButton href="/" />
         <RegistrationForm {...props} />
       </div>
@@ -56,7 +55,7 @@ export const RegistrationPage = props => {
   return (
     <>
       {!successPage}
-      <main id="main">
+      <main id="main" className={'Container'}>
         {initError ? initError : successPage ? successPage : registrationPage}
       </main>
     </>

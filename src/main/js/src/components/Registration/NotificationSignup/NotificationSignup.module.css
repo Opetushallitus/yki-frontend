@@ -12,24 +12,6 @@
   color: hsla(194, 82%, 43%, 1);
 }
 
-.Label {
-  font-size: 14px;
-}
-
-.BoldLabel {
-  font: normal normal bold 16px/24px PT Sans;
-  letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
-}
-
-.Field {
-  height: 30px;
-  width: 260px;
-  background: hsla(0, 0%, 100%, 1) 0 0 no-repeat padding-box;
-  border: 1px solid hsla(194, 82%, 43%, 1);
-  border-radius: 4px;
-}
-
 .EmailContainer {
   display: flex;
 }

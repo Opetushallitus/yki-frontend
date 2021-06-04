@@ -1,70 +1,64 @@
-.RadiobuttonGroup {
+/* .RadiobuttonGroup {
   margin: 0 0 27px 0;
-}
+} */
 
-.TextInput {
+/* .TextInput {
   width: 200px;
   height: 28px;
-  border: 1px solid hsla(194, 82%, 43%, 1);
+  border: 1px solid var(--secondary-blue);
   border-radius: 4px;
-}
+} */
 
-.FormElement {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
+/* .FormElement {
+  margin: 20px 0;
+} */
 
-.FormElement span {
-  color: hsla(194, 91%, 21%, 1);
-}
-
-.Form h2 {
-  margin: 8px 0 14px 0;
-  text-align: left;
-  font: normal normal bold 16px/24px PT Sans;
-  letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
+.Label {
   font-weight: bold;
 }
 
-.Form h3 {
-  margin: 0 0 8px 0;
-  font: normal normal bold 16px/24px PT Sans;
-  letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
-}
+/* .RadioButtonGroup {
+  display: flex;
+  flex-direction: column;
+} */
 
-.Form label {
+/* .Form label {
   font-size: 0.875em;
-}
+} */
 
-.Form span {
+/* .Form span {
   font-size: 0.875em;
-}
+} */
 
-.Form p {
+/* .Form p {
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
   color: hsla(194, 91%, 21%, 1);
-}
+} */
 
-.Form input {
+/* .Form input {
   font: normal normal normal 16px/24px PT Sans;
   color: hsla(194, 91%, 21%, 1);
-}
-
+} */
+/* 
 .Form input:focus {
   outline: 1px solid hsla(194, 82%, 43%, 1);
-}
+} */
 
 .Form button {
   width: 17vw;
   margin-top: 5vh !important;
 }
 
-.InputFieldGrid {
+/* .InputFieldGrid {
   display: grid;
-  grid-template-columns: repeat(3, 24vw);
+  grid-template-columns: repeat(3, 23vw);
+} */
+
+.InputGroup {
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  margin: 20px 0;
 }
 
 .GenderSelect {
@@ -120,7 +114,6 @@
 
 .RadioButtons {
   display: flex;
-  color: hsla(194, 91%, 21%, 1);
 }
 
 .RadioButtons div {

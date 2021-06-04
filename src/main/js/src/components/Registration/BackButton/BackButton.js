@@ -17,7 +17,7 @@ const backButton = ({ buttonText, href }) => {
 };
 
 backButton.propTypes = {
-  clicked: PropTypes.func.isRequired,
+  href: PropTypes.string.isRequired,
   buttonText: PropTypes.string,
 };
 

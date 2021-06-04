@@ -1,8 +1,8 @@
-import React from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import * as R from 'ramda';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
 
 export const nationalitySelect = props => {
   const nationalitiesByLocale = props.nationalities.map(n => {
@@ -22,8 +22,12 @@ export const nationalitySelect = props => {
 
   return (
     <React.Fragment>
-      <h3>{props.t('registration.form.nationality')}</h3>
+      <label htmlFor="select-nationality">
+        {props.t('registration.form.nationality')} *
+      </label>
       <Field
+        id="select-nationality"
+        aria-required
         component="select"
         name="nationality"
         className={props.className}

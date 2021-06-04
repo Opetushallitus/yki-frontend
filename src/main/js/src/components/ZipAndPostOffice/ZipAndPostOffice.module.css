@@ -1,21 +1,25 @@
-.AddressInput input {
-  border: 1px solid hsla(194, 82%, 43%, 1);
-  border-radius: 4px;
-}
-
 .Zip {
   float: left;
   margin-right: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
 .Zip input {
   width: 60px;
   height: 28px;
+  margin-top: 0;
+}
+
+.PostOffice {
+  display: flex;
+  flex-direction: column;
 }
 
 .PostOffice input {
   width: 100px;
   height: 28px;
+  margin-top: 0;
 }
 
 .ErrorMessage {

@@ -1,8 +1,8 @@
-import React from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import * as R from 'ramda';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
 
 export const genderSelect = props => {
   const sortByCode = R.sortBy(R.prop('koodiArvo'));
@@ -19,8 +19,12 @@ export const genderSelect = props => {
 
   return (
     <React.Fragment>
-      <h3>{props.t('registration.form.gender')}</h3>
+      <label htmlFor="gender-select">
+        {props.t('registration.form.gender')} *
+      </label>
       <Field
+        id="gender-select"
+        aria-required
         component="select"
         name="gender"
         className={props.className}

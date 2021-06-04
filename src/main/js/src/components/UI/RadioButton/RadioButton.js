@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import classes from './RadioButton.module.css';
 
@@ -20,9 +20,13 @@ const radioButton = props => (
       onChange={props.onChange}
       disabled={props.disabled || false}
     />
-    <label className={classes.RadioButtonLabel} htmlFor={props.id}>{props.label}</label>
+    <label className={classes.RadioButtonLabel} htmlFor={props.id}>
+      {props.label}
+    </label>
     {props.extraLabel ? (
-      <label className={classes.RadioButtonExtraLabel} htmlFor={props.id}>{props.extraLabel}</label>
+      <label className={classes.RadioButtonExtraLabel} htmlFor={props.id}>
+        {props.extraLabel}
+      </label>
     ) : null}
   </div>
 );
