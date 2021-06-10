@@ -1,18 +1,3 @@
-/* .RadiobuttonGroup {
-  margin: 0 0 27px 0;
-} */
-
-/* .TextInput {
-  width: 200px;
-  height: 28px;
-  border: 1px solid var(--secondary-blue);
-  border-radius: 4px;
-} */
-
-/* .FormElement {
-  margin: 20px 0;
-} */
-
 .Label {
   font-weight: bold;
 }
@@ -30,43 +15,10 @@
   border: none;
 }
 
-/* .RadioButtonGroup {
-  display: flex;
-  flex-direction: column;
-} */
-
-/* .Form label {
-  font-size: 0.875em;
-} */
-
-/* .Form span {
-  font-size: 0.875em;
-} */
-
-/* .Form p {
-  font: normal normal normal 16px/24px PT Sans;
-  letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
-} */
-
-/* .Form input {
-  font: normal normal normal 16px/24px PT Sans;
-  color: hsla(194, 91%, 21%, 1);
-} */
-/* 
-.Form input:focus {
-  outline: 1px solid hsla(194, 82%, 43%, 1);
-} */
-
 .Form button {
   width: 17vw;
   margin-top: 5vh !important;
 }
-
-/* .InputFieldGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 23vw);
-} */
 
 .InputGroup {
   display: grid;
@@ -85,43 +37,9 @@
   -o-border-radius: 4px;
 }
 
-.Birthdate {
-  float: left;
-  margin-right: 12px;
-}
-
-/* .Birthdate input {
-  width: 108px;
-  height: 28px;
-  border: 1px solid hsla(194, 82%, 43%, 1);
-  border-radius: 4px;
-}
-
-.Birthdate span {
-  display: inline;
-  margin-left: 4px;
-} */
-
-.Zip input {
-  width: 60px;
-  height: 28px;
-}
-
-.PostOffice input {
-  width: 100px;
-  height: 28px;
-}
-
-.NationalitySelect {
-  height: 32px;
-  width: 200px;
-  border: 1px solid hsla(194, 82%, 43%, 1);
-  border-radius: 4px;
-}
-
 .ErrorMessage {
   display: block;
-  color: hsla(15, 100%, 40%, 1) !important;
+  color: var(--error) !important;
   margin: 14px 0px 14px 0px;
 }
 
@@ -150,21 +68,13 @@
   margin: 32px;
 }
 
-.ConsentCheckbox p {
-  padding-left: 10px;
-}
-
-.ConsentCheckbox label span {
-  border: 1px solid hsla(194, 82%, 43%, 1) !important;
-}
-
 .ConsentCheckbox .ErrorMessage {
   margin-top: 0;
 }
 
 @media screen and (max-width: 1023px) {
-  .InputFieldGrid {
-    grid-template-columns: none;
+  .InputGroup {
+    grid-template-columns: repeat(2, 50%);
   }
 
   .RadiobuttonGroup {
@@ -191,8 +101,13 @@
   }
 }
 
-@media only screen and (max-width: 1023px) and (orientation: landscape) {
+@media only screen and (max-width: 760px) {
   .FormElement input {
     width: 100%;
+  }
+
+  .InputGroup {
+    display: flex;
+    flex-direction: column;
   }
 }

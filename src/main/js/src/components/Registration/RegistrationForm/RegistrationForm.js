@@ -358,30 +358,15 @@ export const registrationForm = props => {
               <div>{readonlyWhenExistsInput('firstName', initialValues)}</div>
               <div>{readonlyWhenExistsInput('lastName', initialValues)}</div>
             </div>
-            {mobileOrTablet ? (
-              <>
-                <div className={classes.InputGroup}>
-                  {inputField('streetAddress')}
-                </div>
-                <div className={classes.InputGroup}>
-                  <ZipAndPostOffice
-                    mandatory
-                    values={values}
-                    setFieldValue={setFieldValue}
-                  />
-                </div>
-              </>
-            ) : (
-              <div className={classes.InputGroup}>
-                {inputField('streetAddress')}
+            <div className={classes.InputGroup}>
+              {inputField('streetAddress')}
+              <ZipAndPostOffice
+                mandatory
+                values={values}
+                setFieldValue={setFieldValue}
+              />
+            </div>
 
-                <ZipAndPostOffice
-                  mandatory
-                  values={values}
-                  setFieldValue={setFieldValue}
-                />
-              </div>
-            )}
             {mobileOrTablet ? (
               <>
                 <div className={classes.InputGroup}>
@@ -389,19 +374,16 @@ export const registrationForm = props => {
                 </div>
                 <div className={classes.InputGroup}>
                   {readonlyWhenExistsInput('email', initialValues, 'email')}
+
+                  {!props.initData.user.email && (
+                    <>{inputField('confirmEmail', null, null, 'email')}</>
+                  )}
                 </div>
-                {!props.initData.user.email && (
-                  <div className={classes.InputGroup}>
-                    {inputField('confirmEmail', null, null, 'email')}
-                  </div>
-                )}
               </>
             ) : (
               <div className={classes.InputGroup}>
                 {phoneNumberInputField(setFieldValue, setTouched, touched)}
-
                 {readonlyWhenExistsInput('email', initialValues, 'email')}
-
                 {!props.initData.user.email && (
                   <>{inputField('confirmEmail', null, null, 'email')}</>
                 )}
