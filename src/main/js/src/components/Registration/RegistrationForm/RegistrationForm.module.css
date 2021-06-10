@@ -17,6 +17,19 @@
   font-weight: bold;
 }
 
+.InputFieldWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.Form label {
+  margin-bottom: 10px;
+}
+
+.Form fieldset {
+  border: none;
+}
+
 /* .RadioButtonGroup {
   display: flex;
   flex-direction: column;
@@ -61,11 +74,15 @@
   margin: 20px 0;
 }
 
-.GenderSelect {
-  height: 32px;
-  width: 80px;
-  border: 1px solid hsla(194, 82%, 43%, 1);
+.FormSelector {
+  height: 34px;
+  width: 130px;
+  border: 1px solid var(--secondary-blue);
   border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
 }
 
 .Birthdate {
@@ -73,7 +90,7 @@
   margin-right: 12px;
 }
 
-.Birthdate input {
+/* .Birthdate input {
   width: 108px;
   height: 28px;
   border: 1px solid hsla(194, 82%, 43%, 1);
@@ -83,7 +100,7 @@
 .Birthdate span {
   display: inline;
   margin-left: 4px;
-}
+} */
 
 .Zip input {
   width: 60px;
@@ -114,6 +131,7 @@
 
 .RadioButtons {
   display: flex;
+  margin-top: 10px;
 }
 
 .RadioButtons div {
@@ -123,23 +141,13 @@
 .ConsentContainer {
   padding-top: 1vh;
   margin-top: 5vh;
-  border: 1px solid hsla(0, 0%, 83%, 0.2);
+  border: 1px solid var(--light-gray);
   border-radius: 4px;
-  background: hsla(0, 0%, 83%, 0.2);
-}
-
-.ConsentContainer article {
-  padding: 0 10px 0 10px;
-}
-
-.ConsentContainer article h4 {
-  margin-block-start: 0;
+  background: var(--light-gray);
 }
 
 .ConsentCheckbox {
-  grid-template-columns: 30px calc(100% - 30px);
-  padding-left: 10px;
-  padding-bottom: 1.5rem;
+  margin: 32px;
 }
 
 .ConsentCheckbox p {
@@ -152,12 +160,6 @@
 
 .ConsentCheckbox .ErrorMessage {
   margin-top: 0;
-}
-
-@media (min-width: 1440px) {
-  .Form button {
-    margin: 0 40px;
-  }
 }
 
 @media screen and (max-width: 1023px) {

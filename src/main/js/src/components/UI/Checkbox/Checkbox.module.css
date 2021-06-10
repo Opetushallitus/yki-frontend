@@ -35,6 +35,10 @@
   border: 1px solid var(--white);
   background-color: var(--white);
   margin-right: 1rem;
+  -webkit-border-radius: ;
+  -moz-border-radius: ;
+  -ms-border-radius: ;
+  -o-border-radius: ;
 }
 
 .Container input:checked + .CbLabel:before {

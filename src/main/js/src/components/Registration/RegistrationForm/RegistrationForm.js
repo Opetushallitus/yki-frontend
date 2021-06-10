@@ -145,13 +145,14 @@ export const registrationForm = props => {
     error,
   }) => {
     return (
-      <div id={id}>
+      <fieldset id={id}>
         <label>{label}</label>
+
         {children}
         {error && value ? (
           <span className={classes.ErrorMessage}>{error}</span>
         ) : null}
-      </div>
+      </fieldset>
     );
   };
   const CheckboxComponent = ({
@@ -214,8 +215,7 @@ export const registrationForm = props => {
   };
 
   const phoneNumberInputField = (setFieldValue, setTouched, touched) => (
-    <>
-      {' '}
+    <div className={classes.InputFieldWrapper}>
       <label>{props.t(`registration.form.phoneNumber`)}</label>
       <Field
         component={PhoneNumberComponent}
@@ -234,11 +234,11 @@ export const registrationForm = props => {
         component="span"
         className={classes.ErrorMessage}
       />
-    </>
+    </div>
   );
 
   const inputField = (name, placeholder = '', extra, type = 'text') => (
-    <>
+    <div className={classes.InputFieldWrapper}>
       <label id={`${name}-label`} htmlFor={name}>
         {props.t(`registration.form.${name}`)} *
       </label>
@@ -260,7 +260,7 @@ export const registrationForm = props => {
         component="span"
         className={classes.ErrorMessage}
       />
-    </>
+    </div>
   );
 
   const readonlyWhenExistsInput = (name, initialValues, type) =>
@@ -361,88 +361,73 @@ export const registrationForm = props => {
             {mobileOrTablet ? (
               <>
                 <div className={classes.InputGroup}>
-                  <div>{inputField('streetAddress')}</div>
+                  {inputField('streetAddress')}
                 </div>
                 <div className={classes.InputGroup}>
-                  <div>
-                    <ZipAndPostOffice
-                      mandatory
-                      values={values}
-                      setFieldValue={setFieldValue}
-                    />
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className={classes.InputGroup}>
-                <div>{inputField('streetAddress')}</div>
-                <div>
                   <ZipAndPostOffice
                     mandatory
                     values={values}
                     setFieldValue={setFieldValue}
                   />
                 </div>
+              </>
+            ) : (
+              <div className={classes.InputGroup}>
+                {inputField('streetAddress')}
+
+                <ZipAndPostOffice
+                  mandatory
+                  values={values}
+                  setFieldValue={setFieldValue}
+                />
               </div>
             )}
             {mobileOrTablet ? (
               <>
                 <div className={classes.InputGroup}>
-                  <div>
-                    {phoneNumberInputField(setFieldValue, setTouched, touched)}
-                  </div>
+                  {phoneNumberInputField(setFieldValue, setTouched, touched)}
                 </div>
                 <div className={classes.InputGroup}>
-                  <div>
-                    {readonlyWhenExistsInput('email', initialValues, 'email')}
-                  </div>
+                  {readonlyWhenExistsInput('email', initialValues, 'email')}
                 </div>
                 {!props.initData.user.email && (
                   <div className={classes.InputGroup}>
-                    <div>{inputField('confirmEmail', null, null, 'email')}</div>
+                    {inputField('confirmEmail', null, null, 'email')}
                   </div>
                 )}
               </>
             ) : (
               <div className={classes.InputGroup}>
-                <div>
-                  {phoneNumberInputField(setFieldValue, setTouched, touched)}
-                </div>
-                <div>
-                  {readonlyWhenExistsInput('email', initialValues, 'email')}
-                </div>
+                {phoneNumberInputField(setFieldValue, setTouched, touched)}
+
+                {readonlyWhenExistsInput('email', initialValues, 'email')}
+
                 {!props.initData.user.email && (
-                  <div>{inputField('confirmEmail', null, null, 'email')}</div>
+                  <>{inputField('confirmEmail', null, null, 'email')}</>
                 )}
               </div>
             )}
             {!initialValues.nationality && (
-              <div>
-                <NationalitySelect
-                  nationalities={props.initData.nationalities}
-                  className={classes.NationalitySelect}
-                />
-              </div>
+              <NationalitySelect
+                nationalities={props.initData.nationalities}
+                className={classes.FormSelector}
+              />
             )}
             {!props.initData.user.ssn && (
               <div className={classes.InputGroup}>
+                {inputField(
+                  'birthdate',
+                  props.t('registration.form.birthdate.placeholder'),
+                )}
+
+                <GenderSelect
+                  genders={props.initData.genders}
+                  className={classes.FormSelector}
+                />
+
                 <div>
-                  <div className={classes.Birthdate}>
-                    {inputField(
-                      'birthdate',
-                      props.t('registration.form.birthdate.placeholder'),
-                    )}
-                  </div>
-                  <div>
-                    <GenderSelect
-                      genders={props.initData.genders}
-                      className={classes.GenderSelect}
-                    />
-                  </div>
-                  <div>
-                    {inputField('ssn')}
-                    <p> {props.t('registration.form.ssn.text')}</p>
-                  </div>
+                  {inputField('ssn')}
+                  <p> {props.t('registration.form.ssn.text')}</p>
                 </div>
               </div>
             )}
@@ -509,7 +494,11 @@ export const registrationForm = props => {
           <>
             <div className={classes.ConsentContainer}>
               <article>
-                <h4>{props.t('registration.form.consent.heading')}</h4>
+                <p>
+                  <strong>
+                    {props.t('registration.form.consent.heading')}
+                  </strong>
+                </p>
                 <p>{props.t('registration.form.consent.info')}</p>
               </article>
               <div className={classes.ConsentCheckbox}>
@@ -534,9 +523,11 @@ export const registrationForm = props => {
             </div>
             <div className={classes.ConsentContainer}>
               <article>
-                <h4>
-                  {props.t('registration.form.personalData.consent.heading')}
-                </h4>
+                <p>
+                  <strong>
+                    {props.t('registration.form.personalData.consent.heading')}
+                  </strong>
+                </p>
                 <a
                   href={'https://opintopolku.fi/wp/tietosuojaseloste/'}
                   target="_blank"
@@ -580,12 +571,8 @@ export const registrationForm = props => {
             type="submit"
             isRegistration={true}
             datacy="form-submit-button"
-            btnType={!isValid || props.submitting ? 'Disabled' : null}
-            ariaLabel={
-              !isValid || props.submitting
-                ? props.t('registration.form.aria.submit.button')
-                : null
-            }
+            ariaLabel={props.t('registration.form.aria.submit.button')}
+            disabled={!isValid || props.submitting}
           >
             {props.t('registration.form.submit.button')}
           </Button>

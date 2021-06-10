@@ -9,13 +9,14 @@ const button = props => (
     disabled={props.disabled}
     className={[
       props.isRegistration ? 'YkiButton' : classes.Button,
-      classes[props.btnType],
+      classes[props.customClass],
     ].join(' ')}
     onClick={props.clicked}
     tabIndex={props.tabIndex}
     data-cy={props.datacy}
     role="button"
     aria-label={props.ariaLabel}
+    aria-disabled={props.disabled}
   >
     {props.children}
   </button>
@@ -24,7 +25,7 @@ const button = props => (
 button.propTypes = {
   type: PropTypes.string,
   disabled: PropTypes.bool,
-  btnType: PropTypes.string,
+  customClass: PropTypes.string,
   clicked: PropTypes.func,
   tabIndex: PropTypes.string,
   children: PropTypes.any,

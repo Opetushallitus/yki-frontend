@@ -4,6 +4,8 @@ import * as R from 'ramda';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 
+import classes from '../RegistrationForm.module.css';
+
 export const nationalitySelect = props => {
   const nationalitiesByLocale = props.nationalities.map(n => {
     const metadata = n.metadata.find(
@@ -21,7 +23,7 @@ export const nationalitySelect = props => {
   });
 
   return (
-    <React.Fragment>
+    <div className={classes.InputFieldWrapper}>
       <label htmlFor="select-nationality">
         {props.t('registration.form.nationality')} *
       </label>
@@ -33,10 +35,12 @@ export const nationalitySelect = props => {
         className={props.className}
         data-cy="select-nationality"
       >
-        <option value="" key="" />
+        <option value="" key="">
+          {props.t('common.selectorDefault')}
+        </option>
         {nationalityOptions}
       </Field>
-    </React.Fragment>
+    </div>
   );
 };
 

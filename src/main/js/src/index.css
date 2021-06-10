@@ -23,6 +23,7 @@
   --primary-gray: #8b8b8b;
   --secondary-gray: #aaaaaa;
   --shadow-blue: #05526b26;
+  --light-gray: hsla(0, 0%, 83%, 0.2);
   --white: #ffffff;
   --black: #000000;
   --basic-font-size: 16px;
@@ -60,14 +61,16 @@ input {
   border-radius: 4px;
   color: var(--black);
   padding-left: 5px;
-  margin-top: 5px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
 }
 
 label {
   font: normal normal bold 16px/24px PT Sans;
   letter-spacing: 0;
   color: var(--primary-blue);
-  margin-bottom: 5px;
 }
 
 textarea {

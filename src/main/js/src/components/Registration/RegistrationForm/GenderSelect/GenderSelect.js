@@ -4,6 +4,8 @@ import * as R from 'ramda';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 
+import classes from '../RegistrationForm.module.css';
+
 export const genderSelect = props => {
   const sortByCode = R.sortBy(R.prop('koodiArvo'));
   const gendersByLocale = sortByCode(props.genders).map(g => {
@@ -18,7 +20,7 @@ export const genderSelect = props => {
   });
 
   return (
-    <React.Fragment>
+    <div className={classes.InputFieldWrapper}>
       <label htmlFor="gender-select">
         {props.t('registration.form.gender')} *
       </label>
@@ -30,10 +32,12 @@ export const genderSelect = props => {
         className={props.className}
         data-cy="select-gender"
       >
-        <option value="" key="" />
+        <option value="" key="">
+          {props.t('common.selectorDefault')}
+        </option>
         {gendersByLocale}
       </Field>
-    </React.Fragment>
+    </div>
   );
 };
 

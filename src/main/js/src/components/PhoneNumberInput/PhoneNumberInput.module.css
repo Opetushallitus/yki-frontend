@@ -1,44 +1,29 @@
 .PhoneNumberInput {
-	width: 200px;
-	height: 28px;
-	border: 1px solid hsla(194, 82%, 43%, 1);
-	border-radius: 4px;
+  height: 30px;
+  width: 265px;
+  font-size: 1rem;
+  background: var(--white) 0 0 no-repeat padding-box;
+  border: 1px solid var(--secondary-blue);
+  border-radius: 4px;
+  color: var(--black);
 }
 
 .TextInput {
-	width: 200px !important;
-	height: 28px !important;
-	border: none !important;
+  height: 30px !important;
+  width: 260px !important;
+  border: none !important;
+  font-size: 1rem !important;
+  color: var(--black) !important;
 }
 
 .DropdownButton {
-	border: none !important;
+  border: none !important;
 }
 
-.PhoneNumberInput label {
-	font-size: 0.875em;
-  }
-  
-  .PhoneNumberInput span {
-	font-size: 0.875em;
-  }
-  
-  .PhoneNumberInput p {
-	font: normal normal normal 16px/24px PT Sans;
-	letter-spacing: 0;
-	color: hsla(194, 91%, 21%, 1);
-  }
-  
-  .PhoneNumberInput input {
-	font: normal normal normal 16px/24px PT Sans;
-	color: hsla(194, 91%, 21%, 1);
-  }
-  
-  .PhoneNumberInput input:focus {
-	outline: 1px solid hsla(194, 82%, 43%, 1);
-  }
-  
-  .PhoneNumberInput button {
-	width: 17vw;
-	margin-top: 5vh !important;
-  }
+.PhoneNumberInput input:focus {
+  outline: 3px solid var(--secondary-blue);
+}
+
+.PhoneNumberInput .DropdownButton div:focus {
+  outline: 3px solid var(--secondary-blue);
+}
