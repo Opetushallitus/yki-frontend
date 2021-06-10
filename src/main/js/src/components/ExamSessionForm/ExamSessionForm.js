@@ -14,7 +14,7 @@ import {
   levelTranslations,
 } from '../../util/util';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
-import SessionContact from '../SessionContact/SessionContact';
+/* import SessionContact from '../SessionContact/SessionContact'; */
 import Button from '../UI/Button/Button';
 import RadioButton from '../UI/RadioButton/RadioButton';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
