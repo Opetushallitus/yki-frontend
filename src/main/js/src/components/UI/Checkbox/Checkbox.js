@@ -13,6 +13,7 @@ const checkbox = props => {
     checkboxId,
     label,
     checkBoxClass,
+    ariaRequired,
   } = props;
 
   return (
@@ -26,6 +27,7 @@ const checkbox = props => {
         onChange={onChange}
         defaultChecked={checked || false}
         aria-label={ariaLabel || null}
+        aria-required={ariaRequired}
       />
 
       <label data-cy={datacy} className={classes.CbLabel} htmlFor={checkboxId}>

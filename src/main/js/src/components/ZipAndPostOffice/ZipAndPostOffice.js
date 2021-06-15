@@ -39,7 +39,7 @@ export class ZipAndPostOffice extends Component {
           </label>
           <Field
             id="zip-input"
-            aria-labelledby="adress-input zip-label"
+            aria-labelledby="zip-label"
             aria-required={this.props.mandatory}
             component="input"
             name="zip"
@@ -61,7 +61,7 @@ export class ZipAndPostOffice extends Component {
           </label>
           <Field
             id="postOffice-input"
-            aria-labelledby="adress-input postOffice-label"
+            aria-labelledby="postOffice-label"
             aria-required={this.props.mandatory}
             component="input"
             name="postOffice"

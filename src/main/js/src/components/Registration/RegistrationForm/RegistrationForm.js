@@ -164,6 +164,7 @@ export const registrationForm = props => {
     ariaLabel,
     checkboxId,
     touched,
+    ariaRequired,
   }) => {
     return (
       <Checkbox
@@ -183,6 +184,7 @@ export const registrationForm = props => {
         checkboxId={checkboxId}
         label={label}
         ariaLabel={ariaLabel}
+        ariaRequired={ariaRequired}
       />
     );
   };
@@ -493,6 +495,7 @@ export const registrationForm = props => {
                   setFieldValue={setFieldValue}
                   touched={touched}
                   setTouched={setTouched}
+                  ariaRequired={true}
                   label={props.t('registration.form.consent.confirm')}
                   ariaLabel={props.t('registration.form.consent.confirm')}
                 />
@@ -528,6 +531,7 @@ export const registrationForm = props => {
                   touched={touched}
                   setFieldValue={setFieldValue}
                   datacy={'form-checkbox-terms'}
+                  ariaRequired={true}
                   onClick={() =>
                     setFieldValue(
                       'personalDataConsent',
