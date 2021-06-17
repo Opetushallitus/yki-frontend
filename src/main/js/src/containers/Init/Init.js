@@ -11,7 +11,6 @@ class Init extends Component {
   componentDidMount() {
     this.props.onFetchUser();
     this.props.onInitYkiLanguage();
-    this.props.onFetchPrices();
   }
 
   render() {
@@ -41,8 +40,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchUser: () => dispatch(actions.fetchUser()),
-    onInitYkiLanguage: () => dispatch(actions.initYKILanguage()),
-    onFetchPrices: () => dispatch(actions.fetchPrices()),
+    onInitYkiLanguage: () => dispatch(actions.initYKILanguage())
   };
 };
 

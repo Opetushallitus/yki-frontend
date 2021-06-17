@@ -33,6 +33,7 @@ const initialState = {
     submitSuccess: false,
   },
   prices: {},
+  loadingPrices: false,
   evaluationPeriods: [],
   evaluationPeriod: {},
   evaluationOrderId: null,
@@ -205,18 +206,18 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_PRICES_START:
       return {
         ...state,
-        loading: true,
+        loadingPrices: true,
       };
     case actionTypes.FETCH_PRICES_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loadingPrices: false,
         prices: action.prices,
       };
     case actionTypes.FETCH_PRICES_FAIL: {
       return {
         ...state,
-        loading: false,
+        loadingPrices: false,
         error: action.error,
       };
     }

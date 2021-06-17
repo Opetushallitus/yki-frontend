@@ -7,6 +7,7 @@ import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import {
   evaluationFailReset,
   fetchReEvaluationPeriod,
+  fetchPrices
 } from '../../../store/actions';
 import {
   examLanguageAndLevel,
@@ -21,6 +22,7 @@ import classes from './ReEvaluationFormPage.module.css';
 const mapStateToProps = state => {
   return {
     prices: state.registration.prices,
+    loadingPrices: state.registration.loadingPrices,
     evaluationPeriod: state.registration.evaluationPeriod,
     error: state.registration.error,
   };
@@ -31,6 +33,7 @@ const mapDispatchToProps = dispatch => {
     onFetchEvaluationPeriod: examId =>
       dispatch(fetchReEvaluationPeriod(examId)),
     errorConfirmedHandler: () => dispatch(evaluationFailReset()),
+    onFetchPrices: () => dispatch(fetchPrices())
   };
 };
 
@@ -41,11 +44,14 @@ const ReEvaluationFormPage = ({
   error,
   onFetchEvaluationPeriod,
   evaluationPeriod,
+  onFetchPrices,
+  loadingPrices,
   t,
 }) => {
   const examId = match.params.id;
   useEffect(() => {
     onFetchEvaluationPeriod(examId);
+    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices()
   }, []);
 
   const langAndLvl = evaluationPeriod && examLanguageAndLevel(evaluationPeriod);

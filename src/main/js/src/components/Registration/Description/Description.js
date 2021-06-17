@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
@@ -14,15 +14,27 @@ import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCol
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import classes from './Description.module.css';
+import { fetchPrices } from '../../../store/actions/index';
 
 const mapStateToProps = state => {
   return {
     prices: state.registration.prices,
+    loadingPrices: state.registration.loadingPrices
   };
 };
 
-const description = ({ history, prices }) => {
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchPrices: () => dispatch(fetchPrices()),
+  };
+};
+
+const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices()
+  }, [])
 
   const examPrices = prices && prices['exam-prices'];
   const evalPrices = prices && prices['evaluation-prices'];
@@ -241,7 +253,7 @@ const description = ({ history, prices }) => {
           headlineImage={YkiImage1}
         />
         {MOBILE_VIEW ||
-        (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
+          (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
           <>{mobileContent}</>
         ) : (
           <>{desktopContent}</>
@@ -251,4 +263,4 @@ const description = ({ history, prices }) => {
   );
 };
 
-export default connect(mapStateToProps)(description);
+export default connect(mapStateToProps, mapDispatchToProps)(description);
