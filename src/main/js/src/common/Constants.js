@@ -6,6 +6,8 @@ export const REGISTRATION_KIND_ADMISSION = 'ADMISSION';
 export const REGISTRATION_KIND_POST_ADMISSION = 'POST_ADMISSION';
 export const REGISTRATION_KIND_OTHER = 'OTHER';
 
+export const PRIVACY_POLICY_LINK = 'https://opintopolku.fi/wp/tietosuojaseloste/';
+
 export const LANGUAGES = [
   {
     code: 'fin',
