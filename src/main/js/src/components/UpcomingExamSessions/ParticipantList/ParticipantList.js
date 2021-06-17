@@ -296,7 +296,6 @@ export const participantList = props => {
   };
 
   const participantRows = participants => {
-    console.log(participants);
     return sortParticipantsFn(participants).map((p, i) => (
       <React.Fragment key={i}>
         <div
@@ -333,8 +332,8 @@ export const participantList = props => {
           {p.state === 'SUBMITTED' && !props.disableControls
             ? confirmPaymentButton(p)
             : p.state === 'COMPLETED' && !props.disableControls
-            ? relocateButton(p)
-            : null}
+              ? relocateButton(p)
+              : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
@@ -347,7 +346,7 @@ export const participantList = props => {
         <div className={classes.Item}> {p.form.email}</div>
         <div className={classes.ShowOnHover}>
           {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') &&
-          !props.disableControls
+            !props.disableControls
             ? cancelRegistrationButton(p)
             : null}
         </div>
@@ -360,7 +359,7 @@ export const participantList = props => {
   const participantsHeader = () => {
     const post_admission_quota =
       props.examSession.post_admission_quota &&
-      props.examSession.post_admission_active
+        props.examSession.post_admission_active
         ? props.examSession.post_admission_quota
         : 0;
     return (
