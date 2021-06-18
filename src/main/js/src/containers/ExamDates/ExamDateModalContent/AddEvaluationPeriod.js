@@ -86,7 +86,7 @@ const AddEvaluationPeriod = props => {
             </div>
             <div
               className={classes.ActionButtons}
-              style={{ position: 'absolute', bottom: '2rem' }}
+              style={{ bottom: '2rem' }}
             >
               <button className={classes.ConfirmButton}>
                 {t('examDates.add.evaluation.period')}
