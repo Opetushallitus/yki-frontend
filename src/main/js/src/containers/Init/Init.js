@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
+import Alert from '../../components/Alert/Alert';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
-import Alert from '../../components/Alert/Alert';
 
 class Init extends Component {
   componentDidMount() {
@@ -33,7 +33,7 @@ const mapStateToProps = state => {
     user: state.user.user,
     loading: state.user.loading,
     error: state.user.error,
-    yki: state.yki.ykiLanguage
+    yki: state.yki.ykiLanguage,
   };
 };
 

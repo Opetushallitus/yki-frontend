@@ -1,30 +1,26 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
-import moment from 'moment';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import moment from 'moment';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import React, { useState } from 'react';
+import { withTranslation } from 'react-i18next';
 
-import { DATE_FORMAT } from '../../../common/Constants';
 import checkMarkDone from '../../../assets/svg/checkmark-done.svg';
 import checkMarkNotDone from '../../../assets/svg/checkmark-not-done.svg';
 import trashcan from '../../../assets/svg/trashcan.svg';
-import classes from './ParticipantList.module.css';
+import { DATE_FORMAT } from '../../../common/Constants';
 import { ActionButton } from '../../UI/ActionButton/ActionButton';
 import ListExport from './ListExport/ListExport';
+import classes from './ParticipantList.module.css';
 
 const stateComparator = () => (a, b) => {
-  if (a.state === 'COMPLETED')
-    return -1;
-  if (b.state === 'COMPLETED')
-    return 1;
-  if (a.state === "SUBMITTED")
-    return -1;
-  if (b.state === "SUBMITTED")
-    return 1;
+  if (a.state === 'COMPLETED') return -1;
+  if (b.state === 'COMPLETED') return 1;
+  if (a.state === 'SUBMITTED') return -1;
+  if (b.state === 'SUBMITTED') return 1;
 
   return 0;
-}
+};
 
 // const ResendEmailComponent = props => {
 //   const [emailLang, setEmailLang] = useState("fi");
@@ -46,7 +42,7 @@ const stateComparator = () => (a, b) => {
 //     return (
 //       <>
 //         <span className={classes.ResendEmailSelectionText}>Sähköpostin kieli: </span>
-//         <select onChange={e => setEmailLang(e.target.value)}> 
+//         <select onChange={e => setEmailLang(e.target.value)}>
 //           <option value="fi">{props.finText}</option>
 //           <option value="sv">{props.svText}</option>
 //           <option value="en">{props.enText}</option>
@@ -65,8 +61,8 @@ const stateComparator = () => (a, b) => {
 
 //   return linkClicked ? langSelection() : (
 //     // eslint-disable-next-line
-//     <a 
-//       className={classes.ResendEmailLink} 
+//     <a
+//       className={classes.ResendEmailLink}
 //       href="javascript:void(0)" // eslint-disable-line
 //       onClick={e => setLinkClicked(true)}
 //     >
@@ -76,7 +72,9 @@ const stateComparator = () => (a, b) => {
 // }
 
 export const participantList = props => {
-  const [sortParticipantsFn, setSortParticipantsFn] = useState(R.sortBy(R.prop('created')));
+  const [sortParticipantsFn, setSortParticipantsFn] = useState(
+    R.sortBy(R.prop('created')),
+  );
 
   const getStateTranslationKey = state => {
     switch (state) {
@@ -115,7 +113,7 @@ export const participantList = props => {
     //         onResendLink={props.onResendLink}
     //         sendText={props.t('registration.notification.signup.button')}
     //         linkText={props.t('examSession.participants.resendLink')}
-    //         finText={props.t("common.language.fin")} 
+    //         finText={props.t("common.language.fin")}
     //         svText={props.t("common.language.swe")}
     //         enText={props.t("common.language.eng")}
     //       />
@@ -136,11 +134,9 @@ export const participantList = props => {
   };
 
   const getPhoneNumber = participant => {
-    const asNumber = parsePhoneNumberFromString(
-      participant.form.phone_number,
-    );
+    const asNumber = parsePhoneNumberFromString(participant.form.phone_number);
     return asNumber ? asNumber.formatInternational() : '';
-  }
+  };
 
   const confirmPaymentButton = participant => {
     const confirmPayment = (
@@ -182,7 +178,7 @@ export const participantList = props => {
         if (nextSession.office_oid === office_oid) return true;
       }
       return false;
-    }
+    };
 
     const canBeRelocatedTo = e => {
       return (
@@ -245,7 +241,7 @@ export const participantList = props => {
         setSortParticipantsFn(() => R.sortBy(R.prop('created')));
         break;
     }
-  }
+  };
 
   const participantFiltering = () => {
     return (
@@ -253,15 +249,27 @@ export const participantList = props => {
         <label htmlFor="participantFilter">
           {props.t('examSession.participants.sortBy')}
         </label>
-        <select id="ParticipantFilter" className={classes.ParticipantFilter} onChange={handleFilterChange}>
-          <option value="registrationTime">{props.t('examSession.participants.sortBy.registrationTime')}</option>
-          <option value="registrationType">{props.t('examSession.participants.sortBy.registrationType')}</option>
-          <option value="name">{props.t('examSession.participants.sortBy.name')}</option>
-          <option value="state">{props.t('examSession.participants.sortBy.state')}</option>
+        <select
+          id="ParticipantFilter"
+          className={classes.ParticipantFilter}
+          onChange={handleFilterChange}
+        >
+          <option value="registrationTime">
+            {props.t('examSession.participants.sortBy.registrationTime')}
+          </option>
+          <option value="registrationType">
+            {props.t('examSession.participants.sortBy.registrationType')}
+          </option>
+          <option value="name">
+            {props.t('examSession.participants.sortBy.name')}
+          </option>
+          <option value="state">
+            {props.t('examSession.participants.sortBy.state')}
+          </option>
         </select>
       </>
     );
-  }
+  };
 
   const cancelRegistrationButton = p => {
     const cancelRegistration = (
@@ -284,7 +292,7 @@ export const participantList = props => {
         confirmText={props.t('examSession.registration.cancel.confirm')}
         cancelText={props.t('examSession.registration.cancel.cancel')}
       />
-    )
+    );
   };
 
   const participantRows = participants => {
@@ -315,7 +323,11 @@ export const participantList = props => {
         <div className={classes.StateItem}>
           {p.created && moment(p.created).format(DATE_FORMAT)}
         </div>
-        <div className={classes.StateItem}>{props.t('examSession.registration')}</div>
+        <div className={classes.StateItem}>
+          {p.kind === 'ADMISSION'
+            ? props.t('examSession.registration')
+            : props.t('examSession.registration.postAdmission')}
+        </div>
         <div className={classes.FirstShowOnHover}>
           {p.state === 'SUBMITTED' && !props.disableControls
             ? confirmPaymentButton(p)
@@ -330,12 +342,11 @@ export const participantList = props => {
           {', '}
           {p.form.post_office}
         </div>
-        <div className={classes.Item}>
-          {getPhoneNumber(p)}
-        </div>
+        <div className={classes.Item}>{getPhoneNumber(p)}</div>
         <div className={classes.Item}> {p.form.email}</div>
         <div className={classes.ShowOnHover}>
-          {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') && !props.disableControls
+          {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') &&
+            !props.disableControls
             ? cancelRegistrationButton(p)
             : null}
         </div>
@@ -347,15 +358,19 @@ export const participantList = props => {
 
   const participantsHeader = () => {
     const post_admission_quota =
-      (props.examSession.post_admission_quota && props.examSession.post_admission_active) ? props.examSession.post_admission_quota : 0;
+      props.examSession.post_admission_quota &&
+        props.examSession.post_admission_active
+        ? props.examSession.post_admission_quota
+        : 0;
     return (
       <h2>
         {props.t('examSession.participants')}
-        {':'} {props.examSession.participants + props.examSession.pa_participants} /{' '}
+        {':'}{' '}
+        {props.examSession.participants + props.examSession.pa_participants} /{' '}
         {props.examSession.max_participants + post_admission_quota}
       </h2>
     );
-  }
+  };
   return (
     <div data-cy="participant-list">
       {participantsHeader()}

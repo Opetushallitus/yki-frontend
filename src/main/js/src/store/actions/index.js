@@ -16,7 +16,7 @@ export {
 } from './examSession';
 export {
   fetchRegistryExamSessions,
-  fetchRegistryExamSessionParticipants
+  fetchRegistryExamSessionParticipants,
 } from './registryExamSession';
 export {
   fetchRegistryContent,
@@ -41,7 +41,12 @@ export {
   submitRegistrationForm,
   filterExamByAvailability,
   filteredExamSessionsByOpenRegistration,
-  filteredExamsByAvailabilityAndRegistration
+  filteredExamsByAvailabilityAndRegistration,
+  fetchPrices,
+  fetchReEvaluationPeriods,
+  fetchReEvaluationPeriod,
+  submitEvaluationForm,
+  evaluationFailReset,
 } from './registration';
 export {
   addExamDate,
@@ -51,7 +56,8 @@ export {
   deletePostAdmissionEndDate,
   updateExamDateConfigurations,
   deleteExamDate,
-  GetExamDatesHistory
+  // GetExamDatesHistory,
+  addEvaluationPeriod,
 } from './examDates';
 export { fetchUser } from './user';
 export { initYKILanguage, changeYKILanguage } from './yki';

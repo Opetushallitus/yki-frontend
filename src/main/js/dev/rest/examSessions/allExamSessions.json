@@ -104,6 +104,13 @@
       "max_participants": 20,
       "language_code": "fin",
       "participants": 0,
+      "contact": [
+        {
+          "name": "Contact Person",
+          "email": "contact.person@testi.fi",
+          "phone_number": "+3584678124"
+        }
+      ],
       "pa_participants": 0,
       "office_oid": "1.2.246.562.10.29461948951",
       "published_at": "2019-01-15T11:20:41.776Z",
@@ -339,6 +346,13 @@
     {
       "level_code": "KESKI",
       "max_participants": 20,
+      "contact": [
+        {
+          "name": "Contact Person",
+          "email": "contact.person@testi.fi",
+          "phone_number": "+3584678124"
+        }
+      ],
       "language_code": "fin",
       "participants": 10,
       "pa_participants": 0,

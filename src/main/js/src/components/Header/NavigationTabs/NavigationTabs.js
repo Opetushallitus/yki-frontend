@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useLocation, useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
+import { useHistory, useLocation } from 'react-router-dom';
 
-import classes from "./NavigationTabs.module.css";
-import LanguageSelect from "../../../containers/LanguageSelect/LanguageSelect";
-import { MOBILE_VIEW, TABLET_VIEW } from "../../../common/Constants";
+import { MOBILE_VIEW, TABLET_VIEW } from '../../../common/Constants';
+import LanguageSelect from '../../../containers/LanguageSelect/LanguageSelect';
+import classes from './NavigationTabs.module.css';
 
-const NavigationTabs = (props) => {
+const NavigationTabs = props => {
   const [showLanguagesMenu, setLanguageMenuShow] = useState(false);
   const location = useLocation();
   const { t } = useTranslation();
@@ -14,30 +14,48 @@ const NavigationTabs = (props) => {
 
   const handleOnClick = () => {
     setLanguageMenuShow(!showLanguagesMenu);
-  }
+  };
 
   const baseLinks = () => {
-    const onDescriptionPage = location.pathname === '/'
-      || location.pathname === '/ilmoittautuminen'
-      || location.pathname === '/ilmoittautuminen/';
+    const onDescriptionPage =
+      location.pathname === '/' ||
+      location.pathname === '/ilmoittautuminen' ||
+      location.pathname === '/ilmoittautuminen/';
 
-    const divider = (onDescriptionPage && (MOBILE_VIEW || TABLET_VIEW));
+    const linkArray = [
+      { title: 'common.registration.root', url: '/' },
+      {
+        title: 'common.registration',
+        url: '/ilmoittautuminen/valitse-tutkintotilaisuus',
+        secondary: '/ilmoittautuminen/',
+      },
+      { title: 'common.reeval', url: '/tarkistusarviointi' },
+    ];
+
+    const divider = onDescriptionPage && (MOBILE_VIEW || TABLET_VIEW);
     return (
       <>
-        <div className={onDescriptionPage ? classes.ActiveTab : classes.InactiveTab}>
-          <button className={classes.LinkButton} onClick={() => history.push('/')} role="link">
-            {t('common.registration.root')}
-          </button>
-        </div>
-        <div className={onDescriptionPage ? classes.InactiveTab : classes.ActiveTab}>
-          <button
-            className={classes.LinkButton}
-            onClick={() => history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')}
-            role="link"
-          >
-            {t('common.registration')}
-          </button>
-        </div>
+        {linkArray.map((link, i) => {
+          const isActive =
+            location.pathname === link.url ||
+            (link.secondary && location.pathname === link.secondary);
+          return (
+            <div
+              key={link.title}
+              className={isActive ? classes.ActiveTab : classes.InactiveTab}
+            >
+              <button
+                className={classes.LinkButton}
+                onClick={() => {
+                  history.push(link.url);
+                }}
+                role="link"
+              >
+                {t(link.title)}
+              </button>
+            </div>
+          );
+        })}
         {divider ? <hr className={classes.Divider} /> : null}
       </>
     );
@@ -45,22 +63,25 @@ const NavigationTabs = (props) => {
 
   return (
     <>
-      {showLanguagesMenu ?
-        <LanguageSelect isOpen={props.isOpen} setCollapsibleOpen={props.setCollapsibleOpen} />
-        :
+      {showLanguagesMenu ? (
+        <LanguageSelect
+          isOpen={props.isOpen}
+          setCollapsibleOpen={props.setCollapsibleOpen}
+        />
+      ) : (
         <>
           {baseLinks()}
-          {MOBILE_VIEW || TABLET_VIEW ?
+          {MOBILE_VIEW || TABLET_VIEW ? (
             <div onClick={() => handleOnClick()}>
-              <p className={classes.InactiveTab}>{t('common.registration.select.language')}</p>
+              <p className={classes.InactiveTab}>
+                {t('common.registration.select.language')}
+              </p>
             </div>
-            :
-            null
-          }
+          ) : null}
         </>
-      }
+      )}
     </>
   );
-}
+};
 
 export default NavigationTabs;

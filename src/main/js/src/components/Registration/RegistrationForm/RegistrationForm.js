@@ -13,7 +13,7 @@ import RadioButton from '../../UI/RadioButton/RadioButton';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
 import ZipAndPostOffice from '../../ZipAndPostOffice/ZipAndPostOffice';
 import GenderSelect from './GenderSelect/GenderSelect';
-import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW, TABLET_VIEW } from '../../../common/Constants';
+import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW, TABLET_VIEW, PRIVACY_POLICY_LINK } from '../../../common/Constants';
 import RegistrationError from '../RegistrationError/RegistrationError';
 import Checkbox from "../../UI/Checkbox/Checkbox";
 import PhoneNumberInput from "../../PhoneNumberInput/PhoneNumberInput";
@@ -219,8 +219,8 @@ export const registrationForm = props => {
         <span>{initialValues[name]}</span>
       </>
     ) : (
-        inputField(name, null, null, type)
-      );
+      inputField(name, null, null, type)
+    );
 
   const showExamLang = () => {
     const lang = props.initData.exam_session.language_code;
@@ -485,7 +485,7 @@ export const registrationForm = props => {
             <div className={classes.ConsentContainer}>
               <article>
                 <h4>{props.t('registration.form.personalData.consent.heading')}</h4>
-                <a href={'https://opintopolku.fi/wp/tietosuojaseloste/'} target="_blank" rel="noopener noreferrer">
+                <a href={PRIVACY_POLICY_LINK} target="_blank" rel="noopener noreferrer">
                   {props.t('common.yki.consent.link')}
                 </a>
               </article>

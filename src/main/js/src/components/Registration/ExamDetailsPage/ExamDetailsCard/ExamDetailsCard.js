@@ -1,26 +1,32 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
+import {
+  DATE_FORMAT,
+  ISO_DATE_FORMAT_SHORT,
+} from '../../../../common/Constants';
+import { evaluationTexts, getLanguageAndLevel } from '../../../../util/util';
 import classes from './ExamDetailsCard.module.css';
-import {DATE_FORMAT, ISO_DATE_FORMAT_SHORT} from '../../../../common/Constants';
-import {getLanguageAndLevel} from "../../../../util/util";
 
-const ExamDetailsCard = ({exam, isFull, successHeader}) => {
+const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
   const [t, i18n] = useTranslation();
 
   const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
-  const registrationClosed = moment(exam.registration_end_date).isBefore(currentDate);
+  const registrationClosed = moment(exam.registration_end_date).isBefore(
+    currentDate,
+  );
 
-  const exceptionStatus = (
-    isFull ? <p className={classes.Exception}
-                data-cy={"exam-details-exception-status"}>{t('registration.examSpots.full')}</p>
-      : (!exam.open ?
-      <p className={classes.Exception}
-         data-cy={"exam-details-exception-status"}>{t('registration.examSpots.notOpen')}</p>
-      : null)
-  )
+  const exceptionStatus = isFull ? (
+    <p className={classes.Exception} data-cy={'exam-details-exception-status'}>
+      {t('registration.examSpots.full')}
+    </p>
+  ) : !exam.open ? (
+    <p className={classes.Exception} data-cy={'exam-details-exception-status'}>
+      {t('registration.examSpots.notOpen')}
+    </p>
+  ) : null;
 
   const date = (
     <>
@@ -33,17 +39,18 @@ const ExamDetailsCard = ({exam, isFull, successHeader}) => {
     exam.location && exam.location.find(l => l.lang === i18n.language);
   const organizer = location ? <p>{`${location.name},`}</p> : null;
   const address = location ? (
-    <p>{`${location.street_address}, ${location.zip} ${
-      location.post_office
-    }`}</p>
+    <p>{`${location.street_address}, ${location.zip} ${location.post_office}`}</p>
   ) : null;
 
   const locationDetails = (
     <>
       <p>{t('common.address')}:</p>
-      <article>{organizer}<br/> {address}</article>
+      <article>
+        {organizer}
+        <br /> {address}
+      </article>
     </>
-  )
+  );
 
   const extra =
     location && location.extra_information ? (
@@ -56,16 +63,16 @@ const ExamDetailsCard = ({exam, isFull, successHeader}) => {
   const price = (
     <>
       <p>{`${t('registration.examDetails.card.price')}`}</p>
-      <p>{
-        exam.exam_fee ? exam.exam_fee : ''
-      } €</p>
+      <p>{exam.exam_fee || exam.amount || ''} €</p>
     </>
   );
 
   const registrationPeriod = (
     <>
       <p>{t('common.registration')}:</p>
-      <p>{`${moment(exam.registration_start_date).format(DATE_FORMAT)} - ${moment(exam.registration_end_date).format(DATE_FORMAT)}`}</p>
+      <p>{`${moment(exam.registration_start_date).format(
+        DATE_FORMAT,
+      )} - ${moment(exam.registration_end_date).format(DATE_FORMAT)}`}</p>
     </>
   );
 
@@ -74,16 +81,37 @@ const ExamDetailsCard = ({exam, isFull, successHeader}) => {
       {!registrationClosed ? (
         <>
           <p>{t('registration.list.examSpots')}:</p>
-          <p>{`${exam.max_participants - exam.participants} / ${exam.max_participants}`}</p>
+          <p>{`${exam.max_participants - exam.participants} / ${
+            exam.max_participants
+          }`}</p>
         </>
       ) : exam.post_admission_active ? (
-          <>
-            <p>{t('registration.list.examSpots')}:</p>
-            <p>{`${exam.post_admission_quota - exam.pa_participants} / ${exam.post_admission_quota}`}</p>
-          </>
-        ) :
-        null
-      }
+        <>
+          <p>{t('registration.list.examSpots')}:</p>
+          <p>{`${exam.post_admission_quota - exam.pa_participants} / ${
+            exam.post_admission_quota
+          }`}</p>
+        </>
+      ) : null}
+    </>
+  );
+
+  const contactDetails = (
+    <>
+      {exam.contact &&
+        exam.contact.length > 0 &&
+        exam.contact.map(c => {
+          return (
+            <>
+              <p>{t('registration.list.contact')}</p>
+              <article>
+                {c.name}
+                <br /> {c.email}
+                <br /> {c.phone_number}
+              </article>
+            </>
+          );
+        })}
     </>
   );
 
@@ -91,15 +119,33 @@ const ExamDetailsCard = ({exam, isFull, successHeader}) => {
     <div data-cy="exam-details-card" className={classes.SuccessDetailsCard}>
       <p>{getLanguageAndLevel(exam)}</p>
       <p>{moment(exam.session_date).format(DATE_FORMAT)}</p>
-      <article>{organizer}{address}</article>
-      <p>{`${t('registration.examDetails.card.price')} ${exam.exam_fee ? exam.exam_fee : ''}€`}</p>
+      <article>
+        {organizer}
+        {address}
+      </article>
+      {exam.subtests ? (
+        <>
+          {exam.subtests.map(s => {
+            return <p>{t(evaluationTexts[s])}</p>;
+          })}
+          <p>{`${t('registration.examDetails.card.reeval.price')} ${
+            exam.amount
+          } €`}</p>
+        </>
+      ) : (
+        <p>{`${t('registration.examDetails.card.price')} ${
+          exam.exam_fee
+        } €`}</p>
+      )}
+      {contactDetails}
     </div>
   );
 
   return (
     <div data-cy="exam-details-card" className={classes.DetailsContainer}>
-      {successHeader ?
-        registrationSuccessContent :
+      {successHeader ? (
+        registrationSuccessContent
+      ) : (
         <>
           {exceptionStatus}
           <div className={classes.DetailsCard}>
@@ -107,11 +153,16 @@ const ExamDetailsCard = ({exam, isFull, successHeader}) => {
             {registrationPeriod}
             {locationDetails}
             {extra}
+            {exam.subtests &&
+              exam.subtests.map(s => {
+                return <p>{t(evaluationTexts[s])}</p>;
+              })}
             {price}
             {availableSeats}
+            {contactDetails}
           </div>
         </>
-      }
+      )}
     </div>
   );
 };

@@ -1,27 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from 'moment';
-import { withTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
-import classes from './ExamSessionForm.module.css';
-import Button from '../UI/Button/Button';
-import RadioButton from '../UI/RadioButton/RadioButton';
 import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
+import { getLocalizedName } from '../../util/registryUtil';
 import {
   languageToString,
   levelDescription,
   levelTranslations,
 } from '../../util/util';
-import { getLocalizedName } from '../../util/registryUtil';
-import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
-//import SessionContact from '../SessionContact/SessionContact';
+/* import SessionContact from '../SessionContact/SessionContact'; */
+import Button from '../UI/Button/Button';
+import RadioButton from '../UI/RadioButton/RadioButton';
+import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
+import classes from './ExamSessionForm.module.css';
 
 const examSessionForm = props => {
-  const { contact_name, contact_email, contact_phone_number } = props.examSessionContent && props.examSessionContent.organizer
+  const { contact_name, contact_email, contact_phone_number } =
+    props.examSessionContent && props.examSessionContent.organizer;
   function validateDuplicateExamSession() {
     let duplicateFound = false;
     const examDate = this.parent.examDate;
@@ -68,8 +69,7 @@ const examSessionForm = props => {
     extraSv: Yup.string(),
     extraEn: Yup.string(),
     contactName: Yup.string().required(props.t('error.mandatory')),
-    contactEmail: Yup.string()
-      .email(props.t('error.email')),
+    contactEmail: Yup.string().email(props.t('error.email')),
 
     contactPhoneNumber: Yup.string(),
   });
@@ -116,45 +116,50 @@ const examSessionForm = props => {
   };
 
   const languageFields = languages => {
-    const uniqueLanguageCodes = R.compose(
-      R.uniq,
-      R.pluck('language_code'),
-    );
+    const uniqueLanguageCodes = R.compose(R.uniq, R.pluck('language_code'));
 
-    return uniqueLanguageCodes(languages).map(c => {
-      return (
-        <Field
-          component={RadioButtonComponent}
-          name="language"
-          id={c}
-          key={c}
-          checkedValue={c}
-          label={languageToString(c).toLowerCase()}
-        />
-      );
-    });
+    return (
+      languages &&
+      uniqueLanguageCodes(languages).map(c => {
+        return (
+          <Field
+            component={RadioButtonComponent}
+            name="language"
+            id={c}
+            key={c}
+            checkedValue={c}
+            label={languageToString(c).toLowerCase()}
+          />
+        );
+      })
+    );
   };
 
   const languageLevelFields = (languages, selectedLang) => {
     const allLevels = R.keys(levelTranslations);
 
-    return allLevels.map(level => {
-      const enabled = R.includes(
-        { language_code: selectedLang, level_code: level },
-        languages,
-      );
-      return (
-        <Field
-          component={RadioButtonComponent}
-          name="level"
-          id={level}
-          key={level}
-          checkedValue={level}
-          label={levelDescription(level).toLowerCase()}
-          disabled={!enabled}
-        />
-      );
-    });
+    return (
+      allLevels &&
+      allLevels.length > 0 &&
+      allLevels.map(level => {
+        const enabled = R.includes(
+          { language_code: selectedLang, level_code: level },
+          languages,
+        );
+
+        return (
+          <Field
+            component={RadioButtonComponent}
+            name="level"
+            id={level}
+            key={level}
+            checkedValue={level}
+            label={levelDescription(level).toLowerCase()}
+            disabled={!enabled}
+          />
+        );
+      })
+    );
   };
 
   const examDateFields = (examDates, selectedLanguage, selectedLevel) => {
@@ -170,7 +175,9 @@ const examSessionForm = props => {
           { language_code: selectedLanguage, level_code: selectedLevel },
           examDate.languages,
         );
-        const languages = getLanguagesWithLevelDescriptions(examDate.languages).join(', ');
+        const languages = getLanguagesWithLevelDescriptions(
+          examDate.languages,
+        ).join(', ');
         return (
           <Field
             component={RadioButtonComponent}
@@ -203,19 +210,20 @@ const examSessionForm = props => {
     }
   };
 
-  const initialOfficeOid = props.examSessionContent
-    && props.examSessionContent.organizationChildren
-    && props.examSessionContent.organizationChildren.length > 0
-    ? props.examSessionContent.organizationChildren[0].oid
-    : '';
+  const initialOfficeOid =
+    props.examSessionContent &&
+      props.examSessionContent.organizationChildren &&
+      props.examSessionContent.organizationChildren.length > 0
+      ? props.examSessionContent.organizationChildren[0].oid
+      : '';
 
   const organizationSelection = (children, lang) =>
-    children && children.map(c =>
+    children &&
+    children.map(c => (
       <option value={c.oid} key={c.oid}>
         {`${getLocalizedName(c.nimi, lang)} (${c.oid ? c.oid : ''})`}
       </option>
-    );
-
+    ));
 
   return (
     <Formik
@@ -253,12 +261,13 @@ const examSessionForm = props => {
           office_oid: values.officeOid ? values.officeOid : null,
           max_participants: Number.parseInt(values.maxParticipants),
           published_at: moment().toISOString(),
-          /*           contact: [{
-                      name: values.contactName,
-                      email: values.contactEmail,
-                      phone_number: values.contactPhoneNumber
-                    }], */
-          contact: null,
+          contact: [
+            {
+              name: values.contactName,
+              email: values.contactEmail,
+              phone_number: values.contactPhoneNumber,
+            },
+          ],
           location: [
             {
               name: getLocalizedName(orgOrOfficeName, 'fi'),
@@ -335,7 +344,7 @@ const examSessionForm = props => {
                 error={errors.level}
               >
                 {languageLevelFields(
-                  props.examSessionContent.organizer.languages,
+                  props.examSessionContent.organizer.languages || [],
                   values.language,
                 )}
               </RadioButtonGroup>

@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import queryString from 'query-string';
-
-import Spinner from '../../components/UI/Spinner/Spinner';
-import classes from './PaymentStatus.module.css';
-import axios from '../../axios';
-import ExamDetailsCard from '../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
-import BackButton from "../../components/Registration/BackButton/BackButton";
-import HeadlineContainer from "../../components/HeadlineContainer/HeadlineContainer";
+import React, { Component } from 'react';
+import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import YkiImage2 from '../../assets/images/ophYki_image2.png';
+import axios from '../../axios';
+import HeadlineContainer from '../../components/HeadlineContainer/HeadlineContainer';
+import BackButton from '../../components/Registration/BackButton/BackButton';
+import ExamDetailsCard from '../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import classes from './PaymentStatus.module.css';
 
 export class PaymentStatus extends Component {
   state = {
@@ -25,7 +24,7 @@ export class PaymentStatus extends Component {
       // only get exam session if url contains id query parameter
       if (id) {
         axios
-          .get(`/yki/api/exam-session/${id}`)
+          .get(`${this.props.infoUrl}${id}`)
           .then(({ data }) => {
             this.setState({ examSession: data, loading: false });
           })
@@ -42,16 +41,26 @@ export class PaymentStatus extends Component {
       <Spinner />
     ) : (
       <>
-        <p data-cy="payment-status-text">{this.props.t('payment.status.success.info2')}</p>
+        <p data-cy="payment-status-text">
+          {this.props.t(
+            this.props.successMessage || 'payment.status.success.info2',
+          )}
+        </p>
       </>
     );
 
     const cancel = (
-      <p data-cy="payment-status-text">{this.props.t('payment.status.cancel.info1')}</p>
+      <p data-cy="payment-status-text">
+        {this.props.t(
+          this.props.cancelMessage || 'payment.status.cancel.info1',
+        )}
+      </p>
     );
 
     const error = (
-      <p data-cy="payment-status-text">{this.props.t('payment.status.error.info1')}</p>
+      <p data-cy="payment-status-text">
+        {this.props.t(this.props.failMessage || 'payment.status.error.info1')}
+      </p>
     );
 
     const content = () => {
@@ -71,35 +80,47 @@ export class PaymentStatus extends Component {
     const headlineContent = () => {
       if (!this.state.examSession) return null;
       return (
-        <ExamDetailsCard isFull={false} exam={this.state.examSession} successHeader={true} />
-      )
-    }
+        <ExamDetailsCard
+          isFull={false}
+          exam={this.state.examSession}
+          successHeader={true}
+        />
+      );
+    };
 
     const headLine = () => {
       if (!this.state.loading) {
         switch (status) {
           case 'payment-success': {
-            return <HeadlineContainer
-              headlineTitle={`${this.props.t('email.payment_success.subject')}!`}
-              headlineContent={headlineContent()}
-              headlineImage={YkiImage2}
-            />
+            return (
+              <HeadlineContainer
+                headlineTitle={`${this.props.t(
+                  'email.payment_success.subject',
+                )}!`}
+                headlineContent={headlineContent()}
+                headlineImage={YkiImage2}
+              />
+            );
           }
           case 'payment-cancel': {
-            return <HeadlineContainer
-              headlineTitle={this.props.t('payment.status.cancel')}
-              headlineContent={headlineContent()}
-              headlineImage={YkiImage2}
-              disableContent={true}
-            />
+            return (
+              <HeadlineContainer
+                headlineTitle={this.props.t('payment.status.cancel')}
+                headlineContent={headlineContent()}
+                headlineImage={YkiImage2}
+                disableContent={true}
+              />
+            );
           }
           default: {
-            return <HeadlineContainer
-              headlineTitle={this.props.t('payment.status.error')}
-              headlineContent={headlineContent()}
-              headlineImage={YkiImage2}
-              disableContent={true}
-            />
+            return (
+              <HeadlineContainer
+                headlineTitle={this.props.t('payment.status.error')}
+                headlineContent={headlineContent()}
+                headlineImage={YkiImage2}
+                disableContent={true}
+              />
+            );
           }
         }
       }
@@ -112,7 +133,8 @@ export class PaymentStatus extends Component {
           <div className={classes.Content}>
             <BackButton
               clicked={() =>
-                this.props.history && this.props.history.push('/')
+                this.props.history &&
+                this.props.history.push(this.props.returnUrl)
               }
             />
             <div>{content()}</div>

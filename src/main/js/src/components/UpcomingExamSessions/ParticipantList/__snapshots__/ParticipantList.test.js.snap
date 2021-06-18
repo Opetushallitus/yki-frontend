@@ -116,7 +116,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="StateItem"
     >
-      examSession.registration
+      examSession.registration.postAdmission
     </div>
     <div
       className="FirstShowOnHover"
@@ -216,7 +216,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="StateItem"
     >
-      examSession.registration
+      examSession.registration.postAdmission
     </div>
     <div
       className="FirstShowOnHover"

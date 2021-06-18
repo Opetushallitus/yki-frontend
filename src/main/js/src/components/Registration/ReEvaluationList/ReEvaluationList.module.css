@@ -1,0 +1,132 @@
+.Sort {
+  text-align: left;
+  font: normal normal bold 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: white;
+  margin: 15px 0 20px 0;
+  border: none;
+  cursor: pointer;
+  padding-left: 15px;
+  background-color: hsla(194, 91%, 21%, 1);
+}
+
+.Sort:hover {
+  text-decoration: underline;
+}
+
+.Date {
+  margin-bottom: 20px;
+}
+
+.HeaderColumn,
+.TableColumn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 0.25rem;
+  justify-content: center !important;
+  border-right: 2px solid hsla(194, 82%, 43%, 1);
+}
+
+.ColumnHeaders {
+  background: hsla(194, 91%, 21%, 1) 0 0 no-repeat padding-box;
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: hsla(0, 0%, 100%, 1);
+}
+
+.SortIcon {
+  width: 10px;
+}
+
+.TableColumn:last-child,
+.HeaderColumn:last-child {
+  border-right: none;
+}
+
+.List {
+  display: block;
+}
+
+.List:nth-child(odd) {
+  background-color: hsla(194, 82%, 43%, 0.2);
+}
+
+.NotFound {
+  font: normal normal bold 16px/24px PT Sans;
+  color: hsla(194, 91%, 21%, 1);
+}
+
+.MobileRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid hsla(194, 82%, 43%, 1);
+}
+
+.MobileRow:nth-child(2) {
+  justify-content: end;
+}
+
+@media (min-width: 1024px) {
+  .Date {
+    margin-bottom: -2px;
+  }
+
+  .ColumnHeaders {
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1.25fr;
+    align-items: end;
+  }
+
+  .ColumnHeaders > div:nth-child(4),
+  .ColumnHeaders > div:nth-child(5) {
+    justify-self: center;
+  }
+
+  .HeaderColumn {
+    height: 4vh;
+  }
+
+  .List {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1.25fr;
+  }
+}
+
+/* Tablet landscape */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .ColumnHeaders {
+    height: 6vh;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.25fr 1.25fr;
+  }
+  .HeaderColumn,
+  .TableColumn {
+    padding: 0 0.25rem;
+    text-align: center;
+  }
+  .List {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.25fr 1.25fr;
+  }
+}
+
+/* Mobile screens  */
+@media screen and (max-width: 768px) {
+  .ColumnHeaders {
+    display: none;
+  }
+  .TableColumn {
+    border-right: none;
+  }
+  .List {
+    display: block;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+}

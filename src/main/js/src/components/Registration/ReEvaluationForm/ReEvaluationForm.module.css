@@ -1,0 +1,65 @@
+.TextInput {
+  height: 28px;
+  border: 1px solid hsla(194, 82%, 43%, 1);
+  border-radius: 4px;
+  width: 16.25rem;
+  margin-bottom: 1rem;
+}
+
+.FieldRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.FieldColumn {
+  margin-right: 1rem;
+}
+
+.ErrorMessage {
+  display: block;
+  color: hsla(15, 100%, 40%, 1);
+  margin: 14px 0px 14px 0px;
+}
+
+.CheckBoxInput {
+  margin-right: 1.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  vertical-align: middle;
+}
+
+
+.ConsentContainer {
+  padding-top: 1vh;
+  margin-top: 2vh;
+  border: 1px solid hsla(0, 0%, 83%, 0.2);
+  border-radius: 4px;
+  background: hsla(0, 0%, 83%, 0.2);
+}
+
+.ConsentContainer article {
+  padding: 0 10px 0 10px;
+}
+
+.ConsentContainer article h4 {
+  margin-block-start: 0;
+}
+
+.ConsentCheckbox {
+  display: grid;
+  grid-template-columns: 30px calc(100% - 30px);
+  padding-left: 10px;
+}
+
+.ConsentCheckbox p {
+  padding-left: 10px;
+}
+
+.ConsentCheckbox label span {
+  border: 1px solid hsla(194, 82%, 43%, 1) !important;
+}
+
+.ConsentCheckbox .ErrorMessage {
+  margin-top: 0;
+}

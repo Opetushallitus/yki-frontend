@@ -20,6 +20,12 @@
   color: hsla(194, 91%, 21%, 1);
 }
 
+.NotifyText {
+  text-align: left;
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: rgb(182, 5, 43);
+}
 .Identification {
   justify-items: center;
   width: 32vw;

@@ -1,5 +1,8 @@
-import * as actionTypes from './actionTypes';
+import moment from 'moment';
+
 import axios from '../../axios';
+import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
+import * as actionTypes from './actionTypes';
 
 const fetchExamDatesStart = () => {
   return {
@@ -30,11 +33,14 @@ export const examDatesFailReset = () => {
   };
 };
 
-export const fetchExamDates = (oid) => {
+export const fetchExamDates = (oid, daysParam) => {
   return dispatch => {
     dispatch(fetchExamDatesStart());
+    const today = moment().format(ISO_DATE_FORMAT_SHORT);
+    const baseUrl = `/yki/api/virkailija/organizer/${oid}/exam-date`;
+    const url = daysParam ? `${baseUrl}?from=${today}&days=180` : baseUrl;
     axios
-      .get(`/yki/api/virkailija/organizer/${oid}/exam-date`)
+      .get(url)
       .then(res => {
         dispatch(fetchExamDatesSuccess(res.data.dates));
       })
@@ -51,13 +57,13 @@ export const addExamDate = (examDate, oid) => {
       .post(`/yki/api/virkailija/organizer/${oid}/exam-date`, examDate)
       .then(() => {
         dispatch(addExamDateSuccess());
-        dispatch(fetchExamDates(oid))
+        dispatch(fetchExamDates(oid));
       })
       .catch(err => {
         dispatch(addExamDateFail(err));
       });
   };
-}
+};
 
 const addExamDateStart = () => {
   return {
@@ -81,32 +87,43 @@ const addExamDateFail = error => {
   };
 };
 
-export const updateExamDateConfigurations = (postAdmission, languages, oid, examDateId) => {
+export const updateExamDateConfigurations = (
+  postAdmission,
+  languages,
+  oid,
+  examDateId,
+) => {
   return dispatch => {
-    dispatch(configureExamDateLanguagesStart())
-    dispatch(configureExamDatePostAdmissionStart())
+    dispatch(configureExamDateLanguagesStart());
+    dispatch(configureExamDatePostAdmissionStart());
     Promise.all([
       axios
-        .post(`/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}/post-admission`, postAdmission)
+        .post(
+          `/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}/post-admission`,
+          postAdmission,
+        )
         .then(res => {
-          dispatch(configureExamDateLanguagesSuccess())
+          dispatch(configureExamDateLanguagesSuccess());
         })
         .catch(err => {
           dispatch(configureExamDateLanguagesFail(err));
         }),
       axios
-        .post(`/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}/languages`, languages)
+        .post(
+          `/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}/languages`,
+          languages,
+        )
         .then(res => {
-          dispatch(configureExamDatePostAdmissionSuccess())
+          dispatch(configureExamDatePostAdmissionSuccess());
         })
         .catch(err => {
           dispatch(configureExamDatePostAdmissionFail(err));
         }),
     ]).then(res => {
       dispatch(fetchExamDates());
-    })
-  }
-}
+    });
+  };
+};
 
 const configureExamDateLanguagesStart = () => {
   return {
@@ -125,7 +142,9 @@ const configureExamDateLanguagesSuccess = () => {
 const configureExamDateLanguagesFail = error => {
   return {
     type: actionTypes.CONFIGURE_EXAM_DATE_LANGUAGES_FAIL,
-    error: Object.assign(error, { key: 'error.examDates.languages.configurationFailed' }),
+    error: Object.assign(error, {
+      key: 'error.examDates.languages.configurationFailed',
+    }),
     loading: false,
   };
 };
@@ -147,15 +166,16 @@ const configureExamDatePostAdmissionSuccess = () => {
 const configureExamDatePostAdmissionFail = error => {
   return {
     type: actionTypes.CONFIGURE_EXAM_DATE_POST_ADMISSION_FAIL,
-    error: Object.assign(error, { key: 'error.examDates.postAdmission.configurationFailed"' }),
+    error: Object.assign(error, {
+      key: 'error.examDates.postAdmission.configurationFailed"',
+    }),
     loading: false,
   };
 };
 
 export const deleteExamDate = (oid, examDateId) => {
-
   return dispatch => {
-    dispatch(deleteExamDateStart())
+    dispatch(deleteExamDateStart());
     axios
       .delete(`/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}/`)
       .then(res => {
@@ -164,11 +184,10 @@ export const deleteExamDate = (oid, examDateId) => {
       })
       .catch(err => {
         dispatch(deleteExamDateFail(err));
-      })
+      });
     //TODO: handle error
-  }
-}
-
+  };
+};
 
 const deleteExamDateStart = () => {
   return {
@@ -192,7 +211,6 @@ const deleteExamDateFail = error => {
   };
 };
 
-
 // NOT IN USE
 export const updatePostAdmissionEndDate = (examDateId, endDate) => {
   return dispatch => {
@@ -202,8 +220,8 @@ export const updatePostAdmissionEndDate = (examDateId, endDate) => {
         dispatch(fetchExamDates());
       });
     //TODO: handle error
-  }
-}
+  };
+};
 
 // NOT IN USE
 export const deletePostAdmissionEndDate = examDateId => {
@@ -212,23 +230,49 @@ export const deletePostAdmissionEndDate = examDateId => {
       .delete(`/yki/api/exam-date/${examDateId}/post-admission-end-date`)
       .then(res => {
         dispatch(fetchExamDates());
-      })
+      });
     //TODO: handle error
-  }
-}
+  };
+};
 
-// TODO: should this be in examSessions actions?
-export const GetExamDatesHistory = (oid) => {
+export const addEvaluationPeriod = ({
+  id,
+  oid,
+  evaluation_start_date,
+  evaluation_end_date,
+}) => {
   return dispatch => {
-    dispatch(fetchExamDatesStart());
+    dispatch(addEvaluationPeriodStart());
     axios
-      .get(`/yki/api/virkailija/organizer/${oid}/exam-session/history`)
-      .then(res => {
-        // dispatch(fetchExamSessionContent());
-        dispatch(fetchExamDatesSuccess(res.data.dates));
+      .post(`/yki/api/virkailija/organizer/${oid}/exam-date/${id}/evaluation`, {
+        evaluation_start_date,
+        evaluation_end_date,
+      })
+      .then(() => {
+        dispatch(addEvaluationPeriodSuccess());
+        dispatch(fetchExamDates(oid));
       })
       .catch(err => {
-        console.error(err)
+        dispatch(addEvaluationPeriodFail(err));
       });
-  }
-}
+  };
+};
+
+const addEvaluationPeriodStart = () => {
+  return {
+    type: actionTypes.ADD_EVALUATION_PERIOD_START,
+  };
+};
+
+const addEvaluationPeriodSuccess = () => {
+  return {
+    type: actionTypes.ADD_EVALUATION_PERIOD_SUCCESS,
+  };
+};
+
+const addEvaluationPeriodFail = error => {
+  return {
+    type: actionTypes.ADD_EVALUATION_PERIOD_FAIL,
+    error: Object.assign(error, { key: 'error.examDates.addFailed' }),
+  };
+};

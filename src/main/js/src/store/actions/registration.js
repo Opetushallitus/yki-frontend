@@ -1,10 +1,10 @@
-import * as actionTypes from './actionTypes';
-import axios from '../../axios';
 import moment from 'moment';
 import * as R from 'ramda';
 
+import axios from '../../axios';
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 import { capitalize } from '../../util/util';
+import * as actionTypes from './actionTypes';
 
 export const fetchExamSessions = () => {
   return dispatch => {
@@ -24,13 +24,20 @@ export const fetchExamSessions = () => {
 };
 const locationByLang = (examSession, lang) => {
   const location = examSession.location.find(l => l.lang === lang);
-  return location && location.post_office ? capitalize(location.post_office) : null;
+  return location && location.post_office
+    ? capitalize(location.post_office)
+    : null;
 };
 
 const extractExamLocations = examSessions => {
   const getUniqueLocations = (locations, examSession) => {
-    const location = { fi: locationByLang(examSession, 'fi'), sv: locationByLang(examSession, 'sv') };
-    return R.includes(location, locations) ? locations : R.append(location, locations);
+    const location = {
+      fi: locationByLang(examSession, 'fi'),
+      sv: locationByLang(examSession, 'sv'),
+    };
+    return R.includes(location, locations)
+      ? locations
+      : R.append(location, locations);
   };
   const unique = R.reduce(getUniqueLocations, []);
   const sortByFi = R.sort(R.prop('fi'));
@@ -60,39 +67,39 @@ const changeSessionSelector = () => {
 
 const filterByAvailability = () => {
   return {
-    type: actionTypes.FILTER_BY_AVAILABILITY
-  }
-}
+    type: actionTypes.FILTER_BY_AVAILABILITY,
+  };
+};
 
 export const filterExamByAvailability = () => {
   return dispatch => {
-    dispatch(filterByAvailability())
-  }
-}
+    dispatch(filterByAvailability());
+  };
+};
 
 const filterOpenRegistration = () => {
   return {
-    type: actionTypes.FILTER_BY_OPEN_REGISTRATION
-  }
-}
+    type: actionTypes.FILTER_BY_OPEN_REGISTRATION,
+  };
+};
 
 export const filteredExamSessionsByOpenRegistration = () => {
   return dispatch => {
-    dispatch(filterOpenRegistration())
-  }
-}
+    dispatch(filterOpenRegistration());
+  };
+};
 
 const filterAvailabilityAndRegistration = () => {
   return {
-    type: actionTypes.FILTER_BY_AVAILABILITY_AND_REGISTRATION
-  }
-}
+    type: actionTypes.FILTER_BY_AVAILABILITY_AND_REGISTRATION,
+  };
+};
 
 export const filteredExamsByAvailabilityAndRegistration = () => {
   return dispatch => {
-    dispatch(filterAvailabilityAndRegistration())
-  }
-}
+    dispatch(filterAvailabilityAndRegistration());
+  };
+};
 
 const fetchExamSessionsStart = () => {
   return {
@@ -308,4 +315,128 @@ const submitRegistrationFormFail = error => {
     type: actionTypes.SUBMIT_REGISTRATION_FORM_FAIL,
     error: error,
   };
+};
+
+export const fetchPrices = () => {
+  return dispatch => {
+    dispatch(fetchPricesStart());
+    axios
+      .get('/yki/api/exam-session/pricing')
+      .then(res => {
+        dispatch(fetchPricesSuccess(res.data));
+      })
+      .catch(err => dispatch(fetchPricesFail(err)));
+  };
+};
+
+const fetchPricesStart = () => {
+  return { type: actionTypes.FETCH_PRICES_START };
+};
+
+const fetchPricesSuccess = prices => {
+  return {
+    type: actionTypes.FETCH_PRICES_SUCCESS,
+    prices,
+  };
+};
+
+const fetchPricesFail = error => {
+  return {
+    type: actionTypes.FETCH_PRICES_FAIL,
+    error,
+  };
+};
+
+export const fetchReEvaluationPeriods = () => {
+  return dispatch => {
+    dispatch(fetchReEvaluationPeriodsStart());
+    axios
+      .get('/yki/api/evaluation')
+      .then(res => dispatch(fetchReEvaluationPeriodsSuccess(res.data)))
+      .catch(err => dispatch(fetchReEvaluationPeriodsFail(err)));
+  };
+};
+
+const fetchReEvaluationPeriodsStart = () => {
+  return { type: actionTypes.FETCH_REEVALUATION_PERIODS_START };
+};
+
+const fetchReEvaluationPeriodsSuccess = evaluationPeriods => {
+  return {
+    type: actionTypes.FETCH_REEVALUATION_PERIODS_SUCCESS,
+    evaluationPeriods,
+  };
+};
+
+const fetchReEvaluationPeriodsFail = error => {
+  return {
+    type: actionTypes.FETCH_REEVALUATION_PERIODS_FAIL,
+    error,
+  };
+};
+
+export const fetchReEvaluationPeriod = examId => {
+  return dispatch => {
+    dispatch(fetchReEvaluationPeriodStart());
+    axios
+      .get(`/yki/api/evaluation/${examId}`)
+      .then(res => {
+        dispatch(fetchReEvaluationPeriodSuccess(res.data));
+      })
+      .catch(err => dispatch(fetchReEvaluationPeriodFail(err)));
+  };
+};
+
+const fetchReEvaluationPeriodStart = () => {
+  return { type: actionTypes.FETCH_REEVALUATION_PERIOD_START };
+};
+
+const fetchReEvaluationPeriodSuccess = evaluationPeriod => {
+  return {
+    type: actionTypes.FETCH_REEVALUATION_PERIOD_SUCCESS,
+    evaluationPeriod,
+  };
+};
+
+const fetchReEvaluationPeriodFail = error => {
+  return {
+    type: actionTypes.FETCH_REEVALUATION_PERIOD_FAIL,
+    error,
+  };
+};
+
+export const submitEvaluationForm = (examId, formData, history) => {
+  return dispatch => {
+    dispatch(submitEvaluationFormStart());
+    axios
+      .post(`/yki/api/evaluation/${examId}/order`, formData)
+      .then(res => {
+        dispatch(submitEvaluationFormSuccess(res.data.evaluation_order_id));
+      })
+      .catch(error => {
+        dispatch(submitEvaluationFormFail(error));
+      });
+  };
+};
+
+const submitEvaluationFormStart = () => {
+  return { type: actionTypes.SUBMIT_EVALUATION_FORM_START };
+};
+
+const submitEvaluationFormSuccess = evaluationOrderId => {
+  return {
+    type: actionTypes.SUBMIT_EVALUATION_FORM_SUCCESS,
+    evaluationOrderId,
+  };
+};
+
+const submitEvaluationFormFail = error => {
+  return {
+    type: actionTypes.SUBMIT_EVALUATION_FORM_FAIL,
+    error,
+  };
+};
+
+export const evaluationFailReset = () => {
+  return { type: actionTypes.SUBMIT_EVALUATION_FORM_FAIL_RESET };
 };

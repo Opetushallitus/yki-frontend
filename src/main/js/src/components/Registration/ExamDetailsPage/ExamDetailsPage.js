@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import queryString from 'query-string';
 
 import classes from './ExamDetailsPage.module.css';
 import Spinner from '../../UI/Spinner/Spinner';
@@ -22,6 +23,7 @@ import tempHeroImage from '../../../assets/images/ophYki_image2.png'
 import { nowBetweenDates } from '../../../util/util';
 
 const examDetailsPage = ({
+  location,
   session,
   history,
   match,
@@ -33,10 +35,13 @@ const examDetailsPage = ({
 
   useEffect(() => {
     document.title = t('registration.document.examDetails.title');
-    if (Object.keys(session).length === 0) {
+    if (Object.keys(session).length === 0 && !loading) {
       onfetchExamSession(match.params.examSessionId);
     }
   }, []);
+
+  const { status } = queryString.parse(location.search);
+  const validationFailed = status && status === 'validation-fail';
 
   const registrationOpen = session.open;
 
@@ -98,6 +103,8 @@ const examDetailsPage = ({
             />
             {registrationOpen ? (
               <>
+                {validationFailed && <div className={classes.NotifyText}>
+                  {t('registration.examDetails.validationError.info')}</div>}
                 <div className={classes.InfoText}>
                   {seatsAvailable && (
                     <p>{t('registration.examDetails.futureInfo')}</p>

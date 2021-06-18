@@ -1,7 +1,11 @@
-import * as actionTypes from '../actions/actionTypes';
-import { signupPossible, admissionActiveAndQueueNotFull } from '../../util/examSessionUtil';
+import moment from 'moment';
+
 import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
-import moment from "moment";
+import {
+  admissionActiveAndQueueNotFull,
+  signupPossible,
+} from '../../util/examSessionUtil';
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   examSessions: [],
@@ -28,6 +32,11 @@ const initialState = {
     submitError: null,
     submitSuccess: false,
   },
+  prices: {},
+  loadingPrices: false,
+  evaluationPeriods: [],
+  evaluationPeriod: {},
+  evaluationOrderId: null,
 };
 
 const filteredSessions = (state) => {
@@ -55,7 +64,7 @@ const sortSessionsByDate = (sessionA, sessionB) => {
     return -1;
   }
   return 0;
-}
+};
 
 const sortSessionsByOpenSignups = (sessionA, sessionB) => {
   const isOpenA = signupPossible(sessionA);
@@ -76,7 +85,7 @@ const sortSessionsByOpenSignups = (sessionA, sessionB) => {
     return 1;
   }
   return 0;
-}
+};
 
 const sortSessions = sessions => {
   if (!sessions || sessions.length === 0) return [];
@@ -193,8 +202,61 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filteredExamSessionsGroupedByDate: filtered,
-
       };
+    case actionTypes.FETCH_PRICES_START:
+      return {
+        ...state,
+        loadingPrices: true,
+      };
+    case actionTypes.FETCH_PRICES_SUCCESS:
+      return {
+        ...state,
+        loadingPrices: false,
+        prices: action.prices,
+      };
+    case actionTypes.FETCH_PRICES_FAIL: {
+      return {
+        ...state,
+        loadingPrices: false,
+        error: action.error,
+      };
+    }
+    case actionTypes.FETCH_REEVALUATION_PERIODS_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.FETCH_REEVALUATION_PERIODS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        evaluationPeriods: action.evaluationPeriods.evaluation_periods,
+      };
+    case actionTypes.FETCH_REEVALUATION_PERIODS_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    }
+    case actionTypes.FETCH_REEVALUATION_PERIOD_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.FETCH_REEVALUATION_PERIOD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        evaluationPeriod: action.evaluationPeriod,
+      };
+    case actionTypes.FETCH_REEVALUATION_PERIOD_FAIL: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    }
 
     case actionTypes.CHANGE_SESSION_SELECTOR:
       const allFiltered = filteredSessions(state);
@@ -327,6 +389,31 @@ const reducer = (state = initialState, action) => {
           submitting: false,
           submitError: action.error.response,
         },
+      };
+    case actionTypes.SUBMIT_EVALUATION_FORM_START:
+      return {
+        ...state,
+        loading: true,
+        evaluationOrderId: null,
+        error: null,
+      };
+    case actionTypes.SUBMIT_EVALUATION_FORM_SUCCESS:
+      return {
+        ...state,
+        evaluationOrderId: action.evaluationOrderId,
+        loading: false,
+        error: null,
+      };
+    case actionTypes.SUBMIT_EVALUATION_FORM_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    case actionTypes.SUBMIT_EVALUATION_FORM_FAIL_RESET:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;
