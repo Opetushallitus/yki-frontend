@@ -6,7 +6,7 @@ import {
   examLanguageAndLevel,
   formatDate,
 } from '../../../util/examSessionUtil';
-import { checkTodayIsBetween, sortObjectArray } from '../../../util/util';
+import { sortObjectArray } from '../../../util/util';
 import classes from './ReEvaluationList.module.css';
 
 const ReEvaluationList = props => {
@@ -57,10 +57,7 @@ const ReEvaluationList = props => {
     const examDate = formatDate(session, 'exam_date');
     const evaluationStartDate = formatDate(session, 'evaluation_start_date');
     const evaluationEndDate = formatDate(session, 'evaluation_end_date');
-    const enabled = checkTodayIsBetween(
-      session.evaluation_start_date,
-      session.evaluation_end_date,
-    );
+    const enabled = session.open;
 
     return (
       <div
@@ -99,10 +96,7 @@ const ReEvaluationList = props => {
     const examDate = formatDate(session, 'exam_date');
     const evaluationStartDate = formatDate(session, 'evaluation_start_date');
     const evaluationEndDate = formatDate(session, 'evaluation_end_date');
-    const enabled = checkTodayIsBetween(
-      session.evaluation_start_date,
-      session.evaluation_end_date,
-    );
+    const enabled = session.open;
 
     return (
       <div
