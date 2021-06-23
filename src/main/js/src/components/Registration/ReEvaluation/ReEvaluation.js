@@ -4,7 +4,11 @@ import { connect as connectRedux } from 'react-redux';
 
 import YkiImage2 from '../../../assets/images/ophYki_image2.png';
 import { MOBILE_VIEW } from '../../../common/Constants';
-import { fetchReEvaluationPeriods, fetchPrices } from '../../../store/actions/index';
+import {
+  fetchReEvaluationPeriods,
+  fetchPrices,
+} from '../../../store/actions/index';
+import { useMobileView } from '../../../util/customHooks';
 import {
   evaluationTexts,
   formatPriceObject,
@@ -37,7 +41,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchEvaluationPeriods: () => dispatch(fetchReEvaluationPeriods()),
-    onFetchPrices: () => dispatch(fetchPrices())
+    onFetchPrices: () => dispatch(fetchPrices()),
   };
 };
 
@@ -47,13 +51,14 @@ const ReEvaluation = ({
   evaluationPeriods,
   onFetchEvaluationPeriods,
   onFetchPrices,
-  loadingPrices
+  loadingPrices,
 }) => {
   const { t } = useTranslation();
+  const isMobileOrTablet = useMobileView(true, true);
 
   useEffect(() => {
     onFetchEvaluationPeriods();
-    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices()
+    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices();
   }, []);
 
   const evalPrices = prices && prices['evaluation-prices'];
@@ -117,12 +122,7 @@ const ReEvaluation = ({
           }
           headlineImage={YkiImage2}
         />
-        {MOBILE_VIEW ||
-          (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
-          <>{mobileContent}</>
-        ) : (
-          <>{desktopContent}</>
-        )}
+        {isMobileOrTablet ? <>{mobileContent}</> : <>{desktopContent}</>}
       </main>
     </>
   );

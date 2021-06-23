@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { MOBILE_VIEW } from '../../../common/Constants';
+import { useMobileView } from '../../../util/customHooks';
 import {
   examLanguageAndLevel,
   formatDate,
@@ -11,6 +11,7 @@ import classes from './ReEvaluationList.module.css';
 
 const ReEvaluationList = props => {
   const { t } = useTranslation();
+  const isMobile = useMobileView(true);
   const { sessions, headers, history } = props;
   const [sortedSessions, setSortedSessions] = useState(sessions);
   const [sortToggleAsc, setSortToggleAsc] = useState(false);
@@ -137,7 +138,7 @@ const ReEvaluationList = props => {
     <>
       {sortedSessions && sortedSessions.length !== 0 ? (
         <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-          {MOBILE_VIEW ? (
+          {isMobile ? (
             <div className={classes.Date}>
               {sortedSessions.map(session => {
                 return dataRowMobile(session);

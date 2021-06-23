@@ -14,14 +14,6 @@ import Button from '../../UI/Button/Button';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import RadioButton from '../../UI/RadioButton/RadioButton';
 import ZipAndPostOffice from '../../ZipAndPostOffice/ZipAndPostOffice';
-import GenderSelect from './GenderSelect/GenderSelect';
-import {
-  DATE_FORMAT,
-  ISO_DATE_FORMAT_SHORT,
-  MOBILE_VIEW,
-  TABLET_VIEW,
-  PRIVACY_POLICY_LINK,
-} from '../../../common/Constants';
 import RegistrationError from '../RegistrationError/RegistrationError';
 import GenderSelect from './GenderSelect/GenderSelect';
 import NationalitySelect from './NationalitySelect/NationalitySelect';

@@ -5,15 +5,13 @@ import { Link } from 'react-router-dom';
 
 import YkiImage1 from '../../../assets/images/ophYki_image1.png';
 import { fetchPrices } from '../../../store/actions/index';
+import { useMobileView } from '../../../util/customHooks';
 import {
   evaluationTexts,
   formatPriceObject,
   getDeviceOrientation,
   levelTranslations,
 } from '../../../util/util';
-
-import { useMobileView } from '../../../util/customHooks';
-
 import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCollapsible';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
@@ -33,7 +31,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
-  const { history } = props;
   const { t } = useTranslation();
 
   const isMobile = useMobileView(true);

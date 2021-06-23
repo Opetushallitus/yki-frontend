@@ -1,11 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { levelTranslations } from '../../util/util';
-import classes from './PriceContainer.module.css';
 
 import { useMobileView } from '../../util/customHooks';
-import { levelTranslations } from '../../util/util';
 import classes from './PriceContainer.module.css';
 
 const PriceContainer = props => {
@@ -28,7 +25,7 @@ const PriceContainer = props => {
           onMobileSV || onMobileEN ? classes.PriceBoxSV : classes.PriceBox
         }
         style={{
-          gridTemplateColumns: MOBILE_VIEW
+          gridTemplateColumns: mobile
             ? threePerRow
               ? '30% 5% 30% 5% 30%'
               : '45% 10% 45%'
@@ -36,7 +33,7 @@ const PriceContainer = props => {
         }}
       >
         {elements.map((el, i) => {
-          const lastInRow = !MOBILE_VIEW
+          const lastInRow = !mobile
             ? false
             : threePerRow
             ? (i + 1) % 3 === 0
@@ -54,7 +51,7 @@ const PriceContainer = props => {
                 className={classes.MobilePriceBox}
                 style={{
                   borderBottom:
-                    !inLastRow && MOBILE_VIEW
+                    !inLastRow && mobile
                       ? '1px solid hsla(0, 0%, 86%, 1)'
                       : null,
                 }}
