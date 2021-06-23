@@ -2,21 +2,8 @@
   text-align: left;
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
+  color: var(--primary-blue);
   margin-bottom: 10%;
-}
-
-.Container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  z-index: 1;
-}
-
-.ArticleContent h1 {
-  font-weight: 400;
-  font-size: 1.5em;
-  margin: 32px 0;
 }
 
 .ArticleContent p {

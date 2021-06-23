@@ -10,6 +10,7 @@
 
 .PriceBox {
   min-width: 160px;
+  max-width: 200px;
   width: 15vw;
   background: var(--white) 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 16px hsla(0, 0%, 0%, 0.1);
@@ -72,6 +73,7 @@
   }
   .PriceBox {
     margin: 0;
+    max-width: none;
   }
 }
 
@@ -79,6 +81,7 @@
 @media screen and (max-width: 767px) and (orientation: landscape) {
   .PriceBox {
     display: grid;
+    max-width: none;
     grid-template-columns: repeat(5, 1fr);
     border-radius: 8px;
     opacity: 1;
@@ -89,6 +92,7 @@
   }
   .PriceBox hr {
     height: 75px;
+
     width: 0 !important;
     margin-top: 3vh;
     text-align: center;
@@ -115,6 +119,7 @@
     padding: 0 2vw 2vh 2vw;
     margin-right: 2vw;
     margin-left: 0;
+    max-width: none;
   }
 
   .PriceBoxSV {
