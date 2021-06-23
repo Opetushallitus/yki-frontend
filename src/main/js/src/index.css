@@ -22,6 +22,7 @@
   --decoration-blue: #d0ecf5;
   --primary-gray: #8b8b8b;
   --secondary-gray: #aaaaaa;
+  --decoration-gray: #dbdbdb;
   --shadow-blue: #05526b26;
   --light-gray: hsla(0, 0%, 83%, 0.2);
   --white: #ffffff;
@@ -148,7 +149,7 @@ button {
   .InnerContainer {
     padding-right: 3vw;
     padding-left: 4vw;
-    width: 100%;
+    width: calc(100% - 7vw);
   }
 
   .Container {

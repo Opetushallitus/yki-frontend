@@ -147,91 +147,22 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
             content={upperLevel}
           />
           <>{registerButton}</>
-          <div className={classes.InnerContainer}>
-            <h2>{t('registration.description.reEvaluation')}</h2>
-            {Object.keys(evaluationTexts).map(el => {
-              return (
-                <React.Fragment key={el}>
-                  <h3 className={classes.ReEvalHeader}>
-                    {t(evaluationTexts[el])}
-                  </h3>
-                  <hr />
-                </React.Fragment>
-              );
-            })}
-          </div>
-          <>
-            <button
-              className={'YkiButton'}
-              style={{ width: 'auto', padding: '0 1rem' }}
-              data-cy="re-eval-button"
-              onClick={() => history.push(t('/tarkistusarviointi'))}
-              role="link"
-              aria-label={t('registration.reeval')}
-            >
-              {t('registration.reeval')}
-            </button>
-          </>
-        </div>
-      </div>
-    </>
-  );
 
-  const mobileContent = (
-    <>
-      <div
-        className={'InnerContainer'}
-        style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}
-      >
-        <article className={classes.ArticleContent}>
-          <p>{t('registration.description.text2')}</p>
-          <p>{t('registration.description.text3')}</p>
-          <p>{t('registration.description.text4')}</p>
-        </article>
-        {tutorialVideo}
-        <div
-          style={{
-            width: `calc(${window.screen.availWidth}px - 20px)`,
-            padding: '0 2px',
-          }}
-        >
-          <h2>{t('registration.description.examLevels')}</h2>
-          <DescriptionCollapsible
-            headerText={levelTranslations.PERUS}
-            content={basicLevel}
-          />
-          <DescriptionCollapsible
-            headerText={levelTranslations.KESKI}
-            content={middleLevel}
-          />
-          <DescriptionCollapsible
-            headerText={levelTranslations.YLIN}
-            content={upperLevel}
-          />
+          <h2 style={{ marginTop: '4rem' }}>
+            {t('registration.description.reEvaluation')}
+          </h2>
+          {Object.keys(evaluationTexts).map(el => {
+            return (
+              <React.Fragment key={el}>
+                <h3 className={classes.ReEvalHeader}>
+                  {t(evaluationTexts[el])}
+                </h3>
+                <hr />
+              </React.Fragment>
+            );
+          })}
         </div>
-      </div>
-      <>
-        <PriceContainer />
-        {registerButton}
-      </>
-      <div
-        className={classes.InnerContainer}
-        style={{
-          width: `calc(${window.screen.availWidth}px - 20px)`,
-          padding: '1rem',
-        }}
-      >
-        <h2>{t('registration.description.reEvaluation')}</h2>
-        {Object.keys(evaluationTexts).map(el => {
-          return (
-            <React.Fragment key={el}>
-              <h3 className={classes.ReEvalHeader}>{t(evaluationTexts[el])}</h3>
-              <hr />
-            </React.Fragment>
-          );
-        })}
-        <div style={{ margin: '2rem 0 0 0' }}>
-          <PriceContainer elements={evaluationPrices} />
+        <>
           <button
             className={'YkiButton'}
             style={{ width: 'auto', padding: '0 1rem' }}
@@ -242,9 +173,77 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           >
             {t('registration.reeval')}
           </button>
-        </div>
+        </>
       </div>
     </>
+  );
+
+  const mobileContent = (
+    <div
+      className={'InnerContainer'}
+      style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}
+    >
+      <article className={classes.ArticleContent}>
+        <p>{t('registration.description.text2')}</p>
+        <p>{t('registration.description.text3')}</p>
+        <p>{t('registration.description.text4')}</p>
+      </article>
+      {tutorialVideo}
+      <div
+        style={{
+          width: `calc(${window.screen.availWidth}px - 20px)`,
+          padding: '0 2px',
+        }}
+      >
+        <h2>{t('registration.description.examLevels')}</h2>
+        <DescriptionCollapsible
+          headerText={levelTranslations.PERUS}
+          content={basicLevel}
+        />
+        <DescriptionCollapsible
+          headerText={levelTranslations.KESKI}
+          content={middleLevel}
+        />
+        <DescriptionCollapsible
+          headerText={levelTranslations.YLIN}
+          content={upperLevel}
+        />
+      </div>
+
+      <PriceContainer elements={levelPrices} />
+      {registerButton}
+
+      <div
+        style={{
+          width: `calc(${window.screen.availWidth}px - 20px)`,
+          padding: '0 2px',
+        }}
+      >
+        <h2 style={{ marginTop: '2rem', lineHeight: 'normal' }}>
+          {t('registration.description.reEvaluation')}
+        </h2>
+        {Object.keys(evaluationTexts).map(el => {
+          return (
+            <React.Fragment key={el}>
+              <h3 className={classes.ReEvalHeader}>{t(evaluationTexts[el])}</h3>
+              <hr />
+            </React.Fragment>
+          );
+        })}
+
+        <PriceContainer elements={evaluationPrices} />
+        <button
+          className={'YkiButton'}
+          style={{ width: 'auto', padding: '0 1rem' }}
+          data-cy="re-eval-button"
+          onClick={() => history.push(t('/tarkistusarviointi'))}
+          role="link"
+          aria-label={t('registration.reeval')}
+        >
+          {t('registration.reeval')}
+        </button>
+      </div>
+    </div>
   );
 
   return (
