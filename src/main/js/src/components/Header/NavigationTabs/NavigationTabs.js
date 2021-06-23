@@ -49,9 +49,7 @@ const NavigationTabs = props => {
               <Link
                 aria-current={isActive}
                 className={classes.LinkButton}
-                onClick={() => {
-                  history.push(link.url);
-                }}
+                to={link.url}
                 onKeyPress={() => {
                   history.push(link.url);
                 }}

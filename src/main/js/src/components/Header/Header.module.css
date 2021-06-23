@@ -23,7 +23,7 @@
   border-bottom: 3px solid var(--secondary-blue);
   margin-bottom: 0 !important;
   display: grid;
-  grid-template-columns: 33% 66%;
+  grid-template-columns: 20% 80%;
   grid-column-gap: 10px;
   width: 100%;
   align-items: center;

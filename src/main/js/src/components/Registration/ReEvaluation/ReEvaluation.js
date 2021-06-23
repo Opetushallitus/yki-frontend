@@ -8,11 +8,7 @@ import {
   fetchReEvaluationPeriods,
 } from '../../../store/actions/index';
 import { useMobileView } from '../../../util/customHooks';
-import {
-  evaluationTexts,
-  formatPriceObject,
-  getDeviceOrientation,
-} from '../../../util/util';
+import { evaluationTexts, formatPriceObject } from '../../../util/util';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import ReEvaluationList from '../ReEvaluationList/ReEvaluationList';
@@ -53,7 +49,7 @@ const ReEvaluation = ({
   loadingPrices,
 }) => {
   const { t } = useTranslation();
-  const isMobileOrTablet = useMobileView(true, true);
+  const isMobile = useMobileView(true);
 
   useEffect(() => {
     onFetchEvaluationPeriods();
@@ -66,35 +62,8 @@ const ReEvaluation = ({
 
   const desktopContent = (
     <>
-      <div className={'InnerContainer'}>
-        <div style={{ display: 'flex' }}>
-          <div style={{ marginRight: '1rem' }}>
-            <article className={classes.ArticleContent}>
-              <p>{t('registration.reeval.text2')}</p>
-              <p>{t('registration.reeval.text3')}</p>
-              <p>{t('registration.reeval.text4')}</p>
-              <p>{t('registration.reeval.text5')}</p>
-              <p>{t('registration.reeval.text6')}</p>
-            </article>
-          </div>
-          <PriceContainer elements={evaluationPrices} />
-        </div>
-
-        <div style={{ marginTop: '3rem' }}>
-          <ReEvaluationList
-            history={history}
-            headers={headers}
-            sessions={evaluationPeriods}
-          />
-        </div>
-      </div>
-    </>
-  );
-
-  const mobileContent = (
-    <div className={classes.MainContent}>
-      <div className={classes.DescriptionAndText}>
-        <div className={'InnerContainer'}>
+      <div style={{ display: 'flex', paddingBottom: '1rem' }}>
+        <div style={{ marginRight: '1rem' }}>
           <article className={classes.ArticleContent}>
             <p>{t('registration.reeval.text2')}</p>
             <p>{t('registration.reeval.text3')}</p>
@@ -105,6 +74,25 @@ const ReEvaluation = ({
         </div>
         <PriceContainer elements={evaluationPrices} />
       </div>
+
+      <ReEvaluationList
+        history={history}
+        headers={headers}
+        sessions={evaluationPeriods}
+      />
+    </>
+  );
+
+  const mobileContent = (
+    <div style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}>
+      <article className={classes.ArticleContent}>
+        <p>{t('registration.reeval.text2')}</p>
+        <p>{t('registration.reeval.text3')}</p>
+        <p>{t('registration.reeval.text4')}</p>
+        <p>{t('registration.reeval.text5')}</p>
+        <p>{t('registration.reeval.text6')}</p>
+      </article>
+      <PriceContainer elements={evaluationPrices} />
       <ReEvaluationList
         history={history}
         headers={headers}
@@ -126,7 +114,9 @@ const ReEvaluation = ({
           }
           headlineImage={YkiImage2}
         />
-        {isMobileOrTablet ? <>{mobileContent}</> : <>{desktopContent}</>}
+        <div className={'InnerContainer'}>
+          {isMobile ? <>{mobileContent}</> : <>{desktopContent}</>}
+        </div>
       </main>
     </>
   );
