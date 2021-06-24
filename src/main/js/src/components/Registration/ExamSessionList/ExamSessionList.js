@@ -6,7 +6,7 @@ import classes from './ExamSessionList.module.css';
 import ExamSessionListItem from './ExamSessionListItem/ExamSessionListItem';
 
 const examSessionList = ({ examSessions: sessions, language, t, history }) => (
-  <>
+  <div className={classes.ExamSessionList}>
     {Object.keys(sessions).length !== 0 ? (
       <table>
         <thead>
@@ -35,7 +35,7 @@ const examSessionList = ({ examSessions: sessions, language, t, history }) => (
         <b>{t('registration.search.noResults')}</b>
       </p>
     )}
-  </>
+  </div>
 );
 
 examSessionList.propTypes = {

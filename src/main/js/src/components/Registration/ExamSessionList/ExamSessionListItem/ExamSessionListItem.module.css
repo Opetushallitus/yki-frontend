@@ -17,7 +17,7 @@
   background: var(--decoration-blue) 0 0 no-repeat padding-box;
 }
 
-td {
+.ExamSessionListItem td {
   border-left: 1px solid var(--secondary-blue);
   padding: 5px;
   display: flex;
@@ -27,7 +27,7 @@ td {
   overflow-wrap: break-word;
 }
 
-td:first-child {
+.ExamSessionListItem td:first-child {
   border-left: none;
 }
 
@@ -45,7 +45,7 @@ td:first-child {
     font-size: 18px;
   }
 
-  td {
+  .ExamSessionListItem td {
     border-left: none;
     border-bottom: 1px solid var(--secondary-blue);
     display: flex;

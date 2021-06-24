@@ -147,19 +147,6 @@ class Registration extends Component {
                 history={this.props.history}
               />
             </div>
-            {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
-            <ExamSessionList
-              examSessions={this.getValuesOnFilterChange()}
-              language={this.props.language}
-              history={this.props.history}
-            />
-
-            {mobileOrTablet ? <div style={{ paddingTop: '30px' }} /> : null}
-            <ExamSessionList
-              examSessions={this.getValuesOnFilterChange()}
-              language={this.props.language}
-              history={this.props.history}
-            />
           </>
         </main>
       </>

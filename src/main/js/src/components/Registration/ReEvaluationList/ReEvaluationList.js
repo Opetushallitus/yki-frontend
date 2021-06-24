@@ -22,16 +22,15 @@ const ReEvaluationList = props => {
 
   const headerRow = () => {
     return (
-      <div className={classes.ColumnHeaders}>
+      <tr className={classes.ColumnHeaders}>
         {headers.map(header => {
           if (header.sortable) {
             return (
-              <div key={header.key} className={classes.HeaderColumn}>
+              <th key={header.key} className={classes.HeaderColumn}>
                 {t(header.title)}
                 <button
                   onClick={() => {
                     const sessionCopy = sortedSessions.slice();
-
                     setSortedSessions(
                       sortObjectArray(sessionCopy, header.key, sortToggleAsc),
                     );
@@ -42,14 +41,14 @@ const ReEvaluationList = props => {
                   <img
                     src={require('../../../assets/svg/chevron-white.svg')}
                     className={classes.SortIcon}
-                    alt=""
+                    alt="sort"
                   />
                 </button>
-              </div>
+              </th>
             );
-          } else return <div key={header.key}>{t(header.title)}</div>;
+          } else return <th key={header.key}>{t(header.title)}</th>;
         })}
-      </div>
+      </tr>
     );
   };
 
@@ -135,32 +134,32 @@ const ReEvaluationList = props => {
   };
 
   return (
-    <>
+    <div className={classes.ReEvaluationList}>
       {sortedSessions && sortedSessions.length !== 0 ? (
-        <div style={{ paddingLeft: '1rem', paddingRight: '1rem' }}>
-          {isMobile ? (
-            <div className={classes.Date}>
-              {sortedSessions.map(session => {
-                return dataRowMobile(session);
-              })}
-            </div>
-          ) : (
-            <>
-              <div>{headerRow()}</div>
-              <div className={classes.Date}>
+        <table>
+          <thead>{headerRow()}</thead>
+          <tbody>
+            {isMobile ? (
+              <>
+                {sortedSessions.map(session => {
+                  return dataRowMobile(session);
+                })}
+              </>
+            ) : (
+              <>
                 {sortedSessions.map(session => {
                   return dataRowDesktop(session);
                 })}
-              </div>
-            </>
-          )}
-        </div>
+              </>
+            )}
+          </tbody>
+        </table>
       ) : (
         <p className={classes.NotFound}>
           <b>{t('registration.search.noResults')}</b>
         </p>
       )}
-    </>
+    </div>
   );
 };
 

@@ -27,9 +27,8 @@ const checkbox = props => {
         onChange={onChange}
         defaultChecked={checked || false}
         aria-label={ariaLabel || null}
-        aria-required={ariaRequired}
+        required={ariaRequired}
       />
-
       <label data-cy={datacy} className={classes.CbLabel} htmlFor={checkboxId}>
         {label}
       </label>

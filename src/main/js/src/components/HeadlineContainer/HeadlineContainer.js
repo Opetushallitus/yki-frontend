@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { useMobileView } from '../../util/customHooks';
-import { getDeviceOrientation } from '../../util/util';
 import classes from './HeadlineContainer.module.css';
 
 /** HeadlineContainer takes props from parent:
@@ -60,7 +59,6 @@ const HeadlineContainer = props => {
           className={classes.BaseContainer}
           style={{
             background: `url(${headlineImage})`,
-            backgroundSize: '100%',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
           }}

@@ -14,8 +14,10 @@
   text-decoration: underline;
 }
 
-.Date {
+.ReEvaluationList table {
   margin-bottom: 20px;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .HeaderColumn,
@@ -25,14 +27,17 @@
   align-items: center;
   padding: 0 0.25rem;
   justify-content: center !important;
-  border-right: 2px solid hsla(194, 82%, 43%, 1);
+  border-right: 1px solid var(--secondary-blue);
 }
 
 .ColumnHeaders {
-  background: hsla(194, 91%, 21%, 1) 0 0 no-repeat padding-box;
+  background: var(--primary-blue) 0 0 no-repeat padding-box;
+  text-align: left;
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(0, 0%, 100%, 1);
+  color: var(--white);
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1.25fr;
 }
 
 .SortIcon {
@@ -54,7 +59,7 @@
 
 .NotFound {
   font: normal normal bold 16px/24px PT Sans;
-  color: hsla(194, 91%, 21%, 1);
+  color: var(--primary-blue);
 }
 
 .MobileRow {
@@ -63,7 +68,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
-  border-bottom: 1px solid hsla(194, 82%, 43%, 1);
+  border-bottom: 1px solid var(--secondary-blue);
 }
 
 .MobileRow:nth-child(2) {
@@ -73,18 +78,6 @@
 @media (min-width: 1024px) {
   .Date {
     margin-bottom: -2px;
-  }
-
-  .ColumnHeaders {
-    font-size: 14px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 2fr 1.25fr;
-    align-items: end;
-  }
-
-  .ColumnHeaders > div:nth-child(4),
-  .ColumnHeaders > div:nth-child(5) {
-    justify-self: center;
   }
 
   .HeaderColumn {

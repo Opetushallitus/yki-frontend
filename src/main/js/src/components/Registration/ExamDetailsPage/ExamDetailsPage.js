@@ -22,7 +22,6 @@ import classes from './ExamDetailsPage.module.css';
 const examDetailsPage = ({
   location,
   session,
-  history,
   match,
   onfetchExamSession,
   loading,

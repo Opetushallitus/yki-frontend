@@ -8,7 +8,7 @@ import BackButton from '../Registration/BackButton/BackButton';
 import classes from './LinkExpired.module.css';
 
 export const linkExpired = props => {
-  const { history, match } = props;
+  const { match } = props;
 
   const key = () => {
     switch (match.path) {

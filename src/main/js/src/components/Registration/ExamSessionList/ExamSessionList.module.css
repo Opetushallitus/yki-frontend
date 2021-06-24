@@ -20,19 +20,19 @@
   padding: 0px 10px;
 }
 
-table {
+.ExamSessionList table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th {
+.ExamSessionList th {
   border-left: 1px solid var(--secondary-blue);
   padding: 5px 5px 5px 10px;
   display: flex;
   align-items: center;
 }
 
-th:first-child {
+.ExamSessionList th:first-child {
   border-left: none;
 }
 
@@ -49,7 +49,7 @@ th:first-child {
 
 /* Mobile screens landscape */
 @media screen and (max-width: 1024px) {
-  table {
+  .ExamSessionList table {
     width: 100%;
   }
 

@@ -14,7 +14,7 @@ import * as actions from '../../../store/actions/index';
 import { getLanguageAndLevel } from '../../../util/util';
 
 export const RegistrationPage = props => {
-  const { initData, initDataLoading, history, match } = props;
+  const { initData, initDataLoading, match } = props;
 
   useEffect(() => {
     if (!initData && !initDataLoading) {
