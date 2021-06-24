@@ -93,7 +93,6 @@
 /* Tablet landscape */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .ColumnHeaders {
-    height: 6vh;
     font-size: 14px;
     display: grid;
     grid-template-columns: 1fr 1fr 1.25fr 1.25fr;

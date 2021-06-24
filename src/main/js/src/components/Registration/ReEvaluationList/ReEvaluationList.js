@@ -60,19 +60,19 @@ const ReEvaluationList = props => {
     const enabled = session.open;
 
     return (
-      <div
+      <tr
         className={classes.List}
         key={session.id}
         data-cy={`evaluation-period-${session.id}`}
       >
-        <div className={classes.TableColumn}>
+        <td className={classes.TableColumn}>
           <strong>{langAndLvl}</strong>
-        </div>
-        <div className={classes.TableColumn}>{examDate}</div>
-        <div className={classes.TableColumn}>
+        </td>
+        <td className={classes.TableColumn}>{examDate}</td>
+        <td className={classes.TableColumn}>
           {evaluationStartDate} - {evaluationEndDate}
-        </div>
-        <div className={classes.TableColumn}>
+        </td>
+        <td className={classes.TableColumn}>
           <button
             onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
             data-cy={`evaluation-period-button-${session.id}`}
@@ -86,8 +86,8 @@ const ReEvaluationList = props => {
           >
             {t('registration.reeval')}
           </button>
-        </div>
-      </div>
+        </td>
+      </tr>
     );
   };
 
@@ -99,37 +99,38 @@ const ReEvaluationList = props => {
     const enabled = session.open;
 
     return (
-      <div
+      <tr
         className={classes.List}
         key={session.id}
         data-cy={`evaluation-period-${session.id}`}
       >
-        <div className={classes.MobileRow}>
+        <td className={classes.MobileRow}>
           <div className={classes.TableColumn}>{langAndLvl}</div>
           <div className={classes.TableColumn}>{examDate}</div>
-        </div>
-        <div className={classes.MobileRow}>
+        </td>
+        <td className={classes.MobileRow}>
           <div className={classes.TableColumn}>
             {t('registration.list.evalPossible')}
           </div>
           <div className={classes.TableColumn}>
             {evaluationStartDate} - {evaluationEndDate}
           </div>
-        </div>
-
-        <button
-          onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
-          data-cy={`evaluation-period-button-${session.id}`}
-          role="link"
-          className="YkiButton"
-          disabled={!enabled}
-          style={{
-            padding: '0.25rem',
-          }}
-        >
-          {t('registration.reeval')}
-        </button>
-      </div>
+        </td>
+        <td style={{ display: 'flex', justifyContent: 'center' }}>
+          <button
+            onClick={() => history.push(`/tarkistusarviointi/${session.id}`)}
+            data-cy={`evaluation-period-button-${session.id}`}
+            role="link"
+            className="YkiButton"
+            disabled={!enabled}
+            style={{
+              padding: '0.25rem',
+            }}
+          >
+            {t('registration.reeval')}
+          </button>
+        </td>
+      </tr>
     );
   };
 
