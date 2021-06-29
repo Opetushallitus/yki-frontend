@@ -8,8 +8,8 @@ import * as Yup from 'yup';
 import { DATE_FORMAT, PRIVACY_POLICY_LINK } from '../../../common/Constants';
 import * as actions from '../../../store/actions/index';
 import { isoFormatDate } from '../../../util/util';
+import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './ReEvaluationForm.module.css';
-import Checkbox from "../../UI/Checkbox/Checkbox";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -24,13 +24,23 @@ const mapStateToProps = state => {
   };
 };
 
-const CheckboxComponent = ({ field: { name, value, onChange }, datacy }) => {
+const CheckboxComponent = ({
+  field: { name, value, onChange },
+  datacy,
+  label,
+  ariaLabel,
+  ariaRequired,
+}) => {
   return (
     <Checkbox
+      checkboxId={name}
       name={name}
       checked={value}
       datacy={datacy}
       onChange={onChange}
+      label={label}
+      ariaLabel={ariaLabel}
+      ariaRequired={ariaRequired}
     />
   );
 };
@@ -144,7 +154,14 @@ const ReEvaluationForm = props => {
       onSubmit={values => {
         onSubmit(values);
       }}
-      render={({ values, isValid, errors }) => {
+      render={({
+        values,
+        isValid,
+        errors,
+        setFieldValue,
+        setTouched,
+        touched,
+      }) => {
         return (
           <Form>
             <div className={classes.FieldRow}>
@@ -157,8 +174,16 @@ const ReEvaluationForm = props => {
             </div>
             <div className={classes.ConsentContainer}>
               <article>
-                <h4>{t('registration.form.personalData.consent.heading')}</h4>
-                <a href={PRIVACY_POLICY_LINK} target="_blank" rel="noopener noreferrer">
+                <p>
+                  <strong>
+                    {t('registration.form.personalData.consent.heading')}
+                  </strong>
+                </p>
+                <a
+                  href={PRIVACY_POLICY_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {t('common.yki.consent.link')}
                 </a>
               </article>
@@ -168,8 +193,21 @@ const ReEvaluationForm = props => {
                   name={'consent'}
                   value={'consent'}
                   datacy={'input-consent'}
+                  onChange={() => {
+                    setFieldValue('consent', !values.consent);
+                    setTouched(
+                      {
+                        ...touched,
+                        consent: true,
+                      },
+                      true,
+                    );
+                  }}
+                  label={t('registration.form.personalData.consent.confirm')}
+                  ariaLabel={t(
+                    'registration.form.personalData.consent.confirm',
+                  )}
                 />
-                <p>{t('registration.form.personalData.consent.confirm')}</p>
                 <ErrorMessage
                   name={'consent'}
                   component="span"

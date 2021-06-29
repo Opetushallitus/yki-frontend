@@ -6,8 +6,8 @@ import YkiImage2 from '../../../assets/images/ophYki_image2.png';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import {
   evaluationFailReset,
+  fetchPrices,
   fetchReEvaluationPeriod,
-  fetchPrices
 } from '../../../store/actions';
 import {
   examLanguageAndLevel,
@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => {
     onFetchEvaluationPeriod: examId =>
       dispatch(fetchReEvaluationPeriod(examId)),
     errorConfirmedHandler: () => dispatch(evaluationFailReset()),
-    onFetchPrices: () => dispatch(fetchPrices())
+    onFetchPrices: () => dispatch(fetchPrices()),
   };
 };
 
@@ -51,7 +51,7 @@ const ReEvaluationFormPage = ({
   const examId = match.params.id;
   useEffect(() => {
     onFetchEvaluationPeriod(examId);
-    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices()
+    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices();
   }, []);
 
   const langAndLvl = evaluationPeriod && examLanguageAndLevel(evaluationPeriod);
@@ -101,7 +101,7 @@ const ReEvaluationFormPage = ({
 
   return (
     <>
-      <main className={classes.Container}>
+      <main id="main" className={'Container'}>
         <HeadlineContainer
           headlineTitle={t('registration.reeval.banner.title')}
           headlineContent={
@@ -112,28 +112,26 @@ const ReEvaluationFormPage = ({
           }
           headlineImage={YkiImage2}
         />
-        <div className={classes.MainContent}>
-          <div className={classes.InnerContainer}>
-            <h2>{t('registration.reeval.formpage.title1')}</h2>
-            <div className={classes.BasicInfoRow}>
-              <p>{langAndLvl}</p>
-              <p>{examDate}</p>
-            </div>
+
+        <div className={'InnerContainer'}>
+          <h2 style={{ marginTop: '2rem' }}>
+            {t('registration.reeval.formpage.title1')}
+          </h2>
+          <div className={classes.BasicInfoRow}>
+            <p>{langAndLvl}</p>
+            <p>{examDate}</p>
           </div>
-          <div className={classes.InnerContainer}>
-            <h2>{t('registration.reeval.formpage.title2')}</h2>
-            {evaluationPrices.map(price => {
-              return priceElement(price);
-            })}
-            <div className={classes.Total}>
-              <strong>{t('registration.reeval.total')}:</strong>
-              <strong data-cy="reeval-subtest-total">
-                {calculatePrice()} €
-              </strong>
-            </div>
-            <p>{t('registration.reeval.formpage.text')}</p>
+          <h2>{t('registration.reeval.formpage.title2')}</h2>
+          {evaluationPrices.map(price => {
+            return priceElement(price);
+          })}
+          <div className={classes.Total}>
+            <strong>{t('registration.reeval.total')}:</strong>
+            <strong data-cy="reeval-subtest-total">{calculatePrice()} €</strong>
           </div>
-          <div className={classes.InnerContainer}>
+          <p>{t('registration.reeval.formpage.text')}</p>
+
+          <div>
             <h2>{t('registration.reeval.formpage.title3')}</h2>
             <ReEvaluationForm
               externalState={{ id: examId, subtests }}
