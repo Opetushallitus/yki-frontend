@@ -7,11 +7,7 @@
   border: none;
   cursor: pointer;
   padding-left: 15px;
-  background-color: hsla(194, 91%, 21%, 1);
-}
-
-.Sort:hover {
-  text-decoration: underline;
+  background-color: var(--primary-blue);
 }
 
 .ReEvaluationList table {
@@ -33,11 +29,25 @@
 .ColumnHeaders {
   background: var(--primary-blue) 0 0 no-repeat padding-box;
   text-align: left;
-  font: normal normal normal 16px/24px PT Sans;
-  letter-spacing: 0;
   color: var(--white);
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1.25fr;
+  grid-template-columns: 1fr 1fr 2fr 1.5fr;
+}
+
+.List {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1.5fr;
+}
+
+.List:nth-child(odd) {
+  background-color: hsla(194, 82%, 43%, 0.2);
+}
+
+.HeaderColumn {
+  height: 4vh;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center !important;
 }
 
 .SortIcon {
@@ -47,14 +57,6 @@
 .TableColumn:last-child,
 .HeaderColumn:last-child {
   border-right: none;
-}
-
-.List {
-  display: block;
-}
-
-.List:nth-child(odd) {
-  background-color: hsla(194, 82%, 43%, 0.2);
 }
 
 .NotFound {
@@ -75,22 +77,24 @@
   justify-content: end;
 }
 
-@media (min-width: 1024px) {
-  .Date {
-    margin-bottom: -2px;
-  }
-
+/* @media (min-width: 1024px) {
   .HeaderColumn {
     height: 4vh;
+    padding: 5px 0;
   }
 
   .List {
     display: grid;
     grid-template-columns: 1fr 1fr 2fr 1.25fr;
   }
-}
 
-/* Tablet landscape */
+  .ColumnHeaders {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1.25fr;
+  }
+} */
+
+/* Tablet landscape / small screen */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .ColumnHeaders {
     font-size: 14px;

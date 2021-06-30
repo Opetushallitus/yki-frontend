@@ -80,8 +80,8 @@ const ReEvaluationList = props => {
             disabled={!enabled}
             className="YkiButton"
             style={{
-              width: 'auto',
-              padding: '0 1rem',
+              height: 'auto',
+              padding: '1.5rem',
             }}
           >
             {t('registration.reeval')}
