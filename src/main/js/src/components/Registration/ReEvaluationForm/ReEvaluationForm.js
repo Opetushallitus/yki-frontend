@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { DATE_FORMAT, PRIVACY_POLICY_LINK } from '../../../common/Constants';
 import * as actions from '../../../store/actions/index';
 import { isoFormatDate } from '../../../util/util';
+import FormikInputField from '../../FormikInputField/FormikInputField';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './ReEvaluationForm.module.css';
 
@@ -81,36 +82,18 @@ const ReEvaluationForm = props => {
     }
   }, [evaluationOrderId]);
 
-  const inputField = (
-    name,
-    placeholder = '',
-    extra,
-    type = 'text',
-    noLabel = false,
-    style,
-  ) => (
-    <div className={classes.FieldColumn}>
-      {!noLabel && <h3>{t(`registration.form.${name}`)}</h3>}
-      <Field
-        onFocus={() => {
-          if (!externalState.subtests || externalState.subtests.length < 1)
-            setSubTestsFail(true);
-        }}
-        name={name}
-        data-cy={`input-${name}`}
-        placeholder={placeholder}
-        className={style ? style : classes.TextInput}
-        type={type}
-        aria-label={`registration.form.aria.${name}`}
-      />
-      {extra && <span>{extra}</span>}
-      <ErrorMessage
-        name={name}
-        data-cy={`input-error-${name}`}
-        component="span"
-        className={classes.ErrorMessage}
-      />
-    </div>
+  const inputField = (name, required) => (
+    <FormikInputField
+      name={name}
+      label={t(`registration.form.${name}`)}
+      onFocus={() => {
+        if (!externalState.subtests || externalState.subtests.length < 1)
+          setSubTestsFail(true);
+      }}
+      placeholder={t(`registration.form.${name}`)}
+      required={required}
+      customStyle={classes.TextInput}
+    />
   );
 
   const validationSchema = Yup.object().shape({
@@ -165,12 +148,12 @@ const ReEvaluationForm = props => {
         return (
           <Form>
             <div className={classes.FieldRow}>
-              {inputField('firstName')}
-              {inputField('lastName')}
+              {inputField('firstName', true)}
+              {inputField('lastName', true)}
             </div>
             <div className={classes.FieldRow}>
-              {inputField('birthdate')}
-              {inputField('email')}
+              {inputField('birthdate', true)}
+              {inputField('email', true)}
             </div>
             <div className={classes.ConsentContainer}>
               <article>
@@ -207,6 +190,7 @@ const ReEvaluationForm = props => {
                   ariaLabel={t(
                     'registration.form.personalData.consent.confirm',
                   )}
+                  ariaRequired={true}
                 />
                 <ErrorMessage
                   name={'consent'}

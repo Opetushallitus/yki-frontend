@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 
 import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
 import { useMobileView } from '../../../util/customHooks';
+import FormikInputField from '../../FormikInputField/FormikInputField';
 import PhoneNumberInput from '../../PhoneNumberInput/PhoneNumberInput';
 import Button from '../../UI/Button/Button';
 import Checkbox from '../../UI/Checkbox/Checkbox';
@@ -232,29 +233,14 @@ export const registrationForm = props => {
   );
 
   const inputField = (name, placeholder = '', extra, type = 'text') => (
-    <div className={classes.InputFieldWrapper}>
-      <label id={`${name}-label`} htmlFor={name}>
-        {props.t(`registration.form.${name}`)} *
-      </label>
-      <Field
-        id={name}
-        name={name}
-        aria-required
-        aria-labelledby={`${name}-label`}
-        data-cy={`input-${name}`}
-        placeholder={placeholder}
-        className={classes.TextInput}
-        type={type}
-        aria-label={props.t(`registration.form.aria.${name}`)}
-      />
-      {extra && <span>{extra}</span>}
-      <ErrorMessage
-        name={name}
-        data-cy={`input-error-${name}`}
-        component="span"
-        className={classes.ErrorMessage}
-      />
-    </div>
+    <FormikInputField
+      name={name}
+      label={props.t(`registration.form.${name}`)}
+      required
+      extra={extra}
+      type={type}
+      placeholder={props.t(`registration.form.${name}`)}
+    />
   );
 
   const readonlyWhenExistsInput = (name, initialValues, type) =>

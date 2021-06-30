@@ -1,11 +1,12 @@
 .PhoneNumberInput {
-  height: 30px;
+  height: 30px !important;
   width: 265px;
   font-size: 1rem;
   background: var(--white) 0 0 no-repeat padding-box;
   border: 1px solid var(--secondary-blue);
   border-radius: 4px;
   color: var(--black);
+  padding: 1px 0;
 }
 
 .TextInput {
