@@ -145,3 +145,5 @@ export const compareDates = (a, b) => {
 
   return end >= start;
 };
+
+export const containsSpecialCharacters = str => /[*+.;,_&@']/.test(str);

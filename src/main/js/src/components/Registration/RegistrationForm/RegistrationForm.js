@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 
 import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
 import { useMobileView } from '../../../util/customHooks';
+import { containsSpecialCharacters } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
 import PhoneNumberInput from '../../PhoneNumberInput/PhoneNumberInput';
 import Button from '../../UI/Button/Button';
@@ -61,19 +62,39 @@ export const registrationForm = props => {
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
       .required(mandatoryErrorMsg)
-      .max(128, maxErrorMsg),
+      .max(128, maxErrorMsg)
+      .test(
+        'no-special-characters',
+        props.t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     lastName: Yup.string()
       .required(mandatoryErrorMsg)
-      .max(128, maxErrorMsg),
+      .max(128, maxErrorMsg)
+      .test(
+        'no-special-characters',
+        props.t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     streetAddress: Yup.string()
       .required(mandatoryErrorMsg)
-      .max(128, maxErrorMsg),
+      .max(128, maxErrorMsg)
+      .test(
+        'no-special-characters',
+        props.t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     zip: Yup.string()
       .required(mandatoryErrorMsg)
       .max(16, maxErrorMsg),
     postOffice: Yup.string()
       .required(mandatoryErrorMsg)
-      .max(64, maxErrorMsg),
+      .max(64, maxErrorMsg)
+      .test(
+        'no-special-characters',
+        props.t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     phoneNumber: Yup.string()
       .required(mandatoryErrorMsg)
       .test(

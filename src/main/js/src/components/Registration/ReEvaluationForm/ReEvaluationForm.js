@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 import { DATE_FORMAT, PRIVACY_POLICY_LINK } from '../../../common/Constants';
 import * as actions from '../../../store/actions/index';
-import { isoFormatDate } from '../../../util/util';
+import { containsSpecialCharacters, isoFormatDate } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './ReEvaluationForm.module.css';
@@ -100,8 +100,20 @@ const ReEvaluationForm = props => {
     email: Yup.string()
       .email(t('error.email'))
       .required(mandatoryErrorMsg),
-    firstName: Yup.string().required(mandatoryErrorMsg),
-    lastName: Yup.string().required(mandatoryErrorMsg),
+    firstName: Yup.string()
+      .required(mandatoryErrorMsg)
+      .test(
+        'no-special-characters',
+        t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
+    lastName: Yup.string()
+      .required(mandatoryErrorMsg)
+      .test(
+        'no-special-characters',
+        t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     birthdate: Yup.string().test(
       'invalid-birthdate',
       t('error.birthdate'),

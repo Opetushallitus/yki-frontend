@@ -120,6 +120,7 @@
   "error.common": "Tapahtui odottamaton virhe.",
   "error.confirmEmail": "Sähköpostiosoitteet poikkeavat",
   "error.email": "Sähköpostiosoite on väärän muotoinen",
+  "error.specialCharacters": "Ei voi sisältää erikoismerkkejä",
   "error.email.sendFailed": "Lähetys epäonnistui",
   "error.emailAlreaydInQueue": "Sähköpostiosoite on jo lisätty",
   "error.examDates.addFailed": "Tutkintopäivän lisäys epäonnistui",
