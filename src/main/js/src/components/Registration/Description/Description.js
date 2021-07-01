@@ -162,18 +162,19 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
             );
           })}
         </div>
-        <>
-          <button
-            className={'YkiButton'}
-            style={{ width: 'auto', padding: '0 1rem' }}
-            data-cy="re-eval-button"
-            onClick={() => history.push(t('/tarkistusarviointi'))}
-            role="link"
-            aria-label={t('registration.reeval')}
-          >
-            {t('registration.reeval')}
-          </button>
-        </>
+        <Link
+          tabIndex={0}
+          role="link"
+          style={{ padding: '0.25rem 0.75rem' }}
+          onKeyPress={() => history.push('/tarkistusarviointi')}
+          to={{
+            pathname: '/tarkistusarviointi',
+          }}
+          className={'YkiButton'}
+          data-cy="continue-button"
+        >
+          {t('registration.reeval')}
+        </Link>
       </div>
     </>
   );
@@ -232,16 +233,18 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
         })}
 
         <PriceContainer elements={evaluationPrices} />
-        <button
-          className={'YkiButton'}
-          style={{ width: 'auto', padding: '0 1rem' }}
-          data-cy="re-eval-button"
-          onClick={() => history.push(t('/tarkistusarviointi'))}
+        <Link
+          tabIndex={0}
           role="link"
-          aria-label={t('registration.reeval')}
+          onKeyPress={() => history.push('/tarkistusarviointi')}
+          to={{
+            pathname: '/tarkistusarviointi',
+          }}
+          className={'YkiButton'}
+          data-cy="continue-button"
         >
           {t('registration.reeval')}
-        </button>
+        </Link>
       </div>
     </div>
   );

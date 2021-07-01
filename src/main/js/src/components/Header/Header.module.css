@@ -50,6 +50,7 @@
   border: 1px solid var(--primary-blue);
   padding: 4px;
   position: absolute;
+  background-color: white;
   transform: translateY(-300%);
   -webkit-transform: translateY(-300%);
   -moz-transform: translateY(-300%);

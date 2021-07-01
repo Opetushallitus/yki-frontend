@@ -12,6 +12,7 @@ import {
   isoFormatDate,
 } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
+import Button from '../../UI/Button/Button';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './ReEvaluationForm.module.css';
 
@@ -210,20 +211,18 @@ const ReEvaluationForm = props => {
                 {t('error.nosubtasks')}
               </p>
             )}
-            <button
-              role="link"
+            <Button
+              type="submit"
               data-cy="reeval-form-submit-button"
               disabled={
                 !isValid ||
                 (externalState.subtests && externalState.subtests.length < 1)
               }
-              className="YkiButton"
-              style={{
-                padding: '0.25rem',
-              }}
+              ariaLabel={t('registration.reeval.formpage.button')}
+              isRegistration={true}
             >
               {t('registration.reeval.formpage.button')}
-            </button>
+            </Button>
           </Form>
         );
       }}

@@ -34,10 +34,6 @@
   --tablet-width: 1024px;
 }
 
-:focus {
-  outline: 3px solid var(--secondary-blue);
-}
-
 body {
   height: 100vh;
   margin: 0;
@@ -106,12 +102,13 @@ button {
   text-decoration: none;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .YkiButton:disabled {
   color: var(--white);
   background-color: var(--primary-gray);
-  cursor: default;
+  cursor: not-allowed;
 }
 
 .Container {
