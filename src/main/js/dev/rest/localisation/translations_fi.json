@@ -116,6 +116,7 @@
   "email.payment_success.subject": "Maksu onnistui",
   "email.prequeue_notification.subject": "Tutkintotilaisuuden ilmoittautuminen aukeaa pian",
   "email.queue_notification.subject": "Vapaita paikkoja tutkintotilaisuudessa",
+  "error.age": "Tarkista ikä",
   "error.birthdate": "Anna syntymäaika muodossa pp.kk.vvvv",
   "error.common": "Tapahtui odottamaton virhe.",
   "error.confirmEmail": "Sähköpostiosoitteet poikkeavat",

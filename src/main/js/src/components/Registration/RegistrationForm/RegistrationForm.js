@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 
 import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
 import { useMobileView } from '../../../util/customHooks';
-import { containsSpecialCharacters } from '../../../util/util';
+import { checkBirthDate, containsSpecialCharacters } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
 import PhoneNumberInput from '../../PhoneNumberInput/PhoneNumberInput';
 import Button from '../../UI/Button/Button';
@@ -43,16 +43,11 @@ export const registrationForm = props => {
     if (props.initData.user.ssn) {
       return true;
     }
-    if (value) {
-      const date = moment(value, DATE_FORMAT, true);
-      if (date.isValid() || date.isBefore(moment())) {
-        return true;
-      } else {
-        return this.createError({ message: props.t('error.birthdate') });
-      }
-    } else {
-      return this.createError({ message: mandatoryErrorMsg });
+    const validation = checkBirthDate(value);
+    if (validation.error) {
+      return this.createError({ message: validation.error });
     }
+    return true;
   }
 
   function sameEmail(confirmEmail) {

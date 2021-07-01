@@ -1,13 +1,16 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
-import { DATE_FORMAT, PRIVACY_POLICY_LINK } from '../../../common/Constants';
+import { PRIVACY_POLICY_LINK } from '../../../common/Constants';
 import * as actions from '../../../store/actions/index';
-import { containsSpecialCharacters, isoFormatDate } from '../../../util/util';
+import {
+  checkBirthDate,
+  containsSpecialCharacters,
+  isoFormatDate,
+} from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './ReEvaluationForm.module.css';
@@ -53,20 +56,11 @@ const ReEvaluationForm = props => {
   const [subtestsFail, setSubTestsFail] = useState(false);
 
   function validateBirthDate(value) {
-    if (value) {
-      const date = moment(value, DATE_FORMAT, true);
-      if (date.isValid() && date.isBefore(moment())) {
-        return true;
-      } else {
-        return this.createError({
-          message: t('error.birthdate'),
-        });
-      }
-    } else {
-      return this.createError({
-        message: mandatoryErrorMsg,
-      });
+    const validation = checkBirthDate(value);
+    if (validation.error) {
+      return this.createError({ message: validation.error });
     }
+    return true;
   }
 
   useEffect(() => {
