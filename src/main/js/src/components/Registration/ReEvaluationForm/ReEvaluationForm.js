@@ -1,10 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
 import { PRIVACY_POLICY_LINK } from '../../../common/Constants';
+import ScrollToError from '../../../ScrollToFormTop';
 import * as actions from '../../../store/actions/index';
 import {
   checkBirthDate,
@@ -12,6 +13,7 @@ import {
   isoFormatDate,
 } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
+import TextAndButton from '../../TextAndButton/TextAndButton';
 import Button from '../../UI/Button/Button';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './ReEvaluationForm.module.css';
@@ -51,10 +53,15 @@ const CheckboxComponent = ({
 };
 
 const ReEvaluationForm = props => {
-  const { externalState, onSubmitForm, evaluationOrderId, pageHistory } = props;
+  const {
+    externalState,
+    onSubmitForm,
+    evaluationOrderId,
+    pageHistory,
+    evaluationPrices,
+  } = props;
   const { t } = useTranslation();
   const mandatoryErrorMsg = t('error.mandatory');
-  const [subtestsFail, setSubTestsFail] = useState(false);
 
   function validateBirthDate(value) {
     const validation = checkBirthDate(value);
@@ -63,11 +70,6 @@ const ReEvaluationForm = props => {
     }
     return true;
   }
-
-  useEffect(() => {
-    if (externalState.subtests && externalState.subtests.length >= 1)
-      setSubTestsFail(false);
-  }, [externalState.subtests]);
 
   useEffect(() => {
     if (evaluationOrderId) {
@@ -81,15 +83,53 @@ const ReEvaluationForm = props => {
     <FormikInputField
       name={name}
       label={t(`registration.form.${name}`)}
-      onFocus={() => {
-        if (!externalState.subtests || externalState.subtests.length < 1)
-          setSubTestsFail(true);
-      }}
       placeholder={t(`registration.form.${name}`)}
       required={required}
       customStyle={classes.TextInput}
     />
   );
+
+  const toggleSelect = (key, values) => {
+    const subtestsCopy = values.subtests.slice();
+    const foundIndex = subtestsCopy.findIndex(x => x === key);
+    if (foundIndex !== -1) {
+      subtestsCopy.splice(foundIndex, 1);
+    } else {
+      subtestsCopy.push(key);
+    }
+    return subtestsCopy;
+  };
+
+  const priceElement = (price, values, setFieldValue) => {
+    const active = values.subtests.findIndex(x => x === price.key) > -1;
+    return (
+      <Field
+        key={price.key}
+        component={TextAndButton}
+        name={'subtests'}
+        value={price.key}
+        text1={price.title}
+        text2={`${price.price} €`}
+        active={active}
+        buttonLabel={t('registration.reeval.order')}
+        onClick={() => {
+          const newSubtestsArray = toggleSelect(price.key, values);
+          setFieldValue('subtests', newSubtestsArray);
+        }}
+      />
+    );
+  };
+
+  const calculatePrice = subtests => {
+    let total = 0;
+    if (subtests.length > 0) {
+      subtests.forEach(subtest => {
+        const item = evaluationPrices.find(x => x.key === subtest);
+        total += item.price;
+      });
+    }
+    return total;
+  };
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -117,6 +157,9 @@ const ReEvaluationForm = props => {
     consent: Yup.boolean()
       .required(mandatoryErrorMsg)
       .oneOf([true], mandatoryErrorMsg),
+    subtests: Yup.array()
+      .required(t('error.nosubtasks'))
+      .min(1),
   });
 
   const onSubmit = values => {
@@ -124,7 +167,7 @@ const ReEvaluationForm = props => {
       first_names: values.firstName,
       last_name: values.lastName,
       email: values.email,
-      subtests: externalState.subtests,
+      subtests: values.subtests,
     };
     if (values.birthdate) payload.birthdate = isoFormatDate(values.birthdate);
     onSubmitForm(externalState.id, payload);
@@ -139,6 +182,7 @@ const ReEvaluationForm = props => {
         birthdate: '',
         email: '',
         consent: false,
+        subtests: [],
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
@@ -148,12 +192,33 @@ const ReEvaluationForm = props => {
         values,
         isValid,
         errors,
+        isSubmitting,
         setFieldValue,
         setTouched,
         touched,
       }) => {
         return (
-          <Form>
+          <Form id="form">
+            <ScrollToError isValid={isValid} isSubmitting={isSubmitting} />
+            <h2>{t('registration.reeval.formpage.title2')}</h2>
+            {evaluationPrices.map(price => {
+              return priceElement(price, values, setFieldValue);
+            })}
+            <ErrorMessage
+              name={'subtests'}
+              data-cy={`no-subtests`}
+              component="span"
+              className={classes.ErrorMessage}
+            />
+            <div className={classes.Total}>
+              <strong>{t('registration.reeval.total')}: </strong>
+              <strong data-cy="reeval-subtest-total">
+                {calculatePrice(values.subtests)} €
+              </strong>
+            </div>
+            <p>{t('registration.reeval.formpage.text')}</p>
+            <br />
+            <h2>{t('registration.reeval.formpage.title3')}</h2>
             <div className={classes.FieldRow}>
               {inputField('firstName', true)}
               {inputField('lastName', true)}
@@ -206,18 +271,9 @@ const ReEvaluationForm = props => {
                 />
               </div>
             </div>
-            {subtestsFail && (
-              <p className={classes.ErrorMessage} data-cy="subtest-error">
-                {t('error.nosubtasks')}
-              </p>
-            )}
             <Button
               type="submit"
               data-cy="reeval-form-submit-button"
-              disabled={
-                !isValid ||
-                (externalState.subtests && externalState.subtests.length < 1)
-              }
               ariaLabel={t('registration.reeval.formpage.button')}
               isRegistration={true}
             >

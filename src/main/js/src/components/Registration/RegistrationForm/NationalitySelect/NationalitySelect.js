@@ -35,7 +35,7 @@ export const nationalitySelect = props => {
         className={props.className}
         data-cy="select-nationality"
       >
-        <option value="" key="">
+        <option value="placeholder" key="">
           {props.t('common.selectorDefault')}
         </option>
         {nationalityOptions}

@@ -31,17 +31,19 @@ export class ZipAndPostOffice extends Component {
 
   render() {
     return (
-      <div id="adress-input" className={classes.AddressInput}>
+      <div className={classes.AddressInput}>
         <div className={classes.Zip}>
-          <label id="zip-label" htmlFor="zip-input">
+          <label htmlFor="zip-input">
             {this.props.t('registration.form.input.zip')}
             {this.props.mandatory && ' *'}
           </label>
           <Field
             id="zip-input"
-            aria-labelledby="zip-label"
             aria-required={this.props.mandatory}
             component="input"
+            placeholder={this.props.t(
+              'registration.form.input.zip.placeholder',
+            )}
             name="zip"
             data-cy="input-zip"
             aria-label={this.props.t('registration.form.aria.input.zip')}
@@ -55,14 +57,16 @@ export class ZipAndPostOffice extends Component {
           />
         </div>
         <div className={classes.PostOffice}>
-          <label id="postOffice-label" htmlFor="postOffice-input">
+          <label htmlFor="postOffice-input">
             {this.props.t('registration.form.input.postOffice')}
             {this.props.mandatory && ' *'}
           </label>
           <Field
             id="postOffice-input"
-            aria-labelledby="postOffice-label"
             aria-required={this.props.mandatory}
+            placeholder={this.props.t(
+              'registration.form.input.postOffice.placeholder',
+            )}
             component="input"
             name="postOffice"
             data-cy="input-postOffice"

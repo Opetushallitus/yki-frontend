@@ -7,7 +7,13 @@ import { useSelector } from 'react-redux';
 
 import classes from './PhoneNumberInput.module.css';
 
-const PhoneNumberInput = ({ onChange, current, nationalities, datacy }) => {
+const PhoneNumberInput = ({
+  onChange,
+  current,
+  nationalities,
+  datacy,
+  required,
+}) => {
   const [localizations, setLocalizations] = useState(null);
   const state = useSelector(state => state);
   const lang = state.yki.ykiLanguage || 'fi';
@@ -34,6 +40,8 @@ const PhoneNumberInput = ({ onChange, current, nationalities, datacy }) => {
         <PhoneInput
           inputProps={{
             [`data-cy`]: datacy,
+            required: required,
+            [`aria-required`]: required,
           }}
           country={'fi'}
           onChange={numberOnChange}

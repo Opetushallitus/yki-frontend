@@ -8,6 +8,7 @@ import { withTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
+import ScrollToError from '../../../ScrollToFormTop';
 import { useMobileView } from '../../../util/customHooks';
 import { checkBirthDate, containsSpecialCharacters } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
@@ -27,11 +28,13 @@ export const registrationForm = props => {
   const mobileOrTablet = useMobileView(true, true);
 
   function validatePhoneNumber(value) {
+    console.log('validate', value);
+
     if (value) {
       const phoneNumber = parsePhoneNumberFromString(value);
       return phoneNumber && phoneNumber.isValid();
     } else {
-      return true;
+      return false;
     }
   }
 
@@ -101,7 +104,16 @@ export const registrationForm = props => {
       .email(props.t('error.email'))
       .required(mandatoryErrorMsg)
       .max(64, maxErrorMsg),
-    nationality: Yup.string().required(mandatoryErrorMsg),
+    nationality: Yup.string()
+      .required(mandatoryErrorMsg)
+      .test('gender-select', mandatoryErrorMsg, value => {
+        return value && value !== 'placeholder';
+      }),
+    gender: Yup.string()
+      .required(mandatoryErrorMsg)
+      .test('gender-select', mandatoryErrorMsg, value => {
+        return value && value !== 'placeholder';
+      }),
     ssn: Yup.string().test(
       'invalid-ssn',
       props.t('error.ssn.invalid'),
@@ -207,6 +219,7 @@ export const registrationForm = props => {
   }) => {
     return (
       <PhoneNumberInput
+        required={true}
         name={name}
         current={value}
         datacy={datacy}
@@ -227,7 +240,7 @@ export const registrationForm = props => {
 
   const phoneNumberInputField = (setFieldValue, setTouched, touched) => (
     <div className={classes.InputFieldWrapper}>
-      <label>{props.t(`registration.form.phoneNumber`)}</label>
+      <label>{props.t(`registration.form.phoneNumber`)} *</label>
       <Field
         component={PhoneNumberComponent}
         name={'phoneNumber'}
@@ -248,14 +261,14 @@ export const registrationForm = props => {
     </div>
   );
 
-  const inputField = (name, placeholder = '', extra, type = 'text') => (
+  const inputField = (name, required, extra, type = 'text', placeholder) => (
     <FormikInputField
       name={name}
       label={props.t(`registration.form.${name}`)}
-      required
+      required={required}
       extra={extra}
       type={type}
-      placeholder={props.t(`registration.form.${name}`)}
+      placeholder={placeholder || props.t(`registration.form.${name}`)}
     />
   );
 
@@ -266,7 +279,7 @@ export const registrationForm = props => {
         <span>{initialValues[name]}</span>
       </>
     ) : (
-      inputField(name, null, null, type)
+      inputField(name, true, null, type)
     );
 
   const showExamLang = () => {
@@ -341,13 +354,16 @@ export const registrationForm = props => {
       render={({
         values,
         isValid,
+        submitCount,
         errors,
+        isSubmitting,
         initialValues,
         setFieldValue,
         setTouched,
         touched,
       }) => (
-        <Form className={classes.Form}>
+        <Form className={classes.Form} id="form">
+          <ScrollToError isValid={isValid} isSubmitting={isSubmitting} />
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
             <div className={classes.InputGroup}>
@@ -355,7 +371,13 @@ export const registrationForm = props => {
               <div>{readonlyWhenExistsInput('lastName', initialValues)}</div>
             </div>
             <div className={classes.InputGroup}>
-              {inputField('streetAddress')}
+              {inputField(
+                'streetAddress',
+                true,
+                null,
+                'text',
+                props.t('registration.form.streetAddress.placeholder'),
+              )}
               <ZipAndPostOffice
                 mandatory
                 values={values}
@@ -372,7 +394,7 @@ export const registrationForm = props => {
                   {readonlyWhenExistsInput('email', initialValues, 'email')}
 
                   {!props.initData.user.email && (
-                    <>{inputField('confirmEmail', null, null, 'email')}</>
+                    <>{inputField('confirmEmail', true, null, 'email')}</>
                   )}
                 </div>
               </>
@@ -381,28 +403,40 @@ export const registrationForm = props => {
                 {phoneNumberInputField(setFieldValue, setTouched, touched)}
                 {readonlyWhenExistsInput('email', initialValues, 'email')}
                 {!props.initData.user.email && (
-                  <>{inputField('confirmEmail', null, null, 'email')}</>
+                  <>{inputField('confirmEmail', true, null, 'email')}</>
                 )}
               </div>
             )}
             {!initialValues.nationality && (
-              <NationalitySelect
-                nationalities={props.initData.nationalities}
-                className={classes.FormSelector}
-              />
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <NationalitySelect
+                  nationalities={props.initData.nationalities}
+                  className={classes.FormSelector}
+                />
+                <ErrorMessage
+                  name={'nationality'}
+                  data-cy={`input-error-nationality`}
+                  component="span"
+                  className={classes.ErrorMessage}
+                />
+              </div>
             )}
             {!props.initData.user.ssn && (
               <div className={classes.InputGroup}>
-                {inputField(
-                  'birthdate',
-                  props.t('registration.form.birthdate.placeholder'),
-                )}
+                {inputField('birthdate', true)}
 
-                <GenderSelect
-                  genders={props.initData.genders}
-                  className={classes.FormSelector}
-                />
-
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <GenderSelect
+                    genders={props.initData.genders}
+                    className={classes.FormSelector}
+                  />
+                  <ErrorMessage
+                    name={'gender'}
+                    data-cy={`input-error-gender`}
+                    component="span"
+                    className={classes.ErrorMessage}
+                  />
+                </div>
                 <div>
                   {inputField('ssn')}
                   <p> {props.t('registration.form.ssn.text')}</p>
@@ -552,7 +586,6 @@ export const registrationForm = props => {
             isRegistration={true}
             datacy="form-submit-button"
             ariaLabel={props.t('registration.form.aria.submit.button')}
-            disabled={!isValid || props.submitting}
           >
             {props.t('registration.form.submit.button')}
           </Button>

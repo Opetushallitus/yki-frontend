@@ -17,6 +17,7 @@ const TextAndButton = props => {
       </div>
       <button
         onClick={onClick}
+        type="button"
         aria-describedby={elementKey}
         className={['YkiButton', activeClass].join(' ')}
         aria-label={buttonLabel}

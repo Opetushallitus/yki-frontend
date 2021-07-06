@@ -32,7 +32,7 @@ export const genderSelect = props => {
         className={props.className}
         data-cy="select-gender"
       >
-        <option value="" key="">
+        <option value="placeholder" key="placeholder">
           {props.t('common.selectorDefault')}
         </option>
         {gendersByLocale}
