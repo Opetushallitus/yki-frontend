@@ -545,8 +545,13 @@ export const registrationForm = props => {
                   href={'https://opintopolku.fi/wp/tietosuojaseloste/'}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={props.t('common.newTab')}
                 >
                   {props.t('common.yki.consent.link')}
+                  <img
+                    src={require('../../../assets/svg/external-link.svg')}
+                    alt={props.t('common.newTab')}
+                  />
                 </a>
               </article>
               <div className={classes.ConsentCheckbox}>

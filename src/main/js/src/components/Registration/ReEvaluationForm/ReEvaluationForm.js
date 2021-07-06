@@ -238,8 +238,13 @@ const ReEvaluationForm = props => {
                   href={PRIVACY_POLICY_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={t('common.newTab')}
                 >
                   {t('common.yki.consent.link')}
+                  <img
+                    src={require('../../../assets/svg/external-link.svg')}
+                    alt={t('common.newTab')}
+                  />
                 </a>
               </article>
               <div className={classes.ConsentCheckbox}>
