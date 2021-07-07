@@ -72,7 +72,6 @@
 
   .BaseContainer {
     max-width: 100%;
-    max-height: 75vh;
     overflow: auto;
   }
 
@@ -113,7 +112,6 @@
   }
   .BaseContainer {
     max-width: 425px;
-    max-height: 75vh;
     overflow: auto;
   }
 }
@@ -142,7 +140,6 @@
   }
   .BaseContainer {
     max-width: 768px;
-    max-height: 75vh;
     overflow: auto;
   }
 }

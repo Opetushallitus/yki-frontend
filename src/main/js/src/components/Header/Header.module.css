@@ -15,32 +15,28 @@
 }
 
 .RegistrationHeader {
-  top: 0;
   color: var(--primary-blue);
   font-weight: 600;
   background-color: var(--white);
   background-size: 2.2em;
   border-bottom: 3px solid var(--secondary-blue);
   margin-bottom: 0 !important;
-  display: grid;
-  grid-template-columns: 20% 80%;
-  grid-column-gap: 10px;
   width: 100%;
-  align-items: center;
   min-height: 60px;
 }
 
 .RegistrationHeader img {
-  padding-left: 2vw;
+  margin-left: 2vw;
+  margin-right: auto;
 }
 
 .HeaderTabsContainer {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  min-height: inherit;
+  height: inherit;
 }
 
 .SkipLink {
@@ -70,5 +66,11 @@
     font-size: 1.125em;
     background-size: 3.5em;
     padding-top: 2%;
+    display: grid;
+    align-items: center;
+  }
+
+  .RegistrationHeader img {
+    margin-right: 0;
   }
 }

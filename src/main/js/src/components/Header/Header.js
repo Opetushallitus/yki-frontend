@@ -31,13 +31,15 @@ const header = props => {
   ) : (
     <header className={classes.RegistrationHeader}>
       {skipToContentLink}
-      <img src={OPHLogo} alt={'OPH-Logo'} />
       {isMobileOrTablet ? (
-        <MobileMenu />
+        <>
+          <img src={OPHLogo} alt={'OPH-Logo'} />
+          <MobileMenu />
+        </>
       ) : (
         <>
-          {skipToContentLink}
           <nav className={classes.HeaderTabsContainer}>
+            <img src={OPHLogo} alt={'OPH-Logo'} />
             <NavigationTabs />
             <div style={{ marginLeft: 'auto' }}>
               <LanguageSelect />
