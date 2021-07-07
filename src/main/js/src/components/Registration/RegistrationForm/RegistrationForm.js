@@ -28,8 +28,6 @@ export const registrationForm = props => {
   const mobileOrTablet = useMobileView(true, true);
 
   function validatePhoneNumber(value) {
-    console.log('validate', value);
-
     if (value) {
       const phoneNumber = parsePhoneNumberFromString(value);
       return phoneNumber && phoneNumber.isValid();

@@ -25,6 +25,11 @@
   cursor: pointer;
 }
 
+.ControlledCheckbox {
+  height: unset;
+  width: unset;
+}
+
 .CbLabel::before {
   content: '';
   display: inline-block;

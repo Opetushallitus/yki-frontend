@@ -32,7 +32,7 @@ class DatePicker extends Component {
   }
 
   componentDidUpdate() {
-    this.flatpickr.setDate(this.props.options.defaultDate);
+    this.flatpickr.setDate(this.props.options.value);
     this.flatpickr.set('minDate', this.props.options.minDate);
   }
 

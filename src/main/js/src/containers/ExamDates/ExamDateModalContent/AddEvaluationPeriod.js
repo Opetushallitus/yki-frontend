@@ -52,6 +52,7 @@ const AddEvaluationPeriod = props => {
                   id="evaluationStartDate"
                   options={{
                     defaultDate: evaluationStartDate,
+                    value: evaluationStartDate,
                     minDate: moment(exam.exam_date).format('YYYY-MM-DD'),
                   }}
                   onChange={d => {
@@ -75,6 +76,7 @@ const AddEvaluationPeriod = props => {
                   id="evaluationEndDate"
                   options={{
                     defaultDate: evaluationEndDate,
+                    value: evaluationEndDate,
                     minDate: evaluationStartDate,
                   }}
                   onChange={d => {
@@ -84,10 +86,7 @@ const AddEvaluationPeriod = props => {
                 />
               </div>
             </div>
-            <div
-              className={classes.ActionButtons}
-              style={{ bottom: '2rem' }}
-            >
+            <div className={classes.ActionButtons} style={{ bottom: '2rem' }}>
               <button className={classes.ConfirmButton}>
                 {t('examDates.add.evaluation.period')}
               </button>
