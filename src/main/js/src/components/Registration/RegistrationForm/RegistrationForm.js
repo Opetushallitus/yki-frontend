@@ -561,7 +561,7 @@ export const registrationForm = props => {
                   setTouched={setTouched}
                   touched={touched}
                   setFieldValue={setFieldValue}
-                  datacy={'form-checkbox-terms'}
+                  datacy={'form-checkbox-personal-data'}
                   ariaRequired={true}
                   onClick={() =>
                     setFieldValue(

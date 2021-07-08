@@ -171,7 +171,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
             pathname: '/tarkistusarviointi',
           }}
           className={'YkiButton'}
-          data-cy="continue-button"
+          data-cy="continue-button-re-eval"
         >
           {t('registration.reeval')}
         </Link>

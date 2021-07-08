@@ -110,6 +110,7 @@ const ReEvaluationForm = props => {
         value={price.key}
         text1={price.title}
         text2={`${price.price} €`}
+        elementKey={price.key}
         active={active}
         buttonLabel={t('registration.reeval.order')}
         onClick={() => {
@@ -206,7 +207,7 @@ const ReEvaluationForm = props => {
             })}
             <ErrorMessage
               name={'subtests'}
-              data-cy={`no-subtests`}
+              data-cy="no-subtests-error"
               component="span"
               className={classes.ErrorMessage}
             />
@@ -278,7 +279,7 @@ const ReEvaluationForm = props => {
             </div>
             <Button
               type="submit"
-              data-cy="reeval-form-submit-button"
+              datacy="reeval-form-submit-button"
               ariaLabel={t('registration.reeval.formpage.button')}
               isRegistration={true}
             >
