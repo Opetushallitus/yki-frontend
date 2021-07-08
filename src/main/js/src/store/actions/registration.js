@@ -55,9 +55,9 @@ const filterAndGroupByDate = () => {
 
 export const filterByPathParams = () => {
   return dispatch => {
-    dispatch(filterAndGroupByDate())
-  }
-}
+    dispatch(filterAndGroupByDate());
+  };
+};
 
 const changeSessionSelector = () => {
   return {
@@ -174,28 +174,28 @@ const setLocation = location => {
 export const toggleAvailabilityFilter = checked => {
   return dispatch => {
     dispatch(setAvailabilityFilter(checked));
-  }
-}
+  };
+};
 
 const setAvailabilityFilter = checked => {
   return {
     type: actionTypes.TOGGLE_AVAILABILITY_FILTER,
-    availabilityFilter: checked
-  }
-}
+    availabilityFilter: checked,
+  };
+};
 
 export const toggleOpenRegistrationFilter = checked => {
   return dispatch => {
     dispatch(setOpenRegistrationFilter(checked));
-  }
-}
+  };
+};
 
 const setOpenRegistrationFilter = checked => {
   return {
     type: actionTypes.TOGGLE_OPEN_REGISTRATION_FILTER,
-    openRegistrationFilter: checked
-  }
-}
+    openRegistrationFilter: checked,
+  };
+};
 
 export const selectExamSession = examSession => {
   return {

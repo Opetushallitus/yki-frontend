@@ -1,5 +1,6 @@
+import i18next from 'i18next';
+
 import * as actionTypes from './actionTypes';
-import i18next from "i18next";
 
 const setYkiLanguage = language => {
   return {
@@ -13,9 +14,9 @@ const initYkiLanguage = () => {
 
   return {
     type: actionTypes.INIT_YKI_LANGUAGE,
-    ykiLanguage: result
-  }
-}
+    ykiLanguage: result,
+  };
+};
 
 export const initYKILanguage = () => {
   return dispatch => {
@@ -26,5 +27,12 @@ export const initYKILanguage = () => {
 export const changeYKILanguage = language => {
   return dispatch => {
     dispatch(setYkiLanguage(language));
+  };
+};
+
+export const setWindowWidth = width => {
+  return {
+    type: actionTypes.SET_WINDOW_WIDTH,
+    windowWidth: width,
   };
 };

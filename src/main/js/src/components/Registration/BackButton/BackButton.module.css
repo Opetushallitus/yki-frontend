@@ -1,11 +1,8 @@
 .Return {
-  text-align: left;
+  text-decoration: none;
   font: normal normal bold 16px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
-  height: 40px;
-  margin: 15px 0 20px 0;
-  border: none;
+  color: var(--primary-blue);
   cursor: pointer;
   padding-left: 15px;
   background: url('../../../assets/svg/chevron-blue.svg') no-repeat 0 center;

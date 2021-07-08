@@ -1,38 +1,28 @@
-.Content {
-  margin-left: 5vw;
-  margin-right: 5vw;
-  width: auto;
-}
-
-.Content h1 {
-  font-size: 18px;
-  font-weight: 400;
-  margin: 0 0 30px 0;
+.MainContainer {
+  padding-right: 0;
 }
 
 .FilterContainer {
-  height: 40vh;
-  background: hsla(194, 82%, 43%, 0.2) 0 0 no-repeat padding-box;
+  padding: 1.5rem;
+  background-color: var(--decoration-blue);
 }
 
 .FilterContainer hr {
-  margin-top: 8vh;
-  border: 1px solid hsla(194, 82%, 43%, 1);
+  margin-top: 1.5rem;
+  border: 1px solid var(--secondary-blue);
 }
 
-.FilterContainer p {
-  text-align: left;
-  font: normal normal normal 21px/50px PT Sans;
-  letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
-}
-
-.FilterSelectors {
-  padding: 5vh 5vw 0 5vw;
+.ResultCount {
+  font-size: 21px;
 }
 
 .Upcoming {
   margin: 29px 0 14px 0;
+}
+
+.MobileSeparator {
+  padding-top: 30px;
+  background-color: var(--white);
 }
 
 @media (min-width: 620px) {
@@ -42,47 +32,13 @@
 }
 
 /* Tablet portrait */
-@media screen and (max-width: 768px) {
-  .Content {
+@media screen and (max-width: 1024px) {
+  .FilterContainer hr {
+    margin-top: 3vh;
+  }
+  .MainContainer {
     margin: 0;
-  }
-  .FilterContainer {
-    height: 100%;
-  }
-  .FilterContainer hr {
-    margin-top: 3vh;
-  }
-}
-
-/* Tablet landscape */
-@media screen and (max-width: 1024px) and (orientation: landscape) {
-  .Content {
-    margin: 0 auto;
-  }
-  .FilterContainer {
-    height: 100%;
-  }
-  .FilterContainer p {
-    margin-bottom: 0;
-  }
-  .FilterContainer hr {
-    margin-top: 3vh;
-  }
-}
-
-/* Mobile view */
-@media screen and (max-width: 425px) {
-  .Content {
     width: 100%;
-    margin: auto;
-  }
-  .FilterContainer {
-    height: 100%;
-  }
-  .FilterContainer hr {
-    margin: 0;
-  }
-  .FilterSelectors {
-    margin-bottom: 10vh;
+    padding-left: 0;
   }
 }

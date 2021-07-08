@@ -1,36 +1,54 @@
 import React from 'react';
-
-import classes from './Header.module.css';
-import NavigationItems from './NavigationItems/NavigationItems';
-import LanguageSelect from '../../containers/LanguageSelect/LanguageSelect';
+import { useTranslation } from 'react-i18next';
 
 import OPHLogo from '../../assets/svg/oph-logo-updated.svg';
+import LanguageSelect from '../../containers/LanguageSelect/LanguageSelect';
+import { useMobileView } from '../../util/customHooks';
+import MobileMenu from '../MobileMenu/MobileMenu';
+import classes from './Header.module.css';
+import NavigationItems from './NavigationItems/NavigationItems';
+import NavigationTabs from './NavigationTabs/NavigationTabs';
 
-import NavigationTabs from "./NavigationTabs/NavigationTabs";
-import MobileMenu from "../MobileMenu/MobileMenu";
-import {MOBILE_VIEW, TABLET_VIEW} from "../../common/Constants";
+const header = props => {
+  const { nav } = props;
+  const { t } = useTranslation();
 
-const header = ({nav}) =>
-    nav ? (
-        <header className={classes.Header}>
-          <nav>
-            <NavigationItems/>
+  const isMobileOrTablet = useMobileView(true, true);
+
+  const skipToContentLink = (
+    <a className={classes.SkipLink} href="#main">
+      {t('common.skipToContent')}
+    </a>
+  );
+
+  return nav ? (
+    <header className={classes.Header}>
+      {skipToContentLink}
+      <nav>
+        <NavigationItems />
+      </nav>
+    </header>
+  ) : (
+    <header className={classes.RegistrationHeader}>
+      {skipToContentLink}
+      {isMobileOrTablet ? (
+        <>
+          <img src={OPHLogo} alt={'OPH-Logo'} />
+          <MobileMenu />
+        </>
+      ) : (
+        <>
+          <nav className={classes.HeaderTabsContainer}>
+            <img src={OPHLogo} alt={'OPH-Logo'} />
+            <NavigationTabs />
+            <div style={{ marginLeft: 'auto' }}>
+              <LanguageSelect />
+            </div>
           </nav>
-        </header>
-    ) : (
-        <header className={classes.RegistrationHeader}>
-          <img src={OPHLogo} alt={'OPH-Logo'}/>
-          {MOBILE_VIEW || TABLET_VIEW ?
-              <MobileMenu />
-              :
-              <>
-                <div className={classes.HeaderTabsContainer}>
-                  <NavigationTabs/>
-                </div>
-                <LanguageSelect/>
-              </>
-          }
-        </header>
-    );
+        </>
+      )}
+    </header>
+  );
+};
 
 export default header;

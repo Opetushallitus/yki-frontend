@@ -1,138 +1,145 @@
 .Headline {
-    display: inline-flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: hsla(194, 91%, 21%, 1);
-    color: hsla(0, 0%, 100%, 1);
-    text-align: right;
+  display: inline-flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: var(--primary-blue);
+  color: var(--white);
+  min-height: 300px;
 }
 
 .BaseContainer {
-    max-width: 50vw;
-    width: 100%;
+  width: 100%;
 }
 
 .HeadlineText {
-    padding-top: 3vh;
-    text-align: left;
-    margin-left: 14vw;
-    margin-right: 1vw;
+  padding-top: 1vh;
+  text-align: left;
+  margin-left: 14vw;
+  margin-right: 1vw;
 }
 
 .HeadlineText h1 {
-    text-transform: uppercase;
-    font: normal normal bold 51px/56px PT Sans Narrow;
-    letter-spacing: 1.02px;
-    margin: 3vh 0 2vh 0 !important;
+  text-transform: uppercase;
+  font: normal normal bold 51px/56px PT Sans Narrow;
+  letter-spacing: 1.02px;
+  margin: 3vh 0 2vh 0 !important;
 }
 
 .HeadlineText p {
-    text-align: left;
-    font: normal normal normal 16px/24px PT Sans;
-    letter-spacing: 0;
-    color: hsla(0, 0%, 100%, 1);
+  text-align: left;
+  font: normal normal normal 16px/24px PT Sans;
+  letter-spacing: 0;
+  color: var(--white);
 }
 
 .HeadlineText hr {
-    border: 2px solid hsla(194, 82%, 43%, 1);
-    text-align: left;
-    max-width: 5vw;
-    margin: 0 0 3vh 0 !important;
-}
-
-.ImageContainer {
-    overflow: hidden;
-    height: 100%;
-}
-
-.ImageContainer img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  border: 2px solid var(--secondary-blue);
+  text-align: left;
+  max-width: 5vw;
+  margin: 0 0 3vh 0 !important;
 }
 
 /* Tablet portrait */
-@media screen and (min-width: 768px) and (max-width: 768px) {
-    .BaseContainer {
-        max-width: 768px;
-    }
-    .Headline {
-        width: 100%;
-        height: 50%;
-    }
-    .HeadlineText {
-        margin: 0 1vw 1vh 3vw !important;
-    }
-    .HeadlineText h1 {
-        margin: 0 !important;
-    }
-    .HeadlineText hr {
-        margin: 0 0 1vh 0 !important;
-    }
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .BaseContainer {
+    max-width: 768px;
+  }
+  .Headline {
+    width: 100%;
+    height: 50%;
+  }
+  .HeadlineText {
+    margin: 0 1vw 1vh 3vw !important;
+  }
+  .HeadlineText h1 {
+    margin: 0 !important;
+  }
+  .HeadlineText hr {
+    margin: 0 0 1vh 0 !important;
+  }
 }
 
 /* Tablet screen */
-@media screen and (max-width: 1024px) {
-        .HeadlineText {
-            padding-top: 1vh;
-            text-align: left;
-            margin: 0 2vw 2vh 2vw;
-        }
+@media screen and (min-width: 426px) and (max-width: 767px) {
+  .HeadlineText {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    min-height: 200px;
+    text-align: center;
+    margin: 0 0vw 2vh 0vw;
+    width: 100%;
+  }
+
+  .BaseContainer {
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  .Headline {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .HeadlineMobileContent {
+    padding: 0 2rem;
+  }
 }
 
 /* Mobile screen */
 @media screen and (max-width: 425px) and (orientation: portrait) {
-    .Headline {
-        width: 100%;
-        height: 100%;
-        max-width: 425px;
-    }
-    .HeadlineText {
-        padding-top: 2vh;
-        min-height: 145px;
-        margin: 0 !important;
-    }
-    .HeadlineText h1 {
-        font-size: 35px;
-        padding-left: 5vw;
-        padding-bottom: 2vh;
-     }
-    .HeadlineMobileContent {
-        margin: 0 !important;
-        text-align: left;
-        padding-left: 4vw;
-        padding-right: 3vw;
-        min-height: 145px;
-        padding-bottom: 2vh;
-    }
-    .BaseContainer {
-        max-width: 425px;
-    }
+  .Headline {
+    width: 100%;
+    height: 100%;
+    max-width: 767px;
+  }
+  .HeadlineText {
+    padding-top: 2vh;
+    min-height: 145px;
+    margin: 0 !important;
+  }
+  .HeadlineText h1 {
+    font-size: 35px;
+    padding-left: 5vw;
+    padding-bottom: 2vh;
+  }
+  .HeadlineMobileContent {
+    margin: 0 !important;
+    text-align: left;
+    padding-left: 4vw;
+    padding-right: 3vw;
+    min-height: 145px;
+    padding-bottom: 2vh;
+  }
+  .BaseContainer {
+    max-width: 425px;
+    overflow: auto;
+  }
 }
 
 /* Mobile screen */
 @media screen and (max-width: 768px) and (orientation: landscape) {
-    .Headline {
-        width: 100%;
-        height: 100%;
-    }
-    .HeadlineText {
-        padding-top: 2vh;
-        min-height: 145px;
-        margin: 0 !important;
-    }
-    .HeadlineText h1 {
-        padding: 2vh 0 5vh 4vw;
-    }
-    .HeadlineMobileContent {
-        margin: 0 !important;
-        text-align: left;
-        padding-left: 3vw;
-        padding-right: 3vw;
-        min-height: 145px;
-        padding-bottom: 2vh;
-    }
-    .BaseContainer {
-        max-width: 768px;
-    }
+  .Headline {
+    width: 100%;
+    height: 100%;
+  }
+  .HeadlineText {
+    padding-top: 2vh;
+    min-height: 145px;
+    margin: 0 !important;
+  }
+  .HeadlineText h1 {
+    padding: 2vh 0 5vh 4vw;
+  }
+  .HeadlineMobileContent {
+    margin: 0 !important;
+    text-align: left;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    min-height: 145px;
+    padding-bottom: 2vh;
+  }
+  .BaseContainer {
+    max-width: 768px;
+    overflow: auto;
+  }
 }

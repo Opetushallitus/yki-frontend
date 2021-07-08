@@ -1,26 +1,23 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
+import { DATE_FORMAT } from '../../../../common/Constants';
+import * as actions from '../../../../store/actions/index';
+import { useMobileView } from '../../../../util/customHooks';
 import {
-  canSignupForPostAdmission,
-  admissionNotStarted,
-  showAvailableSpots,
   admissionActiveAndQueueNotFull,
-  spotsAvailableForSession,
+  admissionNotStarted,
+  canSignupForPostAdmission,
   isAdmissionActive,
   isPostAdmissionActive,
+  showAvailableSpots,
+  spotsAvailableForSession,
 } from '../../../../util/examSessionUtil';
-import classes from './ExamSessionListItem.module.css';
 import { getDeviceOrientation, levelDescription } from '../../../../util/util';
-import {
-  DATE_FORMAT,
-  DATE_FORMAT_WITHOUT_YEAR,
-  MOBILE_VIEW
-} from '../../../../common/Constants';
-import * as actions from '../../../../store/actions/index';
+import classes from './ExamSessionListItem.module.css';
 
 const examSessionListItem = ({
   examSession: session,
@@ -34,9 +31,10 @@ const examSessionListItem = ({
     onSelectExamSession(session);
     history.push(`/tutkintotilaisuus/${session.id}`);
   };
-
   const examDate = moment(session.session_date).format(DATE_FORMAT);
   const date = <div className={classes.Date}>{examDate}</div>;
+  const mobile = useMobileView(true, false);
+  const tablet = useMobileView(false, true);
 
   const examFee = `${t('common.price')}: ${session.exam_fee} €`;
 
@@ -54,9 +52,12 @@ const examSessionListItem = ({
   const address = sessionLocation.street_address || '';
   const city = sessionLocation.post_office.toUpperCase() || '';
   const location = (
-    <span className={classes.Location}>
-      {name} <br /> {address} <br /> {session.location[0].zip} <strong>{city}</strong>
-    </span>
+    <div>
+      <span className={classes.Location}>
+        {name} <br /> {address} <br /> {session.location[0].zip}{' '}
+        <strong>{city}</strong>
+      </span>
+    </div>
   );
 
   const spotsAvailable = spotsAvailableForSession(session);
@@ -83,108 +84,163 @@ const examSessionListItem = ({
     </div>
   );
 
-  const registrationOpen = (
-    <div className={classes.RegistrationOpen}>
-      <span className={classes.HiddenOnDesktop}>
+  const registrationOpenDesktop = (
+    <div>
+      {session.post_admission_start_date &&
+      session.post_admission_end_date &&
+      session.post_admission_active ? (
+        <>
+          <p>{`${moment(session.post_admission_start_date).format(
+            DATE_FORMAT,
+          )} -
+                    ${moment(session.post_admission_end_date).format(
+                      DATE_FORMAT,
+                    )}`}</p>
+          <p>{t('registration.postregistrationOnGoing')}</p>
+        </>
+      ) : (
+        <>
+          <p>{`${moment(session.registration_start_date).format(
+            DATE_FORMAT,
+          )} - ${moment(session.registration_end_date).format(
+            DATE_FORMAT,
+          )}`}</p>
+          <p>{t('registration.open')}</p>
+        </>
+      )}
+    </div>
+  );
+
+  const registrationOpenMobile = (
+    <div style={{ display: 'block' }}>
+      <div className={classes.RegistrationOpen}>
         {t('registration.list.signupOpen')}
-      </span>{' '}
-      <span>
-        {`${moment(session.registration_start_date).format(
-          DATE_FORMAT_WITHOUT_YEAR,
-        )} - ${moment(session.registration_end_date).format(
-          DATE_FORMAT_WITHOUT_YEAR,
-        )}`}
-        {
-          (session.post_admission_start_date && session.post_admission_end_date && session.post_admission_active) ? (
-            <>
-              <br />
-              <span>{`${moment(session.post_admission_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} -
-                    ${moment(session.post_admission_end_date).format(DATE_FORMAT_WITHOUT_YEAR)}`}</span>
-            </>
-          ) : null
-        }
-      </span>
+        {':'}
+
+        <span style={{ marginLeft: 5 }}>{`${moment(
+          session.registration_start_date,
+        ).format(DATE_FORMAT)} - ${moment(session.registration_end_date).format(
+          DATE_FORMAT,
+        )}`}</span>
+      </div>
+      {session.post_admission_start_date &&
+        session.post_admission_end_date &&
+        session.post_admission_active && (
+          <div className={classes.RegistrationOpen}>
+            {t('examSession.postAdmission')}
+            {':'}
+            <span style={{ marginLeft: 5 }}>
+              {`${moment(session.post_admission_start_date).format(
+                DATE_FORMAT,
+              )} -
+                    ${moment(session.post_admission_end_date).format(
+                      DATE_FORMAT,
+                    )}`}
+            </span>
+          </div>
+        )}
     </div>
   );
 
   const buttonText = spotsAvailable
     ? t('registration.register')
     : session.queue_full
-      ? t('registration.register.queueFull')
-      : t('registration.register.forQueue');
-  const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${spotsAvailable} ${spotsAvailableText}.`;
+    ? t('registration.register.queueFull')
+    : t('registration.register.forQueue');
 
-  const showRegisterButton = admissionNotStarted(session) ||
+  const registrationOpenText =
+    session.post_admission_start_date &&
+    session.post_admission_end_date &&
+    session.post_admission_active
+      ? `${t('examSession.postAdmission')}:  ${moment(
+          session.post_admission_start_date,
+        ).format(DATE_FORMAT)} -
+                    ${moment(session.post_admission_end_date).format(
+                      DATE_FORMAT,
+                    )} `
+      : `${t('registration.list.signupOpen')}: ${moment(
+          session.registration_start_date,
+        ).format(DATE_FORMAT)} - ${moment(session.registration_end_date).format(
+          DATE_FORMAT,
+        )}`;
+
+  const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${spotsAvailable} ${spotsAvailableText}.`;
+
+  const showRegisterButton =
+    admissionNotStarted(session) ||
     admissionActiveAndQueueNotFull(session) ||
     canSignupForPostAdmission(session);
 
   const registerButton = (
-    <>
-      {showRegisterButton ?
+    <div>
+      {showRegisterButton ? (
         <button
-          className={'YkiButton'}
+          className={`YkiButton ${classes.RegisterButton}`}
           onClick={selectExamSession}
           role="link"
           aria-label={srLabel}
-          disabled={!isAdmissionActive(session) && !isPostAdmissionActive(session)}
+          disabled={
+            !isAdmissionActive(session) && !isPostAdmissionActive(session)
+          }
         >
           {buttonText}
         </button>
-        :
-        null
-      }
-    </>
+      ) : null}
+    </div>
   );
   const locationOnMobileView = (
     <div className={classes.Location}>
       <span>
-        {name}<br />{address}<br />
+        {name}
+        <br />
+        {address}
+        <br />
       </span>
       <span>
-        {session.location[0].zip}{' '}{city}
+        {session.location[0].zip} {city}
       </span>
     </div>
   );
 
-  const mobileLarge = window.innerWidth < 1024;
-
   return (
     <>
-      {MOBILE_VIEW || mobileLarge || (mobileLarge && getDeviceOrientation() === 'landscape') ?
-        <div
+      {mobile ||
+      tablet ||
+      (tablet && getDeviceOrientation() === 'landscape') ? (
+        <tr
           className={classes.ExamSessionListItem}
           data-cy="exam-session-list-item"
         >
-          <div className={classes.MobileRow}>
+          <td className={classes.MobileRow}>
             <div>{exam}</div>
             <div>{date}</div>
-          </div>
-          <hr />
-          <div>{registrationOpen}</div>
-          <hr />
-          <div className={classes.MobileRow}>
+          </td>
+          <td>{registrationOpenMobile}</td>
+
+          <td className={classes.MobileRow}>
             <div>{availability}</div>
-            {session.queue_full ? null : <div className={classes.ExamFee}>{examFee}</div>}
-          </div>
-          <hr />
-          <div>
+            {session.queue_full ? null : (
+              <div className={classes.ExamFee}>{examFee}</div>
+            )}
+          </td>
+          <td>
             {locationOnMobileView}
             {registerButton}
-          </div>
-        </div>
-        :
-        <div
+          </td>
+        </tr>
+      ) : (
+        <tr
           className={classes.ExamSessionListItem}
           data-cy="exam-session-list-item"
         >
-          {date}
-          {location}
-          {exam}
-          {availability}
-          {registrationOpen}
-          {registerButton}
-        </div>
-      }
+          <td>{exam}</td>
+          <td>{date}</td>
+          <td>{location}</td>
+          <td>{registrationOpenDesktop}</td>
+          <td>{availability}</td>
+          <td>{registerButton}</td>
+        </tr>
+      )}
     </>
   );
 };
@@ -200,7 +256,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(examSessionListItem);
+export default connect(null, mapDispatchToProps)(examSessionListItem);

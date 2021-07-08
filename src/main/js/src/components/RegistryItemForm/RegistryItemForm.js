@@ -77,183 +77,184 @@ const registryItemForm = props => {
         };
         props.onSubmit(payload);
       }}
-      render={({ values, setFieldValue, isValid }) => (
-        <Form className={classes.Form}>
-          <h2>{props.name}</h2>
-          <p>{props.address}</p>
-          <hr />
-          <div className={classes.FormElements}>
-            <div className={classes.Agreement}>
-              <h3>{props.t('common.agreement')}</h3>
-              <div className={classes.DatePickers}>
-                <div>
-                  <label htmlFor="agreementStart" className={classes.Label}>
-                    {props.t('registryItem.agreementStart')}
-                  </label>
-                  <DatePicker
-                    id="agreementStart"
-                    options={{
-                      defaultDate: props.agreementStart,
-                      value: values.agreementStart,
-                    }}
-                    onChange={d =>
-                      setFieldValue(
-                        'agreementStart',
-                        moment(d[0], DATE_FORMAT).toISOString(),
-                      )
-                    }
-                    locale={props.i18n.language}
-                    tabIndex="1"
-                  />
+      render={({ values, setFieldValue, isValid }) => {
+        return (
+          <Form className={classes.Form}>
+            <h2>{props.name}</h2>
+            <p>{props.address}</p>
+            <hr />
+            <div className={classes.FormElements}>
+              <div className={classes.Agreement}>
+                <h3>{props.t('common.agreement')}</h3>
+                <div className={classes.DatePickers}>
+                  <div>
+                    <label htmlFor="agreementStart" className={classes.Label}>
+                      {props.t('registryItem.agreementStart')}
+                    </label>
+                    <DatePicker
+                      id="agreementStart"
+                      options={{
+                        defaultDate: props.agreementStart,
+                        value: values.agreementStart,
+                      }}
+                      onChange={d =>
+                        setFieldValue(
+                          'agreementStart',
+                          moment(d[0], DATE_FORMAT).toISOString(),
+                        )
+                      }
+                      locale={props.i18n.language}
+                    />
+                  </div>
+                  <div className={classes.Separator}>−</div>
+                  <div>
+                    <label htmlFor="agreementEnd" className={classes.Label}>
+                      {props.t('registryItem.agreementEnd')}
+                    </label>
+                    <DatePicker
+                      id="agreementEnd"
+                      options={{
+                        defaultDate: props.agreementEnd,
+                        value: values.agreementEnd,
+                      }}
+                      onChange={d =>
+                        setFieldValue(
+                          'agreementEnd',
+                          moment(d[0], DATE_FORMAT).toISOString(),
+                        )
+                      }
+                      locale={props.i18n.language}
+                      tabIndex="2"
+                    />
+                  </div>
                 </div>
-                <div className={classes.Separator}>−</div>
-                <div>
-                  <label htmlFor="agreementEnd" className={classes.Label}>
-                    {props.t('registryItem.agreementEnd')}
-                  </label>
-                  <DatePicker
-                    id="agreementEnd"
-                    options={{
-                      defaultDate: props.agreementEnd,
-                      value: values.agreementEnd,
-                    }}
-                    onChange={d =>
-                      setFieldValue(
-                        'agreementEnd',
-                        moment(d[0], DATE_FORMAT).toISOString(),
-                      )
-                    }
-                    locale={props.i18n.language}
-                    tabIndex="2"
+                {props.updating && (
+                  <AgreementPdf
+                    oid={props.oid}
+                    attachmentId={props.attachmentId}
                   />
-                </div>
+                )}
               </div>
-              {props.updating && (
-                <AgreementPdf
-                  oid={props.oid}
-                  attachmentId={props.attachmentId}
+              <div className={classes.Languages}>
+                <h3>{props.t('common.exam.languages')}</h3>
+                <LanguageCheckboxes
+                  languages={values.languages}
+                  onChange={languages => setFieldValue('languages', languages)}
                 />
-              )}
+              </div>
+              <div className={classes.Contact}>
+                <h3>{props.t('registryItem.contactHeader')}</h3>
+                <label htmlFor="contactName" className={classes.Label}>
+                  {props.t('registryItem.contactName')}
+                </label>
+                <Field
+                  type="input"
+                  id="contactName"
+                  name="contactName"
+                  placeholder="Essi Esimerkki"
+                  tabIndex="3"
+                />
+                <ErrorMessage
+                  name="contactName"
+                  component="span"
+                  className={classes.ErrorMessage}
+                />
+                <label htmlFor="contactEmail" className={classes.Label}>
+                  {props.t('registryItem.contactEmail')}
+                </label>
+                <Field
+                  type="input"
+                  id="contactEmail"
+                  name="contactEmail"
+                  placeholder="essi.esimerkki@jarjestaja.fi"
+                  tabIndex="4"
+                />
+                <ErrorMessage
+                  name="contactEmail"
+                  component="span"
+                  className={classes.ErrorMessage}
+                />
+                <label htmlFor="contactPhone" className={classes.Label}>
+                  {props.t('registryItem.contactPhone')}
+                </label>
+                <Field
+                  type="tel"
+                  id="contactPhone"
+                  name="contactPhone"
+                  placeholder="+358 01 234 5678"
+                  tabIndex="5"
+                />
+                <ErrorMessage
+                  name="contactPhone"
+                  component="span"
+                  className={classes.ErrorMessage}
+                />
+                <label htmlFor="extra" className={classes.Label}>
+                  {props.t('registryItem.extra')}
+                </label>
+                <Field
+                  type="textarea"
+                  id="extra"
+                  name="extra"
+                  rows="5"
+                  cols="33"
+                  maxLength="255"
+                  wrap="soft"
+                  placeholder={props.t('registryItem.extra.placeholder')}
+                  tabIndex="6"
+                />
+                <ErrorMessage
+                  name="extra"
+                  component="span"
+                  className={classes.ErrorMessage}
+                />
+              </div>
+              <div className={classes.PaymentInfo}>
+                <h3>{props.t('registryItem.payment')}</h3>
+                <label htmlFor="contactName" className={classes.Label}>
+                  {props.t('registryItem.merchantId')}
+                </label>
+                <Field
+                  type="input"
+                  id="merchantId"
+                  name="merchantId"
+                  tabIndex="7"
+                />
+                <ErrorMessage
+                  name="merchantId"
+                  component="span"
+                  className={classes.ErrorMessage}
+                />
+                <label htmlFor="merchantSecret" className={classes.Label}>
+                  {props.t('registryItem.merchantSecret')}
+                </label>
+                <Field
+                  type="input"
+                  id="merchantSecret"
+                  name="merchantSecret"
+                  tabIndex="8"
+                />
+                <ErrorMessage
+                  name="merchantSecret"
+                  component="span"
+                  className={classes.ErrorMessage}
+                />
+              </div>
             </div>
-            <div className={classes.Languages}>
-              <h3>{props.t('common.exam.languages')}</h3>
-              <LanguageCheckboxes
-                languages={values.languages}
-                onChange={languages => setFieldValue('languages', languages)}
-              />
-            </div>
-            <div className={classes.Contact}>
-              <h3>{props.t('registryItem.contactHeader')}</h3>
-              <label htmlFor="contactName" className={classes.Label}>
-                {props.t('registryItem.contactName')}
-              </label>
-              <Field
-                type="input"
-                id="contactName"
-                name="contactName"
-                placeholder="Essi Esimerkki"
-                tabIndex="3"
-              />
-              <ErrorMessage
-                name="contactName"
-                component="span"
-                className={classes.ErrorMessage}
-              />
-              <label htmlFor="contactEmail" className={classes.Label}>
-                {props.t('registryItem.contactEmail')}
-              </label>
-              <Field
-                type="input"
-                id="contactEmail"
-                name="contactEmail"
-                placeholder="essi.esimerkki@jarjestaja.fi"
-                tabIndex="4"
-              />
-              <ErrorMessage
-                name="contactEmail"
-                component="span"
-                className={classes.ErrorMessage}
-              />
-              <label htmlFor="contactPhone" className={classes.Label}>
-                {props.t('registryItem.contactPhone')}
-              </label>
-              <Field
-                type="tel"
-                id="contactPhone"
-                name="contactPhone"
-                placeholder="+358 01 234 5678"
-                tabIndex="5"
-              />
-              <ErrorMessage
-                name="contactPhone"
-                component="span"
-                className={classes.ErrorMessage}
-              />
-              <label htmlFor="extra" className={classes.Label}>
-                {props.t('registryItem.extra')}
-              </label>
-              <Field
-                type="textarea"
-                id="extra"
-                name="extra"
-                rows="5"
-                cols="33"
-                maxLength="255"
-                wrap="soft"
-                placeholder={props.t('registryItem.extra.placeholder')}
-                tabIndex="6"
-              />
-              <ErrorMessage
-                name="extra"
-                component="span"
-                className={classes.ErrorMessage}
-              />
-            </div>
-            <div className={classes.PaymentInfo}>
-              <h3>{props.t('registryItem.payment')}</h3>
-              <label htmlFor="contactName" className={classes.Label}>
-                {props.t('registryItem.merchantId')}
-              </label>
-              <Field
-                type="input"
-                id="merchantId"
-                name="merchantId"
-                tabIndex="7"
-              />
-              <ErrorMessage
-                name="merchantId"
-                component="span"
-                className={classes.ErrorMessage}
-              />
-              <label htmlFor="merchantSecret" className={classes.Label}>
-                {props.t('registryItem.merchantSecret')}
-              </label>
-              <Field
-                type="input"
-                id="merchantSecret"
-                name="merchantSecret"
-                tabIndex="8"
-              />
-              <ErrorMessage
-                name="merchantSecret"
-                component="span"
-                className={classes.ErrorMessage}
-              />
-            </div>
-          </div>
 
-          <Button
-            type="submit"
-            disabled={!isValid}
-            tabIndex="9"
-            datacy="registry-item-form-submit"
-          >
-            {props.updating
-              ? props.t('registryItem.button.update')
-              : props.t('registryItem.button.add')}
-          </Button>
-        </Form>
-      )}
+            <Button
+              type="submit"
+              disabled={!isValid}
+              tabIndex="9"
+              datacy="registry-item-form-submit"
+            >
+              {props.updating
+                ? props.t('registryItem.button.update')
+                : props.t('registryItem.button.add')}
+            </Button>
+          </Form>
+        );
+      }}
     />
   );
 };

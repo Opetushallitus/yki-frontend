@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import { MOBILE_VIEW, TABLET_VIEW } from '../../../common/Constants';
 import LanguageSelect from '../../../containers/LanguageSelect/LanguageSelect';
+import { useMobileView } from '../../../util/customHooks';
 import classes from './NavigationTabs.module.css';
 
 const NavigationTabs = props => {
@@ -11,6 +11,8 @@ const NavigationTabs = props => {
   const location = useLocation();
   const { t } = useTranslation();
   const history = useHistory();
+
+  const isMobileOrTablet = useMobileView(true, true);
 
   const handleOnClick = () => {
     setLanguageMenuShow(!showLanguagesMenu);
@@ -32,7 +34,7 @@ const NavigationTabs = props => {
       { title: 'common.reeval', url: '/tarkistusarviointi' },
     ];
 
-    const divider = onDescriptionPage && (MOBILE_VIEW || TABLET_VIEW);
+    const divider = onDescriptionPage && isMobileOrTablet;
     return (
       <>
         {linkArray.map((link, i) => {
@@ -44,41 +46,54 @@ const NavigationTabs = props => {
               key={link.title}
               className={isActive ? classes.ActiveTab : classes.InactiveTab}
             >
-              <button
+              <Link
+                aria-current={isActive}
                 className={classes.LinkButton}
-                onClick={() => {
+                to={link.url}
+                onKeyPress={() => {
                   history.push(link.url);
                 }}
                 role="link"
               >
                 {t(link.title)}
-              </button>
+              </Link>
             </div>
           );
         })}
-        {divider ? <hr className={classes.Divider} /> : null}
+        {divider && <hr className={classes.Divider} />}
       </>
     );
   };
 
   return (
     <>
-      {showLanguagesMenu ? (
-        <LanguageSelect
-          isOpen={props.isOpen}
-          setCollapsibleOpen={props.setCollapsibleOpen}
-        />
+      {!isMobileOrTablet ? (
+        <>{baseLinks()}</>
       ) : (
-        <>
+        <div className={classes.ScrollableMenuWrapper}>
           {baseLinks()}
-          {MOBILE_VIEW || TABLET_VIEW ? (
-            <div onClick={() => handleOnClick()}>
-              <p className={classes.InactiveTab}>
+          <>
+            <div className={classes.InactiveTab}>
+              <button
+                onClick={() => handleOnClick()}
+                onKeyDown={e => {
+                  e.preventDefault();
+                  handleOnClick();
+                }}
+                className={classes.LinkButton}
+              >
                 {t('common.registration.select.language')}
-              </p>
+              </button>
             </div>
-          ) : null}
-        </>
+            <hr className={classes.LanguageHr} />
+          </>
+          {showLanguagesMenu && (
+            <LanguageSelect
+              isOpen={props.isOpen}
+              setCollapsibleOpen={props.setCollapsibleOpen}
+            />
+          )}
+        </div>
       )}
     </>
   );

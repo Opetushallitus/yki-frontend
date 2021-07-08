@@ -2,33 +2,12 @@
   text-align: left;
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
+  color: var(--primary-blue);
   margin-bottom: 10%;
-}
-
-.Container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  z-index: 1;
-}
-
-.ArticleContent h1 {
-  font-weight: 400;
-  font-size: 1.5em;
-  margin: 32px 0;
 }
 
 .ArticleContent p {
   margin-bottom: 0 !important;
-}
-
-.Container h2 {
-  text-align: left;
-  font: normal normal bold 28px/24px PT Sans;
-  letter-spacing: 0;
-  color: hsla(194, 82%, 43%, 1);
-  opacity: 1;
 }
 
 .ArticleContent p:nth-of-type(5),
@@ -41,78 +20,8 @@
   margin-top: 20px;
 }
 
-.InnerContainer {
-  padding-right: 4vw;
-  width: 50vw;
-}
-
-.InnerContainer hr {
-  border: 1px solid hsla(194, 82%, 43%, 1);
-  opacity: 0.5;
-}
-
-.DescriptionAndText {
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid hsla(0, 0%, 86%, 1);
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-}
-.MainContent {
-  padding: 1rem 0;
-}
-
-.TutorialVideo {
-  position: relative;
-  padding-bottom: 56.25%;
-  padding-top: 25px;
-  height: 0;
-  margin: 0 10px 40px 10px;
-  overflow: auto;
-}
-
-.TutorialVideo iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.ReEvalHeader {
-  width: 100%;
-  text-align: left;
-  font: normal normal bold 21px/24px PT Sans;
-  letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
-  opacity: 1;
-  padding: 0.2rem 0;
-}
-
-/* Tablet view */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-  .Container {
-    justify-content: left;
-  }
-  .InnerContainer {
-    margin: 2vh 3vw 2vh 3vw;
-    width: 60vw;
-  }
-}
-
 /* Mobile view */
 @media screen and (max-width: 425px) and (orientation: portrait) {
-  .InnerContainer {
-    padding-right: 3vw;
-    padding-left: 4vw;
-    width: 100%;
-  }
-
-  .DescriptionAndText {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .ArticleContent {
     max-width: 425px;
   }
@@ -128,23 +37,10 @@
   .ArticleContent p:last-child {
     margin-bottom: 50px;
   }
-
-  .YkiButton {
-    margin-left: 90px;
-  }
-
-  .InstructionsVideo {
-    min-width: 100%;
-  }
 }
 
 /* Mobile view */
 @media screen and (max-width: 760px) and (orientation: landscape) {
-  .InnerContainer {
-    width: 100%;
-    margin-left: 4vw;
-  }
-
   .ArticleContent p {
     margin-bottom: 25px;
   }
@@ -155,9 +51,5 @@
 
   .ArticleContent p:last-child {
     margin-bottom: 50px;
-  }
-
-  .YkiButton {
-    margin-left: 90px;
   }
 }

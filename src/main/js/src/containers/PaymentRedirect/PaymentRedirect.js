@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from '../../axios';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
+import axios from '../../axios';
 import Alert from '../../components/Alert/Alert';
 import classes from './PaymentRedirect.module.css';
 
@@ -61,7 +61,7 @@ export class PaymentRedirect extends Component {
     ) : (
       this.state.error && (
         <>
-          <main className={classes.Content}>
+          <main id="main" className={classes.Content}>
             <Alert
               title={this.props.t('payment.redirect.error')}
               optionalText={this.props.t('payment.redirect.error.info')}

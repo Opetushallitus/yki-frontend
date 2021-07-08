@@ -38,15 +38,13 @@
   justify-items: stretch;
 }
 
-.ShowPastSessionsItem {
-  align-self: center;
+.CheckBox label:before {
+  border: 1px solid var(--secondary-blue);
 }
 
-
-.ShowPastSessionsItem label span {
-  border: 1px solid hsla(194, 82%, 43%, 1) !important;
+.CheckboxContainer {
+  width: max-content;
 }
-
 
 @media (max-width: 900px) {
   .DesktopOnly {

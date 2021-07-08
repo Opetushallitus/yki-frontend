@@ -60,4 +60,4 @@ export {
   addEvaluationPeriod,
 } from './examDates';
 export { fetchUser } from './user';
-export { initYKILanguage, changeYKILanguage } from './yki';
+export { initYKILanguage, changeYKILanguage, setWindowWidth } from './yki';

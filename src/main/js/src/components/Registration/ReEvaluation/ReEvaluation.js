@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { connect as connectRedux } from 'react-redux';
 
 import YkiImage2 from '../../../assets/images/ophYki_image2.png';
-import { MOBILE_VIEW } from '../../../common/Constants';
-import { fetchReEvaluationPeriods, fetchPrices } from '../../../store/actions/index';
 import {
-  evaluationTexts,
-  formatPriceObject,
-  getDeviceOrientation,
-} from '../../../util/util';
+  fetchPrices,
+  fetchReEvaluationPeriods,
+} from '../../../store/actions/index';
+import { useMobileView } from '../../../util/customHooks';
+import { evaluationTexts, formatPriceObject } from '../../../util/util';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import ReEvaluationList from '../ReEvaluationList/ReEvaluationList';
@@ -37,7 +36,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchEvaluationPeriods: () => dispatch(fetchReEvaluationPeriods()),
-    onFetchPrices: () => dispatch(fetchPrices())
+    onFetchPrices: () => dispatch(fetchPrices()),
   };
 };
 
@@ -47,13 +46,14 @@ const ReEvaluation = ({
   evaluationPeriods,
   onFetchEvaluationPeriods,
   onFetchPrices,
-  loadingPrices
+  loadingPrices,
 }) => {
   const { t } = useTranslation();
+  const isMobile = useMobileView(true);
 
   useEffect(() => {
     onFetchEvaluationPeriods();
-    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices()
+    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices();
   }, []);
 
   const evalPrices = prices && prices['evaluation-prices'];
@@ -61,9 +61,9 @@ const ReEvaluation = ({
   const evaluationPrices = formatPriceObject(evalPrices, evaluationTexts);
 
   const desktopContent = (
-    <div className={classes.MainContent}>
-      <div className={classes.DescriptionAndText}>
-        <div className={classes.InnerContainer}>
+    <>
+      <div style={{ display: 'flex', paddingBottom: '1rem' }}>
+        <div style={{ marginRight: '1rem' }}>
           <article className={classes.ArticleContent}>
             <p>{t('registration.reeval.text2')}</p>
             <p>{t('registration.reeval.text3')}</p>
@@ -74,28 +74,25 @@ const ReEvaluation = ({
         </div>
         <PriceContainer elements={evaluationPrices} />
       </div>
+
       <ReEvaluationList
         history={history}
         headers={headers}
         sessions={evaluationPeriods}
       />
-    </div>
+    </>
   );
 
   const mobileContent = (
-    <div className={classes.MainContent}>
-      <div className={classes.DescriptionAndText}>
-        <div className={classes.InnerContainer}>
-          <article className={classes.ArticleContent}>
-            <p>{t('registration.reeval.text2')}</p>
-            <p>{t('registration.reeval.text3')}</p>
-            <p>{t('registration.reeval.text4')}</p>
-            <p>{t('registration.reeval.text5')}</p>
-            <p>{t('registration.reeval.text6')}</p>
-          </article>
-        </div>
-        <PriceContainer elements={evaluationPrices} />
-      </div>
+    <div style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}>
+      <article className={classes.ArticleContent}>
+        <p>{t('registration.reeval.text2')}</p>
+        <p>{t('registration.reeval.text3')}</p>
+        <p>{t('registration.reeval.text4')}</p>
+        <p>{t('registration.reeval.text5')}</p>
+        <p>{t('registration.reeval.text6')}</p>
+      </article>
+      <PriceContainer elements={evaluationPrices} />
       <ReEvaluationList
         history={history}
         headers={headers}
@@ -106,7 +103,7 @@ const ReEvaluation = ({
 
   return (
     <>
-      <main className={classes.Container}>
+      <main id="main" className={'Container'}>
         <HeadlineContainer
           headlineTitle={t('registration.reeval.banner.title')}
           headlineContent={
@@ -117,12 +114,9 @@ const ReEvaluation = ({
           }
           headlineImage={YkiImage2}
         />
-        {MOBILE_VIEW ||
-          (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
-          <>{mobileContent}</>
-        ) : (
-          <>{desktopContent}</>
-        )}
+        <div className={'InnerContainer'}>
+          {isMobile ? <>{mobileContent}</> : <>{desktopContent}</>}
+        </div>
       </main>
     </>
   );

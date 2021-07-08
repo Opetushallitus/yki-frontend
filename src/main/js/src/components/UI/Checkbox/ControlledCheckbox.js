@@ -5,14 +5,16 @@ import classes from './Checkbox.module.css';
 
 const ControlledCheckbox = props => (
   <label data-cy={props.dataCy} className={classes.Container}>
-    <input
-      type="checkbox"
-      onChange={props.onChange}
-      checked={props.checked || false}
-      name={props.name}
-      disabled={props.disabled}
-    />
-    {!props.hidden && <span className={classes.Checkmark} />}
+    {!props.hidden && (
+      <input
+        className={classes.ControlledCheckbox}
+        type="checkbox"
+        onChange={props.onChange}
+        checked={props.checked || false}
+        name={props.name}
+        disabled={props.disabled}
+      />
+    )}
   </label>
 );
 

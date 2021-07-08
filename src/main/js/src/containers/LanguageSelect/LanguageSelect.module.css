@@ -1,18 +1,23 @@
 .SelectorContainer {
   display: flex;
   justify-content: flex-end;
-  padding-right: 2vw;
+  margin-right: 2vw;
+  align-items: center;
+  height: 100%;
+  color: var(--primary-blue);
 }
 
-.SelectorContainer img {
-  margin-right: 10px;
+.SelectorContainer > img {
+  margin-right: 10px !important;
+  margin-left: 0 !important;
+  color: var(--primary-blue);
 }
 
 .LanguageSelect {
   /* disable default browser style of selector */
-  -moz-appearance:none; /* Firefox */
-  -webkit-appearance:none; /* Safari and Chrome */
-  appearance:none;
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none;
   /* custom styling */
   background-image: url('../../assets/svg/blue-arrow-down.svg');
   background-repeat: no-repeat;
@@ -21,12 +26,19 @@
   width: 90px;
   border: none;
   cursor: pointer;
-  color: hsl(195, 91%, 22%);
-  font: normal normal normal 16px/24px PT Sans;
+  color: var(--primary-blue);
+  font: normal normal normal 18px/24px PT Sans;
 }
 
 .LanguageSelect:hover {
   text-decoration-line: underline;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .LanguageItem,
+  .LanguageItemActive {
+    height: 9vw !important;
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -36,34 +48,34 @@
   .MobileMenuItems {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    align-items: center;
     margin-bottom: 0;
   }
-  .LanguageItem {
-    padding-top: 5vh;
-    padding-bottom: 5vh;
-    width: 100%;
-    top: 0;
-    background: hsla(0, 0%, 100%, 1);
+
+  .LanguageItem,
+  .LanguageItemActive {
+    height: 10vh;
+    width: 85%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2vh;
     border: none;
-    font: normal normal bold 21px/24px PT Sans;
     letter-spacing: 0.6px;
-    color: hsl(195, 91%, 22%);
+    font: normal normal bold 21px/24px PT Sans;
+  }
+
+  .LanguageItem {
+    background: var(--white);
+    color: var(--primary-blue);
   }
   .LanguageItemActive {
-    padding-top: 5vh;
-    padding-bottom: 5vh;
-    width: 100%;
-    top: 0;
-    border: none;
-    letter-spacing: 0.6px;
-    background: hsl(195, 82%, 44%) 0 0 no-repeat padding-box !important;
-    color: hsla(0, 0%, 100%, 1) !important;
-    font: inherit;
-    height: 100%;
+    background: var(--primary-blue) 0 0 no-repeat padding-box !important;
+    color: var(--white) !important;
   }
   .MobileMenuItems hr {
     width: 70vw;
-    border: 1px solid hsla(194, 82%, 43%, 1);
+    border: 1px solid var(--primary-blue);
   }
 }

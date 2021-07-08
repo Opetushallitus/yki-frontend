@@ -30,8 +30,11 @@
   grid-auto-rows: 30px;
 }
 
-.Checkbox {
+.Checkbox label {
   height: 10px;
-  justify-self: start;
-  align-self: center;
+  margin-left: auto;
+}
+
+.Checkbox label:before {
+  border: 1px solid var(--secondary-blue);
 }
