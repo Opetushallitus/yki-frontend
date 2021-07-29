@@ -6,7 +6,7 @@ import classes from './Tooltip.module.css';
 
 const Tooltip = props => {
   const { text } = props;
-  const t = useTranslation();
+  const { t } = useTranslation();
 
   const [showToolTip, setShowToolTip] = useState(false);
 
