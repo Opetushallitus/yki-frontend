@@ -1,20 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<GenderSelect /> should render gender selection sorted by code 1`] = `
-<Fragment>
-  <h3>
+<div
+  className="InputFieldWrapper"
+>
+  <label
+    htmlFor="gender-select"
+  >
     registration.form.gender
-  </h3>
+     *
+  </label>
   <FormikConnect(FieldInner)
+    aria-required={true}
     className="test"
     component="select"
     data-cy="select-gender"
+    id="gender-select"
     name="gender"
   >
     <option
-      key=""
-      value=""
-    />
+      key="placeholder"
+      value="placeholder"
+    >
+      common.selectorDefault
+    </option>
     <option
       key="1"
       value="1"
@@ -28,5 +37,5 @@ exports[`<GenderSelect /> should render gender selection sorted by code 1`] = `
       nainen
     </option>
   </FormikConnect(FieldInner)>
-</Fragment>
+</div>
 `;

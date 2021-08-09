@@ -10,6 +10,9 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
     <h2>
       examSession.upcomingExamSessions
     </h2>
+    <div
+      className="CheckboxContainer"
+    />
   </div>
   <div
     className="Grid"
