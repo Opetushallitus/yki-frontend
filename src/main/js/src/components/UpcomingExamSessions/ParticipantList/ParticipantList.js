@@ -11,6 +11,7 @@ import trashcan from '../../../assets/svg/trashcan.svg';
 import { DATE_FORMAT } from '../../../common/Constants';
 import { ActionButton } from '../../UI/ActionButton/ActionButton';
 import ListExport from './ListExport/ListExport';
+import RelocateParticipant from './RelocateParticipant/RelocateParticipant';
 import classes from './ParticipantList.module.css';
 
 const stateComparator = () => (a, b) => {
@@ -163,64 +164,22 @@ export const participantList = props => {
     );
   };
 
-  const relocateButton = participant => {
-    const {
-      language_code,
-      level_code,
-      session_date,
-      office_oid,
-      organizer_oid,
-    } = props.examSession;
-
-    const matchingOids = nextSession => {
-      if (nextSession.organizer_oid === organizer_oid) {
-        if (!nextSession.office_oid || !office_oid) return true;
-        if (nextSession.office_oid === office_oid) return true;
-      }
-      return false;
-    };
-
-    const canBeRelocatedTo = e => {
-      return (
-        moment(e.session_date).isAfter(moment(session_date)) &&
-        e.level_code === level_code &&
-        e.language_code === language_code &&
-        matchingOids(e) &&
-        e.max_participants > e.participants
-      );
-    };
-
-    const getNextSession = R.compose(
-      R.head,
-      R.sortBy(R.prop('session_date')),
-      R.filter(canBeRelocatedTo),
-    );
-
-    const nextExamSession = getNextSession(props.examSessions);
-    const relocate = (
-      <React.Fragment>
-        {props.t('examSession.registration.relocate')}{' '}
-        {nextExamSession &&
-          moment(nextExamSession.session_date).format(DATE_FORMAT)}{' '}
-        {props.t('examSession.registration.relocate.session')}
-      </React.Fragment>
-    );
-    return nextExamSession ? (
-      <ActionButton
-        children={relocate}
-        confirmOnRight={true}
-        onClick={() =>
+  const relocateParticipant = participant => {
+    return (
+      <RelocateParticipant
+        examSession={props.examSession}
+        examSessions={props.examSessions}
+        onRelocate={newSessionId =>
           props.onRelocate(
             props.examSession.organizer_oid,
             props.examSession.id,
             participant.registration_id,
-            nextExamSession.id,
+            newSessionId,
           )
         }
         confirmText={props.t('examSession.registration.relocate.confirm')}
-        cancelText={props.t('examSession.registration.relocate.cancel')}
       />
-    ) : null;
+    )
   };
 
   const handleFilterChange = event => {
@@ -332,7 +291,7 @@ export const participantList = props => {
           {p.state === 'SUBMITTED' && !props.disableControls
             ? confirmPaymentButton(p)
             : p.state === 'COMPLETED' && !props.disableControls
-              ? relocateButton(p)
+              ? relocateParticipant(p)
               : null}
         </div>
         <div className={classes.Item} />

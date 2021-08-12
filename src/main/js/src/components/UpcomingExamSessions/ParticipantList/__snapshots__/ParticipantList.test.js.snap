@@ -121,18 +121,46 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="FirstShowOnHover"
     >
-      <ActionButton
-        cancelText="examSession.registration.relocate.cancel"
-        confirmOnRight={true}
+      <withI18nextTranslation(RelocateParticipant)
         confirmText="examSession.registration.relocate.confirm"
-        onClick={[Function]}
-      >
-        examSession.registration.relocate
-         
-        1.1.2029
-         
-        examSession.registration.relocate.session
-      </ActionButton>
+        examSession={
+          Object {
+            "language_code": "eng",
+            "level_code": "KESKI",
+            "max_participants": 50,
+            "pa_participants": 0,
+            "participants": 2,
+            "registration_end_date": "2028-12-15",
+            "registration_start_date": "2018-09-01",
+            "session_date": "2028-12-30",
+          }
+        }
+        examSessions={
+          Array [
+            Object {
+              "language_code": "eng",
+              "level_code": "KESKI",
+              "max_participants": 50,
+              "pa_participants": 0,
+              "participants": 2,
+              "registration_end_date": "2028-12-15",
+              "registration_start_date": "2018-09-01",
+              "session_date": "2028-12-30",
+            },
+            Object {
+              "language_code": "eng",
+              "level_code": "KESKI",
+              "max_participants": 50,
+              "pa_participants": 0,
+              "participants": 2,
+              "registration_end_date": "2028-12-15",
+              "registration_start_date": "2018-09-01",
+              "session_date": "2029-01-01",
+            },
+          ]
+        }
+        onRelocate={[Function]}
+      />
     </div>
     <div
       className="Item"
