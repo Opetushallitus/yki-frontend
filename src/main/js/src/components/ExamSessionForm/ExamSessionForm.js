@@ -14,7 +14,7 @@ import {
   levelTranslations,
 } from '../../util/util';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
-/* import SessionContact from '../SessionContact/SessionContact'; */
+import SessionContact from '../SessionContact/SessionContact';
 import Button from '../UI/Button/Button';
 import RadioButton from '../UI/RadioButton/RadioButton';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
@@ -416,8 +416,8 @@ const examSessionForm = props => {
                 className={classes.ErrorMessage}
               />
             </div>
-            {/*             Commented out beacause setting is not reflected to exam session list yet
-            <SessionContact /> */}
+
+            <SessionContact />
             <div className={classes.FormElement}>
               <h3>{props.t('common.extra')}</h3>
               <label className={classes.ExtraLabel}>
