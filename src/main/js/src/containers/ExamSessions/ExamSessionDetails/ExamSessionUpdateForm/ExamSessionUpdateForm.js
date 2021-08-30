@@ -93,13 +93,13 @@ export class ExamSessionUpdateForm extends Component {
       return location.name;
     };
 
+
     const createRegistrationUrl = examSessionId => {
       return `https://${window.location.hostname.replace(
         'virkailija',
         'yki',
       )}/yki/tutkintotilaisuus/${examSessionId}`;
     };
-
 
     return (
       <Formik
@@ -120,15 +120,19 @@ export class ExamSessionUpdateForm extends Component {
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
+
+          const { contactName, contactEmail, contactPhoneNumber } = values;
+
           const payload = {
             ...examSession,
             max_participants: Number.parseInt(values.maxParticipants),
-            contact: values.contactName || values.contactEmail || values.contactPhoneNumber
-              ? [{
-                name: values.contactName,
-                email: values.contactEmail,
-                phone_number: values.contactPhoneNumber
-              }] : null,
+            contact: contactName || contactEmail || contactPhoneNumber ? [
+              {
+                name: contactName ? contactName : null,
+                email: contactEmail ? contactEmail : null,
+                phone_number: contactPhoneNumber ? contactPhoneNumber : null,
+              },
+            ] : null,
             location: [
               {
                 name: getLocationNameByLang('fi'),

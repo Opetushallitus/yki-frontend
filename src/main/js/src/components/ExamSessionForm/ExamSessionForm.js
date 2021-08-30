@@ -21,8 +21,6 @@ import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 import classes from './ExamSessionForm.module.css';
 
 const examSessionForm = props => {
-  const { contact_name, contact_email, contact_phone_number } =
-    props.examSessionContent && props.examSessionContent.organizer;
   function validateDuplicateExamSession() {
     let duplicateFound = false;
     const examDate = this.parent.examDate;
@@ -68,7 +66,7 @@ const examSessionForm = props => {
     extraFi: Yup.string(),
     extraSv: Yup.string(),
     extraEn: Yup.string(),
-    contactName: Yup.string().required(props.t('error.mandatory')),
+    contactName: Yup.string(),
     contactEmail: Yup.string().email(props.t('error.email')),
 
     contactPhoneNumber: Yup.string(),
@@ -240,9 +238,9 @@ const examSessionForm = props => {
         extraFi: '',
         extraSv: '',
         extraEn: '',
-        contactName: contact_name,
-        contactEmail: contact_email,
-        contactPhoneNumber: contact_phone_number,
+        contactName: '',
+        contactEmail: '',
+        contactPhoneNumber: '',
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
@@ -251,9 +249,13 @@ const examSessionForm = props => {
             o => o.oid === values.officeOid,
           )
           : null;
+
         const orgOrOfficeName = office
           ? office.nimi
           : props.examSessionContent.organization.nimi;
+
+        const { contactName, contactEmail, contactPhoneNumber } = values;
+
         const payload = {
           session_date: values.examDate,
           language_code: values.language,
@@ -261,13 +263,13 @@ const examSessionForm = props => {
           office_oid: values.officeOid ? values.officeOid : null,
           max_participants: Number.parseInt(values.maxParticipants),
           published_at: moment().toISOString(),
-          contact: [
+          contact: contactName || contactEmail || contactPhoneNumber ? [
             {
-              name: values.contactName,
-              email: values.contactEmail,
-              phone_number: values.contactPhoneNumber,
+              name: contactName ? contactName : null,
+              email: contactEmail ? contactEmail : null,
+              phone_number: contactPhoneNumber ? contactPhoneNumber : null,
             },
-          ],
+          ] : null,
           location: [
             {
               name: getLocalizedName(orgOrOfficeName, 'fi'),
