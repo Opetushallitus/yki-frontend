@@ -13,7 +13,7 @@ import {
   DATE_FORMAT_WITHOUT_YEAR,
 } from '../../../../common/Constants';
 import ZipAndPostOffice from '../../../../components/ZipAndPostOffice/ZipAndPostOffice';
-//import SessionContact from '../../../../components/SessionContact/SessionContact';
+import SessionContact from '../../../../components/SessionContact/SessionContact';
 
 export class ExamSessionUpdateForm extends Component {
   render() {
@@ -93,13 +93,13 @@ export class ExamSessionUpdateForm extends Component {
       return location.name;
     };
 
+
     const createRegistrationUrl = examSessionId => {
       return `https://${window.location.hostname.replace(
         'virkailija',
         'yki',
       )}/yki/tutkintotilaisuus/${examSessionId}`;
     };
-
 
     return (
       <Formik
@@ -120,16 +120,19 @@ export class ExamSessionUpdateForm extends Component {
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
+
+          const { contactName, contactEmail, contactPhoneNumber } = values;
+
           const payload = {
             ...examSession,
             max_participants: Number.parseInt(values.maxParticipants),
-            /*             contact: values.contactName || values.contactEmail || values.contactPhoneNumber
-                          ? [{
-                            name: values.contactName,
-                            email: values.contactEmail,
-                            phone_number: values.contactPhoneNumber
-                          }] : null, */
-            contact: null,
+            contact: contactName || contactEmail || contactPhoneNumber ? [
+              {
+                name: contactName ? contactName : null,
+                email: contactEmail ? contactEmail : null,
+                phone_number: contactPhoneNumber ? contactPhoneNumber : null,
+              },
+            ] : null,
             location: [
               {
                 name: getLocationNameByLang('fi'),
@@ -232,9 +235,7 @@ export class ExamSessionUpdateForm extends Component {
               </div>
             </div>
             <div>
-              {/* 
-              Commented out beacuse setting is not reflected to exam session list yet
-              <SessionContact /> */}
+              <SessionContact />
               <div>
                 <div className={classes.FormElement}>
                   <h3>{t('common.extra')}</h3>
