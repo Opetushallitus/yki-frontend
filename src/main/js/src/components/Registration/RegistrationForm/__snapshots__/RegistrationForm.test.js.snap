@@ -5,11 +5,11 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
   value={
     Object {
       "store": Object {
+        "@@observable": [Function],
         "dispatch": [Function],
         "getState": [Function],
         "replaceReducer": [Function],
         "subscribe": [Function],
-        "@@observable": [Function],
       },
       "subscription": Subscription {
         "handleChangeWrapper": [Function],
@@ -19,11 +19,11 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
         "onStateChange": [Function],
         "parentSub": undefined,
         "store": Object {
+          "@@observable": [Function]: [Function],
           "dispatch": [Function],
           "getState": [Function],
           "replaceReducer": [Function],
           "subscribe": [Function],
-          "@@observable": [Function]: [Function],
         },
         "unsubscribe": null,
       },
