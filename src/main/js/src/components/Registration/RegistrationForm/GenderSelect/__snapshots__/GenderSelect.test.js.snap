@@ -8,7 +8,6 @@ exports[`<GenderSelect /> should render gender selection sorted by code 1`] = `
     htmlFor="gender-select"
   >
     registration.form.gender
-     *
   </label>
   <FormikConnect(FieldInner)
     aria-required={true}
