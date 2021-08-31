@@ -9,7 +9,7 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
         "getState": [Function],
         "replaceReducer": [Function],
         "subscribe": [Function],
-        Symbol(observable): [Function],
+        "@@observable": [Function],
       },
       "subscription": Subscription {
         "handleChangeWrapper": [Function],
@@ -23,7 +23,7 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
           "getState": [Function],
           "replaceReducer": [Function],
           "subscribe": [Function],
-          Symbol(observable): [Function],
+          "@@observable": [Function]: [Function],
         },
         "unsubscribe": null,
       },
