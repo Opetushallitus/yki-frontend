@@ -107,11 +107,7 @@ export const registrationForm = props => {
       .test('gender-select', mandatoryErrorMsg, value => {
         return value && value !== 'placeholder';
       }),
-    gender: Yup.string()
-      .required(mandatoryErrorMsg)
-      .test('gender-select', mandatoryErrorMsg, value => {
-        return value && value !== 'placeholder';
-      }),
+    gender: Yup.string(),
     ssn: Yup.string().test(
       'invalid-ssn',
       props.t('error.ssn.invalid'),
@@ -331,8 +327,8 @@ export const registrationForm = props => {
           ssn: props.initData.user.ssn || values.ssn,
           birthdate: values.birthdate
             ? moment(values.birthdate, DATE_FORMAT).format(
-                ISO_DATE_FORMAT_SHORT,
-              )
+              ISO_DATE_FORMAT_SHORT,
+            )
             : null,
           gender: values.gender,
           certificate_lang: values.certificateLang,

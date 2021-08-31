@@ -22,7 +22,7 @@ export const genderSelect = props => {
   return (
     <div className={classes.InputFieldWrapper}>
       <label htmlFor="gender-select">
-        {props.t('registration.form.gender')} *
+        {props.t('registration.form.gender')}
       </label>
       <Field
         id="gender-select"
