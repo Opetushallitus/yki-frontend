@@ -19,7 +19,7 @@ exports[`<RegistrationForm /> should render registration form 1`] = `
         "onStateChange": [Function],
         "parentSub": undefined,
         "store": Object {
-          "@@observable": [Function]: [Function],
+          "@@observable": [Function],
           "dispatch": [Function],
           "getState": [Function],
           "replaceReducer": [Function],
