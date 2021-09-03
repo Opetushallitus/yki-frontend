@@ -26,7 +26,7 @@ src
 By default, API requests are directed to "proxy" address found in package.json. Some of the requests require this default proxy address to stay in place. 
 It is possible to configure mockup response to each individual request in src/main/js/src/setupProxy.js.
 
-When you want to use a local backend, you can configure local environment variables for this. Create a file in src/main/js/src/.env.local and add following lines:
+When you want to use a local backend, you can configure local environment variables for this. Create a file in src/main/js/.env.local and add following lines:
 
 ```
 REACT_APP_USE_LOCAL_PROXY_BACKEND=true
