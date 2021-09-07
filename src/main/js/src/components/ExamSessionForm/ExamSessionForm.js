@@ -41,6 +41,9 @@ const examSessionForm = props => {
   }
 
   const validationSchema = Yup.object().shape({
+    officeOid: Yup.string()
+      .required(props.t('error.mandatory'))
+      .oneOf(props.examSessionContent.organizationChildren.map(o => o.oid)),
     language: Yup.string().required(props.t('error.mandatory')),
     level: Yup.string().required(props.t('error.mandatory')),
     examDate: Yup.string()
@@ -112,6 +115,24 @@ const examSessionForm = props => {
       </div>
     );
   };
+
+  const organizationSelection = (children, lang) => {
+    let elements = [];
+
+    elements.push(<option value="" key="" disabled>Valitse toimipiste</option>)
+
+    if (children) {
+      children.forEach(org => {
+        elements.push(
+          <option value={org.oid} key={org.oid}>
+            {`${getLocalizedName(org.nimi, lang)} (${org.oid ? org.oid : ''})`}
+          </option>
+        )
+      })
+    }
+
+    return elements;
+  }
 
   const languageFields = languages => {
     const uniqueLanguageCodes = R.compose(R.uniq, R.pluck('language_code'));
@@ -208,25 +229,10 @@ const examSessionForm = props => {
     }
   };
 
-  const initialOfficeOid =
-    props.examSessionContent &&
-      props.examSessionContent.organizationChildren &&
-      props.examSessionContent.organizationChildren.length > 0
-      ? props.examSessionContent.organizationChildren[0].oid
-      : '';
-
-  const organizationSelection = (children, lang) =>
-    children &&
-    children.map(c => (
-      <option value={c.oid} key={c.oid}>
-        {`${getLocalizedName(c.nimi, lang)} (${c.oid ? c.oid : ''})`}
-      </option>
-    ));
-
   return (
     <Formik
       initialValues={{
-        officeOid: initialOfficeOid,
+        officeOid: '',
         language: '',
         level: '',
         examDate: '',
