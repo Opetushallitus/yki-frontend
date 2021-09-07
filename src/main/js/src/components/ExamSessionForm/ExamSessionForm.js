@@ -119,7 +119,7 @@ const examSessionForm = props => {
   const organizationSelection = (children, lang) => {
     let elements = [];
 
-    elements.push(<option value="" key="" disabled>Valitse toimipiste</option>)
+    elements.push(<option value="" key="">Valitse toimipiste</option>)
 
     if (children) {
       children.forEach(org => {
@@ -333,6 +333,11 @@ const examSessionForm = props => {
                   props.i18n.lang,
                 )}
               </Field>
+              <ErrorMessage
+                name="officeOid"
+                component="span"
+                className={classes.ErrorMessage}
+              />
             </div>
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
