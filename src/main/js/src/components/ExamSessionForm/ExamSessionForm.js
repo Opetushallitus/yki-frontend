@@ -119,7 +119,7 @@ const examSessionForm = props => {
   const organizationSelection = (children, lang) => {
     let elements = [];
 
-    elements.push(<option value="" key="">Valitse toimipiste</option>)
+    elements.push(<option value="" key="">{props.t('examSession.selectInstitution')}</option>)
 
     if (children) {
       children.forEach(org => {
