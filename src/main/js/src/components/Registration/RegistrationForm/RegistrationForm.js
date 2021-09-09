@@ -194,14 +194,7 @@ export const registrationForm = props => {
   const inputField = (name, placeholder = '', extra, type = 'text') => (
     <>
       <h3>{props.t(`registration.form.${name}`)}</h3>
-      <Field
-        name={name}
-        data-cy={`input-${name}`}
-        placeholder={placeholder}
-        className={classes.TextInput}
-        type={type}
-        aria-label={props.t(`registration.form.aria.${name}`)}
-      />
+      {renderInputField(name, placeholder, type)}
       {extra && <span>{extra}</span>}
       <ErrorMessage
         name={name}
@@ -211,6 +204,49 @@ export const registrationForm = props => {
       />
     </>
   );
+
+  /**
+   * Returns default disabled actions for the email inputs
+   * 
+   * @param {true if input type is email or emailConf} isEmailInput 
+   * @returns false or undefined
+   */
+  const handleEmailActions = (isEmailInput) => (e) => {
+    if (isEmailInput) {
+      e.preventDefault();
+      return false;
+    } else {
+      return;
+    }
+  }
+
+  /**
+   * Renders input element. Sets different props for the email inputs
+   * 
+   * @param {name of element} name 
+   * @param {placeholder to be used in the input} placeholder 
+   * @param {type of field} type 
+   * @returns Input field
+   */
+  const renderInputField = (name, placeholder, type) => {
+    const isEmailInput = (name === 'email' || name === 'confirmEmail');
+
+    return (
+      <Field
+        name={name}
+        data-cy={`input-${name}`}
+        placeholder={placeholder}
+        className={classes.TextInput}
+        type={type}
+        autoComplete={isEmailInput ? "off" : undefined}
+        onContextMenu={handleEmailActions(isEmailInput)}
+        onPaste={handleEmailActions(isEmailInput)}
+        onCopy={handleEmailActions(isEmailInput)}
+        onCut={handleEmailActions(isEmailInput)}
+        aria-label={props.t(`registration.form.aria.${name}`)}
+      />
+    )
+  }
 
   const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
