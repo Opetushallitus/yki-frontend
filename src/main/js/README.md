@@ -74,6 +74,16 @@ Run all tests headlessly in the Electron browser.
 npm run cypress:run
 ```
 
+## Localisations
+
+Localisation files for different languages (en, fi & sv) that are used in local development are found under `dev/rest/localisation` directory.
+They aren't meant to be changed there, but rather updated manually in _Käännösten ylläpito_ for different environments under virkailija management panel.
+Once some localisations are added there, you can update local localisations files by running
+```bash
+./update-translations.sh
+```
+in `scripts` directory in under project root.
+
 ### License
 
 YKI is licensed under the [EUPL](./LICENSE).

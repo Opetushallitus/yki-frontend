@@ -13,6 +13,9 @@
 # production
 /build
 
+# localisation files
+dev/rest/localisation
+
 # misc
 .DS_Store
 .env.local
