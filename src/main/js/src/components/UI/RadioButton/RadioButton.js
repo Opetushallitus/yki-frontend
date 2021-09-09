@@ -7,7 +7,7 @@ const radioButton = props => (
   <div
     className={[
       classes.RadioButton,
-      !props.disabled ? classes.RadioButtonEnabled : classes.RadioButtonDisabled,
+      props.disabled ? classes.RadioButtonDisabled: classes.RadioButtonEnabled,
     ].join(' ')}
   >
     <input

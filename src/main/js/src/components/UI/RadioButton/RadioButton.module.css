@@ -24,14 +24,8 @@
   color: hsla(0, 0%, 68%, 1);
 }
 
-.RadioButtonDisabled input {
-  cursor: not-allowed;
-}
-
-.RadioButtonDisabled .RadioButtonLabel {
-  cursor: not-allowed;
-}
-
+.RadioButtonDisabled input,
+.RadioButtonDisabled .RadioButtonLabel,
 .RadioButtonDisabled .RadioButtonExtraLabel {
   cursor: not-allowed;
 }
