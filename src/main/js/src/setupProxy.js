@@ -337,13 +337,17 @@ module.exports = function (app) {
   });
 
   app.post('/yki/api/virkailija/organizer', (req, res) => {
-    try {
-      organizers.push(req.body);
-      res.send({ success: true });
-    } catch (err) {
-      printError(req, err);
-      res.status(404).send(err.message);
-    }
+    const mockCall = () => {
+      try {
+        organizers.push(req.body);
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+
+    useLocalProxy ? proxyPostCall(req, res) : mockCall();
   });
 
   app.get('/yki/api/virkailija/organizer/:oid/exam-session', (req, res) => {
