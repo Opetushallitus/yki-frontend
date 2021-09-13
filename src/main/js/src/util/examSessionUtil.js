@@ -99,3 +99,12 @@ export const examLanguageAndLevel = session => {
 
 export const formatDate = (session, key) =>
   moment(session[key]).format(DATE_FORMAT);
+
+export const examSessionParticipantsCount = (session) => {
+  const postAdmissionOpen = session.post_admission_enabled && moment()
+      .isSameOrAfter(moment(session.registration_end_date));
+
+  const participants = session.participants + (session.post_admission_quota ? session.pa_participants : 0);
+  const max_participants = postAdmissionOpen ? (session.post_admission_quota + session.participants): session.max_participants;
+  return {participants: participants, max_participants: max_participants};
+}
