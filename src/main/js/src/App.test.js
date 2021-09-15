@@ -1,3 +1,8 @@
+
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -11,11 +16,12 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => {
     return { i18n: { language: 'fi', changeLanguage: jest.fn() }, t: k => k };
   },
-  initReactI18next: () => {},
+  initReactI18next: () => { },
 }));
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
+  window.scrollTo = jest.fn();
   window.history.pushState({}, 'yki', '/yki/'); // stop console warnings from using basename
 
   const app = (

@@ -12,6 +12,7 @@ describe('<PaymentStatus />', () => {
   it('should render payment status success', () => {
     const wrapper = shallow(
       <PaymentStatus
+        returnUrl='/#'
         t={key => key}
         user={{ email: 'test@test.com' }}
         location={{ search: '?status=payment-success' }}
@@ -23,6 +24,7 @@ describe('<PaymentStatus />', () => {
   it('should render exam details when url contains id query param', () => {
     const wrapper = shallow(
       <PaymentStatus
+        returnUrl='/#'
         t={key => key}
         user={{ email: 'test@test.com' }}
         location={{ search: '?status=payment-success&id=1' }}
@@ -39,6 +41,7 @@ describe('<PaymentStatus />', () => {
   it('should render payment status error', () => {
     const wrapper = shallow(
       <PaymentStatus
+        returnUrl='/#'
         t={key => key}
         location={{ search: '?status=payment-error' }}
       />,
@@ -50,6 +53,7 @@ describe('<PaymentStatus />', () => {
   it('should render payment status cancel', () => {
     const wrapper = shallow(
       <PaymentStatus
+        returnUrl='/#'
         t={key => key}
         location={{ search: '?status=payment-cancel' }}
       />,
