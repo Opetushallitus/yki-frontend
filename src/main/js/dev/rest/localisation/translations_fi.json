@@ -220,6 +220,7 @@
   "examSession.registration.relocate.confirm": "Siirrä",
   "examSession.registration.relocate.session": "tilaisuuteen",
   "examSession.registrationLink": "Ilmoittautumislinkki",
+  "examSession.selectInstitution": "Valitse oppilaitos",
   "examSession.upcomingExamSessions": "Tulevat tutkintotilaisuudet",
   "examSessions.agreementNotFound": "Ei löytynyt voimassaolevaa järjestäjäsopimusta.",
   "examSessions.showPastSessions": "Näytä menneet tutkintotilaisuudet",
