@@ -543,6 +543,7 @@ export const registrationForm = props => {
           </>
           <Button
             type="submit"
+            disabled={props.submitting}
             isRegistration={true}
             datacy="form-submit-button"
             btnType={!isValid || props.submitting ? 'Disabled' : null}
