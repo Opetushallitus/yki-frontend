@@ -1,3 +1,10 @@
+// Handle 404 errors which are returned when inputing the fields
+Cypress.on('uncaught:exception', (err, runnable) => {
+  if(err.message.includes('code 404')) {
+    return false;
+  }
+});
+
 describe('Exam sessions', () => {
   beforeEach(() => {
     cy.visit('/tutkintotilaisuudet');
@@ -13,7 +20,8 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=radio-2081-01-30]').click();
     cy.get('[data-cy=input-max-participants]').type('100');
     cy.get('[data-cy=input-streetAddress]').type('address');
-    cy.get('[data-cy=input-zip]').type('00100');
+    cy.get('[data-cy=input-zip]').type('33100');
+    cy.get('[data-cy=input-postOffice]').type('city');
   };
 
   it('front page contains list of upcoming exam sessions', () => {
@@ -53,7 +61,7 @@ describe('Exam sessions', () => {
       .click();
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 4);
+      .should('have.length', 6);
   });
 
   it('exam session field validation errors disable submit button', () => {
@@ -76,7 +84,7 @@ describe('Exam sessions', () => {
       .click();
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 4);
+      .should('have.length', 6);
 
     cy.get('[data-cy=add-exam-session-button]').click();
     fillExamSessionForm();

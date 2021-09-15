@@ -17,7 +17,7 @@ describe('Registry item form', () => {
     cy.get('[data-cy=registry-item]').should('have.length', 2);
 
     cy.contains('Lisää järjestäjä').click();
-    cy.get('#organizationSearchField').type('turun yli');
+    cy.get('#organizationSearchField', { timeout: 8000 }).type('turun yli');
     cy.get('[data-cy=10089]').click();
 
     cy.get('#agreementStart').click();
@@ -32,7 +32,7 @@ describe('Registry item form', () => {
     cy.get('#merchantId').type('123456');
     cy.get('#merchantSecret').type('SECRET123456');
     cy.get('[data-cy=registry-item-form-submit]').click();
-    
+
     cy.log('new organizer is added')
     cy.get('[data-cy=registry-item]').should('have.length', 3);
   });
