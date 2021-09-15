@@ -13,8 +13,8 @@
 # production
 /build
 
-# localisation files
-dev/rest/localisation
+# Ignore localisation files except local ones
+/dev/rest/localisation/environment
 
 # misc
 .DS_Store

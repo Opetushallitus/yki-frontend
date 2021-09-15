@@ -77,12 +77,17 @@ npm run cypress:run
 ## Localisations
 
 Localisation files for different languages (en, fi & sv) that are used in local development are found under `dev/rest/localisation` directory.
-They aren't meant to be changed there, but rather updated manually in _Käännösten ylläpito_ for different environments under virkailija management panel.
-Once some localisations are added there, you can update local localisations files by running
+They also describe the set of localisations that should be defined in an environment where the application is being deployed.
+
+In `scripts` directory in under project root we have script `fetch-localisations.sh` which is used for downloading localisations for any environment.
+The localisations are downloaded under `dev/rest/localisation/environment` directory, and by comparing them with the localisations of another
+environment, one can easily see, if some localisations are missing, or their values should be updated before deploying to that environment.
+Fetching localisations can be done by running
+
 ```bash
-./update-translations.sh
+./fetch-localisations.sh env lang
 ```
-in `scripts` directory in under project root.
+in `scripts` directory with example parameters `{env: untuva, lang: fi}`. Running the script requires `curl` and `mkdir`.
 
 ### License
 
