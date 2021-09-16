@@ -15,6 +15,7 @@ describe('Exam sessions', () => {
   });
 
   const fillExamSessionForm = () => {
+    cy.get('[data-cy=select-officeOid]').select('1.2.246.562.10.82346919515');
     cy.get('[data-cy=radio-fin]').click();
     cy.get('[data-cy=radio-PERUS]').click();
     cy.get('[data-cy=radio-2081-01-30]').click();
@@ -188,12 +189,13 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=registration-SUBMITTED').should('not.exist');
   });
 
-  it('registration can be relocated to next exam session', () => {
+  it.only('registration can be relocated to next exam session', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-1]').should('exist');
 
-    cy.get('[data-cy=button-action]').first()
-      .click();
+    cy.get('[data-cy=button-action]').first().click();
+    cy.get('label select').first().select('3');
+
     cy.get('[data-cy=button-confirm-action]').click();
     cy.get('[data-cy=participant-1]').should('not.exist');
 
