@@ -8,7 +8,7 @@ cache:
     - '$HOME/.npm'
 
 script:
-  - npm test
+  - npm test -- --ci=true  
 
 notifications:
   flowdock:
