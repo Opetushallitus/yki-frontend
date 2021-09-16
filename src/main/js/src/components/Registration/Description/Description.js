@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import YkiImage1 from '../../../assets/images/ophYki_image1.png';
-import { MOBILE_VIEW } from '../../../common/Constants';
+import { fetchPrices } from '../../../store/actions/index';
+import { useMobileView } from '../../../util/customHooks';
 import {
   evaluationTexts,
   formatPriceObject,
@@ -14,12 +16,11 @@ import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCol
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import classes from './Description.module.css';
-import { fetchPrices } from '../../../store/actions/index';
 
 const mapStateToProps = state => {
   return {
     prices: state.registration.prices,
-    loadingPrices: state.registration.loadingPrices
+    loadingPrices: state.registration.loadingPrices,
   };
 };
 
@@ -32,9 +33,11 @@ const mapDispatchToProps = dispatch => {
 const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
   const { t } = useTranslation();
 
+  const isMobile = useMobileView(true);
+
   useEffect(() => {
-    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices()
-  }, [])
+    Object.keys(prices).length === 0 && !loadingPrices && onFetchPrices();
+  }, []);
 
   const examPrices = prices && prices['exam-prices'];
   const evalPrices = prices && prices['evaluation-prices'];
@@ -92,16 +95,44 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
     </div>
   );
 
+  const registerButton = (
+    <Link
+      tabIndex={0}
+      role="link"
+      onKeyPress={() =>
+        history.push('/ilmoittautuminen/valitse-tutkintotilaisuus')
+      }
+      to={{
+        pathname: '/ilmoittautuminen/valitse-tutkintotilaisuus',
+      }}
+      className={'YkiButton'}
+      data-cy="continue-button"
+    >
+      {t('registration.register')}
+    </Link>
+  );
+
   const desktopContent = (
     <>
-      <div className={classes.InnerContainer}>
-        <article className={classes.ArticleContent}>
-          <p>{t('registration.description.text2')}</p>
-          <p>{t('registration.description.text3')}</p>
-          <p>{t('registration.description.text4')}</p>
-        </article>
-        {tutorialVideo}
-        <>
+      <div className={'InnerContainer'}>
+        <div style={{ display: 'flex' }}>
+          <div style={{ marginRight: '1rem' }}>
+            <article className={classes.ArticleContent}>
+              <p>{t('registration.description.text2')}</p>
+              <p>{t('registration.description.text3')}</p>
+              <p>{t('registration.description.text4')}</p>
+            </article>
+            {tutorialVideo}
+          </div>
+          <PriceContainer
+            elements={levelPrices.concat({
+              title: 'common.price.reeval.first',
+              price: '50',
+              extraText: 'common.price.reeval.last',
+            })}
+          />
+        </div>
+        <div>
           <h2>{t('registration.description.examLevels')}</h2>
           <DescriptionCollapsible
             headerText={levelTranslations.PERUS}
@@ -115,22 +146,11 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
             headerText={levelTranslations.YLIN}
             content={upperLevel}
           />
-        </>
-        <>
-          <button
-            className={'YkiButton'}
-            data-cy="continue-button"
-            onClick={() =>
-              history.push(t('/ilmoittautuminen/valitse-tutkintotilaisuus'))
-            }
-            role="link"
-            aria-label={t('registration.register')}
-          >
-            {t('registration.register')}
-          </button>
-        </>
-        <div className={classes.InnerContainer}>
-          <h2>{t('registration.description.reEvaluation')}</h2>
+          <>{registerButton}</>
+
+          <h2 style={{ marginTop: '4rem' }}>
+            {t('registration.description.reEvaluation')}
+          </h2>
           {Object.keys(evaluationTexts).map(el => {
             return (
               <React.Fragment key={el}>
@@ -142,83 +162,67 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
             );
           })}
         </div>
-        <>
-          <button
-            className={'YkiButton'}
-            style={{ width: 'auto', padding: '0 1rem' }}
-            data-cy="re-eval-button"
-            onClick={() => history.push(t('/tarkistusarviointi'))}
-            role="link"
-            aria-label={t('registration.reeval')}
-          >
-            {t('registration.reeval')}
-          </button>
-        </>
+        <Link
+          tabIndex={0}
+          role="link"
+          style={{ padding: '0.25rem 0.75rem' }}
+          onKeyPress={() => history.push('/tarkistusarviointi')}
+          to={{
+            pathname: '/tarkistusarviointi',
+          }}
+          className={'YkiButton'}
+          data-cy="continue-button-re-eval"
+        >
+          {t('registration.reeval')}
+        </Link>
       </div>
-      <PriceContainer
-        elements={levelPrices.concat({
-          title: 'common.price.reeval.first',
-          price: '50',
-          extraText: 'common.price.reeval.last',
-        })}
-      />
     </>
   );
 
   const mobileContent = (
-    <>
+    <div
+      className={'InnerContainer'}
+      style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}
+    >
+      <article className={classes.ArticleContent}>
+        <p>{t('registration.description.text2')}</p>
+        <p>{t('registration.description.text3')}</p>
+        <p>{t('registration.description.text4')}</p>
+      </article>
+      {tutorialVideo}
       <div
-        className={classes.InnerContainer}
-        style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}
-      >
-        <article className={classes.ArticleContent}>
-          <p>{t('registration.description.text2')}</p>
-          <p>{t('registration.description.text3')}</p>
-          <p>{t('registration.description.text4')}</p>
-        </article>
-        {tutorialVideo}
-        <div
-          style={{
-            width: `calc(${window.screen.availWidth}px - 20px)`,
-            padding: '0 2px',
-          }}
-        >
-          <h2>{t('registration.description.examLevels')}</h2>
-          <DescriptionCollapsible
-            headerText={levelTranslations.PERUS}
-            content={basicLevel}
-          />
-          <DescriptionCollapsible
-            headerText={levelTranslations.KESKI}
-            content={middleLevel}
-          />
-          <DescriptionCollapsible
-            headerText={levelTranslations.YLIN}
-            content={upperLevel}
-          />
-        </div>
-      </div>
-      <>
-        <PriceContainer elements={levelPrices} />
-        <button
-          className={'YkiButton'}
-          data-cy="continue-button"
-          onClick={() =>
-            history.push(t('/ilmoittautuminen/valitse-tutkintotilaisuus'))
-          }
-          role="link"
-        >
-          {t('registration.register')}
-        </button>
-      </>
-      <div
-        className={classes.InnerContainer}
         style={{
           width: `calc(${window.screen.availWidth}px - 20px)`,
-          padding: '1rem',
+          padding: '0 2px',
         }}
       >
-        <h2>{t('registration.description.reEvaluation')}</h2>
+        <h2>{t('registration.description.examLevels')}</h2>
+        <DescriptionCollapsible
+          headerText={levelTranslations.PERUS}
+          content={basicLevel}
+        />
+        <DescriptionCollapsible
+          headerText={levelTranslations.KESKI}
+          content={middleLevel}
+        />
+        <DescriptionCollapsible
+          headerText={levelTranslations.YLIN}
+          content={upperLevel}
+        />
+      </div>
+
+      <PriceContainer elements={levelPrices} />
+      {registerButton}
+
+      <div
+        style={{
+          width: `calc(${window.screen.availWidth}px - 20px)`,
+          padding: '0 2px',
+        }}
+      >
+        <h2 style={{ marginTop: '2rem', lineHeight: 'normal' }}>
+          {t('registration.description.reEvaluation')}
+        </h2>
         {Object.keys(evaluationTexts).map(el => {
           return (
             <React.Fragment key={el}>
@@ -227,33 +231,33 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
             </React.Fragment>
           );
         })}
-        <div style={{ margin: '2rem 0 0 0' }}>
-          <PriceContainer elements={evaluationPrices} />
-          <button
-            className={'YkiButton'}
-            style={{ width: 'auto', padding: '0 1rem' }}
-            data-cy="re-eval-button"
-            onClick={() => history.push(t('/tarkistusarviointi'))}
-            role="link"
-            aria-label={t('registration.reeval')}
-          >
-            {t('registration.reeval')}
-          </button>
-        </div>
+
+        <PriceContainer elements={evaluationPrices} />
+        <Link
+          tabIndex={0}
+          role="link"
+          onKeyPress={() => history.push('/tarkistusarviointi')}
+          to={{
+            pathname: '/tarkistusarviointi',
+          }}
+          className={'YkiButton'}
+          data-cy="continue-button"
+        >
+          {t('registration.reeval')}
+        </Link>
       </div>
-    </>
+    </div>
   );
 
   return (
     <>
-      <main className={classes.Container}>
+      <main id="main" className={'Container'}>
         <HeadlineContainer
           headlineTitle={t('registration.description.title')}
           headlineContent={<p>{t('registration.description.text1')}</p>}
           headlineImage={YkiImage1}
         />
-        {MOBILE_VIEW ||
-          (MOBILE_VIEW && getDeviceOrientation() === 'landscape') ? (
+        {isMobile || (isMobile && getDeviceOrientation() === 'landscape') ? (
           <>{mobileContent}</>
         ) : (
           <>{desktopContent}</>

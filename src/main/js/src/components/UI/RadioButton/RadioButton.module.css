@@ -1,14 +1,41 @@
+.RadioButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.RadioButton label {
+  margin-bottom: 0 !important;
+}
+
 .RadioButton input {
   margin-bottom: 0.5rem;
   margin-right: 8px;
-  background: hsla(0, 0%, 100%, 1) 0% 0% no-repeat padding-box;
+  background: var(--white) 0% 0% no-repeat padding-box;
+  height: 17px;
+  width: 17px;
   -webkit-appearance: radio;
+}
+
+.RadioButton:hover {
+  color: var(--secondary-blue);
+}
+
+.RadioButtonDisabled {
+  color: var(--secondary-gray);
+}
+
+.RadioButtonDisabled input {
+  margin-bottom: 0.5rem;
+  margin-right: 8px;
+  height: 17px;
+  width: 17px;
 }
 
 .RadioButtonLabel {
   display: inline-block;
   width: 17%;
-  vertical-align:text-top;
+  vertical-align: text-top;
   font-size: 0.875em;
 }
 

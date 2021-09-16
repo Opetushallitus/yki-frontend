@@ -1,17 +1,19 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
 import classes from './Alert.module.css';
 
 const alertClass = props => {
   return props.success ? classes.AlertSuccess : classes.AlertError;
-}
+};
 
 const alert = props => (
-  <div className={classes.Alert}>
+  <div className={classes.Alert} aria-live="assertive">
     <div className={[classes.AlertContainer, alertClass(props)].join(' ')}>
-      <div data-cy="alert-title" className={classes.AlertTitle}>{props.title}</div>
+      <div data-cy="alert-title" className={classes.AlertTitle}>
+        {props.title}
+      </div>
       {props.optionalText && (
         <div className={classes.AlertText}>{props.optionalText}</div>
       )}

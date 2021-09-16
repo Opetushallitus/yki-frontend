@@ -23,6 +23,7 @@ import Registration from './containers/Registration/Registration';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
 import RegistryExamSessions from './containers/RegistryExamSessions/RegistryExamSessions';
 import RegistrationRoute from './hoc/RegistrationRoute/RegistrationRoute';
+import ScrollToTop from './ScrollToTop';
 import examDatesReducer from './store/reducers/examDates';
 import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
@@ -58,6 +59,7 @@ const app = () => (
     <Suspense fallback={<Spinner />}>
       <Init>
         <Router basename={'/yki'}>
+          <ScrollToTop />
           <Switch>
             <ErrorBoundary>
               <RegistrationRoute exact path="/" component={Description} />

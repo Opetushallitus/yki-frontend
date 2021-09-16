@@ -32,7 +32,7 @@ describe('Registry item form', () => {
     cy.get('#merchantId').type('123456');
     cy.get('#merchantSecret').type('SECRET123456');
     cy.get('[data-cy=registry-item-form-submit]').click();
-    
+
     cy.log('new organizer is added')
     cy.get('[data-cy=registry-item]').should('have.length', 3);
   });

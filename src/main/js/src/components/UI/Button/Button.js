@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import classes from './Button.module.css';
 
@@ -9,13 +9,13 @@ const button = props => (
     disabled={props.disabled}
     className={[
       props.isRegistration ? 'YkiButton' : classes.Button,
-      classes[props.btnType],
+      classes[props.customClass],
     ].join(' ')}
     onClick={props.clicked}
     tabIndex={props.tabIndex}
     data-cy={props.datacy}
-    role="link"
     aria-label={props.ariaLabel}
+    aria-disabled={props.disabled}
   >
     {props.children}
   </button>
@@ -24,7 +24,7 @@ const button = props => (
 button.propTypes = {
   type: PropTypes.string,
   disabled: PropTypes.bool,
-  btnType: PropTypes.string,
+  customClass: PropTypes.string,
   clicked: PropTypes.func,
   tabIndex: PropTypes.string,
   children: PropTypes.any,

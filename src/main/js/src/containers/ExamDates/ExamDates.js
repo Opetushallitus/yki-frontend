@@ -296,8 +296,10 @@ class ExamDates extends Component {
             </button>
           </div>
           <div className={classes.PastExamDates}>
-            <p>{t('examDates.show.pastDates')}</p>
             <Checkbox
+              label={t('examDates.show.pastDates')}
+              name={'showPastDates'}
+              checkboxId={'showPastDates'}
               checked={this.state.fetchExamHistory}
               onChange={() => this.onExamDateHistoryFetchChange()}
             />
@@ -314,7 +316,7 @@ class ExamDates extends Component {
             <ControlledCheckbox
               onChange={() => onSelectAllChange()}
               hidden // Hidden until decided if this should exist
-            //checked={isAllChecked}
+              //checked={isAllChecked}
             />
             <h3>{t('common.examDate')}</h3>
             <h3>{`${t('common.language')} & ${t('common.level')}`}</h3>
@@ -406,8 +408,8 @@ class ExamDates extends Component {
           const postAdmissionDate =
             e.post_admission_start_date && e.post_admission_end_date
               ? `${moment(e.post_admission_start_date).format(
-                DATE_FORMAT,
-              )} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}`
+                  DATE_FORMAT,
+                )} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}`
               : '';
 
           const reEvaluationDate =

@@ -2,6 +2,9 @@ import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import toJson from 'enzyme-to-json';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import userReducer from '../../../store/reducers/user';
 
 import { registrationForm as RegistrationForm } from './RegistrationForm';
 
@@ -30,15 +33,18 @@ const initData = {
   },
 };
 describe('<RegistrationForm />', () => {
+  const mockStore = createStore(combineReducers({ user: userReducer }));
   it('should render registration form', () => {
     const wrapper = shallow(
-      <RegistrationForm
-        t={key => key}
-        i18n={{lang: 'fi'}}
-        initData={initData}
-        submitting={false}
-        onSubmitRegistrationForm={jest.fn()}
-      />,
+      <Provider store={mockStore}>
+        <RegistrationForm
+          t={key => key}
+          i18n={{ lang: 'fi' }}
+          initData={initData}
+          submitting={false}
+          onSubmitRegistrationForm={jest.fn()}
+        />
+      </Provider>,
     );
     expect(toJson(wrapper)).toMatchSnapshot();
   });

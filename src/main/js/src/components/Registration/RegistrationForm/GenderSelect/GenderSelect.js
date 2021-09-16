@@ -1,8 +1,10 @@
-import React from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import * as R from 'ramda';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+
+import classes from '../RegistrationForm.module.css';
 
 export const genderSelect = props => {
   const sortByCode = R.sortBy(R.prop('koodiArvo'));
@@ -18,18 +20,24 @@ export const genderSelect = props => {
   });
 
   return (
-    <React.Fragment>
-      <h3>{props.t('registration.form.gender')}</h3>
+    <div className={classes.InputFieldWrapper}>
+      <label htmlFor="gender-select">
+        {props.t('registration.form.gender')}
+      </label>
       <Field
+        id="gender-select"
+        aria-required
         component="select"
         name="gender"
         className={props.className}
         data-cy="select-gender"
       >
-        <option value="" key="" />
+        <option value="placeholder" key="placeholder">
+          {props.t('common.selectorDefault')}
+        </option>
         {gendersByLocale}
       </Field>
-    </React.Fragment>
+    </div>
   );
 };
 

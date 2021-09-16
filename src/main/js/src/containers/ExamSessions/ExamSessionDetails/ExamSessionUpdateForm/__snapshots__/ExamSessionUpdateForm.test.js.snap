@@ -63,25 +63,35 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
         <div
           class="Zip"
         >
-          <h3>
+          <label
+            for="zip-input"
+          >
             registration.form.input.zip *
-          </h3>
+          </label>
           <input
             aria-label="registration.form.aria.input.zip"
+            aria-required="true"
             data-cy="input-zip"
+            id="zip-input"
             name="zip"
+            placeholder="registration.form.input.zip.placeholder"
           />
         </div>
         <div
           class="PostOffice"
         >
-          <h3>
+          <label
+            for="postOffice-input"
+          >
             registration.form.input.postOffice *
-          </h3>
+          </label>
           <input
             aria-label="registration.form.aria.input.postOffice"
+            aria-required="true"
             data-cy="input-postOffice"
+            id="postOffice-input"
             name="postOffice"
+            placeholder="registration.form.input.postOffice.placeholder"
           />
         </div>
       </div>
@@ -211,9 +221,9 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       class="Buttons"
     >
       <button
+        aria-disabled="true"
         class="Button undefined"
         disabled=""
-        role="link"
         type="submit"
       >
         registryItem.button.update

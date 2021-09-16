@@ -1,33 +1,38 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { withTranslation } from 'react-i18next';
+import { FinnishSSN } from 'finnish-ssn';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import moment from 'moment';
-import { FinnishSSN } from 'finnish-ssn';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
-import classes from './RegistrationForm.module.css';
+import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT } from '../../../common/Constants';
+import ScrollToError from '../../../ScrollToFormTop';
+import { useMobileView } from '../../../util/customHooks';
+import { checkBirthDate, containsSpecialCharacters } from '../../../util/util';
+import FormikInputField from '../../FormikInputField/FormikInputField';
+import PhoneNumberInput from '../../PhoneNumberInput/PhoneNumberInput';
 import Button from '../../UI/Button/Button';
+import Checkbox from '../../UI/Checkbox/Checkbox';
 import RadioButton from '../../UI/RadioButton/RadioButton';
-import NationalitySelect from './NationalitySelect/NationalitySelect';
 import ZipAndPostOffice from '../../ZipAndPostOffice/ZipAndPostOffice';
-import GenderSelect from './GenderSelect/GenderSelect';
-import { DATE_FORMAT, ISO_DATE_FORMAT_SHORT, MOBILE_VIEW, TABLET_VIEW, PRIVACY_POLICY_LINK } from '../../../common/Constants';
 import RegistrationError from '../RegistrationError/RegistrationError';
-import Checkbox from "../../UI/Checkbox/Checkbox";
-import PhoneNumberInput from "../../PhoneNumberInput/PhoneNumberInput";
+import GenderSelect from './GenderSelect/GenderSelect';
+import NationalitySelect from './NationalitySelect/NationalitySelect';
+import classes from './RegistrationForm.module.css';
 
 export const registrationForm = props => {
   const mandatoryErrorMsg = props.t('error.mandatory');
   const maxErrorMsg = props.t('error.max');
+  const mobileOrTablet = useMobileView(true, true);
 
   function validatePhoneNumber(value) {
     if (value) {
       const phoneNumber = parsePhoneNumberFromString(value);
       return phoneNumber && phoneNumber.isValid();
     } else {
-      return true;
+      return false;
     }
   }
 
@@ -39,16 +44,11 @@ export const registrationForm = props => {
     if (props.initData.user.ssn) {
       return true;
     }
-    if (value) {
-      const date = moment(value, DATE_FORMAT, true);
-      if (date.isValid() || date.isBefore(moment())) {
-        return true;
-      } else {
-        return this.createError({ message: props.t('error.birthdate') });
-      }
-    } else {
-      return this.createError({ message: mandatoryErrorMsg });
+    const validation = checkBirthDate(value);
+    if (validation.error) {
+      return this.createError({ message: validation.error });
     }
+    return true;
   }
 
   function sameEmail(confirmEmail) {
@@ -58,19 +58,39 @@ export const registrationForm = props => {
   const validationSchema = Yup.object().shape({
     firstName: Yup.string()
       .required(mandatoryErrorMsg)
-      .max(128, maxErrorMsg),
+      .max(128, maxErrorMsg)
+      .test(
+        'no-special-characters',
+        props.t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     lastName: Yup.string()
       .required(mandatoryErrorMsg)
-      .max(128, maxErrorMsg),
+      .max(128, maxErrorMsg)
+      .test(
+        'no-special-characters',
+        props.t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     streetAddress: Yup.string()
       .required(mandatoryErrorMsg)
-      .max(128, maxErrorMsg),
+      .max(128, maxErrorMsg)
+      .test(
+        'no-special-characters',
+        props.t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     zip: Yup.string()
       .required(mandatoryErrorMsg)
       .max(16, maxErrorMsg),
     postOffice: Yup.string()
       .required(mandatoryErrorMsg)
-      .max(64, maxErrorMsg),
+      .max(64, maxErrorMsg)
+      .test(
+        'no-special-characters',
+        props.t('error.specialCharacters'),
+        value => !containsSpecialCharacters(value),
+      ),
     phoneNumber: Yup.string()
       .required(mandatoryErrorMsg)
       .test(
@@ -82,13 +102,17 @@ export const registrationForm = props => {
       .email(props.t('error.email'))
       .required(mandatoryErrorMsg)
       .max(64, maxErrorMsg),
-    nationality: Yup.string().required(mandatoryErrorMsg),
-    ssn: Yup.string()
-      .test(
-        'invalid-ssn',
-        props.t('error.ssn.invalid'),
-        validateSsn,
-      ),
+    nationality: Yup.string()
+      .required(mandatoryErrorMsg)
+      .test('gender-select', mandatoryErrorMsg, value => {
+        return value && value !== 'placeholder';
+      }),
+    gender: Yup.string(),
+    ssn: Yup.string().test(
+      'invalid-ssn',
+      props.t('error.ssn.invalid'),
+      validateSsn,
+    ),
     confirmEmail: Yup.string().test(
       'same-email',
       props.t('error.confirmEmail'),
@@ -101,8 +125,12 @@ export const registrationForm = props => {
     ),
     examLang: Yup.string().required(mandatoryErrorMsg),
     certificateLang: Yup.string().required(mandatoryErrorMsg),
-    personalDataConsent: Yup.boolean().required(mandatoryErrorMsg).oneOf([true], mandatoryErrorMsg),
-    termsOfUseConsent: Yup.boolean().required(mandatoryErrorMsg).oneOf([true], mandatoryErrorMsg),
+    personalDataConsent: Yup.boolean()
+      .required(mandatoryErrorMsg)
+      .oneOf([true], mandatoryErrorMsg),
+    termsOfUseConsent: Yup.boolean()
+      .required(mandatoryErrorMsg)
+      .oneOf([true], mandatoryErrorMsg),
   });
 
   const RadioButtonComponent = ({
@@ -132,55 +160,90 @@ export const registrationForm = props => {
     error,
   }) => {
     return (
-      <div className={className} id={id}>
-        <h3>{label}</h3>
+      <fieldset id={id}>
+        <label>{label}</label>
+
         {children}
         {error && value ? (
           <span className={classes.ErrorMessage}>{error}</span>
         ) : null}
-      </div>
+      </fieldset>
     );
   };
-  const CheckboxComponent = ({ field: { name, value, onChange }, datacy }) => {
+  const CheckboxComponent = ({
+    field: { name, value },
+    setFieldValue,
+    setTouched,
+    datacy,
+    label,
+    ariaLabel,
+    checkboxId,
+    touched,
+    ariaRequired,
+  }) => {
     return (
       <Checkbox
         name={name}
         checked={value}
         datacy={datacy}
-        onChange={onChange}
+        onChange={() => {
+          setFieldValue(name, !value);
+          setTouched(
+            {
+              ...touched,
+              [name]: true,
+            },
+            true,
+          );
+        }}
+        checkboxId={checkboxId}
+        label={label}
+        ariaLabel={ariaLabel}
+        ariaRequired={ariaRequired}
       />
     );
   };
 
-  const PhoneNumberComponent = ({ field: { name, value }, datacy, setFieldValue, setTouched, touched }) => {
+  const PhoneNumberComponent = ({
+    field: { name, value },
+    datacy,
+    setFieldValue,
+    setTouched,
+    touched,
+  }) => {
     return (
       <PhoneNumberInput
+        required={true}
         name={name}
         current={value}
         datacy={datacy}
         nationalities={props.initData.nationalities}
-        onChange={(n) => {
+        onChange={n => {
           setFieldValue(name, n);
-          setTouched({
-            ...touched,
-            [name]: true
-          }, true);
+          setTouched(
+            {
+              ...touched,
+              [name]: true,
+            },
+            true,
+          );
         }}
       />
     );
   };
 
   const phoneNumberInputField = (setFieldValue, setTouched, touched) => (
-    <> <h3>{props.t(`registration.form.phoneNumber`)}</h3>
+    <div className={classes.InputFieldWrapper}>
+      <label>{props.t(`registration.form.phoneNumber`)} *</label>
       <Field
         component={PhoneNumberComponent}
         name={'phoneNumber'}
         value={'phoneNumber'}
-        datacy={"input-phoneNumber"}
+        datacy={'input-phoneNumber'}
         setFieldValue={setFieldValue}
         setTouched={setTouched}
         touched={touched}
-        type='tel'
+        type="tel"
         aria-label={props.t(`registration.form.aria.phoneNumber`)}
       />
       <ErrorMessage
@@ -188,74 +251,50 @@ export const registrationForm = props => {
         data-cy={`input-error-phoneNumber`}
         component="span"
         className={classes.ErrorMessage}
-      /></>
-  )
-
-  const inputField = (name, placeholder = '', extra, type = 'text') => (
-    <>
-      <h3>{props.t(`registration.form.${name}`)}</h3>
-      {renderInputField(name, placeholder, type)}
-      {extra && <span>{extra}</span>}
-      <ErrorMessage
-        name={name}
-        data-cy={`input-error-${name}`}
-        component="span"
-        className={classes.ErrorMessage}
       />
-    </>
+    </div>
   );
+
+  const inputField = (name, required, extra, type = 'text', placeholder) => {
+    const isEmailInput = (name === 'email' || name === 'confirmEmail');
+    const handler = isEmailInput ? handleEmailActions : undefined;
+    
+    return (
+      <FormikInputField
+        name={name}
+        label={props.t(`registration.form.${name}`)}
+        required={required}
+        extra={extra}
+        type={type}
+        autoComplete={isEmailInput ? "off" : undefined}
+        onContextMenu={handler}
+        onPaste={handler}
+        onCopy={handler}
+        onCut={handler}
+        placeholder={placeholder || props.t(`registration.form.${name}`)}
+      />
+    )
+  };
+
 
   /**
    * Returns default disabled actions for the email inputs
    * 
-   * @param {true if input type is email or emailConf} isEmailInput 
    * @returns false or undefined
    */
-  const handleEmailActions = (isEmailInput) => (e) => {
-    if (isEmailInput) {
-      e.preventDefault();
-      return false;
-    } else {
-      return;
-    }
-  }
-
-  /**
-   * Renders input element. Sets different props for the email inputs
-   * 
-   * @param {name of element} name 
-   * @param {placeholder to be used in the input} placeholder 
-   * @param {type of field} type 
-   * @returns Input field
-   */
-  const renderInputField = (name, placeholder, type) => {
-    const isEmailInput = (name === 'email' || name === 'confirmEmail');
-
-    return (
-      <Field
-        name={name}
-        data-cy={`input-${name}`}
-        placeholder={placeholder}
-        className={classes.TextInput}
-        type={type}
-        autoComplete={isEmailInput ? "off" : undefined}
-        onContextMenu={handleEmailActions(isEmailInput)}
-        onPaste={handleEmailActions(isEmailInput)}
-        onCopy={handleEmailActions(isEmailInput)}
-        onCut={handleEmailActions(isEmailInput)}
-        aria-label={props.t(`registration.form.aria.${name}`)}
-      />
-    )
+  const handleEmailActions = (e) => {
+    e.preventDefault();
+    return false;
   }
 
   const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
       <>
-        <h3>{props.t(`registration.form.${name}`)}</h3>
+        <p className={classes.Label}>{props.t(`registration.form.${name}`)}</p>
         <span>{initialValues[name]}</span>
       </>
     ) : (
-      inputField(name, null, null, type)
+      inputField(name, true, null, type)
     );
 
   const showExamLang = () => {
@@ -327,180 +366,166 @@ export const registrationForm = props => {
         };
         props.onSubmitRegistrationForm(props.initData.registration_id, payload);
       }}
-      render={({ values, isValid, errors, initialValues, setFieldValue, setTouched, touched }) => (
-        <Form className={classes.Form}>
+      render={({
+        values,
+        isValid,
+        submitCount,
+        errors,
+        isSubmitting,
+        initialValues,
+        setFieldValue,
+        setTouched,
+        touched,
+      }) => (
+        <Form className={classes.Form} id="form">
+          <ScrollToError isValid={isValid} isSubmitting={isSubmitting} />
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
-            <div className={classes.InputFieldGrid}>
-              <div className={classes.FormElement}>
-                {readonlyWhenExistsInput('firstName', initialValues)}
-              </div>
-              <div className={classes.FormElement}>
-                {readonlyWhenExistsInput('lastName', initialValues)}
-              </div>
+            <div className={classes.InputGroup}>
+              <div>{readonlyWhenExistsInput('firstName', initialValues)}</div>
+              <div>{readonlyWhenExistsInput('lastName', initialValues)}</div>
             </div>
-            {MOBILE_VIEW || TABLET_VIEW ?
+            <div className={classes.InputGroup}>
+              {inputField(
+                'streetAddress',
+                true,
+                null,
+                'text',
+                props.t('registration.form.streetAddress.placeholder'),
+              )}
+              <ZipAndPostOffice
+                mandatory
+                values={values}
+                setFieldValue={setFieldValue}
+              />
+            </div>
+
+            {mobileOrTablet ? (
               <>
-                <div className={classes.InputFieldGrid}>
-                  <div className={classes.FormElement}>
-                    {inputField('streetAddress')}
-                  </div>
-                </div>
-                <div className={classes.InputFieldGrid}>
-                  <div className={classes.FormElement}>
-                    <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
-                  </div>
-                </div>
-              </>
-              :
-              <div className={classes.InputFieldGrid}>
-                <div className={classes.FormElement}>
-                  {inputField('streetAddress')}
-                </div>
-                <div className={classes.FormElement}>
-                  <ZipAndPostOffice values={values} setFieldValue={setFieldValue} />
-                </div>
-              </div>
-            }
-            {MOBILE_VIEW || TABLET_VIEW ?
-              <>
-                <div className={classes.InputFieldGrid}>
-                  <div className={classes.FormElement}>
-                    {phoneNumberInputField(setFieldValue, setTouched, touched)}
-                  </div>
-                </div>
-                <div className={classes.InputFieldGrid}>
-                  <div className={classes.FormElement}>
-                    {readonlyWhenExistsInput('email', initialValues, 'email')}
-                  </div>
-                </div>
-                {!props.initData.user.email && (
-                  <div className={classes.InputFieldGrid}>
-                    <div className={classes.FormElement}>
-                      {inputField('confirmEmail', null, null, 'email')}
-                    </div>
-                  </div>
-                )}
-              </>
-              :
-              <div className={classes.InputFieldGrid}>
-                <div className={classes.FormElement}>
+                <div className={classes.InputGroup}>
                   {phoneNumberInputField(setFieldValue, setTouched, touched)}
                 </div>
-                <div className={classes.FormElement}>
+                <div className={classes.InputGroup}>
                   {readonlyWhenExistsInput('email', initialValues, 'email')}
+
+                  {!props.initData.user.email && (
+                    <>{inputField('confirmEmail', true, null, 'email')}</>
+                  )}
                 </div>
+              </>
+            ) : (
+              <div className={classes.InputGroup}>
+                {phoneNumberInputField(setFieldValue, setTouched, touched)}
+                {readonlyWhenExistsInput('email', initialValues, 'email')}
                 {!props.initData.user.email && (
-                  <div className={classes.FormElement}>
-                    {inputField('confirmEmail', null, null, 'email')}
-                  </div>
+                  <>{inputField('confirmEmail', true, null, 'email')}</>
                 )}
               </div>
-            }
+            )}
             {!initialValues.nationality && (
-              <div className={classes.FormElement}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <NationalitySelect
                   nationalities={props.initData.nationalities}
-                  className={classes.NationalitySelect}
+                  className={classes.FormSelector}
+                />
+                <ErrorMessage
+                  name={'nationality'}
+                  data-cy={`input-error-nationality`}
+                  component="span"
+                  className={classes.ErrorMessage}
                 />
               </div>
             )}
             {!props.initData.user.ssn && (
-              <div className={classes.InputFieldGrid}>
-                <div className={classes.FormElement}>
-                  <div className={classes.Birthdate}>
-                    {inputField(
-                      'birthdate',
-                      props.t('registration.form.birthdate.placeholder'),
-                    )}
-                  </div>
-                  <div>
-                    <GenderSelect
-                      genders={props.initData.genders}
-                      className={classes.GenderSelect}
-                    />
-                  </div>
-                  <div className={classes.FormElement}>
-                    {inputField('ssn')}
-                    <p> {props.t('registration.form.ssn.text')}</p>
-                  </div>
+              <div className={classes.InputGroup}>
+                {inputField('birthdate', true)}
+
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <GenderSelect
+                    genders={props.initData.genders}
+                    className={classes.FormSelector}
+                  />
+                  <ErrorMessage
+                    name={'gender'}
+                    data-cy={`input-error-gender`}
+                    component="span"
+                    className={classes.ErrorMessage}
+                  />
+                </div>
+                <div>
+                  {inputField('ssn')}
+                  <p> {props.t('registration.form.ssn.text')}</p>
                 </div>
               </div>
             )}
-            <div className={classes.InputFieldGrid}>
+            <div className={classes.InputGroup}>
               {showExamLang() && (
-                <div
-                  className={[classes.FormElement, classes.RadiobuttonGroup].join(
-                    ' ',
-                  )}
-                >
-                  <RadioButtonGroup
-                    label={props.t('registration.form.examLang')}
-                    value={values.examLang}
-                    error={errors.examLang}
-                  >
-                    <div className={classes.RadioButtons}>
-                      <Field
-                        component={RadioButtonComponent}
-                        name="examLang"
-                        id={'examLang-fi'}
-                        checkedValue={'fi'}
-                        label={props.t('common.language.fin')}
-                      />
-                      <Field
-                        component={RadioButtonComponent}
-                        name="examLang"
-                        id={'examLang-sv'}
-                        checkedValue={'sv'}
-                        label={props.t('common.language.swe')}
-                      />
-                    </div>
-                  </RadioButtonGroup>
-                </div>
-              )}
-              <div
-                className={[classes.FormElement, classes.RadiobuttonGroup].join(
-                  ' ',
-                )}
-              >
                 <RadioButtonGroup
-                  label={props.t('registration.form.certificateLang')}
-                  value={values.certificateLang}
-                  error={errors.certificateLang}
+                  label={props.t('registration.form.examLang')}
+                  value={values.examLang}
+                  error={errors.examLang}
                 >
                   <div className={classes.RadioButtons}>
                     <Field
                       component={RadioButtonComponent}
-                      name="certificateLang"
-                      id={'certificateLang-fi'}
+                      name="examLang"
+                      id={'examLang-fi'}
                       checkedValue={'fi'}
                       label={props.t('common.language.fin')}
                     />
                     <Field
                       component={RadioButtonComponent}
-                      name="certificateLang"
-                      id={'certificateLang-sv'}
+                      name="examLang"
+                      id={'examLang-sv'}
                       checkedValue={'sv'}
                       label={props.t('common.language.swe')}
                     />
-                    <Field
-                      component={RadioButtonComponent}
-                      name="certificateLang"
-                      id={'certificateLang-en'}
-                      checkedValue={'en'}
-                      label={props.t('common.language.eng')}
-                    />
                   </div>
                 </RadioButtonGroup>
-              </div>
+              )}
+
+              <RadioButtonGroup
+                label={props.t('registration.form.certificateLang')}
+                value={values.certificateLang}
+                error={errors.certificateLang}
+              >
+                <div className={classes.RadioButtons}>
+                  <Field
+                    component={RadioButtonComponent}
+                    name="certificateLang"
+                    id={'certificateLang-fi'}
+                    checkedValue={'fi'}
+                    label={props.t('common.language.fin')}
+                  />
+                  <Field
+                    component={RadioButtonComponent}
+                    name="certificateLang"
+                    id={'certificateLang-sv'}
+                    checkedValue={'sv'}
+                    label={props.t('common.language.swe')}
+                  />
+                  <Field
+                    component={RadioButtonComponent}
+                    name="certificateLang"
+                    id={'certificateLang-en'}
+                    checkedValue={'en'}
+                    label={props.t('common.language.eng')}
+                  />
+                </div>
+              </RadioButtonGroup>
             </div>
           </div>
+
           <p>{props.t('registration.form.specialArrangements.info')}</p>
           <p>{props.t('registration.form.summary.info')}</p>
           <>
             <div className={classes.ConsentContainer}>
               <article>
-                <h4>{props.t('registration.form.consent.heading')}</h4>
+                <p>
+                  <strong>
+                    {props.t('registration.form.consent.heading')}
+                  </strong>
+                </p>
                 <p>{props.t('registration.form.consent.info')}</p>
               </article>
               <div className={classes.ConsentCheckbox}>
@@ -508,9 +533,15 @@ export const registrationForm = props => {
                   component={CheckboxComponent}
                   name={'termsOfUseConsent'}
                   value={'termsOfUseConsent'}
-                  datacy={"form-checkbox-terms"}
+                  checkboxId={'termsOfUseConsent'}
+                  datacy={'form-checkbox-terms'}
+                  setFieldValue={setFieldValue}
+                  touched={touched}
+                  setTouched={setTouched}
+                  ariaRequired={true}
+                  label={props.t('registration.form.consent.confirm')}
+                  ariaLabel={props.t('registration.form.consent.confirm')}
                 />
-                <p>{props.t('registration.form.consent.confirm')}</p>
                 <ErrorMessage
                   name={'termsOfUseConsent'}
                   component="span"
@@ -520,9 +551,22 @@ export const registrationForm = props => {
             </div>
             <div className={classes.ConsentContainer}>
               <article>
-                <h4>{props.t('registration.form.personalData.consent.heading')}</h4>
-                <a href={PRIVACY_POLICY_LINK} target="_blank" rel="noopener noreferrer">
+                <p>
+                  <strong>
+                    {props.t('registration.form.personalData.consent.heading')}
+                  </strong>
+                </p>
+                <a
+                  href={'https://opintopolku.fi/wp/tietosuojaseloste/'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={props.t('common.newTab')}
+                >
                   {props.t('common.yki.consent.link')}
+                  <img
+                    src={require('../../../assets/svg/external-link.svg')}
+                    alt={props.t('common.newTab')}
+                  />
                 </a>
               </article>
               <div className={classes.ConsentCheckbox}>
@@ -530,9 +574,25 @@ export const registrationForm = props => {
                   component={CheckboxComponent}
                   name={'personalDataConsent'}
                   value={'personalDataConsent'}
-                  datacy={"form-checkbox-personal-data"}
+                  checkboxId={'personalDataConsent'}
+                  setTouched={setTouched}
+                  touched={touched}
+                  setFieldValue={setFieldValue}
+                  datacy={'form-checkbox-personal-data'}
+                  ariaRequired={true}
+                  onClick={() =>
+                    setFieldValue(
+                      'personalDataConsent',
+                      !values.personalDataConsent,
+                    )
+                  }
+                  label={props.t(
+                    'registration.form.personalData.consent.confirm',
+                  )}
+                  ariaLabel={props.t(
+                    'registration.form.personalData.consent.confirm',
+                  )}
                 />
-                <p>{props.t('registration.form.personalData.consent.confirm')}</p>
                 <ErrorMessage
                   name={'personalDataConsent'}
                   component="span"
@@ -545,12 +605,7 @@ export const registrationForm = props => {
             type="submit"
             isRegistration={true}
             datacy="form-submit-button"
-            btnType={!isValid || props.submitting ? 'Disabled' : null}
-            ariaLabel={
-              !isValid || props.submitting
-                ? props.t('registration.form.aria.submit.button')
-                : null
-            }
+            ariaLabel={props.t('registration.form.aria.submit.button')}
           >
             {props.t('registration.form.submit.button')}
           </Button>

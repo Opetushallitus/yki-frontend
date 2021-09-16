@@ -2,7 +2,9 @@
 
 exports[`<LinkExpired /> should render link expired page 1`] = `
 <Fragment>
-  <main>
+  <main
+    id="main"
+  >
     <HeadlineContainer
       disableContent={true}
       headlineContent={null}
@@ -13,7 +15,7 @@ exports[`<LinkExpired /> should render link expired page 1`] = `
       className="Content"
     >
       <backButton
-        clicked={[Function]}
+        href="/"
       />
       <p>
         registration.expired.loginlink.info

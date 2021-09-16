@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
 
-import classes from './UpcomingExamSessions.module.css';
 import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
 import { languageToString, levelDescription } from '../../util/util';
-import Checkbox from "../UI/Checkbox/Checkbox";
+import Checkbox from '../UI/Checkbox/Checkbox';
+import classes from './UpcomingExamSessions.module.css';
 
 export const upcomingExamSessions = props => {
   const examSessionRows = props.examSessions.map((e, i) => {
@@ -32,27 +32,30 @@ export const upcomingExamSessions = props => {
           {moment(e.registration_end_date).format(DATE_FORMAT)}
         </p>
         <p>
-          {registrationOpen ? `${e.participants + e.pa_participants} / ${e.max_participants + postAdmissionQuota}` : '-'}
+          {registrationOpen
+            ? `${e.participants + e.pa_participants} / ${e.max_participants +
+                postAdmissionQuota}`
+            : '-'}
         </p>
       </div>
     );
   });
 
   const togglePastCheckbox = (
-    <>
-      {props.togglePastExamSessions &&
-        <>
-          <div className={classes.ShowPastSessionsItem}>{props.t('examSessions.showPastSessions')}</div>
-          <div className={classes.ShowPastSessionsItem}>
-            <Checkbox
-              checked={props.showPastExamSessions}
-              datacy="exam-sessions-toggle-past-checkbox"
-              onChange={() => props.togglePastExamSessions()}
-            />
-          </div>
-        </>}
-    </>
-  )
+    <div className={classes.CheckboxContainer}>
+      {props.togglePastExamSessions && (
+        <Checkbox
+          label={props.t('examSessions.showPastSessions')}
+          ariaLabel={props.t('examSessions.showPastSessions')}
+          checked={props.showPastExamSessions}
+          datacy="exam-sessions-toggle-past-checkbox"
+          onChange={() => props.togglePastExamSessions()}
+          checkboxId="past-sessions"
+          checkBoxClass={classes.CheckBox}
+        />
+      )}
+    </div>
+  );
 
   return (
     <div className={classes.ExamSessionList}>
@@ -72,8 +75,8 @@ export const upcomingExamSessions = props => {
           {examSessionRows}
         </div>
       ) : (
-          <p>{props.t('examSession.noPlannedSessions')}</p>
-        )}
+        <p>{props.t('examSession.noPlannedSessions')}</p>
+      )}
     </div>
   );
 };
