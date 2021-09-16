@@ -79,15 +79,12 @@ npm run cypress:run
 Localisation files for different languages (en, fi & sv) that are used in local development are found under `dev/rest/localisation` directory.
 They also describe the set of localisations that should be defined in an environment where the application is being deployed.
 
-In `scripts` directory in under project root we have script `fetch-localisations.sh` which is used for downloading localisations for any environment.
-The localisations are downloaded under `dev/rest/localisation/environment` directory, and by comparing them with the localisations of another
-environment, one can easily see, if some localisations are missing, or their values should be updated before deploying to that environment.
-Fetching localisations can be done by running
-
+Npm script
 ```bash
-./fetch-localisations.sh env lang
+npm run localisation env
 ```
-in `scripts` directory with example parameters `{env: untuva, lang: fi}`. Running the script requires `curl` and `mkdir`.
+is used for downloading localisations for given environment `env`. Running the script requires `curl` and `mkdir`. If no `env` is provided as
+a parameter, localisations are fetched from `untuva` environment. The localisations are downloaded under `dev/rest/localisation/environment`.
 
 ### License
 

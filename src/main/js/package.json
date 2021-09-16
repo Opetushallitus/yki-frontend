@@ -46,6 +46,7 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "build": "react-scripts build",
+    "localisation": "cd ../../../scripts; ./fetch-localisations.sh",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "e2e-test": "BROWSER=none start-server-and-test start http://localhost:3000 cypress:run"
