@@ -83,8 +83,9 @@ Npm script
 ```bash
 npm run localisation env
 ```
-is used for downloading localisations for given environment `env`. Running the script requires `curl` and `mkdir`. If no `env` is provided as
-a parameter, localisations are fetched from `untuva` environment. The localisations are downloaded under `dev/rest/localisation/environment`.
+is used for downloading localisations for given environment `env`. Running the script requires `curl`, `echo` and `mkdir`.
+If no `env` is provided as a parameter, localisations are fetched from `untuva` environment.
+The localisations are downloaded under `dev/rest/localisation/environment`.
 
 ### License
 
