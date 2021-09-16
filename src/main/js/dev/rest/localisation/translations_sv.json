@@ -209,6 +209,7 @@
   "examSession.registration.relocate.confirm": "Överför",
   "examSession.registration.relocate.session": "till tillfället",
   "examSession.registrationLink": "Anmälningslänk",
+  "examSession.selectInstitution": "Välj verksamhetsstället",
   "examSession.upcomingExamSessions": "Kommande examenstillfällen",
   "examSessions.agreementNotFound": "Giltigt anordnaravtal hittades inte.",
   "feature.languageSelect.disable": "false",
