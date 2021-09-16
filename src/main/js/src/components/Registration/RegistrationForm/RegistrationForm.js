@@ -603,6 +603,7 @@ export const registrationForm = props => {
           </>
           <Button
             type="submit"
+            disabled={props.submitting}
             isRegistration={true}
             datacy="form-submit-button"
             ariaLabel={props.t('registration.form.aria.submit.button')}
