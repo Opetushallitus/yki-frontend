@@ -45,10 +45,10 @@ describe('Navigation', () => {
     });
 
     cy.visit('/tutkintotilaisuudet');
-    cy.get('a')
+    cy.get('li a')
       .contains('Tutkintotilaisuudet')
       .should('exist');
-    cy.get('a')
+    cy.get('li a')
       .contains('Järjestäjärekisteri')
       .should('not.exist');
   });

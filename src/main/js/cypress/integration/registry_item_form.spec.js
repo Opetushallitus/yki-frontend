@@ -17,7 +17,7 @@ describe('Registry item form', () => {
     cy.get('[data-cy=registry-item]').should('have.length', 2);
 
     cy.contains('Lisää järjestäjä').click();
-    cy.get('#organizationSearchField', { timeout: 8000 }).type('turun yli');
+    cy.get('#organizationSearchField').type('turun yli');
     cy.get('[data-cy=10089]').click();
 
     cy.get('#agreementStart').click();

@@ -3,5 +3,7 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "viewportWidth": 1440
+  "viewportWidth": 1440,
+  "retries": 1,
+  "defaultCommandTimeout": 8000
 }
