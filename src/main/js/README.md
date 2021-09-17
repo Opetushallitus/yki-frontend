@@ -87,6 +87,8 @@ is used for downloading localisations for given environment `env`. Running the s
 If no `env` is provided as a parameter, localisations are fetched from `untuva` environment.
 The localisations are downloaded under `dev/rest/localisation/environment`.
 
+Localisations can be compared against repository's localisations by running npm compare and supplying compared enviroment. 
+
 ### License
 
 YKI is licensed under the [EUPL](./LICENSE).
