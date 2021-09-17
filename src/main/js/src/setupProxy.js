@@ -262,7 +262,7 @@ module.exports = function(app) {
       })
       .catch(err => {
         printError(req, err);
-        res.status(404).send(err.message);
+        res.status(404).send(err.response.data);
       });
   };
 
