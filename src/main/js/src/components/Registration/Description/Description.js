@@ -127,9 +127,9 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           </div>
           <PriceContainer
             elements={levelPrices.concat({
-              title: 'common.price.reeval.first',
+              title: i18nKeys.common_price_reeval_first,
               price: '50',
-              extraText: 'common.price.reeval.last',
+              extraText: i18nKeys.common_price_reeval_last,
             })}
           />
         </div>

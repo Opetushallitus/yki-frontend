@@ -3,6 +3,7 @@ import axios from '../../axios';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const flattenOrganizationHierarchy = (orgChildrenResponse) => {
   const mapConcatOrgs = (orgs) => {
@@ -30,7 +31,7 @@ const fetchExamSessionContentSuccess = examSessionContent => {
 const fetchExamSessionContentFail = error => {
   return {
     type: actionTypes.FETCH_EXAM_SESSION_CONTENT_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.fetchFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_examSession_fetchFailed }),
     loading: false,
   };
 };
@@ -151,7 +152,7 @@ const addExamSessionSuccess = () => {
 const addExamSessionFail = error => {
   return {
     type: actionTypes.ADD_EXAM_SESSION_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.addFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_examSession_addFailed }),
     loading: false,
   };
 };
@@ -191,7 +192,7 @@ const updateExamSessionSuccess = () => {
 const updateExamSessionFail = error => {
   return {
     type: actionTypes.UPDATE_EXAM_SESSION_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.updateFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_examSession_updateFailed }),
     loading: false,
   };
 };
@@ -215,7 +216,7 @@ const fetchExamSessionParticipantsFail = error => {
   return {
     type: actionTypes.FETCH_EXAM_SESSION_PARTICIPANTS_FAIL,
     error: Object.assign(error, {
-      key: 'error.examSession.fetchParticipantsFailed',
+      key: i18nKeys.error_examSession_fetchParticipantsFailed,
     }),
     loading: false,
   };
@@ -316,7 +317,7 @@ const cancelRegistrationSuccess = () => {
 const cancelRegistrationFail = error => {
   return {
     type: actionTypes.EXAM_SESSION_CANCEL_REGISTRATION_FAIL,
-    error: Object.assign(error, { key: 'error.registration.cancelFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_registration_cancelFailed }),
     loading: false,
   };
 };
@@ -356,7 +357,7 @@ const confirmPaymentFail = error => {
   return {
     type: actionTypes.EXAM_SESSION_CONFIRM_PAYMENT_FAIL,
     error: Object.assign(error, {
-      key: 'error.examSession.registration.confirmPaymentFailed',
+      key: i18nKeys.error_examSession_registration_confirmPaymentFailed,
     }),
     loading: false,
   };
@@ -403,7 +404,7 @@ const relocateExamSessionFail = error => {
   return {
     type: actionTypes.EXAM_SESSION_RELOCATE_FAIL,
     error: Object.assign(error, {
-      key: 'error.examSession.registration.relocateExamSessionFailed',
+      key: i18nKeys.error_examSession_registration_relocateExamSessionFailed,
     }),
     loading: false,
   };

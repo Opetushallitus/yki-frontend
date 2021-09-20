@@ -3,6 +3,7 @@ import moment from 'moment';
 import axios from '../../axios';
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 import * as actionTypes from './actionTypes';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const fetchExamDatesStart = () => {
   return {
@@ -22,7 +23,7 @@ const fetchExamDatesSuccess = examDates => {
 const fetchExamDatesFail = error => {
   return {
     type: actionTypes.FETCH_EXAM_DATES_FAIL,
-    error: Object.assign(error, { key: 'error.examDates.fetchFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_examDates_fetchFailed }),
     loading: false,
   };
 };
@@ -82,7 +83,7 @@ const addExamDateSuccess = () => {
 const addExamDateFail = error => {
   return {
     type: actionTypes.ADD_EXAM_DATE_FAIL,
-    error: Object.assign(error, { key: 'error.examDates.addFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_examDates_addFailed }),
     loading: false,
   };
 };
@@ -143,7 +144,7 @@ const configureExamDateLanguagesFail = error => {
   return {
     type: actionTypes.CONFIGURE_EXAM_DATE_LANGUAGES_FAIL,
     error: Object.assign(error, {
-      key: 'error.examDates.languages.configurationFailed',
+      key: i18nKeys.error_examDates_languages_configurationFailed,
     }),
     loading: false,
   };
@@ -167,7 +168,7 @@ const configureExamDatePostAdmissionFail = error => {
   return {
     type: actionTypes.CONFIGURE_EXAM_DATE_POST_ADMISSION_FAIL,
     error: Object.assign(error, {
-      key: 'error.examDates.postAdmission.configurationFailed"',
+      key: i18nKeys.error_examDates_postAdmission_configurationFailed,
     }),
     loading: false,
   };
@@ -206,7 +207,7 @@ const deleteExamDateSuccess = () => {
 const deleteExamDateFail = error => {
   return {
     type: actionTypes.DELETE_EXAM_DATE_FAIL,
-    error: Object.assign(error, { key: 'error.examDates.deleteFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_examDates_deleteFailed }),
     loading: false,
   };
 };
@@ -273,6 +274,6 @@ const addEvaluationPeriodSuccess = () => {
 const addEvaluationPeriodFail = error => {
   return {
     type: actionTypes.ADD_EVALUATION_PERIOD_FAIL,
-    error: Object.assign(error, { key: 'error.examDates.addFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_examDates_addFailed }),
   };
 };

@@ -44,7 +44,7 @@ export class PaymentStatus extends Component {
       <>
         <p data-cy="payment-status-text">
           {this.props.t(
-            this.props.successMessage || 'payment.status.success.info2',
+            this.props.successMessage || i18nKeys.payment_status_success_info2,
           )}
         </p>
       </>
@@ -53,14 +53,14 @@ export class PaymentStatus extends Component {
     const cancel = (
       <p data-cy="payment-status-text">
         {this.props.t(
-          this.props.cancelMessage || 'payment.status.cancel.info1',
+          this.props.cancelMessage || i18nKeys.payment_status_cancel_info1,
         )}
       </p>
     );
 
     const error = (
       <p data-cy="payment-status-text">
-        {this.props.t(this.props.failMessage || 'payment.status.error.info1')}
+        {this.props.t(this.props.failMessage || i18nKeys.payment_status_error_info1)}
       </p>
     );
 

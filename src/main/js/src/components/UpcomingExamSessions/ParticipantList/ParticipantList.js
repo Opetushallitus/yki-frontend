@@ -81,15 +81,15 @@ export const participantList = props => {
   const getStateTranslationKey = state => {
     switch (state) {
       case 'COMPLETED':
-        return 'examSession.paid';
+        return i18nKeys.examSession_paid;
       case 'CANCELLED':
-        return 'examSession.cancelled';
+        return i18nKeys.examSession_cancelled;
       case 'EXPIRED':
-        return 'examSession.expired';
+        return i18nKeys.examSession_expired;
       case 'PAID_AND_CANCELLED':
-        return 'examSession.paidAndCancelled';
+        return i18nKeys.examSession_paidAndCancelled;
       default:
-        return 'examSession.notPaid';
+        return i18nKeys.examSession_notPaid;
     }
   };
 

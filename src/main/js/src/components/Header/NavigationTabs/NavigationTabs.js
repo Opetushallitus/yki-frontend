@@ -26,7 +26,7 @@ const NavigationTabs = props => {
       location.pathname === '/ilmoittautuminen/';
 
     const linkArray = [
-      { title: 'common.registration.root', url: '/' },
+      { title: i18nKeys.common_registration_root, url: '/' },
       {
         title: i18nKeys.common_registration,
         url: '/ilmoittautuminen/valitse-tutkintotilaisuus',

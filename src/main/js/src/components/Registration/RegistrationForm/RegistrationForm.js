@@ -235,7 +235,7 @@ export const registrationForm = props => {
 
   const phoneNumberInputField = (setFieldValue, setTouched, touched) => (
     <div className={classes.InputFieldWrapper}>
-      <label>{props.t(`registration.form.phoneNumber`)} *</label>
+      <label>{props.t(i18nKeys.registration_form_phoneNumber)} *</label>
       <Field
         component={PhoneNumberComponent}
         name={'phoneNumber'}
@@ -245,7 +245,7 @@ export const registrationForm = props => {
         setTouched={setTouched}
         touched={touched}
         type="tel"
-        aria-label={props.t(`registration.form.aria.phoneNumber`)}
+        aria-label={props.t(i18nKeys.registration_form_aria_phoneNumber)}
       />
       <ErrorMessage
         name={'phoneNumber'}
@@ -263,7 +263,7 @@ export const registrationForm = props => {
     return (
       <FormikInputField
         name={name}
-        label={props.t(`registration.form.${name}`)}
+        label={props.t(`registration.form.${name}`)} // FIXME
         required={required}
         extra={extra}
         type={type}
@@ -272,7 +272,7 @@ export const registrationForm = props => {
         onPaste={handler}
         onCopy={handler}
         onCut={handler}
-        placeholder={placeholder || props.t(`registration.form.${name}`)}
+        placeholder={placeholder || props.t(`registration.form.${name}`)} // FIXME
       />
     )
   };
@@ -291,7 +291,7 @@ export const registrationForm = props => {
   const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
       <>
-        <p className={classes.Label}>{props.t(`registration.form.${name}`)}</p>
+        <p className={classes.Label}>{props.t(`registration.form.${name}`)}</p>// FIXME
         <span>{initialValues[name]}</span>
       </>
     ) : (
@@ -615,7 +615,7 @@ export const registrationForm = props => {
             <div data-cy="form-submit-error" className={classes.SubmitError}>
               <RegistrationError
                 error={props.submitError}
-                defaultKey={'error.registrationForm.submitFailed'}
+                defaultKey={i18nKeys.error_registrationForm_submitFailed}
               />
             </div>
           )}

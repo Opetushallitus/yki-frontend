@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 
 import Alert from '../../Alert/Alert';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 export const registrationError = props => {
   const resolveErrorMessage = () => {
@@ -11,13 +12,13 @@ export const registrationError = props => {
     let errorKey = props.defaultKey;
     if (error.data && error.data.error) {
       if (error.data.error.full) {
-        errorKey = 'registration.init.error.session.full';
+        errorKey = i18nKeys.registration_init_error_session_full;
       } else if (error.data.error.closed) {
-        errorKey = 'registration.init.error.session.closed';
+        errorKey = i18nKeys.registration_init_error_session_closed;
       } else if (error.data.error.registered) {
-        errorKey = 'registration.init.error.session.multiple';
+        errorKey = i18nKeys.registration_init_error_session_multiple;
       } else if (error.data.error.expired) {
-        errorKey = 'registration.error.form.expired';
+        errorKey = i18nKeys.registration_error_form_expired;
       }
     }
     return props.t(errorKey);

@@ -31,6 +31,7 @@ import registryReducer from './store/reducers/registry';
 import organizationSessionsReducer from './store/reducers/registryExamSession';
 import userReducer from './store/reducers/user';
 import ykiReducer from './store/reducers/ykiReducer';
+import * as i18nKeys from "./common/LocalizationKeys";
 
 const Registry = lazy(() => import('./containers/Registry/Registry'));
 const ExamSessions = lazy(() =>
@@ -132,8 +133,8 @@ const app = () => (
                 render={props => (
                   <PaymentStatus
                     {...props}
-                    failMessage={'payment.status.error.evaluation'}
-                    cancelMessage={'payment.status.error.evaluation'}
+                    failMessage={i18nKeys.payment_status_error_evaluation}
+                    cancelMessage={i18nKeys.payment_status_error_evaluation}
                     infoUrl={'/yki/api/evaluation/order/'}
                     returnUrl="/tarkistusarviointi"
                   />

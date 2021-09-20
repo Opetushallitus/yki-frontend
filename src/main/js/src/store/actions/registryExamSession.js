@@ -3,6 +3,7 @@ import axios from '../../axios';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 
 const fetchExamSessionsStart = () => {
@@ -23,7 +24,7 @@ const fetchExamSessionsSuccess = examSessions => {
 const fetchExamSessionsFail = error => {
   return {
     type: actionTypes.FETCH_REGISTRY_EXAM_SESSIONS_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.fetchFailed' }),
+    error: Object.assign(error, { key: i18nKeys.error_examSession_fetchFailed }),
     loadingExamsessions: false,
   };
 };
@@ -44,7 +45,7 @@ const fetchExamSessionParticipantsSuccess = participants => {
 const fetchExamSessionParticipantsFail = error => {
   return {
     type: actionTypes.FETCH_REGISTRY_EXAM_SESSION_PARTICIPANTS_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.fetchFailed' })
+    error: Object.assign(error, { key: i18nKeys.error_examSession_fetchFailed })
   };
 };
 

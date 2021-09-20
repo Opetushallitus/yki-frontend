@@ -12,6 +12,7 @@ import RegistrationSuccess from '../../../components/Registration/RegistrationSu
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import * as actions from '../../../store/actions/index';
 import { getLanguageAndLevel } from '../../../util/util';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 export const RegistrationPage = props => {
   const { initData, initDataLoading, match } = props;
@@ -26,7 +27,7 @@ export const RegistrationPage = props => {
   const initError = props.initDataError ? (
     <RegistrationError
       error={props.initDataError}
-      defaultKey={'registration.init.error.generic'}
+      defaultKey={i18nKeys.registration_init_error_generic}
     />
   ) : null;
 
