@@ -5,6 +5,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 
 import classes from '../RegistrationForm.module.css';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 export const nationalitySelect = props => {
   const nationalitiesByLocale = props.nationalities.map(n => {
@@ -25,7 +26,7 @@ export const nationalitySelect = props => {
   return (
     <div className={classes.InputFieldWrapper}>
       <label htmlFor="select-nationality">
-        {props.t('registration.form.nationality')} *
+        {props.t(i18nKeys.registration_form_nationality)} *
       </label>
       <Field
         id="select-nationality"
@@ -36,7 +37,7 @@ export const nationalitySelect = props => {
         data-cy="select-nationality"
       >
         <option value="placeholder" key="">
-          {props.t('common.selectorDefault')}
+          {props.t(i18nKeys.common_selectorDefault)}
         </option>
         {nationalityOptions}
       </Field>

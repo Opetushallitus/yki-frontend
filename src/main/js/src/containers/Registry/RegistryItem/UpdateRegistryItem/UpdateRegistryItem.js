@@ -8,6 +8,7 @@ import ActionButton from '../../../../components/UI/ActionButton/ActionButton';
 import * as actions from '../../../../store/actions/index';
 import { capitalize } from '../../../../util/util';
 import classes from './UpdateRegistryItem.module.css';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 class UpdateRegistryItem extends Component {
   deleteRegistryItemHandler = oid => {
@@ -46,9 +47,9 @@ class UpdateRegistryItem extends Component {
         <div className={classes.DeleteButtons}>
           <ActionButton
             onClick={() => this.deleteRegistryItemHandler(this.props.item.oid)}
-            children={this.props.t('registryItem.delete')}
-            confirmText={this.props.t('registryItem.deleteConfirm')}
-            cancelText={this.props.t('registryItem.deleteCancel')}
+            children={this.props.t(i18nKeys.registryItem_delete)}
+            confirmText={this.props.t(i18nKeys.registryItem_deleteConfirm)}
+            cancelText={this.props.t(i18nKeys.registryItem_deleteCancel)}
           />
         </div>
       </React.Fragment>

@@ -5,6 +5,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 
 import classes from '../RegistrationForm.module.css';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 export const genderSelect = props => {
   const sortByCode = R.sortBy(R.prop('koodiArvo'));
@@ -22,7 +23,7 @@ export const genderSelect = props => {
   return (
     <div className={classes.InputFieldWrapper}>
       <label htmlFor="gender-select">
-        {props.t('registration.form.gender')}
+        {props.t(i18nKeys.registration_form_gender)}
       </label>
       <Field
         id="gender-select"
@@ -33,7 +34,7 @@ export const genderSelect = props => {
         data-cy="select-gender"
       >
         <option value="placeholder" key="placeholder">
-          {props.t('common.selectorDefault')}
+          {props.t(i18nKeys.common_selectorDefault)}
         </option>
         {gendersByLocale}
       </Field>

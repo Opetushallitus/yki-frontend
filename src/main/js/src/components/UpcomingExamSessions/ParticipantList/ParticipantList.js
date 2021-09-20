@@ -13,6 +13,7 @@ import { ActionButton } from '../../UI/ActionButton/ActionButton';
 import ListExport from './ListExport/ListExport';
 import RelocateParticipant from './RelocateParticipant/RelocateParticipant';
 import classes from './ParticipantList.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const stateComparator = () => (a, b) => {
   if (a.state === 'COMPLETED') return -1;
@@ -112,8 +113,8 @@ export const participantList = props => {
     //         organizerOid={props.examSession.organizer_oid}
     //         examSessionId={props.examSession.id}
     //         onResendLink={props.onResendLink}
-    //         sendText={props.t('registration.notification.signup.button')}
-    //         linkText={props.t('examSession.participants.resendLink')}
+    //         sendText={props.t(i18nKeys.registration_notification_signup_button)}
+    //         linkText={props.t(i18nKeys.examSession_participants_resendLink)}
     //         finText={props.t("common.language.fin")}
     //         svText={props.t("common.language.swe")}
     //         enText={props.t("common.language.eng")}
@@ -143,7 +144,7 @@ export const participantList = props => {
     const confirmPayment = (
       <React.Fragment>
         <img src={checkMarkDone} data-cy="confirm-payment-icon" alt="" />{' '}
-        {props.t('examSession.registration.confirmPayment')}
+        {props.t(i18nKeys.examSession_registration_confirmPayment)}
       </React.Fragment>
     );
 
@@ -158,8 +159,8 @@ export const participantList = props => {
             participant.registration_id,
           )
         }
-        confirmText={props.t('examSession.registration.confirmPayment.confirm')}
-        cancelText={props.t('examSession.registration.confirmPayment.cancel')}
+        confirmText={props.t(i18nKeys.examSession_registration_confirmPayment_confirm)}
+        cancelText={props.t(i18nKeys.examSession_registration_confirmPayment_cancel)}
       />
     );
   };
@@ -177,7 +178,7 @@ export const participantList = props => {
             newSessionId,
           )
         }
-        confirmText={props.t('examSession.registration.relocate.confirm')}
+        confirmText={props.t(i18nKeys.examSession_registration_relocate_confirm)}
       />
     )
   };
@@ -206,7 +207,7 @@ export const participantList = props => {
     return (
       <>
         <label htmlFor="participantFilter">
-          {props.t('examSession.participants.sortBy')}
+          {props.t(i18nKeys.examSession_participants_sortBy)}
         </label>
         <select
           id="ParticipantFilter"
@@ -214,16 +215,16 @@ export const participantList = props => {
           onChange={handleFilterChange}
         >
           <option value="registrationTime">
-            {props.t('examSession.participants.sortBy.registrationTime')}
+            {props.t(i18nKeys.examSession_participants_sortBy_registrationTime)}
           </option>
           <option value="registrationType">
-            {props.t('examSession.participants.sortBy.registrationType')}
+            {props.t(i18nKeys.examSession_participants_sortBy_registrationType)}
           </option>
           <option value="name">
-            {props.t('examSession.participants.sortBy.name')}
+            {props.t(i18nKeys.examSession_participants_sortBy_name)}
           </option>
           <option value="state">
-            {props.t('examSession.participants.sortBy.state')}
+            {props.t(i18nKeys.examSession_participants_sortBy_state)}
           </option>
         </select>
       </>
@@ -234,7 +235,7 @@ export const participantList = props => {
     const cancelRegistration = (
       <React.Fragment>
         <img src={trashcan} alt="" />{' '}
-        {props.t('examSession.registration.cancel')}
+        {props.t(i18nKeys.examSession_registration_cancel)}
       </React.Fragment>
     );
     return (
@@ -248,8 +249,8 @@ export const participantList = props => {
             p.registration_id,
           )
         }
-        confirmText={props.t('examSession.registration.cancel.confirm')}
-        cancelText={props.t('examSession.registration.cancel.cancel')}
+        confirmText={props.t(i18nKeys.examSession_registration_cancel_confirm)}
+        cancelText={props.t(i18nKeys.examSession_registration_cancel_cancel)}
       />
     );
   };
@@ -284,8 +285,8 @@ export const participantList = props => {
         </div>
         <div className={classes.StateItem}>
           {p.kind === 'ADMISSION'
-            ? props.t('examSession.registration')
-            : props.t('examSession.registration.postAdmission')}
+            ? props.t(i18nKeys.examSession_registration)
+            : props.t(i18nKeys.examSession_registration_postAdmission)}
         </div>
         <div className={classes.FirstShowOnHover}>
           {p.state === 'SUBMITTED' && !props.disableControls
@@ -323,7 +324,7 @@ export const participantList = props => {
         : 0;
     return (
       <h2>
-        {props.t('examSession.participants')}
+        {props.t(i18nKeys.examSession_participants)}
         {':'}{' '}
         {props.examSession.participants + props.examSession.pa_participants} /{' '}
         {props.examSession.max_participants + post_admission_quota}
@@ -336,7 +337,7 @@ export const participantList = props => {
 
       {props.examSession.queue > 0 && (
         <h3>
-          {props.t('examSession.inQueue')}
+          {props.t(i18nKeys.examSession_inQueue)}
           {':'} {props.examSession.queue}
         </h3>
       )}

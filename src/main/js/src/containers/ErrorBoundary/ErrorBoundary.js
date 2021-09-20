@@ -3,6 +3,7 @@ import axios from '../../axios';
 import { withTranslation } from 'react-i18next';
 
 import Alert from '../../components/Alert/Alert';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 export class ErrorBoundary extends Component {
   state = {
@@ -22,9 +23,9 @@ export class ErrorBoundary extends Component {
     if (this.state.error) {
       return (
         <Alert
-          title={this.props.t('errorBoundary.title')}
+          title={this.props.t(i18nKeys.errorBoundary_title)}
           returnLinkTo={window.location.href}
-          returnLinkText={this.props.t('errorBoundary.return')}
+          returnLinkText={this.props.t(i18nKeys.errorBoundary_return)}
         />
       );
     } else {

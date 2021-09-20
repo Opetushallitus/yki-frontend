@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 
 import classes from './ExamSessionList.module.css';
 import ExamSessionListItem from './ExamSessionListItem/ExamSessionListItem';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const examSessionList = ({ examSessions: sessions, language, t, history }) => (
   <div className={classes.ExamSessionList}>
@@ -11,11 +12,11 @@ const examSessionList = ({ examSessions: sessions, language, t, history }) => (
       <table>
         <thead>
           <tr className={classes.ColumnHeaders}>
-            <th>{t('registration.list.exam')}</th>
-            <th>{t('registration.list.date')}</th>
-            <th>{t('registration.list.place')}</th>
-            <th>{t('registration.list.signupOpen')}</th>
-            <th>{t('registration.list.examSpots')}</th>
+            <th>{t(i18nKeys.registration_list_exam)}</th>
+            <th>{t(i18nKeys.registration_list_date)}</th>
+            <th>{t(i18nKeys.registration_list_place)}</th>
+            <th>{t(i18nKeys.registration_list_signupOpen)}</th>
+            <th>{t(i18nKeys.registration_list_examSpots)}</th>
             <th />
           </tr>
         </thead>
@@ -32,7 +33,7 @@ const examSessionList = ({ examSessions: sessions, language, t, history }) => (
       </table>
     ) : (
       <p className={classes.NotFound}>
-        <b>{t('registration.search.noResults')}</b>
+        <b>{t(i18nKeys.registration_search_noResults)}</b>
       </p>
     )}
   </div>

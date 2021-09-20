@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { PaymentStatus } from './PaymentStatus';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ExamDetailsCard from '../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 configure({ adapter: new Adapter() });
 
@@ -48,7 +49,7 @@ describe('<PaymentStatus />', () => {
     );
     const wrapperHeader = wrapper.find('HeadlineContainer');
 
-    expect(wrapperHeader.props().headlineTitle).toBe('payment.status.error');
+    expect(wrapperHeader.props().headlineTitle).toBe(i18nKeys.payment_status_error);
   });
   it('should render payment status cancel', () => {
     const wrapper = shallow(
@@ -60,6 +61,6 @@ describe('<PaymentStatus />', () => {
     );
     const wrapperHeader = wrapper.find('HeadlineContainer');
 
-    expect(wrapperHeader.props().headlineTitle).toBe('payment.status.cancel');
+    expect(wrapperHeader.props().headlineTitle).toBe(i18nKeys.payment_status_cancel);
   });
 });

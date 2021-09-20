@@ -5,6 +5,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import LanguageSelect from '../../../containers/LanguageSelect/LanguageSelect';
 import { useMobileView } from '../../../util/customHooks';
 import classes from './NavigationTabs.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const NavigationTabs = props => {
   const [showLanguagesMenu, setLanguageMenuShow] = useState(false);
@@ -27,11 +28,11 @@ const NavigationTabs = props => {
     const linkArray = [
       { title: 'common.registration.root', url: '/' },
       {
-        title: 'common.registration',
+        title: i18nKeys.common_registration,
         url: '/ilmoittautuminen/valitse-tutkintotilaisuus',
         secondary: '/ilmoittautuminen/',
       },
-      { title: 'common.reeval', url: '/tarkistusarviointi' },
+      { title: i18nKeys.common_reeval, url: '/tarkistusarviointi' },
     ];
 
     const divider = onDescriptionPage && isMobileOrTablet;
@@ -82,7 +83,7 @@ const NavigationTabs = props => {
                 }}
                 className={classes.LinkButton}
               >
-                {t('common.registration.select.language')}
+                {t(i18nKeys.common_registration_select_language)}
               </button>
             </div>
             <hr className={classes.LanguageHr} />

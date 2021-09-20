@@ -6,6 +6,7 @@ import MenuIcon from '../../assets/svg/menu.svg';
 import NavigationTabs from '../Header/NavigationTabs/NavigationTabs';
 import Collapsible from '../UI/Collapsible/Collapsible';
 import classes from './MobileMenu.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const MobileMenu = () => {
   const [isOpen, setCollapsibleOpen] = useState(false);
@@ -47,15 +48,15 @@ const MobileMenu = () => {
       <div
         tabIndex={0}
         role="button"
-        aria-label={isOpen ? t('common.nav.close') : t('common.nav.open')}
+        aria-label={isOpen ? t(i18nKeys.common_nav_close) : t(i18nKeys.common_nav_open)}
         className={classes.MenuIcon}
         onClick={() => setCollapsibleOpen(!isOpen)}
         onKeyPress={() => setCollapsibleOpen(!isOpen)}
       >
         {isOpen ? (
-          <img src={CloseSign} alt={t('common.nav.close')} />
+          <img src={CloseSign} alt={t(i18nKeys.common_nav_close)} />
         ) : (
-          <img src={MenuIcon} alt={t('common.nav.open')} />
+          <img src={MenuIcon} alt={t(i18nKeys.common_nav_open)} />
         )}
       </div>
       <CollapsibleMenu />

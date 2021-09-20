@@ -15,6 +15,7 @@ import ParticipantList from '../../components/UpcomingExamSessions/ParticipantLi
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
 import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer.js'
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 
 class RegistryExamSessions extends PureComponent {
@@ -73,7 +74,7 @@ class RegistryExamSessions extends PureComponent {
 
 	render() {
 		const { sessions, participants } = this.props;
-		const backLinkText = `< ${this.props.t('registry.examSessions.back')}`;
+		const backLinkText = `< ${this.props.t(i18nKeys.registry_examSessions_back)}`;
 
 		const loadingSessions = () => {
 			if (this.props.loadingSessions || !sessions) {
@@ -123,7 +124,7 @@ class RegistryExamSessions extends PureComponent {
 		const organizatioNotFoundComponent = (
 			<div className={classes.Content}>
 				{backLink}
-				<h1>{this.props.t('registry.examSession.organizationNotFound')}</h1>
+				<h1>{this.props.t(i18nKeys.registry_examSession_organizationNotFound)}</h1>
 			</div>
 		)
 

@@ -6,6 +6,7 @@ import moment from 'moment';
 import { addPostAdmission, deactivatePostAdmission } from '../../../../store/actions/examSession';
 import classes from './ExamSessionPostAdmission.module.css'
 import ExamSessionPostAdmissionForm from './ExamSessionPostAdmissionForm';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 class ExamSessionPostAdmissionEdit extends React.Component {
 
@@ -30,7 +31,7 @@ class ExamSessionPostAdmissionEdit extends React.Component {
 
     const confirmActivityChangeButtons = (
       <div className={classes.activityToggleButtonBox}>
-        <h3 data-cy="h3-admission-confirm-text">{t('examSession.postAdmission.confirmationText')}</h3>
+        <h3 data-cy="h3-admission-confirm-text">{t(i18nKeys.examSession_postAdmission_confirmationText)}</h3>
         <div className={classes.ButtonGroup}>
           <button
             className={`${classes.Button} ${classes.CancelButton}`}
@@ -39,7 +40,7 @@ class ExamSessionPostAdmissionEdit extends React.Component {
             onClick={e => this.setState({ confirmActiveToggle: !this.state.confirmActiveToggle })}
             tabIndex="5"
           >
-            {t('common.cancelConfirm')}
+            {t(i18nKeys.common_cancelConfirm)}
           </button>
           <button
             className={classes.Button}
@@ -47,7 +48,7 @@ class ExamSessionPostAdmissionEdit extends React.Component {
             type="button"
             onClick={this.deactivatePostAdmission}
           >
-            {t('common.confirm')}
+            {t(i18nKeys.common_confirm)}
           </button>
         </div>
       </div>
@@ -58,12 +59,12 @@ class ExamSessionPostAdmissionEdit extends React.Component {
       <div className={classes.ButtonGroup}>
         <button className={classes.Button} data-cy="exam-session-post-admission-modify-button" type="button" tabIndex="1"
           onClick={e => this.setState({ edit: !this.state.edit })}>
-          {t('common.modify')}
+          {t(i18nKeys.common_modify)}
         </button>
         <button className={`${classes.Button} ${active ? null : classes.ButtonRight}`}
           data-cy="exam-session-post-admission-deactivate-button" type="button" tabIndex="2"
           onClick={e => this.setState({ confirmActiveToggle: !this.state.confirmActiveToggle })}>
-          {active ? t('examSession.postAdmission.close') : t('examSession.postAdmission.publish')}
+          {active ? t(i18nKeys.examSession_postAdmission_close) : t(i18nKeys.examSession_postAdmission_publish)}
         </button>
       </div>
     )
@@ -86,21 +87,21 @@ class ExamSessionPostAdmissionEdit extends React.Component {
           <div className={classes.FormItem}>
             <div>
               <label className={classes.Label}>
-                {t('examSession.postAdmission.startDate')}
+                {t(i18nKeys.examSession_postAdmission_startDate)}
               </label>
               <input className={`${classes.Input} ${classes.Disabled}`} data-cy="exam-session-post-admission-input-startDate"
                 value={moment(this.props.postAdmission.post_admission_start_date).format('D.M.YYYY')} disabled />
             </div>
             <div>
               <label className={classes.Label}>
-                {t('examSession.postAdmission.endDate')}
+                {t(i18nKeys.examSession_postAdmission_endDate)}
               </label>
               <input className={`${classes.Input} ${classes.Disabled}`} data-cy="exam-session-post-admission-input-endDate"
                 value={moment(this.props.postAdmission.post_admission_end_date).format('D.M.YYYY')} disabled />
             </div>
           </div>
           <label className={classes.Label}>
-            {t('examSession.postAdmission.participantAmount')}
+            {t(i18nKeys.examSession_postAdmission_participantAmount)}
           </label>
           <input
             className={`${classes.Input} ${classes.Disabled}`}

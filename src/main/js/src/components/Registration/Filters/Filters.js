@@ -6,6 +6,7 @@ import { LANGUAGES } from '../../../common/Constants';
 import { levelDescription } from '../../../util/util';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './Filters.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const filters = props => {
   const [t, i18n] = useTranslation();
@@ -31,7 +32,7 @@ const filters = props => {
 
   const languageSelect = (
     <label>
-      {t('common.language')}
+      {t(i18nKeys.common_language)}
       <select
         className={classes.Select}
         defaultValue={t(`common.language.${props.language.code}`)}
@@ -49,14 +50,14 @@ const filters = props => {
 
   const levelSelect = (
     <label>
-      {t('common.level')}
+      {t(i18nKeys.common_level)}
       <select
         className={classes.Select}
         defaultValue={props.level}
         onChange={props.onLevelChange}
         data-cy={'level-filter'}
       >
-        <option value={''}>{t('common.level.all')}</option>
+        <option value={''}>{t(i18nKeys.common_level_all)}</option>
         {props.language.levels.map(l => (
           <option key={l} value={l}>
             {t(levelDescription(l))}
@@ -68,14 +69,14 @@ const filters = props => {
 
   const locationSelect = (
     <label>
-      {t('common.exam.location')}
+      {t(i18nKeys.common_exam_location)}
       <select
         className={classes.Select}
         defaultValue={props.location}
         onChange={props.onLocationChange}
         data-cy={'location-filter'}
       >
-        <option value={''}>{t('common.location.all')}</option>
+        <option value={''}>{t(i18nKeys.common_location_all)}</option>
         {props.locations.map(l => (
           <option key={l.fi} value={l.fi}>
             {i18n.language === 'sv' ? l.sv : l.fi}
@@ -90,8 +91,8 @@ const filters = props => {
       <Checkbox
         datacy={'exam-availability-checkbox'}
         onChange={props.onAvailabilityFilterChange}
-        ariaLabel={t('common.exam.availableExams')}
-        label={t('common.exam.availableExams')}
+        ariaLabel={t(i18nKeys.common_exam_availableExams)}
+        label={t(i18nKeys.common_exam_availableExams)}
         checkboxId={'available'}
       />
     </div>
@@ -101,8 +102,8 @@ const filters = props => {
     <div className={classes.CheckBox}>
       <Checkbox
         onChange={props.onRegistrationFilterChange}
-        ariaLabel={t('common.exam.openExams')}
-        label={t('common.exam.openExams')}
+        ariaLabel={t(i18nKeys.common_exam_openExams)}
+        label={t(i18nKeys.common_exam_openExams)}
         checkboxId="open-exams"
       />
     </div>

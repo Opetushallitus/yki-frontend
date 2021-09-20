@@ -12,6 +12,7 @@ import ParticipantList from '../../../components/UpcomingExamSessions/Participan
 import ExamSessionUpdateForm from './ExamSessionUpdateForm/ExamSessionUpdateForm';
 import * as actions from '../../../store/actions/index';
 import ExamSessionPostAdmission from './PostAdmission/ExamSessionPostAdmission';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 export class ExamSessionDetails extends Component {
   componentDidMount = () => {
@@ -23,10 +24,10 @@ export class ExamSessionDetails extends Component {
 
   PostAdmissionHeader = () => {
     if (this.props.examSession.post_admission_end_date && this.props.examSession.post_admission_active) {
-      return <h2>{`${this.props.t('examSession.postAdmission')} (${this.props.t('examSession.postAdmission.active')})`}</h2>
+      return <h2>{`${this.props.t(i18nKeys.examSession_postAdmission)} (${this.props.t(i18nKeys.examSession_postAdmission_active)})`}</h2>
     }
 
-    return <h2>{`${this.props.t('examSession.postAdmission')} (${this.props.t('examSession.postAdmission.inactive')})`}</h2>
+    return <h2>{`${this.props.t(i18nKeys.examSession_postAdmission)} (${this.props.t(i18nKeys.examSession_postAdmission_inactive)})`}</h2>
   }
 
   render() {
@@ -39,7 +40,7 @@ export class ExamSessionDetails extends Component {
           {location || this.props.examSession.location[0].name}
         </h2>
         <h2 className={classes.ExamSessionDetailsHeader}>
-          {this.props.t('examSession')}
+          {this.props.t(i18nKeys.examSession)}
           {': '}
           {getLanguagesWithLevelDescriptions([
             this.props.examSession,

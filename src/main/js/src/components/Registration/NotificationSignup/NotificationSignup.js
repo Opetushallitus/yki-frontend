@@ -9,6 +9,7 @@ import { useMobileView } from '../../../util/customHooks';
 import Alert from '../../Alert/Alert';
 import Button from '../../UI/Button/Button';
 import classes from './NotificationSignup.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const notificationSignup = ({ examSessionId, registrationOpen }) => {
   const [t] = useTranslation();
@@ -31,20 +32,20 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email(t('registration.notification.signup.validation'))
-      .required(t('error.mandatory')),
+      .email(t(i18nKeys.registration_notification_signup_validation))
+      .required(t(i18nKeys.error_mandatory)),
     confirmEmail: Yup.string()
-      .oneOf([Yup.ref('email'), null], t('error.confirmEmail'))
-      .required(t('registration.form.confirmEmail')),
+      .oneOf([Yup.ref('email'), null], t(i18nKeys.error_confirmEmail))
+      .required(t(i18nKeys.registration_form_confirmEmail)),
   });
 
   return (
     <>
       {signup.success ? (
         <p>
-          {t('registration.notification.signup.complete')}{' '}
+          {t(i18nKeys.registration_notification_signup_complete)}{' '}
           <strong>{signup.email}</strong>
-          {t('registration.notification.signup.complete2')}
+          {t(i18nKeys.registration_notification_signup_complete2)}
         </p>
       ) : (
         <Formik
@@ -56,14 +57,14 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
           render={({ isValid, status }) => (
             <Form className={classes.Form}>
               {registrationOpen === false ? (
-                <h2>{t('registration.form.header.notifyWhenOpen')}</h2>
+                <h2>{t(i18nKeys.registration_form_header_notifyWhenOpen)}</h2>
               ) : (
-                <h2>{t('registration.form.header.notify')}</h2>
+                <h2>{t(i18nKeys.registration_form_header_notify)}</h2>
               )}
               <div className={classes.EmailContainer}>
                 <div>
                   <label htmlFor="email" className={classes.BoldLabel}>
-                    {t('registration.form.email')}
+                    {t(i18nKeys.registration_form_email)}
                   </label>
                   <Field
                     className={classes.Field}
@@ -76,7 +77,7 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
                 </div>
                 <div>
                   <label htmlFor="confirmEmail" className={classes.BoldLabel}>
-                    {t('registration.form.confirmEmail')}
+                    {t(i18nKeys.registration_form_confirmEmail)}
                   </label>
                   <Field
                     className={classes.Field}
@@ -105,7 +106,7 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
                   datacy="registry-item-form-submit"
                   isRegistration
                 >
-                  {t('registration.notification.signup.button')}
+                  {t(i18nKeys.registration_notification_signup_button)}
                 </Button>
               ) : (
                 <div style={{ width: '260px' }}>
@@ -115,7 +116,7 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
                     datacy="registry-item-form-submit"
                     isRegistration
                   >
-                    {t('registration.notification.signup.button')}
+                    {t(i18nKeys.registration_notification_signup_button)}
                   </Button>
                 </div>
               )}
@@ -123,8 +124,8 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
                 <Alert
                   title={
                     status.status === 409
-                      ? t('error.emailAlreaydInQueue')
-                      : t('error.common')
+                      ? t(i18nKeys.error_emailAlreaydInQueue)
+                      : t(i18nKeys.error_common)
                   }
                 />
               )}

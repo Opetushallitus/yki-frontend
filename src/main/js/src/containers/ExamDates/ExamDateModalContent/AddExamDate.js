@@ -10,6 +10,7 @@ import DatePicker from '../../../components/UI/DatePicker/DatePicker';
 import { languageToString, levelDescription } from '../../../util/util';
 import LanguageLevelSelector from '../LanguageLevel/LanguageLevelSelector';
 import classes from './AddOrEditExamDate.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const AddExamDate = props => {
   const { examDates, disabledDates, t } = props;
@@ -134,7 +135,7 @@ const AddExamDate = props => {
         <Form className={classes.Form}>
           <div className={classes.TimeGrid}>
             <div>
-              <label>{t('examDates.choose.registrationTime')}</label>
+              <label>{t(i18nKeys.examDates_choose_registrationTime)}</label>
               <div className={classes.DateGrid}>
                 <div>
                   <div className={classes.DatePickerWrapper}>
@@ -173,7 +174,7 @@ const AddExamDate = props => {
               </div>
             </div>
             <div className={classes.ExamDateGrid}>
-              <label>{t('examDates.choose.examDate')}</label>
+              <label>{t(i18nKeys.examDates_choose_examDate)}</label>
               <div className={classes.DatePickerWrapper}>
                 <DatePicker
                   data-cy="exam-date-new-exam-date"
@@ -223,7 +224,7 @@ const AddExamDate = props => {
               }
               disabled={!isValid}
             >
-              {t('examDates.addNew.confirm')}
+              {t(i18nKeys.examDates_addNew_confirm)}
             </button>
           </div>
         </Form>
@@ -235,7 +236,7 @@ const AddExamDate = props => {
     return (
       <>
         <h3 style={{ marginBlockStart: '0' }}>
-          {t('examDates.addNew.examDate')}
+          {t(i18nKeys.examDates_addNew_examDate)}
         </h3>
         <FormFields />
       </>

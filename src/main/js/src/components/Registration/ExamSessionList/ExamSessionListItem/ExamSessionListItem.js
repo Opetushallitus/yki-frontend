@@ -18,6 +18,7 @@ import {
 } from '../../../../util/examSessionUtil';
 import { getDeviceOrientation, levelDescription } from '../../../../util/util';
 import classes from './ExamSessionListItem.module.css';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 const examSessionListItem = ({
   examSession: session,
@@ -36,7 +37,7 @@ const examSessionListItem = ({
   const mobile = useMobileView(true, false);
   const tablet = useMobileView(false, true);
 
-  const examFee = `${t('common.price')}: ${session.exam_fee} €`;
+  const examFee = `${t(i18nKeys.common_price)}: ${session.exam_fee} €`;
 
   const examLanguage = t(`common.language.${language.code}`);
   const examLevel = levelDescription(session.level_code).toLowerCase();
@@ -64,8 +65,8 @@ const examSessionListItem = ({
 
   const spotsAvailableText =
     spotsAvailable === 1
-      ? t('registration.examSpots.singleFree')
-      : t('registration.examSpots.free');
+      ? t(i18nKeys.registration_examSpots_singleFree)
+      : t(i18nKeys.registration_examSpots_free);
 
   const availability = (
     <div className={classes.Availability}>
@@ -78,7 +79,7 @@ const examSessionListItem = ({
             </span>
           </>
         ) : (
-          <span>{t('registration.examSpots.full')}</span>
+          <span>{t(i18nKeys.registration_examSpots_full)}</span>
         )}
       </strong>
     </div>
@@ -96,7 +97,7 @@ const examSessionListItem = ({
                     ${moment(session.post_admission_end_date).format(
                       DATE_FORMAT,
                     )}`}</p>
-          <p>{t('registration.postregistrationOnGoing')}</p>
+          <p>{t(i18nKeys.registration_postregistrationOnGoing)}</p>
         </>
       ) : (
         <>
@@ -105,7 +106,7 @@ const examSessionListItem = ({
           )} - ${moment(session.registration_end_date).format(
             DATE_FORMAT,
           )}`}</p>
-          <p>{t('registration.open')}</p>
+          <p>{t(i18nKeys.registration_open)}</p>
         </>
       )}
     </div>
@@ -114,7 +115,7 @@ const examSessionListItem = ({
   const registrationOpenMobile = (
     <div style={{ display: 'block' }}>
       <div className={classes.RegistrationOpen}>
-        {t('registration.list.signupOpen')}
+        {t(i18nKeys.registration_list_signupOpen)}
         {':'}
 
         <span style={{ marginLeft: 5 }}>{`${moment(
@@ -127,7 +128,7 @@ const examSessionListItem = ({
         session.post_admission_end_date &&
         session.post_admission_active && (
           <div className={classes.RegistrationOpen}>
-            {t('examSession.postAdmission')}
+            {t(i18nKeys.examSession_postAdmission)}
             {':'}
             <span style={{ marginLeft: 5 }}>
               {`${moment(session.post_admission_start_date).format(
@@ -143,22 +144,22 @@ const examSessionListItem = ({
   );
 
   const buttonText = spotsAvailable
-    ? t('registration.register')
+    ? t(i18nKeys.registration_register)
     : session.queue_full
-    ? t('registration.register.queueFull')
-    : t('registration.register.forQueue');
+    ? t(i18nKeys.registration_register_queueFull)
+    : t(i18nKeys.registration_register_forQueue);
 
   const registrationOpenText =
     session.post_admission_start_date &&
     session.post_admission_end_date &&
     session.post_admission_active
-      ? `${t('examSession.postAdmission')}:  ${moment(
+      ? `${t(i18nKeys.examSession_postAdmission)}:  ${moment(
           session.post_admission_start_date,
         ).format(DATE_FORMAT)} -
                     ${moment(session.post_admission_end_date).format(
                       DATE_FORMAT,
                     )} `
-      : `${t('registration.list.signupOpen')}: ${moment(
+      : `${t(i18nKeys.registration_list_signupOpen)}: ${moment(
           session.registration_start_date,
         ).format(DATE_FORMAT)} - ${moment(session.registration_end_date).format(
           DATE_FORMAT,

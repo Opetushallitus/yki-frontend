@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import Modal from '../../components/UI/Modal/Modal';
 import Alert from '../../components/Alert/Alert';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
-const defaultKey = 'error.common';
+const defaultKey = i18nKeys.error_common;
 
 const withErrorHandler = WrappedComponent => {
   const errorHandler = props => (
@@ -17,7 +18,7 @@ const withErrorHandler = WrappedComponent => {
                 props.error.key ? props.t(props.error.key) : props.t(defaultKey)
               }
             />
-            <p>{props.t('error.generic.info')}</p>
+            <p>{props.t(i18nKeys.error_generic_info)}</p>
           </React.Fragment>
         ) : null}
       </Modal>

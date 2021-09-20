@@ -18,6 +18,7 @@ import LoginLink from '../LoginLink/LoginLink';
 import NotificationSignup from '../NotificationSignup/NotificationSignup';
 import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
 import classes from './ExamDetailsPage.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const examDetailsPage = ({
   location,
@@ -30,7 +31,7 @@ const examDetailsPage = ({
   const [showLoginLink, setShowLoginLink] = useState(false);
 
   useEffect(() => {
-    document.title = t('registration.document.examDetails.title');
+    document.title = t(i18nKeys.registration_document_examDetails_title);
     if (Object.keys(session).length === 0 && !loading) {
       onfetchExamSession(match.params.examSessionId);
     }
@@ -62,13 +63,13 @@ const examDetailsPage = ({
   const registrationPeriod = (
     <div className={classes.InfoText}>
       <p data-cy="exam-details-registrationPeriod">{`${t(
-        'registration.examDetails.registrationPeriod',
+        i18nKeys.registration_examDetails_registrationPeriod,
       )} ${moment(session.registration_start_date).format(
         DATE_FORMAT_WITHOUT_YEAR,
-      )} ${t('registration.examDetails.card.time')} 10.00 - ${moment(
+      )} ${t(i18nKeys.registration_examDetails_card_time)} 10.00 - ${moment(
         session.registration_end_date,
       ).format(DATE_FORMAT_WITHOUT_YEAR)} ${t(
-        'registration.examDetails.card.time',
+        i18nKeys.registration_examDetails_card_time,
       )} 16.00`}</p>
     </div>
   );
@@ -105,25 +106,25 @@ const examDetailsPage = ({
               <>
                 {validationFailed && (
                   <div className={classes.NotifyText}>
-                    {t('registration.examDetails.validationError.info')}
+                    {t(i18nKeys.registration_examDetails_validationError_info)}
                   </div>
                 )}
                 <div className={classes.InfoText}>
                   {seatsAvailable && (
-                    <p>{t('registration.examDetails.futureInfo')}</p>
+                    <p>{t(i18nKeys.registration_examDetails_futureInfo)}</p>
                   )}
                   {!seatsAvailable && !queueFull && (
                     <p className={classes.InfoText}>
-                      {t('registration.notification.signup.label')}
+                      {t(i18nKeys.registration_notification_signup_label)}
                     </p>
                   )}
                 </div>
                 {seatsAvailable ? (
                   <div className={classes.Identification}>
                     <p className={classes.IdentificationHeader}>
-                      <strong>{t('registration.examDetails.identify')}</strong>
+                      <strong>{t(i18nKeys.registration_examDetails_identify)}</strong>
                     </p>
-                    <p>{t('registration.examDetails.additional')}</p>
+                    <p>{t(i18nKeys.registration_examDetails_additional)}</p>
                     <div className={classes.IdentificationButtons}>
                       <AuthButton examSessionId={examSessionId} />
                       {showLoginLink ? (
@@ -136,7 +137,7 @@ const examDetailsPage = ({
                             onClick={() => setShowLoginLink(true)}
                             role="link"
                           >
-                            {t('registration.examDetails.identify.withEmail')}
+                            {t(i18nKeys.registration_examDetails_identify_withEmail)}
                           </button>
                         </>
                       )}
@@ -158,7 +159,7 @@ const examDetailsPage = ({
                     data-cy={'exam-details-title'}
                   >
                     <p>
-                      <strong>{t('registration.examDetails.queueFull')}</strong>
+                      <strong>{t(i18nKeys.registration_examDetails_queueFull)}</strong>
                     </p>
                   </div>
                 ) : null}

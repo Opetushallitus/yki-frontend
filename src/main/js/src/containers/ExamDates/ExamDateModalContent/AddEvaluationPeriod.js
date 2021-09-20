@@ -6,6 +6,7 @@ import { withTranslation } from 'react-i18next';
 import DatePicker from '../../../components/UI/DatePicker/DatePicker';
 import { compareDates } from '../../../util/util';
 import classes from './AddOrEditExamDate.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const AddEvaluationPeriod = props => {
   const { exam, t, i18n, onSubmit } = props;
@@ -39,10 +40,10 @@ const AddEvaluationPeriod = props => {
       render={() => (
         <Form>
           <h3 className={classes.ModalTitle}>
-            {t('examDates.add.evaluation.period')}
+            {t(i18nKeys.examDates_add_evaluation_period)}
           </h3>
           <div>
-            <label>{t('examDates.choose.evaluationTime')}</label>
+            <label>{t(i18nKeys.examDates_choose_evaluationTime)}</label>
             <div className={classes.EvaluationDateGrid}>
               <div
                 className={classes.EvaluationDatePickerWrapper}
@@ -88,7 +89,7 @@ const AddEvaluationPeriod = props => {
             </div>
             <div className={classes.ActionButtons} style={{ bottom: '2rem' }}>
               <button className={classes.ConfirmButton}>
-                {t('examDates.add.evaluation.period')}
+                {t(i18nKeys.examDates_add_evaluation_period)}
               </button>
             </div>
           </div>

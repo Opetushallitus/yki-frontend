@@ -11,36 +11,37 @@ import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
 import AgreementPdf from './AgreementPdf/AgreementPdf';
 import classes from './RegistryItemForm.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const registryItemForm = props => {
   const validationSchema = Yup.object().shape({
     agreementStart: Yup.string().required(
-      props.t('registryItem.agreementStart.required'),
+      props.t(i18nKeys.registryItem_agreementStart_required),
     ),
     agreementEnd: Yup.string().required(
-      props.t('registryItem.agreementEnd.required'),
+      props.t(i18nKeys.registryItem_agreementEnd_required),
     ),
     contactName: Yup.string().required(
-      props.t('registryItem.contactName.required'),
+      props.t(i18nKeys.registryItem_contactName_required),
     ),
     contactPhone: Yup.string().required(
-      props.t('registryItem.contactPhone.required'),
+      props.t(i18nKeys.registryItem_contactPhone_required),
     ),
     contactEmail: Yup.string()
       .email()
-      .required(props.t('registryItem.contactEmail.required')),
+      .required(props.t(i18nKeys.registryItem_contactEmail_required)),
     extra: Yup.string(),
     merchantId: Yup.number()
-      .typeError(props.t('error.numeric'))
-      .max(99999999999, props.t('error.max')),
+      .typeError(props.t(i18nKeys.error_numeric))
+      .max(99999999999, props.t(i18nKeys.error_max)),
     merchantSecret: Yup.string()
       .when('merchantId', {
         is: val => val,
         then: Yup.string().required(
-          props.t('registryItem.merchantSecret.mandatory'),
+          props.t(i18nKeys.registryItem_merchantSecret_mandatory),
         ),
       })
-      .max(30, props.t('error.max')),
+      .max(30, props.t(i18nKeys.error_max)),
   });
 
   return (
@@ -85,11 +86,11 @@ const registryItemForm = props => {
             <hr />
             <div className={classes.FormElements}>
               <div className={classes.Agreement}>
-                <h3>{props.t('common.agreement')}</h3>
+                <h3>{props.t(i18nKeys.common_agreement)}</h3>
                 <div className={classes.DatePickers}>
                   <div>
                     <label htmlFor="agreementStart" className={classes.Label}>
-                      {props.t('registryItem.agreementStart')}
+                      {props.t(i18nKeys.registryItem_agreementStart)}
                     </label>
                     <DatePicker
                       id="agreementStart"
@@ -109,7 +110,7 @@ const registryItemForm = props => {
                   <div className={classes.Separator}>−</div>
                   <div>
                     <label htmlFor="agreementEnd" className={classes.Label}>
-                      {props.t('registryItem.agreementEnd')}
+                      {props.t(i18nKeys.registryItem_agreementEnd)}
                     </label>
                     <DatePicker
                       id="agreementEnd"
@@ -136,16 +137,16 @@ const registryItemForm = props => {
                 )}
               </div>
               <div className={classes.Languages}>
-                <h3>{props.t('common.exam.languages')}</h3>
+                <h3>{props.t(i18nKeys.common_exam_languages)}</h3>
                 <LanguageCheckboxes
                   languages={values.languages}
                   onChange={languages => setFieldValue('languages', languages)}
                 />
               </div>
               <div className={classes.Contact}>
-                <h3>{props.t('registryItem.contactHeader')}</h3>
+                <h3>{props.t(i18nKeys.registryItem_contactHeader)}</h3>
                 <label htmlFor="contactName" className={classes.Label}>
-                  {props.t('registryItem.contactName')}
+                  {props.t(i18nKeys.registryItem_contactName)}
                 </label>
                 <Field
                   type="input"
@@ -160,7 +161,7 @@ const registryItemForm = props => {
                   className={classes.ErrorMessage}
                 />
                 <label htmlFor="contactEmail" className={classes.Label}>
-                  {props.t('registryItem.contactEmail')}
+                  {props.t(i18nKeys.registryItem_contactEmail)}
                 </label>
                 <Field
                   type="input"
@@ -175,7 +176,7 @@ const registryItemForm = props => {
                   className={classes.ErrorMessage}
                 />
                 <label htmlFor="contactPhone" className={classes.Label}>
-                  {props.t('registryItem.contactPhone')}
+                  {props.t(i18nKeys.registryItem_contactPhone)}
                 </label>
                 <Field
                   type="tel"
@@ -190,7 +191,7 @@ const registryItemForm = props => {
                   className={classes.ErrorMessage}
                 />
                 <label htmlFor="extra" className={classes.Label}>
-                  {props.t('registryItem.extra')}
+                  {props.t(i18nKeys.registryItem_extra)}
                 </label>
                 <Field
                   type="textarea"
@@ -200,7 +201,7 @@ const registryItemForm = props => {
                   cols="33"
                   maxLength="255"
                   wrap="soft"
-                  placeholder={props.t('registryItem.extra.placeholder')}
+                  placeholder={props.t(i18nKeys.registryItem_extra_placeholder)}
                   tabIndex="6"
                 />
                 <ErrorMessage
@@ -210,9 +211,9 @@ const registryItemForm = props => {
                 />
               </div>
               <div className={classes.PaymentInfo}>
-                <h3>{props.t('registryItem.payment')}</h3>
+                <h3>{props.t(i18nKeys.registryItem_payment)}</h3>
                 <label htmlFor="contactName" className={classes.Label}>
-                  {props.t('registryItem.merchantId')}
+                  {props.t(i18nKeys.registryItem_merchantId)}
                 </label>
                 <Field
                   type="input"
@@ -226,7 +227,7 @@ const registryItemForm = props => {
                   className={classes.ErrorMessage}
                 />
                 <label htmlFor="merchantSecret" className={classes.Label}>
-                  {props.t('registryItem.merchantSecret')}
+                  {props.t(i18nKeys.registryItem_merchantSecret)}
                 </label>
                 <Field
                   type="input"
@@ -249,8 +250,8 @@ const registryItemForm = props => {
               datacy="registry-item-form-submit"
             >
               {props.updating
-                ? props.t('registryItem.button.update')
-                : props.t('registryItem.button.add')}
+                ? props.t(i18nKeys.registryItem_button_update)
+                : props.t(i18nKeys.registryItem_button_add)}
             </Button>
           </Form>
         );

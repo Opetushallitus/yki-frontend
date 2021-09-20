@@ -17,6 +17,7 @@ import { evaluationTexts, formatPriceObject } from '../../../util/util';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import ReEvaluationForm from './ReEvaluationForm';
 import classes from './ReEvaluationFormPage.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const mapStateToProps = state => {
   return {
@@ -63,11 +64,11 @@ const ReEvaluationFormPage = ({
     <>
       <main id="main" className={'Container'}>
         <HeadlineContainer
-          headlineTitle={t('registration.reeval.banner.title')}
+          headlineTitle={t(i18nKeys.registration_reeval_banner_title)}
           headlineContent={
             <>
-              <p>{t('registration.reeval.banner.text1')}</p>
-              <p>{t('registration.reeval.banner.text2')}</p>
+              <p>{t(i18nKeys.registration_reeval_banner_text1)}</p>
+              <p>{t(i18nKeys.registration_reeval_banner_text2)}</p>
             </>
           }
           headlineImage={YkiImage2}
@@ -75,7 +76,7 @@ const ReEvaluationFormPage = ({
 
         <div className={'InnerContainer'}>
           <h2 style={{ marginTop: '2rem' }}>
-            {t('registration.reeval.formpage.title1')}
+            {t(i18nKeys.registration_reeval_formpage_title1)}
           </h2>
           <div className={classes.BasicInfoRow}>
             <p>{langAndLvl}</p>

@@ -8,6 +8,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import classes from './LoginLink.module.css';
 import Button from '../../../components/UI/Button/Button';
 import Alert from '../../../components/Alert/Alert';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 export class LoginLink extends Component {
   state = {
@@ -25,8 +26,8 @@ export class LoginLink extends Component {
         initialValues={{ email: '' }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
-            .required(this.props.t('error.mandatory'))
-            .email(this.props.t('error.email')),
+            .required(this.props.t(i18nKeys.error_mandatory))
+            .email(this.props.t(i18nKeys.error_email)),
         })}
         onSubmit={(values, { setSubmitting, setStatus }) => {
           submit({
@@ -47,7 +48,7 @@ export class LoginLink extends Component {
         {({ isSubmitting, status, isValid }) => (
           <Form className={classes.Form}>
             <label htmlFor="email" className={classes.Label}>
-              {this.props.t('registration.loginlink.header')}
+              {this.props.t(i18nKeys.registration_loginlink_header)}
             </label>
             <div className={classes.FormElement}>
               <Field
@@ -68,13 +69,13 @@ export class LoginLink extends Component {
               disabled={!isValid || isSubmitting}
               datacy="button-loginlink-form-submit"
             >
-              {this.props.t('registration.notification.signup.button')}
+              {this.props.t(i18nKeys.registration_notification_signup_button)}
             </Button>
             {!!status && (
               <div className={classes.SubmitError}>
                 <Alert
-                  title={this.props.t('error.email.sendFailed')}
-                  optionalText={this.props.t('error.generic.info')}
+                  title={this.props.t(i18nKeys.error_email_sendFailed)}
+                  optionalText={this.props.t(i18nKeys.error_generic_info)}
                 />
               </div>
             )}
@@ -84,7 +85,7 @@ export class LoginLink extends Component {
     ) : (
       <>
         <p data-cy="loginlink-success">
-          {this.props.t('registration.loginlink.success')}{' '}
+          {this.props.t(i18nKeys.registration_loginlink_success)}{' '}
           <strong>{this.state.email}</strong>
         </p>
       </>

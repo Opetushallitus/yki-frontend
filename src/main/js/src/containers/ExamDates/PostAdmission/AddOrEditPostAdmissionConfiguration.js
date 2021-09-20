@@ -11,6 +11,7 @@ import { DATE_FORMAT } from '../../../common/Constants';
 import { languageToString } from '../../../util/util';
 import classes from './AddOrEditPostAdmissionConfiguration.module.css';
 import * as actions from '../../../store/actions';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 // NO LONGER IN USE
 // Can be removed when post admission feature is confirmed to work
@@ -19,7 +20,7 @@ import * as actions from '../../../store/actions';
 const AddOrEditPostAdmissionConfiguration = (props) => {
   const t = props.t;
   const validationSchema = Yup.object().shape({
-    postAdmissionEnd: Yup.string().required(t('error.mandatory')),
+    postAdmissionEnd: Yup.string().required(t(i18nKeys.error_mandatory)),
   });
 
   const endDateSubmitHandler = (payload) => {
@@ -41,9 +42,9 @@ const AddOrEditPostAdmissionConfiguration = (props) => {
         <ActionButton
           onClick={deleteHandler}
           confirmOnRight={true}
-          children={t('examSession.delete')}
-          confirmText={t('common.confirm')}
-          cancelText={t('common.cancelConfirm')}
+          children={t(i18nKeys.examSession_delete)}
+          confirmText={t(i18nKeys.common_confirm)}
+          cancelText={t(i18nKeys.common_cancelConfirm)}
         />
       </div>
     );

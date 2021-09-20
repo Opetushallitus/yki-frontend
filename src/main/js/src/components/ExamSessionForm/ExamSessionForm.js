@@ -19,6 +19,7 @@ import Button from '../UI/Button/Button';
 import RadioButton from '../UI/RadioButton/RadioButton';
 import ZipAndPostOffice from '../ZipAndPostOffice/ZipAndPostOffice';
 import classes from './ExamSessionForm.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const examSessionForm = props => {
   function validateDuplicateExamSession() {
@@ -42,35 +43,35 @@ const examSessionForm = props => {
 
   const validationSchema = Yup.object().shape({
     officeOid: Yup.string()
-      .required(props.t('error.mandatory'))
+      .required(props.t(i18nKeys.error_mandatory))
       .oneOf(props.examSessionContent.organizationChildren.map(o => o.oid)),
-    language: Yup.string().required(props.t('error.mandatory')),
-    level: Yup.string().required(props.t('error.mandatory')),
+    language: Yup.string().required(props.t(i18nKeys.error_mandatory)),
+    level: Yup.string().required(props.t(i18nKeys.error_mandatory)),
     examDate: Yup.string()
-      .required(props.t('error.mandatory'))
+      .required(props.t(i18nKeys.error_mandatory))
       .test(
         'duplicate-exam-session',
-        props.t('examSession.duplicate'),
+        props.t(i18nKeys.examSession_duplicate),
         validateDuplicateExamSession,
       ),
     maxParticipants: Yup.number()
-      .typeError(props.t('error.numeric'))
-      .required(props.t('error.mandatory'))
+      .typeError(props.t(i18nKeys.error_numeric))
+      .required(props.t(i18nKeys.error_mandatory))
       .positive()
       .integer(),
-    streetAddress: Yup.string().required(props.t('error.mandatory')),
-    postOffice: Yup.string().required(props.t('error.mandatory')),
+    streetAddress: Yup.string().required(props.t(i18nKeys.error_mandatory)),
+    postOffice: Yup.string().required(props.t(i18nKeys.error_mandatory)),
     zip: Yup.string()
       .matches(/\b\d{5}\b/, {
-        message: props.t('error.zip'),
+        message: props.t(i18nKeys.error_zip),
       })
-      .required(props.t('error.mandatory')),
+      .required(props.t(i18nKeys.error_mandatory)),
     location: Yup.string(),
     extraFi: Yup.string(),
     extraSv: Yup.string(),
     extraEn: Yup.string(),
     contactName: Yup.string(),
-    contactEmail: Yup.string().email(props.t('error.email')),
+    contactEmail: Yup.string().email(props.t(i18nKeys.error_email)),
 
     contactPhoneNumber: Yup.string(),
   });
@@ -119,7 +120,7 @@ const examSessionForm = props => {
   const organizationSelection = (children, lang) => {
     let elements = [];
 
-    elements.push(<option value="" key="">{props.t('examSession.selectInstitution')}</option>)
+    elements.push(<option value="" key="">{props.t(i18nKeys.examSession_selectInstitution)}</option>)
 
     if (children) {
       children.forEach(org => {
@@ -221,7 +222,7 @@ const examSessionForm = props => {
       const end = moment(examDate.registration_end_date).format(DATE_FORMAT);
       return (
         <p>
-          {props.t('common.registationPeriod')} {start} &ndash; {end}
+          {props.t(i18nKeys.common_registationPeriod)} {start} &ndash; {end}
         </p>
       );
     } else {
@@ -316,11 +317,11 @@ const examSessionForm = props => {
       }}
       render={({ values, isValid, errors, setFieldValue }) => (
         <Form className={classes.Form}>
-          <h1>{props.t('examSession.add.header')}</h1>
-          <h2>{props.t('examSession.add.subHeader')}</h2>
+          <h1>{props.t(i18nKeys.examSession_add_header)}</h1>
+          <h2>{props.t(i18nKeys.examSession_add_subHeader)}</h2>
           <div data-cy="exam-session-form">
             <div className={[classes.FormElement].join(' ')}>
-              <h3>{`${props.t('examSession.office')} *`}</h3>
+              <h3>{`${props.t(i18nKeys.examSession_office)} *`}</h3>
               <Field
                 component="select"
                 name="officeOid"
@@ -342,7 +343,7 @@ const examSessionForm = props => {
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="language"
-                label={`${props.t('common.language')} *`}
+                label={`${props.t(i18nKeys.common_language)} *`}
                 value={values.language}
                 error={errors.language}
               >
@@ -352,7 +353,7 @@ const examSessionForm = props => {
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="level"
-                label={`${props.t('common.level')} *`}
+                label={`${props.t(i18nKeys.common_level)} *`}
                 value={values.level}
                 error={errors.level}
               >
@@ -365,7 +366,7 @@ const examSessionForm = props => {
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
                 id="examDate"
-                label={`${props.t('common.date')} *`}
+                label={`${props.t(i18nKeys.common_date)} *`}
                 value={values.examDate}
                 error={errors.examDate}
               >
@@ -381,7 +382,7 @@ const examSessionForm = props => {
               )}
             </div>
             <div className={classes.FormElement}>
-              <h3>{`${props.t('examSession.maxParticipants')} *`}</h3>
+              <h3>{`${props.t(i18nKeys.examSession_maxParticipants)} *`}</h3>
               <Field
                 id="maxParticipants"
                 name="maxParticipants"
@@ -395,7 +396,7 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>{`${props.t('common.address')} *`}</h3>
+              <h3>{`${props.t(i18nKeys.common_address)} *`}</h3>
               <Field
                 id="streetAddress"
                 name="streetAddress"
@@ -416,11 +417,11 @@ const examSessionForm = props => {
               />
             </div>
             <div className={classes.FormElement}>
-              <h3>{props.t('common.location')}</h3>
+              <h3>{props.t(i18nKeys.common_location)}</h3>
               <Field
                 id="location"
                 name="location"
-                placeholder={props.t('common.location.placeholder')}
+                placeholder={props.t(i18nKeys.common_location_placeholder)}
                 className={classes.TextInput}
               />
               <ErrorMessage
@@ -432,9 +433,9 @@ const examSessionForm = props => {
 
             <SessionContact />
             <div className={classes.FormElement}>
-              <h3>{props.t('common.extra')}</h3>
+              <h3>{props.t(i18nKeys.common_extra)}</h3>
               <label className={classes.ExtraLabel}>
-                {props.t('common.language.fin')}
+                {props.t(i18nKeys.common_language_fin)}
               </label>
               <Field
                 component="textarea"
@@ -444,7 +445,7 @@ const examSessionForm = props => {
                 cols={33}
                 maxLength="2048"
                 wrap="soft"
-                placeholder={props.t('examSession.extra.placeholder')}
+                placeholder={props.t(i18nKeys.examSession_extra_placeholder)}
                 className={classes.TextArea}
               />
               <ErrorMessage
@@ -455,7 +456,7 @@ const examSessionForm = props => {
             </div>
             <div className={classes.FormElement}>
               <label className={classes.ExtraLabel}>
-                {props.t('common.language.swe')}
+                {props.t(i18nKeys.common_language_swe)}
               </label>
               <Field
                 component="textarea"
@@ -475,7 +476,7 @@ const examSessionForm = props => {
             </div>
             <div className={classes.FormElement}>
               <label className={classes.ExtraLabel}>
-                {props.t('common.language.eng')}
+                {props.t(i18nKeys.common_language_eng)}
               </label>
               <Field
                 component="textarea"
@@ -496,7 +497,7 @@ const examSessionForm = props => {
           </div>
 
           <Button type="submit" disabled={!isValid}>
-            {props.t('examSession.addButton')}
+            {props.t(i18nKeys.examSession_addButton)}
           </Button>
         </Form>
       )}

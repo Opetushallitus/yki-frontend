@@ -9,6 +9,7 @@ import {
   filterByLevel,
 } from '../../util/registryUtil';
 import { LANGUAGES } from '../../common/Constants';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 class RegistryFilter extends Component {
   state = {
@@ -73,7 +74,7 @@ class RegistryFilter extends Component {
         data-cy="language-filter"
       >
         <option value="">
-          {this.props.t('registry.search.languageSelectPlaceholder')}
+          {this.props.t(i18nKeys.registry_search_languageSelectPlaceholder)}
         </option>
         {LANGUAGES.map(l => (
           <option key={l.code} value={l.code}>
@@ -94,7 +95,7 @@ class RegistryFilter extends Component {
         data-cy="level-filter"
       >
         <option value="">
-          {this.props.t('registry.search.levelSelectPlaceholder')}
+          {this.props.t(i18nKeys.registry_search_levelSelectPlaceholder)}
         </option>
         {LANGUAGES[0].levels.map(l => (
           <option key={l} value={l}>
@@ -108,7 +109,7 @@ class RegistryFilter extends Component {
       <div className={classes.Filter}>
         <input
           type="search"
-          placeholder={this.props.t('registry.search.placeholder')}
+          placeholder={this.props.t(i18nKeys.registry_search_placeholder)}
           onChange={this.inputChangeHandler}
         />
         {languageSelect}

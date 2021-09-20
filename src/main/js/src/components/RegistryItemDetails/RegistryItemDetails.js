@@ -8,11 +8,12 @@ import Hyperlink from '../UI/Hyperlink/Hyperlink';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
 import { Link } from 'react-router-dom';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const registryItemDetails = props => {
   const languages = (
     <div className={classes.Languages}>
-      <h3>{props.t('common.exam.languages')}</h3>
+      <h3>{props.t(i18nKeys.common_exam_languages)}</h3>
       {getLanguagesWithLevelDescriptions(props.item.languages).map(lang => {
         return <p key={lang}>{lang}</p>;
       })}
@@ -24,7 +25,7 @@ const registryItemDetails = props => {
 
   const contact = (
     <div className={classes.Contact}>
-      <h3>{props.t('registryItem.contact')}</h3>
+      <h3>{props.t(i18nKeys.registryItem_contact)}</h3>
       <p>{props.item.contact.name}</p>
       <Hyperlink type="phone" to={props.item.contact.phone} />
       <Hyperlink type="email" to={props.item.contact.email} />
@@ -41,14 +42,14 @@ const registryItemDetails = props => {
         className={classes.PdfLink}
         download
       >
-        {props.t('registryItem.agreement.loadPdf')}
+        {props.t(i18nKeys.registryItem_agreement_loadPdf)}
       </a>
     </div>
   ) : null;
 
   const agreement = (
     <div className={props.agreementActive ? null : classes.AgreementExpired}>
-      <h3>{props.t('common.agreement')}</h3>
+      <h3>{props.t(i18nKeys.common_agreement)}</h3>
       <p>
         {moment(props.item.agreement.start).format(DATE_FORMAT)} -{' '}
         {moment(props.item.agreement.end).format(DATE_FORMAT)}
@@ -59,7 +60,7 @@ const registryItemDetails = props => {
 
   const extra = (
     <div className={classes.Extra}>
-      <h3>{props.t('registryItem.extra')}</h3>
+      <h3>{props.t(i18nKeys.registryItem_extra)}</h3>
       <p>{props.item.extra}</p>
     </div>
   );
@@ -89,7 +90,7 @@ const registryItemDetails = props => {
         {inspectExamSessions}
       </Link>
       <button className={[classes.Update, classes.LinkStyle].join(" ")} onClick={props.modify}>
-        {props.t('common.modify')}
+        {props.t(i18nKeys.common_modify)}
       </button>
     </div>
   );

@@ -21,10 +21,11 @@ import RegistrationError from '../RegistrationError/RegistrationError';
 import GenderSelect from './GenderSelect/GenderSelect';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
 import classes from './RegistrationForm.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 export const registrationForm = props => {
-  const mandatoryErrorMsg = props.t('error.mandatory');
-  const maxErrorMsg = props.t('error.max');
+  const mandatoryErrorMsg = props.t(i18nKeys.error_mandatory);
+  const maxErrorMsg = props.t(i18nKeys.error_max);
   const mobileOrTablet = useMobileView(true, true);
 
   function validatePhoneNumber(value) {
@@ -61,7 +62,7 @@ export const registrationForm = props => {
       .max(128, maxErrorMsg)
       .test(
         'no-special-characters',
-        props.t('error.specialCharacters'),
+        props.t(i18nKeys.error_specialCharacters),
         value => !containsSpecialCharacters(value),
       ),
     lastName: Yup.string()
@@ -69,7 +70,7 @@ export const registrationForm = props => {
       .max(128, maxErrorMsg)
       .test(
         'no-special-characters',
-        props.t('error.specialCharacters'),
+        props.t(i18nKeys.error_specialCharacters),
         value => !containsSpecialCharacters(value),
       ),
     streetAddress: Yup.string()
@@ -77,7 +78,7 @@ export const registrationForm = props => {
       .max(128, maxErrorMsg)
       .test(
         'no-special-characters',
-        props.t('error.specialCharacters'),
+        props.t(i18nKeys.error_specialCharacters),
         value => !containsSpecialCharacters(value),
       ),
     zip: Yup.string()
@@ -88,18 +89,18 @@ export const registrationForm = props => {
       .max(64, maxErrorMsg)
       .test(
         'no-special-characters',
-        props.t('error.specialCharacters'),
+        props.t(i18nKeys.error_specialCharacters),
         value => !containsSpecialCharacters(value),
       ),
     phoneNumber: Yup.string()
       .required(mandatoryErrorMsg)
       .test(
         'invalid-phone-number',
-        props.t('error.phoneNumber'),
+        props.t(i18nKeys.error_phoneNumber),
         validatePhoneNumber,
       ),
     email: Yup.string()
-      .email(props.t('error.email'))
+      .email(props.t(i18nKeys.error_email))
       .required(mandatoryErrorMsg)
       .max(64, maxErrorMsg),
     nationality: Yup.string()
@@ -110,17 +111,17 @@ export const registrationForm = props => {
     gender: Yup.string(),
     ssn: Yup.string().test(
       'invalid-ssn',
-      props.t('error.ssn.invalid'),
+      props.t(i18nKeys.error_ssn_invalid),
       validateSsn,
     ),
     confirmEmail: Yup.string().test(
       'same-email',
-      props.t('error.confirmEmail'),
+      props.t(i18nKeys.error_confirmEmail),
       sameEmail,
     ),
     birthdate: Yup.string().test(
       'invalid-birthdate',
-      props.t('error.birthdate'),
+      props.t(i18nKeys.error_birthdate),
       validateBirthDate,
     ),
     examLang: Yup.string().required(mandatoryErrorMsg),
@@ -380,7 +381,7 @@ export const registrationForm = props => {
         <Form className={classes.Form} id="form">
           <ScrollToError isValid={isValid} isSubmitting={isSubmitting} />
           <div data-cy="registration-form">
-            <p>{props.t('registration.form.info')}</p>
+            <p>{props.t(i18nKeys.registration_form_info)}</p>
             <div className={classes.InputGroup}>
               <div>{readonlyWhenExistsInput('firstName', initialValues)}</div>
               <div>{readonlyWhenExistsInput('lastName', initialValues)}</div>
@@ -391,7 +392,7 @@ export const registrationForm = props => {
                 true,
                 null,
                 'text',
-                props.t('registration.form.streetAddress.placeholder'),
+                props.t(i18nKeys.registration_form_streetAddress_placeholder),
               )}
               <ZipAndPostOffice
                 mandatory
@@ -454,14 +455,14 @@ export const registrationForm = props => {
                 </div>
                 <div>
                   {inputField('ssn')}
-                  <p> {props.t('registration.form.ssn.text')}</p>
+                  <p> {props.t(i18nKeys.registration_form_ssn_text)}</p>
                 </div>
               </div>
             )}
             <div className={classes.InputGroup}>
               {showExamLang() && (
                 <RadioButtonGroup
-                  label={props.t('registration.form.examLang')}
+                  label={props.t(i18nKeys.registration_form_examLang)}
                   value={values.examLang}
                   error={errors.examLang}
                 >
@@ -471,21 +472,21 @@ export const registrationForm = props => {
                       name="examLang"
                       id={'examLang-fi'}
                       checkedValue={'fi'}
-                      label={props.t('common.language.fin')}
+                      label={props.t(i18nKeys.common_language_fin)}
                     />
                     <Field
                       component={RadioButtonComponent}
                       name="examLang"
                       id={'examLang-sv'}
                       checkedValue={'sv'}
-                      label={props.t('common.language.swe')}
+                      label={props.t(i18nKeys.common_language_swe)}
                     />
                   </div>
                 </RadioButtonGroup>
               )}
 
               <RadioButtonGroup
-                label={props.t('registration.form.certificateLang')}
+                label={props.t(i18nKeys.registration_form_certificateLang)}
                 value={values.certificateLang}
                 error={errors.certificateLang}
               >
@@ -495,38 +496,38 @@ export const registrationForm = props => {
                     name="certificateLang"
                     id={'certificateLang-fi'}
                     checkedValue={'fi'}
-                    label={props.t('common.language.fin')}
+                    label={props.t(i18nKeys.common_language_fin)}
                   />
                   <Field
                     component={RadioButtonComponent}
                     name="certificateLang"
                     id={'certificateLang-sv'}
                     checkedValue={'sv'}
-                    label={props.t('common.language.swe')}
+                    label={props.t(i18nKeys.common_language_swe)}
                   />
                   <Field
                     component={RadioButtonComponent}
                     name="certificateLang"
                     id={'certificateLang-en'}
                     checkedValue={'en'}
-                    label={props.t('common.language.eng')}
+                    label={props.t(i18nKeys.common_language_eng)}
                   />
                 </div>
               </RadioButtonGroup>
             </div>
           </div>
 
-          <p>{props.t('registration.form.specialArrangements.info')}</p>
-          <p>{props.t('registration.form.summary.info')}</p>
+          <p>{props.t(i18nKeys.registration_form_specialArrangements_info)}</p>
+          <p>{props.t(i18nKeys.registration_form_summary_info)}</p>
           <>
             <div className={classes.ConsentContainer}>
               <article>
                 <p>
                   <strong>
-                    {props.t('registration.form.consent.heading')}
+                    {props.t(i18nKeys.registration_form_consent_heading)}
                   </strong>
                 </p>
-                <p>{props.t('registration.form.consent.info')}</p>
+                <p>{props.t(i18nKeys.registration_form_consent_info)}</p>
               </article>
               <div className={classes.ConsentCheckbox}>
                 <Field
@@ -539,8 +540,8 @@ export const registrationForm = props => {
                   touched={touched}
                   setTouched={setTouched}
                   ariaRequired={true}
-                  label={props.t('registration.form.consent.confirm')}
-                  ariaLabel={props.t('registration.form.consent.confirm')}
+                  label={props.t(i18nKeys.registration_form_consent_confirm)}
+                  ariaLabel={props.t(i18nKeys.registration_form_consent_confirm)}
                 />
                 <ErrorMessage
                   name={'termsOfUseConsent'}
@@ -553,19 +554,19 @@ export const registrationForm = props => {
               <article>
                 <p>
                   <strong>
-                    {props.t('registration.form.personalData.consent.heading')}
+                    {props.t(i18nKeys.registration_form_personalData_consent_heading)}
                   </strong>
                 </p>
                 <a
                   href={'https://opintopolku.fi/wp/tietosuojaseloste/'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={props.t('common.newTab')}
+                  aria-label={props.t(i18nKeys.common_newTab)}
                 >
-                  {props.t('common.yki.consent.link')}
+                  {props.t(i18nKeys.common_yki_consent_link)}
                   <img
                     src={require('../../../assets/svg/external-link.svg')}
-                    alt={props.t('common.newTab')}
+                    alt={props.t(i18nKeys.common_newTab)}
                   />
                 </a>
               </article>
@@ -587,10 +588,10 @@ export const registrationForm = props => {
                     )
                   }
                   label={props.t(
-                    'registration.form.personalData.consent.confirm',
+                    i18nKeys.registration_form_personalData_consent_confirm,
                   )}
                   ariaLabel={props.t(
-                    'registration.form.personalData.consent.confirm',
+                    i18nKeys.registration_form_personalData_consent_confirm,
                   )}
                 />
                 <ErrorMessage
@@ -606,9 +607,9 @@ export const registrationForm = props => {
             disabled={props.submitting}
             isRegistration={true}
             datacy="form-submit-button"
-            ariaLabel={props.t('registration.form.aria.submit.button')}
+            ariaLabel={props.t(i18nKeys.registration_form_aria_submit_button)}
           >
-            {props.t('registration.form.submit.button')}
+            {props.t(i18nKeys.registration_form_submit_button)}
           </Button>
           {props.submitError && (
             <div data-cy="form-submit-error" className={classes.SubmitError}>

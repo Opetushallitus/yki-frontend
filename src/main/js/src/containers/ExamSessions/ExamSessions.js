@@ -15,6 +15,7 @@ import Button from '../../components/UI/Button/Button';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { getLocalizedName } from '../../util/registryUtil';
 import * as actions from '../../store/actions/index';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 class ExamSessions extends Component {
   state = {
@@ -142,10 +143,10 @@ class ExamSessions extends Component {
             data-cy="add-exam-session-button"
           >
             <Button clicked={this.openAddExamSessionModalHandler}>
-              {this.props.t('examSession.addExamSession')}
+              {this.props.t(i18nKeys.examSession_addExamSession)}
             </Button>
           </div>
-          <h2 className={classes.ContractTitle}>{this.props.t('common.agreement')}</h2>
+          <h2 className={classes.ContractTitle}>{this.props.t(i18nKeys.common_agreement)}</h2>
           <ExamSessionOrganizer
             organizer={this.props.examSessionContent.organizer}
             organization={this.props.examSessionContent.organization}
@@ -153,7 +154,7 @@ class ExamSessions extends Component {
         </div>
       </div>
     ) : (
-          <p>{this.props.t('examSessions.agreementNotFound')}</p>
+          <p>{this.props.t(i18nKeys.examSessions_agreementNotFound)}</p>
         );
 
     return (

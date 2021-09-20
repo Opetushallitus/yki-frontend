@@ -15,6 +15,7 @@ import classes from './Registry.module.css';
 import NewRegistryItem from './RegistryItem/NewRegistryItem/NewRegistryItem';
 import RegistryItem from './RegistryItem/RegistryItem';
 import UpdateRegistryItem from './RegistryItem/UpdateRegistryItem/UpdateRegistryItem';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 export class Registry extends Component {
   state = {
@@ -26,7 +27,7 @@ export class Registry extends Component {
   };
 
   componentDidMount = () => {
-    document.title = this.props.t('registry.document.title');
+    document.title = this.props.t(i18nKeys.registry_document_title);
     this.props.onFetchRegistryContent();
   };
 
@@ -58,7 +59,7 @@ export class Registry extends Component {
           }
         />
         <Button clicked={this.openModalHandler}>
-          {this.props.t('registryItem.button.add')}
+          {this.props.t(i18nKeys.registryItem_button_add)}
         </Button>
       </div>
     );
@@ -106,14 +107,14 @@ export class Registry extends Component {
       })
     ) : this.state.filtering ? (
       <p className={classes.SearchResultsEmpty}>
-        {this.props.t('registry.search.noResults')}
+        {this.props.t(i18nKeys.registry_search_noResults)}
       </p>
     ) : null;
 
     return (
       <Page>
         <div className={classes.Registry}>
-          <h1>{this.props.t('common.exam.languages.registry')}</h1>
+          <h1>{this.props.t(i18nKeys.common_exam_languages_registry)}</h1>
           {searchBar}
           {modal}
           {list}

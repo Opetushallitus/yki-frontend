@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 
 import classes from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const items = props => {
   return props.user && props.user.isAdmin ? (
     <React.Fragment>
       <NavigationItem link="/jarjestajarekisteri">
-        {props.t('common.registry')}
+        {props.t(i18nKeys.common_registry)}
       </NavigationItem>
       <div className={classes.Separator} />
       <NavigationItem link="/tutkintopaivat">
-        {props.t('common.examDates')}
+        {props.t(i18nKeys.common_examDates)}
       </NavigationItem>
     </React.Fragment>
   ) : (
     <NavigationItem link="/tutkintotilaisuudet">
-      {props.t('common.examSessions')}
+      {props.t(i18nKeys.common_examSessions)}
     </NavigationItem>
   );
 };

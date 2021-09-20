@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { useMobileView } from '../../util/customHooks';
 import classes from './PriceContainer.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const PriceContainer = props => {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ const PriceContainer = props => {
 
   return (
     <div className={classes.PriceContainer} data-cy="price-container">
-      <h2 style={{ textAlign: 'center' }}>{t('common.priceList')}</h2>
+      <h2 style={{ textAlign: 'center' }}>{t(i18nKeys.common_priceList)}</h2>
       <div
         className={
           onMobileSV || onMobileEN ? classes.PriceBoxSV : classes.PriceBox

@@ -14,6 +14,7 @@ import {
 } from '../../../../common/Constants';
 import ZipAndPostOffice from '../../../../components/ZipAndPostOffice/ZipAndPostOffice';
 import SessionContact from '../../../../components/SessionContact/SessionContact';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 export class ExamSessionUpdateForm extends Component {
   render() {
@@ -22,20 +23,20 @@ export class ExamSessionUpdateForm extends Component {
 
     const validationSchema = Yup.object().shape({
       maxParticipants: Yup.number()
-        .typeError(t('error.numeric'))
-        .required(t('error.mandatory'))
+        .typeError(t(i18nKeys.error_numeric))
+        .required(t(i18nKeys.error_mandatory))
         .min(
           examSession.participants,
-          t('examSession.maxParticipants.lessThan.participants'),
+          t(i18nKeys.examSession_maxParticipants_lessThan_participants),
         )
         .integer(),
-      streetAddress: Yup.string().required(t('error.mandatory')),
-      postOffice: Yup.string().required(t('error.mandatory')),
+      streetAddress: Yup.string().required(t(i18nKeys.error_mandatory)),
+      postOffice: Yup.string().required(t(i18nKeys.error_mandatory)),
       zip: Yup.string()
         .matches(/\b\d{5}\b/, {
-          message: t('error.zip'),
+          message: t(i18nKeys.error_zip),
         })
-        .required(t('error.mandatory')),
+        .required(t(i18nKeys.error_mandatory)),
       location: Yup.string(),
       extraFi: Yup.string(),
       extraSe: Yup.string(),
@@ -66,9 +67,9 @@ export class ExamSessionUpdateForm extends Component {
           <ActionButton
             onClick={this.props.onDelete}
             confirmOnRight={true}
-            children={t('examSession.delete')}
-            confirmText={t('common.confirm')}
-            cancelText={t('common.cancelConfirm')}
+            children={t(i18nKeys.examSession_delete)}
+            confirmText={t(i18nKeys.common_confirm)}
+            cancelText={t(i18nKeys.common_cancelConfirm)}
           />
         </div>
       ) : null;
@@ -175,17 +176,17 @@ export class ExamSessionUpdateForm extends Component {
           <Form className={classes.Form}>
             <div>
               <div className={classes.FormElement}>
-                <h3>{t('common.registationPeriod')}</h3>
+                <h3>{t(i18nKeys.common_registationPeriod)}</h3>
                 {registrationPediod(examSession)}
               </div>
               <div className={classes.FormElement}>
-                <h3>{t('examSession.registrationLink')}</h3>
+                <h3>{t(i18nKeys.examSession_registrationLink)}</h3>
                 <label data-cy="registration-link">
                   {createRegistrationUrl(examSession.id)}
                 </label>
               </div>
               <div className={classes.FormElement}>
-                <h3>{`${t('examSession.maxParticipants')} *`}</h3>
+                <h3>{`${t(i18nKeys.examSession_maxParticipants)} *`}</h3>
                 <Field
                   id="maxParticipants"
                   name="maxParticipants"
@@ -199,7 +200,7 @@ export class ExamSessionUpdateForm extends Component {
                 />
               </div>
               <div className={classes.FormElement}>
-                <h3>{`${t('common.address')} *`}</h3>
+                <h3>{`${t(i18nKeys.common_address)} *`}</h3>
                 <Field
                   id="streetAddress"
                   name="streetAddress"
@@ -220,7 +221,7 @@ export class ExamSessionUpdateForm extends Component {
                 />
               </div>
               <div className={classes.FormElement}>
-                <h3>{t('common.location')}</h3>
+                <h3>{t(i18nKeys.common_location)}</h3>
                 <Field
                   id="location"
                   name="location"
@@ -238,9 +239,9 @@ export class ExamSessionUpdateForm extends Component {
               <SessionContact />
               <div>
                 <div className={classes.FormElement}>
-                  <h3>{t('common.extra')}</h3>
+                  <h3>{t(i18nKeys.common_extra)}</h3>
                   <label className={classes.ExtraLabel}>
-                    {t('common.language.fin')}
+                    {t(i18nKeys.common_language_fin)}
                   </label>
                   <Field
                     component="textarea"
@@ -261,7 +262,7 @@ export class ExamSessionUpdateForm extends Component {
                 </div>
                 <div className={classes.FormElement}>
                   <label className={classes.ExtraLabel}>
-                    {t('common.language.swe')}
+                    {t(i18nKeys.common_language_swe)}
                   </label>
                   <Field
                     component="textarea"
@@ -282,7 +283,7 @@ export class ExamSessionUpdateForm extends Component {
                 </div>
                 <div className={classes.FormElement}>
                   <label className={classes.ExtraLabel}>
-                    {t('common.language.eng')}
+                    {t(i18nKeys.common_language_eng)}
                   </label>
                   <Field
                     component="textarea"
@@ -310,7 +311,7 @@ export class ExamSessionUpdateForm extends Component {
                   disabled={!isValid}
                   className={classes.UpdateButton}
                 >
-                  {t('registryItem.button.update')}
+                  {t(i18nKeys.registryItem_button_update)}
                 </Button>
               </div>
             </div>

@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import classes from './Collapsible.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const collapsible = props => {
   const { className, clicked, children, extendedClassName, show } = props;
@@ -17,7 +18,7 @@ const collapsible = props => {
         className={[classes.Header, className].join(' ')}
         onClick={clicked}
         onKeyPress={clicked}
-        aria-label={show ? t('common.close') : t('common.open')}
+        aria-label={show ? t(i18nKeys.common_close) : t(i18nKeys.common_open)}
       >
         {children[0]}
       </div>

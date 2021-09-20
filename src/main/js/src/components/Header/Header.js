@@ -8,6 +8,7 @@ import MobileMenu from '../MobileMenu/MobileMenu';
 import classes from './Header.module.css';
 import NavigationItems from './NavigationItems/NavigationItems';
 import NavigationTabs from './NavigationTabs/NavigationTabs';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const header = props => {
   const { nav } = props;
@@ -17,7 +18,7 @@ const header = props => {
 
   const skipToContentLink = (
     <a className={classes.SkipLink} href="#main">
-      {t('common.skipToContent')}
+      {t(i18nKeys.common_skipToContent)}
     </a>
   );
 

@@ -6,6 +6,7 @@ import moment from 'moment';
 import * as R from 'ramda';
 
 import classes from './RelocateParticipant.module.css';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 export class RelocateParticipant extends Component {
   state = {
@@ -62,9 +63,9 @@ export class RelocateParticipant extends Component {
 
     const relocateText = (
       <React.Fragment>
-        {t('examSession.registration.relocate')}
+        {t(i18nKeys.examSession_registration_relocate)}
         {' '}
-        {t('examSession.registration.relocate.session')}
+        {t(i18nKeys.examSession_registration_relocate_session)}
       </React.Fragment>
     );
 

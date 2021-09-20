@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 
 import axios from '../../axios';
 import classes from './ZipAndPostOffice.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 export class ZipAndPostOffice extends Component {
   getPostOffice(zip) {
@@ -34,7 +35,7 @@ export class ZipAndPostOffice extends Component {
       <div className={classes.AddressInput}>
         <div className={classes.Zip}>
           <label htmlFor="zip-input">
-            {this.props.t('registration.form.input.zip')}
+            {this.props.t(i18nKeys.registration_form_input_zip)}
             {this.props.mandatory && ' *'}
           </label>
           <Field
@@ -42,11 +43,11 @@ export class ZipAndPostOffice extends Component {
             aria-required={this.props.mandatory}
             component="input"
             placeholder={this.props.t(
-              'registration.form.input.zip.placeholder',
+              i18nKeys.registration_form_input_zip_placeholder,
             )}
             name="zip"
             data-cy="input-zip"
-            aria-label={this.props.t('registration.form.aria.input.zip')}
+            aria-label={this.props.t(i18nKeys.registration_form_aria_input_zip)}
           />
           <ErrorMessage
             htmlFor="zip-input"
@@ -58,19 +59,19 @@ export class ZipAndPostOffice extends Component {
         </div>
         <div className={classes.PostOffice}>
           <label htmlFor="postOffice-input">
-            {this.props.t('registration.form.input.postOffice')}
+            {this.props.t(i18nKeys.registration_form_input_postOffice)}
             {this.props.mandatory && ' *'}
           </label>
           <Field
             id="postOffice-input"
             aria-required={this.props.mandatory}
             placeholder={this.props.t(
-              'registration.form.input.postOffice.placeholder',
+              i18nKeys.registration_form_input_postOffice_placeholder,
             )}
             component="input"
             name="postOffice"
             data-cy="input-postOffice"
-            aria-label={this.props.t('registration.form.aria.input.postOffice')}
+            aria-label={this.props.t(i18nKeys.registration_form_aria_input_postOffice)}
           />
           <ErrorMessage
             htmlFor="postOffice-input"

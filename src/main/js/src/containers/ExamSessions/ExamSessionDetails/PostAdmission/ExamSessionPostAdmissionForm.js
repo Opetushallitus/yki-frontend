@@ -8,12 +8,13 @@ import * as Yup from 'yup';
 import { activatePostAdmission } from '../../../../store/actions/index';
 import closeSign from '../../../../assets/svg/close-overlay.svg';
 import classes from './ExamSessionPostAdmission.module.css'
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 const ExamSessionPostAdmissionForm = props => {
 
   const t = props.t;
   const validationSchema = Yup.object().shape({
-    postAdmissionQuota: Yup.number().typeError(t('error.numeric.int')).required(t('error.mandatory')).positive(t('error.numeric.positive')).integer(t('error.numeric.int')),
+    postAdmissionQuota: Yup.number().typeError(t(i18nKeys.error_numeric_int)).required(t(i18nKeys.error_mandatory)).positive(t(i18nKeys.error_numeric_positive)).integer(t(i18nKeys.error_numeric_int)),
   });
 
   const postAdmissionAddHandler = (postadmission) => {
@@ -43,19 +44,19 @@ const ExamSessionPostAdmissionForm = props => {
       render={({ values, setFieldValue, isValid, dirty, handleReset }) => (
         <Form className={classes.Form}>
           <div className={classes.ExitItem}>
-            <div onClick={props.onClose}>{t('common.close')}</div>
+            <div onClick={props.onClose}>{t(i18nKeys.common_close)}</div>
             <button
               data-cy="exam-session-post-admission-close-button"
               onClick={props.onClose}
               className={classes.ExitButton}
               tabIndex='5'>
-              <img src={closeSign} alt={t('common.cancelConfirm')} />
+              <img src={closeSign} alt={t(i18nKeys.common_cancelConfirm)} />
             </button>
           </div>
           <div className={classes.FormItem} data-cy="exam-session-post-admission-form-create">
             <div className={classes.DatePickerWrapper}>
               <label className={classes.Label}
-                htmlFor="postAdmissionStart">{t('examSession.postAdmission.startDate')}</label>
+                htmlFor="postAdmissionStart">{t(i18nKeys.examSession_postAdmission_startDate)}</label>
               <Field
                 id="postAdmissionEnd"
                 className={`${classes.Input} ${classes.Disabled}`}
@@ -69,7 +70,7 @@ const ExamSessionPostAdmissionForm = props => {
               <label
                 className={classes.Label}
                 htmlFor="postAdmissionEnd">
-                {t('examSession.postAdmission.endDate')}
+                {t(i18nKeys.examSession_postAdmission_endDate)}
               </label>
               <Field
                 id="postAdmissionEnd"
@@ -84,7 +85,7 @@ const ExamSessionPostAdmissionForm = props => {
           <div className={classes.FormItem}>
             <div>
               <label className={`${classes.Label} ${classes.QuotaLabel}`} htmlFor="postAdmissionQuota">
-                {t('examSession.postAdmission.participantAmount')}: {props.postAdmissionQuota}
+                {t(i18nKeys.examSession_postAdmission_participantAmount)}: {props.postAdmissionQuota}
               </label>
               <Field
                 id="postAdmissionQuota"
@@ -105,7 +106,7 @@ const ExamSessionPostAdmissionForm = props => {
                 className={getSaveButtonStyle(isValid)}
                 data-cy="exam-session-post-admission-submit-button"
                 type="submit" tabIndex="4">
-                {t('examSession.postAdmission.publish')}
+                {t(i18nKeys.examSession_postAdmission_publish)}
               </button>
             </div>
           </div>

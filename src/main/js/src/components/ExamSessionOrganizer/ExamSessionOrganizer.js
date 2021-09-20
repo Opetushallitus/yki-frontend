@@ -7,6 +7,7 @@ import classes from './ExamSessionOrganizer.module.css';
 import { collectRegistryItemDetails } from '../../util/registryUtil';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 export const examSessionOrganizer = props => {
   const item = collectRegistryItemDetails(
@@ -17,7 +18,7 @@ export const examSessionOrganizer = props => {
 
   const languages = (
     <div className={classes.Languages}>
-      <h3>{props.t('common.exam.languages')}</h3>
+      <h3>{props.t(i18nKeys.common_exam_languages)}</h3>
       {getLanguagesWithLevelDescriptions(item.languages).map(lang => {
         return <p key={lang}>{lang.toLowerCase()}</p>;
       })}
@@ -26,7 +27,7 @@ export const examSessionOrganizer = props => {
 
   const contact = (
     <div className={classes.Contact}>
-      <h3>{props.t('registryItem.contactHeader')}</h3>
+      <h3>{props.t(i18nKeys.registryItem_contactHeader)}</h3>
       <p>{item.contact.name}</p>
       <p>{item.contact.email}</p>
       <p>{item.contact.phone}</p>
@@ -36,7 +37,7 @@ export const examSessionOrganizer = props => {
 
   const agreement = (
     <div>
-      <h3>{props.t('common.validityPeriod')}</h3>
+      <h3>{props.t(i18nKeys.common_validityPeriod)}</h3>
       <p data-cy="exam-session-organizer-agreement-validity">
         {moment(item.agreement.start).format(DATE_FORMAT)} -{' '}
         {moment(item.agreement.end).format(DATE_FORMAT)}
@@ -54,7 +55,7 @@ export const examSessionOrganizer = props => {
         {agreement}
       </div>
       {!props.hideContact && <>
-        <h2>{props.t('registryItem.contact')}</h2>
+        <h2>{props.t(i18nKeys.registryItem_contact)}</h2>
         <div>{contact}</div>
       </>}
     </div>

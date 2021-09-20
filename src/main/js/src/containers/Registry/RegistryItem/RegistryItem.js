@@ -7,6 +7,7 @@ import Collapsible from '../../../components/UI/Collapsible/Collapsible';
 import RegistryItemDetails from '../../../components/RegistryItemDetails/RegistryItemDetails';
 import { languagesToString } from '../../../util/util';
 import { nowBetweenDates } from '../../../util/util';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 class RegistryItem extends PureComponent {
   state = {
@@ -64,12 +65,12 @@ class RegistryItem extends PureComponent {
                   <div className={classes.HeaderLanguages}>{languages}</div>
                 ) : (
                     <div className={classes.AgreementExpired}>
-                      {this.props.t('registryItem.paymentInfoMissing')}
+                      {this.props.t(i18nKeys.registryItem_paymentInfoMissing)}
                     </div>
                   )
               ) : (
                   <div className={classes.AgreementExpired}>
-                    {this.props.t('registryItem.agreementExpired')}
+                    {this.props.t(i18nKeys.registryItem_agreementExpired)}
                   </div>
                 )}
               <div className={classes.HeaderCity}>

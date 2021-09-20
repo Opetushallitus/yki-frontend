@@ -11,6 +11,7 @@ import BackButton from '../../components/Registration/BackButton/BackButton';
 import ExamDetailsCard from '../../components/Registration/ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './PaymentStatus.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 export class PaymentStatus extends Component {
   state = {
@@ -95,7 +96,7 @@ export class PaymentStatus extends Component {
             return (
               <HeadlineContainer
                 headlineTitle={`${this.props.t(
-                  'email.payment_success.subject',
+                  i18nKeys.email_payment_success_subject,
                 )}!`}
                 headlineContent={headlineContent()}
                 headlineImage={YkiImage2}
@@ -105,7 +106,7 @@ export class PaymentStatus extends Component {
           case 'payment-cancel': {
             return (
               <HeadlineContainer
-                headlineTitle={this.props.t('payment.status.cancel')}
+                headlineTitle={this.props.t(i18nKeys.payment_status_cancel)}
                 headlineContent={headlineContent()}
                 headlineImage={YkiImage2}
                 disableContent={true}
@@ -115,7 +116,7 @@ export class PaymentStatus extends Component {
           default: {
             return (
               <HeadlineContainer
-                headlineTitle={this.props.t('payment.status.error')}
+                headlineTitle={this.props.t(i18nKeys.payment_status_error)}
                 headlineContent={headlineContent()}
                 headlineImage={YkiImage2}
                 disableContent={true}

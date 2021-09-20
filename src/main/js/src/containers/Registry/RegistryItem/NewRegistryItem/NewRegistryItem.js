@@ -13,6 +13,7 @@ import {
   sortArrayByName,
 } from '../../../../util/registryUtil';
 import * as actions from '../../../../store/actions/index';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 class NewRegistryItem extends PureComponent {
   state = {
@@ -87,11 +88,11 @@ class NewRegistryItem extends PureComponent {
     if (this.state.searchInput.length !== 0 && !this.state.selected) {
       info += `${this.state.numOfResults} ${
         this.state.numOfResults === 1
-          ? this.props.t('common.searchResult')
-          : this.props.t('common.searchResults')
+          ? this.props.t(i18nKeys.common_searchResult)
+          : this.props.t(i18nKeys.common_searchResults)
       }`;
       if (this.state.numOfResults > 50) {
-        info += this.props.t('common.searchTooManyResults');
+        info += this.props.t(i18nKeys.common_searchTooManyResults);
       }
     }
     const search = (
@@ -105,7 +106,7 @@ class NewRegistryItem extends PureComponent {
               type="search"
               autoComplete="off"
               id="organizationSearchField"
-              placeholder={this.props.t('registryItem.search.placeholder')}
+              placeholder={this.props.t(i18nKeys.registryItem_search_placeholder)}
               value={this.state.searchInput}
               onChange={this.searchInputChangedHandler}
             />
@@ -116,9 +117,9 @@ class NewRegistryItem extends PureComponent {
     );
 
     const orgTypes = {
-      organisaatiotyyppi_01: this.props.t('registry.search.orgType01'),
-      organisaatiotyyppi_02: this.props.t('registry.search.orgType02'),
-      organisaatiotyyppi_05: this.props.t('registry.search.orgType05'),
+      organisaatiotyyppi_01: this.props.t(i18nKeys.registry_search_orgType01),
+      organisaatiotyyppi_02: this.props.t(i18nKeys.registry_search_orgType02),
+      organisaatiotyyppi_05: this.props.t(i18nKeys.registry_search_orgType05),
     };
     const searchResults = (
       <div className={classes.SearchResults}>
@@ -161,7 +162,7 @@ class NewRegistryItem extends PureComponent {
 
     return (
       <div className={classes.RegistryItem}>
-        <h1>{this.props.t('registryItem.add.header')}</h1>
+        <h1>{this.props.t(i18nKeys.registryItem_add_header)}</h1>
         {search}
         {form}
       </div>

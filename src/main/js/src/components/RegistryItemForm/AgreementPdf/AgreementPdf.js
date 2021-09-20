@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import axios from '../../../axios';
 import classes from './AgreementPdf.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const agreementPdf = props => {
   const maxSize = 104857600;
@@ -48,7 +49,7 @@ const agreementPdf = props => {
           <div {...getRootProps()}>
             <input {...getInputProps()} />
             <p className={classes.UploadButton}>
-              {t('registryItem.agreement.addPdf')}
+              {t(i18nKeys.registryItem_agreement_addPdf)}
             </p>
           </div>
         )}
@@ -56,12 +57,12 @@ const agreementPdf = props => {
 
       {success === false && (
         <p className={classes.ErrorMessage}>
-          {t('registryItem.agreement.addPdfFailed')}
+          {t(i18nKeys.registryItem_agreement_addPdfFailed)}
         </p>
       )}
       {success && (
         <p className={classes.SuccessMessage}>
-          {t('registryItem.agreement.addPdfSuccess')}
+          {t(i18nKeys.registryItem_agreement_addPdfSuccess)}
         </p>
       )}
     </div>

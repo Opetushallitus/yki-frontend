@@ -13,12 +13,13 @@ import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import ReEvaluationList from '../ReEvaluationList/ReEvaluationList';
 import classes from './ReEvaluation.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const headers = [
-  { title: 'registration.list.exam', key: 'language_code', sortable: true },
-  { title: 'registration.list.date', key: 'exam_date', sortable: true },
+  { title: i18nKeys.registration_list_exam, key: 'language_code', sortable: true },
+  { title: i18nKeys.registration_list_date, key: 'exam_date', sortable: true },
   {
-    title: 'registration.list.evalPossible',
+    title: i18nKeys.registration_list_evalPossible,
     key: 'evaluation_start_date',
     sortable: true,
   },
@@ -65,11 +66,11 @@ const ReEvaluation = ({
       <div style={{ display: 'flex', paddingBottom: '1rem' }}>
         <div style={{ marginRight: '1rem' }}>
           <article className={classes.ArticleContent}>
-            <p>{t('registration.reeval.text2')}</p>
-            <p>{t('registration.reeval.text3')}</p>
-            <p>{t('registration.reeval.text4')}</p>
-            <p>{t('registration.reeval.text5')}</p>
-            <p>{t('registration.reeval.text6')}</p>
+            <p>{t(i18nKeys.registration_reeval_text2)}</p>
+            <p>{t(i18nKeys.registration_reeval_text3)}</p>
+            <p>{t(i18nKeys.registration_reeval_text4)}</p>
+            <p>{t(i18nKeys.registration_reeval_text5)}</p>
+            <p>{t(i18nKeys.registration_reeval_text6)}</p>
           </article>
         </div>
         <PriceContainer elements={evaluationPrices} />
@@ -86,11 +87,11 @@ const ReEvaluation = ({
   const mobileContent = (
     <div style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}>
       <article className={classes.ArticleContent}>
-        <p>{t('registration.reeval.text2')}</p>
-        <p>{t('registration.reeval.text3')}</p>
-        <p>{t('registration.reeval.text4')}</p>
-        <p>{t('registration.reeval.text5')}</p>
-        <p>{t('registration.reeval.text6')}</p>
+        <p>{t(i18nKeys.registration_reeval_text2)}</p>
+        <p>{t(i18nKeys.registration_reeval_text3)}</p>
+        <p>{t(i18nKeys.registration_reeval_text4)}</p>
+        <p>{t(i18nKeys.registration_reeval_text5)}</p>
+        <p>{t(i18nKeys.registration_reeval_text6)}</p>
       </article>
       <PriceContainer elements={evaluationPrices} />
       <ReEvaluationList
@@ -105,11 +106,11 @@ const ReEvaluation = ({
     <>
       <main id="main" className={'Container'}>
         <HeadlineContainer
-          headlineTitle={t('registration.reeval.banner.title')}
+          headlineTitle={t(i18nKeys.registration_reeval_banner_title)}
           headlineContent={
             <>
-              <p>{t('registration.reeval.banner.text1')}</p>
-              <p>{t('registration.reeval.banner.text2')}</p>
+              <p>{t(i18nKeys.registration_reeval_banner_text1)}</p>
+              <p>{t(i18nKeys.registration_reeval_banner_text2)}</p>
             </>
           }
           headlineImage={YkiImage2}

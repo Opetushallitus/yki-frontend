@@ -16,6 +16,7 @@ import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCol
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import classes from './Description.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const mapStateToProps = state => {
   return {
@@ -51,32 +52,32 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
   const basicLevel = [
     {
       languageLevel: 'A1',
-      descriptionText: t('common.examLevel.description.a1'),
+      descriptionText: t(i18nKeys.common_examLevel_description_a1),
     },
     {
       languageLevel: 'A2',
-      descriptionText: t('common.examLevel.description.a2'),
+      descriptionText: t(i18nKeys.common_examLevel_description_a2),
     },
   ];
   const middleLevel = [
     {
       languageLevel: 'B1',
-      descriptionText: t('common.examLevel.description.b1'),
+      descriptionText: t(i18nKeys.common_examLevel_description_b1),
     },
     {
       languageLevel: 'B2',
-      descriptionText: t('common.examLevel.description.b2'),
+      descriptionText: t(i18nKeys.common_examLevel_description_b2),
     },
   ];
 
   const upperLevel = [
     {
       languageLevel: 'C1',
-      descriptionText: t('common.examLevel.description.c1'),
+      descriptionText: t(i18nKeys.common_examLevel_description_c1),
     },
     {
       languageLevel: 'C2',
-      descriptionText: t('common.examLevel.description.c2'),
+      descriptionText: t(i18nKeys.common_examLevel_description_c2),
     },
   ];
 
@@ -87,7 +88,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        title={t('registration.tutorialVideo')}
+        title={t(i18nKeys.registration_tutorialVideo)}
         scrolling="no"
         width={'300'}
         height={'500'}
@@ -108,7 +109,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
       className={'YkiButton'}
       data-cy="continue-button"
     >
-      {t('registration.register')}
+      {t(i18nKeys.registration_register)}
     </Link>
   );
 
@@ -118,9 +119,9 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
         <div style={{ display: 'flex' }}>
           <div style={{ marginRight: '1rem' }}>
             <article className={classes.ArticleContent}>
-              <p>{t('registration.description.text2')}</p>
-              <p>{t('registration.description.text3')}</p>
-              <p>{t('registration.description.text4')}</p>
+              <p>{t(i18nKeys.registration_description_text2)}</p>
+              <p>{t(i18nKeys.registration_description_text3)}</p>
+              <p>{t(i18nKeys.registration_description_text4)}</p>
             </article>
             {tutorialVideo}
           </div>
@@ -133,7 +134,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           />
         </div>
         <div>
-          <h2>{t('registration.description.examLevels')}</h2>
+          <h2>{t(i18nKeys.registration_description_examLevels)}</h2>
           <DescriptionCollapsible
             headerText={levelTranslations.PERUS}
             content={basicLevel}
@@ -149,7 +150,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           <>{registerButton}</>
 
           <h2 style={{ marginTop: '4rem' }}>
-            {t('registration.description.reEvaluation')}
+            {t(i18nKeys.registration_description_reEvaluation)}
           </h2>
           {Object.keys(evaluationTexts).map(el => {
             return (
@@ -173,7 +174,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           className={'YkiButton'}
           data-cy="continue-button-re-eval"
         >
-          {t('registration.reeval')}
+          {t(i18nKeys.registration_reeval)}
         </Link>
       </div>
     </>
@@ -185,9 +186,9 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
       style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}
     >
       <article className={classes.ArticleContent}>
-        <p>{t('registration.description.text2')}</p>
-        <p>{t('registration.description.text3')}</p>
-        <p>{t('registration.description.text4')}</p>
+        <p>{t(i18nKeys.registration_description_text2)}</p>
+        <p>{t(i18nKeys.registration_description_text3)}</p>
+        <p>{t(i18nKeys.registration_description_text4)}</p>
       </article>
       {tutorialVideo}
       <div
@@ -196,7 +197,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           padding: '0 2px',
         }}
       >
-        <h2>{t('registration.description.examLevels')}</h2>
+        <h2>{t(i18nKeys.registration_description_examLevels)}</h2>
         <DescriptionCollapsible
           headerText={levelTranslations.PERUS}
           content={basicLevel}
@@ -221,7 +222,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
         }}
       >
         <h2 style={{ marginTop: '2rem', lineHeight: 'normal' }}>
-          {t('registration.description.reEvaluation')}
+          {t(i18nKeys.registration_description_reEvaluation)}
         </h2>
         {Object.keys(evaluationTexts).map(el => {
           return (
@@ -243,7 +244,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           className={'YkiButton'}
           data-cy="continue-button"
         >
-          {t('registration.reeval')}
+          {t(i18nKeys.registration_reeval)}
         </Link>
       </div>
     </div>
@@ -253,8 +254,8 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
     <>
       <main id="main" className={'Container'}>
         <HeadlineContainer
-          headlineTitle={t('registration.description.title')}
-          headlineContent={<p>{t('registration.description.text1')}</p>}
+          headlineTitle={t(i18nKeys.registration_description_title)}
+          headlineContent={<p>{t(i18nKeys.registration_description_text1)}</p>}
           headlineImage={YkiImage1}
         />
         {isMobile || (isMobile && getDeviceOrientation() === 'landscape') ? (

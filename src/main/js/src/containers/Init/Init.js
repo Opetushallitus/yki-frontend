@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Alert from '../../components/Alert/Alert';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 class Init extends Component {
   componentDidMount() {
@@ -38,9 +39,9 @@ class Init extends Component {
       <Spinner />
     ) : this.props.error ? (
       <Alert
-        title={this.props.t('error.common')}
+        title={this.props.t(i18nKeys.error_common)}
         returnLinkTo={window.location.href}
-        returnLinkText={this.props.t('error.tryAgain')}
+        returnLinkText={this.props.t(i18nKeys.error_tryAgain)}
       />
     ) : (
       this.props.children

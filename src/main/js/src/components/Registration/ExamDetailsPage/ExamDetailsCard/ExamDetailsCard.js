@@ -8,6 +8,7 @@ import {
 } from '../../../../common/Constants';
 import { evaluationTexts, getLanguageAndLevel } from '../../../../util/util';
 import classes from './ExamDetailsCard.module.css';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
   const [t, i18n] = useTranslation();
@@ -19,17 +20,17 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
 
   const exceptionStatus = isFull ? (
     <p className={classes.Exception} data-cy={'exam-details-exception-status'}>
-      {t('registration.examSpots.full')}
+      {t(i18nKeys.registration_examSpots_full)}
     </p>
   ) : !exam.open ? (
     <p className={classes.Exception} data-cy={'exam-details-exception-status'}>
-      {t('registration.examSpots.notOpen')}
+      {t(i18nKeys.registration_examSpots_notOpen)}
     </p>
   ) : null;
 
   const date = (
     <p>
-      {t('common.examDate')}:{' '}
+      {t(i18nKeys.common_examDate)}:{' '}
       <strong>{moment(exam.session_date).format(DATE_FORMAT)} </strong>
     </p>
   );
@@ -43,7 +44,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
 
   const locationDetails = (
     <p>
-      {t('common.address')}:
+      {t(i18nKeys.common_address)}:
       <strong>
         {organizer} {address}
       </strong>
@@ -52,7 +53,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
 
   const extra = location && location.extra_information && (
     <p>
-      {t('registryItem.extra')}:
+      {t(i18nKeys.registryItem_extra)}:
       <strong data-cy="exam-details-card-extra">
         {''} {location.extra_information}
       </strong>
@@ -61,14 +62,14 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
 
   const price = (
     <p>
-      {`${t('registration.examDetails.card.price')}: `}
+      {`${t(i18nKeys.registration_examDetails_card_price)}: `}
       <strong>{exam.exam_fee || exam.amount || ''} €</strong>
     </p>
   );
 
   const registrationPeriod = (
     <p>
-      {t('common.registration')}:
+      {t(i18nKeys.common_registration)}:
       <strong>
         {` ${moment(exam.registration_start_date).format(
           DATE_FORMAT,
@@ -81,7 +82,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
     <>
       {!registrationClosed ? (
         <p>
-          {t('registration.list.examSpots')}:
+          {t(i18nKeys.registration_list_examSpots)}:
           <strong>
             {` ${exam.max_participants - exam.participants} / ${
               exam.max_participants
@@ -90,7 +91,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
         </p>
       ) : exam.post_admission_active ? (
         <p>
-          {t('registration.list.examSpots')}:
+          {t(i18nKeys.registration_list_examSpots)}:
           <strong>
             {` ${exam.post_admission_quota - exam.pa_participants} / ${
               exam.post_admission_quota
@@ -108,7 +109,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
         exam.contact.map(c => {
           return (
             <>
-              <p>{t('registration.list.contact')}</p>
+              <p>{t(i18nKeys.registration_list_contact)}</p>
               <article>
                 {c.name}
                 <br /> {c.email}
@@ -133,12 +134,12 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
           {exam.subtests.map(s => {
             return <p>{t(evaluationTexts[s])}</p>;
           })}
-          <p>{`${t('registration.examDetails.card.reeval.price')} ${
+          <p>{`${t(i18nKeys.registration_examDetails_card_reeval_price)} ${
             exam.amount
           } €`}</p>
         </>
       ) : (
-        <p>{`${t('registration.examDetails.card.price')} ${
+        <p>{`${t(i18nKeys.registration_examDetails_card_price)} ${
           exam.exam_fee
         } €`}</p>
       )}

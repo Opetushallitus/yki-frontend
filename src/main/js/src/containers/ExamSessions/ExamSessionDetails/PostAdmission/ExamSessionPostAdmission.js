@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import ExamSessionPostAdmissionEdit from './ExamSessionPostAdmissionEdit';
 import ExamSessionPostAdmissionForm from './ExamSessionPostAdmissionForm';
 import classes from './ExamSessionPostAdmission.module.css';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 export class ExamSessionPostAdmission extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ export class ExamSessionPostAdmission extends Component {
     }
 
     if (!this.props.examSession.post_admission_enabled)
-      return <p>{t('examSession.postAdmission.notAllowed')}</p>
+      return <p>{t(i18nKeys.examSession_postAdmission_notAllowed)}</p>
 
     if (this.state.createMode)
       return (
@@ -58,7 +59,7 @@ export class ExamSessionPostAdmission extends Component {
           data-cy="exam-session-post-admission-add-button"
           onClick={() => this.toggleCreateMode()}
         >
-          {t('examSession.postAdmission.create')}
+          {t(i18nKeys.examSession_postAdmission_create)}
         </button>
       </div>
     )

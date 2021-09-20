@@ -11,6 +11,7 @@ import Filters from '../../components/Registration/Filters/Filters';
 import * as actions from '../../store/actions/index';
 import { getArraySize } from '../../util/util';
 import classes from './Registration.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 class Registration extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Registration extends Component {
       this.props.history.location.search,
     );
     const lang = LANGUAGES.find(l => l.code === language);
-    document.title = this.props.t('registration.document.title');
+    document.title = this.props.t(i18nKeys.registration_document_title);
     const allQueryParamsExist = language && level && location;
     const paramsAreDifferent =
       (lang && this.props.language.name !== lang.name) ||
@@ -112,8 +113,8 @@ class Registration extends Component {
     return (
       <>
         <HeadlineContainer
-          headlineTitle={this.props.t('registration.title')}
-          headlineContent={<p>{this.props.t('registration.times.info')}</p>}
+          headlineTitle={this.props.t(i18nKeys.registration_title)}
+          headlineContent={<p>{this.props.t(i18nKeys.registration_times_info)}</p>}
           headlineImage={YkiImage1}
         />
         <main id="main" className={'Container'}>
@@ -137,7 +138,7 @@ class Registration extends Component {
                   <strong>{`${getArraySize(
                     this.getValuesOnFilterChange(),
                   )}`}</strong>{' '}
-                  {`${this.props.t('common.searchResults')}`}
+                  {`${this.props.t(i18nKeys.common_searchResults)}`}
                 </p>
               </div>
               {mobileOrTablet && <div className={classes.MobileSeparator} />}

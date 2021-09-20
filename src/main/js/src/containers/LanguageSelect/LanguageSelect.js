@@ -7,6 +7,7 @@ import i18n from '../../i18n';
 import * as actions from '../../store/actions';
 import { capitalize } from '../../util/util';
 import classes from './LanguageSelect.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const texts = { fi: 'suomeksi', sv: 'på svenska', en: 'in english' };
 const languages = ['fi', 'sv', 'en'];
@@ -53,7 +54,7 @@ class LanguageSelect extends React.PureComponent {
       onChange={e => this.handleLanguageChange(e)}
       data-cy={'language-select'}
       defaultValue={this.state.ykiLanguage}
-      aria-label={i18n.t('common.aria.changeLanguage')}
+      aria-label={i18n.t(i18nKeys.common_aria_changeLanguage)}
     >
       {languages.map(lang => (
         <option

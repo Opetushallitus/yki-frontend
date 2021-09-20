@@ -19,6 +19,7 @@ import AddExamDate from './ExamDateModalContent/AddExamDate';
 import EditExamDate from './ExamDateModalContent/EditExamDate';
 import classes from './ExamDates.module.css';
 import RegistrationPeriod from './util/RegistrationPeriod';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 class ExamDates extends Component {
   constructor(props) {
@@ -210,7 +211,7 @@ class ExamDates extends Component {
           >
             <div className={classes.DeleteModal}>
               <div className={classes.ConfirmText}>
-                {t('examDates.delete.confirm')}
+                {t(i18nKeys.examDates_delete_confirm)}
               </div>
               <div className={classes.ConfirmButtons}>
                 <button
@@ -218,7 +219,7 @@ class ExamDates extends Component {
                   className={classes.CancelButton}
                   onClick={this.closeDeleteConfirmationHandler}
                 >
-                  {t('common.cancelConfirm')}
+                  {t(i18nKeys.common_cancelConfirm)}
                 </button>
                 <button
                   data-cy="exam-dates-delete-confirm"
@@ -227,7 +228,7 @@ class ExamDates extends Component {
                     this.deleteExamDateHandler(this.state.checkedExamDate)
                   }
                 >
-                  {t('common.confirm')}
+                  {t(i18nKeys.common_confirm)}
                 </button>
               </div>
             </div>
@@ -280,7 +281,7 @@ class ExamDates extends Component {
               className={classes.AdditionButton}
               onClick={() => this.showAddOrEditExamDateModalHandler()}
             >
-              {t('examDates.addNew.confirm')}
+              {t(i18nKeys.examDates_addNew_confirm)}
             </button>
             <button
               data-cy="exam-dates-button-delete"
@@ -292,12 +293,12 @@ class ExamDates extends Component {
               disabled={!checked || hasExamSessions(checked)}
               onClick={this.showDeleteConfirmationHandler}
             >
-              {t('examDates.delete.selected')}
+              {t(i18nKeys.examDates_delete_selected)}
             </button>
           </div>
           <div className={classes.PastExamDates}>
             <Checkbox
-              label={t('examDates.show.pastDates')}
+              label={t(i18nKeys.examDates_show_pastDates)}
               name={'showPastDates'}
               checkboxId={'showPastDates'}
               checked={this.state.fetchExamHistory}
@@ -318,12 +319,12 @@ class ExamDates extends Component {
               hidden // Hidden until decided if this should exist
               //checked={isAllChecked}
             />
-            <h3>{t('common.examDate')}</h3>
-            <h3>{`${t('common.language')} & ${t('common.level')}`}</h3>
-            <h3>{t('common.registationPeriod')}</h3>
-            <h3>{t('common.postAdmission')}</h3>
-            <h3>{t('common.reeval')}</h3>
-            <h3>{t('common.edit')}</h3>
+            <h3>{t(i18nKeys.common_examDate)}</h3>
+            <h3>{`${t(i18nKeys.common_language)} & ${t(i18nKeys.common_level)}`}</h3>
+            <h3>{t(i18nKeys.common_registationPeriod)}</h3>
+            <h3>{t(i18nKeys.common_postAdmission)}</h3>
+            <h3>{t(i18nKeys.common_reeval)}</h3>
+            <h3>{t(i18nKeys.common_edit)}</h3>
           </div>
           <hr className={classes.GridDivider} />
         </>
@@ -371,8 +372,8 @@ class ExamDates extends Component {
             e.languages[0].language_code === 'fin';
 
           const level = finnishOnly
-            ? t('common.level.middle')
-            : t('common.level.all');
+            ? t(i18nKeys.common_level_middle)
+            : t(i18nKeys.common_level_all);
 
           const languages = e.languages
             .map(l => {
@@ -441,7 +442,7 @@ class ExamDates extends Component {
               <p data-cy={`exam-dates-list-post-admission-${e.exam_date}`}>
                 {postAdmissionDate
                   ? `${postAdmissionDate}`
-                  : t('examDates.postAdmission.closed')}
+                  : t(i18nKeys.examDates_postAdmission_closed)}
               </p>
 
               {reEvaluationDate ? (
@@ -455,7 +456,7 @@ class ExamDates extends Component {
                   style={{ width: '90%' }}
                   onClick={() => this.showAddEvaluationPeriodHandler(e)}
                 >
-                  {t('examDates.add.evaluation.period')}
+                  {t(i18nKeys.examDates_add_evaluation_period)}
                 </button>
               )}
 
@@ -465,7 +466,7 @@ class ExamDates extends Component {
                 className={classes.EditButton}
                 onClick={() => this.showEditExamDateHandler(e)}
               >
-                {t('common.edit')}
+                {t(i18nKeys.common_edit)}
               </button>
             </React.Fragment>
           );
@@ -490,12 +491,12 @@ class ExamDates extends Component {
     ) : (
       <>
         <div className={classes.ExamDatesListHeader}>
-          <h2>{t('common.examDates')}</h2>
+          <h2>{t(i18nKeys.common_examDates)}</h2>
         </div>
         {examDates.length > 0 ? (
           examDateTables()
         ) : (
-          <p>{t('examDates.noUpcomingExamDates')}</p>
+          <p>{t(i18nKeys.examDates_noUpcomingExamDates)}</p>
         )}
         <hr className={classes.GridDivider} />
       </>

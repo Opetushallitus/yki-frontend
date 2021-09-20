@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import axios from '../../axios';
 import Alert from '../../components/Alert/Alert';
 import classes from './EvaluationPaymentRedirect.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 export class PaymentRedirect extends Component {
   paymentForm = React.createRef();
@@ -56,8 +57,8 @@ export class PaymentRedirect extends Component {
         <>
           <main className={classes.Content}>
             <Alert
-              title={this.props.t('payment.redirect.error')}
-              optionalText={this.props.t('payment.redirect.error.info')}
+              title={this.props.t(i18nKeys.payment_redirect_error)}
+              optionalText={this.props.t(i18nKeys.payment_redirect_error_info)}
             />
           </main>
         </>

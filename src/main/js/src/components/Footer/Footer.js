@@ -4,6 +4,7 @@ import { useStore } from 'react-redux';
 
 import OPHFooterLogo from '../../assets/images/OPH_Su_Ru_vaaka_nega.png';
 import classes from './Footer.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const Footer = () => {
             YKI Kotisivu{' '}
             <img
               src={require('../../assets/svg/external-link-white.svg')}
-              alt={t('common.newTab')}
+              alt={t(i18nKeys.common_newTab)}
             />
           </a>
         );
@@ -39,7 +40,7 @@ const Footer = () => {
             YKI Hemsida{' '}
             <img
               src={require('../../assets/svg/external-link-white.svg')}
-              alt={t('common.newTab')}
+              alt={t(i18nKeys.common_newTab)}
               style={{ color: 'white' }}
             />
           </a>
@@ -56,7 +57,7 @@ const Footer = () => {
             YKI Homepage{' '}
             <img
               src={require('../../assets/svg/external-link-white.svg')}
-              alt={t('common.newTab')}
+              alt={t(i18nKeys.common_newTab)}
             />
           </a>
         );
@@ -72,7 +73,7 @@ const Footer = () => {
             YKI Kotisivu{' '}
             <img
               src={require('../../assets/svg/external-link-white.svg')}
-              alt={t('common.newTab')}
+              alt={t(i18nKeys.common_newTab)}
             />
           </a>
         );
@@ -87,10 +88,10 @@ const Footer = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        {t('footer.yki.accessibility.link')}
+        {t(i18nKeys.footer_yki_accessibility_link)}
         <img
           src={require('../../assets/svg/external-link-white.svg')}
-          alt={t('common.newTab')}
+          alt={t(i18nKeys.common_newTab)}
         />
       </a>
     );
@@ -103,35 +104,35 @@ const Footer = () => {
         {ykiHomePage()}
         {accessibilityStatetment()}
         <div className={classes.AdditionalInfo}>
-          <p>{t('footer.yki.contact.info')}</p>
+          <p>{t(i18nKeys.footer_yki_contact_info)}</p>
           <a
             href={'mailto:yki@oph.fi'}
-            aria-label={`${t('footer.yki.contact.info')} yki@oph.fi`}
+            aria-label={`${t(i18nKeys.footer_yki_contact_info)} yki@oph.fi`}
           >
             yki@oph.fi
           </a>
-          <p>{t('footer.yki.additional.info')}</p>
+          <p>{t(i18nKeys.footer_yki_additional_info)}</p>
         </div>
       </div>
       <div className={classes.FooterContact}>
         <p>
-          {t('common.oph.address')}
+          {t(i18nKeys.common_oph_address)}
           <br />
-          {t('common.oph.zip')}
+          {t(i18nKeys.common_oph_zip)}
         </p>
         <p>
-          {`${t('common.phone')}`}{' '}
+          {`${t(i18nKeys.common_phone)}`}{' '}
           <a
             href={'tel: +358 29 533 1000'}
-            aria-label={`${t('common.phone')} +358 29 533 1000`}
+            aria-label={`${t(i18nKeys.common_phone)} +358 29 533 1000`}
           >
             +358 29 533 1000
           </a>
           <br />
-          {`${t('common.fax')}`}{' '}
+          {`${t(i18nKeys.common_fax)}`}{' '}
           <a
             href={'tel: +358 29 533 1035'}
-            aria-label={`${t('common.fax')} +358 29 533 1035`}
+            aria-label={`${t(i18nKeys.common_fax)} +358 29 533 1035`}
           >
             +358 29 533 1035
           </a>

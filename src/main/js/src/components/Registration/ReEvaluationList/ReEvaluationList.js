@@ -8,6 +8,7 @@ import {
 } from '../../../util/examSessionUtil';
 import { sortObjectArray } from '../../../util/util';
 import classes from './ReEvaluationList.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const ReEvaluationList = props => {
   const { t } = useTranslation();
@@ -84,7 +85,7 @@ const ReEvaluationList = props => {
               padding: '1.5rem',
             }}
           >
-            {t('registration.reeval')}
+            {t(i18nKeys.registration_reeval)}
           </button>
         </td>
       </tr>
@@ -110,7 +111,7 @@ const ReEvaluationList = props => {
         </td>
         <td className={classes.MobileRow}>
           <div className={classes.TableColumn}>
-            {t('registration.list.evalPossible')}
+            {t(i18nKeys.registration_list_evalPossible)}
           </div>
           <div className={classes.TableColumn}>
             {evaluationStartDate} - {evaluationEndDate}
@@ -127,7 +128,7 @@ const ReEvaluationList = props => {
               padding: '0.25rem',
             }}
           >
-            {t('registration.reeval')}
+            {t(i18nKeys.registration_reeval)}
           </button>
         </td>
       </tr>
@@ -157,7 +158,7 @@ const ReEvaluationList = props => {
         </table>
       ) : (
         <p className={classes.NotFound}>
-          <b>{t('registration.search.noResults')}</b>
+          <b>{t(i18nKeys.registration_search_noResults)}</b>
         </p>
       )}
     </div>

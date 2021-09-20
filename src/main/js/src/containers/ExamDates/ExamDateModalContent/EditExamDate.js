@@ -9,6 +9,7 @@ import DatePicker from '../../../components/UI/DatePicker/DatePicker';
 import ToggleSwitch from '../../../components/UI/ToggleSwitch/ToggleSwitch';
 import LanguageLevelSelector from '../LanguageLevel/LanguageLevelSelector';
 import classes from './AddOrEditExamDate.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const EditExamDate = props => {
   const { examDate, t } = props;
@@ -145,7 +146,7 @@ const EditExamDate = props => {
           </div>
 
           <div className={classes.PostAdmission}>
-            <label>{t('examDates.edit.postAdmission.title')}</label>
+            <label>{t(i18nKeys.examDates_edit_postAdmission_title)}</label>
             <div className={classes.PostAdmissionContainer}>
               <div className={classes.Toggle}>
                 <ToggleSwitch
@@ -156,11 +157,11 @@ const EditExamDate = props => {
                   }
                 />
                 <p className={classes.Label}>
-                  {t('examDates.edit.postAdmission.allow')}
+                  {t(i18nKeys.examDates_edit_postAdmission_allow)}
                 </p>
               </div>
               <p className={classes.Label}>
-                {t('examDates.edit.postAdmission.dates')}
+                {t(i18nKeys.examDates_edit_postAdmission_dates)}
               </p>
               <div className={classes.DateGrid}>
                 <div
@@ -225,7 +226,7 @@ const EditExamDate = props => {
               type="submit"
               className={classes.ConfirmButton}
             >
-              {t('examDates.edit.save')}
+              {t(i18nKeys.examDates_edit_save)}
             </button>
           </div>
         </Form>
@@ -235,7 +236,7 @@ const EditExamDate = props => {
 
   return (
     <>
-      <h3 style={{ marginBlockStart: '0' }}>{t('examDates.edit.title')}</h3>
+      <h3 style={{ marginBlockStart: '0' }}>{t(i18nKeys.examDates_edit_title)}</h3>
       <FormFields />
     </>
   );

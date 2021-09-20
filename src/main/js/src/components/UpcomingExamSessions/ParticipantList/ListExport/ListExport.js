@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { DATE_FORMAT } from '../../../../common/Constants';
 import classes from './ListExport.module.css';
+import * as i18nKeys from "../../../../common/LocalizationKeys";
 
 const defaultCol = { wch: 12 };
 const columns = [
@@ -107,7 +108,7 @@ export const listExport = props => {
       onClick={() => exportToExcel(props.participants)}
       data-cy="button-export-to-excel"
     >
-      {t('examSession.downloadExcel')}
+      {t(i18nKeys.examSession_downloadExcel)}
     </button>
   );
 };

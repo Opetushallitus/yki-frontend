@@ -6,21 +6,22 @@ import {
   ISO_DATE_FORMAT_SHORT,
   LANGUAGES,
 } from '../common/Constants';
+import * as i18nKeys from "../common/LocalizationKeys";
 
 export const capitalize = s =>
   s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
 export const levelTranslations = {
-  PERUS: 'common.level.basic',
-  KESKI: 'common.level.middle',
-  YLIN: 'common.level.high',
+  PERUS: i18nKeys.common_level_basic,
+  KESKI: i18nKeys.common_level_middle,
+  YLIN: i18nKeys.common_level_high,
 };
 
 export const evaluationTexts = {
-  READING: 'registration.description.read',
-  WRITING: 'registration.description.write',
-  LISTENING: 'registration.description.listen',
-  SPEAKING: 'registration.description.speak',
+  READING: i18nKeys.registration_description_read,
+  WRITING: i18nKeys.registration_description_write,
+  LISTENING: i18nKeys.registration_description_listen,
+  SPEAKING: i18nKeys.registration_description_speak,
 };
 
 export const formatPriceObject = (pricesObj, translationObj) => {
@@ -63,10 +64,10 @@ export const getLanguagesWithLevelDescriptions = array => {
     if (levels.length > 0) {
       const description =
         levels.length === language.levels.length
-          ? i18next.t('common.level.all')
+          ? i18next.t(i18nKeys.common_level_all)
           : levels
               .map(l => levelDescription(l))
-              .join(` ${i18next.t('common.and')} `);
+              .join(` ${i18next.t(i18nKeys.common_and)} `);
       list.push(`${language.name} - ${capitalize(description)}`);
     }
   }
@@ -104,9 +105,13 @@ export const getArraySize = array => {
 };
 
 export const getLanguageAndLevel = sessionData => {
-  return `${i18next.t(
-    `common.language.${sessionData.language_code}`,
-  )}, ${levelDescription(sessionData.level_code)}`;
+  const languageCodeToTranslationKey = {
+    'fin': i18nKeys.common_language_fin,
+    'swe': i18nKeys.common_language_swe,
+    'eng': i18nKeys.common_language_eng
+  };
+  const langKey = languageCodeToTranslationKey[sessionData.language_code];
+  return `${i18next.t(langKey)}, ${levelDescription(sessionData.level_code)}`;
 };
 
 export const getDeviceOrientation = () => {
@@ -159,12 +164,12 @@ export function checkBirthDate(value) {
       return { error: null };
     } else {
       return {
-        error: i18next.t(!date.isValid() ? 'error.birthdate' : 'error.age'),
+        error: i18next.t(!date.isValid() ? i18nKeys.error_birthdate : i18nKeys.error_age),
       };
     }
   } else {
     return {
-      error: i18next.t('error.mandatory'),
+      error: i18next.t(i18nKeys.error_mandatory),
     };
   }
 }

@@ -17,6 +17,7 @@ import TextAndButton from '../../TextAndButton/TextAndButton';
 import Button from '../../UI/Button/Button';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './ReEvaluationForm.module.css';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -61,7 +62,7 @@ const ReEvaluationForm = props => {
     evaluationPrices,
   } = props;
   const { t } = useTranslation();
-  const mandatoryErrorMsg = t('error.mandatory');
+  const mandatoryErrorMsg = t(i18nKeys.error_mandatory);
 
   function validateBirthDate(value) {
     const validation = checkBirthDate(value);
@@ -112,7 +113,7 @@ const ReEvaluationForm = props => {
         text2={`${price.price} €`}
         elementKey={price.key}
         active={active}
-        buttonLabel={t('registration.reeval.order')}
+        buttonLabel={t(i18nKeys.registration_reeval_order)}
         onClick={() => {
           const newSubtestsArray = toggleSelect(price.key, values);
           setFieldValue('subtests', newSubtestsArray);
@@ -134,32 +135,32 @@ const ReEvaluationForm = props => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email(t('error.email'))
+      .email(t(i18nKeys.error_email))
       .required(mandatoryErrorMsg),
     firstName: Yup.string()
       .required(mandatoryErrorMsg)
       .test(
         'no-special-characters',
-        t('error.specialCharacters'),
+        t(i18nKeys.error_specialCharacters),
         value => !containsSpecialCharacters(value),
       ),
     lastName: Yup.string()
       .required(mandatoryErrorMsg)
       .test(
         'no-special-characters',
-        t('error.specialCharacters'),
+        t(i18nKeys.error_specialCharacters),
         value => !containsSpecialCharacters(value),
       ),
     birthdate: Yup.string().test(
       'invalid-birthdate',
-      t('error.birthdate'),
+      t(i18nKeys.error_birthdate),
       validateBirthDate,
     ),
     consent: Yup.boolean()
       .required(mandatoryErrorMsg)
       .oneOf([true], mandatoryErrorMsg),
     subtests: Yup.array()
-      .required(t('error.nosubtasks'))
+      .required(t(i18nKeys.error_nosubtasks))
       .min(1),
   });
 
@@ -201,7 +202,7 @@ const ReEvaluationForm = props => {
         return (
           <Form id="form">
             <ScrollToError isValid={isValid} isSubmitting={isSubmitting} />
-            <h2>{t('registration.reeval.formpage.title2')}</h2>
+            <h2>{t(i18nKeys.registration_reeval_formpage_title2)}</h2>
             {evaluationPrices.map(price => {
               return priceElement(price, values, setFieldValue);
             })}
@@ -212,14 +213,14 @@ const ReEvaluationForm = props => {
               className={classes.ErrorMessage}
             />
             <div className={classes.Total}>
-              <strong>{t('registration.reeval.total')}: </strong>
+              <strong>{t(i18nKeys.registration_reeval_total)}: </strong>
               <strong data-cy="reeval-subtest-total">
                 {calculatePrice(values.subtests)} €
               </strong>
             </div>
-            <p>{t('registration.reeval.formpage.text')}</p>
+            <p>{t(i18nKeys.registration_reeval_formpage_text)}</p>
             <br />
-            <h2>{t('registration.reeval.formpage.title3')}</h2>
+            <h2>{t(i18nKeys.registration_reeval_formpage_title3)}</h2>
             <div className={classes.FieldRow}>
               {inputField('firstName', true)}
               {inputField('lastName', true)}
@@ -232,19 +233,19 @@ const ReEvaluationForm = props => {
               <article>
                 <p>
                   <strong>
-                    {t('registration.form.personalData.consent.heading')}
+                    {t(i18nKeys.registration_form_personalData_consent_heading)}
                   </strong>
                 </p>
                 <a
                   href={PRIVACY_POLICY_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={t('common.newTab')}
+                  aria-label={t(i18nKeys.common_newTab)}
                 >
-                  {t('common.yki.consent.link')}
+                  {t(i18nKeys.common_yki_consent_link)}
                   <img
                     src={require('../../../assets/svg/external-link.svg')}
-                    alt={t('common.newTab')}
+                    alt={t(i18nKeys.common_newTab)}
                   />
                 </a>
               </article>
@@ -264,9 +265,9 @@ const ReEvaluationForm = props => {
                       true,
                     );
                   }}
-                  label={t('registration.form.personalData.consent.confirm')}
+                  label={t(i18nKeys.registration_form_personalData_consent_confirm)}
                   ariaLabel={t(
-                    'registration.form.personalData.consent.confirm',
+                    i18nKeys.registration_form_personalData_consent_confirm,
                   )}
                   ariaRequired={true}
                 />
@@ -280,10 +281,10 @@ const ReEvaluationForm = props => {
             <Button
               type="submit"
               datacy="reeval-form-submit-button"
-              ariaLabel={t('registration.reeval.formpage.button')}
+              ariaLabel={t(i18nKeys.registration_reeval_formpage_button)}
               isRegistration={true}
             >
-              {t('registration.reeval.formpage.button')}
+              {t(i18nKeys.registration_reeval_formpage_button)}
             </Button>
           </Form>
         );

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Field, ErrorMessage } from 'formik';
 import { withTranslation } from 'react-i18next';
 import classes from './SessionContact.module.css';
+import * as i18nKeys from "../../common/LocalizationKeys";
 
 export class SessionContact extends Component {
 
@@ -9,14 +10,14 @@ export class SessionContact extends Component {
 		const t = this.props.t;
 		return (
 			<div className={classes.FormElement}>
-				<h3>{t('examSession.contact.title')}</h3>
+				<h3>{t(i18nKeys.examSession_contact_title)}</h3>
 				<label className={classes.ExtraLabel}>
-					{t('examSession.contact.name.label')}
+					{t(i18nKeys.examSession_contact_name_label)}
 				</label>
 				<Field
 					id="contactName"
 					name="contactName"
-					placeholder={t('examSession.contact.name.placeholder')}
+					placeholder={t(i18nKeys.examSession_contact_name_placeholder)}
 					className={classes.TextInput}
 				/>
 				<ErrorMessage
@@ -25,12 +26,12 @@ export class SessionContact extends Component {
 					className={classes.ErrorMessage}
 				/>
 				<label className={classes.ExtraLabel}>
-					{t('examSession.contact.email.label')}
+					{t(i18nKeys.examSession_contact_email_label)}
 				</label>
 				<Field
 					id="contactEmail"
 					name="contactEmail"
-					placeholder={t('examSession.contact.email.placeholder')}
+					placeholder={t(i18nKeys.examSession_contact_email_placeholder)}
 					className={classes.TextInput}
 				/>
 				<ErrorMessage
@@ -39,12 +40,12 @@ export class SessionContact extends Component {
 					className={classes.ErrorMessage}
 				/>
 				<label className={classes.ExtraLabel}>
-					{t('examSession.contact.phoneNumber.label')}
+					{t(i18nKeys.examSession_contact_phoneNumber_label)}
 				</label>
 				<Field
 					id="contactPhoneNumber"
 					name="contactPhoneNumber"
-					placeholder={t('examSession.contact.phoneNumber.placeholder')}
+					placeholder={t(i18nKeys.examSession_contact_phoneNumber_placeholder)}
 					className={classes.TextInput}
 				/>
 				<ErrorMessage

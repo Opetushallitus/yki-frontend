@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { LANGUAGES } from '../../../common/Constants';
 import classes from '../ExamDateModalContent/AddOrEditExamDate.module.css';
 import { levelTranslations } from '../../../util/util';
+import * as i18nKeys from "../../../common/LocalizationKeys";
 
 const LanguageLevelSelector = props => {
 
@@ -34,8 +35,8 @@ const LanguageLevelSelector = props => {
 		<>
 			{modify ? (
 				<>
-					<label>{t('examDates.choose.examLanguage')}</label>
-					<label>{t('registration.select.level')}</label>
+					<label>{t(i18nKeys.examDates_choose_examLanguage)}</label>
+					<label>{t(i18nKeys.registration_select_level)}</label>
 					<span />
 					<>
 						{languages.map((date, i) => {
@@ -92,7 +93,7 @@ const LanguageLevelSelector = props => {
 											className={`${classes.LanguageButton} ${classes.RemoveLanguageButton}`}
 											onClick={() => handleRemoveLanguage(i)}
 										>
-											{t('examDates.languages.delete')}
+											{t(i18nKeys.examDates_languages_delete)}
 										</button>
 									</div>
 								</React.Fragment>
@@ -103,7 +104,7 @@ const LanguageLevelSelector = props => {
 			) : (
 					<>
 						<div>
-							<label>{t('examDates.choose.examLanguage')}</label>
+							<label>{t(i18nKeys.examDates_choose_examLanguage)}</label>
 							<>
 								<select
 									data-cy="exam-date-languages-select-language"
@@ -122,7 +123,7 @@ const LanguageLevelSelector = props => {
 							</>
 						</div>
 						<div>
-							<label>{t('registration.select.level')}</label>
+							<label>{t(i18nKeys.registration_select_level)}</label>
 							<>
 								<select
 									data-cy="exam-date-languages-select-level"
@@ -148,7 +149,7 @@ const LanguageLevelSelector = props => {
 								className={classes.AddNewLanguages}
 								onClick={() => setNewLanguageField(!newLanguageField)}
 							>
-								{t('examDates.languages.add')}
+								{t(i18nKeys.examDates_languages_add)}
 							</button>
 						</div>
 					) : (
@@ -189,7 +190,7 @@ const LanguageLevelSelector = props => {
 										className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
 										onClick={() => handleAddNewLanguage()}
 									>
-										{t('examDates.addNew.addLanguage')}
+										{t(i18nKeys.examDates_addNew_addLanguage)}
 									</button>
 								</div>
 							</div>
@@ -203,7 +204,7 @@ const LanguageLevelSelector = props => {
 							className={`${classes.LanguageButton} ${classes.LanguageAdditionButton}`}
 							onClick={() => handleAddNewLanguage()}
 						>
-							{t('examDates.addNew.addLanguage')}
+							{t(i18nKeys.examDates_addNew_addLanguage)}
 						</button>
 					</div>
 				)}
