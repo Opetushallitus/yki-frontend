@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import classes from './LogOut.module.css';
+// import * as i18nKeys from "../../../common/LocalizationKeys";
 
 export const LogOut = ({ user }) => {
   // const { t } = useTranslation();

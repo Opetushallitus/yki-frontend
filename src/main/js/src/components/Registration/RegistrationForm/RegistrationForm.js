@@ -263,7 +263,7 @@ export const registrationForm = props => {
     return (
       <FormikInputField
         name={name}
-        label={props.t(`registration.form.${name}`)} // FIXME
+        label={props.t(`registration.form.${name}`)}/* FIXME */
         required={required}
         extra={extra}
         type={type}
@@ -272,7 +272,7 @@ export const registrationForm = props => {
         onPaste={handler}
         onCopy={handler}
         onCut={handler}
-        placeholder={placeholder || props.t(`registration.form.${name}`)} // FIXME
+        placeholder={placeholder || props.t(`registration.form.${name}`)}/* FIXME */
       />
     )
   };
@@ -291,7 +291,7 @@ export const registrationForm = props => {
   const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
       <>
-        <p className={classes.Label}>{props.t(`registration.form.${name}`)}</p>// FIXME
+        <p className={classes.Label}>{props.t(`registration.form.${name}`)}</p>{/* FIXME */}
         <span>{initialValues[name]}</span>
       </>
     ) : (
