@@ -83,7 +83,7 @@ Npm script
 ```bash
 npm run localisation env
 ```
-is used for downloading localisations for given environment `env`. Running the script requires `curl`, `echo` and `mkdir`.
+is used for downloading localisations for given environment `env`. Running the script requires `curl`, `diff`, `jq`.
 If no `env` is provided as a parameter, localisations are fetched from `untuva` environment.
 The localisations are downloaded under `dev/rest/localisation/environment`.
 
