@@ -18,7 +18,7 @@
 }
 
 .RadioButton:hover {
-  color: hsla(195, 100%, 47%, 1);
+  color: var(--light-blue);
   cursor: pointer;
 }
 
