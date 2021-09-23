@@ -106,5 +106,5 @@ export const examSessionParticipantsCount = (session) => {
 
   const participants = session.participants + (session.post_admission_quota ? session.pa_participants : 0);
   const max_participants = postAdmissionOpen ? (session.post_admission_quota + session.participants): session.max_participants;
-  return {participants: participants, max_participants: max_participants};
+  return {participants: participants, maxParticipants: max_participants};
 }

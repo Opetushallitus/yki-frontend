@@ -13,7 +13,7 @@ describe('examSessionParticipantsCount', () => {
             post_admission_quota: null,
             pa_participants: null
         };
-        expect(examSessionParticipantsCount(e)).toEqual({participants: 45, max_participants: 100});
+        expect(examSessionParticipantsCount(e)).toEqual({participants: 45, maxParticipants: 100});
     });
 
     it('should use max_participants still when registration is open', () => {
@@ -25,7 +25,7 @@ describe('examSessionParticipantsCount', () => {
             post_admission_quota: 5,
             pa_participants: 0
         };
-        expect(examSessionParticipantsCount(e)).toEqual({participants: 45, max_participants: 100});
+        expect(examSessionParticipantsCount(e)).toEqual({participants: 45, maxParticipants: 100});
     });
 
     it('should use pa_quota and participants as max_participants when registration passed', () => {
@@ -37,7 +37,7 @@ describe('examSessionParticipantsCount', () => {
             post_admission_quota: 5,
             pa_participants: 0
         };
-        expect(examSessionParticipantsCount(e)).toEqual({participants: 45, max_participants: 50});
+        expect(examSessionParticipantsCount(e)).toEqual({participants: 45, maxParticipants: 50});
     });
 
     it('should use pa_quota and participants as max_participants and count both participants and pa_participants', () => {
@@ -49,7 +49,7 @@ describe('examSessionParticipantsCount', () => {
             post_admission_quota: 5,
             pa_participants: 4
         };
-        expect(examSessionParticipantsCount(e)).toEqual({participants: 49, max_participants: 50});
+        expect(examSessionParticipantsCount(e)).toEqual({participants: 49, maxParticipants: 50});
     });
 
 })

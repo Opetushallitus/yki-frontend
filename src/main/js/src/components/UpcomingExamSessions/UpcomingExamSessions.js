@@ -31,7 +31,7 @@ export const upcomingExamSessions = props => {
           {moment(e.registration_end_date).format(DATE_FORMAT)}
         </p>
         <p>
-          {registrationOpen ? `${participantsCount.participants} / ${participantsCount.max_participants}` : '-'}
+          {registrationOpen ? `${participantsCount.participants} / ${participantsCount.maxParticipants}` : '-'}
         </p>
       </div>
     );
