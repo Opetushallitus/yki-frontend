@@ -13,6 +13,7 @@ import { ActionButton } from '../../UI/ActionButton/ActionButton';
 import ListExport from './ListExport/ListExport';
 import RelocateParticipant from './RelocateParticipant/RelocateParticipant';
 import classes from './ParticipantList.module.css';
+import {examSessionParticipantsCount} from "../../../util/examSessionUtil";
 
 const stateComparator = () => (a, b) => {
   if (a.state === 'COMPLETED') return -1;
@@ -316,17 +317,13 @@ export const participantList = props => {
   };
 
   const participantsHeader = () => {
-    const post_admission_quota =
-      props.examSession.post_admission_quota &&
-        props.examSession.post_admission_active
-        ? props.examSession.post_admission_quota
-        : 0;
+    const participantsCount = examSessionParticipantsCount(props.examSession);
     return (
       <h2>
         {props.t('examSession.participants')}
         {':'}{' '}
-        {props.examSession.participants + props.examSession.pa_participants} /{' '}
-        {props.examSession.max_participants + post_admission_quota}
+        {participantsCount.participants} /{' '}
+        {participantsCount.maxParticipants}
       </h2>
     );
   };

@@ -7,15 +7,14 @@ import { DATE_FORMAT, DATE_FORMAT_WITHOUT_YEAR } from '../../common/Constants';
 import { languageToString, levelDescription } from '../../util/util';
 import Checkbox from '../UI/Checkbox/Checkbox';
 import classes from './UpcomingExamSessions.module.css';
+import {examSessionParticipantsCount} from "../../util/examSessionUtil";
 
 export const upcomingExamSessions = props => {
   const examSessionRows = props.examSessions.map((e, i) => {
     const registrationOpen = moment().isSameOrAfter(
       moment(e.registration_start_date),
     );
-
-    const postAdmissionQuota = e.post_admission_quota || 0;
-
+    const participantsCount = examSessionParticipantsCount(e);
     return (
       <div
         className={classes.Row}
@@ -32,10 +31,7 @@ export const upcomingExamSessions = props => {
           {moment(e.registration_end_date).format(DATE_FORMAT)}
         </p>
         <p>
-          {registrationOpen
-            ? `${e.participants + e.pa_participants} / ${e.max_participants +
-                postAdmissionQuota}`
-            : '-'}
+          {registrationOpen ? `${participantsCount.participants} / ${participantsCount.maxParticipants}` : '-'}
         </p>
       </div>
     );
