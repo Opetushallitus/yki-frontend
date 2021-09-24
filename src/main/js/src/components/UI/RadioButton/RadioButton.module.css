@@ -4,11 +4,7 @@
   align-items: center;
 }
 
-.RadioButton label {
-  margin-bottom: 0 !important;
-}
-
-.RadioButton input {
+.RadioButtonInput {
   margin-bottom: 0.5rem;
   margin-right: 8px;
   background: var(--white) 0% 0% no-repeat padding-box;
@@ -17,45 +13,34 @@
   -webkit-appearance: radio;
 }
 
-.RadioButton:hover {
-  color: var(--secondary-blue);
-}
-
-.RadioButtonDisabled {
-  color: var(--secondary-gray);
-}
-
-.RadioButtonDisabled input {
-  margin-bottom: 0.5rem;
-  margin-right: 8px;
-  height: 17px;
-  width: 17px;
-}
-
 .RadioButtonLabel {
-  display: inline-block;
   width: 17%;
-  vertical-align: text-top;
   font-size: 0.875em;
+  vertical-align: text-top;
 }
 
-.RadioButtonExtraLabel {
+.RadioButton label {
   display: inline-block;
+  color: inherit;
+  cursor: inherit;
+  margin-bottom: 0 !important;
 }
 
-.RadioButtonEnabled:hover {
-  color: hsla(195, 100%, 47%, 1);
+.RadioButton:hover {
+  color: var(--light-blue);
 }
 
-.RadioButtonDisabled {
-  color: hsla(0, 0%, 68%, 1);
+.RadioButtonInput:hover,
+.RadioButton label:hover {
+  cursor: pointer;
 }
 
-.RadioButtonDisabled input,
-.RadioButtonDisabled .RadioButtonLabel,
-.RadioButtonDisabled .RadioButtonExtraLabel {
+.RadioButtonInput:disabled,
+.RadioButtonInput:disabled ~ label {
+  color: var(--secondary-gray);
   cursor: not-allowed;
 }
+
 
 @media screen and (min-width: 768px) and (max-width: 1020px) {
   .RadioButton {

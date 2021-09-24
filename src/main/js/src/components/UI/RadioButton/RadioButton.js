@@ -5,12 +5,10 @@ import classes from './RadioButton.module.css';
 
 const radioButton = props => (
   <div
-    className={[
-      classes.RadioButton,
-      props.disabled ? classes.RadioButtonDisabled: classes.RadioButtonEnabled,
-    ].join(' ')}
+    className={classes.RadioButton}
   >
     <input
+      className={classes.RadioButtonInput}
       name={props.name}
       id={props.id}
       type="radio"
@@ -20,11 +18,15 @@ const radioButton = props => (
       onChange={props.onChange}
       disabled={props.disabled || false}
     />
-    <label className={classes.RadioButtonLabel} htmlFor={props.id}>
+    <label
+      className={classes.RadioButtonLabel}
+      htmlFor={props.id}>
       {props.label}
     </label>
     {props.extraLabel ? (
-      <label className={classes.RadioButtonExtraLabel} htmlFor={props.id}>
+      <label
+        className={classes.RadioButtonExtraLabel}
+        htmlFor={props.id}>
         {props.extraLabel}
       </label>
     ) : null}
