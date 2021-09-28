@@ -15,7 +15,7 @@ describe('Exam sessions', () => {
   });
 
   const fillExamSessionForm = () => {
-    cy.get('[data-cy=select-officeOid]').select('1.2.246.562.10.82346919515');
+    selectSchool();
     cy.get('[data-cy=radio-fin]').click();
     cy.get('[data-cy=radio-PERUS]').click();
     cy.get('[data-cy=radio-2081-01-30]').click();
@@ -24,6 +24,10 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=input-zip]').type('33100');
     cy.get('[data-cy=input-postOffice]').type('city');
   };
+
+  const selectSchool = () => {
+    cy.get('[data-cy=select-officeOid]').select('1.2.246.562.10.82346919515');
+  }
 
   it('front page contains list of upcoming exam sessions', () => {
     cy.get('[data-cy=exam-session-header]');
@@ -95,6 +99,27 @@ describe('Exam sessions', () => {
     cy.get('span')
       .contains('Tutkintotilaisuus on jo olemassa')
       .should('not.exist');
+  });
+
+  it('should undo disabled level and exam date selections in case of language change', () => {
+    cy.get('[data-cy=add-exam-session-button]').click();
+    selectSchool();
+    cy.get('[data-cy=radio-fin]').click();
+    cy.get('[data-cy=radio-PERUS]').click();
+    cy.get('[data-cy=radio-2081-01-30]').click();
+    cy.get('[data-cy=radio-deu]').click();
+    cy.get('[data-cy=radio-PERUS]').should('not.be.checked');
+    cy.get('[data-cy=radio-2081-01-30]').should('not.be.checked');
+  });
+
+  it('should undo the disabled exam date selection in case of level change', () => {
+    cy.get('[data-cy=add-exam-session-button]').click();
+    selectSchool();
+    cy.get('[data-cy=radio-fin]').click();
+    cy.get('[data-cy=radio-PERUS]').click();
+    cy.get('[data-cy=radio-2081-01-30]').click();
+    cy.get('[data-cy=radio-KESKI]').click();
+    cy.get('[data-cy=radio-2081-01-30]').should('not.be.checked');
   });
 
   it('selecting upcoming exam session opens details with participant list', () => {
@@ -189,7 +214,7 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=registration-SUBMITTED').should('not.exist');
   });
 
-  it.only('registration can be relocated to next exam session', () => {
+  it('registration can be relocated to next exam session', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-1]').should('exist');
 
