@@ -82,9 +82,13 @@ const examSessionForm = props => {
     label,
     extraLabel,
     disabled,
+    setFieldValue,
+    values
   }) => {
     return (
       <RadioButton
+        values={values}
+        setFieldValue={setFieldValue}
         name={name}
         id={id}
         value={value}
@@ -154,7 +158,7 @@ const examSessionForm = props => {
     );
   };
 
-  const languageLevelFields = (languages, selectedLang) => {
+  const languageLevelFields = (languages, selectedLang, setFieldValue, values) => {
     const allLevels = R.keys(levelTranslations);
 
     return (
@@ -168,6 +172,8 @@ const examSessionForm = props => {
 
         return (
           <Field
+            setFieldValue={setFieldValue}
+            values={values}
             component={RadioButtonComponent}
             name="level"
             id={level}
@@ -181,7 +187,7 @@ const examSessionForm = props => {
     );
   };
 
-  const examDateFields = (examDates, selectedLanguage, selectedLevel) => {
+  const examDateFields = (examDates, selectedLanguage, selectedLevel, setFieldValue, values) => {
     // Disable date filtering in development because test data is not dynamic
     return examDates
       .filter(e => {
@@ -199,6 +205,8 @@ const examSessionForm = props => {
         ).join(', ');
         return (
           <Field
+            setFieldValue={setFieldValue}
+            values={values}
             component={RadioButtonComponent}
             name="examDate"
             id={examDate.exam_date}
@@ -359,6 +367,8 @@ const examSessionForm = props => {
                 {languageLevelFields(
                   props.examSessionContent.organizer.languages || [],
                   values.language,
+                  setFieldValue,
+                  values
                 )}
               </RadioButtonGroup>
             </div>
@@ -373,6 +383,8 @@ const examSessionForm = props => {
                   props.examSessionContent.examDates,
                   values.language,
                   values.level,
+                  setFieldValue,
+                  values
                 )}
               </RadioButtonGroup>
               {registrationPediod(

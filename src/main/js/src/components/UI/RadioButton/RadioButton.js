@@ -1,37 +1,52 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import classes from './RadioButton.module.css';
 
-const radioButton = props => (
-  <div
-    className={classes.RadioButton}
-  >
-    <input
-      className={classes.RadioButtonInput}
-      name={props.name}
-      id={props.id}
-      type="radio"
-      data-cy={`radio-${props.id}`}
-      value={props.checkedValue}
-      checked={props.checkedValue === props.value}
-      onChange={props.onChange}
-      disabled={props.disabled || false}
-    />
-    <label
-      className={classes.RadioButtonLabel}
-      htmlFor={props.id}>
-      {props.label}
-    </label>
-    {props.extraLabel ? (
+const radioButton = props => {
+  useEffect(() => {
+    // Undo disabled selections in case of change
+    if (props.values &&
+      props.setFieldValue &&
+      props.name !== 'language' &&
+      props.checkedValue === props.value &&
+      props.disabled &&
+      props.values[props.name] !== '') {
+      // Uncheck the disabled radio button
+      props.setFieldValue(props.name, '');
+    }
+  });
+
+  return (
+    <div
+      className={classes.RadioButton}
+    >
+      <input
+        className={classes.RadioButtonInput}
+        name={props.name}
+        id={props.id}
+        type="radio"
+        data-cy={`radio-${props.id}`}
+        value={props.checkedValue}
+        checked={props.checkedValue === props.value}
+        onChange={props.onChange}
+        disabled={props.disabled || false}
+      />
       <label
-        className={classes.RadioButtonExtraLabel}
+        className={classes.RadioButtonLabel}
         htmlFor={props.id}>
-        {props.extraLabel}
+        {props.label}
       </label>
-    ) : null}
-  </div>
-);
+      {props.extraLabel ? (
+        <label
+          className={classes.RadioButtonExtraLabel}
+          htmlFor={props.id}>
+          {props.extraLabel}
+        </label>
+      ) : null}
+    </div>
+  )
+};
 
 radioButton.propTypes = {
   name: PropTypes.string.isRequired,
@@ -42,6 +57,8 @@ radioButton.propTypes = {
   extraLabel: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  values: PropTypes.object,
+  setFieldValue: PropTypes.func
 };
 
 export default radioButton;
