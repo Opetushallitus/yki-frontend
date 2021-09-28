@@ -4,15 +4,20 @@ import React, { useEffect } from 'react';
 import classes from './RadioButton.module.css';
 
 const radioButton = props => {
+
+  /**
+   * Undo disabled radio button selections 
+   * in case of change language and level changes
+   */
   useEffect(() => {
-    // Undo disabled selections in case of change
-    if (props.values &&
+    if (
+      props.values &&
       props.setFieldValue &&
       props.name !== 'language' &&
       props.checkedValue === props.value &&
       props.disabled &&
-      props.values[props.name] !== '') {
-      // Uncheck the disabled radio button
+      props.values[props.name] !== ''
+    ) {
       props.setFieldValue(props.name, '');
     }
   });
