@@ -350,5 +350,6 @@
   "registryItem.merchantSecret.mandatory": "Mandatory when merchant ID is given",
   "registryItem.payment": "Payment service information",
   "registryItem.paymentInfoMissing": "Payment service information missing",
-  "registryItem.search.placeholder": "Search by organisation name"
+  "registryItem.search.placeholder": "Search by organisation name",
+  "registryItem.viewAsOrganiser": "Show organiser view"
 }

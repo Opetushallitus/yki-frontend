@@ -350,5 +350,6 @@
   "registryItem.merchantSecret.mandatory": "Obligatorisk om handlarens ID har angetts",
   "registryItem.payment": "Betalningstjänstens uppgifter",
   "registryItem.paymentInfoMissing": "Betalningstjänstens uppgifter fattas",
-  "registryItem.search.placeholder": "Sök med organisationens namn"
+  "registryItem.search.placeholder": "Sök med organisationens namn",
+  "registryItem.viewAsOrganiser": "Visa anordnarens vy"
 }
