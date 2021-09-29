@@ -53,7 +53,7 @@ main {
 
 input {
   height: 30px;
-  width: 260px;
+  max-width: 260px;
   font-size: 1rem;
   background: var(--white) 0 0 no-repeat padding-box;
   border: 1px solid var(--secondary-blue);
