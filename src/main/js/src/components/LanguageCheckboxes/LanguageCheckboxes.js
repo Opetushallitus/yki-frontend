@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { LANGUAGES } from '../../common/Constants';
 import Checkbox from '../UI/Checkbox/Checkbox';
 import classes from './LanguageCheckboxes.module.css';
+import { langLocalisationKey } from '../../util/languageUtil'
 
 const languageCheckboxes = props => {
   const toggleChecked = (code, level) => {
@@ -41,25 +42,30 @@ const languageCheckboxes = props => {
     </div>
   );
 
-  const checkboxGrid = LANGUAGES.map(l => (
-    <div key={l.name} className={classes.CheckboxGrid}>
-      <div className={classes.Language}>{l.name}</div>
-      {l.levels.map(ll => (
-        <Checkbox
-          key={ll}
-          name={ll}
-          checkboxId={`${l.code}-${ll}`}
-          checkBoxClass={classes.Checkbox}
-          languageCode={l.code}
-          languageLevel={ll}
-          checked={isSelected(l.code, ll)}
-          onChange={() => {
-            toggleChecked(l.code, ll);
-          }}
-        />
-      ))}
-    </div>
-  ));
+  const checkboxGrid = LANGUAGES.map(lang => {
+    const localisationKey = langLocalisationKey(lang);
+
+    return (
+      <div key={localisationKey} className={classes.CheckboxGrid}>
+        <div className={classes.Language}>{props.t(localisationKey)}</div>
+
+        {lang.levels.map(level => (
+          <Checkbox
+            key={level}
+            name={level}
+            checkboxId={`${lang.code}-${level}`}
+            checkBoxClass={classes.Checkbox}
+            languageCode={lang.code}
+            languageLevel={level}
+            checked={isSelected(lang.code, level)}
+            onChange={() => {
+              toggleChecked(lang.code, level);
+            }}
+          />
+        ))}
+      </div>
+    )
+  });
 
   return (
     <div className={classes.LanguageCheckboxes}>
