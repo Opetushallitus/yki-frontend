@@ -406,7 +406,7 @@ export const registrationForm = props => {
                   {phoneNumberInputField(setFieldValue, setTouched, touched)}
                 </div>
                 <div className={classes.InputGroup}>
-                  {readonlyWhenExistsInput('email', initialValues, 'email')}
+                  <div>{readonlyWhenExistsInput('email', initialValues, 'email')}</div>
 
                   {!props.initData.user.email && (
                     <>{inputField('confirmEmail', true, null, 'email')}</>
@@ -416,7 +416,7 @@ export const registrationForm = props => {
             ) : (
               <div className={classes.InputGroup}>
                 {phoneNumberInputField(setFieldValue, setTouched, touched)}
-                {readonlyWhenExistsInput('email', initialValues, 'email')}
+                <div>{readonlyWhenExistsInput('email', initialValues, 'email')}</div>
                 {!props.initData.user.email && (
                   <>{inputField('confirmEmail', true, null, 'email')}</>
                 )}
