@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 
 import { LANGUAGES } from '../../common/Constants';
 import Checkbox from '../UI/Checkbox/Checkbox';
@@ -23,13 +24,18 @@ const languageCheckboxes = props => {
       l => l.language_code === languageCode && l.level_code === levelCode,
     );
 
-  const levels = ['Perustaso', 'Keskitaso', 'Ylin taso'];
+  const levelLocalisationKeys = [
+    'common.level.basic',
+    'common.level.middle',
+    'common.level.high'
+  ];
+
   const languageLabels = (
     <div className={classes.LanguageLabels}>
       <span className={classes.LanguageLabel} />
-      {levels.map(level => (
-        <span key={level} className={classes.LanguageLabel}>
-          {level}
+      {levelLocalisationKeys.map(key => (
+        <span key={key} className={classes.LanguageLabel}>
+          {props.t(key)}
         </span>
       ))}
     </div>
@@ -68,4 +74,4 @@ languageCheckboxes.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default languageCheckboxes;
+export default withTranslation()(languageCheckboxes);
