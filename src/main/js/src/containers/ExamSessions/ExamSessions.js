@@ -81,7 +81,7 @@ class ExamSessions extends Component {
   };
 
   togglePastExamSessionsHandler = () => {
-    const days = !this.props.showPastSessionsFromDays ? 180 : null;
+    const days = !this.props.showPastSessionsFromDays ? 365 : null;
     this.props.toggleAndFetchPastExamSessions(days);
   }
 
