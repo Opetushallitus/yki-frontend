@@ -1,6 +1,6 @@
 .PhoneNumberInput {
   height: 30px !important;
-  width: 265px;
+  width: 267px;
   font-size: 1rem;
   background: var(--white) 0 0 no-repeat padding-box;
   border: 1px solid var(--secondary-blue);
@@ -11,7 +11,7 @@
 
 .TextInput {
   height: 30px !important;
-  width: 260px !important;
+  width: 267px !important;
   border: none !important;
   font-size: 1rem !important;
   color: var(--black) !important;

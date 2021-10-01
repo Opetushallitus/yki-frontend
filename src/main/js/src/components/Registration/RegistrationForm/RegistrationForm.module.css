@@ -1,5 +1,6 @@
 .Label {
   font-weight: bold;
+  margin-top: 2px;
 }
 
 .ConsentContainer article > a > img {
@@ -27,6 +28,7 @@
 .InputGroup {
   display: grid;
   grid-template-columns: repeat(3, 33%);
+  column-gap: 1rem;
   margin: 20px 0;
 }
 

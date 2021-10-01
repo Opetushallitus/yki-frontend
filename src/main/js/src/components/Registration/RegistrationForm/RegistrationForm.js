@@ -289,10 +289,10 @@ export const registrationForm = props => {
 
   const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
-      <>
+      <div>
         <p className={classes.Label}>{props.t(`registration.form.${name}`)}</p>
         <span>{initialValues[name]}</span>
-      </>
+      </div>
     ) : (
       inputField(name, true, null, type)
     );
@@ -382,8 +382,8 @@ export const registrationForm = props => {
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
             <div className={classes.InputGroup}>
-              <div>{readonlyWhenExistsInput('firstName', initialValues)}</div>
-              <div>{readonlyWhenExistsInput('lastName', initialValues)}</div>
+              {readonlyWhenExistsInput('firstName', initialValues)}
+              {readonlyWhenExistsInput('lastName', initialValues)}
             </div>
             <div className={classes.InputGroup}>
               {inputField(
