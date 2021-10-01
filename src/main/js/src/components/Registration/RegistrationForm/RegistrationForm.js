@@ -289,10 +289,10 @@ export const registrationForm = props => {
 
   const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
-      <>
+      <div>
         <p className={classes.Label}>{props.t(`registration.form.${name}`)}</p>
         <span>{initialValues[name]}</span>
-      </>
+      </div>
     ) : (
       inputField(name, true, null, type)
     );
@@ -382,8 +382,8 @@ export const registrationForm = props => {
           <div data-cy="registration-form">
             <p>{props.t('registration.form.info')}</p>
             <div className={classes.InputGroup}>
-              <div>{readonlyWhenExistsInput('firstName', initialValues)}</div>
-              <div>{readonlyWhenExistsInput('lastName', initialValues)}</div>
+              {readonlyWhenExistsInput('firstName', initialValues)}
+              {readonlyWhenExistsInput('lastName', initialValues)}
             </div>
             <div className={classes.InputGroup}>
               {inputField(
@@ -406,7 +406,7 @@ export const registrationForm = props => {
                   {phoneNumberInputField(setFieldValue, setTouched, touched)}
                 </div>
                 <div className={classes.InputGroup}>
-                  <div>{readonlyWhenExistsInput('email', initialValues, 'email')}</div>
+                  {readonlyWhenExistsInput('email', initialValues, 'email')}
 
                   {!props.initData.user.email && (
                     <>{inputField('confirmEmail', true, null, 'email')}</>
@@ -416,7 +416,7 @@ export const registrationForm = props => {
             ) : (
               <div className={classes.InputGroup}>
                 {phoneNumberInputField(setFieldValue, setTouched, touched)}
-                <div>{readonlyWhenExistsInput('email', initialValues, 'email')}</div>
+                {readonlyWhenExistsInput('email', initialValues, 'email')}
                 {!props.initData.user.email && (
                   <>{inputField('confirmEmail', true, null, 'email')}</>
                 )}
