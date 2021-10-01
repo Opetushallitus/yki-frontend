@@ -344,7 +344,7 @@
   "registryItem.deleteCancel": "Älä poista järjestäjää",
   "registryItem.deleteConfirm": "Vahvista poisto",
   "registryItem.extra": "Lisätiedot",
-  "registryItem.extra.placeholder": "Esim. Yleinen sähköpostilista kaikille@jarjestaja.fi",
+  "registryItem.extra.placeholder": "Esim. yleinen sähköpostilista kaikille@jarjestaja.fi",
   "registryItem.merchantId": "Kauppiastunnus",
   "registryItem.merchantSecret": "Kauppiasvarmenne",
   "registryItem.merchantSecret.mandatory": "Pakollinen jos kauppiastunnus annettu",
