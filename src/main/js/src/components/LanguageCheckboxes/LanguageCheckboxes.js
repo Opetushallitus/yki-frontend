@@ -5,7 +5,8 @@ import { withTranslation } from 'react-i18next';
 import { LANGUAGES } from '../../common/Constants';
 import Checkbox from '../UI/Checkbox/Checkbox';
 import classes from './LanguageCheckboxes.module.css';
-import { langLocalisationKey } from '../../util/languageUtil'
+import { langLocalisationKey } from '../../util/localisationUtil'
+import { levelTranslations } from '../../util/util';
 
 const languageCheckboxes = props => {
   const toggleChecked = (code, level) => {
@@ -25,11 +26,7 @@ const languageCheckboxes = props => {
       l => l.language_code === languageCode && l.level_code === levelCode,
     );
 
-  const levelLocalisationKeys = [
-    'common.level.basic',
-    'common.level.middle',
-    'common.level.high'
-  ];
+  const levelLocalisationKeys = Object.values(levelTranslations);
 
   const languageLabels = (
     <div className={classes.LanguageLabels}>
