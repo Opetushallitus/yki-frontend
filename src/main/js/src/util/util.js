@@ -65,8 +65,8 @@ export const getLanguagesWithLevelDescriptions = array => {
         levels.length === language.levels.length
           ? i18next.t('common.level.all')
           : levels
-              .map(l => levelDescription(l))
-              .join(` ${i18next.t('common.and')} `);
+            .map(l => levelDescription(l))
+            .join(` ${i18next.t('common.and')} `);
       list.push(`${language.name} - ${capitalize(description)}`);
     }
   }
@@ -167,4 +167,13 @@ export function checkBirthDate(value) {
       error: i18next.t('error.mandatory'),
     };
   }
+}
+
+export const getCookie = (name) => {
+  const cookie = {};
+  document.cookie.split(';').forEach((element) => {
+    const [k, v] = element.split('=');
+    cookie[k.trim()] = v;
+  })
+  return cookie[name];
 }
