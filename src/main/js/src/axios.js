@@ -1,5 +1,6 @@
 import axios from 'axios';
 import i18next from 'i18next';
+import { getCookie } from './util/util';
 
 const instance = axios.create({
   baseURL: '',
@@ -9,9 +10,10 @@ instance.interceptors.request.use((config) => {
   const lang = i18next.language;
   config.headers = {
     ...config.headers,
-    'Caller-Id': '1.2.246.562.10.00000000001.yki'
+    'Caller-Id': '1.2.246.562.10.00000000001.yki',
+    'CSRF': getCookie('CSRF')
   };
-  config.params = {lang: lang ? lang : 'fi'};
+  config.params = { lang: lang ? lang : 'fi' };
   return config;
 });
 

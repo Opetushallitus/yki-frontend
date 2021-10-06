@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
+import { getCookie } from './util/util'
 
 i18n
   // load translation using xhr -> see /public/locales
@@ -23,7 +24,8 @@ i18n
     backend: {
       loadPath: '/yki/api/localisation?lang={{lng}}',
       customHeaders: {
-        'Caller-Id': '1.2.246.562.10.00000000001.yki'
+        'Caller-Id': '1.2.246.562.10.00000000001.yki',
+        'CSRF': getCookie('CSRF')
       }
     },
 
