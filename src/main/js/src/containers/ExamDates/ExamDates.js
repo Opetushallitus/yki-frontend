@@ -492,14 +492,14 @@ class ExamDates extends Component {
         <div className={classes.ExamDatesListHeader}>
           <h2>{t('common.examDates')}</h2>
         </div>
-        {examDates.length > 0 ? (
-          examDateTables()
-        ) : (
+        {! examDates.some(examDate => moment(examDate.exam_date).isSameOrAfter(moment())) && (
           <p>{t('examDates.noUpcomingExamDates')}</p>
         )}
+        {examDateTables()}
         <hr className={classes.GridDivider} />
       </>
     );
+
     return (
       <Page>
         <div className={classes.ExamDates}>{content}</div>
