@@ -84,30 +84,19 @@ const examSessionListItem = ({
     </div>
   );
 
+    const fmtDateRange = (startDate, endDate) => {
+        const start = moment(startDate).format(DATE_FORMAT);
+        const end = moment(endDate).format(DATE_FORMAT);
+        return `${start} - ${end}`;
+    };
+
   const registrationOpenDesktop = (
     <div>
       {session.post_admission_start_date &&
       session.post_admission_end_date &&
-      session.post_admission_active ? (
-        <>
-          <p>{`${moment(session.post_admission_start_date).format(
-            DATE_FORMAT,
-          )} -
-                    ${moment(session.post_admission_end_date).format(
-                      DATE_FORMAT,
-                    )}`}</p>
-          <p>{t('registration.postregistrationOnGoing')}</p>
-        </>
-      ) : (
-        <>
-          <p>{`${moment(session.registration_start_date).format(
-            DATE_FORMAT,
-          )} - ${moment(session.registration_end_date).format(
-            DATE_FORMAT,
-          )}`}</p>
-          <p>{t('registration.open')}</p>
-        </>
-      )}
+      session.post_admission_active
+          ? <p>{fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
+          : <p>{fmtDateRange(session.registration_start_date, session.registration_end_date)}</p>}
     </div>
   );
 
@@ -117,11 +106,9 @@ const examSessionListItem = ({
         {t('registration.list.signupOpen')}
         {':'}
 
-        <span style={{ marginLeft: 5 }}>{`${moment(
-          session.registration_start_date,
-        ).format(DATE_FORMAT)} - ${moment(session.registration_end_date).format(
-          DATE_FORMAT,
-        )}`}</span>
+        <span style={{ marginLeft: 5 }}>
+            {fmtDateRange(session.registration_start_date, session.registration_end_date)}
+        </span>
       </div>
       {session.post_admission_start_date &&
         session.post_admission_end_date &&
@@ -130,12 +117,7 @@ const examSessionListItem = ({
             {t('examSession.postAdmission')}
             {':'}
             <span style={{ marginLeft: 5 }}>
-              {`${moment(session.post_admission_start_date).format(
-                DATE_FORMAT,
-              )} -
-                    ${moment(session.post_admission_end_date).format(
-                      DATE_FORMAT,
-                    )}`}
+                {fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}
             </span>
           </div>
         )}
@@ -152,17 +134,8 @@ const examSessionListItem = ({
     session.post_admission_start_date &&
     session.post_admission_end_date &&
     session.post_admission_active
-      ? `${t('examSession.postAdmission')}:  ${moment(
-          session.post_admission_start_date,
-        ).format(DATE_FORMAT)} -
-                    ${moment(session.post_admission_end_date).format(
-                      DATE_FORMAT,
-                    )} `
-      : `${t('registration.list.signupOpen')}: ${moment(
-          session.registration_start_date,
-        ).format(DATE_FORMAT)} - ${moment(session.registration_end_date).format(
-          DATE_FORMAT,
-        )}`;
+      ? `${t('examSession.postAdmission')}:  ${fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)} `
+      : `${t('registration.list.signupOpen')}: ${fmtDateRange(session.registration_start_date, session.registration_end_date)}`;
 
   const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${spotsAvailable} ${spotsAvailableText}.`;
 
