@@ -84,20 +84,33 @@ const examSessionListItem = ({
     </div>
   );
 
-    const fmtDateRange = (startDate, endDate) => {
-        const start = moment(startDate).format(DATE_FORMAT);
-        const end = moment(endDate).format(DATE_FORMAT);
-        return `${start} - ${end}`;
-    };
+  const fmtDateRange = (startDate, endDate) => {
+      const start = moment(startDate).format(DATE_FORMAT);
+      const end = moment(endDate).format(DATE_FORMAT);
+      return `${start} - ${end}`;
+  };
+
+  const showTextIfDateRangeNow = (startDate, endDate, text) => {
+    if (moment().isBetween(moment(startDate), moment(endDate).endOf('day'))) {
+      return <p>{text}</p>;
+    }
+  }
 
   const registrationOpenDesktop = (
-    <div>
-      {session.post_admission_start_date &&
-      session.post_admission_end_date &&
-      session.post_admission_active
-          ? <p>{fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
-          : <p>{fmtDateRange(session.registration_start_date, session.registration_end_date)}</p>}
-    </div>
+      <div>
+        {session.post_admission_start_date &&
+        session.post_admission_end_date &&
+        session.post_admission_active
+            ? <>
+              <p>{fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
+              {showTextIfDateRangeNow(session.post_admission_start_date, session.post_admission_end_date, t('registration.postregistrationOnGoing'))}
+            </>
+            : <>
+              <p>{fmtDateRange(session.registration_start_date, session.registration_end_date)}</p>
+              {showTextIfDateRangeNow(session.registration_start_date, session.registration_end_date, t('registration.open'))}
+            </>
+        }
+      </div>
   );
 
   const registrationOpenMobile = (
