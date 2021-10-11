@@ -1,4 +1,4 @@
-describe('Exam sessions', () => {
+describe('Exam dates page', () => {
   beforeEach(() => {
     cy.visit('/tutkintopaivat');
   });
@@ -45,6 +45,31 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=exam-date-languages-select-level').select('Keskitaso');
     cy.get('[data-cy=exam-date-languages-add-new]').click();
   };
+
+  describe('when there are no exam dates', () => {
+
+    it('there is a button for adding a new exam date', () => {
+      cy
+        .get('[data-cy=exam-dates-button-add-new]')
+        .should('be.visible');
+    });
+
+    it('there is no button for removing an exam date', () => {
+      cy
+        .get('[data-cy=exam-dates-button-delete]')
+        .should('not.exist');
+    });
+
+    it('there is no table for listing exam dates', () => {
+      cy
+        .get('[data-cy=exam-dates-table-headers]')
+        .should('not.exist');
+
+        cy
+        .get('[data-cy=exam-dates-table-rows]')
+        .should('not.exist');
+    });
+  });
 
   it('exam dates page contains a table of upcoming exam dates', () => {
     cy.get('[data-cy=exam-dates-table-headers]');
