@@ -151,6 +151,7 @@ class ExamDates extends Component {
     const { examDates, loading, t } = this.props;
     const usedDates = examDates.map(ed => ed.exam_date);
     const currentDate = moment(new Date()).format('YYYY-MM-DD');
+    const upcomingExamDatesExist = examDates.length > 0;
 
     const {
       selectedExamDate,
@@ -236,9 +237,57 @@ class ExamDates extends Component {
       </>
     );
 
-    const examDateTables = () => {
+    const hasExamSessions = exam => {
+      if (!exam || !exam.exam_session_count || exam.exam_session_count === 0)
+        return false;
+      if (exam.exam_session_count > 0) return true;
+    };
+
+    const examDatesControlButtons = () => {
+      const checked = this.state.checkedExamDate;
+      const showDeleteButton = upcomingExamDatesExist;
+
+      return (
+        <div className={classes.ExamDateControls}>
+          <div className={classes.ActionButtons}>
+            <button
+              data-cy="exam-dates-button-add-new"
+              className={classes.AdditionButton}
+              onClick={() => this.showAddOrEditExamDateModalHandler()}
+            >
+              {t('examDates.addNew.confirm')}
+            </button>
+            {showDeleteButton && (
+              <button
+                data-cy="exam-dates-button-delete"
+                className={
+                  !checked || hasExamSessions(checked)
+                    ? classes.DisabledButton
+                    : classes.DeleteButton
+                }
+                disabled={!checked || hasExamSessions(checked)}
+                onClick={this.showDeleteConfirmationHandler}
+              >
+                {t('examDates.delete.selected')}
+              </button>
+            )}
+          </div>
+          <div className={classes.PastExamDates}>
+            <Checkbox
+              label={t('examDates.show.pastDates')}
+              name={'showPastDates'}
+              checkboxId={'showPastDates'}
+              checked={this.state.fetchExamHistory}
+              onChange={() => this.onExamDateHistoryFetchChange()}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    const examDatesTable = () => {
       const onSelectAllChange = () => {
-        /*         
+        /*
         TODO: Decide if the feature should be kept or not.
         Disabled for now to simplify the delete feature.
 
@@ -253,59 +302,16 @@ class ExamDates extends Component {
         } */
       };
 
-      const checked = this.state.checkedExamDate;
-
       // Use this if deleting multiple at the same time should be allowed
-      /*  
+      /*
       const hasExamSessions = exams => {
       if (exams.length > 0) {
           const sessionCount = exams.some(examDate => examDate.exam_session_count);
           return !!(sessionCount && sessionCount > 0);
         } else {
           return !!(exams.exam_session_count && exams.exam_session_count > 0);
-        } 
+        }
       }*/
-
-      const hasExamSessions = exam => {
-        if (!exam || !exam.exam_session_count || exam.exam_session_count === 0)
-          return false;
-        if (exam.exam_session_count > 0) return true;
-      };
-
-      const examDateButtons = (
-        <div className={classes.ExamDateControls}>
-          <div className={classes.ActionButtons}>
-            <button
-              data-cy="exam-dates-button-add-new"
-              className={classes.AdditionButton}
-              onClick={() => this.showAddOrEditExamDateModalHandler()}
-            >
-              {t('examDates.addNew.confirm')}
-            </button>
-            <button
-              data-cy="exam-dates-button-delete"
-              className={
-                !checked || hasExamSessions(checked)
-                  ? classes.DisabledButton
-                  : classes.DeleteButton
-              }
-              disabled={!checked || hasExamSessions(checked)}
-              onClick={this.showDeleteConfirmationHandler}
-            >
-              {t('examDates.delete.selected')}
-            </button>
-          </div>
-          <div className={classes.PastExamDates}>
-            <Checkbox
-              label={t('examDates.show.pastDates')}
-              name={'showPastDates'}
-              checkboxId={'showPastDates'}
-              checked={this.state.fetchExamHistory}
-              onChange={() => this.onExamDateHistoryFetchChange()}
-            />
-          </div>
-        </div>
-      );
 
       // Hidden until decided if this should exist
       //const isAllChecked = R.equals(this.state.grouped, this.state.selectedExamDates);
@@ -474,7 +480,6 @@ class ExamDates extends Component {
 
       return (
         <>
-          {examDateButtons}
           {examDateHeaders}
           {this.state.grouped !== null && (
             <div className={classes.Grid} data-cy="exam-dates-table-rows">
@@ -492,11 +497,19 @@ class ExamDates extends Component {
         <div className={classes.ExamDatesListHeader}>
           <h2>{t('common.examDates')}</h2>
         </div>
-        {! examDates.some(examDate => moment(examDate.exam_date).isSameOrAfter(moment())) && (
-          <p>{t('examDates.noUpcomingExamDates')}</p>
-        )}
-        {examDateTables()}
-        <hr className={classes.GridDivider} />
+        {upcomingExamDatesExist ? (
+          <div>
+            {examDatesControlButtons()}
+            {examDatesTable()}
+
+            <hr className={classes.GridDivider} />
+          </div>
+        ) :
+          <div>
+            <p>{t('examDates.noUpcomingExamDates')}</p>
+            {examDatesControlButtons()}
+          </div>
+        }
       </>
     );
 
@@ -516,7 +529,7 @@ const mapStateToProps = state => {
     examDates: state.dates.examDates,
     loading: state.dates.loading,
     error: state.dates.error,
-    user: state.user.user,
+    user: state.user.user
   };
 };
 
@@ -547,12 +560,13 @@ ExamDates.propTypes = {
   examDates: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
+  user: PropTypes.object,
+  onAddExamDate: PropTypes.func.isRequired,
   onFetchExamDates: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
-  onAddExamDate: PropTypes.func.isRequired,
   onUpdateConfiguration: PropTypes.func.isRequired,
   onDeleteExamDate: PropTypes.func.isRequired,
-  user: PropTypes.object,
+  onAddEvaluationPeriod: PropTypes.func.isRequired
 };
 
 export default connect(
