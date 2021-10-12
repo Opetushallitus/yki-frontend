@@ -50,7 +50,7 @@ describe('Exam dates page', () => {
     cy.get('[data-cy=exam-dates-table-headers]');
     cy.get('[data-cy=exam-dates-table-headers]')
       .find('h3')
-      .should('have.length', 6);
+      .should('have.length', 7);
   });
 
   it('exam dates table should have exam dates listed', () => {
