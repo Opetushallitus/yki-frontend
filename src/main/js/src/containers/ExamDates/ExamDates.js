@@ -269,7 +269,7 @@ class ExamDates extends Component {
       const tableHeaders = (
         <>
           <div className={classes.Grid} data-cy="exam-dates-table-headers">
-            <h3 />
+            <span />
             <h3>{t('common.examDate')}</h3>
             <h3>{`${t('common.language')} & ${t('common.level')}`}</h3>
             <h3>{t('common.registationPeriod')}</h3>
