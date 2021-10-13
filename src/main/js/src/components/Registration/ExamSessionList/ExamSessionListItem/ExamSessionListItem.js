@@ -53,10 +53,9 @@ const examSessionListItem = ({
   const city = sessionLocation.post_office.toUpperCase() || '';
   const location = (
     <div>
-      <span className={classes.Location}>
-        {name} <br /> {address} <br /> {session.location[0].zip}{' '}
-        <strong>{city}</strong>
-      </span>
+      {name} <br />
+      {address} <br />
+      <strong>{city}</strong>
     </div>
   );
 
@@ -175,16 +174,10 @@ const examSessionListItem = ({
     </div>
   );
   const locationOnMobileView = (
-    <div className={classes.Location}>
-      <span>
-        {name}
-        <br />
-        {address}
-        <br />
-      </span>
-      <span>
-        {session.location[0].zip} {city}
-      </span>
+    <div className={classes.LocationMobile}>
+      {name} <br />
+      {address} <br />
+      <strong>{city}</strong>
     </div>
   );
 

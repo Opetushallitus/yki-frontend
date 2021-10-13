@@ -31,6 +31,10 @@
   border-left: none;
 }
 
+.LocationMobile {
+  text-align: left;
+}
+
 .RegisterButton {
   width: -webkit-fill-available !important;
 }
