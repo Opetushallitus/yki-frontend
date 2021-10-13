@@ -20,11 +20,11 @@ import {getDeviceOrientation, levelDescription} from '../../../../util/util';
 import classes from './ExamSessionListItem.module.css';
 
 const examSessionListItem = ({
-                                 examSession: session,
-                                 language,
-                                 onSelectExamSession,
-                                 history,
-                             }) => {
+    examSession: session,
+    language,
+    onSelectExamSession,
+    history,
+}) => {
     const [t, i18n] = useTranslation();
 
     const selectExamSession = () => {
@@ -51,8 +51,9 @@ const examSessionListItem = ({
     const name = sessionLocation.name;
     const address = sessionLocation.street_address || '';
     const city = sessionLocation.post_office.toUpperCase() || '';
+
     const location = (
-        <div>
+        <div className={classes.Location}>
             {name} <br/>
             {address} <br/>
             <strong>{city}</strong>
@@ -71,7 +72,8 @@ const examSessionListItem = ({
             <strong>
                 {showAvailableSpots(session) ? (
                     <>
-                        <span>{spotsAvailable}</span>{' '}
+                        <span>{spotsAvailable}</span>
+                        {' '}
                         <span>{spotsAvailableText}</span>
                     </>
                 ) : (
@@ -115,10 +117,9 @@ const examSessionListItem = ({
             <div className={classes.RegistrationOpen}>
                 {t('registration.list.signupOpen')}
                 {':'}
-
                 <span style={{marginLeft: 5}}>
-            {fmtDateRange(session.registration_start_date, session.registration_end_date)}
-        </span>
+                    {fmtDateRange(session.registration_start_date, session.registration_end_date)}
+                </span>
             </div>
             {session.post_admission_start_date &&
             session.post_admission_end_date &&
@@ -127,8 +128,8 @@ const examSessionListItem = ({
                     {t('examSession.postAdmission')}
                     {':'}
                     <span style={{marginLeft: 5}}>
-                {fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}
-            </span>
+                        {fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}
+                    </span>
                 </div>
             )}
         </div>
@@ -171,13 +172,6 @@ const examSessionListItem = ({
             ) : null}
         </div>
     );
-    const locationOnMobileView = (
-        <div className={classes.LocationMobile}>
-            {name} <br/>
-            {address} <br/>
-            <strong>{city}</strong>
-        </div>
-    );
 
     return (
         <>
@@ -193,7 +187,6 @@ const examSessionListItem = ({
                         <div>{date}</div>
                     </td>
                     <td>{registrationOpenMobile}</td>
-
                     <td>
                         <div>{availability}</div>
                         {session.queue_full ? null : (
@@ -201,7 +194,7 @@ const examSessionListItem = ({
                         )}
                     </td>
                     <td>
-                        {locationOnMobileView}
+                        {location}
                         {registerButton}
                     </td>
                 </tr>

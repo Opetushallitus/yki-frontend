@@ -38,7 +38,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
     exam.location && exam.location.find(l => l.lang === i18n.language);
   const organizer = location && <span>{` ${location.name},`}</span>;
   const address = location && (
-      <span>{` ${location.street_address}, \n`}<strong>{location.post_office.toUpperCase()}</strong></span>
+    <span>{` ${location.street_address}, \n`}<strong>{location.post_office.toUpperCase()}</strong></span>
   );
 
   const locationDetails = (
