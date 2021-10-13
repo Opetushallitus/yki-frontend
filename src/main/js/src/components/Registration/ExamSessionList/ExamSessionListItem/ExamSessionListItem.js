@@ -41,7 +41,7 @@ const examSessionListItem = ({
     const examLanguage = t(`common.language.${language.code}`);
     const examLevel = levelDescription(session.level_code).toLowerCase();
     const exam = (
-        <div className={classes.Exam}>
+        <div>
             <strong>{`${examLanguage}, ${examLevel}`}</strong>
         </div>
     );
@@ -67,14 +67,12 @@ const examSessionListItem = ({
             : t('registration.examSpots.free');
 
     const availability = (
-        <div className={classes.Availability}>
+        <div>
             <strong>
                 {showAvailableSpots(session) ? (
                     <>
                         <span>{spotsAvailable}</span>{' '}
-                        <span className={classes.HiddenOnDesktop}>
-              {spotsAvailableText}
-            </span>
+                        <span>{spotsAvailableText}</span>
                     </>
                 ) : (
                     <span>{t('registration.examSpots.full')}</span>
@@ -190,16 +188,16 @@ const examSessionListItem = ({
                     className={classes.ExamSessionListItem}
                     data-cy="exam-session-list-item"
                 >
-                    <td className={classes.MobileRow}>
+                    <td>
                         <div>{exam}</div>
                         <div>{date}</div>
                     </td>
                     <td>{registrationOpenMobile}</td>
 
-                    <td className={classes.MobileRow}>
+                    <td>
                         <div>{availability}</div>
                         {session.queue_full ? null : (
-                            <div className={classes.ExamFee}>{examFee}</div>
+                            <div>{examFee}</div>
                         )}
                     </td>
                     <td>
