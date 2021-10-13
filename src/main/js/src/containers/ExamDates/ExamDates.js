@@ -21,6 +21,7 @@ import classes from './ExamDates.module.css';
 import RegistrationPeriod from './util/RegistrationPeriod';
 
 class ExamDates extends Component {
+
   constructor(props) {
     super(props);
 
@@ -28,14 +29,13 @@ class ExamDates extends Component {
       showAddOrEditExamDate: false,
       showDeleteConfirmation: false,
       selectedExamDate: null,
-      selectedExamDateIndex: null,
       fetchExamHistory: false,
-      grouped: null,
+      visibleExamDates: null,
       checkedExamDate: null,
-      showAddEvaluationPeriod: false,
-      //selectedExamDates: [], // Use if multiple dates need to be deleted at the same time
+      showAddEvaluationPeriod: false
     };
   }
+
   componentDidMount() {
     this.props.user &&
       this.props.user.identity &&
@@ -43,61 +43,53 @@ class ExamDates extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.grouped === null) {
-      this.setState({
-        grouped: this.sortByRegistrationDate,
-      });
-    }
-
-    if (prevProps.examDates !== this.props.examDates) {
-      const result = R.sortBy(
+    if (!prevState.visibleExamDates || prevProps.examDates !== this.props.examDates) {
+      const examDates = R.sortBy(
         R.prop('registration_start_date'),
-        this.props.examDates,
+        this.props.examDates
       );
-      this.setState({
-        grouped: result,
-      });
+
+      this.setState({ visibleExamDates: examDates });
     }
 
     if (prevState.fetchExamHistory !== this.state.fetchExamHistory) {
-      const id = this.props.user.identity.oid;
-      this.props.onFetchExamDates(id, this.state.fetchExamHistory);
+      this.props.onFetchExamDates(this.props.user.identity.oid, this.state.fetchExamHistory);
     }
   }
 
-  showAddOrEditExamDateModalHandler = () =>
+  showAddOrEditExamDateModalHandler = () => {
     this.setState({ showAddOrEditExamDate: !this.state.showAddOrEditExamDate });
+  }
 
   showEditExamDateHandler = selectedDate => {
     this.setState(prev => ({
       showAddOrEditExamDate: !prev.showAddOrEditExamDate,
-      selectedExamDate: selectedDate,
+      selectedExamDate: selectedDate
     }));
   };
 
   showAddEvaluationPeriodHandler = selected => {
     this.setState(prev => ({
       showAddEvaluationPeriod: !prev.showAddEvaluationPeriod,
-      selectedExamDate: selected,
+      selectedExamDate: selected
     }));
   };
 
   showDeleteConfirmationHandler = () => {
-    this.setState({
-      showDeleteConfirmation: !this.state.showDeleteConfirmation,
-    });
+    this.setState({ showDeleteConfirmation: !this.state.showDeleteConfirmation });
   };
 
   closeDeleteConfirmationHandler = () =>
     this.setState({ showDeleteConfirmation: false });
 
-  closeAddOrEditExamDateModal = () =>
+  closeAddOrEditExamDateModal = () => {
     this.setState({
       showAddOrEditExamDate: false,
       selectedExamDate: null,
       showAddEvaluationPeriod: false,
-      fetchExamHistory: false,
+      fetchExamHistory: false
     });
+  }
 
   onExamDateHistoryFetchChange = () => {
     this.setState(prev => ({
@@ -133,24 +125,11 @@ class ExamDates extends Component {
     this.closeAddOrEditExamDateModal();
   };
 
-  sortByRegistrationDate = R.sortBy(
-    R.prop('registration_start_date'),
-    this.props.examDates,
-  );
-
-  grouped = R.groupWith(
-    (a, b) => a.registration_start_date === b.registration_start_date,
-    this.props.examDates,
-  );
-
-  // TODO: new filters & groupings to be added if needed
-  // sortedByDateASC = [R.sort(R.ascend(R.prop('exam_date')), this.state.selectedRegistrationPeriod)];
-  // sortedByDateDESC = [R.sort(R.descend(R.prop('exam_date')), this.state.selectedRegistrationPeriod)];
-
   render() {
     const { examDates, loading, t } = this.props;
     const usedDates = examDates.map(ed => ed.exam_date);
     const currentDate = moment(new Date()).format('YYYY-MM-DD');
+    const upcomingExamDatesExist = examDates.length > 0;
 
     const {
       selectedExamDate,
@@ -183,7 +162,7 @@ class ExamDates extends Component {
             show={showAddOrEditExamDate}
             modalClosed={this.closeAddOrEditExamDateModal}
           >
-            {!!selectedExamDate ? (
+            {selectedExamDate ? (
               <EditExamDate
                 examDate={selectedExamDate}
                 onSubmit={this.editExamDateHandler}
@@ -236,43 +215,18 @@ class ExamDates extends Component {
       </>
     );
 
-    const examDateTables = () => {
-      const onSelectAllChange = () => {
-        /*         
-        TODO: Decide if the feature should be kept or not.
-        Disabled for now to simplify the delete feature.
+    const hasExamSessions = exam => {
+      if (exam && exam.exam_session_count) {
+        return exam.exam_session_count > 0;
+      }
+      return false;
+    }
 
-        if (selectedExamDates.length < 1) {
-          this.setState({
-            selectedExamDates: [...this.state.grouped],
-          });
-        } else {
-          this.setState({
-            selectedExamDates: []
-          });
-        } */
-      };
-
+    const examDatesControlButtons = () => {
       const checked = this.state.checkedExamDate;
+      const showDeleteButton = upcomingExamDatesExist;
 
-      // Use this if deleting multiple at the same time should be allowed
-      /*  
-      const hasExamSessions = exams => {
-      if (exams.length > 0) {
-          const sessionCount = exams.some(examDate => examDate.exam_session_count);
-          return !!(sessionCount && sessionCount > 0);
-        } else {
-          return !!(exams.exam_session_count && exams.exam_session_count > 0);
-        } 
-      }*/
-
-      const hasExamSessions = exam => {
-        if (!exam || !exam.exam_session_count || exam.exam_session_count === 0)
-          return false;
-        if (exam.exam_session_count > 0) return true;
-      };
-
-      const examDateButtons = (
+      return (
         <div className={classes.ExamDateControls}>
           <div className={classes.ActionButtons}>
             <button
@@ -282,18 +236,20 @@ class ExamDates extends Component {
             >
               {t('examDates.addNew.confirm')}
             </button>
-            <button
-              data-cy="exam-dates-button-delete"
-              className={
-                !checked || hasExamSessions(checked)
-                  ? classes.DisabledButton
-                  : classes.DeleteButton
-              }
-              disabled={!checked || hasExamSessions(checked)}
-              onClick={this.showDeleteConfirmationHandler}
-            >
-              {t('examDates.delete.selected')}
-            </button>
+            {showDeleteButton && (
+              <button
+                data-cy="exam-dates-button-delete"
+                className={
+                  !checked || hasExamSessions(checked)
+                    ? classes.DisabledButton
+                    : classes.DeleteButton
+                }
+                disabled={!checked || hasExamSessions(checked)}
+                onClick={this.showDeleteConfirmationHandler}
+              >
+                {t('examDates.delete.selected')}
+              </button>
+            )}
           </div>
           <div className={classes.PastExamDates}>
             <Checkbox
@@ -306,18 +262,14 @@ class ExamDates extends Component {
           </div>
         </div>
       );
+    }
 
-      // Hidden until decided if this should exist
-      //const isAllChecked = R.equals(this.state.grouped, this.state.selectedExamDates);
+    const examDatesTable = () => {
 
-      const examDateHeaders = (
+      const tableHeaders = (
         <>
           <div className={classes.Grid} data-cy="exam-dates-table-headers">
-            <ControlledCheckbox
-              onChange={() => onSelectAllChange()}
-              hidden // Hidden until decided if this should exist
-              //checked={isAllChecked}
-            />
+            <span />
             <h3>{t('common.examDate')}</h3>
             <h3>{`${t('common.language')} & ${t('common.level')}`}</h3>
             <h3>{t('common.registationPeriod')}</h3>
@@ -329,30 +281,17 @@ class ExamDates extends Component {
         </>
       );
 
-      const examDateRows = examDates => {
-        const handleCheckboxChange = key => {
-          // const selectedExamDates = this.state.selectedExamDates;
-          const selected = examDates.find(exam => exam.id === key);
+      const tableRows = examDates => {
+
+        const handleCheckboxChange = examId => {
+          const selected = examDates.find(exam => exam.id === examId);
           const checked = this.state.checkedExamDate;
-          if (!!checked && selected.id === checked.id) {
+
+          if (checked && selected.id === checked.id) {
             this.setState({ checkedExamDate: null });
           } else {
             this.setState({ checkedExamDate: selected });
           }
-
-          /* Hidden until decided if this should exist
-          
-              if (selectedExamDates.length <= examDates.length) {
-              this.setState({
-                selectedExamDates: [...selectedExamDates, selected],
-              });
-            }
-            if (selectedExamDates.includes(selected)) {
-              this.setState(prev => ({
-                selectedExamDates: prev.selectedExamDates.filter(removable => removable !== selected),
-              }));
-            } 
-          */
         };
 
         const cannotDeleteExamDate = exam => {
@@ -364,32 +303,13 @@ class ExamDates extends Component {
         };
 
         return examDates.map((e, i) => {
-          /* TODO: remove this block if new design is implemented
-          const finnishOnly =
-            examDates.length === 1 &&
-            e.languages.length === 1 &&
-            e.languages[0].language_code === 'fin';
-
-          const level = finnishOnly
-            ? t('common.level.middle')
-            : t('common.level.all');
-
-          const languages = e.languages
-            .map(l => {
-              return languageToString(l.language_code).toLowerCase();
-            })
-            .join(', ');
-          */
-
           const languageAndLevel =
             e.languages &&
             e.languages.map(lang => {
-              const language = languageToString(
-                lang.language_code,
-              ).toLowerCase();
+              const language = languageToString(lang.language_code).toLowerCase();
               const level = levelDescription(lang.level_code).toLowerCase();
-              const dataId =
-                e.exam_date + '-' + lang.language_code + '-' + lang.level_code;
+              const dataId = e.exam_date + '-' + lang.language_code + '-' + lang.level_code;
+
               return (
                 <li
                   data-cy={`exam-dates-row-language-${dataId}`}
@@ -401,8 +321,7 @@ class ExamDates extends Component {
             });
 
           const isChecked = id => {
-            if (!this.state.checkedExamDate) return false;
-            return id === this.state.checkedExamDate.id;
+            return this.state.checkedExamDate && this.state.checkedExamDate.id === id;
           };
 
           const postAdmissionDate =
@@ -425,7 +344,7 @@ class ExamDates extends Component {
                 dataCy={`exam-dates-list-checkbox-${e.exam_date}`}
                 onChange={() => handleCheckboxChange(e.id)}
                 name={e.id}
-                checked={!!isChecked(e.id)}
+                checked={isChecked(e.id)}
                 disabled={cannotDeleteExamDate(e)}
               />
               <p data-cy={`exam-dates-list-date-${e.exam_date}`}>
@@ -474,11 +393,10 @@ class ExamDates extends Component {
 
       return (
         <>
-          {examDateButtons}
-          {examDateHeaders}
-          {this.state.grouped !== null && (
+          {tableHeaders}
+          {this.state.visibleExamDates && (
             <div className={classes.Grid} data-cy="exam-dates-table-rows">
-              {examDateRows(this.state.grouped)}
+              {tableRows(this.state.visibleExamDates)}
             </div>
           )}
         </>
@@ -492,14 +410,22 @@ class ExamDates extends Component {
         <div className={classes.ExamDatesListHeader}>
           <h2>{t('common.examDates')}</h2>
         </div>
-        {examDates.length > 0 ? (
-          examDateTables()
-        ) : (
-          <p>{t('examDates.noUpcomingExamDates')}</p>
-        )}
-        <hr className={classes.GridDivider} />
+        {upcomingExamDatesExist ? (
+          <div>
+            {examDatesControlButtons()}
+            {examDatesTable()}
+
+            <hr className={classes.GridDivider} />
+          </div>
+        ) :
+          <div>
+            <p>{t('examDates.noUpcomingExamDates')}</p>
+            {examDatesControlButtons()}
+          </div>
+        }
       </>
     );
+
     return (
       <Page>
         <div className={classes.ExamDates}>{content}</div>
@@ -516,7 +442,7 @@ const mapStateToProps = state => {
     examDates: state.dates.examDates,
     loading: state.dates.loading,
     error: state.dates.error,
-    user: state.user.user,
+    user: state.user.user
   };
 };
 
@@ -547,12 +473,13 @@ ExamDates.propTypes = {
   examDates: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
+  user: PropTypes.object,
+  onAddExamDate: PropTypes.func.isRequired,
   onFetchExamDates: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
-  onAddExamDate: PropTypes.func.isRequired,
   onUpdateConfiguration: PropTypes.func.isRequired,
   onDeleteExamDate: PropTypes.func.isRequired,
-  user: PropTypes.object,
+  onAddEvaluationPeriod: PropTypes.func.isRequired
 };
 
 export default connect(

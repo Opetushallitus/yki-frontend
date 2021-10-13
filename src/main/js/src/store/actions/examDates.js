@@ -6,24 +6,21 @@ import * as actionTypes from './actionTypes';
 
 const fetchExamDatesStart = () => {
   return {
-    type: actionTypes.FETCH_EXAM_DATES_START,
-    loading: true,
+    type: actionTypes.FETCH_EXAM_DATES_START
   };
 };
 
 const fetchExamDatesSuccess = examDates => {
   return {
     type: actionTypes.FETCH_EXAM_DATES_SUCCESS,
-    examDates: examDates,
-    loading: false,
+    examDates: examDates
   };
 };
 
 const fetchExamDatesFail = error => {
   return {
     type: actionTypes.FETCH_EXAM_DATES_FAIL,
-    error: Object.assign(error, { key: 'error.examDates.fetchFailed' }),
-    loading: false,
+    error: Object.assign(error, { key: 'error.examDates.fetchFailed' })
   };
 };
 
@@ -33,12 +30,12 @@ export const examDatesFailReset = () => {
   };
 };
 
-export const fetchExamDates = (oid, daysParam) => {
+export const fetchExamDates = (oid, fetchHistory) => {
   return dispatch => {
     dispatch(fetchExamDatesStart());
     const today = moment().format(ISO_DATE_FORMAT_SHORT);
     const baseUrl = `/yki/api/virkailija/organizer/${oid}/exam-date`;
-    const url = daysParam ? `${baseUrl}?from=${today}&days=180` : baseUrl;
+    const url = fetchHistory ? `${baseUrl}?from=${today}&days=180` : baseUrl;
     axios
       .get(url)
       .then(res => {
