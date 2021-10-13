@@ -144,7 +144,7 @@ const examSessionListItem = ({
         session.post_admission_start_date &&
         session.post_admission_end_date &&
         session.post_admission_active
-            ? `${t('examSession.postAdmission')}:  ${fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)} `
+            ? `${t('examSession.postAdmission')}: ${fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}`
             : `${t('registration.list.signupOpen')}: ${fmtDateRange(session.registration_start_date, session.registration_end_date)}`;
 
     const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${spotsAvailable} ${spotsAvailableText}.`;
