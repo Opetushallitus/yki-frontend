@@ -54,6 +54,10 @@
     padding: 1rem 0;
   }
 
+  .Location {
+    text-align: left;
+  }
+
   .RegistrationOpen {
     display: flex;
     flex-direction: row;

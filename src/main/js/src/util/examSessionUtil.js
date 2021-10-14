@@ -12,7 +12,7 @@ const admissionOpenSpots = session => {
   return session.max_participants - session.participants;
 };
 
-const postAdmissionAvailable = session => {
+export const postAdmissionAvailable = session => {
   return (
     session.post_admission_end_date &&
     session.post_admission_start_date &&

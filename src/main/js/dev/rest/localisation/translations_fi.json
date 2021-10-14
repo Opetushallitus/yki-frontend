@@ -278,8 +278,6 @@
   "registration.notification.signup.complete2": ", jos paikkoja vapautuu tutkintotilaisuuteen.",
   "registration.notification.signup.label": "Antamalla sähköpostiosoitteesi tulet saamaan ilmoituksen, jos paikkoja vapautuu tutkintotilaisuuteen.",
   "registration.notification.signup.validation": "Sähköpostin tulee olla muotoa esi@merkki.fi",
-  "registration.open": "Avoinna",
-  "registration.postregistrationOnGoing": "Jälki-ilmoittautuminen menossa",
   "registration.reeval": "Pyydä tarkistusarviointia",
   "registration.reeval.banner.text1": "Tutkinnon suorittajalla on oikeus pyytää tarkistusarviointia, jos hän ei ole tyytyväinen saamaansa arviointiin.  Tarkistusarviointia tulee hakea 14 vuorokauden kuluessa todistuksen saamisesta.",
   "registration.reeval.banner.text2": "Tarkistusarviointien käsittelystä on tullut maksullista keväästä 2021 alkaen.",

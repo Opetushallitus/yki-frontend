@@ -278,8 +278,6 @@
   "registration.notification.signup.complete2": "if places become available in the language proficiency test.",
   "registration.notification.signup.label": "By submitting your email address, you will be notified if places become available in the test.",
   "registration.notification.signup.validation": "The email format must match the form exam@ple.fi",
-  "registration.open": "Open",
-  "registration.postregistrationOnGoing": "Post registration ongoing",
   "registration.reeval": "Request a reassessment",
   "registration.reeval.banner.text1": "Candidates have the right to request a reassessment if they are not satisfied with the assessment they received.  The reassessment must be requested within 14 days of receiving the certificate.",
   "registration.reeval.banner.text2": "Since spring 2021, a fee is charged for processing reassessments.",
