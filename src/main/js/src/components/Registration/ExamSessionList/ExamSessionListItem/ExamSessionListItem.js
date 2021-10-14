@@ -90,11 +90,16 @@ const examSessionListItem = ({
       return `${start} - ${end}`;
     };
 
-    const registrationOpenDesktop = (
+  function postAdmissionExistsAndAfterRegistration() {
+    return session.post_admission_start_date &&
+      session.post_admission_end_date &&
+      session.post_admission_active &&
+      moment().isAfter(session.registration_end_date);
+  }
+
+  const registrationOpenDesktop = (
       <div>
-        {session.post_admission_start_date &&
-        session.post_admission_end_date &&
-        session.post_admission_active
+        {postAdmissionExistsAndAfterRegistration()
           ? <p>{formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
           : <p>{formatDateRange(session.registration_start_date, session.registration_end_date)}</p>
         }
@@ -110,9 +115,7 @@ const examSessionListItem = ({
             {formatDateRange(session.registration_start_date, session.registration_end_date)}
           </span>
         </div>
-        {session.post_admission_start_date &&
-        session.post_admission_end_date &&
-        session.post_admission_active && (
+        {postAdmissionExistsAndAfterRegistration() && (
           <div className={classes.RegistrationOpen}>
             {t('examSession.postAdmission')}
             {':'}
@@ -131,9 +134,7 @@ const examSessionListItem = ({
         : t('registration.register.forQueue');
 
     const registrationOpenText =
-      session.post_admission_start_date &&
-      session.post_admission_end_date &&
-      session.post_admission_active
+      postAdmissionExistsAndAfterRegistration()
         ? `${t('examSession.postAdmission')}: ${formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}`
         : `${t('registration.list.signupOpen')}: ${formatDateRange(session.registration_start_date, session.registration_end_date)}`;
 
