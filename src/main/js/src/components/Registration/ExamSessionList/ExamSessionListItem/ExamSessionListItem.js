@@ -13,6 +13,7 @@ import {
   canSignupForPostAdmission,
   isAdmissionActive,
   isPostAdmissionActive,
+  postAdmissionAvailable,
   showAvailableSpots,
   spotsAvailableForSession,
 } from '../../../../util/examSessionUtil';
@@ -84,27 +85,20 @@ const examSessionListItem = ({
       </div>
     );
 
-    const formatDateRange = (startDate, endDate) => {
+    const displayRegistrationPeriod = (startDate, endDate) => {
       const start = moment(startDate).format(DATE_FORMAT);
       const end = moment(endDate).format(DATE_FORMAT);
       return `${start} ${t('registration.examDetails.card.time')} 10 - ${end} ${t('registration.examDetails.card.time')} 16`;
     };
 
-  function postAdmissionExists() {
-    return session.post_admission_start_date &&
-      session.post_admission_end_date &&
-      session.post_admission_active;
-  }
-
-  function postAdmissionExistsAndAfterRegistration() {
-    return postAdmissionExists() && moment().isAfter(session.post_admission_start_date);
-  }
-
   const registrationOpenDesktop = (
       <div>
-        {postAdmissionExistsAndAfterRegistration()
-          ? <p>{formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
-          : <p>{formatDateRange(session.registration_start_date, session.registration_end_date)}</p>
+        {postAdmissionAvailable(session) && moment().isAfter(session.post_admission_start_date)
+          ? (
+            <p>{displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}</p>
+          ) : (
+            <p>{displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}</p>
+          )
         }
       </div>
     );
@@ -115,15 +109,16 @@ const examSessionListItem = ({
           {t('registration.list.signupOpen')}
           {':'}
           <span style={{marginLeft: 5}}>
-            {formatDateRange(session.registration_start_date, session.registration_end_date)}
+            {displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}
           </span>
         </div>
-        {postAdmissionExists() && (
+
+        {postAdmissionAvailable(session) && (
           <div className={classes.RegistrationOpen}>
             {t('examSession.postAdmission')}
             {':'}
             <span style={{marginLeft: 5}}>
-              {formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}
+              {displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}
             </span>
           </div>
         )}
@@ -137,9 +132,9 @@ const examSessionListItem = ({
         : t('registration.register.forQueue');
 
     const registrationOpenText =
-      postAdmissionExistsAndAfterRegistration()
-        ? `${t('examSession.postAdmission')}: ${formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}`
-        : `${t('registration.list.signupOpen')}: ${formatDateRange(session.registration_start_date, session.registration_end_date)}`;
+      postAdmissionAvailable(session)
+        ? `${t('examSession.postAdmission')}: ${displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}`
+        : `${t('registration.list.signupOpen')}: ${displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}`;
 
     const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${spotsAvailable} ${spotsAvailableText}.`;
 
@@ -147,6 +142,8 @@ const examSessionListItem = ({
       admissionNotStarted(session) ||
       admissionActiveAndQueueNotFull(session) ||
       canSignupForPostAdmission(session);
+
+    const registerButtonEnabled = isAdmissionActive(session) || isPostAdmissionActive(session)
 
     const registerButton = (
       <div>
@@ -156,9 +153,7 @@ const examSessionListItem = ({
             onClick={selectExamSession}
             role="link"
             aria-label={srLabel}
-            disabled={
-              !isAdmissionActive(session) && !isPostAdmissionActive(session)
-            }
+            disabled={!registerButtonEnabled}
           >
             {buttonText}
           </button>
