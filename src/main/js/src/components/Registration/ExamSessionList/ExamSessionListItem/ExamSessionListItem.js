@@ -90,11 +90,14 @@ const examSessionListItem = ({
       return `${start} - ${end}`;
     };
 
-  function postAdmissionExistsAndAfterRegistration() {
+  function postAdmissionExists() {
     return session.post_admission_start_date &&
       session.post_admission_end_date &&
-      session.post_admission_active &&
-      moment().isAfter(session.registration_end_date);
+      session.post_admission_active;
+  }
+
+  function postAdmissionExistsAndAfterRegistration() {
+    return postAdmissionExists() && moment().isAfter(session.post_admission_start_date);
   }
 
   const registrationOpenDesktop = (
@@ -115,7 +118,7 @@ const examSessionListItem = ({
             {formatDateRange(session.registration_start_date, session.registration_end_date)}
           </span>
         </div>
-        {postAdmissionExistsAndAfterRegistration() && (
+        {postAdmissionExists() && (
           <div className={classes.RegistrationOpen}>
             {t('examSession.postAdmission')}
             {':'}
