@@ -132,7 +132,7 @@ const examSessionListItem = ({
         : t('registration.register.forQueue');
 
     const registrationOpenText =
-      postAdmissionAvailable(session)
+        postAdmissionAvailable(session) && moment().isAfter(session.post_admission_start_date)
         ? `${t('examSession.postAdmission')}: ${displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}`
         : `${t('registration.list.signupOpen')}: ${displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}`;
 
