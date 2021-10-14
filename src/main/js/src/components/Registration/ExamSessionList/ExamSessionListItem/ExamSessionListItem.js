@@ -90,27 +90,13 @@ const examSessionListItem = ({
       return `${start} - ${end}`;
     };
 
-    const nowBetweenDates = (startDate, endDate) => {
-      return moment().isBetween(moment(startDate), moment(endDate).endOf('day'));
-    }
-
     const registrationOpenDesktop = (
       <div>
         {session.post_admission_start_date &&
         session.post_admission_end_date &&
         session.post_admission_active
-          ? <>
-            <p>{formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
-            {nowBetweenDates(session.post_admission_start_date, session.post_admission_end_date) &&
-              <p>{t('registration.postregistrationOnGoing')}</p>
-            }
-          </>
-          : <>
-            <p>{formatDateRange(session.registration_start_date, session.registration_end_date)}</p>
-            {nowBetweenDates(session.registration_start_date, session.registration_end_date) &&
-              <p>{t('registration.open')}</p>
-            }
-          </>
+          ? <p>{formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
+          : <p>{formatDateRange(session.registration_start_date, session.registration_end_date)}</p>
         }
       </div>
     );
