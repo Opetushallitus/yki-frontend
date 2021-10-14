@@ -83,16 +83,14 @@ const examSessionListItem = ({
         </div>
     );
 
-    const fmtDateRange = (startDate, endDate) => {
+    const formatDateRange = (startDate, endDate) => {
         const start = moment(startDate).format(DATE_FORMAT);
         const end = moment(endDate).format(DATE_FORMAT);
         return `${start} - ${end}`;
     };
 
-    const showTextIfDateRangeNow = (startDate, endDate, text) => {
-        if (moment().isBetween(moment(startDate), moment(endDate).endOf('day'))) {
-            return <p>{text}</p>;
-        }
+    const nowBetweenDates = (startDate, endDate) => {
+        return moment().isBetween(moment(startDate), moment(endDate).endOf('day'));
     }
 
     const registrationOpenDesktop = (
@@ -101,12 +99,16 @@ const examSessionListItem = ({
             session.post_admission_end_date &&
             session.post_admission_active
                 ? <>
-                    <p>{fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
-                    {showTextIfDateRangeNow(session.post_admission_start_date, session.post_admission_end_date, t('registration.postregistrationOnGoing'))}
+                    <p>{formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}</p>
+                    {nowBetweenDates(session.post_admission_start_date, session.post_admission_end_date) &&
+                        <p>{t('registration.postregistrationOnGoing')}</p>
+                    }
                 </>
                 : <>
-                    <p>{fmtDateRange(session.registration_start_date, session.registration_end_date)}</p>
-                    {showTextIfDateRangeNow(session.registration_start_date, session.registration_end_date, t('registration.open'))}
+                    <p>{formatDateRange(session.registration_start_date, session.registration_end_date)}</p>
+                    {nowBetweenDates(session.registration_start_date, session.registration_end_date) &&
+                        <p>{t('registration.open')}</p>
+                    }
                 </>
             }
         </div>
@@ -118,7 +120,7 @@ const examSessionListItem = ({
                 {t('registration.list.signupOpen')}
                 {':'}
                 <span style={{marginLeft: 5}}>
-                    {fmtDateRange(session.registration_start_date, session.registration_end_date)}
+                    {formatDateRange(session.registration_start_date, session.registration_end_date)}
                 </span>
             </div>
             {session.post_admission_start_date &&
@@ -128,7 +130,7 @@ const examSessionListItem = ({
                     {t('examSession.postAdmission')}
                     {':'}
                     <span style={{marginLeft: 5}}>
-                        {fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}
+                        {formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}
                     </span>
                 </div>
             )}
@@ -145,8 +147,8 @@ const examSessionListItem = ({
         session.post_admission_start_date &&
         session.post_admission_end_date &&
         session.post_admission_active
-            ? `${t('examSession.postAdmission')}: ${fmtDateRange(session.post_admission_start_date, session.post_admission_end_date)}`
-            : `${t('registration.list.signupOpen')}: ${fmtDateRange(session.registration_start_date, session.registration_end_date)}`;
+            ? `${t('examSession.postAdmission')}: ${formatDateRange(session.post_admission_start_date, session.post_admission_end_date)}`
+            : `${t('registration.list.signupOpen')}: ${formatDateRange(session.registration_start_date, session.registration_end_date)}`;
 
     const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${spotsAvailable} ${spotsAvailableText}.`;
 
