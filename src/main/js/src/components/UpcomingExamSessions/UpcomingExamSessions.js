@@ -11,9 +11,6 @@ import {examSessionParticipantsCount} from "../../util/examSessionUtil";
 
 export const upcomingExamSessions = props => {
   const examSessionRows = props.examSessions.map((e, i) => {
-    const registrationOpen = moment().isSameOrAfter(
-      moment(e.registration_start_date),
-    );
     const participantsCount = examSessionParticipantsCount(e);
     return (
       <div
@@ -31,7 +28,7 @@ export const upcomingExamSessions = props => {
           {moment(e.registration_end_date).format(DATE_FORMAT)}
         </p>
         <p>
-          {registrationOpen ? `${participantsCount.participants} / ${participantsCount.maxParticipants}` : '-'}
+          {`${participantsCount.participants} / ${participantsCount.maxParticipants}`}
         </p>
       </div>
     );
