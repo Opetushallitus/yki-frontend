@@ -76,7 +76,7 @@ export class RelocateParticipant extends Component {
           <select onChange={this.selectSession}>
             <option value={''}>Valitse</option>
             {validSessions && validSessions.length > 0 && validSessions.map(session => (
-              <option key={session.fi} value={session.id}>
+              <option key={session.id} value={session.id}>
                 {moment(session.session_date).format(DATE_FORMAT)}{' '}
               </option>
             ))}
@@ -108,6 +108,7 @@ export class RelocateParticipant extends Component {
     };
 
     if (!examSessions || examSessions.length < 1) return null;
+    if (moment(session_date) < moment().add(3, 'weeks')) return null;
 
     return !this.state.confirming ? (
       <button
