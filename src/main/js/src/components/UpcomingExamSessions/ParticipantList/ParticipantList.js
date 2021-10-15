@@ -322,7 +322,7 @@ export const participantList = props => {
       <h2>
         {props.t('examSession.participants')}
         {':'}{' '}
-        {participantsCount.participants} /{' '}
+        {props.participants.length} /{' '}
         {participantsCount.maxParticipants}
       </h2>
     );
