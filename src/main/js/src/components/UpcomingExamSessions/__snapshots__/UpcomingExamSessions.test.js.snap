@@ -84,7 +84,7 @@ exports[`<UpcomingExamSessions /> should render exam session rows 1`] = `
         15.12.2025
       </p>
       <p>
-        -
+        2 / 30
       </p>
     </div>
   </div>
