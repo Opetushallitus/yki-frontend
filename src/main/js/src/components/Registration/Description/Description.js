@@ -105,7 +105,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
       to={{
         pathname: '/ilmoittautuminen/valitse-tutkintotilaisuus',
       }}
-      className={'YkiButton'}
+      className='YkiButton'
       data-cy="continue-button"
     >
       {t('registration.register')}
@@ -165,12 +165,11 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
         <Link
           tabIndex={0}
           role="link"
-          style={{ padding: '0.25rem 0.75rem' }}
           onKeyPress={() => history.push('/tarkistusarviointi')}
           to={{
             pathname: '/tarkistusarviointi',
           }}
-          className={'YkiButton'}
+          className='YkiButton'
           data-cy="continue-button-re-eval"
         >
           {t('registration.reeval')}
@@ -240,7 +239,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           to={{
             pathname: '/tarkistusarviointi',
           }}
-          className={'YkiButton'}
+          className='YkiButton'
           data-cy="continue-button"
         >
           {t('registration.reeval')}
