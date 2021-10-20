@@ -79,10 +79,6 @@ const ReEvaluationList = props => {
             role="link"
             disabled={!enabled}
             className="YkiButton"
-            style={{
-              height: 'auto',
-              padding: '1.5rem',
-            }}
           >
             {t('registration.reeval')}
           </button>
