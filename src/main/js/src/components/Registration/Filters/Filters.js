@@ -6,6 +6,7 @@ import { LANGUAGES } from '../../../common/Constants';
 import { levelDescription } from '../../../util/util';
 import Checkbox from '../../UI/Checkbox/Checkbox';
 import classes from './Filters.module.css';
+import * as R from 'ramda';
 
 const filters = props => {
   const [t, i18n] = useTranslation();
@@ -66,6 +67,11 @@ const filters = props => {
     </label>
   );
 
+  const getUniqLocationNamesSorted = (locations) => {
+    const getName = i18n.language === 'sv' ? R.prop('sv') : R.prop('fi');
+    return R.compose(R.sortBy(R.identity), R.uniq, R.map(getName))(locations);
+  };
+
   const locationSelect = (
     <label>
       {t('common.exam.location')}
@@ -76,9 +82,9 @@ const filters = props => {
         data-cy={'location-filter'}
       >
         <option value={''}>{t('common.location.all')}</option>
-        {props.locations.map(l => (
-          <option key={l.fi} value={l.fi}>
-            {i18n.language === 'sv' ? l.sv : l.fi}
+        {getUniqLocationNamesSorted(props.locations).map(locationName => (
+          <option key={locationName} value={locationName}>
+            {locationName}
           </option>
         ))}
       </select>
