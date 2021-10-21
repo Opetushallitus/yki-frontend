@@ -40,7 +40,7 @@ const extractExamLocations = examSessions => {
       : R.append(location, locations);
   };
   const unique = R.reduce(getUniqueLocations, []);
-  const sortByFi = R.sort(R.prop('fi'));
+  const sortByFi = R.sortBy(R.prop('fi'));
   return {
     type: actionTypes.ADD_EXAM_LOCATIONS,
     locations: R.compose(sortByFi, unique)(examSessions),
