@@ -34,7 +34,7 @@ export const linkExpired = props => {
           disableContent={true}
         />
         <div className={classes.Content}>
-          <BackButton href="/" />
+          <BackButton href="/yki/" />
           <p>{props.t(`${key()}.info`)}</p>
         </div>
       </main>

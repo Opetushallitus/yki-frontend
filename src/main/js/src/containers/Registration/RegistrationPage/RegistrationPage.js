@@ -46,7 +46,7 @@ export const RegistrationPage = props => {
         headlineImage={YkiImage2}
       />
       <div className={'InnerContainer'}>
-        <BackButton href="/" />
+        <BackButton href="/yki/" />
         <RegistrationForm {...props} />
       </div>
     </>

@@ -104,7 +104,7 @@ const app = () => (
                   <PaymentStatus
                     {...props}
                     infoUrl={'/yki/api/exam-session/'}
-                    returnUrl="/"
+                    returnUrl="/yki/"
                   />
                 )}
               />
@@ -135,7 +135,7 @@ const app = () => (
                     failMessage={'payment.status.error.evaluation'}
                     cancelMessage={'payment.status.error.evaluation'}
                     infoUrl={'/yki/api/evaluation/order/'}
-                    returnUrl="/tarkistusarviointi"
+                    returnUrl="/yki/tarkistusarviointi"
                   />
                 )}
               />

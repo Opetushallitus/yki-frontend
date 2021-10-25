@@ -15,7 +15,7 @@ exports[`<LinkExpired /> should render link expired page 1`] = `
       className="Content"
     >
       <backButton
-        href="/"
+        href="/yki/"
       />
       <p>
         registration.expired.loginlink.info
