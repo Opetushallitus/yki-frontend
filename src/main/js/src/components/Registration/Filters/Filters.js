@@ -67,9 +67,9 @@ const filters = props => {
     </label>
   );
 
-  const getUniqLocationNamesSorted = (locations) => {
-    const getName = i18n.language === 'sv' ? R.prop('sv') : R.prop('fi');
-    return R.compose(R.sortBy(R.identity), R.uniq, R.map(getName))(locations);
+  const sortLocationsBySelectedLang = (locations) => {
+    const lang = i18n.language === 'sv' ? 'sv' : 'fi';
+    return R.sortBy(R.prop(lang))(locations);
   };
 
   const locationSelect = (
@@ -82,9 +82,9 @@ const filters = props => {
         data-cy={'location-filter'}
       >
         <option value={''}>{t('common.location.all')}</option>
-        {getUniqLocationNamesSorted(props.locations).map(locationName => (
-          <option key={locationName} value={locationName}>
-            {locationName}
+        {sortLocationsBySelectedLang(props.locations).map(location => (
+          <option key={`${location.fi}-${location.sv}`} value={location.fi}>
+            {i18n.language === 'sv' ? location.sv : location.fi}
           </option>
         ))}
       </select>
