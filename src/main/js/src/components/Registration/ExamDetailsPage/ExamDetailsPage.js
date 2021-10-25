@@ -100,7 +100,7 @@ const examDetailsPage = ({
             headlineImage={tempHeroImage}
           />
           <div className={classes.Content}>
-            <BackButton href="/ilmoittautuminen/valitse-tutkintotilaisuus" />
+            <BackButton href="/yki/ilmoittautuminen/valitse-tutkintotilaisuus" />
             {registrationOpen ? (
               <>
                 {validationFailed && (
