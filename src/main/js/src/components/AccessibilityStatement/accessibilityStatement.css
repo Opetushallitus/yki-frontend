@@ -1,6 +1,8 @@
 article {
 	margin: 2em;
+	padding-bottom: 1px;
 }
+
 .row {
 	margin: 25px 0;
 }
@@ -36,10 +38,6 @@ h6 {
 	background-color: #f0f0f0;
 	padding: 0.5em;
 }
-
-.flaw__title {}
-
-.flaw__subtitle {}
 
 .flaw p {
 	margin-bottom: 1em;
