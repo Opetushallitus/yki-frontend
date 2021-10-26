@@ -1,0 +1,10 @@
+.InputFieldWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.ErrorMessage {
+  display: block;
+  color: var(--error) !important;
+  margin-bottom: 14px;
+}

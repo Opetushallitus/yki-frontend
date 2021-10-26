@@ -8,7 +8,7 @@ import BackButton from '../Registration/BackButton/BackButton';
 import classes from './LinkExpired.module.css';
 
 export const linkExpired = props => {
-  const { history, match } = props;
+  const { match } = props;
 
   const key = () => {
     switch (match.path) {
@@ -26,7 +26,7 @@ export const linkExpired = props => {
 
   return (
     <>
-      <main>
+      <main id="main">
         <HeadlineContainer
           headlineTitle={props.t(key())}
           headlineContent={null}
@@ -34,7 +34,7 @@ export const linkExpired = props => {
           disableContent={true}
         />
         <div className={classes.Content}>
-          <BackButton clicked={() => history && history.push('/')} />
+          <BackButton href="/yki/" />
           <p>{props.t(`${key()}.info`)}</p>
         </div>
       </main>

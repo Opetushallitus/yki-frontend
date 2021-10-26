@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field } from 'formik';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
 import axios from '../../axios';
@@ -33,17 +33,23 @@ export class ZipAndPostOffice extends Component {
     return (
       <div className={classes.AddressInput}>
         <div className={classes.Zip}>
-          <h3>
+          <label htmlFor="zip-input">
             {this.props.t('registration.form.input.zip')}
             {this.props.mandatory && ' *'}
-          </h3>
+          </label>
           <Field
+            id="zip-input"
+            aria-required={this.props.mandatory}
             component="input"
+            placeholder={this.props.t(
+              'registration.form.input.zip.placeholder',
+            )}
             name="zip"
             data-cy="input-zip"
             aria-label={this.props.t('registration.form.aria.input.zip')}
           />
           <ErrorMessage
+            htmlFor="zip-input"
             name="zip"
             data-cy="input-error-zip"
             component="span"
@@ -51,17 +57,23 @@ export class ZipAndPostOffice extends Component {
           />
         </div>
         <div className={classes.PostOffice}>
-          <h3>
+          <label htmlFor="postOffice-input">
             {this.props.t('registration.form.input.postOffice')}
             {this.props.mandatory && ' *'}
-          </h3>
+          </label>
           <Field
+            id="postOffice-input"
+            aria-required={this.props.mandatory}
+            placeholder={this.props.t(
+              'registration.form.input.postOffice.placeholder',
+            )}
             component="input"
             name="postOffice"
             data-cy="input-postOffice"
             aria-label={this.props.t('registration.form.aria.input.postOffice')}
           />
           <ErrorMessage
+            htmlFor="postOffice-input"
             name="postOffice"
             data-cy="input-error-postOffice"
             component="span"

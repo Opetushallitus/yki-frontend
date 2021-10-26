@@ -1,5 +1,4 @@
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -29,69 +28,74 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
   ) : null;
 
   const date = (
-    <>
-      <p>{t('common.examDate')}:</p>
-      <p>{moment(exam.session_date).format(DATE_FORMAT)}</p>
-    </>
+    <p>
+      {t('common.examDate')}:{' '}
+      <strong>{moment(exam.session_date).format(DATE_FORMAT)} </strong>
+    </p>
   );
 
   const location =
     exam.location && exam.location.find(l => l.lang === i18n.language);
-  const organizer = location ? <p>{`${location.name},`}</p> : null;
-  const address = location ? (
-    <p>{`${location.street_address}, ${location.zip} ${location.post_office}`}</p>
-  ) : null;
-
-  const locationDetails = (
-    <>
-      <p>{t('common.address')}:</p>
-      <article>
-        {organizer}
-        <br /> {address}
-      </article>
-    </>
+  const organizer = location && <span>{` ${location.name},`}</span>;
+  const address = location && (
+    <span>{` ${location.street_address}, \n`}<strong>{location.post_office.toUpperCase()}</strong></span>
   );
 
-  const extra =
-    location && location.extra_information ? (
-      <>
-        <p>{t('registryItem.extra')}:</p>
-        <p data-cy="exam-details-card-extra">{location.extra_information}</p>
-      </>
-    ) : null;
+  const locationDetails = (
+    <p>
+      {t('common.address')}:
+      {organizer}
+      {address}
+    </p>
+  );
+
+  const extra = location && location.extra_information && (
+    <p>
+      {t('registryItem.extra')}:
+      <strong data-cy="exam-details-card-extra">
+        {''} {location.extra_information}
+      </strong>
+    </p>
+  );
 
   const price = (
-    <>
-      <p>{`${t('registration.examDetails.card.price')}`}</p>
-      <p>{exam.exam_fee || exam.amount || ''} €</p>
-    </>
+    <p>
+      {`${t('registration.examDetails.card.price')}: `}
+      <strong>{exam.exam_fee || exam.amount || ''} €</strong>
+    </p>
   );
 
   const registrationPeriod = (
-    <>
-      <p>{t('common.registration')}:</p>
-      <p>{`${moment(exam.registration_start_date).format(
-        DATE_FORMAT,
-      )} - ${moment(exam.registration_end_date).format(DATE_FORMAT)}`}</p>
-    </>
+    <p>
+      {t('common.registration')}:
+      <strong>
+        {` ${moment(exam.registration_start_date).format(
+          DATE_FORMAT,
+        )} - ${moment(exam.registration_end_date).format(DATE_FORMAT)}`}
+      </strong>
+    </p>
   );
 
   const availableSeats = (
     <>
       {!registrationClosed ? (
-        <>
-          <p>{t('registration.list.examSpots')}:</p>
-          <p>{`${exam.max_participants - exam.participants} / ${
-            exam.max_participants
-          }`}</p>
-        </>
+        <p>
+          {t('registration.list.examSpots')}:
+          <strong>
+            {` ${exam.max_participants - exam.participants} / ${
+              exam.max_participants
+            }`}
+          </strong>
+        </p>
       ) : exam.post_admission_active ? (
-        <>
-          <p>{t('registration.list.examSpots')}:</p>
-          <p>{`${exam.post_admission_quota - exam.pa_participants} / ${
-            exam.post_admission_quota
-          }`}</p>
-        </>
+        <p>
+          {t('registration.list.examSpots')}:
+          <strong>
+            {` ${exam.post_admission_quota - exam.pa_participants} / ${
+              exam.post_admission_quota
+            }`}
+          </strong>
+        </p>
       ) : null}
     </>
   );
@@ -119,10 +123,10 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
     <div data-cy="exam-details-card" className={classes.SuccessDetailsCard}>
       <p>{getLanguageAndLevel(exam)}</p>
       <p>{moment(exam.session_date).format(DATE_FORMAT)}</p>
-      <article>
+      <p>
         {organizer}
         {address}
-      </article>
+      </p>
       {exam.subtests ? (
         <>
           {exam.subtests.map(s => {
@@ -165,11 +169,6 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
       )}
     </div>
   );
-};
-
-ExamDetailsCard.propTypes = {
-  exam: PropTypes.object.isRequired,
-  isFull: PropTypes.bool.isRequired,
 };
 
 export default ExamDetailsCard;

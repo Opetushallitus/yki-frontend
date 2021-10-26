@@ -23,6 +23,7 @@ import Registration from './containers/Registration/Registration';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
 import RegistryExamSessions from './containers/RegistryExamSessions/RegistryExamSessions';
 import RegistrationRoute from './hoc/RegistrationRoute/RegistrationRoute';
+import ScrollToTop from './ScrollToTop';
 import examDatesReducer from './store/reducers/examDates';
 import examSessionReducer from './store/reducers/examSession';
 import registrationReducer from './store/reducers/registration';
@@ -58,6 +59,7 @@ const app = () => (
     <Suspense fallback={<Spinner />}>
       <Init>
         <Router basename={'/yki'}>
+          <ScrollToTop />
           <Switch>
             <ErrorBoundary>
               <RegistrationRoute exact path="/" component={Description} />
@@ -102,7 +104,7 @@ const app = () => (
                   <PaymentStatus
                     {...props}
                     infoUrl={'/yki/api/exam-session/'}
-                    returnUrl="/"
+                    returnUrl="/yki/"
                   />
                 )}
               />
@@ -133,7 +135,7 @@ const app = () => (
                     failMessage={'payment.status.error.evaluation'}
                     cancelMessage={'payment.status.error.evaluation'}
                     infoUrl={'/yki/api/evaluation/order/'}
-                    returnUrl="/tarkistusarviointi"
+                    returnUrl="/yki/tarkistusarviointi"
                   />
                 )}
               />

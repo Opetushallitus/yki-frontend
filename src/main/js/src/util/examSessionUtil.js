@@ -12,7 +12,7 @@ const admissionOpenSpots = session => {
   return session.max_participants - session.participants;
 };
 
-const postAdmissionAvailable = session => {
+export const postAdmissionAvailable = session => {
   return (
     session.post_admission_end_date &&
     session.post_admission_start_date &&
@@ -99,3 +99,12 @@ export const examLanguageAndLevel = session => {
 
 export const formatDate = (session, key) =>
   moment(session[key]).format(DATE_FORMAT);
+
+export const examSessionParticipantsCount = (session) => {
+  const postAdmissionOpen = session.post_admission_enabled && moment()
+      .isSameOrAfter(moment(session.registration_end_date));
+
+  const participants = session.participants + (session.post_admission_quota ? session.pa_participants : 0);
+  const max_participants = postAdmissionOpen ? (session.post_admission_quota + session.participants): session.max_participants;
+  return {participants: participants, maxParticipants: max_participants};
+}

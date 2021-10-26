@@ -14,24 +14,14 @@
 
 .DetailsCard {
   letter-spacing: 0 !important;
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  grid-column-gap: 2vw;
+  display: block;
+  padding-bottom: 1rem;
 }
 
 .DetailsCard p {
-  font: normal normal normal 16px/24px PT Sans;
-  margin: 0 !important;
-  box-sizing: border-box;
-  display: inline-block;
-}
-
-.DetailsCard p:nth-child(2n) {
-  font: normal normal bold 16px/24px PT Sans !important;
-}
-
-.DetailsCard article p {
-  font: normal normal bold 16px/24px PT Sans !important;
+  font-size: 18px;
+  white-space: pre-wrap;
+  width: 100%;
 }
 
 .SuccessDetailsCard {
@@ -39,13 +29,9 @@
 }
 
 .SuccessDetailsCard p {
-  font: normal normal bold 18px/24px PT Sans;
+  font: normal normal bold 16px/24px PT Sans;
   margin: 0 !important;
   box-sizing: border-box;
-}
-
-.SuccessDetailsCard article p {
-  font: normal normal bold 16px/24px PT Sans !important;
 }
 
 /* Tablet view portrait */
@@ -77,14 +63,5 @@
     text-align: left;
     margin-left: 5vw;
     margin-right: 5vw;
-  }
-  .DetailsCard p:nth-child(2n) {
-    padding-left: 2vw;
-  }
-  .DetailsCard article {
-    padding-left: 2vw;
-  }
-  .SuccessDetailsCard article {
-    display: block;
   }
 }

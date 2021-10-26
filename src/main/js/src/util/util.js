@@ -101,7 +101,7 @@ export const getObjectValuesCount = object => {
 export const getArraySize = array => {
   if (!array) return 0;
   return array.length;
-}
+};
 
 export const getLanguageAndLevel = sessionData => {
   return `${i18next.t(
@@ -145,3 +145,35 @@ export const compareDates = (a, b) => {
 
   return end >= start;
 };
+
+export const containsSpecialCharacters = str => /[*+.;,_&@']/.test(str);
+
+export function checkBirthDate(value) {
+  if (value) {
+    const date = moment(value, DATE_FORMAT, true);
+    const duration = moment.duration(moment().diff(date));
+    const years = duration.asYears();
+    const ageOk = years > 1 && years < 105;
+
+    if (date.isValid() && date.isBefore(moment()) && ageOk) {
+      return { error: null };
+    } else {
+      return {
+        error: i18next.t(!date.isValid() ? 'error.birthdate' : 'error.age'),
+      };
+    }
+  } else {
+    return {
+      error: i18next.t('error.mandatory'),
+    };
+  }
+}
+
+export const getCookie = (name) => {
+  const cookie = {};
+  document.cookie.split(';').forEach((element) => {
+    const [k, v] = element.split('=');
+    cookie[k.trim()] = v;
+  })
+  return cookie[name];
+}

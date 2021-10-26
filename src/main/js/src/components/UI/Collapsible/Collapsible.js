@@ -1,42 +1,42 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import classes from './Collapsible.module.css';
 
-const collapsible = props => (
+const collapsible = props => {
+  const { className, clicked, children, extendedClassName, show } = props;
+  const { t } = useTranslation();
+
+  return (
     <React.Fragment>
+      {/* Button Element */}
       <div
-          className={[classes.Header, props.className].join(' ')}
-          onClick={props.clicked}
+        tabIndex={0}
+        role="button"
+        className={[classes.Header, className].join(' ')}
+        onClick={clicked}
+        onKeyPress={clicked}
+        aria-label={show ? t('common.close') : t('common.open')}
       >
-        {props.children[0]}
+        {children[0]}
       </div>
-      {props.extendedClassName ?
-          <div
-              className={props.extendedClassName}
-              style={{
-                display: props.show ? 'block' : 'none',
-              }}
-          >
-            {props.children[1]}
-          </div>
-          :
+      {/* Content */}
       <div
-          style={{
-            display: props.show ? 'block' : 'none',
-          }}
+        className={`${extendedClassName} ${!show ? classes.HiddenContent : ''}`}
+        aria-expanded={show}
       >
-        {props.children[1]}
+        {children[1]}
       </div>
-      }
     </React.Fragment>
-);
+  );
+};
 
 collapsible.propTypes = {
   className: PropTypes.string,
   clicked: PropTypes.func.isRequired,
   children: PropTypes.any,
-  extendedClassName: PropTypes.string
+  extendedClassName: PropTypes.string,
 };
 
 export default collapsible;

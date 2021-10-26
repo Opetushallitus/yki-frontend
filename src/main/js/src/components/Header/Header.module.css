@@ -3,11 +3,11 @@
   height: 50px;
   width: 100%;
   top: 0;
-  background-color: hsla(194, 100%, 21%, 1);
+  background-color: var(--primary-blue);
   justify-content: center;
   align-items: center;
   z-index: 90;
-  border-bottom: 3px solid hsl(195, 82%, 44%);
+  border-bottom: 3px solid var(--secondary-blue);
 }
 
 .Header nav {
@@ -15,31 +15,47 @@
 }
 
 .RegistrationHeader {
-  top: 0;
-  color: hsl(195, 91%, 22%);
+  color: var(--primary-blue);
   font-weight: 600;
-  background-color: hsl(0, 0%, 100%);
+  background-color: var(--white);
   background-size: 2.2em;
-  border-bottom: 3px solid hsl(195, 82%, 44%);
+  border-bottom: 3px solid var(--secondary-blue);
   margin-bottom: 0 !important;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 10px;
   width: 100%;
-  align-items: center;
   min-height: 60px;
 }
 
 .RegistrationHeader img {
-  padding-left: 2vw;
+  margin-left: 2vw;
+  margin-right: auto;
 }
 
 .HeaderTabsContainer {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  text-align: center;
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  min-height: inherit;
+  height: inherit;
+}
+
+.SkipLink {
+  text-decoration: none;
+  color: var(--primary-blue);
+  left: 200px;
+  border: 1px solid var(--primary-blue);
+  padding: 4px;
+  position: absolute;
+  background-color: white;
+  transform: translateY(-300%);
+  -webkit-transform: translateY(-300%);
+  -moz-transform: translateY(-300%);
+  -ms-transform: translateY(-300%);
+  -o-transform: translateY(-300%);
+}
+
+.SkipLink:focus {
+  transform: translateY(0%);
 }
 
 /* Mobile & Tablet view */
@@ -50,5 +66,11 @@
     font-size: 1.125em;
     background-size: 3.5em;
     padding-top: 2%;
+    display: grid;
+    align-items: center;
+  }
+
+  .RegistrationHeader img {
+    margin-right: 0;
   }
 }

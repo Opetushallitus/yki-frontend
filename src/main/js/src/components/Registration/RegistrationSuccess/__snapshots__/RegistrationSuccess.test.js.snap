@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<RegistrationSuccess /> should render registration success page 1`] = `
-<main>
+<main
+  id="main"
+>
   <HeadlineContainer
     headlineContent={
       <ExamDetailsCard
@@ -29,14 +31,15 @@ exports[`<RegistrationSuccess /> should render registration success page 1`] = `
   >
     <backButton
       buttonText="errorBoundary.return"
-      clicked={[Function]}
+      href="/yki/"
     />
     <div
       data-cy="registration-success"
     >
       <p>
         registration.success.info1
-        : 
+        :
+         
         <b>
           undefined, undefined
           .

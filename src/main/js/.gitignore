@@ -13,6 +13,9 @@
 # production
 /build
 
+# Ignore localisation files except local ones
+/dev/rest/localisation/environment
+
 # misc
 .DS_Store
 .env.local

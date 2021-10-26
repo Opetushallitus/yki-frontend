@@ -1,8 +1,10 @@
-import React from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import { withTranslation } from 'react-i18next';
 import * as R from 'ramda';
+import React from 'react';
+import { withTranslation } from 'react-i18next';
+
+import classes from '../RegistrationForm.module.css';
 
 export const nationalitySelect = props => {
   const nationalitiesByLocale = props.nationalities.map(n => {
@@ -21,18 +23,24 @@ export const nationalitySelect = props => {
   });
 
   return (
-    <React.Fragment>
-      <h3>{props.t('registration.form.nationality')}</h3>
+    <div className={classes.InputFieldWrapper}>
+      <label htmlFor="select-nationality">
+        {props.t('registration.form.nationality')} *
+      </label>
       <Field
+        id="select-nationality"
+        aria-required
         component="select"
         name="nationality"
         className={props.className}
         data-cy="select-nationality"
       >
-        <option value="" key="" />
+        <option value="placeholder" key="">
+          {props.t('common.selectorDefault')}
+        </option>
         {nationalityOptions}
       </Field>
-    </React.Fragment>
+    </div>
   );
 };
 

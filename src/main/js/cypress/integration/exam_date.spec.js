@@ -1,4 +1,4 @@
-describe('Exam sessions', () => {
+describe('Exam dates page', () => {
   beforeEach(() => {
     cy.visit('/tutkintopaivat');
   });

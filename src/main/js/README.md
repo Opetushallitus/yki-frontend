@@ -74,6 +74,19 @@ Run all tests headlessly in the Electron browser.
 npm run cypress:run
 ```
 
+## Localisations
+
+Localisation files for different languages (en, fi & sv) that are used in local development are found under `dev/rest/localisation` directory.
+They also describe the set of localisations that should be defined in an environment where the application is being deployed.
+
+Npm script
+```bash
+npm run localisation env
+```
+is used for downloading localisations for given environment `env`. Running the script requires `curl`, `diff`, `jq`.
+If no `env` is provided as a parameter, localisations are fetched from `untuva` environment.
+The localisations are downloaded under `dev/rest/localisation/environment`.
+
 ### License
 
 YKI is licensed under the [EUPL](./LICENSE).

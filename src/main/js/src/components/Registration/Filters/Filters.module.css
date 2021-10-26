@@ -8,7 +8,7 @@
   text-align: left;
   font: normal normal bold 16px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
+  color: var(--primary-blue);
 }
 
 .Filters select {
@@ -17,20 +17,22 @@
   width: 100%;
   padding-left: 7px;
   appearance: none;
-  background: url('../../../assets/svg/down-facing-triangle.svg') 98% no-repeat hsla(0, 0%, 100%, 1);
-  border: 1px solid hsla(0, 0%, 100%, 1);
+  background: url('../../../assets/svg/chevron-blue-down.svg') 98% no-repeat
+    var(--white);
+  border: 1px solid var(--secondary-blue);
   border-radius: 4px;
   text-overflow: ellipsis;
   text-align: left;
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
-  color: hsla(194, 91%, 21%, 1);
+  color: var(--primary-blue);
 }
 
 .FilterCheckboxes {
   display: flex;
-  margin-top: 5vh;
+  margin-top: 2rem;
   text-align: left;
+  align-items: center;
   font: normal normal normal 16px/24px PT Sans;
   letter-spacing: 0;
   color: hsla(194, 91%, 21%, 1);
@@ -52,7 +54,7 @@
   }
   .Filters select {
     background: url('../../../assets/svg/down-facing-triangle.svg') 95%
-    no-repeat hsl(0, 0%, 100%);
+      no-repeat hsl(0, 0%, 100%);
   }
   .Filters select {
     margin-bottom: 4vh;
@@ -76,7 +78,7 @@
   }
   .Filters select {
     background: url('../../../assets/svg/down-facing-triangle.svg') 95%
-    no-repeat hsl(0, 0%, 100%);
+      no-repeat hsl(0, 0%, 100%);
   }
   .Filters select {
     margin-bottom: 8vh;
@@ -101,7 +103,7 @@
 @media screen and (min-width: 640px) and (max-width: 1023px) and (orientation: landscape) {
   .Filters select {
     background: url('../../../assets/svg/down-facing-triangle.svg') 95%
-    no-repeat hsl(0, 0%, 100%);
+      no-repeat hsl(0, 0%, 100%);
     margin-bottom: 8vh;
   }
   .CheckBox {

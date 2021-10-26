@@ -35,4 +35,3 @@ bin/
 node/
 target/
 temp/
-package-lock.json

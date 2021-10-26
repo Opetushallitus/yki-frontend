@@ -1,3 +1,10 @@
+// Handle 404 errors which are returned when inputing the fields
+Cypress.on('uncaught:exception', (err, runnable) => {
+  if(err.message.includes('code 404')) {
+    return false;
+  }
+});
+
 describe('Exam sessions', () => {
   beforeEach(() => {
     cy.visit('/tutkintotilaisuudet');
@@ -8,13 +15,19 @@ describe('Exam sessions', () => {
   });
 
   const fillExamSessionForm = () => {
+    selectSchool();
     cy.get('[data-cy=radio-fin]').click();
     cy.get('[data-cy=radio-PERUS]').click();
     cy.get('[data-cy=radio-2081-01-30]').click();
     cy.get('[data-cy=input-max-participants]').type('100');
     cy.get('[data-cy=input-streetAddress]').type('address');
-    cy.get('[data-cy=input-zip]').type('00100');
+    cy.get('[data-cy=input-zip]').type('33100');
+    cy.get('[data-cy=input-postOffice]').type('city');
   };
+
+  const selectSchool = () => {
+    cy.get('[data-cy=select-officeOid]').select('1.2.246.562.10.82346919515');
+  }
 
   it('front page contains list of upcoming exam sessions', () => {
     cy.get('[data-cy=exam-session-header]');
@@ -53,7 +66,7 @@ describe('Exam sessions', () => {
       .click();
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 4);
+      .should('have.length', 6);
   });
 
   it('exam session field validation errors disable submit button', () => {
@@ -76,7 +89,7 @@ describe('Exam sessions', () => {
       .click();
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 4);
+      .should('have.length', 6);
 
     cy.get('[data-cy=add-exam-session-button]').click();
     fillExamSessionForm();
@@ -86,6 +99,27 @@ describe('Exam sessions', () => {
     cy.get('span')
       .contains('Tutkintotilaisuus on jo olemassa')
       .should('not.exist');
+  });
+
+  it('should undo disabled level and exam date selections in case of language change', () => {
+    cy.get('[data-cy=add-exam-session-button]').click();
+    selectSchool();
+    cy.get('[data-cy=radio-fin]').click();
+    cy.get('[data-cy=radio-PERUS]').click();
+    cy.get('[data-cy=radio-2081-01-30]').click();
+    cy.get('[data-cy=radio-deu]').click();
+    cy.get('[data-cy=radio-PERUS]').should('not.be.checked');
+    cy.get('[data-cy=radio-2081-01-30]').should('not.be.checked');
+  });
+
+  it('should undo the disabled exam date selection in case of level change', () => {
+    cy.get('[data-cy=add-exam-session-button]').click();
+    selectSchool();
+    cy.get('[data-cy=radio-fin]').click();
+    cy.get('[data-cy=radio-PERUS]').click();
+    cy.get('[data-cy=radio-2081-01-30]').click();
+    cy.get('[data-cy=radio-KESKI]').click();
+    cy.get('[data-cy=radio-2081-01-30]').should('not.be.checked');
   });
 
   it('selecting upcoming exam session opens details with participant list', () => {
@@ -184,8 +218,9 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-1]').should('exist');
 
-    cy.get('[data-cy=button-action]').first()
-      .click();
+    cy.get('[data-cy=button-action]').first().click();
+    cy.get('label select').first().select('3');
+
     cy.get('[data-cy=button-confirm-action]').click();
     cy.get('[data-cy=participant-1]').should('not.exist');
 

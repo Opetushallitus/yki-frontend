@@ -64,11 +64,9 @@ const registryItemDetails = props => {
     </div>
   );
 
-  const placeholder = "Tarkastele järjestäjän näkymää"
-
   const inspectExamSessions = (
     <div className={classes.InspectExamSessions} onClick={() => props.openSessions(props.item.oid)}>
-      <p>{placeholder}</p>
+      <p>{props.t('registryItem.viewAsOrganiser')}</p>
     </div>
   );
 

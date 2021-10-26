@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { MOBILE_VIEW } from '../../common/Constants';
+import { useMobileView } from '../../util/customHooks';
 import classes from './PriceContainer.module.css';
 
 const PriceContainer = props => {
@@ -10,8 +10,10 @@ const PriceContainer = props => {
   const { elements } = props;
 
   const state = useSelector(state => state);
-  const onMobileSV = state.yki.ykiLanguage === 'sv' && MOBILE_VIEW;
-  const onMobileEN = state.yki.ykiLanguage === 'en' && MOBILE_VIEW;
+
+  const mobile = useMobileView(true, false);
+  const onMobileSV = state.yki.ykiLanguage === 'sv' && mobile;
+  const onMobileEN = state.yki.ykiLanguage === 'en' && mobile;
   const childLength = elements.length;
   const threePerRow = childLength % 3 === 0;
 
@@ -23,7 +25,7 @@ const PriceContainer = props => {
           onMobileSV || onMobileEN ? classes.PriceBoxSV : classes.PriceBox
         }
         style={{
-          gridTemplateColumns: MOBILE_VIEW
+          gridTemplateColumns: mobile
             ? threePerRow
               ? '30% 5% 30% 5% 30%'
               : '45% 10% 45%'
@@ -31,7 +33,7 @@ const PriceContainer = props => {
         }}
       >
         {elements.map((el, i) => {
-          const lastInRow = !MOBILE_VIEW
+          const lastInRow = !mobile
             ? false
             : threePerRow
             ? (i + 1) % 3 === 0
@@ -49,7 +51,7 @@ const PriceContainer = props => {
                 className={classes.MobilePriceBox}
                 style={{
                   borderBottom:
-                    !inLastRow && MOBILE_VIEW
+                    !inLastRow && mobile
                       ? '1px solid hsla(0, 0%, 86%, 1)'
                       : null,
                 }}

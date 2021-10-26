@@ -41,6 +41,9 @@ const examSessionForm = props => {
   }
 
   const validationSchema = Yup.object().shape({
+    officeOid: Yup.string()
+      .required(props.t('error.mandatory'))
+      .oneOf(props.examSessionContent.organizationChildren.map(o => o.oid)),
     language: Yup.string().required(props.t('error.mandatory')),
     level: Yup.string().required(props.t('error.mandatory')),
     examDate: Yup.string()
@@ -79,9 +82,13 @@ const examSessionForm = props => {
     label,
     extraLabel,
     disabled,
+    setFieldValue,
+    values
   }) => {
     return (
       <RadioButton
+        values={values}
+        setFieldValue={setFieldValue}
         name={name}
         id={id}
         value={value}
@@ -113,6 +120,24 @@ const examSessionForm = props => {
     );
   };
 
+  const organizationSelection = (children, lang) => {
+    let elements = [];
+
+    elements.push(<option value="" key="">{props.t('examSession.selectInstitution')}</option>)
+
+    if (children) {
+      children.forEach(org => {
+        elements.push(
+          <option value={org.oid} key={org.oid}>
+            {`${getLocalizedName(org.nimi, lang)} (${org.oid ? org.oid : ''})`}
+          </option>
+        )
+      })
+    }
+
+    return elements;
+  }
+
   const languageFields = languages => {
     const uniqueLanguageCodes = R.compose(R.uniq, R.pluck('language_code'));
 
@@ -133,7 +158,7 @@ const examSessionForm = props => {
     );
   };
 
-  const languageLevelFields = (languages, selectedLang) => {
+  const languageLevelFields = (languages, selectedLang, setFieldValue, values) => {
     const allLevels = R.keys(levelTranslations);
 
     return (
@@ -147,6 +172,8 @@ const examSessionForm = props => {
 
         return (
           <Field
+            setFieldValue={setFieldValue}
+            values={values}
             component={RadioButtonComponent}
             name="level"
             id={level}
@@ -160,7 +187,7 @@ const examSessionForm = props => {
     );
   };
 
-  const examDateFields = (examDates, selectedLanguage, selectedLevel) => {
+  const examDateFields = (examDates, selectedLanguage, selectedLevel, setFieldValue, values) => {
     // Disable date filtering in development because test data is not dynamic
     return examDates
       .filter(e => {
@@ -178,6 +205,8 @@ const examSessionForm = props => {
         ).join(', ');
         return (
           <Field
+            setFieldValue={setFieldValue}
+            values={values}
             component={RadioButtonComponent}
             name="examDate"
             id={examDate.exam_date}
@@ -208,25 +237,10 @@ const examSessionForm = props => {
     }
   };
 
-  const initialOfficeOid =
-    props.examSessionContent &&
-      props.examSessionContent.organizationChildren &&
-      props.examSessionContent.organizationChildren.length > 0
-      ? props.examSessionContent.organizationChildren[0].oid
-      : '';
-
-  const organizationSelection = (children, lang) =>
-    children &&
-    children.map(c => (
-      <option value={c.oid} key={c.oid}>
-        {`${getLocalizedName(c.nimi, lang)} (${c.oid ? c.oid : ''})`}
-      </option>
-    ));
-
   return (
     <Formik
       initialValues={{
-        officeOid: initialOfficeOid,
+        officeOid: '',
         language: '',
         level: '',
         examDate: '',
@@ -327,6 +341,11 @@ const examSessionForm = props => {
                   props.i18n.lang,
                 )}
               </Field>
+              <ErrorMessage
+                name="officeOid"
+                component="span"
+                className={classes.ErrorMessage}
+              />
             </div>
             <div className={classes.RadiobuttonGroup}>
               <RadioButtonGroup
@@ -348,6 +367,8 @@ const examSessionForm = props => {
                 {languageLevelFields(
                   props.examSessionContent.organizer.languages || [],
                   values.language,
+                  setFieldValue,
+                  values
                 )}
               </RadioButtonGroup>
             </div>
@@ -362,6 +383,8 @@ const examSessionForm = props => {
                   props.examSessionContent.examDates,
                   values.language,
                   values.level,
+                  setFieldValue,
+                  values
                 )}
               </RadioButtonGroup>
               {registrationPediod(

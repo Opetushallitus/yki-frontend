@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "/yki",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.22.0",
     "finnish-ssn": "^2.0.4",
     "flatpickr": "^4.5.7",
     "formik": "^1.5.2",
@@ -13,6 +13,7 @@
     "i18next-xhr-backend": "^2.0.1",
     "libphonenumber-js": "^1.7.15",
     "moment": "^2.24.0",
+    "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "query-string": "^6.4.2",
     "ramda": "^0.26.1",
@@ -25,11 +26,11 @@
     "react-router-dom": "^5.1.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "xlsx": "^0.14.2",
+    "xlsx": "^0.17.1",
     "yup": "^0.27.0"
   },
   "devDependencies": {
-    "cypress": "^3.2.0",
+    "cypress": "^4.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "enzyme-to-json": "^3.3.5",
@@ -43,9 +44,10 @@
     "start-server-and-test": "^1.7.13"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts start",
     "test": "react-scripts test",
-    "build": "react-scripts build",
+    "build": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts build",
+    "localisation": "cd ../../../scripts; ./fetch-localisations.sh",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "e2e-test": "BROWSER=none start-server-and-test start http://localhost:3000 cypress:run"

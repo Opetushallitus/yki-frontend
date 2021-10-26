@@ -20,6 +20,11 @@ describe('Registration form', () => {
     cy.get('[data-cy=form-submit-button]').should('not.be.disabled');
   });
 
+  it('ensures that autocomplete is disabled for the email and email confirmation fields' , () => {
+    cy.get('[data-cy=input-email]').invoke('attr', 'autocomplete').should('eq', 'off');
+    cy.get('[data-cy=input-confirmEmail]').invoke('attr', 'autocomplete').should('eq', 'off');
+  });
+
   it('generic registration form initialization error is shown', () => {
     cy.server();
     cy.route({

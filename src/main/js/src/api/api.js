@@ -1,7 +1,15 @@
+import { getCookie } from "../util/util";
+
 const config = {
   baseUrl: '',
   locale: '',
 };
+
+const headers = new Headers({
+  Accept: 'application/json',
+  'Caller-Id': '1.2.246.562.10.00000000001.yki',
+  'CSRF': getCookie('CSRF')
+})
 
 function handleErrors(response) {
   if (response.ok) return response.json();
@@ -12,10 +20,7 @@ const apiGet = async (name, url, params = {}) => {
   try {
     const promise = fetch(`${config.baseUrl}/${url}`, {
       method: 'GET',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Caller-Id': '1.2.246.562.10.00000000001.yki',
-      }),
+      headers
     }).then(handleErrors);
     return promise;
   } catch (err) {
@@ -28,11 +33,7 @@ const apiPost = async (name, url, body, params = {}) => {
     const promise = fetch(`${config.baseUrl}/${url}`, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Caller-Id': '1.2.246.562.10.00000000001.yki',
-      }),
+      headers,
     }).then(handleErrors);
     return promise;
   } catch (err) {
