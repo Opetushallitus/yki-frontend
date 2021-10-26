@@ -1,3 +1,7 @@
+body {
+  font-family: 'PT Sans', sans-serif;
+}
+
 article {
 	margin: 2em;
 }
@@ -36,10 +40,6 @@ h6 {
 	background-color: #f0f0f0;
 	padding: 0.5em;
 }
-
-.flaw__title {}
-
-.flaw__subtitle {}
 
 .flaw p {
 	margin-bottom: 1em;
