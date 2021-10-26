@@ -115,7 +115,7 @@ const AccessibilityStatement = () => (
 
 		<section class="statement__section">
 			<h2>Valvontaviranomainen</h2>
-			<p>Jos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href="https://www.saavutettavuusvaatimukset.fi/oikeutesi/" target="_blank">voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon <span class="screen-reader-text">(avautuu uuteen ikkunaan)</span></a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.</p>
+			<p>Jos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href="https://www.saavutettavuusvaatimukset.fi/oikeutesi/" target="_blank" rel="noopener noreferrer">voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon <span class="screen-reader-text">(avautuu uuteen ikkunaan)</span></a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.</p>
 			<h2>Valvontaviranomaisen yhteystiedot</h2>
 			<p>
 				Etelä-Suomen aluehallintovirasto<br/>
