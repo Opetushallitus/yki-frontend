@@ -124,10 +124,10 @@ const AccessibilityStatement = () => (
 					<p>Jos huomaat sivustolla saavutettavuusongelmia, anna ensin palautetta meille eli sivuston ylläpitäjälle. Vastauksessa voi mennä 14 päivää. Jos et ole tyytyväinen saamaasi vastaukseen tai et saa vastausta lainkaan kahden viikon aikana, <a href="https://www.saavutettavuusvaatimukset.fi/oikeutesi/" target="_blank">voit tehdä ilmoituksen Etelä-Suomen aluehallintovirastoon <span class="screen-reader-text">(avautuu uuteen ikkunaan)</span></a>. Etelä-Suomen aluehallintoviraston sivulla kerrotaan tarkasti, miten ilmoituksen voi tehdä ja miten asia käsitellään.</p>
 					<h2>Valvontaviranomaisen yhteystiedot</h2>
 					<p>
-						Etelä-Suomen aluehallintovirasto<br />
-						Saavutettavuuden valvonnan yksikkö<br />
-						www.saavutettavuusvaatimukset.fi  <br />
-						saavutettavuus(at)avi.fi<br />
+						Etelä-Suomen aluehallintovirasto<br/>
+						Saavutettavuuden valvonnan yksikkö<br/>
+						www.saavutettavuusvaatimukset.fi<br/>
+						saavutettavuus(at)avi.fi<br/>
 						puhelinnumero vaihde 0295 016 000
 					</p>
 				</section>
@@ -136,8 +136,8 @@ const AccessibilityStatement = () => (
 					<h2>Teemme jatkuvasti työtä saavutettavuuden parantamiseksi</h2>
 					<h3>Tarjoamme tukea käyttäjille joille digipalvelut eivät ole saavutettavissa</h3>
 					<p>
-						Olemme sitoutuneet digipalveluiden saavutettavuuden parantamiseen.<br />
-						Huomasitko saavutettavuuspuutteen? Kerro se meille ja teemme parhaamme puutteen korjaamiseksi.<br />
+						Olemme sitoutuneet digipalveluiden saavutettavuuden parantamiseen.<br/>
+						Huomasitko saavutettavuuspuutteen? Kerro se meille ja teemme parhaamme puutteen korjaamiseksi.
 					</p>
 				</section>
 			</article>
