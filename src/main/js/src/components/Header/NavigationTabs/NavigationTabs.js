@@ -7,16 +7,11 @@ import { useMobileView } from '../../../util/customHooks';
 import classes from './NavigationTabs.module.css';
 
 const NavigationTabs = props => {
-  const [showLanguagesMenu, setLanguageMenuShow] = useState(false);
   const location = useLocation();
   const { t } = useTranslation();
   const history = useHistory();
 
   const isMobileOrTablet = useMobileView(true, true);
-
-  const handleOnClick = () => {
-    setLanguageMenuShow(!showLanguagesMenu);
-  };
 
   const baseLinks = () => {
     const onDescriptionPage =
@@ -34,7 +29,6 @@ const NavigationTabs = props => {
       { title: 'common.reeval', url: '/tarkistusarviointi' },
     ];
 
-    const divider = onDescriptionPage && isMobileOrTablet;
     return (
       <>
         {linkArray.map((link, i) => {
@@ -60,7 +54,6 @@ const NavigationTabs = props => {
             </div>
           );
         })}
-        {divider && <hr className={classes.Divider} />}
       </>
     );
   };
@@ -71,28 +64,11 @@ const NavigationTabs = props => {
         <>{baseLinks()}</>
       ) : (
         <div className={classes.ScrollableMenuWrapper}>
+          <LanguageSelect
+            isOpen={props.isOpen}
+            setCollapsibleOpen={props.setCollapsibleOpen}
+          />
           {baseLinks()}
-          <>
-            <div className={classes.InactiveTab}>
-              <button
-                onClick={() => handleOnClick()}
-                onKeyDown={e => {
-                  e.preventDefault();
-                  handleOnClick();
-                }}
-                className={classes.LinkButton}
-              >
-                {t('common.registration.select.language')}
-              </button>
-            </div>
-            <hr className={classes.LanguageHr} />
-          </>
-          {showLanguagesMenu && (
-            <LanguageSelect
-              isOpen={props.isOpen}
-              setCollapsibleOpen={props.setCollapsibleOpen}
-            />
-          )}
         </div>
       )}
     </>

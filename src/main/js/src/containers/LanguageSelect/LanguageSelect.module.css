@@ -35,8 +35,7 @@
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .LanguageItem,
-  .LanguageItemActive {
+  .LanguageItem {
     height: 9vw !important;
   }
 }
@@ -47,33 +46,33 @@
   }
   .MobileMenuItems {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     margin-bottom: 0;
   }
 
-  .LanguageItem,
-  .LanguageItemActive {
+  .LanguageItem {
     height: 10vh;
     width: 85%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
-    padding: 2vh;
+    align-items: end;
+    padding: 2vh 2vh 1vh 2vh;
     border: none;
-    letter-spacing: 0.6px;
-    font: normal normal bold 21px/24px PT Sans;
-  }
-
-  .LanguageItem {
+    font: normal normal normal 21px/24px PT Sans;
     background: var(--white);
     color: var(--primary-blue);
   }
-  .LanguageItemActive {
-    background: var(--primary-blue) 0 0 no-repeat padding-box !important;
-    color: var(--white) !important;
+
+  .LanguageItem.Active {
+    border-bottom: 2px solid var(--light-blue);
   }
+
+  .LanguageItem.Inactive {
+    border-bottom: 2px solid var(--white);
+  }
+
   .MobileMenuItems hr {
     width: 70vw;
     border: 1px solid var(--primary-blue);

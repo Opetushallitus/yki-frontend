@@ -31,8 +31,18 @@
     padding-right: 3vw;
   }
   .MenuItems {
-    width: 35vw;
+    width: fit-content;
     right: 0;
     box-shadow: 0 3px 16px var(--black);
   }
+}
+
+.Menu {
+  border-top: 3px solid var(--secondary-blue);
+  display: flex;
+  flex-direction: column;
+}
+
+.LanguageSelect :active {
+  border-bottom: 1px #8acfe5;
 }
