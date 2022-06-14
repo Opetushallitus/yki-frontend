@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
@@ -14,11 +14,6 @@ const NavigationTabs = props => {
   const isMobileOrTablet = useMobileView(true, true);
 
   const baseLinks = () => {
-    const onDescriptionPage =
-      location.pathname === '/' ||
-      location.pathname === '/ilmoittautuminen' ||
-      location.pathname === '/ilmoittautuminen/';
-
     const linkArray = [
       { title: 'common.registration.root', url: '/' },
       {
