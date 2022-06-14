@@ -105,10 +105,10 @@ const Footer = () => {
         <div className={classes.AdditionalInfo}>
           <p>{t('footer.yki.contact.info')}</p>
           <a
-            href={'mailto:yki@oph.fi'}
-            aria-label={`${t('footer.yki.contact.info')} yki@oph.fi`}
+            href={'mailto:kielitutkinnot@oph.fi'}
+            aria-label={`${t('footer.yki.contact.info')} kielitutkinnot@oph.fi`}
           >
-            yki@oph.fi
+            kielitutkinnot@oph.fi
           </a>
           <p>{t('footer.yki.additional.info')}</p>
         </div>
