@@ -42,7 +42,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.LanguageSelect :active {
-  border-bottom: 1px #8acfe5;
-}
