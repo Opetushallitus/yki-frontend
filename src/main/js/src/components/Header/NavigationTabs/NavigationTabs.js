@@ -59,10 +59,7 @@ const NavigationTabs = props => {
         <>{baseLinks()}</>
       ) : (
         <div className={classes.ScrollableMenuWrapper}>
-          <LanguageSelect
-            isOpen={props.isOpen}
-            setCollapsibleOpen={props.setCollapsibleOpen}
-          />
+          <LanguageSelect isOpen={props.isOpen} />
           {baseLinks()}
         </div>
       )}

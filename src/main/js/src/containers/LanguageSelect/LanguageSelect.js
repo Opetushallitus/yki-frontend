@@ -32,13 +32,6 @@ class LanguageSelect extends React.PureComponent {
   };
 
   handleLanguageChange = e => {
-    const mobileOrTablet =
-      this.state.windowWidth < MOBILE_WIDTH ||
-      this.state.windowWidth < TABLET_WIDTH;
-    if (mobileOrTablet) {
-      this.props.setCollapsibleOpen(!this.props.isOpen);
-    }
-
     const selected = e.target.value;
     this.props.onYkiLanguageChange(selected);
     i18n.changeLanguage(selected);

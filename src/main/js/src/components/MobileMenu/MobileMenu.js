@@ -21,10 +21,7 @@ const MobileMenu = () => {
         >
           <div style={{ display: 'none' }} />
           <div className={classes.Menu}>
-            <NavigationTabs
-              isOpen={isOpen}
-              setCollapsibleOpen={setCollapsibleOpen}
-            />
+            <NavigationTabs isOpen={isOpen} />
             <hr />
           </div>
         </Collapsible>
