@@ -5,11 +5,12 @@ import globe from '../../assets/svg/globe.svg';
 import { MOBILE_WIDTH, TABLET_WIDTH } from '../../common/Constants';
 import i18n from '../../i18n';
 import * as actions from '../../store/actions';
-import { capitalize } from '../../util/util';
 import classes from './LanguageSelect.module.css';
 
-const texts = { fi: 'suomeksi', sv: 'på svenska', en: 'in english' };
+const desktopLanguageLabels = { fi: 'suomeksi', sv: 'på svenska', en: 'in English' };
+const mobileLanguageLabels = { fi: 'Suomeksi', sv: 'På svenska', en: 'In English'};
 const languages = ['fi', 'sv', 'en'];
+
 
 class LanguageSelect extends React.PureComponent {
   constructor(props) {
@@ -32,13 +33,6 @@ class LanguageSelect extends React.PureComponent {
   };
 
   handleLanguageChange = e => {
-    const mobileOrTablet =
-      this.state.windowWidth < MOBILE_WIDTH ||
-      this.state.windowWidth < TABLET_WIDTH;
-    if (mobileOrTablet) {
-      this.props.setCollapsibleOpen(!this.props.isOpen);
-    }
-
     const selected = e.target.value;
     this.props.onYkiLanguageChange(selected);
     i18n.changeLanguage(selected);
@@ -62,26 +56,27 @@ class LanguageSelect extends React.PureComponent {
           value={lang}
           className={classes.LanguageSelect}
         >
-          {texts[lang]}
+          {desktopLanguageLabels[lang]}
         </option>
       ))}
     </select>
   );
+
+  getClassForLanguageItem = lang =>
+    this.state.ykiLanguage === lang
+      ? `${classes.LanguageItem} ${classes.Active}`
+      : `${classes.LanguageItem} ${classes.Inactive}`;
 
   languageLinks = () => (
     <div className={classes.MobileMenuItems}>
       {languages.map(lang => (
         <button
           key={`LINK-${lang}`}
-          className={
-            this.state.ykiLanguage === lang
-              ? classes.LanguageItemActive
-              : classes.LanguageItem
-          }
+          className={this.getClassForLanguageItem(lang)}
           value={lang}
           onClick={e => this.handleLanguageChange(e)}
         >
-          {capitalize(texts[lang])}
+          {mobileLanguageLabels[lang]}
         </button>
       ))}
     </div>
