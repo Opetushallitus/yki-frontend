@@ -20,11 +20,8 @@ const MobileMenu = () => {
           extendedClassName={classes.MenuItems}
         >
           <div style={{ display: 'none' }} />
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <NavigationTabs
-              isOpen={isOpen}
-              setCollapsibleOpen={setCollapsibleOpen}
-            />
+          <div className={classes.Menu}>
+            <NavigationTabs isOpen={isOpen} />
             <hr />
           </div>
         </Collapsible>

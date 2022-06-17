@@ -39,12 +39,6 @@ a:hover {
   color: var(--primary-blue);
 }
 
-.Divider {
-  width: 90vw;
-  margin-top: 5%;
-  border: 1px solid var(--secondary-blue);
-}
-
 .ScrollableMenuWrapper {
   height: calc(100vh - 72px);
   overflow-y: scroll;
@@ -79,13 +73,6 @@ a:hover {
   .ActiveTab,
   .InactiveTab button {
     margin-top: 0;
-  }
-
-  .LanguageHr {
-    width: 85%;
-    border-bottom: 1px solid var(--secondary-blue);
-    margin-top: 0;
-    margin-bottom: 0;
   }
 
   .ActiveTab,

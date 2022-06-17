@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "/yki",
   "dependencies": {
-    "axios": "^0.22.0",
+    "axios": "^0.27.2",
     "finnish-ssn": "^2.0.4",
     "flatpickr": "^4.5.7",
     "formik": "^1.5.2",
@@ -40,8 +40,7 @@
     "prettier": "^1.17.0",
     "react-scripts": "2.1.8",
     "react-test-renderer": "^16.8.6",
-    "redux-devtools-extension": "^2.13.8",
-    "start-server-and-test": "^1.7.13"
+    "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
     "start": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts start",
@@ -49,8 +48,7 @@
     "build": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts build",
     "localisation": "cd ../../../scripts; ./fetch-localisations.sh",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "e2e-test": "BROWSER=none start-server-and-test start http://localhost:3000 cypress:run"
+    "cypress:run": "cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
