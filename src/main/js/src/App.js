@@ -17,6 +17,7 @@ import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import EvaluationPaymentRedirect from './containers/EvaluationPaymentRedirect/EvaluationPaymentRedirect';
 import ExamDates from './containers/ExamDates/ExamDates';
 import Init from './containers/Init/Init';
+import NewPaymentRedirect from './containers/NewPaymentRedirect/NewPaymentRedirect';
 import OldPaymentRedirect from './containers/OldPaymentRedirect/OldPaymentRedirect';
 import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
 import Registration from './containers/Registration/Registration';
@@ -114,7 +115,7 @@ const app = () => (
               />
               <RegistrationRoute
                 path="/maksu/v2/ilmoittautuminen/:registrationId"
-                component={OldPaymentRedirect}
+                component={NewPaymentRedirect}
               />
               <RegistrationRoute
                 path="/tutkintotilaisuudet"
