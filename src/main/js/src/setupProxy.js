@@ -1183,7 +1183,7 @@ module.exports = function(app) {
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   });
 
-  app.get('/yki/api/payment/v2/paytrail/success', (req, res) => {
+  app.get('/yki/api/payment/v2/paytrail/:lang/success', (req, res) => {
     const mockCall = () => {
       try {
         console.log('paytrail payment success callback invoked');
@@ -1196,7 +1196,7 @@ module.exports = function(app) {
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   })
 
-  app.get('/yki/api/payment/v2/paytrail/error', (req, res) => {
+  app.get('/yki/api/payment/v2/paytrail/:lang/error', (req, res) => {
     const mockCall = () => {
       try {
         console.log('paytrail payment error callback invoked');
@@ -1209,7 +1209,7 @@ module.exports = function(app) {
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   })
 
-  app.get('/yki/api/payment/v2/redirect', (req, res) => {
+  app.get('/yki/api/payment/v2/:id/redirect', (req, res) => {
     const mockCall = () => {
       try {
         console.log('payment redirect callback invoked');
