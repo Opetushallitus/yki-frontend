@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 
 import axios from '../../axios';
 import Alert from '../../components/Alert/Alert';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './NewPaymentRedirect.module.css';
 
 export class NewPaymentRedirect extends Component {
@@ -11,6 +12,7 @@ export class NewPaymentRedirect extends Component {
 
   state = {
     error: false,
+    redirectUrl: undefined
   };
 
   componentDidMount = () => {
@@ -19,15 +21,25 @@ export class NewPaymentRedirect extends Component {
     } = this.props;
     axios
       .get(`/yki/api/payment/v2/${params.registrationId}/redirect`)
+      .then(({ data }) => {
+        this.setState({ redirectUrl: data.redirect })
+      })
       .catch(err => {
         this.setState({ error: true });
       });
   };
 
+  componentDidUpdate = () => {
+    if (this.state.redirectUrl) {
+      console.log('Redirecting to', this.state.redirectUrl);
+      window.location.href = this.state.redirectUrl;
+    }
+  }
+
   render() {
     return !this.state.error ? (
       <main id="main" className={classes.Content}>
-        TODO Should we render some content here? 
+        <Spinner />
       </main>
     ) : (
       <>
