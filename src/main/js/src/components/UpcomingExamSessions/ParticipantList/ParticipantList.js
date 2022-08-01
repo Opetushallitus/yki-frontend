@@ -140,6 +140,10 @@ export const participantList = props => {
     return asNumber ? asNumber.formatInternational() : '';
   };
 
+  // TODO Remove this for the new payments?
+  // The current backend implementation only works for registrations with legacy payments.
+  // In addition, the new payments are made to Opetushallitus instead of exam organizers,
+  // so it doesn't make sense for an organizer to be able to mark them as completed.
   const confirmPaymentButton = participant => {
     const confirmPayment = (
       <React.Fragment>
