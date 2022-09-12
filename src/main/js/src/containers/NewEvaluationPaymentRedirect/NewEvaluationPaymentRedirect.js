@@ -3,9 +3,9 @@ import { withTranslation } from 'react-i18next';
 
 import axios from '../../axios';
 import Alert from '../../components/Alert/Alert';
-import classes from './EvaluationPaymentRedirect.module.css';
+import classes from './NewEvaluationPaymentRedirect.module.css';
 
-export class PaymentRedirect extends Component {
+export class NewEvaluationPaymentRedirect extends Component {
   paymentForm = React.createRef();
 
   state = {
@@ -66,4 +66,4 @@ export class PaymentRedirect extends Component {
   }
 }
 
-export default withTranslation()(PaymentRedirect);
+export default withTranslation()(NewEvaluationPaymentRedirect);
