@@ -31,13 +31,12 @@ export class RelocateParticipant extends Component {
     const {
       language_code,
       level_code,
-      session_date,
       organizer_oid,
     } = examSession;
 
     const canBeRelocatedTo = e => {
       return (
-        moment(e.session_date).isAfter(moment(session_date)) &&
+        moment(e.session_date).isSameOrAfter(moment(), 'day') &&
         e.level_code === level_code &&
         e.language_code === language_code &&
         e.organizer_oid === organizer_oid
