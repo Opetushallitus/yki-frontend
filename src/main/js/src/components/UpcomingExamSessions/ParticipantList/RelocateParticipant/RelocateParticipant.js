@@ -67,6 +67,7 @@ export class RelocateParticipant extends Component {
             {validSessions && validSessions.length > 0 && validSessions.map(session => (
               <option key={session.fi} value={session.id}>
                 {moment(session.session_date).format(DATE_FORMAT)}{' '}
+                {session.location && session.location[0] ? session.location[0].name: ''}
               </option>
             ))}
           </select>
