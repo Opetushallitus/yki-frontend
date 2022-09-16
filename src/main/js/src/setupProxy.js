@@ -1221,4 +1221,17 @@ module.exports = function(app) {
     }
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   })
+
+  app.get('/yki/api/evaluation-payment/v2/:id/redirect', (req, res) => {
+    const mockCall = () => {
+      try {
+        console.log('paytrail evaluation payment redirect callback invoked');
+        res.send({success: true});
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    }
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  })
 };

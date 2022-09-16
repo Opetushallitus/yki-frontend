@@ -31,7 +31,6 @@ export class NewPaymentRedirect extends Component {
 
   componentDidUpdate = () => {
     if (this.state.redirectUrl) {
-      console.log('Redirecting to', this.state.redirectUrl);
       window.location.href = this.state.redirectUrl;
     }
   }

@@ -3,13 +3,14 @@ import { withTranslation } from 'react-i18next';
 
 import axios from '../../axios';
 import Alert from '../../components/Alert/Alert';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './NewEvaluationPaymentRedirect.module.css';
 
 export class NewEvaluationPaymentRedirect extends Component {
   paymentForm = React.createRef();
 
   state = {
-    formData: null,
+    redirectUrl: null,
     error: false,
   };
 
@@ -18,11 +19,9 @@ export class NewEvaluationPaymentRedirect extends Component {
       match: { params },
     } = this.props;
     axios
-      .get(
-        `/yki/evaluation-payment/formdata?evaluation-order-id=${params.evaluationOrderId}`,
-      )
+      .get(`/yki/api/evaluation-payment/v2/${params.evaluationOrderId}/redirect`)
       .then(({ data }) => {
-        this.setState({ formData: data });
+        this.setState({ redirectUrl: data.redirect })
       })
       .catch(err => {
         this.setState({ error: true });
@@ -30,27 +29,16 @@ export class NewEvaluationPaymentRedirect extends Component {
   };
 
   componentDidUpdate = () => {
-    if (this.state.formData) {
-      this.paymentForm.current.submit();
+    if (this.state.redirectUrl) {
+      window.location.href = this.state.redirectUrl;
     }
-  };
+  }
 
   render() {
-    const { formData } = this.state;
-    return formData && !this.state.error ? (
-      <form
-        ref={this.paymentForm}
-        action={formData.uri}
-        method="POST"
-        acceptCharset="ISO-8859-1"
-      >
-        {formData.params.PARAMS_IN.split(',').map((p, i) => {
-          return (
-            <input key={i} name={p} type="hidden" value={formData.params[p]} />
-          );
-        })}
-        <input name="AUTHCODE" type="hidden" value={formData.params.AUTHCODE} />
-      </form>
+    return !this.state.error ? (
+      <main id="main" className={classes.Content}>
+        <Spinner />
+      </main>
     ) : (
       this.state.error && (
         <>
