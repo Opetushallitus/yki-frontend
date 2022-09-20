@@ -76,7 +76,7 @@ const ReEvaluationForm = props => {
   useEffect(() => {
     if (evaluationOrderId) {
       const pathname = useNewPaymentsIntegration ?
-        `/tarkistusarviointi/tilaus/v2/${evaluationOrderId}` :
+        `/tarkistusarviointi/v2/tilaus/${evaluationOrderId}` :
         `/tarkistusarviointi/tilaus/${evaluationOrderId}`; 
       pageHistory.push({
         pathname
