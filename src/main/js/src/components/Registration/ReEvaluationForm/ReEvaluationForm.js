@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     evaluationOrderId: state.registration.evaluationOrderId,
-    useNewPaymentIntegration: state.registration.useNewPaymentIntegration,
+    useNewPaymentsIntegration: state.registration.useNewPaymentsIntegration,
   };
 };
 
@@ -58,7 +58,7 @@ const ReEvaluationForm = props => {
     externalState,
     onSubmitForm,
     evaluationOrderId,
-    useNewPaymentIntegration,
+    useNewPaymentsIntegration,
     pageHistory,
     evaluationPrices,
   } = props;
@@ -75,14 +75,14 @@ const ReEvaluationForm = props => {
 
   useEffect(() => {
     if (evaluationOrderId) {
-      const pathname = useNewPaymentIntegration ? 
+      const pathname = useNewPaymentsIntegration ?
         `/tarkistusarviointi/tilaus/v2/${evaluationOrderId}` :
         `/tarkistusarviointi/tilaus/${evaluationOrderId}`; 
       pageHistory.push({
         pathname
       });
     }
-  }, [evaluationOrderId, useNewPaymentIntegration]);
+  }, [evaluationOrderId, useNewPaymentsIntegration]);
 
   const inputField = (name, required) => (
     <FormikInputField

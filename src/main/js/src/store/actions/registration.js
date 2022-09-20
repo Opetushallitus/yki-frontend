@@ -427,7 +427,7 @@ const submitEvaluationFormSuccess = evaluationOrderResponse => {
   return {
     type: actionTypes.SUBMIT_EVALUATION_FORM_SUCCESS,
     evaluationOrderId: evaluationOrderResponse.evaluation_order_id,
-    useNewPaymentIntegration: evaluationOrderResponse.use_new_payment_integration
+    useNewPaymentsIntegration: evaluationOrderResponse.use_new_payments_integration
   };
 };
 
