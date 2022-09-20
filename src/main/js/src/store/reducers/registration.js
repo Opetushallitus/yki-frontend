@@ -37,6 +37,7 @@ const initialState = {
   evaluationPeriods: [],
   evaluationPeriod: {},
   evaluationOrderId: null,
+  useNewPaymentsIntegration: false,
 };
 
 const filteredSessions = (state) => {
@@ -401,6 +402,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         evaluationOrderId: action.evaluationOrderId,
+        useNewPaymentsIntegration: action.useNewPaymentsIntegration,
         loading: false,
         error: null,
       };
