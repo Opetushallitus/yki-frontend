@@ -29,28 +29,19 @@ export class RelocateParticipant extends Component {
   render() {
     const { t, examSession, examSessions } = this.props;
     const {
-      language_code,
+      id,
       level_code,
-      session_date,
-      office_oid,
+      language_code,
       organizer_oid,
     } = examSession;
 
-    const matchingOids = nextSession => {
-      if (nextSession.organizer_oid === organizer_oid) {
-        if (!nextSession.office_oid || !office_oid) return true;
-        if (nextSession.office_oid === office_oid) return true;
-      }
-      return false;
-    };
-
     const canBeRelocatedTo = e => {
       return (
-        moment(e.session_date).isAfter(moment(session_date)) &&
+        e.id !== id &&
+        moment(e.session_date).isSameOrAfter(moment(), 'day') &&
         e.level_code === level_code &&
         e.language_code === language_code &&
-        matchingOids(e) &&
-        e.max_participants > e.participants
+        e.organizer_oid === organizer_oid
       );
     };
 
@@ -78,6 +69,7 @@ export class RelocateParticipant extends Component {
             {validSessions && validSessions.length > 0 && validSessions.map(session => (
               <option key={session.fi} value={session.id}>
                 {moment(session.session_date).format(DATE_FORMAT)}{' '}
+                {session.location && session.location[0] ? session.location[0].name: ''}
               </option>
             ))}
           </select>
