@@ -38,6 +38,7 @@ const initialState = {
   evaluationPeriod: {},
   evaluationOrderId: null,
   useNewPaymentsIntegration: false,
+  signature: null,
 };
 
 const filteredSessions = (state) => {
@@ -396,6 +397,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: true,
         evaluationOrderId: null,
+        useNewPaymentsIntegration: false,
+        signature: null,
         error: null,
       };
     case actionTypes.SUBMIT_EVALUATION_FORM_SUCCESS:
@@ -403,6 +406,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         evaluationOrderId: action.evaluationOrderId,
         useNewPaymentsIntegration: action.useNewPaymentsIntegration,
+        signature: action.signature,
         loading: false,
         error: null,
       };
