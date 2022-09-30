@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import axios from '../../axios';
 import Alert from '../../components/Alert/Alert';
@@ -17,9 +18,10 @@ export class NewEvaluationPaymentRedirect extends Component {
   componentDidMount = () => {
     const {
       match: { params },
+      signature
     } = this.props;
     axios
-      .get(`/yki/api/evaluation-payment/v2/${params.evaluationOrderId}/redirect`)
+      .get(`/yki/api/evaluation-payment/v2/${params.evaluationOrderId}/redirect?signature=${signature}`)
       .then(({ data }) => {
         this.setState({ redirectUrl: data.redirect })
       })
@@ -54,4 +56,10 @@ export class NewEvaluationPaymentRedirect extends Component {
   }
 }
 
-export default withTranslation()(NewEvaluationPaymentRedirect);
+const mapStateToProps = state => {
+	return {
+		signature: state.registration.signature
+	};
+};
+
+export default connect(mapStateToProps)(withTranslation()(NewEvaluationPaymentRedirect));

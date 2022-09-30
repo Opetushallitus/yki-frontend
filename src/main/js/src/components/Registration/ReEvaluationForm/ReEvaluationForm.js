@@ -29,7 +29,6 @@ const mapStateToProps = state => {
   return {
     evaluationOrderId: state.registration.evaluationOrderId,
     useNewPaymentsIntegration: state.registration.useNewPaymentsIntegration,
-    signature: state.registration.signature,
   };
 };
 
@@ -60,7 +59,6 @@ const ReEvaluationForm = props => {
     onSubmitForm,
     evaluationOrderId,
     useNewPaymentsIntegration,
-    signature,
     pageHistory,
     evaluationPrices,
   } = props;
@@ -78,7 +76,7 @@ const ReEvaluationForm = props => {
   useEffect(() => {
     if (evaluationOrderId) {
       const pathname = useNewPaymentsIntegration ?
-        `/tarkistusarviointi/v2/tilaus/${evaluationOrderId}?signature=${signature}` :
+        `/tarkistusarviointi/v2/tilaus/${evaluationOrderId}` :
         `/tarkistusarviointi/tilaus/${evaluationOrderId}`; 
       pageHistory.push({
         pathname
