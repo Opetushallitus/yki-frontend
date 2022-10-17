@@ -9,7 +9,7 @@ import Page from '../../hoc/Page/Page';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import classes from './PaymentReports.module.css';
 
-const dateToString = (date) => date.format('YYYY-MM-DD');
+const dateToString = date => date.format('YYYY-MM-DD');
 
 const PaymentReports = props => {
   const { t, i18n } = props;
@@ -17,25 +17,52 @@ const PaymentReports = props => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const downloadReport = () => {
-    axios.get(`/yki/api/payment/v2/report?from=${dateToString(startDate)}&to=${dateToString(endDate)}`)
+  const downloadBlob = (blob) => {
+    const link = document.createElement('a');
+    link.download = `YKI_tutkintomaksut_${startDate.format(
+      'YYYY-MM-DD',
+    )}_${endDate.format('YYYY-MM-DD')}.csv`;
+    link.href = blob;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    // Cleanup.
+    setTimeout(() => {
+      window.URL.revokeObjectURL(blob);
+    }, 100);
   };
 
-  const isRangeValid = startDate && endDate && startDate.isSameOrBefore(endDate);
+  const downloadReport = () => {
+    axios
+      .get(
+        `/yki/api/payment/v2/report?from=${dateToString(
+          startDate,
+        )}&to=${dateToString(endDate)}`,
+        { responseType: 'blob' },
+      )
+      .then((response) => {
+        const blob = URL.createObjectURL(response.data);
+        downloadBlob(blob);
+      });
+  };
+
+  const isRangeValid =
+    startDate && endDate && startDate.isSameOrBefore(endDate);
 
   useEffect(() => {
     if (!startDate) {
       setStartDate(
         moment()
           .subtract(1, 'month')
-          .startOf('month')
+          .startOf('month'),
       );
     }
     if (!endDate) {
       setEndDate(
         moment()
           .subtract(1, 'month')
-          .endOf('month')
+          .endOf('month'),
       );
     }
   }, [startDate, endDate]);
@@ -76,4 +103,5 @@ const PaymentReports = props => {
   );
 };
 
+// TODO error handler requires props modalClosed and errorConfirmedHandler to be present
 export default withTranslation()(withErrorHandler(PaymentReports));
