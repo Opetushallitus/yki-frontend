@@ -20,6 +20,7 @@ import ExamDates from './containers/ExamDates/ExamDates';
 import Init from './containers/Init/Init';
 import NewPaymentRedirect from './containers/NewPaymentRedirect/NewPaymentRedirect';
 import OldPaymentRedirect from './containers/OldPaymentRedirect/OldPaymentRedirect';
+import PaymentReports from './containers/PaymentReports/PaymentReports';
 import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
 import Registration from './containers/Registration/Registration';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
@@ -129,6 +130,7 @@ const app = () => (
               />
 
               <Route path="/tutkintopaivat" component={ExamDates} />
+              <Route exact path="/maksuraportit" component={PaymentReports} />
               <Route
                 path="/saavutettavuus"
                 component={AccessibilityStatement}

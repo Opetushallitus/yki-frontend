@@ -1234,4 +1234,16 @@ module.exports = function(app) {
     }
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   })
+
+  app.get('/yki/api/payment/v2/report', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send({success: true});
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    }
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  })
 };
