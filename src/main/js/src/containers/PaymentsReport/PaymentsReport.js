@@ -1,23 +1,25 @@
-import axios from '../../axios';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
 import DatePicker from '../../components/UI/DatePicker/DatePicker';
 import Page from '../../hoc/Page/Page';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import classes from './PaymentReports.module.css';
+import classes from './PaymentsReport.module.css';
+import * as actions from '../../store/actions/index';
 
 const dateToString = date => date.format('YYYY-MM-DD');
 
-const PaymentReports = props => {
-  const { t, i18n } = props;
+const PaymentsReport = props => {
+  const { t, i18n, onFetchPaymentsReport } = props;
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const downloadBlob = (blob) => {
+  const downloadBlob = (response) => {
+    const blob = URL.createObjectURL(response.data);
     const link = document.createElement('a');
     link.download = `YKI_tutkintomaksut_${startDate.format(
       'YYYY-MM-DD',
@@ -33,19 +35,9 @@ const PaymentReports = props => {
     }, 100);
   };
 
-  const downloadReport = () => {
-    axios
-      .get(
-        `/yki/api/payment/v2/report?from=${dateToString(
-          startDate,
-        )}&to=${dateToString(endDate)}`,
-        { responseType: 'blob' },
-      )
-      .then((response) => {
-        const blob = URL.createObjectURL(response.data);
-        downloadBlob(blob);
-      });
-  };
+  const doFetchPaymentsReport = () => {
+    onFetchPaymentsReport(startDate, endDate, downloadBlob)
+  }
 
   const isRangeValid =
     startDate && endDate && startDate.isSameOrBefore(endDate);
@@ -69,12 +61,12 @@ const PaymentReports = props => {
 
   return (
     <Page>
-      <div className={classes.PaymentReports}>
-        <h1>{t('paymentReports.document.title')}</h1>
+      <div className={classes.PaymentsReport}>
+        <h1>{t('paymentsReport.document.title')}</h1>
         <div className={classes.DateGrid}>
           <div className={classes.DatePickerWrapper}>
             <DatePicker
-              id="paymentReportStartDate"
+              id="paymentsReportStartDate"
               options={{
                 value: startDate ? dateToString(startDate) : '',
               }}
@@ -84,7 +76,7 @@ const PaymentReports = props => {
           </div>
           <div className={classes.DatePickerWrapper}>
             <DatePicker
-              id="paymentReportEndDate"
+              id="paymentsReportEndDate"
               options={{
                 value: endDate ? dateToString(endDate) : '',
               }}
@@ -93,8 +85,8 @@ const PaymentReports = props => {
             />
           </div>
           <div className={classes.DownloadButtonWrapper}>
-            <Button clicked={downloadReport} disabled={!isRangeValid}>
-              {t('paymentReports.button.download')}
+            <Button clicked={doFetchPaymentsReport} disabled={!isRangeValid}>
+              {t('paymentsReport.button.download')}
             </Button>
           </div>
         </div>
@@ -103,5 +95,19 @@ const PaymentReports = props => {
   );
 };
 
-// TODO error handler requires props modalClosed and errorConfirmedHandler to be present
-export default withTranslation()(withErrorHandler(PaymentReports));
+const mapStateToProps = state => {
+  return {
+    error: state.paymentsReport.error,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchPaymentsReport: (startDate, endDate, download) => {
+      dispatch(actions.fetchPaymentsReport(dateToString(startDate), dateToString(endDate), download))
+    },
+    errorConfirmedHandler: () => dispatch(actions.fetchPaymentsReportReset()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(withErrorHandler(PaymentsReport)));

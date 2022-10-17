@@ -61,3 +61,4 @@ export {
 } from './examDates';
 export { fetchUser } from './user';
 export { initYKILanguage, changeYKILanguage, setWindowWidth } from './yki';
+export { fetchPaymentsReport, fetchPaymentsReportReset } from './paymentsReport'

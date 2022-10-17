@@ -20,7 +20,7 @@ import ExamDates from './containers/ExamDates/ExamDates';
 import Init from './containers/Init/Init';
 import NewPaymentRedirect from './containers/NewPaymentRedirect/NewPaymentRedirect';
 import OldPaymentRedirect from './containers/OldPaymentRedirect/OldPaymentRedirect';
-import PaymentReports from './containers/PaymentReports/PaymentReports';
+import PaymentsReport from './containers/PaymentsReport/PaymentsReport';
 import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
 import Registration from './containers/Registration/Registration';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
@@ -34,6 +34,7 @@ import registryReducer from './store/reducers/registry';
 import organizationSessionsReducer from './store/reducers/registryExamSession';
 import userReducer from './store/reducers/user';
 import ykiReducer from './store/reducers/ykiReducer';
+import paymentsReportReducer from './store/reducers/paymentsReport';
 
 const Registry = lazy(() => import('./containers/Registry/Registry'));
 const ExamSessions = lazy(() =>
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   dates: examDatesReducer,
   yki: ykiReducer,
+  paymentsReport: paymentsReportReducer,
 });
 
 const store = createStore(
@@ -130,7 +132,7 @@ const app = () => (
               />
 
               <Route path="/tutkintopaivat" component={ExamDates} />
-              <Route exact path="/maksuraportit" component={PaymentReports} />
+              <Route exact path="/maksuraportit" component={PaymentsReport} />
               <Route
                 path="/saavutettavuus"
                 component={AccessibilityStatement}

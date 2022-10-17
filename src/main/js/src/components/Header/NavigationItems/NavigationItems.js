@@ -17,7 +17,7 @@ const items = props => {
       </NavigationItem>
       <div className={classes.Separator} />
       <NavigationItem link="/maksuraportit">
-        {props.t('common.paymentReports')}
+        {props.t('common.paymentsReports')}
       </NavigationItem>
     </React.Fragment>
   ) : (
