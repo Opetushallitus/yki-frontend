@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
-export const fetchPaymentsReport = (startDate, endDate, download) => {
+export const fetchPaymentsReport = (startDate, endDate) => {
   return dispatch => {
     dispatch({
       type: actionTypes.FETCH_PAYMENTS_REPORT_START,
@@ -11,8 +11,7 @@ export const fetchPaymentsReport = (startDate, endDate, download) => {
         responseType: 'blob',
       })
       .then(response => {
-        dispatch({ type: actionTypes.FETCH_PAYMENTS_REPORT_SUCCESS });
-        download(response.data);
+        dispatch({ type: actionTypes.FETCH_PAYMENTS_REPORT_SUCCESS, data: response.data });
       })
       .catch(error => {
         dispatch({ type: actionTypes.FETCH_PAYMENTS_REPORT_FAIL, error });

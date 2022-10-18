@@ -9,35 +9,37 @@ import Page from '../../hoc/Page/Page';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import classes from './PaymentsReport.module.css';
 import * as actions from '../../store/actions/index';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const dateToString = date => date.format('YYYY-MM-DD');
 
+const downloadBlob = (data, startDate, endDate) => {
+  const blob = URL.createObjectURL(data);
+  const link = document.createElement('a');
+  link.download = `YKI_tutkintomaksut_${startDate.format(
+    'YYYY-MM-DD',
+  )}_${endDate.format('YYYY-MM-DD')}.csv`;
+  link.href = blob;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  // Cleanup.
+  return () =>
+    setTimeout(() => {
+      window.URL.revokeObjectURL(blob);
+    }, 100);
+};
+
 const PaymentsReport = props => {
-  const { t, i18n, onFetchPaymentsReport } = props;
+  const { t, i18n, onFetchPaymentsReport, data, loading } = props;
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const downloadBlob = (response) => {
-    const blob = URL.createObjectURL(response.data);
-    const link = document.createElement('a');
-    link.download = `YKI_tutkintomaksut_${startDate.format(
-      'YYYY-MM-DD',
-    )}_${endDate.format('YYYY-MM-DD')}.csv`;
-    link.href = blob;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    // Cleanup.
-    setTimeout(() => {
-      window.URL.revokeObjectURL(blob);
-    }, 100);
-  };
-
   const doFetchPaymentsReport = () => {
-    onFetchPaymentsReport(startDate, endDate, downloadBlob)
-  }
+    onFetchPaymentsReport(startDate, endDate);
+  };
 
   const isRangeValid =
     startDate && endDate && startDate.isSameOrBefore(endDate);
@@ -58,6 +60,13 @@ const PaymentsReport = props => {
       );
     }
   }, [startDate, endDate]);
+
+  useEffect(() => {
+    if (data) {
+      const cleanUp = downloadBlob(data, startDate, endDate);
+      return cleanUp;
+    }
+  }, [data]);
 
   return (
     <Page>
@@ -85,9 +94,13 @@ const PaymentsReport = props => {
             />
           </div>
           <div className={classes.DownloadButtonWrapper}>
-            <Button clicked={doFetchPaymentsReport} disabled={!isRangeValid}>
-              {t('paymentsReport.button.download')}
-            </Button>
+            {loading ? (
+              <Spinner />
+            ) : (
+              <Button clicked={doFetchPaymentsReport} disabled={!isRangeValid}>
+                {t('paymentsReport.button.download')}
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -98,16 +111,26 @@ const PaymentsReport = props => {
 const mapStateToProps = state => {
   return {
     error: state.paymentsReport.error,
-  }
-}
+    loading: state.paymentsReport.loading,
+    data: state.paymentsReport.data,
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchPaymentsReport: (startDate, endDate, download) => {
-      dispatch(actions.fetchPaymentsReport(dateToString(startDate), dateToString(endDate), download))
+    onFetchPaymentsReport: (startDate, endDate) => {
+      dispatch(
+        actions.fetchPaymentsReport(
+          dateToString(startDate),
+          dateToString(endDate),
+        ),
+      );
     },
     errorConfirmedHandler: () => dispatch(actions.fetchPaymentsReportReset()),
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(withErrorHandler(PaymentsReport)));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation()(withErrorHandler(PaymentsReport)));
