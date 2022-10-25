@@ -8,7 +8,7 @@
 }
 
 .PaymentsReport p {
-  margin: auto;
+  margin-bottom: 1rem;
 }
 
 .PaymentsReport h1 {
@@ -17,8 +17,14 @@
 }
 
 .DateGrid {
+  padding-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(3, 150px);
+  grid-template-areas:
+    "a b"
+    "a b"
+    "a b";
+  grid-template-columns: 50px 150px;
+  align-items: center;
   grid-gap: 20px;
   max-height: 90px;
 }
@@ -26,8 +32,6 @@
 .DatePickerWrapper > input {
   width: 150px;
   height: 35px;
-  margin-bottom: 20px;
-  margin-top: 8px;
   color: hsl(0, 0%, 0%);
 }
 

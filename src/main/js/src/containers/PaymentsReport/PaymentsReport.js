@@ -72,7 +72,11 @@ const PaymentsReport = props => {
     <Page>
       <div className={classes.PaymentsReport}>
         <h1>{t('paymentsReport.document.title')}</h1>
+        <p>{t('paymentsReport.document.text1')}</p>
+        <p>{t('paymentsReport.document.text2')}</p>
+        <p>{t('paymentsReport.document.text3')}</p>
         <div className={classes.DateGrid}>
+          <div>{t('paymentsReport.input.from')}</div>
           <div className={classes.DatePickerWrapper}>
             <DatePicker
               id="paymentsReportStartDate"
@@ -83,6 +87,7 @@ const PaymentsReport = props => {
               locale={i18n.language}
             />
           </div>
+          <div>{t('paymentsReport.input.to')}</div>
           <div className={classes.DatePickerWrapper}>
             <DatePicker
               id="paymentsReportEndDate"
@@ -93,6 +98,7 @@ const PaymentsReport = props => {
               locale={i18n.language}
             />
           </div>
+          <div />
           <div className={classes.DownloadButtonWrapper}>
             {loading ? (
               <Spinner />
