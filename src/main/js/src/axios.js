@@ -1,5 +1,6 @@
 import axios from 'axios';
 import i18next from 'i18next';
+import { OPH_OID } from './common/Constants';
 import { getCookie } from './util/util';
 
 const instance = axios.create({
@@ -10,7 +11,7 @@ instance.interceptors.request.use((config) => {
   const lang = i18next.language;
   config.headers = {
     ...config.headers,
-    'Caller-Id': '1.2.246.562.10.00000000001.yki',
+    'Caller-Id': `${OPH_OID}.yki`,
     'CSRF': getCookie('CSRF')
   };
   config.params = { lang: lang ? lang : 'fi' };
@@ -26,7 +27,8 @@ instance.interceptors.response.use(
       error.response.status === 401 &&
       (window.location.href.includes('jarjestajarekisteri') ||
         window.location.href.includes('tutkintotilaisuudet') ||
-        window.location.href.includes('tutkintopaivat'))
+        window.location.href.includes('tutkintopaivat') ||
+        window.location.href.includes('maksuraportit'))
     ) {
       window.location.replace('/yki/auth/cas');
     }

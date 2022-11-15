@@ -4,9 +4,9 @@ import { withTranslation } from 'react-i18next';
 
 import axios from '../../axios';
 import Alert from '../../components/Alert/Alert';
-import classes from './PaymentRedirect.module.css';
+import classes from './OldPaymentRedirect.module.css';
 
-export class PaymentRedirect extends Component {
+export class OldPaymentRedirect extends Component {
   paymentForm = React.createRef();
 
   state = {
@@ -73,8 +73,8 @@ export class PaymentRedirect extends Component {
   }
 }
 
-PaymentRedirect.propTypes = {
+OldPaymentRedirect.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-export default withTranslation()(PaymentRedirect);
+export default withTranslation()(OldPaymentRedirect);

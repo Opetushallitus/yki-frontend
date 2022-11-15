@@ -140,31 +140,6 @@ export const participantList = props => {
     return asNumber ? asNumber.formatInternational() : '';
   };
 
-  const confirmPaymentButton = participant => {
-    const confirmPayment = (
-      <React.Fragment>
-        <img src={checkMarkDone} data-cy="confirm-payment-icon" alt="" />{' '}
-        {props.t('examSession.registration.confirmPayment')}
-      </React.Fragment>
-    );
-
-    return (
-      <ActionButton
-        children={confirmPayment}
-        confirmOnRight={true}
-        onClick={() =>
-          props.onConfirmPayment(
-            props.examSession.organizer_oid,
-            props.examSession.id,
-            participant.registration_id,
-          )
-        }
-        confirmText={props.t('examSession.registration.confirmPayment.confirm')}
-        cancelText={props.t('examSession.registration.confirmPayment.cancel')}
-      />
-    );
-  };
-
   const relocateParticipant = participant => {
     return (
       <RelocateParticipant
@@ -289,11 +264,9 @@ export const participantList = props => {
             : props.t('examSession.registration.postAdmission')}
         </div>
         <div className={classes.FirstShowOnHover}>
-          {p.state === 'SUBMITTED' && !props.disableControls
-            ? confirmPaymentButton(p)
-            : p.state === 'COMPLETED' && !props.disableControls
-              ? relocateParticipant(p)
-              : null}
+          {p.state === 'COMPLETED' && !props.disableControls
+            ? relocateParticipant(p)
+            : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>

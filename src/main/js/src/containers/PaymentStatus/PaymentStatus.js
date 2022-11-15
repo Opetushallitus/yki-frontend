@@ -12,6 +12,9 @@ import ExamDetailsCard from '../../components/Registration/ExamDetailsPage/ExamD
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './PaymentStatus.module.css';
 
+// Note: even though the file mentions examSession etc,
+// the component is actually used to render payment statuses
+// of both exam and evaluation registrations
 export class PaymentStatus extends Component {
   state = {
     examSession: null,

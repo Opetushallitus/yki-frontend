@@ -411,7 +411,7 @@ export const submitEvaluationForm = (examId, formData, history) => {
     axios
       .post(`/yki/api/evaluation/${examId}/order`, formData)
       .then(res => {
-        dispatch(submitEvaluationFormSuccess(res.data.evaluation_order_id));
+        dispatch(submitEvaluationFormSuccess(res.data));
       })
       .catch(error => {
         dispatch(submitEvaluationFormFail(error));
@@ -423,10 +423,12 @@ const submitEvaluationFormStart = () => {
   return { type: actionTypes.SUBMIT_EVALUATION_FORM_START };
 };
 
-const submitEvaluationFormSuccess = evaluationOrderId => {
+const submitEvaluationFormSuccess = evaluationOrderResponse => {
   return {
     type: actionTypes.SUBMIT_EVALUATION_FORM_SUCCESS,
-    evaluationOrderId,
+    evaluationOrderId: evaluationOrderResponse.evaluation_order_id,
+    useNewPaymentsIntegration: evaluationOrderResponse.use_new_payments_integration,
+    signature: evaluationOrderResponse.signature
   };
 };
 

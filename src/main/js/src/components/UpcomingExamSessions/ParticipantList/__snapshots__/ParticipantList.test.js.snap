@@ -248,22 +248,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     </div>
     <div
       className="FirstShowOnHover"
-    >
-      <ActionButton
-        cancelText="examSession.registration.confirmPayment.cancel"
-        confirmOnRight={true}
-        confirmText="examSession.registration.confirmPayment.confirm"
-        onClick={[Function]}
-      >
-        <img
-          alt=""
-          data-cy="confirm-payment-icon"
-          src="checkmark-done.svg"
-        />
-         
-        examSession.registration.confirmPayment
-      </ActionButton>
-    </div>
+    />
     <div
       className="Item"
     />
