@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
+import { OPH_OID } from '../../common/Constants';
 
 export const fetchUser = () => {
   return dispatch => {
@@ -26,10 +27,11 @@ const fetchUserSuccess = identity => {
   if (identity) {
     let isAdmin = false;
     if (identity.organizations) {
-      const organization = identity.organizations[0];
-      isAdmin = organization.permissions.some(
-        p => p.palvelu === 'YKI' && p.oikeus === 'YLLAPITAJA',
-      );
+      isAdmin = identity.organizations.some(({ oid, permissions}) =>
+        oid === OPH_OID &&
+        permissions.some(
+          ({ palvelu, oikeus }) => palvelu === "YKI" && oikeus === "YLLAPITAJA")
+        );
     }
     return {
       type: actionTypes.FETCH_USER_SUCCESS,

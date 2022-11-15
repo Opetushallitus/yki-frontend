@@ -14,10 +14,13 @@ import ReEvaluation from './components/Registration/ReEvaluation/ReEvaluation';
 import ReEvaluationFormPage from './components/Registration/ReEvaluationForm/ReEvaluationFormPage';
 import Spinner from './components/UI/Spinner/Spinner';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
-import EvaluationPaymentRedirect from './containers/EvaluationPaymentRedirect/EvaluationPaymentRedirect';
+import OldEvaluationPaymentRedirect from './containers/OldEvaluationPaymentRedirect/OldEvaluationPaymentRedirect';
+import NewEvaluationPaymentRedirect from './containers/NewEvaluationPaymentRedirect/NewEvaluationPaymentRedirect';
 import ExamDates from './containers/ExamDates/ExamDates';
 import Init from './containers/Init/Init';
-import PaymentRedirect from './containers/PaymentRedirect/PaymentRedirect';
+import NewPaymentRedirect from './containers/NewPaymentRedirect/NewPaymentRedirect';
+import OldPaymentRedirect from './containers/OldPaymentRedirect/OldPaymentRedirect';
+import PaymentsReport from './containers/PaymentsReport/PaymentsReport';
 import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
 import Registration from './containers/Registration/Registration';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
@@ -31,6 +34,7 @@ import registryReducer from './store/reducers/registry';
 import organizationSessionsReducer from './store/reducers/registryExamSession';
 import userReducer from './store/reducers/user';
 import ykiReducer from './store/reducers/ykiReducer';
+import paymentsReportReducer from './store/reducers/paymentsReport';
 
 const Registry = lazy(() => import('./containers/Registry/Registry'));
 const ExamSessions = lazy(() =>
@@ -45,6 +49,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   dates: examDatesReducer,
   yki: ykiReducer,
+  paymentsReport: paymentsReportReducer,
 });
 
 const store = createStore(
@@ -110,7 +115,11 @@ const app = () => (
               />
               <RegistrationRoute
                 path="/maksu/ilmoittautuminen/:registrationId"
-                component={PaymentRedirect}
+                component={OldPaymentRedirect}
+              />
+              <RegistrationRoute
+                path="/maksu/v2/ilmoittautuminen/:registrationId"
+                component={NewPaymentRedirect}
               />
               <RegistrationRoute
                 path="/tutkintotilaisuudet"
@@ -123,6 +132,7 @@ const app = () => (
               />
 
               <Route path="/tutkintopaivat" component={ExamDates} />
+              <Route exact path="/maksuraportit" component={PaymentsReport} />
               <Route
                 path="/saavutettavuus"
                 component={AccessibilityStatement}
@@ -141,7 +151,11 @@ const app = () => (
               />
               <Route
                 path="/tarkistusarviointi/tilaus/:evaluationOrderId"
-                component={EvaluationPaymentRedirect}
+                component={OldEvaluationPaymentRedirect}
+              />
+              <Route
+                path="/tarkistusarviointi/v2/tilaus/:evaluationOrderId"
+                component={NewEvaluationPaymentRedirect}
               />
             </ErrorBoundary>
             <Route component={NotFound} />

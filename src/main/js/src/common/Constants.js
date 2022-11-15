@@ -59,3 +59,5 @@ export const LANGUAGES = [
 export const MOBILE_WIDTH = 426;
 export const LANDSCAPE_WIDTH = 768;
 export const TABLET_WIDTH = 1025;
+
+export const OPH_OID = '1.2.246.562.10.00000000001';

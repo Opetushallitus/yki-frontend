@@ -76,7 +76,7 @@ export const listExport = props => {
         postinumero: p.form.zip,
         postitoimipaikka: p.form.post_office,
         kansalaisuus: p.form.nationality_desc ? p.form.nationality_desc : null,
-        maksunumero: p.order_number ? p.order_number : null,
+        maksunumero: p.order_number ? p.order_number : null
       };
     });
     const workbook = XLSX.utils.book_new();
