@@ -16,25 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      #- name: Cache npm
-      #  uses: actions/cache@v3
-      #  id: npm-cache
-      #  with:
-      #    path: ~/.npm
-      #    key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json') }}-${{ hashFiles('**/package-lock.json') }}
-      #    restore-keys: |
-      #      ${{ runner.os }}-npm-
-
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
+          # Note: does not cache node_modules
+          # Use instead actions/cache explicitly if caching node_modules is desired
           cache: 'npm'
           cache-dependency-path: src/main/js/
-      
+
       - name: Install NPM dependencies
-        run: npm i --prefix src/main/js/
-        #if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci --prefix src/main/js/
 
       - name: Run tests
         run: npm test --prefix src/main/js/
