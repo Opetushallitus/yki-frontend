@@ -40,7 +40,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'temurin'
           cache: 'maven'
 
@@ -68,7 +68,7 @@ jobs:
       - name: Build and deploy Docker image
         shell: bash
         run: |
-          export BASE_IMAGE="baseimage-fatjar-openjdk17:master"
+          export BASE_IMAGE="baseimage-fatjar-openjdk11:master"
           export ARTIFACT_NAME="yki-frontend"
           git clone https://github.com/Opetushallitus/ci-tools.git
           source ci-tools/common/setup-tools.sh
