@@ -289,7 +289,7 @@ module.exports = function(app) {
       req.originalUrl.indexOf('/yki/api') === 0 ||
       req.originalUrl.indexOf('/organisaatio-service')
     ) {
-      if (!process.env.TRAVIS) {
+      if (!process.env.CI) {
         // eslint-disable-next-line
         console.log(
           '\nTime:',

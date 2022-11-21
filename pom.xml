@@ -98,9 +98,9 @@
                                 <echo file="target/classes/resources/buildversion.txt">
                                     <![CDATA[artifactId=${project.artifactId}
 version=${project.version}
-buildNumber=${TRAVIS_BUILD_NUMBER}
-branchName=${TRAVIS_BRANCH}
-vcsRevision=${TRAVIS_COMMIT}
+buildNumber=ga-${GITHUB_RUN_NUMBER}
+branchName=${GITHUB_REF_NAME}
+vcsRevision=${GITHUB_SHA}
 buildTime=${maven.build.timestamp}
 ]]>
                                 </echo>
