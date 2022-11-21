@@ -31,47 +31,50 @@ jobs:
       - name: Run tests
         run: npm test --prefix src/main/js/
 
-#  build:
-#    runs-on: ubuntu-latest
-#    needs: [test]
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 0
-#
-#      - name: Prepare Clojure env
-#        uses: ./.github/actions/prepare-clojure-env
-#
-#      - name: Build uberjar
-#        run: lein uberjar
-#
-#     - uses: actions/cache@v3
-#        id: restore-build
-#        with:
-#          path: target
-#          key: ${{ github.sha }}
+  build:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v3
 
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: [test, build]
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - uses: actions/cache@v3
-#        id: restore-build
-#        with:
-#          path: target
-#          key: ${{ github.sha }}
-#
-#      - name: Build and deploy Docker image
-#        shell: bash
-#        run: |
-#          git clone https://github.com/Opetushallitus/ci-tools.git
-#          source ci-tools/common/setup-tools.sh
-#          mv target/yki-*-standalone.jar $DOCKER_BUILD_DIR/artifact/yki.jar
-#          cp -vr oph-configuration $DOCKER_BUILD_DIR/config/
-#          export BASE_IMAGE="baseimage-fatjar-openjdk17:master"
-#          ./ci-tools/common/pull-image.sh
-#          ./ci-tools/github-build/build-fatjar.sh yki
-#          ./ci-tools/github-build/upload-image.sh yki
-#          ./ci-tools/common/clean-docker-build-dir.sh
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: target
+          key: ${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: target
+          key: ${{ github.sha }}
+
+      - name: Build and deploy Docker image
+        shell: bash
+        run: |
+          export BASE_IMAGE="baseimage-fatjar-openjdk17:master"
+          export ARTIFACT_NAME="yki-frontend"
+          git clone https://github.com/Opetushallitus/ci-tools.git
+          source ci-tools/common/setup-tools.sh
+          mv target/yki-frontend-*.jar $DOCKER_BUILD_DIR/artifact/${ARTIFACT_NAME}.jar
+          cp -vr src/main/resources/* $DOCKER_BUILD_DIR/config/
+          ./ci-tools/common/pull-image.sh
+          ./ci-tools/github-build/build-fatjar.sh $ARTIFACT_NAME
+          ./ci-tools/github-build/upload-image.sh $ARTIFACT_NAME
+          ./ci-tools/common/clean-docker-build-dir.sh
