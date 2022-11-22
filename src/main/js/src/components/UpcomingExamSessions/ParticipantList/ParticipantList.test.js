@@ -55,6 +55,14 @@ const participants = [
   },
 ];
 
+// TODO Remove the below workaround, provide instead suitable Jest configs?
+// Mock parsePhoneNumberFromString as jest for some reason can't seem to find the correct import.
+jest.mock('libphonenumber-js', () => {
+  return { parsePhoneNumberFromString: (_) => {
+    return { formatInternational: () => '+358 40 5131441' }
+  } }
+});
+
 describe('<ParticipantList />', () => {
   it('should render participant rows', () => {
     const wrapper = shallow(

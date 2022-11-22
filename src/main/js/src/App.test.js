@@ -16,7 +16,7 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => {
     return { i18n: { language: 'fi', changeLanguage: jest.fn() }, t: k => k };
   },
-  initReactI18next: () => { },
+  initReactI18next: { type: '3rdParty', init: jest.fn() },
 }));
 
 it('renders without crashing', () => {
