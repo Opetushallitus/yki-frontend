@@ -1,4 +1,4 @@
-# YKI frontend
+# YKI frontend · [![Build Status](https://github.com/Opetushallitus/yki-frontend/actions/workflows/yki-frontend.yml/badge.svg)](https://github.com/Opetushallitus/yki-frontend/actions/workflows/yki-frontend.yml)
 
 Spring boot application for serving YKI frontend application.
 
