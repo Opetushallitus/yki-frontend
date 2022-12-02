@@ -93,6 +93,8 @@ const evaluationPeriods = JSON.parse(
   fs.readFileSync('./dev/rest/registration/evaluationPeriods.json'),
 );
 
+const paymentsReport = JSON.parse(fs.readFileSync('./dev/rest/examPayments/paymentsReport.json'))
+
 const evaluationOrder = {
   id: 1,
   language_code: 'fin',
@@ -1187,63 +1189,63 @@ module.exports = function(app) {
     const mockCall = () => {
       try {
         console.log('paytrail payment success callback invoked');
-        res.send({success: true});
+        res.send({ success: true });
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
       }
-    }
+    };
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  })
+  });
 
   app.get('/yki/api/payment/v2/paytrail/:lang/error', (req, res) => {
     const mockCall = () => {
       try {
         console.log('paytrail payment error callback invoked');
-        res.send({success: true});
+        res.send({ success: true });
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
       }
-    }
+    };
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  })
+  });
 
   app.get('/yki/api/payment/v2/:id/redirect', (req, res) => {
     const mockCall = () => {
       try {
         console.log('payment redirect callback invoked');
-        res.send({success: true});
+        res.send({ success: true });
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
       }
-    }
+    };
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  })
+  });
 
   app.get('/yki/api/evaluation-payment/v2/:id/redirect', (req, res) => {
     const mockCall = () => {
       try {
         console.log('paytrail evaluation payment redirect callback invoked');
-        res.send({success: true});
+        res.send({ success: true });
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
       }
-    }
+    };
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  })
+  });
 
   app.get('/yki/api/payment/v2/report', (req, res) => {
     const mockCall = () => {
       try {
-        res.send({success: true});
+        res.send(paymentsReport);
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
       }
-    }
+    };
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  })
+  });
 };

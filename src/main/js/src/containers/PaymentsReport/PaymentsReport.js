@@ -2,6 +2,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import XLSX from 'xlsx';
 
 import Button from '../../components/UI/Button/Button';
 import DatePicker from '../../components/UI/DatePicker/DatePicker';
@@ -13,13 +14,12 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 const dateToString = date => date.format('YYYY-MM-DD');
 
-const downloadBlob = (data, startDate, endDate) => {
-  const blob = URL.createObjectURL(data);
+const download = (url, startDate, endDate) => {
   const link = document.createElement('a');
   link.download = `YKI_tutkintomaksut_${startDate.format(
     'YYYY-MM-DD',
-  )}_${endDate.format('YYYY-MM-DD')}.csv`;
-  link.href = blob;
+  )}_${endDate.format('YYYY-MM-DD')}.xlsx`;
+  link.href = url;
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -27,8 +27,67 @@ const downloadBlob = (data, startDate, endDate) => {
   // Cleanup.
   return () =>
     setTimeout(() => {
-      window.URL.revokeObjectURL(blob);
+      window.URL.revokeObjectURL(url);
     }, 100);
+};
+
+const toArrayBuffer = s => {
+  const buf = new ArrayBuffer(s.length);
+  const view = new Uint8Array(buf);
+
+  for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
+  return buf;
+};
+
+const exportToExcel = (payments, startDate, endDate) => {
+  const defaultCol = { wch: 20 };
+
+  const columns = [
+    { wch: 40 },
+    defaultCol,
+    defaultCol,
+    defaultCol,
+    defaultCol,
+    { wch: 40 },
+    { wch: 40 },
+    defaultCol,
+    { wch: 60 },
+  ];
+  const data = payments.map(p => {
+    return {
+      "Järjestäjä": p.organizer,
+      "Maksun aikaleima": p.paid_at,
+      "Koepäivä": p.exam_date,
+      "Kieli": p.exam_language,
+      "Taso": p.exam_level,
+      "Osallistujan nimi": p.name,
+      "Osallistujan sähköposti": p.email,
+      "Summa (€)": p.amount,
+      "Maksun yksilöintitunnus": p.reference,
+    };
+  });
+  const workbook = XLSX.utils.book_new();
+  const worksheet = XLSX.utils.json_to_sheet(data,
+    { header: ["Järjestäjä", "Maksun aikaleima", "Koepäivä", "Kieli", "Taso", "Osallistujan nimi",
+     "Osallistujan sähköposti", "Summa (€)", "Maksun yksilöintitunnus"]});
+
+  worksheet['!cols'] = columns;
+  const sheetName = 'maksuraportti';
+  workbook.SheetNames.push(sheetName);
+  workbook.Sheets[sheetName] = worksheet;
+
+  const workbookOut = XLSX.write(workbook, {
+    bookType: 'xlsx',
+    bookSST: true,
+    type: 'binary',
+  });
+
+  let url = window.URL.createObjectURL(
+    new Blob([toArrayBuffer(workbookOut)], {
+      type: 'application/octet-stream',
+    }),
+  );
+  return download(url, startDate, endDate);
 };
 
 const PaymentsReport = props => {
@@ -63,7 +122,7 @@ const PaymentsReport = props => {
 
   useEffect(() => {
     if (data) {
-      const cleanUp = downloadBlob(data, startDate, endDate);
+      const cleanUp = exportToExcel(data, startDate, endDate);
       return cleanUp;
     }
   }, [data]);
