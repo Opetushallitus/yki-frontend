@@ -70,7 +70,7 @@ const examSessionForm = props => {
     extraSv: Yup.string(),
     extraEn: Yup.string(),
     contactName: Yup.string(),
-    contactEmail: Yup.string().email(props.t('error.email')),
+    contactEmail: Yup.string().email(props.t('error.email')).required(props.t('error.mandatory')),
 
     contactPhoneNumber: Yup.string(),
   });

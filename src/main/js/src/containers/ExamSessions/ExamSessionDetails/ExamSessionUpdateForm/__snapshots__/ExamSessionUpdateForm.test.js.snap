@@ -133,7 +133,7 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       <label
         class="ExtraLabel"
       >
-        examSession.contact.email.label
+        examSession.contact.email.label *
       </label>
       <input
         class="TextInput"

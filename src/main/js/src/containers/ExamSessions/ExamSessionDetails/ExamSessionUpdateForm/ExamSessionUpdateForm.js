@@ -37,6 +37,7 @@ export class ExamSessionUpdateForm extends Component {
         })
         .required(t('error.mandatory')),
       location: Yup.string(),
+      contactEmail: Yup.string().email((t('error.email'))).required(t('error.mandatory')),
       extraFi: Yup.string(),
       extraSe: Yup.string(),
       extraEn: Yup.string(),

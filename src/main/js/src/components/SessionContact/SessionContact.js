@@ -25,7 +25,7 @@ export class SessionContact extends Component {
 					className={classes.ErrorMessage}
 				/>
 				<label className={classes.ExtraLabel}>
-					{t('examSession.contact.email.label')}
+					{`${t('examSession.contact.email.label')} *`}
 				</label>
 				<Field
 					id="contactEmail"
