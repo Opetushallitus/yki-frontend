@@ -41,14 +41,15 @@ const toArrayBuffer = s => {
 
 const exportToExcel = (payments, startDate, endDate) => {
   const defaultCol = { wch: 20 };
+
   const columns = [
-    defaultCol,
+    { wch: 40 },
     defaultCol,
     defaultCol,
     defaultCol,
     defaultCol,
     { wch: 40 },
-    defaultCol,
+    { wch: 40 },
     defaultCol,
     { wch: 60 },
   ];
