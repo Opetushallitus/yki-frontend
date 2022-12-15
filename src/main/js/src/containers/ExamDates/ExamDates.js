@@ -32,7 +32,7 @@ class ExamDates extends Component {
       showPassedExamDates: false,
       selectedExamDate: null,
       visibleExamDates: null,
-      checkedExamDate: null,
+      checkedExamDateId: null,
     };
   }
 
@@ -118,8 +118,8 @@ class ExamDates extends Component {
     this.closeExamDateModal();
   };
 
-  handleDeleteExamDate = examDate => {
-    this.props.onDeleteExamDate(this.props.user.identity.oid, examDate.id);
+  handleDeleteExamDate = examDateId => {
+    this.props.onDeleteExamDate(this.props.user.identity.oid, examDateId);
     this.unsetPassedExamDatesShown();
     this.toggleShowDeleteConfirmationModal();
   };
@@ -210,7 +210,7 @@ class ExamDates extends Component {
                   data-cy="exam-dates-delete-confirm"
                   className={classes.ConfirmButton}
                   onClick={() =>
-                    this.handleDeleteExamDate(this.state.checkedExamDate)
+                    this.handleDeleteExamDate(this.state.checkedExamDateId)
                   }
                 >
                   {t('common.confirm')}
@@ -222,15 +222,15 @@ class ExamDates extends Component {
       </>
     );
 
-    const hasExamSessions = exam => {
-      if (exam && exam.exam_session_count) {
-        return exam.exam_session_count > 0;
-      }
-      return false;
-    }
+    const hasExamSessions = examDateId => {
+      const examDate = examDates.find((e) => e.id === examDateId);
+
+      return examDate && examDate.exam_session_count && examDate.exam_session_count > 0;
+    };
 
     const examDatesControlButtons = () => {
-      const checked = this.state.checkedExamDate;
+      const { checkedExamDateId } = this.state;
+      const deleteDisabled = !checkedExamDateId || hasExamSessions(checkedExamDateId)
 
       return (
         <div className={classes.ExamDateControls}>
@@ -246,11 +246,11 @@ class ExamDates extends Component {
               <button
                 data-cy="exam-dates-button-delete"
                 className={
-                  !checked || hasExamSessions(checked)
+                  deleteDisabled
                     ? classes.DisabledButton
                     : classes.DeleteButton
                 }
-                disabled={!checked || hasExamSessions(checked)}
+                disabled={deleteDisabled}
                 onClick={this.toggleShowDeleteConfirmationModal}
               >
                 {t('examDates.delete.selected')}
@@ -288,24 +288,20 @@ class ExamDates extends Component {
       );
 
       const tableRows = examDates => {
+        const handleCheckboxChange = examDateId => {
+          const checkedExamDateId = this.state.checkedExamDateId !== examDateId
+            ? examDateId
+            : null;
 
-        const handleCheckboxChange = examId => {
-          const selected = examDates.find(exam => exam.id === examId);
-          const checked = this.state.checkedExamDate;
-
-          if (checked && selected.id === checked.id) {
-            this.setState({ checkedExamDate: null });
-          } else {
-            this.setState({ checkedExamDate: selected });
-          }
+          this.setState({ checkedExamDateId });
         };
 
-        const cannotDeleteExamDate = exam => {
-          return exam.exam_date < currentDate || hasExamSessions(exam);
-        };
-
-        const canEditExamDate = exam => {
+        const editShown = exam => {
           return exam.exam_date > currentDate;
+        };
+
+        const deleteDisabled = exam => {
+          return exam.exam_date < currentDate || hasExamSessions(exam.id);
         };
 
         return examDates.map((e, i) => {
@@ -325,10 +321,6 @@ class ExamDates extends Component {
                 </li>
               );
             });
-
-          const isChecked = id => {
-            return this.state.checkedExamDate && this.state.checkedExamDate.id === id;
-          };
 
           const postAdmissionDate =
             e.post_admission_start_date && e.post_admission_end_date
@@ -350,8 +342,8 @@ class ExamDates extends Component {
                 dataCy={`exam-dates-list-checkbox-${e.exam_date}`}
                 onChange={() => handleCheckboxChange(e.id)}
                 name={e.id}
-                checked={isChecked(e.id)}
-                disabled={cannotDeleteExamDate(e)}
+                checked={this.state.checkedExamDateId === e.id}
+                disabled={deleteDisabled(e)}
               />
               <p data-cy={`exam-dates-list-date-${e.exam_date}`}>
                 {moment(e.exam_date).format(DATE_FORMAT)}
@@ -380,18 +372,19 @@ class ExamDates extends Component {
                   style={{ width: '90%' }}
                   onClick={() => this.showAddEvaluationPeriodModal(e)}
                 >
-                  {t('examDates.add.evaluation.period')}
+                  {t('examDates.evaluation.period')}
                 </button>
               )}
 
-              <button
-                data-cy={`exam-dates-edit-button-${e.exam_date}`}
-                disabled={!canEditExamDate(e)}
-                className={classes.EditButton}
-                onClick={() => this.showExamDateModal(e)}
-              >
-                {t('common.edit')}
-              </button>
+              {editShown(e) ? (
+                <button
+                  data-cy={`exam-dates-edit-button-${e.exam_date}`}
+                  className={classes.EditButton}
+                  onClick={() => this.showExamDateModal(e)}
+                >
+                  {t('common.edit')}
+                </button>
+              ) : <div/> }
             </React.Fragment>
           );
         });
