@@ -325,6 +325,36 @@ module.exports = function(app) {
     res.send({ success: true });
   });
 
+  app.get('/yki/api/virkailija/quarantine/matches', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send({ organizers: organizers });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  });
+
+  app.put('/yki/api/virkailija/quarantine/:id/registration/:reg_id/set', (req, res) => {
+    const mockCall = () => {
+      try {
+        const { id } = req.params;
+        const foundIndex = examSessions.exam_sessions.findIndex(
+          x => x.id == id,
+        );
+        examSessions.exam_sessions[foundIndex] = req.body;
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+
+    useLocalProxy ? proxyPutCall(req, res) : mockCall();
+  });
+
   app.get('/yki/api/virkailija/organizer', (req, res) => {
     const mockCall = () => {
       try {
