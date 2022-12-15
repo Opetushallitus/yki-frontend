@@ -214,7 +214,7 @@ const AddExamDate = props => {
               );
             })}
           </div>
-          <div className={classes.ActionButtons}>
+          <div className={classes.ActionButtonsGrid}>
             <button
               data-cy="exam-dates-button-save-new"
               type="submit"

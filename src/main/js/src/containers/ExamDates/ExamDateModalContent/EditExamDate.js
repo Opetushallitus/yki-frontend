@@ -12,12 +12,14 @@ import classes from './AddOrEditExamDate.module.css';
 
 const EditExamDate = props => {
   const { examDate, t } = props;
+
   const minDate =
     examDate &&
     examDate.exam_date &&
     moment(examDate.registration_end_date)
       .add(1, 'days')
       .format('YYYY-MM-DD');
+
   const maxDate =
     examDate &&
     examDate.exam_date &&
@@ -39,10 +41,10 @@ const EditExamDate = props => {
 
   const initializeLanguageAndLevel = () => {
     if (examDate && examDate.languages && examDate.languages.length > 1) {
-      const langs = examDate.languages;
+      const { languages } = examDate;
       return {
-        language_code: langs[langs.length - 1].language_code,
-        level_code: langs[langs.length - 1].level_code,
+        language_code: languages[languages.length - 1].language_code,
+        level_code: languages[languages.length - 1].level_code,
       };
     }
     if (languageAndLevel.length > 0) {
@@ -72,6 +74,16 @@ const EditExamDate = props => {
   );
   const { language_code, level_code } = initializeLanguageAndLevel();
 
+  const deleteDisabled = examDate.exam_session_count && examDate.exam_session_count > 0;
+
+  const confirmDeletion = (e) => {
+    if (window.confirm(t('examDates.edit.delete.confirm'))) {
+      props.onDelete(examDate.id);
+    } else {
+      e.preventDefault();
+    }
+  };
+
   const FormFields = () => (
     <Formik
       initialValues={{
@@ -90,7 +102,7 @@ const EditExamDate = props => {
           },
           languages: languageAndLevel,
         };
-        props.onSubmit(payload);
+        props.onSave(payload);
       }}
       render={({ values, setFieldValue }) => (
         <Form className={classes.Form}>
@@ -219,13 +231,21 @@ const EditExamDate = props => {
               </div>
             </div>
           </div>
-          <div className={classes.ActionButtons}>
+          <div className={classes.ActionButtonsGrid}>
             <button
               data-cy="exam-dates-modify-save"
               type="submit"
               className={classes.ConfirmButton}
             >
               {t('examDates.edit.save')}
+            </button>
+            <button
+              data-cy="exam-dates-modify-delete"
+              className={`${classes.DeleteButton} ${deleteDisabled && classes.DisabledButton}`}
+              onClick={confirmDeletion}
+              disabled={deleteDisabled}
+            >
+              {t('examDates.edit.delete')}
             </button>
           </div>
         </Form>
@@ -247,7 +267,8 @@ EditExamDate.propTypes = {
     registration_end_date: PropTypes.string.isRequired,
     registration_start_date: PropTypes.string.isRequired,
   }).isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default withTranslation()(EditExamDate);

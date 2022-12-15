@@ -3,6 +3,7 @@ import React from 'react';
 
 import classes from './Checkbox.module.css';
 
+// TODO: unused, could be deleted
 const ControlledCheckbox = props => (
   <label data-cy={props.dataCy} className={classes.Container}>
     {!props.hidden && (
