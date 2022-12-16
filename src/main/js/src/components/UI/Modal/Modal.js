@@ -10,25 +10,30 @@ const modalClass = props => {
   return classes.Modal;
 }
 
-const modal = props => (
-  <React.Fragment>
-    <Backdrop show={props.show} clicked={props.modalClosed} />
-    <div
-      className={modalClass(props)}
-      style={{
-        display: props.show ? 'block' : 'none',
-      }}
-    >
-      <button
-        data-cy={props.show && "modal-close-button"}
-        aria-label="Close"
-        className={classes.ModalClose}
-        onClick={props.modalClosed}
-      />
-      <div className={classes.Content}>{props.children}</div>
-    </div>
-  </React.Fragment>
-);
+const modal = props => {
+  const divStyle = {
+    ...(props.style || {}),
+    display: props.show ? 'block' : 'none',
+  };
+
+  return (
+    <React.Fragment>
+      <Backdrop show={props.show} clicked={props.modalClosed} />
+      <div
+        className={modalClass(props)}
+        style={divStyle}
+      >
+        <button
+          data-cy={props.show && "modal-close-button"}
+          aria-label="Close"
+          className={classes.ModalClose}
+          onClick={props.modalClosed}
+        />
+        <div className={classes.Content}>{props.children}</div>
+      </div>
+    </React.Fragment>
+  );
+};
 
 modal.propTypes = {
   show: PropTypes.bool.isRequired,
@@ -36,6 +41,7 @@ modal.propTypes = {
   children: PropTypes.any,
   smallModal: PropTypes.bool,
   confirmationModal: PropTypes.bool,
+  style: PropTypes.object,
 };
 
 export default modal;

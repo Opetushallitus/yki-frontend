@@ -7,14 +7,11 @@ describe('Exam dates page', () => {
     cy.request('/reset-mocks');
   });
 
-  const newDateId = '2050-03-01';
   const modifyDateId = '2081-01-30';
   const originalRowCount = 4;
 
   const getLanguageDataId = (dateId, lang, level) =>
     `[data-cy=exam-dates-row-language-${dateId}-${lang}-${level}]`;
-  const getNewLanguageDataId = (lang, level) =>
-    getLanguageDataId(newDateId, lang, level);
   const getModifiedLanguageDataId = (lang, level) =>
     getLanguageDataId(modifyDateId, lang, level);
 
@@ -29,20 +26,22 @@ describe('Exam dates page', () => {
       .click();
   };
 
-  const fillNewExamDateForm = () => {
-    cy.get('[data-cy=exam-date-new-registration-start]').click();
-    chooseFlatpickerDate('1', 'tammikuu', '2050');
+  const fillExamDateViewDate = () => {
+    cy.get('[data-cy=exam-date-new-exam-date]').click();
+    chooseFlatpickerDate('1', 'maaliskuu', '2050');
+  };
 
+  const fillExamDateViewRegistrationPeriod = () => {
     cy.get('[data-cy=exam-date-new-registration-end]').click();
     chooseFlatpickerDate('25', 'tammikuu', '2050');
 
-    cy.get('[data-cy=exam-date-new-exam-date]').click();
-    chooseFlatpickerDate('1', 'maaliskuu', '2050');
+    cy.get('[data-cy=exam-date-new-registration-start]').click();
+    chooseFlatpickerDate('1', 'tammikuu', '2050');
+  };
 
-    cy.get('[data-cy=exam-date-languages-add-new]').click();
-
-    cy.get('[data-cy=exam-date-languages-select-language').select('Englanti');
-    cy.get('[data-cy=exam-date-languages-select-level').select('Keskitaso');
+  const addLanguage = (language, level) => {
+    cy.get('[data-cy=exam-date-languages-select-language').select(language);
+    cy.get('[data-cy=exam-date-languages-select-level').select(level);
     cy.get('[data-cy=exam-date-languages-add-new]').click();
   };
 
@@ -58,85 +57,86 @@ describe('Exam dates page', () => {
       .should('have.length', originalRowCount);
   });
 
-  it('should not allow creation when registration start date is set after registration end date', () => {
+  it('should not allow creation of new exam date without date', () => {
     cy.get('[data-cy=exam-dates-button-add-new]').click();
-    fillNewExamDateForm();
-    cy.get('[data-cy=exam-date-new-registration-start]').click();
-    chooseFlatpickerDate('1', 'helmikuu', '2050');
-    cy.get('[data-cy=exam-dates-button-save-new').should('be.disabled');
+    fillExamDateViewRegistrationPeriod();
+    addLanguage('englanti', 'keskitaso');
+
+    cy.get('[data-cy=exam-dates-modify-save').should('be.disabled');
   });
 
-  it('should not allow creation when registration end date is set after registration end', () => {
+  it('should not allow creation of new exam date without registration period', () => {
     cy.get('[data-cy=exam-dates-button-add-new]').click();
-    fillNewExamDateForm();
-    cy.get('[data-cy=exam-date-new-registration-end]').click();
-    chooseFlatpickerDate('20', 'maaliskuu', '2050');
-    cy.get('[data-cy=exam-dates-button-save-new').should('be.disabled');
+    fillExamDateViewDate();
+    addLanguage('englanti', 'keskitaso');
+
+    cy.get('[data-cy=exam-dates-modify-save').should('be.disabled');
   });
 
-  it('should not allow creation with no added languages', () => {
+  it('should not allow creation of new exam date without languages', () => {
     cy.get('[data-cy=exam-dates-button-add-new]').click();
-    cy.get('[data-cy=exam-dates-button-save-new').should('be.disabled');
+    fillExamDateViewDate();
+    fillExamDateViewRegistrationPeriod();
+
+    cy.get('[data-cy=exam-dates-modify-save').should('be.disabled');
+  });
+
+  it('should not allow adding the same language level twice', () => {
+    cy.get('[data-cy=exam-dates-button-add-new]').click();
+    addLanguage('englanti', 'keskitaso');
+
+    cy.get('[data-cy=exam-date-languages-add-new]').should('be.disabled');
+
+    cy.get('[data-cy=exam-date-languages-select-level').select('perustaso');
+    cy.get('[data-cy=exam-date-languages-add-new]').should('be.enabled');
   });
 
   it('should allow creating exam date with valid details', () => {
     cy.get('[data-cy=exam-dates-button-add-new]').click();
-    fillNewExamDateForm();
-    cy.get('[data-cy=exam-dates-button-save-new').click();
-    cy.get('[data-cy=exam-dates-table-rows]');
+    fillExamDateViewDate();
+    fillExamDateViewRegistrationPeriod();
+    addLanguage('englanti', 'keskitaso');
+
+    cy.get('[data-cy=exam-dates-modify-save').should('be.enabled');
+    cy.get('[data-cy=exam-dates-modify-save').click();
+
     cy.get('[data-cy=exam-dates-table-rows]')
       .find('ul')
       .should('have.length', originalRowCount + 1);
     cy.get('[data-cy=exam-dates-table-rows]').contains(
       new RegExp(`^${'1.3.2050'}$`),
     );
-    cy.get(`[data-cy=exam-dates-list-date-${newDateId}]`);
-    cy.get(`${getNewLanguageDataId('fin', 'PERUS')}`);
-    cy.get(`${getNewLanguageDataId('eng', 'KESKI')}`);
   });
 
-  it('should let modify an upcoming exam date', () => {
-    const addLanguage = (lang, level) => {
-      cy.get('[data-cy=exam-date-languages-add-row]').click();
-      cy.get('[data-cy=exam-date-languages-select-language-new]').select(lang);
-      cy.get('[data-cy=exam-date-languages-select-level-new]').select(level);
-      cy.get('[data-cy=exam-date-languages-button-add]').click();
-    };
-
-    // Add new languages
+  it('should allow modifying language levels for an existing exam date', () => {
     cy.get(`[data-cy=exam-dates-edit-button-${modifyDateId}]`).click();
-    addLanguage('Suomi', 'Keskitaso');
-    addLanguage('Englanti', 'Ylin taso');
+
+    addLanguage('suomi', 'keskitaso');
+    addLanguage('englanti', 'ylin taso');
+
     cy.get('[data-cy=exam-dates-modify-save').click();
 
     cy.get('[data-cy=exam-dates-table-rows]')
       .find('ul')
       .should('have.length', originalRowCount);
+
     cy.get('[data-cy=exam-dates-table-rows]').contains('30.1.2081');
     cy.get(`${getModifiedLanguageDataId('fin', 'KESKI')}`);
     cy.get(`${getModifiedLanguageDataId('eng', 'YLIN')}`);
-
-    // Remove one language
-    cy.get(`[data-cy=exam-dates-edit-button-${modifyDateId}]`).click();
-    cy.get(`[data-cy=exam-date-languages-button-delete-eng-YLIN`).click();
-    cy.get('[data-cy=exam-dates-modify-save').click();
-
-    cy.get('[data-cy=exam-dates-table-rows]')
-      .find('ul')
-      .should('have.length', originalRowCount);
-    cy.get('[data-cy=exam-dates-table-rows]').contains('30.1.2081');
-    cy.get(`${getModifiedLanguageDataId('fin', 'KESKI')}`);
-    cy.get(`${getModifiedLanguageDataId('eng', 'YLIN')}`).should('not.exist');
   });
 
-  it('should enable setting post admissions for an exam date', () => {
+  it('should allow modifying post admission for an existing exam date', () => {
     cy.get(`[data-cy=exam-dates-edit-button-${modifyDateId}]`).click();
     cy.get(`[data-cy=exam-dates-modify-post-admission-toggle]`).click();
+
     cy.get('[data-cy=exam-dates-modify-post-admission-start-date]').click();
     chooseFlatpickerDate('15', 'joulukuu', '2080');
+
     cy.get('[data-cy=exam-dates-modify-post-admission-end-date]').click();
     chooseFlatpickerDate('15', 'tammikuu', '2081');
+
     cy.get('[data-cy=exam-dates-modify-save').click();
+
     cy.get('[data-cy=exam-dates-table-rows]')
       .find('ul')
       .should('have.length', originalRowCount);
