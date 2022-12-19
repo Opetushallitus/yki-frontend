@@ -33,7 +33,7 @@
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
-  height: 20vh;
+  min-height: 20vh;
   width: 35vw;
   max-width: 650px;
   z-index: 500;
@@ -60,6 +60,7 @@
     center;
   background-size: 15px;
   z-index: 999;
+  cursor: pointer;
 }
 .ModalClose:hover {
   opacity: 1;
