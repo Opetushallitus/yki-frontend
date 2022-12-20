@@ -9,6 +9,13 @@ export const fetchQuarantineMatches = () => dispatch => {
     .catch(err => dispatch(fetchQuarantineMatchesFail(err)));
 };
 
+export const fetchQuarantines = () => dispatch => {
+  axios
+    .get('/yki/api/virkailija/quarantine')
+    .then(res => dispatch(extractQuarantines(res.data)))
+    .catch(err => dispatch(fetchQuarantineMatchesFail(err)));
+};
+
 export const setQuarantine = (id, reg_id, quarantined) => dispatch => {
   const payload = { is_quarantined: quarantined };
   axios
@@ -24,15 +31,25 @@ export const confirmQuarantine = (callback) => dispatch => {
   });
 };
 
+const extractQuarantines = res => {
+  console.log('res', res)
+  return {
+    type: actionTypes.ADD_QUARANTINES,
+    quarantines: res.quarantines,
+  };
+};
+
 const extractQuarantineMatches = res => {
   const matches = R.filter(
     (quarantine) => R.isNil(quarantine.reviewed),
     res.quarantines
   );
+  const all = res.quarantines;
 
   return {
     type: actionTypes.ADD_QUARANTINE_MATCHES,
     matches: matches,
+    all: all,
   };
 };
 

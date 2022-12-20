@@ -4,12 +4,16 @@ const initialState = {
   loading: false,
   error: null,
   matches: [],
+  all: [],
+  quarantines: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_QUARANTINE_MATCHES:
-      return { ...initialState, matches: action.matches };
+      return { ...state, matches: action.matches, all: action.all };
+    case actionTypes.ADD_QUARANTINES:
+      return { ...state, quarantines: action.quarantines };
     case actionTypes.CONFIRM_QUARANTINE:
       return { ...state, confirm: action.confirm };
     case actionTypes.SET_QUARANTINE_FAIL:

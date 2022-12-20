@@ -337,6 +337,18 @@ module.exports = function(app) {
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   });
 
+  app.get('/yki/api/virkailija/quarantine', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send({ organizers: organizers });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  });
+
   app.put('/yki/api/virkailija/quarantine/:id/registration/:reg_id/set', (req, res) => {
     const mockCall = () => {
       try {
