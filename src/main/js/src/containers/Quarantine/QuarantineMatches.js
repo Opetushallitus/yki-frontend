@@ -128,7 +128,8 @@ const QuarantineMatches = props => {
 const mapStateToProps = state => {
   return {
     matches: state.quarantine.matches,
-    confirm: state.quarantine.confirm
+    confirm: state.quarantine.confirm,
+    error: state.quarantine.error,
   };
 };
 

@@ -12,6 +12,9 @@ const reducer = (state = initialState, action) => {
       return { ...initialState, matches: action.matches };
     case actionTypes.CONFIRM_QUARANTINE:
       return { ...state, confirm: action.confirm };
+    case actionTypes.SET_QUARANTINE_FAIL:
+    case actionTypes.FETCH_QUARANTINE_MATCHES_FAIL:
+      return { ...state, error: action.error };
     default:
       return state;
   }
