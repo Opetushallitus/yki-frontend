@@ -19,14 +19,15 @@ const QuarantineMatches = props => {
     onFetchQuarantineMatches,
     setQuarantine,
     confirmQuarantine,
-    confirm
+    confirm,
+    error
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const closeConfirmModal = () => confirmQuarantine(null);
 
   const confirmQuarantineModal = (
     <Modal
-      show={!R.isNil(confirm)}
+      show={!R.isNil(confirm) && R.isNil(error)}
       confirmationModal
       modalClosed={closeConfirmModal}
     >
@@ -108,12 +109,12 @@ const QuarantineMatches = props => {
                   {match.form.phone_number}
                 </div>
                 <div className={classes.PrimaryButton}>
-                  <Button clicked={showQuarantineConfirm.bind(this, match.id, match.reg_id)}>
+                  <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
                     {t('quarantine.addQuarantine')}
                   </Button>
                 </div>
                 <div>
-                  <Button clicked={doSetQuarantine.bind(this, match.id, match.reg_id, false)}>
+                  <Button clicked={doSetQuarantine.bind(this, match.id, match.registration_id, false)}>
                     {t('quarantine.noQuarantine')}
                   </Button>
                 </div>
