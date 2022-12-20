@@ -33,7 +33,7 @@ const QuarantineMatches = props => {
       <div className={classes.ConfirmText}>
         {t('common.areYouSure')}
       </div>
-      <p>Karenssin lisääminen peruuttaa ilmoittautumisen. Hoidathan peruutusilmoituksen ja maksun palautuksen.</p>
+      <p>{t('quarantine.confirmDescription')}</p>
       <div className={classes.ConfirmButtons}>
         <button onClick={confirm} className={classes.ConfirmButton}>
           {t('common.confirm')}
@@ -45,17 +45,13 @@ const QuarantineMatches = props => {
     </Modal>
   );
 
-  useEffect(() => {
-    onFetchQuarantineMatches();
-  }, []);
+  useEffect(onFetchQuarantineMatches, []);
 
-  const showQuarantineConfirm = (id, reg_id) => {
+  const showQuarantineConfirm = (id, reg_id) =>
     confirmQuarantine(() => setQuarantine(id, reg_id, true));
-  };
 
-  const doSetQuarantine = (id, reg_id, quarantined) => {
+  const doSetQuarantine = (id, reg_id, quarantined) =>
     setQuarantine(id, reg_id, quarantined);
-  };
 
   return (
     <Page>
