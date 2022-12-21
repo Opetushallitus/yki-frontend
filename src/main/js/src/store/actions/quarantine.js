@@ -31,8 +31,11 @@ export const confirmQuarantine = (callback) => dispatch => {
   });
 };
 
+export const addNewQuarantine = (form) => dispatch => {
+  console.log(form)
+};
+
 const extractQuarantines = res => {
-  console.log('res', res)
   return {
     type: actionTypes.ADD_QUARANTINES,
     quarantines: res.quarantines,

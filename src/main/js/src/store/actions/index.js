@@ -67,4 +67,5 @@ export {
   fetchQuarantines,
   setQuarantine,
   confirmQuarantine,
+  addNewQuarantine,
 } from './quarantine';
