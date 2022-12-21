@@ -516,7 +516,20 @@ export const registrationForm = props => {
             </div>
           </div>
 
-          <p>{props.t('registration.form.specialArrangements.info')}</p>
+          <p>{props.t('registration.form.specialArrangements.info')}
+            &nbsp;
+            <a
+              href={props.t('registration.form.specialArrangements.link')}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={props.t('common.newTab')}>
+                  {props.t('registration.form.specialArrangements.link')}
+                  <img
+                    src={require('../../../assets/svg/external-link.svg')}
+                    alt={props.t('common.newTab')}
+                  />
+            </a>
+          </p>
           <p>{props.t('registration.form.summary.info')}</p>
           <>
             <div className={classes.ConsentContainer}>
