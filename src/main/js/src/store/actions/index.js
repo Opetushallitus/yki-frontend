@@ -68,4 +68,5 @@ export {
   setQuarantine,
   confirmQuarantine,
   addNewQuarantine,
+  showAddModal,
 } from './quarantine';

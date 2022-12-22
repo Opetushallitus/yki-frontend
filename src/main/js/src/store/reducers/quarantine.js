@@ -6,6 +6,7 @@ const initialState = {
   matches: [],
   all: [],
   quarantines: [],
+  showAddModal: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +17,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, quarantines: action.quarantines };
     case actionTypes.CONFIRM_QUARANTINE:
       return { ...state, confirm: action.confirm };
+    case actionTypes.SHOW_ADD_QUARANTINE:
+      return { ...state, showAddModal: action.showAddModal };
     case actionTypes.SET_QUARANTINE_FAIL:
     case actionTypes.FETCH_QUARANTINE_MATCHES_FAIL:
       return { ...state, error: action.error };

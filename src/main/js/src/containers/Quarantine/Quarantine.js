@@ -22,76 +22,152 @@ const Quarantine = props => {
     i18n,
     quarantines,
     onFetchQuarantines,
-    onAddNewQuarantine
+    onAddNewQuarantine,
+    onShowAddModal,
+    showAddModal,
+    onConfirmModal,
+    confirm
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
+  const [endDate, setEndDate] = useState(null);
+  const [birthdate, setBirthdate] = useState(null);
+  const initialForm = {
+    language_code: 'fin',
+    email: '',
+    phone_number: '',
+    name: '',
+  };
+  const onFormSubmit = (form, actions) => {
+    const payload = {
+      ...form,
+      birthdate: dateToString(birthdate),
+      end_date: dateToString(endDate),
+    };
+    onAddNewQuarantine(payload);
+
+    actions.resetForm(initialForm);
+  };
+  const cancelForm = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onShowAddModal(false)
+  };
+  const doDelete = (id) => {
+    onConfirmModal(() => '');
+  };
 
   useEffect(onFetchQuarantines, []);
-  const [endDate, setEndDate] = useState(null);
+
+  const closeConfirmModal = onConfirmModal.bind(this, null);
+  const confirmDeleteModal = (
+    <Modal
+      show={!R.isNil(confirm)}
+      confirmationModal
+      modalClosed={closeConfirmModal}
+    >
+      <div className={classes.ConfirmText}>
+        {t('common.areYouSure')}
+      </div>
+      <p>{t('quarantine.confirmDescription')}</p>
+      <div className={classes.ConfirmButtons}>
+        <button onClick={confirm} className={classes.ConfirmButton}>
+          {t('common.confirm')}
+        </button>
+        <button onClick={closeConfirmModal} className={classes.CancelButton}>
+          {t('common.cancelConfirm')}
+        </button>
+      </div>
+    </Modal>
+  );
+
+  const quarantineModal = (
+    <Modal
+      show={showAddModal}
+      smallModal
+      modalClosed={onShowAddModal.bind(this, false)}>
+      <Formik
+        initialValues={initialForm}
+        onSubmit={onFormSubmit}
+        render={({ values, handleChange }) => (
+          <Form>
+            <div className={classes.QuarantineFormFields}>
+              <div className={classes.QuarantineFormField}>
+                <label htmlFor="language_code">Tutkinnon kieli</label>
+                <select
+                  value={values.language_code}
+                  name="language_code"
+                  onChange={handleChange}
+                >
+                  <option value="swe">Ruotsi</option>
+                  <option value="fin">Suomi</option>
+                </select>
+              </div>
+
+              <div className={classes.QuarantineFormField}>
+                <label htmlFor="end_date">Vanhenee</label>
+                <DatePicker
+                  options={{ value: endDate ? dateToString(endDate) : '' }}
+                  locale={i18n.language}
+                  onChange={(dates) => {
+                    setEndDate(moment(dates[0]));
+                  }}
+                  id="end_date"
+                />
+              </div>
+
+              <div className={classes.QuarantineFormField}>
+                <label htmlFor="first_name">Etu- ja sukunimi</label>
+                <Field name="name" />
+              </div>
+
+              <div className={classes.QuarantineFormField}>
+                <label htmlFor="birthdate">Syntymäaika</label>
+                <DatePicker
+                  options={{ value: birthdate ? dateToString(birthdate) : '' }}
+                  locale={i18n.language}
+                  onChange={(dates) => {
+                    setBirthdate(moment(dates[0]));
+                  }}
+                  id="birthdate"
+                />
+              </div>
+
+              <div className={classes.QuarantineFormField}>
+                <label htmlFor="email">Email</label>
+                <Field name="email" />
+              </div>
+
+              <div className={classes.QuarantineFormField}>
+                <label htmlFor="phone_number">Puhelinnumero</label>
+                <Field name="phone_number" />
+              </div>
+            </div>
+
+            <Button clicked={cancelForm} tabIndex="4">
+              Peruuta
+            </Button>
+            <Button type="submit" tabIndex="4">
+              Lähetä
+            </Button>
+          </Form>
+        )}/>
+    </Modal>
+  );
 
   return (
     <Page>
-      <div className={classes.QuarantineMatches}>
+      {quarantineModal}
+      {confirmDeleteModal}
+      <div className={classes.Quarantines}>
         <h1>
           Karenssit
         </h1>
 
-        <p>
-          Asetetut karenssit.
-        </p>
-
-        <Formik
-          initialValues={{
-            language_code: 'fin',
-            email: '',
-            birthdate: '',
-            phone_number: '',
-            first_name: '',
-            last_name: '',
-          }}
-          onSubmit={onAddNewQuarantine}
-          render={({ values, handleChange }) => (
-            <Form>
-              <label htmlFor="language_code">Tutkinnon kieli</label>
-              <select
-                value={values.language_code}
-                name="language_code"
-                onChange={handleChange}
-              >
-                <option value="swe">Ruotsi</option>
-                <option value="fin">Suomi</option>
-              </select>
-              <br />
-              <label htmlFor="email">Email</label>
-              <Field name="email" />
-              <br />
-              <label htmlFor="birthdate">Syntymäaika</label>
-              <Field name="birthdate" />
-              <br />
-              <label htmlFor="phone_number">Puhelinnumero</label>
-              <Field name="phone_number" />
-              <br />
-              <label htmlFor="first_name">Etunimi</label>
-              <Field name="first_name" />
-              <br />
-              <label htmlFor="last_name">Sukunimi</label>
-              <Field name="last_name" />
-              <br />
-              <label htmlFor="end_date">Vanhenee</label>
-              <DatePicker
-                options={{ value: endDate ? dateToString(endDate) : '' }}
-                locale={i18n.language}
-                onChange={(dates) => {
-                  setEndDate(moment(dates[0]));
-                }}
-                id="end_date"
-              />
-
-              <button type="submit" tabIndex="4">
-                Lähetä
-              </button>
-            </Form>
-        )}/>
+        <div className={classes.PrimaryButton}>
+          <Button clicked={onShowAddModal.bind(this, true)}>
+            Lisää karenssi
+          </Button>
+        </div>
 
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader}>
@@ -132,9 +208,15 @@ const Quarantine = props => {
               <div>
                 {match.phone_number}
               </div>
-              <div>
+              <div className={classes.EditButton}>
+                <Button>
+                  Muokkaa karenssia
+                </Button>
               </div>
-              <div>
+              <div className={classes.DeleteButton}>
+                <Button clicked={doDelete.bind(this, match.id)}>
+                  Poista
+                </Button>
               </div>
             </React.Fragment>
           ))}
@@ -147,8 +229,9 @@ const Quarantine = props => {
 const mapStateToProps = state => {
   return {
     quarantines: state.quarantine.quarantines,
-    confirm: state.quarantine.confirm,
+    showAddModal: state.quarantine.showAddModal,
     error: state.quarantine.error,
+    confirm: state.quarantine.confirm,
   };
 };
 
@@ -159,6 +242,12 @@ const mapDispatchToProps = dispatch => {
     },
     onAddNewQuarantine: (form) => {
       dispatch(actions.addNewQuarantine(form));
+    },
+    onShowAddModal: (isVisible) => {
+      dispatch(actions.showAddModal(isVisible));
+    },
+    onConfirmModal: (callback) => {
+      dispatch(actions.confirmQuarantine(callback));
     },
   };
 };

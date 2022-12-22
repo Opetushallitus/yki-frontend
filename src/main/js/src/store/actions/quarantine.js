@@ -24,6 +24,13 @@ export const setQuarantine = (id, reg_id, quarantined) => dispatch => {
     .catch(err => dispatch(setQuarantineFail(err)));
 };
 
+export const showAddModal = (isVisible) => dispatch => {
+  return dispatch({
+    type: actionTypes.SHOW_ADD_QUARANTINE,
+    showAddModal: isVisible,
+  });
+};
+
 export const confirmQuarantine = (callback) => dispatch => {
   return dispatch({
     type: actionTypes.CONFIRM_QUARANTINE,
@@ -32,7 +39,10 @@ export const confirmQuarantine = (callback) => dispatch => {
 };
 
 export const addNewQuarantine = (form) => dispatch => {
-  console.log(form)
+  axios
+    .post(`/yki/api/virkailija/quarantine`, form)
+    .then(() => dispatch(fetchQuarantines()))
+    .catch(err => dispatch(setQuarantineFail(err)));
 };
 
 const extractQuarantines = res => {
