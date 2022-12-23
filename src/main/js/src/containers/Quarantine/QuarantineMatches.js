@@ -88,7 +88,7 @@ const QuarantineMatches = props => {
           <div/>
           <div/>
           {matches.map((match) => (
-            <React.Fragment key={`quarantine-match-row-{match.id}`}>
+            <React.Fragment key={`quarantine-match-row-${match.id}`}>
                 <div>{findLang(match.language_code)}</div>
                 <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
                 <div>

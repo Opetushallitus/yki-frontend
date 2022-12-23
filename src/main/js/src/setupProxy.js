@@ -160,6 +160,32 @@ let organizers = [
   },
 ];
 
+const quarantineMatches = {
+  quarantines: [{
+    quarantine_lang: 'fin',
+    birthdate: '2018-02-01',
+    email: 'email@invalid.invalid',
+    language_code: 'fin',
+    phone_number: '0401234567',
+    quarantine_id: null,
+    reviewed: '2022-12-20T12:23:52.501Z',
+    name: 'Max Syöttöpaine',
+    ssn: '301079-900U',
+    registration_id: 1,
+    created: '2022-12-02T10:32:11.888Z',
+    exam_date: '2025-03-10',
+    end_date: '2028-01-01',
+    id: 1,
+    form: {
+      email: 'email@invalid.invalid',
+      birthdate: '2018-02-01',
+      last_name: 'Syöttöpaine',
+      first_name: 'Max',
+      phone_number: '0401234567'
+    }
+  }]
+};
+
 const initialOrganizers = [...organizers];
 
 const paymentFormData = {
@@ -328,7 +354,7 @@ module.exports = function(app) {
   app.get('/yki/api/virkailija/quarantine/matches', (req, res) => {
     const mockCall = () => {
       try {
-        res.send({ organizers: organizers });
+        res.send(quarantineMatches);
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
@@ -341,10 +367,10 @@ module.exports = function(app) {
     const mockCall = () => {
       try {
         const { id } = req.params;
-        const foundIndex = examSessions.exam_sessions.findIndex(
+        const foundIndex = quarantineMatches.quarantines.findIndex(
           x => x.id == id,
         );
-        examSessions.exam_sessions[foundIndex] = req.body;
+        quarantineMatches.quarantines[foundIndex] = req.body;
         res.send({ success: true });
       } catch (err) {
         printError(req, err);
