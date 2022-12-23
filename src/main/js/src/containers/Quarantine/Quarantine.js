@@ -94,7 +94,11 @@ const Quarantine = props => {
       show={!R.isNil(showAddModal)}
       smallModal
       modalClosed={onShowAddModal.bind(this, null)}
+      className={classes.QuarantineModal}
     >
+      <div className={classes.ConfirmText}>
+        Uusi karenssi
+      </div>
       <Formik
         initialValues={showAddModal ? showAddModal.form : initialForm}
         onSubmit={onFormSubmit}
