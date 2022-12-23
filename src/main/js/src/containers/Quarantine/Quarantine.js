@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as R from 'ramda';
@@ -23,10 +24,12 @@ const Quarantine = props => {
     quarantines,
     onFetchQuarantines,
     onAddNewQuarantine,
+    onEditQuarantine,
     onShowAddModal,
     showAddModal,
     onConfirmModal,
-    confirm
+    confirm,
+    onDeleteQuarantine,
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const [endDate, setEndDate] = useState(null);
@@ -36,24 +39,30 @@ const Quarantine = props => {
     email: '',
     phone_number: '',
     name: '',
+    end_date: '',
+    birthdate: '',
   };
+  const today = moment(new Date()).format('YYYY-MM-DD');
   const onFormSubmit = (form, actions) => {
     const payload = {
       ...form,
-      birthdate: dateToString(birthdate),
-      end_date: dateToString(endDate),
+      birthdate: birthdate ? dateToString(birthdate) : showAddModal.form.birthdate,
+      end_date: endDate ? dateToString(endDate) :  showAddModal.form.end_date,
     };
-    onAddNewQuarantine(payload);
+
+    form.id
+      ? onEditQuarantine(payload)
+      : onAddNewQuarantine(payload);
 
     actions.resetForm(initialForm);
   };
   const cancelForm = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    onShowAddModal(false)
+    onShowAddModal(false);
   };
   const doDelete = (id) => {
-    onConfirmModal(() => '');
+    onConfirmModal(onDeleteQuarantine.bind(this, id));
   };
 
   useEffect(onFetchQuarantines, []);
@@ -68,7 +77,7 @@ const Quarantine = props => {
       <div className={classes.ConfirmText}>
         {t('common.areYouSure')}
       </div>
-      <p>{t('quarantine.confirmDescription')}</p>
+      <p>Haluatko varmasti poistaa karenssin?</p>
       <div className={classes.ConfirmButtons}>
         <button onClick={confirm} className={classes.ConfirmButton}>
           {t('common.confirm')}
@@ -82,11 +91,12 @@ const Quarantine = props => {
 
   const quarantineModal = (
     <Modal
-      show={showAddModal}
+      show={!R.isNil(showAddModal)}
       smallModal
-      modalClosed={onShowAddModal.bind(this, false)}>
+      modalClosed={onShowAddModal.bind(this, null)}
+    >
       <Formik
-        initialValues={initialForm}
+        initialValues={showAddModal ? showAddModal.form : initialForm}
         onSubmit={onFormSubmit}
         render={({ values, handleChange }) => (
           <Form>
@@ -106,28 +116,32 @@ const Quarantine = props => {
               <div className={classes.QuarantineFormField}>
                 <label htmlFor="end_date">Vanhenee</label>
                 <DatePicker
-                  options={{ value: endDate ? dateToString(endDate) : '' }}
-                  locale={i18n.language}
-                  onChange={(dates) => {
-                    setEndDate(moment(dates[0]));
+                  options={{
+                    defaultDate: showAddModal.form.end_date,
+                    value: endDate ? dateToString(endDate) : showAddModal.form.end_date,
+                    minDate: today,
                   }}
+                  locale={i18n.language}
+                  onChange={(dates) => setEndDate(moment(dates[0]))}
                   id="end_date"
                 />
               </div>
 
               <div className={classes.QuarantineFormField}>
-                <label htmlFor="first_name">Etu- ja sukunimi</label>
-                <Field name="name" />
+                <label htmlFor="name">Etu- ja sukunimi</label>
+                <Field id="name" name="name" />
               </div>
 
               <div className={classes.QuarantineFormField}>
                 <label htmlFor="birthdate">Syntymäaika</label>
                 <DatePicker
-                  options={{ value: birthdate ? dateToString(birthdate) : '' }}
-                  locale={i18n.language}
-                  onChange={(dates) => {
-                    setBirthdate(moment(dates[0]));
+                  options={{
+                    defaultDate: showAddModal.form.birthdate,
+                    value: birthdate ? dateToString(birthdate) : showAddModal.form.birthdate,
+                    maxDate: today,
                   }}
+                  locale={i18n.language}
+                  onChange={(dates) => setBirthdate(moment(dates[0]))}
                   id="birthdate"
                 />
               </div>
@@ -143,12 +157,14 @@ const Quarantine = props => {
               </div>
             </div>
 
-            <Button clicked={cancelForm} tabIndex="4">
-              Peruuta
-            </Button>
-            <Button type="submit" tabIndex="4">
-              Lähetä
-            </Button>
+            <div className={classes.ConfirmButtons}>
+              <button className={classes.ConfirmButton} type="submit" tabIndex="4">
+                Lähetä
+              </button>
+              <button className={classes.CancelButton} onClick={cancelForm} tabIndex="4">
+                Peruuta
+              </button>
+            </div>
           </Form>
         )}/>
     </Modal>
@@ -156,15 +172,26 @@ const Quarantine = props => {
 
   return (
     <Page>
-      {quarantineModal}
+      {!R.isNil(showAddModal) && quarantineModal}
       {confirmDeleteModal}
       <div className={classes.Quarantines}>
+
         <h1>
           Karenssit
         </h1>
 
+        <NavLink to="/karenssi/mahdolliset" className={classes.MenuItem} activeClassName={classes.Active}>
+          Odottavat tarkistukset
+        </NavLink>
+        <NavLink to="/karenssi/historia" className={classes.MenuItem} activeClassName={classes.Active}>
+          Aiemmat tarkistukset
+        </NavLink>
+        <NavLink to="/karenssi" className={classes.MenuItem} activeClassName={classes.Active}>
+          Aktiiviset karenssit
+        </NavLink>
+
         <div className={classes.PrimaryButton}>
-          <Button clicked={onShowAddModal.bind(this, true)}>
+          <Button clicked={onShowAddModal.bind(this, { isVisible: true, form: initialForm })}>
             Lisää karenssi
           </Button>
         </div>
@@ -192,29 +219,29 @@ const Quarantine = props => {
           </div>
           <div className={classes.ListHeader}>
           </div>
-          {quarantines.map((match) => (
-            <React.Fragment key={`quarantine-row-${match.id}`}>
-              <div>{findLang(match.language_code)}</div>
-              <div>{moment(match.end_date).format(DATE_FORMAT)}</div>
+          {quarantines.map((quarantine) => (
+            <React.Fragment key={`quarantine-row-${quarantine.id}`}>
+              <div>{findLang(quarantine.language_code)}</div>
+              <div>{moment(quarantine.end_date).format(DATE_FORMAT)}</div>
               <div>
-                {match.name}
+                {quarantine.name}
               </div>
               <div>
-                {match.email}
+                {quarantine.email}
               </div>
               <div>
-                {moment(match.birthdate).format(DATE_FORMAT)}
+                {moment(quarantine.birthdate).format(DATE_FORMAT)}
               </div>
               <div>
-                {match.phone_number}
+                {quarantine.phone_number}
               </div>
               <div className={classes.EditButton}>
-                <Button>
-                  Muokkaa karenssia
+                <Button clicked={onShowAddModal.bind(this, { isVisible: true, form: quarantine })}>
+                  Muokkaa
                 </Button>
               </div>
               <div className={classes.DeleteButton}>
-                <Button clicked={doDelete.bind(this, match.id)}>
+                <Button clicked={doDelete.bind(this, quarantine.id)}>
                   Poista
                 </Button>
               </div>
@@ -237,11 +264,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onDeleteQuarantine: (id) => {
+      dispatch(actions.deleteQuarantine(id));
+    },
     onFetchQuarantines: () => {
       dispatch(actions.fetchQuarantines());
     },
     onAddNewQuarantine: (form) => {
       dispatch(actions.addNewQuarantine(form));
+    },
+    onEditQuarantine: (form) => {
+      dispatch(actions.editQuarantine(form));
     },
     onShowAddModal: (isVisible) => {
       dispatch(actions.showAddModal(isVisible));

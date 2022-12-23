@@ -10,16 +10,23 @@
 
 .QuarantineList {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 1.2fr 0.8fr;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 0;
   grid-row-gap: 5px;
 }
 
+.Quarantines .QuarantineList {
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 0.7fr 0.7fr;
+}
+
 .QuarantineList div {
+  display: flex;
   padding: 10px 0;
   text-align: center;
   margin: 0;
   color: #000;
+  align-items: center;
+  justify-content: center;
 }
 
 .QuarantineList div.ListHeader {
@@ -27,7 +34,8 @@
   border-color: #000;
   border-style: solid;
   font-weight: bold;
-  margin: 10px 0 30px 0;
+  margin: 10px 0 20px 0;
+  padding: 20px 0;
 }
 
 .PrimaryButton button {
@@ -49,6 +57,21 @@
 
 .QuarantineFormField label {
   display: block;
+}
+
+.MenuItem {
+  display: inline-block;
+  padding: 8px 15px;
+  margin: 20px 3px;
+  color: #000;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.MenuItem.Active {
+  border-width: 0 0 1px 0;
+  border-color: #000;
+  border-style: solid;
 }
 
 .ConfirmText {

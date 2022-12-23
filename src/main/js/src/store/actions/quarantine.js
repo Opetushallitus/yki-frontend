@@ -16,6 +16,13 @@ export const fetchQuarantines = () => dispatch => {
     .catch(err => dispatch(fetchQuarantineMatchesFail(err)));
 };
 
+export const deleteQuarantine = (id) => dispatch => {
+  axios
+    .delete(`/yki/api/virkailija/quarantine/${id}`)
+    .then()
+    .catch(err => dispatch(fetchQuarantineMatchesFail(err)));
+};
+
 export const setQuarantine = (id, reg_id, quarantined) => dispatch => {
   const payload = { is_quarantined: quarantined };
   axios
@@ -40,7 +47,14 @@ export const confirmQuarantine = (callback) => dispatch => {
 
 export const addNewQuarantine = (form) => dispatch => {
   axios
-    .post(`/yki/api/virkailija/quarantine`, form)
+    .post('/yki/api/virkailija/quarantine', form)
+    .then(() => dispatch(fetchQuarantines()))
+    .catch(err => dispatch(setQuarantineFail(err)));
+};
+
+export const editQuarantine = (form) => dispatch => {
+  axios
+    .put(`/yki/api/virkailija/quarantine/${form.id}`, form)
     .then(() => dispatch(fetchQuarantines()))
     .catch(err => dispatch(setQuarantineFail(err)));
 };

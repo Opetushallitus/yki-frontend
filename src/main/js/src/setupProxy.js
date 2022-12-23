@@ -361,6 +361,30 @@ module.exports = function(app) {
     useLocalProxy ? proxyPostCall(req, res) : mockCall();
   });
 
+  app.put('/yki/api/virkailija/quarantine/:id', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send({ organizers: organizers });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyPutCall(req, res) : mockCall();
+  });
+
+  app.delete('/yki/api/virkailija/quarantine/:id', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send({ organizers: organizers });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyDeleteCall(req, res) : mockCall();
+  });
+
   app.put('/yki/api/virkailija/quarantine/:id/registration/:reg_id/set', (req, res) => {
     const mockCall = () => {
       try {

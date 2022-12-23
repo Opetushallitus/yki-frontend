@@ -6,7 +6,7 @@ const initialState = {
   matches: [],
   all: [],
   quarantines: [],
-  showAddModal: false,
+  showAddModal: null,
 };
 
 const reducer = (state = initialState, action) => {
