@@ -70,47 +70,7 @@
   width: 10rem;
 }
 
-.MenuItem {
-  display: inline-block;
-  padding: 8px 15px;
-  margin: 20px 3px;
-  color: #000;
-  font-size: 1.2rem;
-  text-decoration: none;
-}
-
-.MenuItem.Active {
-  border-width: 0 0 1px 0;
-  border-color: #000;
-  border-style: solid;
-}
-
-.ConfirmText {
-  font-weight: bold;
-  margin-bottom: 4vh;
-  max-height: 300px;
-}
-
-.ConfirmButtons {
-  text-align: right;
-  margin: 30px 0 0 0;
-}
-
-.ConfirmButtons button {
-  color: hsl(0, 0%, 100%);
-  border: none;
-  padding: 12px;
-  border-radius: 2px;
-  width: 6rem;
-  cursor: pointer;
-}
-
-.ConfirmButton {
-  background-color: hsla(199, 77%, 43%, 0.95);
-  margin-right: 1.2vw;
-}
-
-.CancelButton, .DeleteButton button {
+.DeleteButton button {
   background-color: hsla(358, 75%, 57%, 0.85);
 }
 

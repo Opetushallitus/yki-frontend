@@ -1,6 +1,5 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as R from 'ramda';
@@ -14,6 +13,7 @@ import classes from './Quarantine.module.css';
 import * as actions from '../../store/actions/index';
 import { DATE_FORMAT, LANGUAGES } from '../../common/Constants';
 import Modal from '../../components/UI/Modal/Modal';
+import QuarantineNav from '../../components/Quarantine/Navigation';
 
 const dateToString = date => date.format('YYYY-MM-DD');
 
@@ -184,15 +184,7 @@ const Quarantine = props => {
           Karenssit
         </h1>
 
-        <NavLink to="/karenssi/mahdolliset" className={classes.MenuItem} activeClassName={classes.Active}>
-          Odottavat tarkistukset
-        </NavLink>
-        <NavLink to="/karenssi/historia" className={classes.MenuItem} activeClassName={classes.Active}>
-          Aiemmat tarkistukset
-        </NavLink>
-        <NavLink to="/karenssi" className={classes.MenuItem} activeClassName={classes.Active}>
-          Aktiiviset karenssit
-        </NavLink>
+        <QuarantineNav />
 
         <div className={classes.PrimaryButton}>
           <Button clicked={onShowAddModal.bind(this, { isVisible: true, form: initialForm })}>

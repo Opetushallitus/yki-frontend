@@ -11,6 +11,8 @@ import classes from './Quarantine.module.css';
 import * as actions from '../../store/actions/index';
 import { DATE_FORMAT, LANGUAGES } from '../../common/Constants';
 import Modal from '../../components/UI/Modal/Modal';
+import QuarantineNav from '../../components/Quarantine/Navigation';
+import QuarantineConfirmModal from '../../components/Quarantine/ConfirmModal';
 
 const QuarantineHistory = props => {
   const {
@@ -24,27 +26,6 @@ const QuarantineHistory = props => {
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const closeConfirmModal = () => confirmQuarantine(null);
 
-  const confirmQuarantineModal = (
-    <Modal
-      show={!R.isNil(confirm)}
-      confirmationModal
-      modalClosed={closeConfirmModal}
-    >
-      <div className={classes.ConfirmText}>
-        {t('common.areYouSure')}
-      </div>
-      <p>{t('quarantine.confirmDescription')}</p>
-      <div className={classes.ConfirmButtons}>
-        <button onClick={confirm} className={classes.ConfirmButton}>
-          {t('common.confirm')}
-        </button>
-        <button onClick={closeConfirmModal} className={classes.CancelButton}>
-          {t('common.cancelConfirm')}
-        </button>
-      </div>
-    </Modal>
-  );
-
   useEffect(onFetchQuarantineMatches, []);
 
   const showQuarantineConfirm = (id, reg_id) =>
@@ -55,11 +36,17 @@ const QuarantineHistory = props => {
 
   return (
     <Page>
-      {confirmQuarantineModal}
+      <QuarantineConfirmModal
+        t={t}
+        confirm={confirm}
+        cancel={closeConfirmModal}
+      />
       <div className={classes.QuarantineMatches}>
         <h1>
           {t('quarantine.matchesTitle')}
         </h1>
+
+        <QuarantineNav />
 
         <p>
           {t('quarantine.matchesDescription')}
@@ -85,21 +72,19 @@ const QuarantineHistory = props => {
             {t('common.phoneNumber')}
           </div>
           <div className={classes.ListHeader}>
-            Tarkastettu
-          </div>
-          <div className={classes.ListHeader}>
             Tila
           </div>
+          <div/>
           {all.map((match) => (
             <React.Fragment key={`quarantine-match-row-{match.id}`}>
               <div>{findLang(match.language_code)}</div>
               <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
               <div>
-                {match.name}<br />
+                {match.name}<br/>
                 {match.form.first_name} {match.form.last_name}
               </div>
               <div>
-                {match.email}<br />
+                {match.email}<br/>
                 {match.form.email}
               </div>
               <div>
@@ -108,14 +93,16 @@ const QuarantineHistory = props => {
                 {moment(match.form.birthdate).format(DATE_FORMAT)}
               </div>
               <div>
-                {match.phone_number}<br />
+                {match.phone_number}<br/>
                 {match.form.phone_number}
               </div>
               <div>
-                {moment(match.reviewed).format(DATE_FORMAT)}
+                Karenssissa
               </div>
               <div>
-                Karenssissa
+                <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
+                  Kumoa karenssi
+                </Button>
               </div>
             </React.Fragment>
           ))}
