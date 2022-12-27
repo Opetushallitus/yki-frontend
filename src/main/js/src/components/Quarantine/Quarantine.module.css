@@ -41,3 +41,20 @@
 .CancelButton {
   background-color: hsla(358, 75%, 57%, 0.85);
 }
+
+.QuarantineFormFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+  grid-row-gap: 20px;
+}
+
+.QuarantineFormField label {
+  display: block;
+  padding: 5px 0;
+}
+
+.QuarantineFormField select {
+  padding: 5px;
+  width: 10rem;
+}

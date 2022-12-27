@@ -72,7 +72,7 @@ const QuarantineHistory = props => {
             {t('common.phoneNumber')}
           </div>
           <div className={classes.ListHeader}>
-            Tila
+            {t('quarantine.status')}
           </div>
           <div/>
           {all.map((match) => (
@@ -97,12 +97,18 @@ const QuarantineHistory = props => {
                 {match.form.phone_number}
               </div>
               <div>
-                Karenssissa
+                {match.id ? t('quarantine.quarantined') : t('quarantine.notQuarantined')}
               </div>
               <div>
-                <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
-                  Kumoa karenssi
-                </Button>
+                {match.id ? (
+                  <Button clicked={doSetQuarantine.bind(this, match.id, match.registration_id, false)}>
+                    {t('quarantine.cancelQuarantine')}
+                  </Button>
+                ) : (
+                  <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
+                    {t('quarantine.setQuarantine')}
+                  </Button>
+                )}
               </div>
             </React.Fragment>
           ))}

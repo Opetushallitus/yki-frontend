@@ -11,6 +11,8 @@ import classes from './Quarantine.module.css';
 import * as actions from '../../store/actions/index';
 import { DATE_FORMAT, LANGUAGES } from '../../common/Constants';
 import Modal from '../../components/UI/Modal/Modal';
+import QuarantineNav from '../../components/Quarantine/Navigation';
+import QuarantineConfirmModal from '../../components/Quarantine/ConfirmModal';
 
 const QuarantineMatches = props => {
   const {
@@ -25,27 +27,6 @@ const QuarantineMatches = props => {
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const closeConfirmModal = () => confirmQuarantine(null);
 
-  const confirmQuarantineModal = (
-    <Modal
-      show={!R.isNil(confirm) && R.isNil(error)}
-      confirmationModal
-      modalClosed={closeConfirmModal}
-    >
-      <div className={classes.ConfirmText}>
-        {t('common.areYouSure')}
-      </div>
-      <p>{t('quarantine.confirmDescription')}</p>
-      <div className={classes.ConfirmButtons}>
-        <button onClick={confirm} className={classes.ConfirmButton}>
-          {t('common.confirm')}
-        </button>
-        <button onClick={closeConfirmModal} className={classes.CancelButton}>
-          {t('common.cancelConfirm')}
-        </button>
-      </div>
-    </Modal>
-  );
-
   useEffect(onFetchQuarantineMatches, []);
 
   const showQuarantineConfirm = (id, reg_id) =>
@@ -56,11 +37,19 @@ const QuarantineMatches = props => {
 
   return (
     <Page>
-      {confirmQuarantineModal}
+      {R.isNil(error) && (
+        <QuarantineConfirmModal
+          t={t}
+          confirm={confirm}
+          cancel={closeConfirmModal}
+        />
+      )}
       <div className={classes.QuarantineMatches}>
         <h1>
           {t('quarantine.matchesTitle')}
         </h1>
+
+        <QuarantineNav />
 
         <p>
           {t('quarantine.matchesDescription')}
