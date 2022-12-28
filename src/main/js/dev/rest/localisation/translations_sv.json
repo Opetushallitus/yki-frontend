@@ -270,7 +270,7 @@
   "registration.init.error.session.closed": "Anmälningstiden har gått ut.",
   "registration.init.error.session.full": "Examenstillfället är fullsatt.",
   "registration.init.error.session.multiple": "Du kan anmäla dig till endast ett examenstillfälle.",
-  "registration.list.contact": "Kontaktpersoner:",
+  "registration.list.contact": "Arrangörens kontaktuppgifter:",
   "registration.list.date": "Datum",
   "registration.list.evalPossible": "Möjligt att begära om kontrollbedömning",
   "registration.list.exam": "Examen",

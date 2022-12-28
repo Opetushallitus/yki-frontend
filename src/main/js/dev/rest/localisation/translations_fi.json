@@ -275,7 +275,7 @@
   "registration.init.error.session.closed": "Ilmoittautumisaika on päättynyt.",
   "registration.init.error.session.full": "Tutkintotilaisuus on täynnä.",
   "registration.init.error.session.multiple": "Voit ilmoittautua vain yhteen tutkintotilaisuuteen.",
-  "registration.list.contact": "Yhteyshenkilöt:",
+  "registration.list.contact": "Järjestäjän yhteystiedot:",
   "registration.list.date": "Päivämäärä",
   "registration.list.evalPossible": "Tarkistusarvioinnin tilaaminen mahdollista",
   "registration.list.exam": "Tutkinto",

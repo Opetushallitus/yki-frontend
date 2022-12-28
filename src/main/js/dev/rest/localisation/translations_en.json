@@ -270,7 +270,7 @@
   "registration.init.error.session.closed": "Registration period has ended.",
   "registration.init.error.session.full": "Language proficiency test is full.",
   "registration.init.error.session.multiple": "You may sign up for only one test.",
-  "registration.list.contact": "Contact persons:",
+  "registration.list.contact": "Organizer's contact information:",
   "registration.list.date": "Date",
   "registration.list.evalPossible": "Requesting a reassessment is possible",
   "registration.list.exam": "Language procifiency test",
