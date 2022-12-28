@@ -517,13 +517,15 @@ export const registrationForm = props => {
           </div>
 
           <p>{props.t('registration.form.specialArrangements.info')}
-            &nbsp;
+            <br />
+            {props.t('registration.form.specialArrangements.link.info')}:
+            <br />
             <a
-              href={props.t('registration.form.specialArrangements.link')}
+              href={props.t('registration.form.specialArrangements.link.url')}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={props.t('common.newTab')}>
-                  {props.t('registration.form.specialArrangements.link')}
+                  {props.t('registration.form.specialArrangements.link.url')}
                   <img
                     src={require('../../../assets/svg/external-link.svg')}
                     alt={props.t('common.newTab')}
