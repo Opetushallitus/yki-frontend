@@ -20,6 +20,7 @@ const PriceContainer = props => {
   return (
     <div className={classes.PriceContainer} data-cy="price-container">
       <h2 style={{ textAlign: 'center' }}>{t('common.priceList')}</h2>
+      { props.showValidFromText ? <p style={{ textAlign: 'center '}}>{t('common.priceList.validFrom')}</p> : null }
       <div
         className={
           onMobileSV || onMobileEN ? classes.PriceBoxSV : classes.PriceBox
