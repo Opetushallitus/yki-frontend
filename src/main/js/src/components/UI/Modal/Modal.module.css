@@ -33,7 +33,7 @@
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
-  min-height: 20vh;
+  height: 20vh;
   width: 35vw;
   max-width: 650px;
   z-index: 500;
