@@ -130,6 +130,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
               price: '50',
               extraText: 'common.price.reeval.last',
             })}
+            showValidFromText
           />
         </div>
         <div>
@@ -210,7 +211,7 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
         />
       </div>
 
-      <PriceContainer elements={levelPrices} />
+      <PriceContainer elements={levelPrices} showValidFromText/>
       {registerButton}
 
       <div
