@@ -92,7 +92,7 @@ const QuarantineMatches = props => {
                 <div>{findLang(match.language_code)}</div>
                 <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
                 <div>
-                  {match.name}<br />
+                  {match.first_name} {match.last_name}<br />
                   {match.form.first_name} {match.form.last_name}
                 </div>
                 <div>

@@ -80,7 +80,7 @@
   "quarantine.noQuarantine": "Ei karenssia",
   "quarantine.matchesTitle": "Mahdolliset karenssit",
   "quarantine.matchesDescription": "Järjestelmän tunnistamat mahdolliset karenssit.",
-  "quarantine.confirmDescription": "Karenssin lisääminen peruuttaa ilmoittautumisen. Hoidathan peruutusilmoituksen ja maksun palautuksen.",
+  "quarantine.confirmDescription": "Karenssin lisääminen peruuttaa ilmoittautumisen. Hoidathan peruutusilmoituksen, maksun palautuksen ja tiedon välityksen SOLKI-järjestelmään.",
   "email.payment_success.subject": "Maksu onnistui",
   "error.age": "Tarkista ikä",
   "error.birthdate": "Anna syntymäaika muodossa pp.kk.vvvv",
