@@ -34,7 +34,7 @@ const QuarantineConfirmModal = props => {
 };
 
 QuarantineConfirmModal.propTypes = {
-  t: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired,
   confirm: PropTypes.func.isRequired,
   cancel: PropTypes.func.isRequired,
 };

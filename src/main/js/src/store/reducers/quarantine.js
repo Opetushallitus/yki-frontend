@@ -11,6 +11,10 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.RESET_QUARANTINE:
+      return { ...initialState };
+    case actionTypes.LOADING_QUARANTINE:
+      return { ...state, loading: action.loading };
     case actionTypes.ADD_QUARANTINE_MATCHES:
       return { ...state, matches: action.matches, all: action.all };
     case actionTypes.ADD_QUARANTINES:

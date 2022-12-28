@@ -90,3 +90,7 @@
   width: 6rem;
   cursor: pointer;
 }
+
+.SpinnerContainer {
+  text-align: center;
+}

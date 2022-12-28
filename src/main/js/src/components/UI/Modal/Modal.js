@@ -16,6 +16,7 @@ const modal = props => (
   <React.Fragment>
     <Backdrop show={props.show} clicked={props.modalClosed} />
     <div
+      disabled={true}
       className={modalClass(props)}
       style={{
         display: props.show ? 'block' : 'none',

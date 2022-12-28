@@ -13,7 +13,6 @@ const QuarantineForm = props => {
     t,
     i18n,
     form,
-    emptyForm,
     onEdit,
     onAdd,
     onCancel,
@@ -27,7 +26,7 @@ const QuarantineForm = props => {
     onCancel();
   };
 
-  const onFormSubmit = (values, actions) => {
+  const onFormSubmit = (values) => {
     const payload = {
       ...values,
       birthdate: birthdate ? dateToString(birthdate) : form.birthdate,
@@ -37,8 +36,6 @@ const QuarantineForm = props => {
     values.id
       ? onEdit(payload)
       : onAdd(payload);
-
-    actions.resetForm(emptyForm);
   };
 
   return (
@@ -80,8 +77,8 @@ const QuarantineForm = props => {
             </div>
 
             <div className={classes.QuarantineFormField}>
-              <label htmlFor="firstname">{t('common.firstname')}</label>
-              <Field id="firstname" name="firstname" />
+              <label htmlFor="first_name">{t('common.first_name')}</label>
+              <Field id="first_name" name="first_name" />
             </div>
 
             <div className={classes.QuarantineFormField}>
@@ -99,8 +96,8 @@ const QuarantineForm = props => {
             </div>
 
             <div className={classes.QuarantineFormField}>
-              <label htmlFor="lastname">{t('common.lastname')}</label>
-              <Field id="lastname" name="lastname" />
+              <label htmlFor="last_name">{t('common.last_name')}</label>
+              <Field id="last_name" name="last_name" />
             </div>
 
             <div className={classes.QuarantineFormField}>
@@ -128,9 +125,12 @@ const QuarantineForm = props => {
 };
 
 QuarantineForm.propTypes = {
-  t: PropTypes.object.isRequired,
-  confirm: PropTypes.func.isRequired,
-  cancel: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
+  i18n: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default QuarantineForm;

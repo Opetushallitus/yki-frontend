@@ -2,7 +2,6 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import * as R from 'ramda';
 
 import Button from '../../components/UI/Button/Button';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -10,7 +9,7 @@ import Page from '../../hoc/Page/Page';
 import classes from './Quarantine.module.css';
 import * as actions from '../../store/actions/index';
 import { DATE_FORMAT, LANGUAGES } from '../../common/Constants';
-import Modal from '../../components/UI/Modal/Modal';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import QuarantineNav from '../../components/Quarantine/Navigation';
 import QuarantineConfirmModal from '../../components/Quarantine/ConfirmModal';
 
@@ -21,12 +20,14 @@ const QuarantineHistory = props => {
     onFetchQuarantineMatches,
     setQuarantine,
     confirmQuarantine,
-    confirm
+    confirm,
+    loading,
+    error,
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const closeConfirmModal = () => confirmQuarantine(null);
 
-  useEffect(onFetchQuarantineMatches, []);
+  useEffect(onFetchQuarantineMatches, [error]);
 
   const showQuarantineConfirm = (id, reg_id) =>
     confirmQuarantine(() => setQuarantine(id, reg_id, true));
@@ -76,11 +77,11 @@ const QuarantineHistory = props => {
           </div>
           <div/>
           {all.map((match) => (
-            <React.Fragment key={`quarantine-match-row-{match.id}`}>
+            <React.Fragment key={`quarantine-match-row-${match.id}`}>
               <div>{findLang(match.language_code)}</div>
               <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
               <div>
-                {match.name}<br/>
+                {match.first_name} {match.last_name}<br/>
                 {match.form.first_name} {match.form.last_name}
               </div>
               <div>
@@ -113,6 +114,11 @@ const QuarantineHistory = props => {
             </React.Fragment>
           ))}
         </div>
+        {loading && (
+          <div className={classes.SpinnerContainer}>
+            <Spinner />
+          </div>
+        )}
      </div>
     </Page>
   );
@@ -123,6 +129,7 @@ const mapStateToProps = state => {
     all: state.quarantine.all,
     confirm: state.quarantine.confirm,
     error: state.quarantine.error,
+    loading: state.quarantine.loading,
   };
 };
 
@@ -137,6 +144,7 @@ const mapDispatchToProps = dispatch => {
     confirmQuarantine: (callback) => {
       dispatch(actions.confirmQuarantine(callback));
     },
+    errorConfirmedHandler: () => dispatch(actions.resetAll()),
   };
 };
 

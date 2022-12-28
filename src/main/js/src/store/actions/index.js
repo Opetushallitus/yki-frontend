@@ -71,4 +71,5 @@ export {
   showAddModal,
   deleteQuarantine,
   editQuarantine,
+  resetAll,
 } from './quarantine';

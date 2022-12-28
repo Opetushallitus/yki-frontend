@@ -11,8 +11,20 @@ import classes from './Quarantine.module.css';
 import * as actions from '../../store/actions/index';
 import { DATE_FORMAT, LANGUAGES } from '../../common/Constants';
 import Modal from '../../components/UI/Modal/Modal';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import SpinnerOverlay from '../../components/UI/SpinnerOverlay/SpinnerOverlay';
 import QuarantineNav from '../../components/Quarantine/Navigation';
 import QuarantineForm from '../../components/Quarantine/Form';
+
+const initialForm = {
+  language_code: 'fin',
+  email: '',
+  phone_number: '',
+  first_name: '',
+  last_name: '',
+  end_date: '',
+  birthdate: '',
+};
 
 const Quarantine = props => {
   const {
@@ -27,13 +39,15 @@ const Quarantine = props => {
     onConfirmModal,
     confirm,
     onDeleteQuarantine,
+    loading,
+    error,
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const doDelete = (id) => {
     onConfirmModal(onDeleteQuarantine.bind(this, id));
   };
 
-  useEffect(onFetchQuarantines, []);
+  useEffect(onFetchQuarantines, [error]);
 
   const closeConfirmModal = onConfirmModal.bind(this, null);
   const confirmDeleteModal = (
@@ -42,10 +56,11 @@ const Quarantine = props => {
       confirmationModal
       modalClosed={closeConfirmModal}
     >
+      {loading && (<SpinnerOverlay />)}
       <div className={classes.ConfirmText}>
         {t('common.areYouSure')}
       </div>
-      <p>Haluatko varmasti poistaa karenssin?</p>
+      <p>{t('quarantine.askDelete')}</p>
       <div className={classes.ConfirmButtons}>
         <button onClick={confirm} className={classes.ConfirmButton}>
           {t('common.confirm')}
@@ -57,16 +72,6 @@ const Quarantine = props => {
     </Modal>
   );
 
-  const initialForm = {
-    language_code: 'fin',
-    email: '',
-    phone_number: '',
-    firstname: '',
-    lastname: '',
-    end_date: '',
-    birthdate: '',
-  };
-
   const quarantineModal = (
     <Modal
       show={!R.isNil(showAddModal)}
@@ -74,6 +79,7 @@ const Quarantine = props => {
       modalClosed={onShowAddModal.bind(this, null)}
       className={classes.QuarantineModal}
     >
+      {loading && (<SpinnerOverlay />)}
       <div className={classes.ConfirmText}>
         {t('quarantine.new')}
       </div>
@@ -81,17 +87,17 @@ const Quarantine = props => {
         t={t}
         i18n={i18n}
         form={showAddModal ? showAddModal.form : initialForm}
-        emptyForm={initialForm}
         onEdit={onEditQuarantine}
         onAdd={onAddNewQuarantine}
         onCancel={() => onShowAddModal(null)}
       />
     </Modal>
   );
+
   return (
     <Page>
-      {!R.isNil(showAddModal) && quarantineModal}
-      {confirmDeleteModal}
+      {R.isNil(error) && !R.isNil(showAddModal) && quarantineModal}
+      {R.isNil(error) && confirmDeleteModal}
       <div className={classes.Quarantines}>
         <h1>
           {t('quarantine.quarantines')}
@@ -131,7 +137,7 @@ const Quarantine = props => {
               <div>{moment(quarantine.end_date).format(DATE_FORMAT)}</div>
               <div>{findLang(quarantine.language_code)}</div>
               <div>
-                {quarantine.name}
+                {quarantine.first_name} {quarantine.last_name}
               </div>
               <div>
                 {quarantine.email}
@@ -155,6 +161,11 @@ const Quarantine = props => {
             </React.Fragment>
           ))}
         </div>
+        {loading && (
+          <div className={classes.SpinnerContainer}>
+            <Spinner />
+          </div>
+        )}
      </div>
     </Page>
   );
@@ -166,6 +177,7 @@ const mapStateToProps = state => {
     showAddModal: state.quarantine.showAddModal,
     error: state.quarantine.error,
     confirm: state.quarantine.confirm,
+    loading: state.quarantine.loading
   };
 };
 
@@ -189,6 +201,7 @@ const mapDispatchToProps = dispatch => {
     onConfirmModal: (callback) => {
       dispatch(actions.confirmQuarantine(callback));
     },
+    errorConfirmedHandler: () => dispatch(actions.resetAll()),
   };
 };
 
