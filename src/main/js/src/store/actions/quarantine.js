@@ -61,6 +61,7 @@ export const setQuarantine = (id, reg_id, quarantined) => dispatch => {
   axios
     .put(`/yki/api/virkailija/quarantine/${id}/registration/${reg_id}/set`, payload)
     .then(() => dispatch(fetchQuarantineMatches()))
+    .then(() => dispatch(confirmQuarantine(null)))
     .then(() => dispatch({
       type: actionTypes.LOADING_QUARANTINE,
       loading: false,

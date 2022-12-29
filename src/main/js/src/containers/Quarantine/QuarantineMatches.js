@@ -38,7 +38,7 @@ const QuarantineMatches = props => {
 
   return (
     <Page>
-      {R.isNil(error) && (
+      {R.isNil(error) && !R.isNil(confirm) && (
         <QuarantineConfirmModal
           t={t}
           confirm={confirm}

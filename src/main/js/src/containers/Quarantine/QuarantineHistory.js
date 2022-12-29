@@ -2,6 +2,7 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import * as R from 'ramda';
 
 import Button from '../../components/UI/Button/Button';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -37,11 +38,13 @@ const QuarantineHistory = props => {
 
   return (
     <Page>
-      <QuarantineConfirmModal
-        t={t}
-        confirm={confirm}
-        cancel={closeConfirmModal}
-      />
+      {R.isNil(error) && !R.isNil(confirm) && (
+        <QuarantineConfirmModal
+          t={t}
+          confirm={confirm}
+          cancel={closeConfirmModal}
+        />
+      )}
       <div className={classes.QuarantineMatches}>
         <h1>
           {t('quarantine.matchesTitle')}
