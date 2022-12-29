@@ -3,12 +3,14 @@ import React from 'react';
 import classes from './Quarantine.module.css';
 import Modal from '../../components/UI/Modal/Modal';
 import PropTypes from 'prop-types';
+import SpinnerOverlay from '../../components/UI/SpinnerOverlay/SpinnerOverlay';
 
 const QuarantineConfirmModal = props => {
   const {
     t,
     confirm,
     cancel,
+    loading,
   } = props;
 
   return (
@@ -17,6 +19,7 @@ const QuarantineConfirmModal = props => {
       confirmationModal
       modalClosed={cancel}
     >
+      {loading && (<SpinnerOverlay />)}
       <div className={classes.ConfirmText}>
         {t('common.areYouSure')}
       </div>
@@ -37,6 +40,7 @@ QuarantineConfirmModal.propTypes = {
   t: PropTypes.func.isRequired,
   confirm: PropTypes.func.isRequired,
   cancel: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default QuarantineConfirmModal;

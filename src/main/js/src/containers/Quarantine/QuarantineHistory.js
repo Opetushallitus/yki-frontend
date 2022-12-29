@@ -44,6 +44,7 @@ const QuarantineHistory = props => {
           t={t}
           confirm={confirm}
           cancel={closeConfirmModal}
+          loading={loading}
         />
       )}
       <div className={classes.QuarantineMatches}>
@@ -54,7 +55,7 @@ const QuarantineHistory = props => {
         <QuarantineNav />
 
         <p>
-          {t('quarantine.matchesDescription')}
+          {t('quarantine.reviewsDescription')}
         </p>
 
         <div className={classes.QuarantineList}>
@@ -81,36 +82,62 @@ const QuarantineHistory = props => {
           </div>
           <div/>
           {reviews.map(review => (
-            <React.Fragment key={`quarantine-match-row-${review.id}`}>
+            <React.Fragment key={`quarantine-match-row-${review.quarantine_id}`}>
               <div>{findLang(review.language_code)}</div>
               <div>{moment(review.exam_date).format(DATE_FORMAT)}</div>
-              <div>
-                {review.first_name} {review.last_name}<br/>
-                {review.form.first_name} {review.form.last_name}
+              <div className={classes.ListRow}>
+                <span>
+                  {review.form.first_name} {review.form.last_name}
+                </span>
+                <span>
+                  {review.first_name} {review.last_name}
+                </span>
               </div>
-              <div>
-                {review.email}<br/>
-                {review.form.email}
+              <div className={classes.ListRow}>
+                <span>
+                  {review.form.email}&nbsp;<br/>
+                </span>
+                <span>
+                  {review.email}
+                </span>
               </div>
-              <div>
-                {moment(review.birthdate).format(DATE_FORMAT)}
-                <br />
-                {moment(review.form.birthdate).format(DATE_FORMAT)}
+              <div className={classes.ListRow}>
+                <span>
+                  {moment(review.form.birthdate).format(DATE_FORMAT)}&nbsp;
+                </span>
+                <span>
+                  {moment(review.birthdate).format(DATE_FORMAT)}
+                </span>
               </div>
-              <div>
-                {review.phone_number}<br/>
-                {review.form.phone_number}
+              <div className={classes.ListRow}>
+                <span>
+                  {review.phone_number}
+                </span>
+                <span>
+                  {review.form.phone_number}
+                </span>
               </div>
-              <div>
-                {review.quarantined ? t('quarantine.quarantined') : t('quarantine.notQuarantined')}
+              <div className={classes.ListRow}>
+                {review.quarantined
+                 ? t('quarantine.quarantined')
+                 : t('quarantine.notQuarantined')}
               </div>
               <div>
                 {review.quarantined ? (
-                  <Button clicked={doSetQuarantine.bind(this, review.id, review.registration_id, false)}>
+                  <Button disabled={loading} clicked={doSetQuarantine.bind(
+                    this,
+                    review.quarantine_id,
+                    review.registration_id,
+                    false
+                  )}>
                     {t('quarantine.cancelQuarantine')}
                   </Button>
                 ) : (
-                  <Button clicked={showQuarantineConfirm.bind(this, review.id, review.registration_id)}>
+                  <Button disabled={loading} clicked={showQuarantineConfirm.bind(
+                    this,
+                    review.quarantine_id,
+                    review.registration_id
+                  )}>
                     {t('quarantine.setQuarantine')}
                   </Button>
                 )}

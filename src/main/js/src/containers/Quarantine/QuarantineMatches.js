@@ -44,6 +44,7 @@ const QuarantineMatches = props => {
           t={t}
           confirm={confirm}
           cancel={closeConfirmModal}
+          loading={loading}
         />
       )}
       <div className={classes.QuarantineMatches}>
@@ -80,35 +81,50 @@ const QuarantineMatches = props => {
           <div/>
           {matches.map((match) => (
             <React.Fragment key={`quarantine-match-row-${match.id}`}>
-                <div>{findLang(match.language_code)}</div>
-                <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
-                <div>
-                  {match.first_name} {match.last_name}<br />
+              <div>{findLang(match.language_code)}</div>
+              <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
+              <div className={classes.ListRow}>
+                <span>
                   {match.form.first_name} {match.form.last_name}
-                </div>
-                <div>
-                  {match.email}<br />
+                </span>
+                <span>
+                  {match.first_name} {match.last_name}
+                </span>
+              </div>
+              <div className={classes.ListRow}>
+                <span>
                   {match.form.email}
-                </div>
-                <div>
-                  {moment(match.birthdate).format(DATE_FORMAT)}
-                  <br />
+                </span>
+                <span>
+                  {match.email}
+                </span>
+              </div>
+              <div className={classes.ListRow}>
+                <span>
                   {moment(match.form.birthdate).format(DATE_FORMAT)}
-                </div>
-                <div>
-                  {match.phone_number}<br />
+                </span>
+                <span>
+                  {moment(match.birthdate).format(DATE_FORMAT)}
+                </span>
+              </div>
+              <div className={classes.ListRow}>
+                <span>
                   {match.form.phone_number}
-                </div>
-                <div className={classes.PrimaryButton}>
-                  <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
-                    {t('quarantine.addQuarantine')}
-                  </Button>
-                </div>
-                <div>
-                  <Button clicked={doSetQuarantine.bind(this, match.id, match.registration_id, false)}>
-                    {t('quarantine.noQuarantine')}
-                  </Button>
-                </div>
+                </span>
+                <span>
+                  {match.phone_number}
+                </span>
+              </div>
+              <div className={classes.PrimaryButton}>
+                <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
+                  {t('quarantine.setQuarantine')}
+                </Button>
+              </div>
+              <div>
+                <Button clicked={doSetQuarantine.bind(this, match.id, match.registration_id, false)}>
+                  {t('quarantine.noQuarantine')}
+                </Button>
+              </div>
             </React.Fragment>
           ))}
         </div>

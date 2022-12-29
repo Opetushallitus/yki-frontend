@@ -4,9 +4,14 @@ import classes from './Quarantine.module.css';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field } from 'formik';
 import DatePicker from '../../components/UI/DatePicker/DatePicker';
-import { LANGUAGES } from '../../common/Constants';
+import {
+  LANGUAGES,
+  DATE_FORMAT,
+  DATE_FORMAT_PICKER,
+} from '../../common/Constants';
 
 const dateToString = date => date.format('YYYY-MM-DD');
+const formatDate = date => moment(date).format(DATE_FORMAT);
 
 const QuarantineForm = props => {
   const {
@@ -17,8 +22,16 @@ const QuarantineForm = props => {
     onAdd,
     onCancel,
   } = props;
-  const [endDate, setEndDate] = useState(null);
-  const [birthdate, setBirthdate] = useState(null);
+  const initialEndDate = form.end_date
+        ? formatDate(form.end_date)
+        : null;
+  const initialBirthdate = form.birthdate
+        ? formatDate(form.birthdate)
+        : null;
+
+  // Datepicker doesn't work with formik so we store it in state instead
+  const [endDate, setEndDate] = useState(initialEndDate);
+  const [birthdate, setBirthdate] = useState(initialBirthdate);
   const today = moment(new Date()).format('YYYY-MM-DD');
   const cancelForm = (e) => {
     e.stopPropagation();
@@ -27,10 +40,17 @@ const QuarantineForm = props => {
   };
 
   const onFormSubmit = (values) => {
+    // Datepicker can return either Date object or string
+    const parsedBirthdate = (birthdate instanceof Date)
+      ? moment(birthdate)
+      : moment(birthdate, DATE_FORMAT)
+    const parsedEndDate = (endDate instanceof Date)
+      ? moment(endDate)
+      : moment(endDate, DATE_FORMAT)
     const payload = {
       ...values,
-      birthdate: birthdate ? dateToString(birthdate) : form.birthdate,
-      end_date: endDate ? dateToString(endDate) :  form.end_date,
+      birthdate: dateToString(parsedBirthdate),
+      end_date: dateToString(parsedEndDate),
     };
 
     values.id
@@ -66,12 +86,14 @@ const QuarantineForm = props => {
               <label htmlFor="end_date">{t('common.expires')}</label>
               <DatePicker
                 options={{
-                  defaultDate: form.end_date,
-                  value: endDate ? dateToString(endDate) : form.end_date,
+                  defaultDate: endDate,
+                  value: endDate,
                   minDate: today,
+                  allowInput: true,
+                  dateFormat: DATE_FORMAT_PICKER,
                 }}
                 locale={i18n.language}
-                onChange={(dates) => setEndDate(moment(dates[0]))}
+                onChange={(dates) => setEndDate(dates[0])}
                 id="end_date"
               />
             </div>
@@ -85,12 +107,14 @@ const QuarantineForm = props => {
               <label htmlFor="birthdate">{t('common.birthdate')}</label>
               <DatePicker
                 options={{
-                  defaultDate: form.birthdate,
-                  value: birthdate ? dateToString(birthdate) : form.birthdate,
+                  defaultDate: birthdate,
+                  value: birthdate,
                   maxDate: today,
+                  allowInput: true,
+                  dateFormat: DATE_FORMAT_PICKER,
                 }}
                 locale={i18n.language}
-                onChange={(dates) => setBirthdate(moment(dates[0]))}
+                onChange={(dates) => setBirthdate(dates[0])}
                 id="birthdate"
               />
             </div>

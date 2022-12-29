@@ -30,7 +30,7 @@
   text-align: center;
   margin: 0;
   color: #000;
-  align-items: center;
+  align-items: top;
   justify-content: center;
 }
 
@@ -41,6 +41,15 @@
   font-weight: bold;
   margin: 10px 0 20px 0;
   padding: 20px 0;
+}
+
+.ListRow {
+  display: block !important;
+}
+
+.ListRow span {
+  display: block;
+  height: 1.2em;
 }
 
 .PrimaryButton button {
