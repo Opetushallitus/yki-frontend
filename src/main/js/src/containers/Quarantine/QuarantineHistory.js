@@ -17,8 +17,8 @@ import QuarantineConfirmModal from '../../components/Quarantine/ConfirmModal';
 const QuarantineHistory = props => {
   const {
     t,
-    all,
-    onFetchQuarantineMatches,
+    reviews,
+    onFetchQuarantineReviews,
     setQuarantine,
     confirmQuarantine,
     confirm,
@@ -27,8 +27,9 @@ const QuarantineHistory = props => {
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const closeConfirmModal = () => confirmQuarantine(null);
+  const hasError = !R.isNil(error);
 
-  useEffect(onFetchQuarantineMatches, [error]);
+  useEffect(onFetchQuarantineReviews, [hasError]);
 
   const showQuarantineConfirm = (id, reg_id) =>
     confirmQuarantine(() => setQuarantine(id, reg_id, true));
@@ -79,37 +80,37 @@ const QuarantineHistory = props => {
             {t('quarantine.status')}
           </div>
           <div/>
-          {all.map((match) => (
-            <React.Fragment key={`quarantine-match-row-${match.id}`}>
-              <div>{findLang(match.language_code)}</div>
-              <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
+          {reviews.map(review => (
+            <React.Fragment key={`quarantine-match-row-${review.id}`}>
+              <div>{findLang(review.language_code)}</div>
+              <div>{moment(review.exam_date).format(DATE_FORMAT)}</div>
               <div>
-                {match.first_name} {match.last_name}<br/>
-                {match.form.first_name} {match.form.last_name}
+                {review.first_name} {review.last_name}<br/>
+                {review.form.first_name} {review.form.last_name}
               </div>
               <div>
-                {match.email}<br/>
-                {match.form.email}
+                {review.email}<br/>
+                {review.form.email}
               </div>
               <div>
-                {moment(match.birthdate).format(DATE_FORMAT)}
+                {moment(review.birthdate).format(DATE_FORMAT)}
                 <br />
-                {moment(match.form.birthdate).format(DATE_FORMAT)}
+                {moment(review.form.birthdate).format(DATE_FORMAT)}
               </div>
               <div>
-                {match.phone_number}<br/>
-                {match.form.phone_number}
+                {review.phone_number}<br/>
+                {review.form.phone_number}
               </div>
               <div>
-                {match.id ? t('quarantine.quarantined') : t('quarantine.notQuarantined')}
+                {review.quarantined ? t('quarantine.quarantined') : t('quarantine.notQuarantined')}
               </div>
               <div>
-                {match.id ? (
-                  <Button clicked={doSetQuarantine.bind(this, match.id, match.registration_id, false)}>
+                {review.quarantined ? (
+                  <Button clicked={doSetQuarantine.bind(this, review.id, review.registration_id, false)}>
                     {t('quarantine.cancelQuarantine')}
                   </Button>
                 ) : (
-                  <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
+                  <Button clicked={showQuarantineConfirm.bind(this, review.id, review.registration_id)}>
                     {t('quarantine.setQuarantine')}
                   </Button>
                 )}
@@ -129,7 +130,7 @@ const QuarantineHistory = props => {
 
 const mapStateToProps = state => {
   return {
-    all: state.quarantine.all,
+    reviews: state.quarantine.reviews,
     confirm: state.quarantine.confirm,
     error: state.quarantine.error,
     loading: state.quarantine.loading,
@@ -138,8 +139,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchQuarantineMatches: () => {
-      dispatch(actions.fetchQuarantineMatches());
+    onFetchQuarantineReviews: () => {
+      dispatch(actions.fetchQuarantineReviews());
     },
     setQuarantine: (id, reg_id, quarantined) => {
       dispatch(actions.setQuarantine(id, reg_id, quarantined));

@@ -64,6 +64,7 @@ export { initYKILanguage, changeYKILanguage, setWindowWidth } from './yki';
 export { fetchPaymentsReport, fetchPaymentsReportReset } from './paymentsReport';
 export {
   fetchQuarantineMatches,
+  fetchQuarantineReviews,
   fetchQuarantines,
   setQuarantine,
   confirmQuarantine,

@@ -4,7 +4,7 @@ const initialState = {
   loading: false,
   error: null,
   matches: [],
-  all: [],
+  reviews: [],
   quarantines: [],
   showAddModal: null,
 };
@@ -16,7 +16,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.LOADING_QUARANTINE:
       return { ...state, loading: action.loading };
     case actionTypes.ADD_QUARANTINE_MATCHES:
-      return { ...state, matches: action.matches, all: action.all };
+      return { ...state, matches: action.matches };
+    case actionTypes.ADD_QUARANTINE_REVIEWS:
+      return { ...state, reviews: action.reviews };
     case actionTypes.ADD_QUARANTINES:
       return { ...state, quarantines: action.quarantines };
     case actionTypes.CONFIRM_QUARANTINE:

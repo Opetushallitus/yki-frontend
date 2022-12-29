@@ -18,6 +18,22 @@ export const fetchQuarantineMatches = () => dispatch => {
     .catch(err => dispatch(fetchQuarantineMatchesFail(err)));
 };
 
+export const fetchQuarantineReviews = () => dispatch => {
+  dispatch({
+    type: actionTypes.LOADING_QUARANTINE,
+    loading: true,
+  });
+
+  axios
+    .get('/yki/api/virkailija/quarantine/reviews')
+    .then(res => dispatch(extractQuarantineReviews(res.data)))
+    .then(() => dispatch({
+      type: actionTypes.LOADING_QUARANTINE,
+      loading: false,
+    }))
+    .catch(err => dispatch(fetchQuarantineMatchesFail(err)));
+};
+
 export const fetchQuarantines = () => dispatch => {
   dispatch({
     type: actionTypes.LOADING_QUARANTINE,
@@ -131,16 +147,20 @@ const extractQuarantines = res => {
 };
 
 const extractQuarantineMatches = res => {
-  const matches = R.filter(
-    (quarantine) => R.isNil(quarantine.reviewed),
-    res.quarantines
-  );
-  const all = res.quarantines;
+  const matches = res.quarantines;
 
   return {
     type: actionTypes.ADD_QUARANTINE_MATCHES,
-    matches: matches,
-    all: all,
+    matches,
+  };
+};
+
+const extractQuarantineReviews = res => {
+  const reviews = res.reviews;
+
+  return {
+    type: actionTypes.ADD_QUARANTINE_REVIEWS,
+    reviews,
   };
 };
 

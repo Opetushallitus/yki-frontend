@@ -27,8 +27,9 @@ const QuarantineMatches = props => {
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const closeConfirmModal = () => confirmQuarantine(null);
+  const hasError = !R.isNil(error);
 
-  useEffect(onFetchQuarantineMatches, [error]);
+  useEffect(onFetchQuarantineMatches, [hasError]);
 
   const showQuarantineConfirm = (id, reg_id) =>
     confirmQuarantine(() => setQuarantine(id, reg_id, true));

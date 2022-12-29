@@ -46,8 +46,9 @@ const Quarantine = props => {
   const doDelete = (id) => {
     onConfirmModal(onDeleteQuarantine.bind(this, id));
   };
+  const hasError = !R.isNil(error);
 
-  useEffect(onFetchQuarantines, [error]);
+  useEffect(onFetchQuarantines, [hasError]);
 
   const closeConfirmModal = onConfirmModal.bind(this, null);
   const confirmDeleteModal = (
