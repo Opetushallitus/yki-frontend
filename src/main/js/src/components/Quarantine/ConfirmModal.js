@@ -18,6 +18,7 @@ const QuarantineConfirmModal = props => {
       show={!R.isNil(confirm)}
       confirmationModal
       modalClosed={cancel}
+      className={classes.ConfirmModal}
     >
       {loading && (<SpinnerOverlay />)}
       <div className={classes.ConfirmText}>

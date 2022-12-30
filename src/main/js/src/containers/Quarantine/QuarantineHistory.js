@@ -49,7 +49,7 @@ const QuarantineHistory = props => {
       )}
       <div className={classes.QuarantineMatches}>
         <h1>
-          {t('quarantine.matchesTitle')}
+          {t('quarantine.reviewsTitle')}
         </h1>
 
         <QuarantineNav />
