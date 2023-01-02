@@ -1,9 +1,0 @@
-{
-  "baseUrl": "http://localhost:3000/yki/",
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "viewportWidth": 1440,
-  "retries": 1,
-  "defaultCommandTimeout": 8000
-}
