@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 
 import { DATE_FORMAT } from '../../common/Constants';
 import Checkbox from '../../components/UI/Checkbox/Checkbox';
-import ControlledCheckbox from '../../components/UI/Checkbox/ControlledCheckbox';
 import Modal from '../../components/UI/Modal/Modal';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Page from '../../hoc/Page/Page';
@@ -26,13 +25,11 @@ class ExamDates extends Component {
     super(props);
 
     this.state = {
-      showAddOrEditExamDate: false,
-      showDeleteConfirmation: false,
+      showExamDateModal: false,
+      showAddEvaluationPeriodModal: false,
+      showPassedExamDates: false,
       selectedExamDate: null,
-      fetchExamHistory: false,
       visibleExamDates: null,
-      checkedExamDate: null,
-      showAddEvaluationPeriod: false
     };
   }
 
@@ -45,133 +42,134 @@ class ExamDates extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.visibleExamDates || prevProps.examDates !== this.props.examDates) {
       const examDates = R.sortBy(
-        R.prop('registration_start_date'),
+        R.prop('exam_date'),
         this.props.examDates
-      );
+      ).reverse();
 
       this.setState({ visibleExamDates: examDates });
     }
 
-    if (prevState.fetchExamHistory !== this.state.fetchExamHistory) {
-      this.props.onFetchExamDates(this.props.user.identity.oid, this.state.fetchExamHistory);
+    if (prevState.showPassedExamDates !== this.state.showPassedExamDates) {
+      this.props.onFetchExamDates(this.props.user.identity.oid, this.state.showPassedExamDates);
     }
   }
 
-  showAddOrEditExamDateModalHandler = () => {
-    this.setState({ showAddOrEditExamDate: !this.state.showAddOrEditExamDate });
-  }
-
-  showEditExamDateHandler = selectedDate => {
-    this.setState(prev => ({
-      showAddOrEditExamDate: !prev.showAddOrEditExamDate,
-      selectedExamDate: selectedDate
-    }));
-  };
-
-  showAddEvaluationPeriodHandler = selected => {
-    this.setState(prev => ({
-      showAddEvaluationPeriod: !prev.showAddEvaluationPeriod,
-      selectedExamDate: selected
-    }));
-  };
-
-  showDeleteConfirmationHandler = () => {
-    this.setState({ showDeleteConfirmation: !this.state.showDeleteConfirmation });
-  };
-
-  closeDeleteConfirmationHandler = () =>
-    this.setState({ showDeleteConfirmation: false });
-
-  closeAddOrEditExamDateModal = () => {
+  showExamDateModal = selectedExamDate => {
     this.setState({
-      showAddOrEditExamDate: false,
-      selectedExamDate: null,
-      showAddEvaluationPeriod: false,
-      fetchExamHistory: false
+      selectedExamDate,
+      showExamDateModal: true,
     });
-  }
+  };
 
-  onExamDateHistoryFetchChange = () => {
+  closeExamDateModal = () => {
+    this.setState({
+      selectedExamDate: null,
+      showExamDateModal: false,
+    });
+  };
+
+  showAddEvaluationPeriodModal = selectedExamDate => {
+    this.setState({
+      selectedExamDate,
+      showAddEvaluationPeriodModal: true,
+    });
+  };
+
+  closeAddEvaluationPeriodModal = () => {
+    this.setState({
+      selectedExamDate: null,
+      showAddEvaluationPeriodModal: false,
+    });
+  };
+
+  togglePassedExamDatesShown = () => {
     this.setState(prev => ({
-      fetchExamHistory: !prev.fetchExamHistory,
+      showPassedExamDates: !prev.showPassedExamDates,
     }));
   };
 
-  createExamDateHandler = examDate => {
-    this.props.onAddExamDate(examDate, this.props.user.identity.oid);
-    this.closeAddOrEditExamDateModal();
+  unsetPassedExamDatesShown = () => {
+    this.setState({ showPassedExamDates: false });
   };
 
-  editExamDateHandler = payload => {
+  handleCreateExamDate = examDate => {
+    this.props.onAddExamDate(examDate, this.props.user.identity.oid);
+    this.unsetPassedExamDatesShown();
+    this.closeExamDateModal();
+  };
+
+  handleEditExamDate = payload => {
     this.props.onUpdateConfiguration(
       payload.postAdmission,
       payload.languages,
       this.props.user.identity.oid,
       payload.examDateId,
     );
-    this.closeAddOrEditExamDateModal();
+    this.unsetPassedExamDatesShown();
+    this.closeExamDateModal();
   };
 
-  deleteExamDateHandler = examDate => {
-    this.props.onDeleteExamDate(this.props.user.identity.oid, examDate.id);
-    this.closeDeleteConfirmationHandler();
+  handleDeleteExamDate = examDateId => {
+    this.props.onDeleteExamDate(this.props.user.identity.oid, examDateId);
+    this.unsetPassedExamDatesShown();
+    this.closeExamDateModal();
   };
 
-  addEvaluationPeriodHandler = payload => {
+  handleAddEvaluationPeriod = payload => {
     this.props.onAddEvaluationPeriod({
       ...payload,
       oid: this.props.user.identity.oid,
     });
-    this.closeAddOrEditExamDateModal();
+    this.unsetPassedExamDatesShown();
+    this.closeAddEvaluationPeriodModal();
   };
 
   render() {
     const { examDates, loading, t } = this.props;
-    const usedDates = examDates.map(ed => ed.exam_date);
     const currentDate = moment(new Date()).format('YYYY-MM-DD');
-    const upcomingExamDatesExist = examDates.length > 0;
 
     const {
+      showExamDateModal,
+      showAddEvaluationPeriodModal,
       selectedExamDate,
-      showAddOrEditExamDate,
-      showAddEvaluationPeriod,
     } = this.state;
 
     const addEvaluationPeriodModal = (
       <>
-        {showAddEvaluationPeriod ? (
+        {showAddEvaluationPeriodModal ? (
           <Modal
-            show={showAddEvaluationPeriod}
-            modalClosed={this.closeAddOrEditExamDateModal}
+            show={showAddEvaluationPeriodModal}
+            modalClosed={this.closeAddEvaluationPeriodModal}
             smallModal
           >
             <AddEvaluationPeriod
               exam={selectedExamDate}
-              onSubmit={this.addEvaluationPeriodHandler}
+              onSubmit={this.handleAddEvaluationPeriod}
             />
           </Modal>
         ) : null}
       </>
     );
 
-    const addNewExamDateModal = (
+    const examDateModal = (
       <>
-        {showAddOrEditExamDate ? (
+        {showExamDateModal ? (
           <Modal
             smallModal
-            show={showAddOrEditExamDate}
-            modalClosed={this.closeAddOrEditExamDateModal}
+            show={showExamDateModal}
+            modalClosed={this.closeExamDateModal}
           >
             {selectedExamDate ? (
               <EditExamDate
                 examDate={selectedExamDate}
-                onSubmit={this.editExamDateHandler}
+                onSave={this.handleEditExamDate}
+                onDelete={this.handleDeleteExamDate}
               />
             ) : (
               <AddExamDate
                 examDates={[]}
-                onSubmit={this.createExamDateHandler}
-                disabledDates={usedDates}
+                onSubmit={this.handleCreateExamDate}
+                disabledDates={examDates.map(ed => ed.exam_date)}
               />
             )}
           </Modal>
@@ -179,97 +177,33 @@ class ExamDates extends Component {
       </>
     );
 
-    const addDeleteConfirmationModal = (
-      <>
-        {this.state.showDeleteConfirmation ? (
-          <Modal
-            confirmationModal
-            show={this.state.showDeleteConfirmation}
-            modalClosed={this.closeDeleteConfirmationHandler}
+    const examDateControls = (
+      <div className={classes.ExamDateControls}>
+        <div className={classes.ActionButtons}>
+          <button
+            data-cy="exam-dates-button-add-new"
+            className={classes.AdditionButton}
+            onClick={() => this.showExamDateModal(null)}
           >
-            <div className={classes.DeleteModal}>
-              <div className={classes.ConfirmText}>
-                {t('examDates.delete.confirm')}
-              </div>
-              <div className={classes.ConfirmButtons}>
-                <button
-                  data-cy="exam-dates-delete-cancel"
-                  className={classes.CancelButton}
-                  onClick={this.closeDeleteConfirmationHandler}
-                >
-                  {t('common.cancelConfirm')}
-                </button>
-                <button
-                  data-cy="exam-dates-delete-confirm"
-                  className={classes.ConfirmButton}
-                  onClick={() =>
-                    this.deleteExamDateHandler(this.state.checkedExamDate)
-                  }
-                >
-                  {t('common.confirm')}
-                </button>
-              </div>
-            </div>
-          </Modal>
-        ) : null}
-      </>
+            {t('examDates.addNew.confirm')}
+          </button>
+        </div>
+        <div className={classes.PastExamDates}>
+          <Checkbox
+            label={t('examDates.show.pastDates')}
+            name={'showPastDates'}
+            checkboxId={'showPastDates'}
+            checked={this.state.showPassedExamDates}
+            onChange={() => this.togglePassedExamDatesShown()}
+          />
+        </div>
+      </div>
     );
 
-    const hasExamSessions = exam => {
-      if (exam && exam.exam_session_count) {
-        return exam.exam_session_count > 0;
-      }
-      return false;
-    }
-
-    const examDatesControlButtons = () => {
-      const checked = this.state.checkedExamDate;
-      const showDeleteButton = upcomingExamDatesExist;
-
-      return (
-        <div className={classes.ExamDateControls}>
-          <div className={classes.ActionButtons}>
-            <button
-              data-cy="exam-dates-button-add-new"
-              className={classes.AdditionButton}
-              onClick={() => this.showAddOrEditExamDateModalHandler()}
-            >
-              {t('examDates.addNew.confirm')}
-            </button>
-            {showDeleteButton && (
-              <button
-                data-cy="exam-dates-button-delete"
-                className={
-                  !checked || hasExamSessions(checked)
-                    ? classes.DisabledButton
-                    : classes.DeleteButton
-                }
-                disabled={!checked || hasExamSessions(checked)}
-                onClick={this.showDeleteConfirmationHandler}
-              >
-                {t('examDates.delete.selected')}
-              </button>
-            )}
-          </div>
-          <div className={classes.PastExamDates}>
-            <Checkbox
-              label={t('examDates.show.pastDates')}
-              name={'showPastDates'}
-              checkboxId={'showPastDates'}
-              checked={this.state.fetchExamHistory}
-              onChange={() => this.onExamDateHistoryFetchChange()}
-            />
-          </div>
-        </div>
-      );
-    }
-
-    const examDatesTable = () => {
-
-      const tableHeaders = (
+    const examDateTable = () => {
+      const tableHeader = (
         <>
           <div className={classes.Grid} data-cy="exam-dates-table-headers">
-            <span />
             <h3>{t('common.examDate')}</h3>
             <h3>{`${t('common.language')} & ${t('common.level')}`}</h3>
             <h3>{t('common.registationPeriod')}</h3>
@@ -282,23 +216,7 @@ class ExamDates extends Component {
       );
 
       const tableRows = examDates => {
-
-        const handleCheckboxChange = examId => {
-          const selected = examDates.find(exam => exam.id === examId);
-          const checked = this.state.checkedExamDate;
-
-          if (checked && selected.id === checked.id) {
-            this.setState({ checkedExamDate: null });
-          } else {
-            this.setState({ checkedExamDate: selected });
-          }
-        };
-
-        const cannotDeleteExamDate = exam => {
-          return exam.exam_date < currentDate || hasExamSessions(exam);
-        };
-
-        const canEditExamDate = exam => {
+        const editShown = exam => {
           return exam.exam_date > currentDate;
         };
 
@@ -320,10 +238,6 @@ class ExamDates extends Component {
               );
             });
 
-          const isChecked = id => {
-            return this.state.checkedExamDate && this.state.checkedExamDate.id === id;
-          };
-
           const postAdmissionDate =
             e.post_admission_start_date && e.post_admission_end_date
               ? `${moment(e.post_admission_start_date).format(
@@ -340,13 +254,6 @@ class ExamDates extends Component {
 
           return (
             <React.Fragment key={i}>
-              <ControlledCheckbox
-                dataCy={`exam-dates-list-checkbox-${e.exam_date}`}
-                onChange={() => handleCheckboxChange(e.id)}
-                name={e.id}
-                checked={isChecked(e.id)}
-                disabled={cannotDeleteExamDate(e)}
-              />
               <p data-cy={`exam-dates-list-date-${e.exam_date}`}>
                 {moment(e.exam_date).format(DATE_FORMAT)}
               </p>
@@ -370,22 +277,22 @@ class ExamDates extends Component {
               ) : (
                 <button
                   data-cy={`exam-dates-add-eval-button-${e.exam_date}`}
-                  className={classes.EditButton}
-                  style={{ width: '90%' }}
-                  onClick={() => this.showAddEvaluationPeriodHandler(e)}
+                  className={`${classes.EditButton} ${classes.Evaluation}`}
+                  onClick={() => this.showAddEvaluationPeriodModal(e)}
                 >
                   {t('examDates.add.evaluation.period')}
                 </button>
               )}
 
-              <button
-                data-cy={`exam-dates-edit-button-${e.exam_date}`}
-                disabled={!canEditExamDate(e)}
-                className={classes.EditButton}
-                onClick={() => this.showEditExamDateHandler(e)}
-              >
-                {t('common.edit')}
-              </button>
+              {editShown(e) ? (
+                <button
+                  data-cy={`exam-dates-edit-button-${e.exam_date}`}
+                  className={classes.EditButton}
+                  onClick={() => this.showExamDateModal(e)}
+                >
+                  {t('common.edit')}
+                </button>
+              ) : <span /> }
             </React.Fragment>
           );
         });
@@ -393,7 +300,7 @@ class ExamDates extends Component {
 
       return (
         <>
-          {tableHeaders}
+          {tableHeader}
           {this.state.visibleExamDates && (
             <div className={classes.Grid} data-cy="exam-dates-table-rows">
               {tableRows(this.state.visibleExamDates)}
@@ -410,17 +317,17 @@ class ExamDates extends Component {
         <div className={classes.ExamDatesListHeader}>
           <h2>{t('common.examDates')}</h2>
         </div>
-        {upcomingExamDatesExist ? (
+        {examDates.length > 0 ? (
           <div>
-            {examDatesControlButtons()}
-            {examDatesTable()}
+            {examDateControls}
+            {examDateTable()}
 
             <hr className={classes.GridDivider} />
           </div>
         ) :
           <div>
             <p>{t('examDates.noUpcomingExamDates')}</p>
-            {examDatesControlButtons()}
+            {examDateControls}
           </div>
         }
       </>
@@ -429,9 +336,8 @@ class ExamDates extends Component {
     return (
       <Page>
         <div className={classes.ExamDates}>{content}</div>
-        {addNewExamDateModal}
+        {examDateModal}
         {addEvaluationPeriodModal}
-        {addDeleteConfirmationModal}
       </Page>
     );
   }

@@ -31,13 +31,13 @@ describe('Exam dates page', () => {
 
   const fillNewExamDateForm = () => {
     cy.get('[data-cy=exam-date-new-registration-start]').click();
-    chooseFlatpickerDate('1', 'Tammikuu', '2050');
+    chooseFlatpickerDate('1', 'tammikuu', '2050');
 
     cy.get('[data-cy=exam-date-new-registration-end]').click();
-    chooseFlatpickerDate('25', 'Tammikuu', '2050');
+    chooseFlatpickerDate('25', 'tammikuu', '2050');
 
     cy.get('[data-cy=exam-date-new-exam-date]').click();
-    chooseFlatpickerDate('1', 'Maaliskuu', '2050');
+    chooseFlatpickerDate('1', 'maaliskuu', '2050');
 
     cy.get('[data-cy=exam-date-languages-add-new]').click();
 
@@ -46,30 +46,23 @@ describe('Exam dates page', () => {
     cy.get('[data-cy=exam-date-languages-add-new]').click();
   };
 
-  it('exam dates page contains a table of upcoming exam dates', () => {
+  it('should contain a table of upcoming exam dates', () => {
     cy.get('[data-cy=exam-dates-table-headers]');
     cy.get('[data-cy=exam-dates-table-headers]')
       .find('h3')
       .should('have.length', 6);
-  });
 
-  it('exam dates table should have exam dates listed', () => {
     cy.get('[data-cy=exam-dates-table-rows]');
     cy.get('[data-cy=exam-dates-table-rows]')
-      .find('label')
+      .find('ul')
       .should('have.length', originalRowCount);
-  });
-
-  it('exam date with exam sessions assigned to it should have a disabled checkbox', () => {
-    cy.get('[data-cy=exam-dates-list-checkbox-2081-01-12]').click();
-    cy.get(`[data-cy=exam-dates-button-delete`).should('be.disabled');
   });
 
   it('should not allow creation when registration start date is set after registration end date', () => {
     cy.get('[data-cy=exam-dates-button-add-new]').click();
     fillNewExamDateForm();
     cy.get('[data-cy=exam-date-new-registration-start]').click();
-    chooseFlatpickerDate('1', 'Helmikuu', '2050');
+    chooseFlatpickerDate('1', 'helmikuu', '2050');
     cy.get('[data-cy=exam-dates-button-save-new').should('be.disabled');
   });
 
@@ -77,7 +70,7 @@ describe('Exam dates page', () => {
     cy.get('[data-cy=exam-dates-button-add-new]').click();
     fillNewExamDateForm();
     cy.get('[data-cy=exam-date-new-registration-end]').click();
-    chooseFlatpickerDate('20', 'Maaliskuu', '2050');
+    chooseFlatpickerDate('20', 'maaliskuu', '2050');
     cy.get('[data-cy=exam-dates-button-save-new').should('be.disabled');
   });
 
@@ -86,13 +79,13 @@ describe('Exam dates page', () => {
     cy.get('[data-cy=exam-dates-button-save-new').should('be.disabled');
   });
 
-  it('new exam date can be created', () => {
+  it('should allow creating exam date with valid details', () => {
     cy.get('[data-cy=exam-dates-button-add-new]').click();
     fillNewExamDateForm();
     cy.get('[data-cy=exam-dates-button-save-new').click();
     cy.get('[data-cy=exam-dates-table-rows]');
     cy.get('[data-cy=exam-dates-table-rows]')
-      .find('label')
+      .find('ul')
       .should('have.length', originalRowCount + 1);
     cy.get('[data-cy=exam-dates-table-rows]').contains(
       new RegExp(`^${'1.3.2050'}$`),
@@ -102,7 +95,7 @@ describe('Exam dates page', () => {
     cy.get(`${getNewLanguageDataId('eng', 'KESKI')}`);
   });
 
-  it('can add languages and remove languages from exam date', () => {
+  it('should let modify an upcoming exam date', () => {
     const addLanguage = (lang, level) => {
       cy.get('[data-cy=exam-date-languages-add-row]').click();
       cy.get('[data-cy=exam-date-languages-select-language-new]').select(lang);
@@ -117,7 +110,7 @@ describe('Exam dates page', () => {
     cy.get('[data-cy=exam-dates-modify-save').click();
 
     cy.get('[data-cy=exam-dates-table-rows]')
-      .find('label')
+      .find('ul')
       .should('have.length', originalRowCount);
     cy.get('[data-cy=exam-dates-table-rows]').contains('30.1.2081');
     cy.get(`${getModifiedLanguageDataId('fin', 'KESKI')}`);
@@ -129,31 +122,33 @@ describe('Exam dates page', () => {
     cy.get('[data-cy=exam-dates-modify-save').click();
 
     cy.get('[data-cy=exam-dates-table-rows]')
-      .find('label')
+      .find('ul')
       .should('have.length', originalRowCount);
     cy.get('[data-cy=exam-dates-table-rows]').contains('30.1.2081');
     cy.get(`${getModifiedLanguageDataId('fin', 'KESKI')}`);
     cy.get(`${getModifiedLanguageDataId('eng', 'YLIN')}`).should('not.exist');
   });
 
-  it('can enable post admissions for exam date', () => {
+  it('should enable setting post admissions for an exam date', () => {
     cy.get(`[data-cy=exam-dates-edit-button-${modifyDateId}]`).click();
     cy.get(`[data-cy=exam-dates-modify-post-admission-toggle]`).click();
     cy.get('[data-cy=exam-dates-modify-post-admission-start-date]').click();
-    chooseFlatpickerDate('15', 'Joulukuu', '2080');
+    chooseFlatpickerDate('15', 'joulukuu', '2080');
     cy.get('[data-cy=exam-dates-modify-post-admission-end-date]').click();
-    chooseFlatpickerDate('15', 'Tammikuu', '2081');
+    chooseFlatpickerDate('15', 'tammikuu', '2081');
     cy.get('[data-cy=exam-dates-modify-save').click();
     cy.get('[data-cy=exam-dates-table-rows]')
-      .find('label')
+      .find('ul')
       .should('have.length', originalRowCount);
     cy.get('[data-cy=exam-dates-table-rows]').contains('30.1.2081');
+
+    cy.wait(1000);
     cy.get(`[data-cy=exam-dates-list-post-admission-${modifyDateId}`).contains(
       '15.12.2080 - 15.1.2081',
     );
   });
 
-  it('has evaluation peroids or a button displayed', () => {
+  it('should allow managing evaluation period for an exam date', () => {
     cy.get(`[data-cy=exam-dates-add-eval-text-2081-01-12]`).contains(
       '13.1.2081 - 13.2.2081',
     );
@@ -176,22 +171,17 @@ describe('Exam dates page', () => {
       .should('have.value', '20.1.2081');
   });
 
-  it('can delete the exam date', () => {
-    cy.get(`[data-cy=exam-dates-list-checkbox-${modifyDateId}]`).should(
-      'not.be.disabled',
-    );
-    cy.get(`[data-cy=exam-dates-list-checkbox-${modifyDateId}]`).click();
-    cy.get(`[data-cy=exam-dates-button-delete`).should('not.be.disabled');
-    cy.get(`[data-cy=exam-dates-button-delete`).click();
+  it('should allow deleting an upcoming exam date with no exam sessions', () => {
+    cy.get(`[data-cy=exam-dates-edit-button-${modifyDateId}]`).click();
 
-    // Can cancel
-    cy.get(`[data-cy=exam-dates-delete-cancel`).click();
-    cy.get(`[data-cy=exam-dates-button-delete`).click();
+    cy.get(`[data-cy=exam-dates-modify-delete]`).should('exist');
+    cy.get(`[data-cy=exam-dates-modify-delete]`).click();
 
-    // Can delete
-    cy.get(`[data-cy=exam-dates-delete-confirm`).click();
+    const alertShown = cy.stub().as("alertShown");
+    cy.on('window:alert', alertShown);
+
     cy.get('[data-cy=exam-dates-table-rows]')
-      .find('label')
+      .find('ul')
       .should('have.length', originalRowCount - 1);
     cy.get(`[data-cy=exam-dates-list-date-${modifyDateId}]`).should(
       'not.exist',

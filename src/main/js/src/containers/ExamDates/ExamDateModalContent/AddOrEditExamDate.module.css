@@ -3,6 +3,7 @@
   grid-gap: 10px;
   max-width: 30vw;
   width: 300px;
+  padding: 1rem;
 }
 
 .Form label {
@@ -94,7 +95,13 @@
   border-radius: 2px;
 }
 
-.ActionButtons button {
+.ActionButtonsGrid {
+  display: grid;
+  grid-template-columns: 220px 0;
+  grid-gap: 20px;
+}
+
+.ActionButtonsGrid button {
   color: hsl(0, 0%, 100%);
   border: none;
   padding: 12px;
@@ -105,6 +112,10 @@
 .ConfirmButton {
   background-color: #00516b;
   color: white;
+}
+
+.DeleteButton {
+  background-color: hsla(358, 75%, 57%, 0.85);
 }
 
 .DisabledButton {
