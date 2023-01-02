@@ -13,11 +13,11 @@ import Page from '../../hoc/Page/Page';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
 import { languageToString, levelDescription } from '../../util/util';
-import AddEvaluationPeriod from './ExamDateModalContent/AddEvaluationPeriod';
-import AddExamDate from './ExamDateModalContent/AddExamDate';
-import EditExamDate from './ExamDateModalContent/EditExamDate';
+import AddEvaluationPeriod from './ExamDateModal/AddEvaluationPeriod';
+import ExamDateView from './ExamDateModal/ExamDateView';
+import ExamDatesRegistrationPeriod from './ExamDatesRegistrationPeriod';
+
 import classes from './ExamDates.module.css';
-import RegistrationPeriod from './util/RegistrationPeriod';
 
 class ExamDates extends Component {
 
@@ -92,25 +92,22 @@ class ExamDates extends Component {
     this.setState({ showPassedExamDates: false });
   };
 
-  handleCreateExamDate = examDate => {
-    this.props.onAddExamDate(examDate, this.props.user.identity.oid);
+  handleCreateExamDate = payload => {
+    this.props.onAddExamDate(payload, this.props.user.identity.oid);
     this.unsetPassedExamDatesShown();
     this.closeExamDateModal();
   };
 
   handleEditExamDate = payload => {
-    this.props.onUpdateConfiguration(
-      payload.postAdmission,
-      payload.languages,
-      this.props.user.identity.oid,
-      payload.examDateId,
-    );
+    const { examDateId, ...rest } = payload;
+
+    this.props.onUpdateExamDate(examDateId, rest, this.props.user.identity.oid);
     this.unsetPassedExamDatesShown();
     this.closeExamDateModal();
   };
 
   handleDeleteExamDate = examDateId => {
-    this.props.onDeleteExamDate(this.props.user.identity.oid, examDateId);
+    this.props.onDeleteExamDate(examDateId, this.props.user.identity.oid);
     this.unsetPassedExamDatesShown();
     this.closeExamDateModal();
   };
@@ -126,7 +123,6 @@ class ExamDates extends Component {
 
   render() {
     const { examDates, loading, t } = this.props;
-    const currentDate = moment(new Date()).format('YYYY-MM-DD');
 
     const {
       showExamDateModal,
@@ -138,9 +134,9 @@ class ExamDates extends Component {
       <>
         {showAddEvaluationPeriodModal ? (
           <Modal
-            show={showAddEvaluationPeriodModal}
+            show
+            style={{ height: '200px', maxWidth: '500px' }}
             modalClosed={this.closeAddEvaluationPeriodModal}
-            smallModal
           >
             <AddEvaluationPeriod
               exam={selectedExamDate}
@@ -151,31 +147,31 @@ class ExamDates extends Component {
       </>
     );
 
-    const examDateModal = (
-      <>
-        {showExamDateModal ? (
-          <Modal
-            smallModal
-            show={showExamDateModal}
-            modalClosed={this.closeExamDateModal}
-          >
-            {selectedExamDate ? (
-              <EditExamDate
-                examDate={selectedExamDate}
-                onSave={this.handleEditExamDate}
-                onDelete={this.handleDeleteExamDate}
-              />
-            ) : (
-              <AddExamDate
-                examDates={[]}
-                onSubmit={this.handleCreateExamDate}
-                disabledDates={examDates.map(ed => ed.exam_date)}
-              />
-            )}
-          </Modal>
-        ) : null}
-      </>
-    );
+    const renderExamDateModal = () => {
+      const onSave = selectedExamDate
+        ? this.handleEditExamDate
+        : this.handleCreateExamDate;
+
+      // Passed exam dates are disabled only if they are shown
+      const disabledDates = examDates
+        .filter((ed) => !selectedExamDate || ed.exam_date !== selectedExamDate.exam_date)
+        .map((ed) => ed.exam_date);
+
+      return (
+        <Modal
+          show
+          style={{ height: '650px', maxWidth: '800px' }}
+          modalClosed={this.closeExamDateModal}
+        >
+          <ExamDateView
+            examDate={selectedExamDate}
+            onSave={onSave}
+            onDelete={this.handleDeleteExamDate}
+            disabledDates={disabledDates}
+          />
+        </Modal>
+      );
+    };
 
     const examDateControls = (
       <div className={classes.ExamDateControls}>
@@ -205,7 +201,7 @@ class ExamDates extends Component {
         <>
           <div className={classes.Grid} data-cy="exam-dates-table-headers">
             <h3>{t('common.examDate')}</h3>
-            <h3>{`${t('common.language')} & ${t('common.level')}`}</h3>
+            <h3>{t('examDates.languageLevels')}</h3>
             <h3>{t('common.registationPeriod')}</h3>
             <h3>{t('common.postAdmission')}</h3>
             <h3>{t('common.reeval')}</h3>
@@ -216,24 +212,19 @@ class ExamDates extends Component {
       );
 
       const tableRows = examDates => {
-        const editShown = exam => {
-          return exam.exam_date > currentDate;
-        };
-
         return examDates.map((e, i) => {
-          const languageAndLevel =
+          const languageLevel =
             e.languages &&
             e.languages.map(lang => {
-              const language = languageToString(lang.language_code).toLowerCase();
-              const level = levelDescription(lang.level_code).toLowerCase();
-              const dataId = e.exam_date + '-' + lang.language_code + '-' + lang.level_code;
+              const key = `${lang.language_code}-${lang.level_code}`;
+              const content = `${languageToString(lang.language_code)}, ${levelDescription(lang.level_code)}`.toLowerCase();
 
               return (
                 <li
-                  data-cy={`exam-dates-row-language-${dataId}`}
-                  key={language + level}
+                  data-cy={`exam-dates-row-language-${e.exam_date}-${key}`}
+                  key={key}
                 >
-                  {language}, {level}
+                  {content}
                 </li>
               );
             });
@@ -261,9 +252,9 @@ class ExamDates extends Component {
                 data-cy={`exam-dates-list-languages-${e.exam_date}`}
                 className={classes.LanguageList}
               >
-                {languageAndLevel}
+                {languageLevel}
               </ul>
-              <RegistrationPeriod period={e} />
+              <ExamDatesRegistrationPeriod period={e} />
               <p data-cy={`exam-dates-list-post-admission-${e.exam_date}`}>
                 {postAdmissionDate
                   ? `${postAdmissionDate}`
@@ -284,15 +275,13 @@ class ExamDates extends Component {
                 </button>
               )}
 
-              {editShown(e) ? (
-                <button
-                  data-cy={`exam-dates-edit-button-${e.exam_date}`}
-                  className={classes.EditButton}
-                  onClick={() => this.showExamDateModal(e)}
-                >
-                  {t('common.edit')}
-                </button>
-              ) : <span /> }
+              <button
+                data-cy={`exam-dates-edit-button-${e.exam_date}`}
+                className={classes.EditButton}
+                onClick={() => this.showExamDateModal(e)}
+              >
+                {t('common.edit')}
+              </button>
             </React.Fragment>
           );
         });
@@ -336,7 +325,7 @@ class ExamDates extends Component {
     return (
       <Page>
         <div className={classes.ExamDates}>{content}</div>
-        {examDateModal}
+        {showExamDateModal && renderExamDateModal()}
         {addEvaluationPeriodModal}
       </Page>
     );
@@ -354,22 +343,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddExamDate: (examDate, oid) =>
-      dispatch(actions.addExamDate(examDate, oid)),
+    onAddExamDate: (payload, oid) =>
+      dispatch(actions.addExamDate(payload, oid)),
     onFetchExamDates: (oid, fetchHistory) =>
       dispatch(actions.fetchExamDates(oid, fetchHistory)),
     errorConfirmedHandler: () => dispatch(actions.examDatesFailReset()),
-    onUpdateConfiguration: (postAdmission, languages, oid, examDateId) =>
-      dispatch(
-        actions.updateExamDateConfigurations(
-          postAdmission,
-          languages,
-          oid,
-          examDateId,
-        ),
-      ),
-    onDeleteExamDate: (oid, examDateId) =>
-      dispatch(actions.deleteExamDate(oid, examDateId)),
+    onUpdateExamDate: (examDateId, payload, oid) =>
+      dispatch(actions.updateExamDate(examDateId, payload, oid)),
+    onDeleteExamDate: (examDateId, oid) =>
+      dispatch(actions.deleteExamDate(examDateId, oid)),
     onAddEvaluationPeriod: payload =>
       dispatch(actions.addEvaluationPeriod(payload)),
   };
@@ -383,7 +365,7 @@ ExamDates.propTypes = {
   onAddExamDate: PropTypes.func.isRequired,
   onFetchExamDates: PropTypes.func.isRequired,
   errorConfirmedHandler: PropTypes.func.isRequired,
-  onUpdateConfiguration: PropTypes.func.isRequired,
+  onUpdateExamDate: PropTypes.func.isRequired,
   onDeleteExamDate: PropTypes.func.isRequired,
   onAddEvaluationPeriod: PropTypes.func.isRequired
 };
