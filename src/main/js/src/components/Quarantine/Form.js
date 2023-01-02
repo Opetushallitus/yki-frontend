@@ -73,6 +73,7 @@ const QuarantineForm = props => {
                 value={values.language_code}
                 name="language_code"
                 onChange={handleChange}
+                id="language_code"
               >
                 {LANGUAGES.map((lang) => (
                   <option key={`lang-option-${lang.code}`} value={lang.code}>
@@ -126,12 +127,12 @@ const QuarantineForm = props => {
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="email">{t('common.email')}</label>
-              <Field name="email" />
+              <Field name="email" id="email" />
             </div>
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="phone_number">{t('common.phoneNumber')}</label>
-              <Field name="phone_number" />
+              <Field name="phone_number" id="phone_number" />
             </div>
           </div>
 
