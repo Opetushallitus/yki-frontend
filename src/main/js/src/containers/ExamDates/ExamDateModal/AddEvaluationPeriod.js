@@ -5,7 +5,8 @@ import { withTranslation } from 'react-i18next';
 
 import DatePicker from '../../../components/UI/DatePicker/DatePicker';
 import { compareDates } from '../../../util/util';
-import classes from './AddOrEditExamDate.module.css';
+
+import classes from './ExamDateView.module.css';
 
 const AddEvaluationPeriod = props => {
   const { exam, t, i18n, onSubmit } = props;
@@ -43,9 +44,9 @@ const AddEvaluationPeriod = props => {
           </h3>
           <div>
             <label>{t('examDates.choose.evaluationTime')}</label>
-            <div className={classes.EvaluationDateGrid}>
+            <div className={classes.DatePeriodGrid}>
               <div
-                className={classes.EvaluationDatePickerWrapper}
+                className={classes.DatePickerWrapper}
                 data-cy="exam-date-new-registration-start"
               >
                 <DatePicker
@@ -61,15 +62,9 @@ const AddEvaluationPeriod = props => {
                   locale={i18n.language}
                 />
               </div>
-
+              &nbsp; &ndash; &nbsp;
               <div
-                style={{ flex: 0.5, justifyContent: 'center', display: 'flex' }}
-              >
-                -
-              </div>
-
-              <div
-                className={classes.EvaluationDatePickerWrapper}
+                className={classes.DatePickerWrapper}
                 data-cy="exam-date-new-registration-end"
               >
                 <DatePicker
