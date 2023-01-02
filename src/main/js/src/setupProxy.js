@@ -856,9 +856,12 @@ module.exports = function(app) {
   app.post('/yki/api/virkailija/organizer/:oid/exam-date', (req, res) => {
     const mockCall = () => {
       try {
-        examDates.dates.push(req.body);
         const id = getNumberBetween(100, 1000);
-        res.send({ id: id });
+        examDates.dates.push({
+          id,
+          ...req.body,
+        });
+        res.send({ success: true });
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
@@ -867,59 +870,37 @@ module.exports = function(app) {
     useLocalProxy ? proxyPostCall(req, res) : mockCall();
   });
 
-  app.post(
-    '/yki/api/virkailija/organizer/:oid/exam-date/:id/post-admission',
-    (req, res) => {
-      const mockCall = () => {
-        try {
-          const { id } = req.params;
-          const index = examDates.dates.findIndex(x => x.id == id);
-          examDates.dates[index] = {
-            ...examDates.dates[index],
-            ...req.body,
-          };
-          res.send({ success: true });
-        } catch (err) {
-          printError(req, err);
-          res.status(404).send(err.message);
-        }
-      };
-      useLocalProxy ? proxyPostCall(req, res) : mockCall();
-    },
-  );
+  app.put('/yki/api/virkailija/organizer/:oid/exam-date/:id', (req, res) => {
+    const mockCall = () => {
+      try {
+        const { id } = req.params;
+        const index = examDates.dates.findIndex(x => x.id == id);
+        const { exam_session_count } = examDates.dates[index];
+
+        examDates.dates[index] = {
+          ...req.body,
+          id,
+          exam_session_count,
+        };
+        res.send({ success: true });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyPutCall(req, res) : mockCall();
+  });
 
   app.post(
     '/yki/api/virkailija/organizer/:oid/exam-date/:id/evaluation',
     (req, res) => {
       const mockCall = () => {
-        console.log(req.body);
         try {
           const { id } = req.params;
           const index = examDates.dates.findIndex(x => x.id == id);
           examDates.dates[index] = {
             ...examDates.dates[index],
             ...req.body,
-          };
-          res.send({ success: true });
-        } catch (err) {
-          printError(req, err);
-          res.status(404).send(err.message);
-        }
-      };
-      useLocalProxy ? proxyPostCall(req, res) : mockCall();
-    },
-  );
-
-  app.post(
-    '/yki/api/virkailija/organizer/:oid/exam-date/:id/languages',
-    (req, res) => {
-      const mockCall = () => {
-        try {
-          const { id } = req.params;
-          const index = examDates.dates.findIndex(x => x.id == id);
-          examDates.dates[index] = {
-            ...examDates.dates[index],
-            languages: req.body,
           };
           res.send({ success: true });
         } catch (err) {
@@ -983,40 +964,6 @@ module.exports = function(app) {
       }
     },
   );
-
-  app.post('/yki/api/exam-date/:id/post-admission-end-date', (req, res) => {
-    try {
-      const examDateId = Number(req.params.id);
-      const newEndDate = req.body.post_admission_end_date;
-      const edIndex = examDates.dates.findIndex(e => e.id === examDateId);
-
-      const copyOfEd = examDates.dates.find(e => e.id === examDateId);
-      copyOfEd.post_admission_end_date = newEndDate;
-
-      examDates.dates[edIndex] = copyOfEd;
-      res.send({ success: true });
-    } catch (e) {
-      printError(req, err);
-      res.status(404).send(e.message);
-    }
-  });
-
-  app.delete('/yki/api/exam-date/:id/post-admission-end-date', (req, res) => {
-    try {
-      const examDateId = Number(req.params.id);
-      const examDateIndex = examDates.dates.findIndex(
-        ed => ed.id === examDateId,
-      );
-      const examDate = examDates.dates[examDateIndex];
-      examDate.post_admission_end_date = null;
-
-      examDates.dates[examDateIndex] = examDate;
-      res.send({ success: true });
-    } catch (e) {
-      printError(req, err);
-      res.status(404).send(e.message);
-    }
-  });
 
   app.get('/yki/payment/formdata', (req, res) => {
     const mockCall = () => {

@@ -47,11 +47,11 @@ export const fetchExamDates = (oid, fetchHistory) => {
   };
 };
 
-export const addExamDate = (examDate, oid) => {
+export const addExamDate = (payload, oid) => {
   return dispatch => {
     dispatch(addExamDateStart());
     axios
-      .post(`/yki/api/virkailija/organizer/${oid}/exam-date`, examDate)
+      .post(`/yki/api/virkailija/organizer/${oid}/exam-date`, payload)
       .then(() => {
         dispatch(addExamDateSuccess());
         dispatch(fetchExamDates(oid));
@@ -84,100 +84,57 @@ const addExamDateFail = error => {
   };
 };
 
-export const updateExamDateConfigurations = (
-  postAdmission,
-  languages,
-  oid,
-  examDateId,
-) => {
+export const updateExamDate = (examDateId, payload, oid) => {
   return dispatch => {
-    dispatch(configureExamDateLanguagesStart());
-    dispatch(configureExamDatePostAdmissionStart());
-    Promise.all([
-      axios
-        .post(
-          `/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}/post-admission`,
-          postAdmission,
-        )
-        .then(res => {
-          dispatch(configureExamDateLanguagesSuccess());
-        })
-        .catch(err => {
-          dispatch(configureExamDateLanguagesFail(err));
-        }),
-      axios
-        .post(
-          `/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}/languages`,
-          languages,
-        )
-        .then(res => {
-          dispatch(configureExamDatePostAdmissionSuccess());
-        })
-        .catch(err => {
-          dispatch(configureExamDatePostAdmissionFail(err));
-        }),
-    ]).then(res => {
-      dispatch(fetchExamDates());
-    });
+    dispatch(updateExamDateStart());
+
+    axios
+      .put(
+        `/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}`,
+        payload,
+      )
+      .then(() => {
+        dispatch(updateExamDateSuccess());
+        dispatch(fetchExamDates(oid));
+      })
+      .catch(err => {
+        dispatch(updateExamDateFail(err));
+      });
   };
 };
 
-const configureExamDateLanguagesStart = () => {
+const updateExamDateStart = () => {
   return {
-    type: actionTypes.CONFIGURE_EXAM_DATE_LANGUAGES_START,
+    type: actionTypes.UPDATE_EXAM_DATE_START,
     loading: true,
   };
 };
 
-const configureExamDateLanguagesSuccess = () => {
+const updateExamDateSuccess = () => {
   return {
-    type: actionTypes.CONFIGURE_EXAM_DATE_LANGUAGES_SUCCESS,
+    type: actionTypes.UPDATE_EXAM_DATE_SUCCESS,
     loading: false,
   };
 };
 
-const configureExamDateLanguagesFail = error => {
+const updateExamDateFail = error => {
   return {
-    type: actionTypes.CONFIGURE_EXAM_DATE_LANGUAGES_FAIL,
+    type: actionTypes.UPDATE_EXAM_DATE_FAIL,
     error: Object.assign(error, {
-      key: 'error.examDates.languages.configurationFailed',
+      key: 'error.examDates.updateFailed',
     }),
     loading: false,
   };
 };
 
-const configureExamDatePostAdmissionStart = () => {
-  return {
-    type: actionTypes.CONFIGURE_EXAM_DATE_POST_ADMISSION_START,
-    loading: true,
-  };
-};
-
-const configureExamDatePostAdmissionSuccess = () => {
-  return {
-    type: actionTypes.CONFIGURE_EXAM_DATE_POST_ADMISSION_SUCCESS,
-    loading: false,
-  };
-};
-
-const configureExamDatePostAdmissionFail = error => {
-  return {
-    type: actionTypes.CONFIGURE_EXAM_DATE_POST_ADMISSION_FAIL,
-    error: Object.assign(error, {
-      key: 'error.examDates.postAdmission.configurationFailed"',
-    }),
-    loading: false,
-  };
-};
-
-export const deleteExamDate = (oid, examDateId) => {
+export const deleteExamDate = (examDateId, oid) => {
   return dispatch => {
     dispatch(deleteExamDateStart());
     axios
-      .delete(`/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}/`)
+      .delete(`/yki/api/virkailija/organizer/${oid}/exam-date/${examDateId}`)
       .then(res => {
         dispatch(deleteExamDateSuccess());
-        dispatch(fetchExamDates());
+        dispatch(fetchExamDates(oid));
       })
       .catch(err => {
         dispatch(deleteExamDateFail(err));
@@ -205,30 +162,6 @@ const deleteExamDateFail = error => {
     type: actionTypes.DELETE_EXAM_DATE_FAIL,
     error: Object.assign(error, { key: 'error.examDates.deleteFailed' }),
     loading: false,
-  };
-};
-
-// NOT IN USE
-export const updatePostAdmissionEndDate = (examDateId, endDate) => {
-  return dispatch => {
-    axios
-      .post(`/yki/api/exam-date/${examDateId}/post-admission-end-date`, endDate)
-      .then(res => {
-        dispatch(fetchExamDates());
-      });
-    //TODO: handle error
-  };
-};
-
-// NOT IN USE
-export const deletePostAdmissionEndDate = examDateId => {
-  return dispatch => {
-    axios
-      .delete(`/yki/api/exam-date/${examDateId}/post-admission-end-date`)
-      .then(res => {
-        dispatch(fetchExamDates());
-      });
-    //TODO: handle error
   };
 };
 

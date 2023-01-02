@@ -52,16 +52,13 @@ export {
   addExamDate,
   fetchExamDates,
   examDatesFailReset,
-  updatePostAdmissionEndDate,
-  deletePostAdmissionEndDate,
-  updateExamDateConfigurations,
+  updateExamDate,
   deleteExamDate,
   // GetExamDatesHistory,
   addEvaluationPeriod,
 } from './examDates';
 export { fetchUser } from './user';
 export { initYKILanguage, changeYKILanguage, setWindowWidth } from './yki';
-export { fetchPaymentsReport, fetchPaymentsReportReset } from './paymentsReport';
 export {
   fetchQuarantineMatches,
   fetchQuarantineReviews,
@@ -74,3 +71,4 @@ export {
   editQuarantine,
   resetAll,
 } from './quarantine';
+export { fetchPaymentsReport, fetchPaymentsReportReset } from './paymentsReport'
