@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: can be deleted once backend localisations have been potentially fetched with this script
+
 function get_domain {
   env=$1
 
@@ -60,7 +62,7 @@ fi
 
 domain=$(get_domain $env)
 
-dir="../src/main/js/dev/rest/localisation"
+dir="../src/main/js/public/localisation"
 mkdir -p "$dir/environment/"
 
 for lang in "en" "fi" "sv"

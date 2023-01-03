@@ -839,7 +839,7 @@ module.exports = function(app) {
     try {
       const { lang } = req.query;
       const data = fs.readFileSync(
-        `./dev/rest/localisation/translations_${lang}.json`,
+        `./public/localisation/translations_${lang}.json`,
       );
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.send(data);
