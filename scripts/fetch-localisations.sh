@@ -62,7 +62,7 @@ fi
 
 domain=$(get_domain $env)
 
-dir="../src/main/js/public/localisation"
+dir="../src/main/js/src/assets/localisation"
 mkdir -p "$dir/environment/"
 
 for lang in "en" "fi" "sv"

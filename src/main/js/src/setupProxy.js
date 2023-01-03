@@ -835,20 +835,6 @@ module.exports = function(app) {
     }
   });
 
-  app.get('/yki/api/localisation', (req, res) => {
-    try {
-      const { lang } = req.query;
-      const data = fs.readFileSync(
-        `./public/localisation/translations_${lang}.json`,
-      );
-      res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(data);
-    } catch (err) {
-      printError(req, err);
-      res.status(404).send(err.message);
-    }
-  });
-
   app.get('/yki/api/virkailija/organizer/:oid/exam-date', (req, res) => {
     const mockCall = () => {
       try {
