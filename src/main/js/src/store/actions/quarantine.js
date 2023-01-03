@@ -148,16 +148,16 @@ const extractQuarantines = res => {
 };
 
 const extractQuarantineMatches = res => {
-  const matches = res.quarantines;
+  const matches = res.quarantines || [];
 
   return {
     type: actionTypes.ADD_QUARANTINE_MATCHES,
-    matches,
+    matches: matches,
   };
 };
 
 const extractQuarantineReviews = res => {
-  const reviews = res.reviews;
+  const reviews = res.reviews || [];
 
   return {
     type: actionTypes.ADD_QUARANTINE_REVIEWS,

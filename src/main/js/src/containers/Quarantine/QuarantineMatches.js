@@ -115,12 +115,12 @@ const QuarantineMatches = props => {
                   {match.phone_number}
                 </span>
               </div>
-              <div className={classes.PrimaryButton}>
+              <div data-cy="set-quarantine-btn" className={classes.PrimaryButton}>
                 <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
                   {t('quarantine.setQuarantine')}
                 </Button>
               </div>
-              <div>
+              <div data-cy="set-no-quarantine-btn">
                 <Button clicked={doSetQuarantine.bind(this, match.id, match.registration_id, false)}>
                   {t('quarantine.noQuarantine')}
                 </Button>

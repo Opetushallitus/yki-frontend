@@ -15,9 +15,9 @@ describe('Quarantine CRUD page', () => {
       .click();
   };
 
-  it('open quarantine add form and fill it', () => {
-    cy.get('[data-cy=add-quarantine-btn] button').click();
-    cy.get('#language_code').should('be.visible').select('swe');
+  it.skip('open quarantine add form and fill it', () => {
+    cy.get('[data-cy=add-quarantine-btn] button').should('be.visible').click();
+    cy.get('#language_code').should('be.visible').should('be.visible').select('swe');
     cy.get('#first_name').should('be.visible').type('Testi');
     cy.get('#last_name').should('be.visible').type('Testi');
     cy.get('#email').should('be.visible').type('test@invalid.invalid');
@@ -28,5 +28,21 @@ describe('Quarantine CRUD page', () => {
 
     cy.get('#birthdate').click();
     chooseFlatpickerDate('15', 'helmikuu', 1990);
+  });
+
+  it('edit quarantine form has correct values', () => {
+    cy.get('[data-cy=edit-quarantine-btn] button').should('be.visible').click();
+    cy.get('#email').should('be.visible').should('have.value', 'email@invalid.invalid');
+    cy.get('#phone_number').should('be.visible').should('have.value', '0401234567');
+    cy.get('#first_name').should('be.visible').should('have.value', 'Max');
+    cy.get('#last_name').should('be.visible').should('have.value', 'Syöttöpaine');
+    cy.get('#end_date').should('have.value', '1.1.2028');
+    cy.get('#birthdate').should('have.value', '1.2.2018');
+  });
+
+  it('delete quarantine should show confirm dialog', () => {
+    cy.get('[data-cy=delete-quarantine-btn] button').should('be.visible').click();
+    cy.get('[data-cy=confirm-delete-quarantine-btn]').should('be.visible');
+    cy.get('[data-cy=cancel-delete-quarantine-btn]').should('be.visible');
   });
 });

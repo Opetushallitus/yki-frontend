@@ -63,10 +63,16 @@ const Quarantine = props => {
       </div>
       <p>{t('quarantine.askDelete')}</p>
       <div className={classes.ConfirmButtons}>
-        <button onClick={confirm} className={classes.ConfirmButton}>
+        <button
+          data-cy="confirm-delete-quarantine-btn"
+          onClick={confirm}
+          className={classes.ConfirmButton}>
           {t('common.confirm')}
         </button>
-        <button onClick={closeConfirmModal} className={classes.CancelButton}>
+        <button
+          data-cy="cancel-delete-quarantine-btn"
+          onClick={closeConfirmModal}
+          className={classes.CancelButton}>
           {t('common.cancelConfirm')}
         </button>
       </div>
@@ -149,12 +155,12 @@ const Quarantine = props => {
               <div>
                 {quarantine.phone_number}
               </div>
-              <div className={classes.EditButton}>
+              <div data-cy="edit-quarantine-btn" className={classes.EditButton}>
                 <Button clicked={onShowAddModal.bind(this, { isVisible: true, form: quarantine })}>
                   {t('common.edit')}
                 </Button>
               </div>
-              <div className={classes.DeleteButton}>
+              <div data-cy="delete-quarantine-btn" className={classes.DeleteButton}>
                 <Button clicked={doDelete.bind(this, quarantine.id)}>
                   {t('common.delete')}
                 </Button>

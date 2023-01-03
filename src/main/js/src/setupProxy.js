@@ -186,6 +186,23 @@ const quarantineMatches = {
   }]
 };
 
+const quarantines = {
+  quarantines: [{
+    quarantine_lang: 'fin',
+    birthdate: '2018-02-01',
+    email: 'email@invalid.invalid',
+    language_code: 'fin',
+    phone_number: '0401234567',
+    name: 'Max Syöttöpaine',
+    ssn: '301079-900U',
+    created: '2022-12-02T10:32:11.888Z',
+    end_date: '2028-01-01',
+    id: 1,
+    last_name: 'Syöttöpaine',
+    first_name: 'Max',
+  }]
+};
+
 const initialOrganizers = [...organizers];
 
 const paymentFormData = {
@@ -378,7 +395,7 @@ module.exports = function(app) {
   app.get('/yki/api/virkailija/quarantine', (req, res) => {
     const mockCall = () => {
       try {
-        res.send({ organizers: organizers });
+        res.send(quarantines);
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);

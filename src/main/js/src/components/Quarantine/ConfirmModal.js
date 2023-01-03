@@ -26,10 +26,16 @@ const QuarantineConfirmModal = props => {
       </div>
       <p>{t('quarantine.confirmDescription')}</p>
       <div className={classes.ConfirmButtons}>
-        <button onClick={confirm} className={classes.ConfirmButton}>
+        <button
+          data-cy="confirm-set-quarantine-btn"
+          onClick={confirm}
+          className={classes.ConfirmButton}>
           {t('common.confirm')}
         </button>
-        <button onClick={cancel} className={classes.CancelButton}>
+        <button
+          data-cy="cancel-set-quarantine-btn"
+          onClick={cancel}
+          className={classes.CancelButton}>
           {t('common.cancelConfirm')}
         </button>
       </div>
