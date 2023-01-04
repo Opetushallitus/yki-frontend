@@ -52,7 +52,7 @@ const QuarantineHistory = props => {
           {t('quarantine.reviewsTitle')}
         </h1>
 
-        <QuarantineNav />
+        <QuarantineNav t={t} />
 
         <p>
           {t('quarantine.reviewsDescription')}

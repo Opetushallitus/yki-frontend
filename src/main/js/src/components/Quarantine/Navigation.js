@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import classes from './Quarantine.module.css';
 
-const QuarantineNav = () => {
+const QuarantineNav = (props) => {
+  const { t } = props;
+
   return (
     <>
       <NavLink
@@ -11,7 +14,7 @@ const QuarantineNav = () => {
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >
-        Odottavat tarkistukset
+        {t('quarantine.pendingQuarantines')}
       </NavLink>
       <NavLink
         exact
@@ -19,7 +22,7 @@ const QuarantineNav = () => {
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >
-        Aiemmat tarkistukset
+        {t('quarantine.reviewedQuarantines')}
       </NavLink>
       <NavLink
         exact
@@ -27,10 +30,14 @@ const QuarantineNav = () => {
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >
-        Aktiiviset karenssit
+        {t('quarantine.activeQuarantines')}
       </NavLink>
     </>
   );
+};
+
+QuarantineNav.propTypes = {
+  t: PropTypes.func.isRequired,
 };
 
 export default QuarantineNav;

@@ -52,7 +52,7 @@ const QuarantineMatches = props => {
           {t('quarantine.matchesTitle')}
         </h1>
 
-        <QuarantineNav />
+        <QuarantineNav t={t} />
 
         <p>
           {t('quarantine.matchesDescription')}

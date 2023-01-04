@@ -110,7 +110,7 @@ const Quarantine = props => {
           {t('quarantine.quarantines')}
         </h1>
 
-        <QuarantineNav />
+        <QuarantineNav t={t} />
 
         <div data-cy="add-quarantine-btn" className={classes.PrimaryButton}>
           <Button clicked={onShowAddModal.bind(this, { isVisible: true, form: initialForm })}>
