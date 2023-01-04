@@ -122,22 +122,26 @@ const QuarantineHistory = props => {
                  ? t('quarantine.quarantined')
                  : t('quarantine.notQuarantined')}
               </div>
-              <div>
+              <div data-cy={`${review.quarantined ? 'unset' : 'set'}-quarantine-btn`}>
                 {review.quarantined ? (
-                  <Button disabled={loading} clicked={doSetQuarantine.bind(
-                    this,
-                    review.quarantine_id,
-                    review.registration_id,
-                    false
-                  )}>
+                  <Button
+                    disabled={loading}
+                    clicked={doSetQuarantine.bind(
+                      this,
+                      review.quarantine_id,
+                      review.registration_id,
+                      false
+                    )}>
                     {t('quarantine.cancelQuarantine')}
                   </Button>
                 ) : (
-                  <Button disabled={loading} clicked={showQuarantineConfirm.bind(
-                    this,
-                    review.quarantine_id,
-                    review.registration_id
-                  )}>
+                  <Button
+                    disabled={loading}
+                    clicked={showQuarantineConfirm.bind(
+                      this,
+                      review.quarantine_id,
+                      review.registration_id
+                    )}>
                     {t('quarantine.setQuarantine')}
                   </Button>
                 )}

@@ -137,7 +137,11 @@ const QuarantineForm = props => {
           </div>
 
           <div className={classes.ConfirmButtons}>
-            <button className={classes.ConfirmButton} type="submit" tabIndex="4">
+            <button
+              data-cy="submit-quarantine-btn"
+              className={classes.ConfirmButton}
+              type="submit"
+              tabIndex="4">
               {t('common.send')}
             </button>
             <button className={classes.CancelButton} onClick={cancelForm} tabIndex="4">
