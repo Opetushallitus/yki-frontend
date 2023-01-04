@@ -1,0 +1,68 @@
+.QuarantineMatches {
+  margin: auto;
+  width: calc(100% - 170px);
+  max-width: 1440px;
+  min-width: 300px;
+  height: 100%;
+  align-items: center;
+  padding: 30px 0;
+}
+
+.QuarantineList {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 0;
+  grid-row-gap: 5px;
+}
+
+.QuarantineList div {
+  padding: 10px 0;
+  text-align: center;
+  margin: 0;
+  color: #000;
+}
+
+.QuarantineList div.ListHeader {
+  border-width: 0 0 1px 0;
+  border-color: #000;
+  border-style: solid;
+  font-weight: bold;
+  margin: 10px 0 30px 0;
+}
+
+.QuarantineList .PrimaryButton button {
+  background-color: var(--primary-blue) !important;
+}
+
+.ConfirmText {
+  font-weight: bold;
+  margin-bottom: 4vh;
+  max-height: 300px;
+}
+
+.ConfirmButtons {
+  text-align: right;
+  margin: 30px 0 0 0;
+}
+
+.ConfirmButtons button {
+  color: hsl(0, 0%, 100%);
+  border: none;
+  padding: 12px;
+  border-radius: 2px;
+  width: 6rem;
+  cursor: pointer;
+}
+
+.ConfirmButton {
+  background-color: hsla(199, 77%, 43%, 0.95);
+  margin-right: 1.2vw;
+}
+
+.CancelButton {
+  background-color: hsla(358, 75%, 57%, 0.85);
+}
+
+.ModalContainer > div {
+  height: auto;
+}
