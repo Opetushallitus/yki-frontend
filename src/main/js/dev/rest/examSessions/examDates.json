@@ -342,13 +342,14 @@
             "exam_session_count": 1
         },
         {
+            "id": 53,
+            "exam_date": "2081-06-07",
+            "registration_start_date": "2081-01-01",
+            "registration_end_date": "2081-01-30",
+            "post_admission_enabled": false,
+            "post_admission_start_date": null,
             "post_admission_end_date": null,
             "exam_session_count": 0,
-            "post_admission_start_date": null,
-            "exam_date": "2081-06-07",
-            "id": 53,
-            "post_admission_enabled": false,
-            "registration_start_date": "2081-01-01",
             "languages": [
                 {
                     "language_code": "fin",
@@ -370,8 +371,7 @@
                     "language_code": "eng",
                     "level_code": "YLIN"
                 }
-            ],
-            "registration_end_date": "2081-01-30"
+            ]
         }
     ]
 }
