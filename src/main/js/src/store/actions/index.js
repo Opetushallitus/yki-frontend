@@ -71,4 +71,4 @@ export {
   editQuarantine,
   resetAll,
 } from './quarantine';
-export { fetchPaymentsReport, fetchPaymentsReportReset } from './paymentsReport'
+export { fetchPaymentsReport, fetchPaymentsReportReset } from './paymentsReport';
