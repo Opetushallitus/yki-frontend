@@ -251,6 +251,7 @@ const quarantines = {
     id: 1,
     last_name: 'Syöttöpaine',
     first_name: 'Max',
+    diary_number: '1234',
   }]
 };
 

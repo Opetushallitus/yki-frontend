@@ -84,6 +84,7 @@
   "common.expires": "Päättyy",
   "common.delete": "Poista",
   "common.edit": "Muokkaa",
+  "common.diaryNumber": "Asianumero",
   "quarantine.pendingQuarantines": "Odottavat tarkistukset",
   "quarantine.reviewedQuarantines": "Aiemmat tarkistukset",
   "quarantine.activeQuarantines": "Aktiiviset karenssit",

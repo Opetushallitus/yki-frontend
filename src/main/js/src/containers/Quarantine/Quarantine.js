@@ -24,6 +24,7 @@ const initialForm = {
   last_name: '',
   end_date: '',
   birthdate: '',
+  diary_number: '',
 };
 
 const Quarantine = props => {

@@ -25,6 +25,7 @@ describe('Quarantine CRUD page', () => {
       language_code: 'swe',
       last_name: 'Testi',
       phone_number: '0401234567',
+      diary_number: '1234',
     };
 
     cy.intercept('POST', url).as('addQuarantine');
@@ -33,14 +34,16 @@ describe('Quarantine CRUD page', () => {
     cy.get('#language_code').should('be.visible').should('be.visible').select('swe');
     cy.get('#first_name').should('be.visible').type('Testi');
     cy.get('#last_name').should('be.visible').type('Testi');
-    cy.get('#email').should('be.visible').type('test@invalid.invalid');
-    cy.get('#phone_number').should('be.visible').type('0401234567');
 
     cy.get('#end_date').click();
     chooseFlatpickerDate('5', 'maaliskuu', 2050);
 
     cy.get('#birthdate').click();
     chooseFlatpickerDate('15', 'helmikuu', 1990);
+
+    cy.get('#email').should('be.visible').type('test@invalid.invalid');
+    cy.get('#phone_number').should('be.visible').type('0401234567');
+    cy.get('#diary_number').should('be.visible').type('1234');
 
     cy.get('[data-cy=submit-quarantine-btn]').should('be.visible').click();
     cy.wait('@addQuarantine').then((interception) => {
@@ -62,7 +65,8 @@ describe('Quarantine CRUD page', () => {
       end_date: '2028-01-01',
       id: 1,
       last_name: 'Syöttöpaine',
-      first_name: 'Max 2'
+      first_name: 'Max 2',
+      diary_number: '12343',
     };
 
     cy.intercept('PUT', url).as('editQuarantine');
@@ -75,6 +79,7 @@ describe('Quarantine CRUD page', () => {
     cy.get('#end_date').should('have.value', '1.1.2028');
     cy.get('#birthdate').should('have.value', '1.2.2018');
     cy.get('#first_name').type(' 2');
+    cy.get('#diary_number').type('3');
 
     cy.get('[data-cy=submit-quarantine-btn]').should('be.visible').click();
     cy.wait('@editQuarantine').then((interception) => {

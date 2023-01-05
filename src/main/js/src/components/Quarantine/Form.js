@@ -40,13 +40,9 @@ const QuarantineForm = props => {
   };
 
   const onFormSubmit = (values) => {
-    // Datepicker can return either Date object or string
-    const parsedBirthdate = (birthdate instanceof Date)
-      ? moment(birthdate)
-      : moment(birthdate, DATE_FORMAT)
-    const parsedEndDate = (endDate instanceof Date)
-      ? moment(endDate)
-      : moment(endDate, DATE_FORMAT)
+    // Datepicker uses different date format
+    const parsedBirthdate = moment(birthdate, DATE_FORMAT)
+    const parsedEndDate = moment(endDate, DATE_FORMAT)
     const payload = {
       ...values,
       birthdate: dateToString(parsedBirthdate),
@@ -60,6 +56,7 @@ const QuarantineForm = props => {
 
   return (
     <Formik
+      key={`quarantine-form-${form.id}`}
       initialValues={form}
       onSubmit={onFormSubmit}
       render={({ values, handleChange }) => (
@@ -92,9 +89,10 @@ const QuarantineForm = props => {
                   minDate: today,
                   allowInput: true,
                   dateFormat: DATE_FORMAT_PICKER,
+                  noMinDateUpdate: true,
                 }}
                 locale={i18n.language}
-                onChange={(dates) => setEndDate(dates[0])}
+                onChange={(dates) => setEndDate(moment(dates[0]).format(DATE_FORMAT))}
                 id="end_date"
               />
             </div>
@@ -113,9 +111,10 @@ const QuarantineForm = props => {
                   maxDate: today,
                   allowInput: true,
                   dateFormat: DATE_FORMAT_PICKER,
+                  noMinDateUpdate: true,
                 }}
                 locale={i18n.language}
-                onChange={(dates) => setBirthdate(dates[0])}
+                onChange={(dates) => setBirthdate(moment(dates[0]).format(DATE_FORMAT))}
                 id="birthdate"
               />
             </div>
@@ -133,6 +132,11 @@ const QuarantineForm = props => {
             <div className={classes.QuarantineFormField}>
               <label htmlFor="phone_number">{t('common.phoneNumber')}</label>
               <Field name="phone_number" id="phone_number" />
+            </div>
+
+            <div className={classes.QuarantineFormField}>
+              <label htmlFor="diary_number">{t('common.diaryNumber')}</label>
+              <Field name="diary_number" id="diary_number" />
             </div>
           </div>
 
