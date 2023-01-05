@@ -161,7 +161,7 @@ let organizers = [
 ];
 
 const quarantineMatches = {
-  quarantines: [{
+  quarantine_matches: [{
     quarantine_lang: 'fin',
     birthdate: '2018-02-01',
     email: 'email@invalid.invalid',
@@ -194,7 +194,7 @@ const quarantineReviews = {
     language_code: 'fin',
     phone_number: '0401234567',
     quarantine_id: 1,
-    quarantined: false,
+    is_quarantined: false,
     reviewed: '2022-12-20T12:23:52.501Z',
     name: 'Max Syöttöpaine',
     ssn: '301079-900U',
@@ -218,7 +218,7 @@ const quarantineReviews = {
     language_code: 'fin',
     phone_number: '0401234567',
     quarantine_id: 2,
-    quarantined: true,
+    is_quarantined: true,
     reviewed: '2022-12-20T12:23:52.501Z',
     name: 'Max Syöttöpaine',
     ssn: '301079-900U',

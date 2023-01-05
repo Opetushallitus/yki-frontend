@@ -118,12 +118,12 @@ const QuarantineHistory = props => {
                 </span>
               </div>
               <div className={classes.ListRow}>
-                {review.quarantined
+                {review.is_quarantined
                  ? t('quarantine.quarantined')
                  : t('quarantine.notQuarantined')}
               </div>
-              <div data-cy={`${review.quarantined ? 'unset' : 'set'}-quarantine-btn`}>
-                {review.quarantined ? (
+              <div data-cy={`${review.is_quarantined ? 'unset' : 'set'}-quarantine-btn`}>
+                {review.is_quarantined ? (
                   <Button
                     disabled={loading}
                     clicked={doSetQuarantine.bind(

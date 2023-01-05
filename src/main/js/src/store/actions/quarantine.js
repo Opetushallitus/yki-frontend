@@ -147,7 +147,7 @@ const extractQuarantines = res => {
 };
 
 const extractQuarantineMatches = res => {
-  const matches = res.quarantines || [];
+  const matches = res.quarantine_matches || [];
 
   return {
     type: actionTypes.ADD_QUARANTINE_MATCHES,
