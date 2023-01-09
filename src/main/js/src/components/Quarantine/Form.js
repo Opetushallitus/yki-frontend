@@ -2,7 +2,8 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import classes from './Quarantine.module.css';
 import PropTypes from 'prop-types';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import DatePicker from '../../components/UI/DatePicker/DatePicker';
 import {
   LANGUAGES,
@@ -39,14 +40,23 @@ const QuarantineForm = props => {
     onCancel();
   };
 
+  const validationSchema = Yup.object().shape({
+    first_name: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
+    last_name: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
+  });
+
   const onFormSubmit = (values) => {
     // Datepicker uses different date format
-    const parsedBirthdate = moment(birthdate, DATE_FORMAT)
-    const parsedEndDate = moment(endDate, DATE_FORMAT)
+    const parsedBirthdate = birthdate
+          ? dateToString(moment(birthdate, DATE_FORMAT))
+          : null;
+    const parsedEndDate = endDate
+          ? dateToString(moment(endDate, DATE_FORMAT))
+          : null;
     const payload = {
       ...values,
-      birthdate: dateToString(parsedBirthdate),
-      end_date: dateToString(parsedEndDate),
+      birthdate: parsedBirthdate,
+      end_date: parsedEndDate,
     };
 
     values.id
@@ -58,8 +68,9 @@ const QuarantineForm = props => {
     <Formik
       key={`quarantine-form-${form.id}`}
       initialValues={form}
+      validationSchema={validationSchema}
       onSubmit={onFormSubmit}
-      render={({ values, handleChange }) => (
+      render={({ values, handleChange, isValid }) => (
         <Form>
           <div className={classes.QuarantineFormFields}>
             <div className={classes.QuarantineFormField}>
@@ -71,7 +82,7 @@ const QuarantineForm = props => {
                 name="language_code"
                 onChange={handleChange}
                 id="language_code"
-              >
+                tabIndex="1">
                 {LANGUAGES.map((lang) => (
                   <option key={`lang-option-${lang.code}`} value={lang.code}>
                     {lang.name}
@@ -91,6 +102,8 @@ const QuarantineForm = props => {
                   dateFormat: DATE_FORMAT_PICKER,
                   noMinDateUpdate: true,
                 }}
+                autoComplete="off"
+                tabIndex="2"
                 locale={i18n.language}
                 onChange={(dates) => setEndDate(moment(dates[0]).format(DATE_FORMAT))}
                 id="end_date"
@@ -99,7 +112,12 @@ const QuarantineForm = props => {
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="first_name">{t('common.first_name')}</label>
-              <Field id="first_name" name="first_name" />
+              <Field autoFocus="true" id="first_name" tabIndex="3" name="first_name" />
+              <ErrorMessage
+                name="first_name"
+                component="span"
+                className={classes.ErrorMessage}
+              />
             </div>
 
             <div className={classes.QuarantineFormField}>
@@ -113,6 +131,8 @@ const QuarantineForm = props => {
                   dateFormat: DATE_FORMAT_PICKER,
                   noMinDateUpdate: true,
                 }}
+                autoComplete="off"
+                tabIndex="4"
                 locale={i18n.language}
                 onChange={(dates) => setBirthdate(moment(dates[0]).format(DATE_FORMAT))}
                 id="birthdate"
@@ -121,22 +141,27 @@ const QuarantineForm = props => {
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="last_name">{t('common.last_name')}</label>
-              <Field id="last_name" name="last_name" />
+              <Field id="last_name" tabIndex="5" name="last_name" />
+              <ErrorMessage
+                name="last_name"
+                component="span"
+                className={classes.ErrorMessage}
+              />
             </div>
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="email">{t('common.email')}</label>
-              <Field name="email" id="email" />
+              <Field name="email" tabIndex="6" id="email" />
             </div>
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="phone_number">{t('common.phoneNumber')}</label>
-              <Field name="phone_number" id="phone_number" />
+              <Field name="phone_number" tabIndex="7" id="phone_number" />
             </div>
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="diary_number">{t('common.diaryNumber')}</label>
-              <Field name="diary_number" id="diary_number" />
+              <Field name="diary_number" tabIndex="8" id="diary_number" />
             </div>
           </div>
 
@@ -145,10 +170,11 @@ const QuarantineForm = props => {
               data-cy="submit-quarantine-btn"
               className={classes.ConfirmButton}
               type="submit"
-              tabIndex="4">
+              tabIndex="9"
+              disabled={!isValid}>
               {t('common.send')}
             </button>
-            <button className={classes.CancelButton} onClick={cancelForm} tabIndex="4">
+            <button className={classes.CancelButton} onClick={cancelForm} tabIndex="10">
               {t('common.cancelConfirm')}
             </button>
           </div>

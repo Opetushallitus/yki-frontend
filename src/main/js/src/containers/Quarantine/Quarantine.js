@@ -18,13 +18,13 @@ import QuarantineForm from '../../components/Quarantine/Form';
 
 const initialForm = {
   language_code: 'fin',
-  email: '',
-  phone_number: '',
-  first_name: '',
-  last_name: '',
-  end_date: '',
-  birthdate: '',
-  diary_number: '',
+  email: null,
+  phone_number: null,
+  first_name: null,
+  last_name: null,
+  end_date: null,
+  birthdate: null,
+  diary_number: null,
 };
 
 const Quarantine = props => {

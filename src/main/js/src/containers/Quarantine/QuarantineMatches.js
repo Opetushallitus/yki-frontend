@@ -84,36 +84,20 @@ const QuarantineMatches = props => {
               <div>{findLang(match.language_code)}</div>
               <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
               <div className={classes.ListRow}>
-                <span>
-                  {match.form.first_name} {match.form.last_name}
-                </span>
-                <span>
-                  {match.first_name} {match.last_name}
-                </span>
+                <span>{match.form.first_name} {match.form.last_name}</span>
+                <span>{match.first_name} {match.last_name}</span>
               </div>
               <div className={classes.ListRow}>
-                <span>
-                  {match.form.email}
-                </span>
-                <span>
-                  {match.email}
-                </span>
+                <span>{match.form.email}</span>
+                <span>{match.email}</span>
               </div>
               <div className={classes.ListRow}>
-                <span>
-                  {moment(match.form.birthdate).format(DATE_FORMAT)}
-                </span>
-                <span>
-                  {moment(match.birthdate).format(DATE_FORMAT)}
-                </span>
+                <span>{moment(match.form.birthdate).format(DATE_FORMAT)}</span>
+                <span>{moment(match.birthdate).format(DATE_FORMAT)}</span>
               </div>
               <div className={classes.ListRow}>
-                <span>
-                  {match.form.phone_number}
-                </span>
-                <span>
-                  {match.phone_number}
-                </span>
+                <span>{match.form.phone_number}</span>
+                <span>{match.phone_number}</span>
               </div>
               <div data-cy="set-quarantine-btn" className={classes.PrimaryButton}>
                 <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>

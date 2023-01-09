@@ -124,6 +124,7 @@
   "error.mandatory": "Pakollinen",
   "error.max": "Arvo liian pitkä",
   "error.nosubtasks": "Tutkinnonosia ei valittu",
+  "error.string": "Arvon pitää olla merkkijono",
   "error.numeric": "Arvon pitää olla numero",
   "error.numeric.int": "Arvon pitää olla kokonaisluku",
   "error.numeric.positive": "Arvon pitää olla positiivinen",

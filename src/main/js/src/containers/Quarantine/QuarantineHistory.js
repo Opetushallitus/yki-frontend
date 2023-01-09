@@ -86,36 +86,24 @@ const QuarantineHistory = props => {
               <div>{findLang(review.language_code)}</div>
               <div>{moment(review.exam_date).format(DATE_FORMAT)}</div>
               <div className={classes.ListRow}>
-                <span>
-                  {review.form.first_name} {review.form.last_name}
-                </span>
-                <span>
-                  {review.first_name} {review.last_name}
-                </span>
+                <span>{review.form.first_name} {review.form.last_name}</span>
+                <span>{review.first_name} {review.last_name}</span>
+              </div>
+              <div className={classes.ListRow}>
+                <span>{review.form.email}</span>
+                <span>{review.email}</span>
               </div>
               <div className={classes.ListRow}>
                 <span>
-                  {review.form.email}&nbsp;<br/>
-                </span>
-                <span>
-                  {review.email}
-                </span>
-              </div>
-              <div className={classes.ListRow}>
-                <span>
-                  {moment(review.form.birthdate).format(DATE_FORMAT)}&nbsp;
+                  {moment(review.form.birthdate).format(DATE_FORMAT)}
                 </span>
                 <span>
                   {moment(review.birthdate).format(DATE_FORMAT)}
                 </span>
               </div>
               <div className={classes.ListRow}>
-                <span>
-                  {review.phone_number}
-                </span>
-                <span>
-                  {review.form.phone_number}
-                </span>
+                <span>{review.phone_number}</span>
+                <span>{review.form.phone_number}</span>
               </div>
               <div className={classes.ListRow}>
                 {review.is_quarantined

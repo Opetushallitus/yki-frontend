@@ -44,12 +44,9 @@
 }
 
 .ListRow {
-  display: block !important;
-}
-
-.ListRow span {
-  display: block;
-  height: 1.2em;
+  display: grid !important;
+  grid-template-rows: 1.6em 1.6em;
+  justify-content: center;
 }
 
 .PrimaryButton button {
