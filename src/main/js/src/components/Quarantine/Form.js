@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React, { useState } from 'react';
+import * as R from 'ramda';
 import classes from './Quarantine.module.css';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -13,6 +14,7 @@ import {
 
 const dateToString = date => date.format('YYYY-MM-DD');
 const formatDate = date => moment(date).format(DATE_FORMAT);
+const valueOrNull = R.when(R.isEmpty, R.always(null));
 
 const QuarantineForm = props => {
   const {
@@ -55,6 +57,11 @@ const QuarantineForm = props => {
           : null;
     const payload = {
       ...values,
+      email: valueOrNull(values.email),
+      phone_number: valueOrNull(values.phone_number),
+      first_name: valueOrNull(values.first_name),
+      last_name: valueOrNull(values.last_name),
+      diary_number: valueOrNull(values.diary_number),
       birthdate: parsedBirthdate,
       end_date: parsedEndDate,
     };
@@ -70,7 +77,7 @@ const QuarantineForm = props => {
       initialValues={form}
       validationSchema={validationSchema}
       onSubmit={onFormSubmit}
-      render={({ values, handleChange, isValid }) => (
+      render={({ values, handleChange, isValid, dirty }) => (
         <Form>
           <div className={classes.QuarantineFormFields}>
             <div className={classes.QuarantineFormField}>
@@ -112,7 +119,7 @@ const QuarantineForm = props => {
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="first_name">{t('common.first_name')}</label>
-              <Field autoFocus="true" id="first_name" tabIndex="3" name="first_name" />
+              <Field autoFocus={true} id="first_name" tabIndex="3" name="first_name" />
               <ErrorMessage
                 name="first_name"
                 component="span"
@@ -171,7 +178,7 @@ const QuarantineForm = props => {
               className={classes.ConfirmButton}
               type="submit"
               tabIndex="9"
-              disabled={!isValid}>
+              disabled={(dirty && !isValid) || (!form.id && !isValid)}>
               {t('common.send')}
             </button>
             <button className={classes.CancelButton} onClick={cancelForm} tabIndex="10">
