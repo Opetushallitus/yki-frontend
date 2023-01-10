@@ -32,7 +32,6 @@ export const collectRegistryItemDetails = (organizer, organization, lang) => {
   item.attachmentId = organizer.attachments ? organizer.attachments[0].external_id : null;
   item.languages = organizer.languages || [];
   item.extra = organizer.extra || '';
-  item.merchant = organizer.merchant;
 
   return item;
 };

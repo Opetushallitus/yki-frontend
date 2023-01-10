@@ -344,11 +344,6 @@
   "registryItem.deleteConfirm": "Confirm deletion",
   "registryItem.extra": "Extra information",
   "registryItem.extra.placeholder": "F.ex. common mailing list everybody@organiser.fi",
-  "registryItem.merchantId": "Merchant ID",
-  "registryItem.merchantSecret": "Merchant secret",
-  "registryItem.merchantSecret.mandatory": "Mandatory when merchant ID is given",
-  "registryItem.payment": "Payment service information",
-  "registryItem.paymentInfoMissing": "Payment service information missing",
   "registryItem.search.placeholder": "Search by organisation name",
   "registryItem.viewAsOrganiser": "Show organiser view"
 }

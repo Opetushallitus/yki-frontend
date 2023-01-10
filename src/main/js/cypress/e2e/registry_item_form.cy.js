@@ -12,7 +12,7 @@ describe('Registry item form', () => {
     cy.request('/reset-mocks');
   });
 
-  it.skip('organizer can be added with payment info', () => {
+  it.skip('organizer can be added', () => {
     cy.wait('@findbyoids');
     cy.get('[data-cy=registry-item]').should('have.length', 2);
 
@@ -33,8 +33,6 @@ describe('Registry item form', () => {
     cy.get('#contactName').type('Example Contact');
     cy.get('#contactEmail').type('example.contact@test.com');
     cy.get('#contactPhone').type('+35840123456');
-    cy.get('#merchantId').type('123456');
-    cy.get('#merchantSecret').type('SECRET123456');
     cy.get('[data-cy=registry-item-form-submit]').click();
 
     cy.log('new organizer is added');

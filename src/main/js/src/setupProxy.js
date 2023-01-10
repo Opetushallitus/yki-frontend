@@ -142,10 +142,6 @@ let organizers = [
       },
     ],
     extra: 'Yleinen sähköpostilista: yki@amiedu.fi',
-    merchant: {
-      merchant_id: 13466,
-      merchant_secret: '6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ',
-    },
   },
   {
     oid: '1.2.246.562.10.39706139522',
