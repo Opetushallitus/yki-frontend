@@ -45,6 +45,7 @@ const QuarantineForm = props => {
   const validationSchema = Yup.object().shape({
     first_name: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
     last_name: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
+    diary_number: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
   });
 
   const onFormSubmit = (values) => {
@@ -169,6 +170,11 @@ const QuarantineForm = props => {
             <div className={classes.QuarantineFormField}>
               <label htmlFor="diary_number">{t('common.diaryNumber')}</label>
               <Field name="diary_number" tabIndex="8" id="diary_number" />
+              <ErrorMessage
+                name="diary_number"
+                component="span"
+                className={classes.ErrorMessage}
+              />
             </div>
           </div>
 
