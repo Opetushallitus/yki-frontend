@@ -188,51 +188,6 @@ const quarantineMatches = {
 
 const initialOrganizers = [...organizers];
 
-const paymentFormData = {
-  uri: 'https://payment.paytrail.com/e2',
-  params: {
-    MERCHANT_ID: 13466,
-    URL_SUCCESS: 'https://yki.untuvaopintopolku.fi/yki/payment/payment/success',
-    AMOUNT: '100.00',
-    PARAMS_OUT:
-      'ORDER_NUMBER,PAYMENT_ID,AMOUNT,TIMESTAMP,STATUS,PAYMENT_METHOD,SETTLEMENT_REFERENCE_NUMBER,LOCALE',
-    URL_CANCEL: 'https://yki.untuvaopintopolku.fi/yki/payment/payment/cancel',
-    LOCALE: 'fi_FI',
-    AUTHCODE:
-      '708C62459471D5AA42381A7284BE4EFFCC73906604CAE92B694F5D393E69B5F6',
-    PARAMS_IN:
-      'MERCHANT_ID,LOCALE,URL_SUCCESS,URL_CANCEL,URL_NOTIFY,AMOUNT,ORDER_NUMBER,MSG_SETTLEMENT_PAYER,MSG_UI_MERCHANT_PANEL,PARAMS_IN,PARAMS_OUT',
-    MSG_SETTLEMENT_PAYER: 'tutkintomaksu_fi',
-    URL_NOTIFY: 'https://yki.untuvaopintopolku.fi/yki/payment/payment/notify',
-    MSG_UI_MERCHANT_PANEL: 'tutkintomaksu_fi',
-    ORDER_NUMBER: 123456,
-  },
-};
-
-const evaluationPaymentFormData = {
-  uri: 'https://payment.paytrail.com/e2',
-  params: {
-    MERCHANT_ID: 13466,
-    URL_SUCCESS:
-      'https://yki.untuvaopintopolku.fi/yki/evaluation-payment/payment/success',
-    AMOUNT: '100.00',
-    PARAMS_OUT:
-      'ORDER_NUMBER,PAYMENT_ID,AMOUNT,TIMESTAMP,STATUS,PAYMENT_METHOD,SETTLEMENT_REFERENCE_NUMBER,LOCALE',
-    URL_CANCEL:
-      'https://yki.untuvaopintopolku.fi/yki/evaluation-payment/payment/cancel',
-    LOCALE: 'fi_FI',
-    AUTHCODE:
-      '708C62459471D5AA42381A7284BE4EFFCC73906604CAE92B694F5D393E69B5F6',
-    PARAMS_IN:
-      'MERCHANT_ID,LOCALE,URL_SUCCESS,URL_CANCEL,URL_NOTIFY,AMOUNT,ORDER_NUMBER,MSG_SETTLEMENT_PAYER,MSG_UI_MERCHANT_PANEL,PARAMS_IN,PARAMS_OUT',
-    MSG_SETTLEMENT_PAYER: 'tutkintomaksu_fi',
-    URL_NOTIFY:
-      'https://yki.untuvaopintopolku.fi/yki/evaluation-payment/payment/notify',
-    MSG_UI_MERCHANT_PANEL: 'tutkintomaksu_fi',
-    ORDER_NUMBER: 123456,
-  },
-};
-
 const adminUser = {
   identity: {
     username: 'ykitestaaja',
@@ -905,21 +860,6 @@ module.exports = function(app) {
     },
   );
 
-  app.get('/yki/payment/formdata', (req, res) => {
-    const mockCall = () => {
-      try {
-        console.log('get payment form data');
-        res.set('Content-Type', 'application/json; charset=utf-8');
-        res.send(paymentFormData);
-        //res.send(paymentFormData);
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
 
   app.get('/yki/auth/user', (req, res) => {
     try {
@@ -1160,32 +1100,6 @@ module.exports = function(app) {
       }
     };
     useLocalProxy ? proxyPostCall(req, res) : mockCall();
-  });
-  app.post('/yki/evaluation-payment/:evaluationOrderId', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyPostCall(req, res) : mockCall();
-  });
-
-  app.get('/yki/evaluation-payment/formdata', (req, res) => {
-    const mockCall = () => {
-      try {
-        console.log('get payment form data');
-        res.set('Content-Type', 'application/json; charset=utf-8');
-        res.send(evaluationPaymentFormData);
-        //res.send(paymentFormData);
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
   });
 
   app.get('/yki/api/payment/v2/paytrail/:lang/success', (req, res) => {
