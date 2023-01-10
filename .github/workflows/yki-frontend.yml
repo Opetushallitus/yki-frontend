@@ -53,6 +53,9 @@ jobs:
         with:
           working-directory: ${{ env.FRONTEND_DIR }}
           install: false
+          build: npm run build
+          start: npm run start
+          wait-on: "http://localhost:3000"
           command: npm run cypress:run
         timeout-minutes: 10
 
