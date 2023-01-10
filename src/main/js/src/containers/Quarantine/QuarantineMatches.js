@@ -21,18 +21,19 @@ const QuarantineMatches = props => {
     onFetchQuarantineMatches,
     setQuarantine,
     confirmQuarantine,
+    closeConfirmQuarantine,
     confirm,
     error,
     loading,
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
-  const closeConfirmModal = () => confirmQuarantine(null);
+  const closeConfirmModal = () => closeConfirmQuarantine();
   const hasError = !R.isNil(error);
 
   useEffect(onFetchQuarantineMatches, [hasError]);
 
   const showQuarantineConfirm = (id, reg_id) =>
-    confirmQuarantine(() => setQuarantine(id, reg_id, true));
+    confirmQuarantine(() => setQuarantine(id, reg_id, true), t('quarantine.confirmDescription'));
 
   const doSetQuarantine = (id, reg_id, quarantined) =>
     setQuarantine(id, reg_id, quarantined);
@@ -42,7 +43,8 @@ const QuarantineMatches = props => {
       {R.isNil(error) && !R.isNil(confirm) && (
         <QuarantineConfirmModal
           t={t}
-          confirm={confirm}
+          confirm={confirm.callback}
+          description={confirm.description}
           cancel={closeConfirmModal}
           loading={loading}
         />
@@ -139,8 +141,11 @@ const mapDispatchToProps = dispatch => {
     setQuarantine: (id, reg_id, quarantined) => {
       dispatch(actions.setQuarantine(id, reg_id, quarantined));
     },
-    confirmQuarantine: (callback) => {
-      dispatch(actions.confirmQuarantine(callback));
+    confirmQuarantine: (callback, description) => {
+      dispatch(actions.confirmQuarantine(callback, description));
+    },
+    closeConfirmQuarantine: () => {
+      dispatch(actions.closeConfirmQuarantine());
     },
     errorConfirmedHandler: () => dispatch(actions.resetAll()),
   };

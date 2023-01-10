@@ -21,18 +21,22 @@ const QuarantineHistory = props => {
     onFetchQuarantineReviews,
     setQuarantine,
     confirmQuarantine,
+    closeConfirmQuarantine,
     confirm,
     loading,
     error,
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
-  const closeConfirmModal = () => confirmQuarantine(null);
+  const closeConfirmModal = () => closeConfirmQuarantine();
   const hasError = !R.isNil(error);
 
   useEffect(onFetchQuarantineReviews, [hasError]);
 
   const showQuarantineConfirm = (id, reg_id) =>
-    confirmQuarantine(() => setQuarantine(id, reg_id, true));
+    confirmQuarantine(() => setQuarantine(id, reg_id, true), t('quarantine.confirmDescription'));
+
+  const showCancelQuarantineConfirm = (id, reg_id) =>
+    confirmQuarantine(() => setQuarantine(id, reg_id, false), t('quarantine.confirmCancelDescription'));
 
   const doSetQuarantine = (id, reg_id, quarantined) =>
     setQuarantine(id, reg_id, quarantined);
@@ -42,9 +46,10 @@ const QuarantineHistory = props => {
       {R.isNil(error) && !R.isNil(confirm) && (
         <QuarantineConfirmModal
           t={t}
-          confirm={confirm}
+          confirm={confirm.callback}
           cancel={closeConfirmModal}
           loading={loading}
+          description={confirm.description}
         />
       )}
       <div className={classes.QuarantineMatches}>
@@ -110,15 +115,15 @@ const QuarantineHistory = props => {
                  ? t('quarantine.quarantined')
                  : t('quarantine.notQuarantined')}
               </div>
-              <div data-cy={`${review.is_quarantined ? 'unset' : 'set'}-quarantine-btn`}>
+              <div data-cy={`${review.is_quarantined ? 'unset' : 'set'}-quarantine-btn`}
+                   className={!review.is_quarantined && classes.PrimaryButton}>
                 {review.is_quarantined ? (
                   <Button
                     disabled={loading}
-                    clicked={doSetQuarantine.bind(
+                    clicked={showCancelQuarantineConfirm.bind(
                       this,
                       review.quarantine_id,
-                      review.registration_id,
-                      false
+                      review.registration_id
                     )}>
                     {t('quarantine.cancelQuarantine')}
                   </Button>
@@ -164,8 +169,11 @@ const mapDispatchToProps = dispatch => {
     setQuarantine: (id, reg_id, quarantined) => {
       dispatch(actions.setQuarantine(id, reg_id, quarantined));
     },
-    confirmQuarantine: (callback) => {
-      dispatch(actions.confirmQuarantine(callback));
+    confirmQuarantine: (callback, description) => {
+      dispatch(actions.confirmQuarantine(callback, description));
+    },
+    closeConfirmQuarantine: () => {
+      dispatch(actions.closeConfirmQuarantine());
     },
     errorConfirmedHandler: () => dispatch(actions.resetAll()),
   };

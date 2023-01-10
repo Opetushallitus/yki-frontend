@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   loading: false,
+  confirm: null,
   error: null,
   matches: [],
   reviews: [],

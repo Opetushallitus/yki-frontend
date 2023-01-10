@@ -132,10 +132,20 @@ export const showAddModal = (isVisible) => dispatch => {
   });
 };
 
-export const confirmQuarantine = (callback) => dispatch => {
+export const closeConfirmQuarantine = () => dispatch => {
   return dispatch({
     type: actionTypes.CONFIRM_QUARANTINE,
-    confirm: callback,
+    confirm: null,
+  });
+};
+
+export const confirmQuarantine = (callback, description) => dispatch => {
+  return dispatch({
+    type: actionTypes.CONFIRM_QUARANTINE,
+    confirm: {
+      callback: callback,
+      description,
+    },
   });
 };
 

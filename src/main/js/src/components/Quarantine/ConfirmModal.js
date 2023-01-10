@@ -11,6 +11,7 @@ const QuarantineConfirmModal = props => {
     confirm,
     cancel,
     loading,
+    description,
   } = props;
 
   return (
@@ -24,7 +25,7 @@ const QuarantineConfirmModal = props => {
       <div className={classes.ConfirmText}>
         {t('common.areYouSure')}
       </div>
-      <p>{t('quarantine.confirmDescription')}</p>
+      <p>{description}</p>
       <div className={classes.ConfirmButtons}>
         <button
           data-cy="confirm-set-quarantine-btn"
@@ -48,6 +49,7 @@ QuarantineConfirmModal.propTypes = {
   confirm: PropTypes.func.isRequired,
   cancel: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  description: PropTypes.bool.isRequired,
 };
 
 export default QuarantineConfirmModal;

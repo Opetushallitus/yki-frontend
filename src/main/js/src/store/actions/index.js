@@ -65,6 +65,7 @@ export {
   fetchQuarantines,
   setQuarantine,
   confirmQuarantine,
+  closeConfirmQuarantine,
   addNewQuarantine,
   showAddModal,
   deleteQuarantine,
