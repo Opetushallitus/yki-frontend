@@ -38,9 +38,6 @@ const QuarantineHistory = props => {
   const showCancelQuarantineConfirm = (id, reg_id) =>
     confirmQuarantine(() => setQuarantine(id, reg_id, false), t('quarantine.confirmCancelDescription'));
 
-  const doSetQuarantine = (id, reg_id, quarantined) =>
-    setQuarantine(id, reg_id, quarantined);
-
   return (
     <Page>
       {R.isNil(error) && !R.isNil(confirm) && (
@@ -115,8 +112,9 @@ const QuarantineHistory = props => {
                  ? t('quarantine.quarantined')
                  : t('quarantine.notQuarantined')}
               </div>
-              <div data-cy={`${review.is_quarantined ? 'unset' : 'set'}-quarantine-btn`}
-                   className={!review.is_quarantined && classes.PrimaryButton}>
+              <div
+                data-cy={`${review.is_quarantined ? 'unset' : 'set'}-quarantine-btn`}
+                className={!review.is_quarantined && classes.PrimaryButton}>
                 {review.is_quarantined ? (
                   <Button
                     disabled={loading}
