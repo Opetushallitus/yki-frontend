@@ -8,11 +8,12 @@ on:
       - "!**/*.md"
     # Setting 'branches' has the side effect that just pushing tags does not start workflows.
     branches:
-      - '**'
+      - "**"
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  FRONTEND_DIR: ./src/main/js
 
 jobs:
   test:
@@ -26,14 +27,34 @@ jobs:
           node-version: lts/*
           # Note: does not cache node_modules
           # Use instead actions/cache explicitly if caching node_modules is desired
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: src/main/js/
 
       - name: Install NPM dependencies
         run: npm ci --prefix src/main/js/
 
-      - name: Run tests
+      - name: Run Jest tests
         run: npm test --prefix src/main/js/
+
+      - name: Cache Cypress
+        uses: actions/cache@v3
+        id: cypress-cache
+        with:
+          path: "~/.cache/Cypress"
+          key: ${{ runner.os }}-cypress-cache-${{ hashFiles('src/main/js/package.json') }}
+      - name: Install Cypress
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ${{ env.FRONTEND_DIR }}
+          runTests: false
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ${{ env.FRONTEND_DIR }}
+          install: false
+          command: npm cypress:run
+        timeout-minutes: 10
 
   build:
     runs-on: ubuntu-latest
@@ -44,9 +65,9 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'temurin'
-          cache: 'maven'
+          java-version: "11"
+          distribution: "temurin"
+          cache: "maven"
 
       - name: Build with Maven
         run: mvn clean package
