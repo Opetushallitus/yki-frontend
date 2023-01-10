@@ -47,8 +47,10 @@
   },
   "scripts": {
     "start": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts start",
+    "start:ci": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts --openssl-legacy-provider start",
     "test": "react-scripts test",
     "build": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts build",
+    "build:ci": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts --openssl-legacy-provider build",
     "localisation": "cd ../../../scripts; ./fetch-localisations.sh",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
