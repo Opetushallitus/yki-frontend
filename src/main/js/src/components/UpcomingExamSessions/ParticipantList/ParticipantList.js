@@ -44,7 +44,7 @@ export const participantList = props => {
     }
   };
 
-  const registratioStatus = participant => {
+  const registrationStatus = participant => {
     const registrationState = participant.state;
     const image =
       registrationState === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
@@ -180,7 +180,7 @@ export const participantList = props => {
             classes.StateItem,
           ].join(' ')}
         >
-          {registratioStatus(p)}
+          {registrationStatus(p)}
         </div>
         <div className={classes.StateItem}>
           {p.created && moment(p.created).format(DATE_FORMAT)}
