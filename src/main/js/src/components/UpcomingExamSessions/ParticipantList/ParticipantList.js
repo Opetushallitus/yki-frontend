@@ -24,55 +24,6 @@ const stateComparator = () => (a, b) => {
   return 0;
 };
 
-// const ResendEmailComponent = props => {
-//   const [emailLang, setEmailLang] = useState("fi");
-//   const [linkClicked, setLinkClicked] = useState(false);
-
-//   const onResendClick = (participantName, participantEmail, regId, orgOid, examSessionId) => {
-//     if(window.confirm(`Lähetetäänkö maksulinkki osallistujalle ${participantName} osoitteeseen ${participantEmail}`)){
-//       props.onResendLink(
-//         orgOid,
-//         examSessionId,
-//         regId,
-//         emailLang
-//       );
-//       setLinkClicked(false);
-//     }
-//   }
-
-//   const langSelection = () => {
-//     return (
-//       <>
-//         <span className={classes.ResendEmailSelectionText}>Sähköpostin kieli: </span>
-//         <select onChange={e => setEmailLang(e.target.value)}>
-//           <option value="fi">{props.finText}</option>
-//           <option value="sv">{props.svText}</option>
-//           <option value="en">{props.enText}</option>
-//         </select>
-//         <button
-//           className={classes.ResendEmailButton}
-//           onClick={e => onResendClick(props.fullName, props.email, props.registrationId, props.organizerOid, props.examSessionId)}
-//           data-cy="button-export-to-excel"
-//         >
-//           {props.sendText}
-//         </button>
-
-//       </>
-//     );
-//   }
-
-//   return linkClicked ? langSelection() : (
-//     // eslint-disable-next-line
-//     <a
-//       className={classes.ResendEmailLink}
-//       href="javascript:void(0)" // eslint-disable-line
-//       onClick={e => setLinkClicked(true)}
-//     >
-//       {props.linkText}
-//     </a>
-//   )
-// }
-
 export const participantList = props => {
   const [sortParticipantsFn, setSortParticipantsFn] = useState(
     R.sortBy(R.prop('created')),
@@ -99,30 +50,6 @@ export const participantList = props => {
       registrationState === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
     const text = props.t(getStateTranslationKey(registrationState));
 
-    // add ability to resend confirmation email if state is submitted
-    // if (registrationState === 'SUBMITTED') {
-    //   return (
-    //     <React.Fragment>
-    //       <img src={image} data-cy={`registration-${registrationState}`} alt="" />{' '}
-    //       {`${text} `}
-    //       {/* eslint-disable-next-line */}
-    //       <ResendEmailComponent
-    //         fullName={fullName}
-    //         email={participant.form.email}
-    //         registrationId={participant.registration_id}
-    //         organizerOid={props.examSession.organizer_oid}
-    //         examSessionId={props.examSession.id}
-    //         onResendLink={props.onResendLink}
-    //         sendText={props.t('registration.notification.signup.button')}
-    //         linkText={props.t('examSession.participants.resendLink')}
-    //         finText={props.t("common.language.fin")}
-    //         svText={props.t("common.language.swe")}
-    //         enText={props.t("common.language.eng")}
-    //       />
-    //   </React.Fragment>
-    //   );
-    // }
-    // else just show status
     return (
       <React.Fragment>
         <img src={image} data-cy={`registration-${registrationState}`} alt="" />{' '}
