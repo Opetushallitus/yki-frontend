@@ -38,6 +38,7 @@ const Quarantine = props => {
     onShowAddModal,
     showAddModal,
     onConfirmModal,
+    closeConfirmModal,
     confirm,
     onDeleteQuarantine,
     loading,
@@ -51,7 +52,6 @@ const Quarantine = props => {
 
   useEffect(onFetchQuarantines, [hasError]);
 
-  const closeConfirmModal = onConfirmModal.bind(this, null);
   const confirmDeleteModal = (
     <Modal
       show={!R.isNil(confirm)}
@@ -66,7 +66,7 @@ const Quarantine = props => {
       <div className={classes.ConfirmButtons}>
         <button
           data-cy="confirm-delete-quarantine-btn"
-          onClick={confirm}
+          onClick={confirm && confirm.callback}
           className={classes.ConfirmButton}>
           {t('common.confirm')}
         </button>
@@ -105,7 +105,7 @@ const Quarantine = props => {
   return (
     <Page>
       {R.isNil(error) && !R.isNil(showAddModal) && quarantineModal}
-      {R.isNil(error) && confirmDeleteModal}
+      {R.isNil(error) && !R.isNil(confirm) && confirmDeleteModal}
       <div className={classes.Quarantines}>
         <h1>
           {t('quarantine.quarantines')}
@@ -208,6 +208,9 @@ const mapDispatchToProps = dispatch => {
     },
     onConfirmModal: (callback) => {
       dispatch(actions.confirmQuarantine(callback));
+    },
+    closeConfirmModal: () => {
+      dispatch(actions.closeConfirmQuarantine());
     },
     errorConfirmedHandler: () => dispatch(actions.resetAll()),
   };

@@ -58,7 +58,7 @@ export const deleteQuarantine = (id) => dispatch => {
   axios
     .delete(`/yki/api/virkailija/quarantine/${id}`)
     .then(() => dispatch(fetchQuarantines()))
-    .then(() => dispatch(confirmQuarantine(null)))
+    .then(() => dispatch(closeConfirmQuarantine()))
     .then(() => dispatch({
       type: actionTypes.LOADING_QUARANTINE,
       loading: false,
@@ -77,7 +77,7 @@ export const setQuarantine = (id, reg_id, quarantined) => dispatch => {
     .put(`/yki/api/virkailija/quarantine/${id}/registration/${reg_id}/set`, payload)
     .then(() => dispatch(fetchQuarantineMatches()))
     .then(() => dispatch(fetchQuarantineReviews()))
-    .then(() => dispatch(confirmQuarantine(null)))
+    .then(() => dispatch(closeConfirmQuarantine()))
     .then(() => dispatch({
       type: actionTypes.LOADING_QUARANTINE,
       loading: false,

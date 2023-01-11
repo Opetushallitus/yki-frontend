@@ -49,7 +49,7 @@ QuarantineConfirmModal.propTypes = {
   confirm: PropTypes.func.isRequired,
   cancel: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  description: PropTypes.bool.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default QuarantineConfirmModal;
