@@ -48,6 +48,8 @@ const QuarantineForm = props => {
     diary_number: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
   });
 
+  const isEndDateValid = !R.isNil(endDate) && !R.isEmpty(endDate);
+  const isBirthdateValid = !R.isNil(birthdate) && !R.isEmpty(birthdate);
   const onFormSubmit = (values) => {
     // Datepicker uses different date format
     const parsedBirthdate = birthdate
@@ -71,6 +73,8 @@ const QuarantineForm = props => {
       ? onEdit(payload)
       : onAdd(payload);
   };
+
+  const errorMsg = <span className={classes.ErrorMessage}>{t('error.mandatory')}</span>;
 
   return (
     <Formik
@@ -112,10 +116,11 @@ const QuarantineForm = props => {
                 }}
                 autoComplete="off"
                 tabIndex="2"
+                id="end_date"
                 locale={i18n.language}
                 onChange={(dates) => setEndDate(moment(dates[0]).format(DATE_FORMAT))}
-                id="end_date"
               />
+              {!isEndDateValid && errorMsg}
             </div>
 
             <div className={classes.QuarantineFormField}>
@@ -145,6 +150,7 @@ const QuarantineForm = props => {
                 onChange={(dates) => setBirthdate(moment(dates[0]).format(DATE_FORMAT))}
                 id="birthdate"
               />
+              {!isBirthdateValid && errorMsg}
             </div>
 
             <div className={classes.QuarantineFormField}>
@@ -184,7 +190,7 @@ const QuarantineForm = props => {
               className={classes.ConfirmButton}
               type="submit"
               tabIndex="9"
-              disabled={(dirty && !isValid) || (!form.id && !isValid)}>
+              disabled={(dirty && !isValid) || (!form.id && !isValid) || (!isBirthdateValid || !isEndDateValid)}>
               {t('common.send')}
             </button>
             <button className={classes.CancelButton} onClick={cancelForm} tabIndex="10">

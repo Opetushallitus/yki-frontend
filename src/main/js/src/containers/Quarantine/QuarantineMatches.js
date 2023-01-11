@@ -61,6 +61,7 @@ const QuarantineMatches = props => {
         </p>
 
         <div className={classes.QuarantineList}>
+          <div/>
           <div className={classes.ListHeader}>
             {t('common.examLanguage')}
           </div>
@@ -83,6 +84,10 @@ const QuarantineMatches = props => {
           <div/>
           {matches.map((match) => (
             <React.Fragment key={`quarantine-match-row-${match.id}`}>
+              <div className={classes.IndicatorRow}>
+                <span>{t('common.quarantine')}</span>
+                <span>{t('common.registration')}</span>
+              </div>
               <div>{findLang(match.language_code)}</div>
               <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
               <div className={classes.ListRow}>

@@ -10,13 +10,13 @@
 
 .QuarantineList {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: min-content 1fr 1fr 1.4fr 1fr 0.8fr min-content 1fr 1fr;
   grid-gap: 0;
   grid-row-gap: 5px;
 }
 
 .Quarantines .QuarantineList {
-  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 0.7fr 0.7fr;
+  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr min-content min-content;
 }
 
 .QuarantineModal {
@@ -43,10 +43,15 @@
   padding: 20px 0;
 }
 
-.ListRow {
+.ListRow, .IndicatorRow {
   display: grid !important;
   grid-template-rows: 1.6em 1.6em;
-  justify-content: center;
+  text-align: center;
+}
+
+.QuarantineList .IndicatorRow {
+  text-align: right;
+  color: var(--primary-blue);
 }
 
 .PrimaryButton button {
@@ -61,12 +66,14 @@
 
 .DeleteButton button {
   background-color: hsla(358, 75%, 57%, 0.85);
+  margin: 0 10px;
 }
 
 .EditButton button {
   background-color: #fff;
   color: #000;
   border: 1px solid var(--primary-blue);
+  margin: 0 10px;
 }
 
 .ModalContainer > div {
