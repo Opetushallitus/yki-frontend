@@ -13,7 +13,7 @@ import { ActionButton } from '../../UI/ActionButton/ActionButton';
 import ListExport from './ListExport/ListExport';
 import RelocateParticipant from './RelocateParticipant/RelocateParticipant';
 import classes from './ParticipantList.module.css';
-import {examSessionParticipantsCount} from "../../../util/examSessionUtil";
+import { examSessionParticipantsCount } from '../../../util/examSessionUtil';
 
 const stateComparator = () => (a, b) => {
   if (a.state === 'COMPLETED') return -1;
@@ -82,7 +82,7 @@ export const participantList = props => {
         }
         confirmText={props.t('examSession.registration.relocate.confirm')}
       />
-    )
+    );
   };
 
   const handleFilterChange = event => {
@@ -206,7 +206,7 @@ export const participantList = props => {
         <div className={classes.Item}> {p.form.email}</div>
         <div className={classes.ShowOnHover}>
           {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') &&
-            !props.disableControls
+          !props.disableControls
             ? cancelRegistrationButton(p)
             : null}
         </div>
@@ -221,8 +221,7 @@ export const participantList = props => {
     return (
       <h2>
         {props.t('examSession.participants')}
-        {':'}{' '}
-        {participantsCount.participants} /{' '}
+        {':'} {participantsCount.participants} /{' '}
         {participantsCount.maxParticipants}
       </h2>
     );

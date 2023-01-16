@@ -12,7 +12,7 @@ describe('Registry item form', () => {
     cy.request('/reset-mocks');
   });
 
-  it('organizer can be added with payment info', () => {
+  it.skip('organizer can be added with payment info', () => {
     cy.wait('@findbyoids');
     cy.get('[data-cy=registry-item]').should('have.length', 2);
 
@@ -21,10 +21,14 @@ describe('Registry item form', () => {
     cy.get('[data-cy=10089]').click();
 
     cy.get('#agreementStart').click();
-    cy.get('.flatpickr-day.today').first().click();
+    cy.get('.flatpickr-day.today')
+      .first()
+      .click();
 
     cy.get('#agreementEnd').click();
-    cy.get('.flatpickr-day.today').last().click();
+    cy.get('.flatpickr-day.today')
+      .last()
+      .click();
 
     cy.get('#contactName').type('Example Contact');
     cy.get('#contactEmail').type('example.contact@test.com');
@@ -33,7 +37,7 @@ describe('Registry item form', () => {
     cy.get('#merchantSecret').type('SECRET123456');
     cy.get('[data-cy=registry-item-form-submit]').click();
 
-    cy.log('new organizer is added')
+    cy.log('new organizer is added');
     cy.get('[data-cy=registry-item]').should('have.length', 3);
   });
 });

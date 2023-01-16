@@ -21,19 +21,13 @@ export class RelocateParticipant extends Component {
 
   selectSession = session => {
     this.setState({
-      selectedSession: session.target.value
+      selectedSession: session.target.value,
     });
-  }
-
+  };
 
   render() {
     const { t, examSession, examSessions } = this.props;
-    const {
-      id,
-      level_code,
-      language_code,
-      organizer_oid,
-    } = examSession;
+    const { id, level_code, language_code, organizer_oid } = examSession;
 
     const canBeRelocatedTo = e => {
       return (
@@ -50,11 +44,9 @@ export class RelocateParticipant extends Component {
       R.filter(canBeRelocatedTo),
     );
 
-
     const relocateText = (
       <React.Fragment>
-        {t('examSession.registration.relocate')}
-        {' '}
+        {t('examSession.registration.relocate')}{' '}
         {t('examSession.registration.relocate.session')}
       </React.Fragment>
     );
@@ -65,18 +57,23 @@ export class RelocateParticipant extends Component {
       return (
         <label>
           <select onChange={this.selectSession}>
-            <option value={''}>Valitse</option>
-            {validSessions && validSessions.length > 0 && validSessions.map(session => (
-              <option key={session.fi} value={session.id}>
-                {moment(session.session_date).format(DATE_FORMAT)}{' '}
-                {session.location && session.location[0] ? session.location[0].name: ''}
-              </option>
-            ))}
+            <option key="default" value={''}>
+              Valitse
+            </option>
+            {validSessions &&
+              validSessions.length > 0 &&
+              validSessions.map((session, i) => (
+                <option key={i} value={session.id}>
+                  {moment(session.session_date).format(DATE_FORMAT)}{' '}
+                  {session.location && session.location[0]
+                    ? session.location[0].name
+                    : ''}
+                </option>
+              ))}
           </select>
         </label>
-      )
-    }
-
+      );
+    };
 
     const confirmButton = () => {
       const disabled = !this.state.selectedSession;
@@ -84,19 +81,19 @@ export class RelocateParticipant extends Component {
         <button
           type="button"
           onClick={() => {
-            this.state.selectedSession
-              && this.props.onRelocate(parseInt(this.state.selectedSession))
+            this.state.selectedSession &&
+              this.props.onRelocate(parseInt(this.state.selectedSession));
           }}
           data-cy="button-confirm-action"
           className={[
             classes.ConfirmButton,
-            disabled && classes.ConfirmButtonDisabled
+            disabled && classes.ConfirmButtonDisabled,
           ].join(' ')}
           disabled={disabled}
         >
           {this.props.confirmText}
         </button>
-      )
+      );
     };
 
     if (!examSessions || examSessions.length < 1) return null;
@@ -110,10 +107,12 @@ export class RelocateParticipant extends Component {
       >
         {relocateText}
       </button>
-    ) : <React.Fragment>
-      {selector()}
-      {confirmButton()}
-    </React.Fragment>
+    ) : (
+      <React.Fragment>
+        {selector()}
+        {confirmButton()}
+      </React.Fragment>
+    );
   }
 }
 

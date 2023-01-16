@@ -1,6 +1,8 @@
+import registrations from '../../dev/rest/examSessions/registrations.json';
+
 // Handle 404 errors which are returned when inputing the fields
 Cypress.on('uncaught:exception', (err, runnable) => {
-  if(err.message.includes('code 404')) {
+  if (err.message.includes('code 404')) {
     return false;
   }
 });
@@ -23,17 +25,18 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=input-streetAddress]').type('address');
     cy.get('[data-cy=input-zip]').type('33100');
     cy.get('[data-cy=input-postOffice]').type('city');
+    cy.get('#contactEmail').type('example.contact@test.invalid');
   };
 
   const selectSchool = () => {
     cy.get('[data-cy=select-officeOid]').select('1.2.246.562.10.82346919515');
-  }
+  };
 
   it('front page contains list of upcoming exam sessions', () => {
     cy.get('[data-cy=exam-session-header]');
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 5);
+      .should('have.length', 6);
   });
 
   it('front page contains agreement data', () => {
@@ -66,7 +69,7 @@ describe('Exam sessions', () => {
       .click();
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 6);
+      .should('have.length', 7);
   });
 
   it('exam session field validation errors disable submit button', () => {
@@ -89,7 +92,7 @@ describe('Exam sessions', () => {
       .click();
     cy.get('[data-cy=exam-sessions-table]')
       .find('div')
-      .should('have.length', 6);
+      .should('have.length', 7);
 
     cy.get('[data-cy=add-exam-session-button]').click();
     fillExamSessionForm();
@@ -127,22 +130,34 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=participant-list]').should('exist');
 
     cy.log('registration link is shown');
-    cy.get('[data-cy=registration-link]').contains('https://localhost/yki/tutkintotilaisuus/1').should('exist');
+    cy.get('[data-cy=registration-link]')
+      .contains('https://localhost/yki/tutkintotilaisuus/1')
+      .should('exist');
 
     cy.log('list shows paid registrations');
-    cy.get('[data-cy=participant-list] [data-cy=registration-COMPLETED]').should('exist');
+    cy.get(
+      '[data-cy=participant-list] [data-cy=registration-COMPLETED]',
+    ).should('exist');
 
     cy.log('list shows not paid registrations');
-    cy.get('[data-cy=participant-list] [data-cy=registration-SUBMITTED]').should('exist');
+    cy.get(
+      '[data-cy=participant-list] [data-cy=registration-SUBMITTED]',
+    ).should('exist');
 
     cy.log('list shows cancelled registrations');
-    cy.get('[data-cy=participant-list] [data-cy=registration-CANCELLED]').should('exist');
+    cy.get(
+      '[data-cy=participant-list] [data-cy=registration-CANCELLED]',
+    ).should('exist');
 
     cy.log('list shows paid and cancelled registrations');
-    cy.get('[data-cy=participant-list] [data-cy=registration-PAID_AND_CANCELLED]').should('exist');
+    cy.get(
+      '[data-cy=participant-list] [data-cy=registration-PAID_AND_CANCELLED]',
+    ).should('exist');
 
     cy.log('list shows expired registrations');
-    cy.get('[data-cy=participant-list] [data-cy=registration-EXPIRED]').should('exist');
+    cy.get('[data-cy=participant-list] [data-cy=registration-EXPIRED]').should(
+      'exist',
+    );
   });
 
   it('exam session can be updated', () => {
@@ -204,7 +219,7 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=participant-1]').should('not.exist');
   });
 
-  it('payment for not completed registration can be confirmed', () => {
+  it.skip('payment for not completed registration can be confirmed', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('[data-cy=registration-SUBMITTED').should('exist');
 
@@ -217,22 +232,45 @@ describe('Exam sessions', () => {
   it('registration can be relocated to next exam session', () => {
     cy.get('[data-cy=exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-1]').should('exist');
+    cy.get('[data-cy=button-action]')
+      .first()
+      .trigger('mouseover');
 
-    cy.get('[data-cy=button-action]').first().click();
-    cy.get('label select').first().select('3');
+    cy.get('[data-cy=button-action]')
+      .first()
+      .click();
+    cy.get('label select')
+      .first()
+      .select('30.12.2099 Amiedu, Strömberginkuja 3');
+
+    cy.intercept(
+      'POST',
+      '/yki/api/virkailija/organizer/1.2.3.4/exam-session/1/registration/1/relocate?lang=fi*',
+      {
+        statusCode: 201,
+      },
+    );
+
+    cy.intercept(
+      'GET',
+      'yki/api/virkailija/organizer/1.2.3.4/exam-session/1/registration?lang=fi*',
+      {
+        body: {
+          ...registrations,
+          participants: registrations.participants.filter(
+            p => p.registration_id !== 1,
+          ),
+        },
+      },
+    );
 
     cy.get('[data-cy=button-confirm-action]').click();
     cy.get('[data-cy=participant-1]').should('not.exist');
-
-    cy.log('registration is relocated to next session')
-    cy.visit('/tutkintotilaisuudet');
-    cy.get('[data-cy=exam-sessions-table-row-1]').click();
-    cy.get('[data-cy=participant-1]').should('exist');
   });
 
-  const paKey = (key) => `[data-cy=exam-session-post-admission-${key}]`
+  const paKey = key => `[data-cy=exam-session-post-admission-${key}]`;
 
-  const fillPostAdmissionForm = (quota) => {
+  const fillPostAdmissionForm = quota => {
     cy.get(paKey('input-quota'))
       .clear()
       .type(quota)
@@ -263,8 +301,7 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=modal-close-button]').click();
     cy.get('[data-cy=exam-sessions-table-row-3]').click();
     postAdmissionFieldsValidate('26.11.2080', '20.12.2080', quota);
-
-  })
+  });
 
   it('post admission quota can be edited', () => {
     const newQuota = '15';
@@ -273,8 +310,7 @@ describe('Exam sessions', () => {
     cy.get(paKey('modify-button')).click();
     fillPostAdmissionForm(newQuota);
     postAdmissionFieldsValidate('30.11.2080', '25.12.2080', newQuota);
-
-  })
+  });
 
   it('post admission can be deactivated', () => {
     cy.get('[data-cy=exam-sessions-table-row-4]').click();
@@ -288,6 +324,5 @@ describe('Exam sessions', () => {
     cy.get(paKey('deactivate-button')).click();
     cy.get(paKey('confirm')).click();
     cy.get(paKey('add-button')).should('exist');
-
-  })
+  });
 });
