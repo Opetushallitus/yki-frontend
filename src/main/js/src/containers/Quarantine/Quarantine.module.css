@@ -50,7 +50,6 @@
 }
 
 .QuarantineList .IndicatorRow {
-  text-align: right;
   color: var(--primary-blue);
 }
 
@@ -87,6 +86,10 @@
 
 .CancelButton {
   background-color: hsla(358, 75%, 57%, 0.85);
+}
+
+.ConfirmText {
+  margin: 0 0 4vh 0;
 }
 
 .ConfirmButtons {

@@ -48,16 +48,17 @@ const QuarantineForm = props => {
     diary_number: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
   });
 
-  const isEndDateValid = !R.isNil(endDate) && !R.isEmpty(endDate);
-  const isBirthdateValid = !R.isNil(birthdate) && !R.isEmpty(birthdate);
+  const parsedBirthdate = birthdate
+        ? dateToString(moment(birthdate, DATE_FORMAT))
+        : null;
+  const parsedEndDate = endDate
+        ? dateToString(moment(endDate, DATE_FORMAT))
+        : null;
+
+  const isEndDateValid = !R.isNil(parsedEndDate) && !R.isEmpty(parsedEndDate);
+  const isBirthdateValid = !R.isNil(parsedEndDate) && !R.isEmpty(parsedEndDate);
   const onFormSubmit = (values) => {
     // Datepicker uses different date format
-    const parsedBirthdate = birthdate
-          ? dateToString(moment(birthdate, DATE_FORMAT))
-          : null;
-    const parsedEndDate = endDate
-          ? dateToString(moment(endDate, DATE_FORMAT))
-          : null;
     const payload = {
       ...values,
       email: valueOrNull(values.email),
@@ -75,6 +76,20 @@ const QuarantineForm = props => {
   };
 
   const errorMsg = <span className={classes.ErrorMessage}>{t('error.mandatory')}</span>;
+
+  const setPickerBirthdate = (dates) => {
+    // Datepicker sends SyntheticEvents when typing dates
+    if (dates.constructor.name !== 'SyntheticEvent') {
+      setBirthdate(moment(dates[0]).format(DATE_FORMAT));
+    }
+  };
+
+  const setPickerEndDate = (dates) => {
+    // Datepicker sends SyntheticEvents when typing dates
+    if (dates.constructor.name !== 'SyntheticEvent') {
+      setEndDate(moment(dates[0]).format(DATE_FORMAT));
+    }
+  };
 
   return (
     <Formik
@@ -118,7 +133,8 @@ const QuarantineForm = props => {
                 tabIndex="2"
                 id="end_date"
                 locale={i18n.language}
-                onChange={(dates) => setEndDate(moment(dates[0]).format(DATE_FORMAT))}
+                onChange={setPickerEndDate}
+                onBlur={(event) => setEndDate(event.target.value)}
               />
               {!isEndDateValid && errorMsg}
             </div>
@@ -147,7 +163,8 @@ const QuarantineForm = props => {
                 autoComplete="off"
                 tabIndex="4"
                 locale={i18n.language}
-                onChange={(dates) => setBirthdate(moment(dates[0]).format(DATE_FORMAT))}
+                onChange={setPickerBirthdate}
+                onBlur={(event) => setBirthdate(event.target.value)}
                 id="birthdate"
               />
               {!isBirthdateValid && errorMsg}

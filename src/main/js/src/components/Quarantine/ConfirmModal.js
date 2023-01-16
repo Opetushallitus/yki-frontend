@@ -22,9 +22,9 @@ const QuarantineConfirmModal = props => {
       className={classes.ConfirmModal}
     >
       {loading && (<SpinnerOverlay />)}
-      <div className={classes.ConfirmText}>
+      <h3 className={classes.ConfirmText}>
         {t('common.areYouSure')}
-      </div>
+      </h3>
       <p>{description}</p>
       <div className={classes.ConfirmButtons}>
         <button

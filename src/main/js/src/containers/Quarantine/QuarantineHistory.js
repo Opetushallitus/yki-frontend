@@ -61,7 +61,7 @@ const QuarantineHistory = props => {
         </p>
 
         <div className={classes.QuarantineList}>
-          <div/>
+          <div className={classes.ListHeader}/>
           <div className={classes.ListHeader}>
             {t('common.examLanguage')}
           </div>
@@ -87,8 +87,8 @@ const QuarantineHistory = props => {
           {reviews.map(review => (
             <React.Fragment key={`quarantine-match-row-${review.quarantine_id}`}>
               <div className={classes.IndicatorRow}>
-                <span>{t('common.quarantine')}</span>
                 <span>{t('common.registration')}</span>
+                <span>{t('common.quarantine')}</span>
               </div>
               <div>{findLang(review.language_code)}</div>
               <div>{moment(review.exam_date).format(DATE_FORMAT)}</div>

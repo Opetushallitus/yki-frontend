@@ -169,7 +169,8 @@ const quarantineMatches = {
     phone_number: '0401234567',
     quarantine_id: null,
     reviewed: '2022-12-20T12:23:52.501Z',
-    name: 'Max Syöttöpaine',
+    first_name: 'Max',
+    last_name: 'Karenssi',
     ssn: '301079-900U',
     registration_id: 2,
     created: '2022-12-02T10:32:11.888Z',
@@ -179,7 +180,7 @@ const quarantineMatches = {
     form: {
       email: 'email@invalid.invalid',
       birthdate: '2018-02-01',
-      last_name: 'Syöttöpaine',
+      last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567'
     }
@@ -196,7 +197,8 @@ const quarantineReviews = {
     quarantine_id: 1,
     is_quarantined: false,
     reviewed: '2022-12-20T12:23:52.501Z',
-    name: 'Max Syöttöpaine',
+    first_name: 'Max',
+    last_name: 'Von Karenssi',
     ssn: '301079-900U',
     registration_id: 2,
     created: '2022-12-02T10:32:11.888Z',
@@ -206,7 +208,7 @@ const quarantineReviews = {
     form: {
       email: 'email@invalid.invalid',
       birthdate: '2018-02-01',
-      last_name: 'Syöttöpaine',
+      last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567'
     }
@@ -220,7 +222,8 @@ const quarantineReviews = {
     quarantine_id: 2,
     is_quarantined: true,
     reviewed: '2022-12-20T12:23:52.501Z',
-    name: 'Max Syöttöpaine',
+    first_name: 'Max',
+    last_name: 'Von Karenssi',
     ssn: '301079-900U',
     registration_id: 3,
     created: '2022-12-02T10:32:11.888Z',
@@ -230,7 +233,7 @@ const quarantineReviews = {
     form: {
       email: 'email@invalid.invalid',
       birthdate: '2018-02-01',
-      last_name: 'Syöttöpaine',
+      last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567'
     }

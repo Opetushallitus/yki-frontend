@@ -59,9 +59,9 @@ const Quarantine = props => {
       modalClosed={closeConfirmModal}
     >
       {loading && (<SpinnerOverlay />)}
-      <div className={classes.ConfirmText}>
+      <h3 className={classes.ConfirmText}>
         {t('common.areYouSure')}
-      </div>
+      </h3>
       <p>{t('quarantine.askDelete')}</p>
       <div className={classes.ConfirmButtons}>
         <button
@@ -88,9 +88,9 @@ const Quarantine = props => {
       className={classes.QuarantineModal}
     >
       {loading && (<SpinnerOverlay />)}
-      <div className={classes.ConfirmText}>
+      <h3 className={classes.ConfirmText}>
         {t('quarantine.new')}
-      </div>
+      </h3>
       <QuarantineForm
         t={t}
         i18n={i18n}
