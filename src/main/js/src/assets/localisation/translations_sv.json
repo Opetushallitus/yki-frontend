@@ -232,6 +232,7 @@
   "registration.form.aria.input.zip": "Postnummer. Obligatoriskt.",
   "registration.form.aria.phoneNumber": "Mobiltelefon. Obligatorisk. Ange i formatet +358501234567.",
   "registration.form.aria.submit.button": "Bekräfta din anmälan -knappen är inte aktiv. Obligatoriska uppgifter fattas.",
+  "registration.form.birthdate": "Födelsedatum",
   "registration.form.certificateLang": "Intygets språk",
   "registration.form.confirmEmail": "Bekräfta e-postadressen",
   "registration.form.consent.confirm": "Jag godkänner villkoren.",

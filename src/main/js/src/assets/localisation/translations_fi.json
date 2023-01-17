@@ -273,6 +273,7 @@
   "registration.form.aria.input.zip": "Postinumero. Pakollinen.",
   "registration.form.aria.phoneNumber": "Matkapuhelin. Pakollinen. Anna muodossa +358501234567.",
   "registration.form.aria.submit.button": "Ilmoittaudu nappi ei aktiivinen. Pakollisia tietoja puuttuu.",
+  "registration.form.birthdate": "Syntymäaika",
   "registration.form.certificateLang": "Todistuksen kieli",
   "registration.form.confirmEmail": "Vahvista sähköposti",
   "registration.form.consent.confirm": "Hyväksyn ehdot.",

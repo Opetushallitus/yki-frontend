@@ -232,6 +232,7 @@
   "registration.form.aria.input.zip": "Zip code. Required.",
   "registration.form.aria.phoneNumber": "Phone number. Required. Use format +358501234567.",
   "registration.form.aria.submit.button": "Submit button not active. Required information missing.",
+  "registration.form.birthdate": "Birthdate",
   "registration.form.certificateLang": "Certificate language",
   "registration.form.confirmEmail": "Confirm email",
   "registration.form.consent.confirm": "I accept the terms and conditions.",
