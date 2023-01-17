@@ -33,6 +33,7 @@ class RegistryItem extends PureComponent {
       this.props.item.agreement.start,
       this.props.item.agreement.end,
     );
+
     return (
       <>
         <div

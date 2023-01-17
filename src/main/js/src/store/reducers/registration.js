@@ -37,7 +37,6 @@ const initialState = {
   evaluationPeriods: [],
   evaluationPeriod: {},
   evaluationOrderId: null,
-  useNewPaymentsIntegration: false,
   signature: null,
 };
 
@@ -397,7 +396,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: true,
         evaluationOrderId: null,
-        useNewPaymentsIntegration: false,
         signature: null,
         error: null,
       };
@@ -405,7 +403,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         evaluationOrderId: action.evaluationOrderId,
-        useNewPaymentsIntegration: action.useNewPaymentsIntegration,
         signature: action.signature,
         loading: false,
         error: null,
