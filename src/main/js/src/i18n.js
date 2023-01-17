@@ -33,7 +33,6 @@ i18n
     resources,
     detection,
     fallbackLng: 'fi',
-    load: 'languageOnly',
     debug: false,
     keySeparator: '|', // override default to be able to use dots in keys
   });
