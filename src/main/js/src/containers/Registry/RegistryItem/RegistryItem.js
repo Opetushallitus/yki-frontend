@@ -21,27 +21,21 @@ class RegistryItem extends PureComponent {
     }));
   };
 
-  openModalHandler = orgId => this.setState({ showModal: true, selectedOid: orgId });
+  openModalHandler = orgId =>
+    this.setState({ showModal: true, selectedOid: orgId });
 
   closeModalHandler = () =>
     this.setState({ showModal: false, selectedOid: null });
 
-
-
   render() {
-
     const languages = languagesToString(this.props.item.languages);
     const agreementActive = nowBetweenDates(
       this.props.item.agreement.start,
       this.props.item.agreement.end,
     );
-    const hasPaymentInfo =
-      this.props.item.merchant &&
-      this.props.item.merchant.merchant_id &&
-      this.props.item.merchant.merchant_secret;
+
     return (
       <>
-        {/*  {orgSessionsModal} */}
         <div
           className={
             this.state.show
@@ -60,18 +54,12 @@ class RegistryItem extends PureComponent {
                 <strong>{this.props.item.name}</strong>
               </div>
               {agreementActive ? (
-                hasPaymentInfo ? (
-                  <div className={classes.HeaderLanguages}>{languages}</div>
-                ) : (
-                    <div className={classes.AgreementExpired}>
-                      {this.props.t('registryItem.paymentInfoMissing')}
-                    </div>
-                  )
+                <div className={classes.HeaderLanguages}>{languages}</div>
               ) : (
-                  <div className={classes.AgreementExpired}>
-                    {this.props.t('registryItem.agreementExpired')}
-                  </div>
-                )}
+                <div className={classes.AgreementExpired}>
+                  {this.props.t('registryItem.agreementExpired')}
+                </div>
+              )}
               <div className={classes.HeaderCity}>
                 {this.props.item.address.city}
               </div>

@@ -14,13 +14,11 @@ import ReEvaluation from './components/Registration/ReEvaluation/ReEvaluation';
 import ReEvaluationFormPage from './components/Registration/ReEvaluationForm/ReEvaluationFormPage';
 import Spinner from './components/UI/Spinner/Spinner';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
-import OldEvaluationPaymentRedirect from './containers/OldEvaluationPaymentRedirect/OldEvaluationPaymentRedirect';
 import NewEvaluationPaymentRedirect from './containers/NewEvaluationPaymentRedirect/NewEvaluationPaymentRedirect';
 import ExamDates from './containers/ExamDates/ExamDates';
 import Init from './containers/Init/Init';
 import QuarantineMatches from './containers/Quarantine/QuarantineMatches';
 import NewPaymentRedirect from './containers/NewPaymentRedirect/NewPaymentRedirect';
-import OldPaymentRedirect from './containers/OldPaymentRedirect/OldPaymentRedirect';
 import PaymentsReport from './containers/PaymentsReport/PaymentsReport';
 import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
 import Registration from './containers/Registration/Registration';
@@ -117,10 +115,6 @@ const app = () => (
                 )}
               />
               <RegistrationRoute
-                path="/maksu/ilmoittautuminen/:registrationId"
-                component={OldPaymentRedirect}
-              />
-              <RegistrationRoute
                 path="/maksu/v2/ilmoittautuminen/:registrationId"
                 component={NewPaymentRedirect}
               />
@@ -152,10 +146,6 @@ const app = () => (
                     returnUrl="/yki/tarkistusarviointi"
                   />
                 )}
-              />
-              <Route
-                path="/tarkistusarviointi/tilaus/:evaluationOrderId"
-                component={OldEvaluationPaymentRedirect}
               />
               <Route
                 path="/tarkistusarviointi/v2/tilaus/:evaluationOrderId"

@@ -35,7 +35,6 @@ class UpdateRegistryItem extends Component {
             attachmentId={this.props.item.attachmentId}
             extra={this.props.item.extra}
             name={this.props.item.name}
-            merchant={this.props.item.merchant}
             address={`${this.props.item.address.street}, ${
               this.props.item.address.zipCode
             } ${capitalize(this.props.item.address.city)}`}

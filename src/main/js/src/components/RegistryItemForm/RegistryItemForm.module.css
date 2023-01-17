@@ -8,7 +8,6 @@
   grid-template-areas:
     'agreement'
     'contact'
-    'payment'
     'languages';
   margin-bottom: 40px;
 }
@@ -85,15 +84,6 @@
 .Contact {
   grid-area: contact;
   grid-row: span 2;
-}
-
-.PaymentInfo {
-  grid-area: payment;
-  grid-row: span 2;
-}
-
-.PaymentInfo input {
-  width: 340px;
 }
 
 .Contact input {
