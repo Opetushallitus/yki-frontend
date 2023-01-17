@@ -66,7 +66,7 @@ const QuarantineMatches = props => {
             {t('common.examLanguage')}
           </div>
           <div className={classes.ListHeader}>
-            {t('common.examDate')}
+            {t('quarantine.examDate')}
           </div>
           <div className={classes.ListHeader}>
             {t('common.names')}
