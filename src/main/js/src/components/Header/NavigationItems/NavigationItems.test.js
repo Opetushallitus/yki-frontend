@@ -17,7 +17,7 @@ jest.mock('react-i18next', () => ({
 describe('<NavigationItems />', () => {
   it('should render three <NavigationItem /> elements for admin', () => {
     const wrapper = shallow(<NavigationItems user={{ isAdmin: true }} />);
-    expect(wrapper.find(NavigationItem)).toHaveLength(3);
+    expect(wrapper.find(NavigationItem)).toHaveLength(4);
   });
   it('should render one <NavigationItem /> element for organizer', () => {
     const wrapper = shallow(<NavigationItems user={{ isAdmin: false }} />);

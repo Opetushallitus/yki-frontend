@@ -33,7 +33,11 @@ class DatePicker extends Component {
 
   componentDidUpdate() {
     this.flatpickr.setDate(this.props.options.value);
-    this.flatpickr.set('minDate', this.props.options.minDate);
+    // Re-setting minDate does not always work correctly
+    // but I left here in case removing it breaks something
+    if (!this.props.options.noMinDateUpdate) {
+      this.flatpickr.set('minDate', this.props.options.minDate);
+    }
   }
 
   componentWillUnmount() {
@@ -72,6 +76,7 @@ DatePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   tabIndex: PropTypes.string,
   disabled: PropTypes.bool,
+  noMinDateUpdate: PropTypes.bool,
 };
 
 export default DatePicker;

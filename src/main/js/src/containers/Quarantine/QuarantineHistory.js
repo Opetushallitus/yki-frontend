@@ -14,29 +14,29 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import QuarantineNav from '../../components/Quarantine/Navigation';
 import QuarantineConfirmModal from '../../components/Quarantine/ConfirmModal';
 
-const QuarantineMatches = props => {
+const QuarantineHistory = props => {
   const {
     t,
-    matches,
-    onFetchQuarantineMatches,
+    reviews,
+    onFetchQuarantineReviews,
     setQuarantine,
     confirmQuarantine,
     closeConfirmQuarantine,
     confirm,
-    error,
     loading,
+    error,
   } = props;
   const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
   const closeConfirmModal = () => closeConfirmQuarantine();
   const hasError = !R.isNil(error);
 
-  useEffect(onFetchQuarantineMatches, [hasError]);
+  useEffect(onFetchQuarantineReviews, [hasError]);
 
   const showQuarantineConfirm = (id, reg_id) =>
     confirmQuarantine(() => setQuarantine(id, reg_id, true), t('quarantine.confirmDescription'));
 
-  const doSetQuarantine = (id, reg_id, quarantined) =>
-    setQuarantine(id, reg_id, quarantined);
+  const showCancelQuarantineConfirm = (id, reg_id) =>
+    confirmQuarantine(() => setQuarantine(id, reg_id, false), t('quarantine.confirmCancelDescription'));
 
   return (
     <Page>
@@ -44,20 +44,20 @@ const QuarantineMatches = props => {
         <QuarantineConfirmModal
           t={t}
           confirm={confirm.callback}
-          description={confirm.description}
           cancel={closeConfirmModal}
           loading={loading}
+          description={confirm.description}
         />
       )}
       <div className={classes.QuarantineMatches}>
         <h1>
-          {t('quarantine.matchesTitle')}
+          {t('quarantine.reviewsTitle')}
         </h1>
 
         <QuarantineNav t={t} />
 
         <p>
-          {t('quarantine.matchesDescription')}
+          {t('quarantine.reviewsDescription')}
         </p>
 
         <div className={classes.QuarantineList}>
@@ -80,41 +80,67 @@ const QuarantineMatches = props => {
           <div className={classes.ListHeader}>
             {t('common.phoneNumber')}
           </div>
+          <div className={classes.ListHeader}>
+            {t('quarantine.status')}
+          </div>
           <div/>
-          <div/>
-          {matches.map((match) => (
-            <React.Fragment key={`quarantine-match-row-${match.id}`}>
+          {reviews.map(review => (
+            <React.Fragment key={`quarantine-match-row-${review.quarantine_id}`}>
               <div className={classes.IndicatorRow}>
                 <span>{t('common.registration')}</span>
                 <span>{t('common.quarantine')}</span>
               </div>
-              <div>{findLang(match.language_code)}</div>
-              <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
+              <div>{findLang(review.language_code)}</div>
+              <div>{moment(review.exam_date).format(DATE_FORMAT)}</div>
               <div className={classes.ListRow}>
-                <span>{match.form.first_name} {match.form.last_name}</span>
-                <span>{match.first_name} {match.last_name}</span>
-              </div>
-              <div className={classes.ListRow}>
-                <span>{match.form.email}</span>
-                <span>{match.email}</span>
+                <span>{review.form.first_name} {review.form.last_name}</span>
+                <span>{review.first_name} {review.last_name}</span>
               </div>
               <div className={classes.ListRow}>
-                <span>{moment(match.form.birthdate).format(DATE_FORMAT)}</span>
-                <span>{moment(match.birthdate).format(DATE_FORMAT)}</span>
+                <span>{review.form.email}</span>
+                <span>{review.email}</span>
               </div>
               <div className={classes.ListRow}>
-                <span>{match.form.phone_number}</span>
-                <span>{match.phone_number}</span>
+                <span>
+                  {moment(review.form.birthdate).format(DATE_FORMAT)}
+                </span>
+                <span>
+                  {moment(review.birthdate).format(DATE_FORMAT)}
+                </span>
               </div>
-              <div data-cy="set-quarantine-btn" className={classes.PrimaryButton}>
-                <Button clicked={showQuarantineConfirm.bind(this, match.id, match.registration_id)}>
-                  {t('quarantine.setQuarantine')}
-                </Button>
+              <div className={classes.ListRow}>
+                <span>{review.phone_number}</span>
+                <span>{review.form.phone_number}</span>
               </div>
-              <div data-cy="set-no-quarantine-btn">
-                <Button clicked={doSetQuarantine.bind(this, match.id, match.registration_id, false)}>
-                  {t('quarantine.noQuarantine')}
-                </Button>
+              <div className={classes.ListRow}>
+                {review.is_quarantined
+                 ? t('quarantine.quarantined')
+                 : t('quarantine.notQuarantined')}
+              </div>
+              <div
+                data-cy={`${review.is_quarantined ? 'unset' : 'set'}-quarantine-btn`}
+                className={!review.is_quarantined ? '' : classes.PrimaryButton}>
+                {review.is_quarantined ? (
+                  <Button
+                    disabled={loading}
+                    clicked={showCancelQuarantineConfirm.bind(
+                      this,
+                      review.quarantine_id,
+                      review.registration_id
+                    )}>
+                    {t('quarantine.cancelQuarantine')}
+                  </Button>
+                ) : (
+                  <Button
+                    disabled={loading}
+                    clicked={showQuarantineConfirm.bind(
+                      this,
+                      review.quarantine_id,
+                      review.registration_id
+                    )}>
+                    {t('quarantine.setQuarantine')}
+                  </Button>
+                )}
               </div>
             </React.Fragment>
           ))}
@@ -131,7 +157,7 @@ const QuarantineMatches = props => {
 
 const mapStateToProps = state => {
   return {
-    matches: state.quarantine.matches,
+    reviews: state.quarantine.reviews,
     confirm: state.quarantine.confirm,
     error: state.quarantine.error,
     loading: state.quarantine.loading,
@@ -140,8 +166,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchQuarantineMatches: () => {
-      dispatch(actions.fetchQuarantineMatches());
+    onFetchQuarantineReviews: () => {
+      dispatch(actions.fetchQuarantineReviews());
     },
     setQuarantine: (id, reg_id, quarantined) => {
       dispatch(actions.setQuarantine(id, reg_id, quarantined));
@@ -159,4 +185,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(withErrorHandler(QuarantineMatches)));
+)(withTranslation()(withErrorHandler(QuarantineHistory)));

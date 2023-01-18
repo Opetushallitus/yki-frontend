@@ -59,5 +59,17 @@ export {
 } from './examDates';
 export { fetchUser } from './user';
 export { initYKILanguage, changeYKILanguage, setWindowWidth } from './yki';
+export {
+  fetchQuarantineMatches,
+  fetchQuarantineReviews,
+  fetchQuarantines,
+  setQuarantine,
+  confirmQuarantine,
+  closeConfirmQuarantine,
+  addNewQuarantine,
+  showAddModal,
+  deleteQuarantine,
+  editQuarantine,
+  resetAll,
+} from './quarantine';
 export { fetchPaymentsReport, fetchPaymentsReportReset } from './paymentsReport';
-export { fetchQuarantineMatches, setQuarantine, confirmQuarantine } from './quarantine';

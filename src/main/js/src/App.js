@@ -18,6 +18,8 @@ import NewEvaluationPaymentRedirect from './containers/NewEvaluationPaymentRedir
 import ExamDates from './containers/ExamDates/ExamDates';
 import Init from './containers/Init/Init';
 import QuarantineMatches from './containers/Quarantine/QuarantineMatches';
+import QuarantineHistory from './containers/Quarantine/QuarantineHistory';
+import Quarantine from './containers/Quarantine/Quarantine';
 import NewPaymentRedirect from './containers/NewPaymentRedirect/NewPaymentRedirect';
 import PaymentsReport from './containers/PaymentsReport/PaymentsReport';
 import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
@@ -130,7 +132,9 @@ const app = () => (
 
               <Route path="/tutkintopaivat" component={ExamDates} />
               <Route exact path="/maksuraportit" component={PaymentsReport} />
-              <Route exact path="/karenssi" component={QuarantineMatches} />
+              <Route exact path="/karenssi/mahdolliset" component={QuarantineMatches} />
+              <Route exact path="/karenssi/historia" component={QuarantineHistory} />
+              <Route exact path="/karenssi" component={Quarantine} />
               <Route
                 path="/saavutettavuus"
                 component={AccessibilityStatement}

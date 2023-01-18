@@ -5,9 +5,11 @@ import classes from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
 const modalClass = props => {
-  if (props.confirmationModal) return classes.TinyModal;
-  if (props.smallModal) return classes.SmallModal;
-  return classes.Modal;
+  const className = props.className ? props.className : '';
+
+  if (props.confirmationModal) return [className, classes.TinyModal].join(' ');
+  if (props.smallModal) return [className, classes.SmallModal].join(' ');
+  return [className, classes.Modal].join(' ');
 }
 
 const modal = props => {
@@ -39,6 +41,7 @@ modal.propTypes = {
   show: PropTypes.bool.isRequired,
   modalClosed: PropTypes.func.isRequired,
   children: PropTypes.any,
+  className: PropTypes.string,
   smallModal: PropTypes.bool,
   confirmationModal: PropTypes.bool,
   style: PropTypes.object,

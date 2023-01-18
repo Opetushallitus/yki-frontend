@@ -157,7 +157,7 @@ let organizers = [
 ];
 
 const quarantineMatches = {
-  quarantines: [{
+  quarantine_matches: [{
     quarantine_lang: 'fin',
     birthdate: '2018-02-01',
     email: 'email@invalid.invalid',
@@ -165,9 +165,10 @@ const quarantineMatches = {
     phone_number: '0401234567',
     quarantine_id: null,
     reviewed: '2022-12-20T12:23:52.501Z',
-    name: 'Max Syöttöpaine',
+    first_name: 'Max',
+    last_name: 'Karenssi',
     ssn: '301079-900U',
-    registration_id: 1,
+    registration_id: 2,
     created: '2022-12-02T10:32:11.888Z',
     exam_date: '2025-03-10',
     end_date: '2028-01-01',
@@ -175,10 +176,81 @@ const quarantineMatches = {
     form: {
       email: 'email@invalid.invalid',
       birthdate: '2018-02-01',
-      last_name: 'Syöttöpaine',
+      last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567'
     }
+  }]
+}
+
+const quarantineReviews = {
+  reviews: [{
+    quarantine_lang: 'fin',
+    birthdate: '2018-02-01',
+    email: 'email@invalid.invalid',
+    language_code: 'fin',
+    phone_number: '0401234567',
+    quarantine_id: 1,
+    is_quarantined: false,
+    reviewed: '2022-12-20T12:23:52.501Z',
+    first_name: 'Max',
+    last_name: 'Von Karenssi',
+    ssn: '301079-900U',
+    registration_id: 2,
+    created: '2022-12-02T10:32:11.888Z',
+    exam_date: '2025-03-10',
+    end_date: '2028-01-01',
+    id: 1,
+    form: {
+      email: 'email@invalid.invalid',
+      birthdate: '2018-02-01',
+      last_name: 'De Ilmoittautuminen',
+      first_name: 'Max',
+      phone_number: '0401234567'
+    }
+  },
+  {
+    quarantine_lang: 'fin',
+    birthdate: '2018-02-01',
+    email: 'email@invalid.invalid',
+    language_code: 'fin',
+    phone_number: '0401234567',
+    quarantine_id: 2,
+    is_quarantined: true,
+    reviewed: '2022-12-20T12:23:52.501Z',
+    first_name: 'Max',
+    last_name: 'Von Karenssi',
+    ssn: '301079-900U',
+    registration_id: 3,
+    created: '2022-12-02T10:32:11.888Z',
+    exam_date: '2025-03-10',
+    end_date: '2028-01-01',
+    id: 1,
+    form: {
+      email: 'email@invalid.invalid',
+      birthdate: '2018-02-01',
+      last_name: 'De Ilmoittautuminen',
+      first_name: 'Max',
+      phone_number: '0401234567'
+    }
+  }]
+};
+
+const quarantines = {
+  quarantines: [{
+    quarantine_lang: 'fin',
+    birthdate: '2018-02-01',
+    email: 'email@invalid.invalid',
+    language_code: 'fin',
+    phone_number: '0401234567',
+    name: 'Max Syöttöpaine',
+    ssn: '301079-900U',
+    created: '2022-12-02T10:32:11.888Z',
+    end_date: '2028-01-01',
+    id: 1,
+    last_name: 'Syöttöpaine',
+    first_name: 'Max',
+    diary_number: '1234',
   }]
 };
 
@@ -314,14 +386,69 @@ module.exports = function(app) {
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   });
 
+  app.get('/yki/api/virkailija/quarantine/reviews', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send(quarantineReviews);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  });
+
+  app.get('/yki/api/virkailija/quarantine', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send(quarantines);
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyGetCall(req, res) : mockCall();
+  });
+
+  app.post('/yki/api/virkailija/quarantine', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send({ organizers: organizers });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyPostCall(req, res) : mockCall();
+  });
+
+  app.put('/yki/api/virkailija/quarantine/:id', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send({ organizers: organizers });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyPutCall(req, res) : mockCall();
+  });
+
+  app.delete('/yki/api/virkailija/quarantine/:id', (req, res) => {
+    const mockCall = () => {
+      try {
+        res.send({ organizers: organizers });
+      } catch (err) {
+        printError(req, err);
+        res.status(404).send(err.message);
+      }
+    };
+    useLocalProxy ? proxyDeleteCall(req, res) : mockCall();
+  });
+
   app.put('/yki/api/virkailija/quarantine/:id/registration/:reg_id/set', (req, res) => {
     const mockCall = () => {
       try {
-        const { id } = req.params;
-        const foundIndex = quarantineMatches.quarantines.findIndex(
-          x => x.id == id,
-        );
-        quarantineMatches.quarantines[foundIndex] = req.body;
         res.send({ success: true });
       } catch (err) {
         printError(req, err);

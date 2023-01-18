@@ -1,4 +1,4 @@
-.QuarantineMatches {
+.QuarantineMatches, .Quarantines {
   margin: auto;
   width: calc(100% - 170px);
   max-width: 1440px;
@@ -10,16 +10,28 @@
 
 .QuarantineList {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: min-content 1fr 1fr 1.4fr 1fr 0.8fr min-content 1fr 1fr;
   grid-gap: 0;
   grid-row-gap: 5px;
 }
 
+.Quarantines .QuarantineList {
+  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr min-content min-content;
+}
+
+.QuarantineModal {
+  width: 600px;
+  height: auto;
+}
+
 .QuarantineList div {
+  display: flex;
   padding: 10px 0;
   text-align: center;
   margin: 0;
   color: #000;
+  align-items: top;
+  justify-content: center;
 }
 
 .QuarantineList div.ListHeader {
@@ -27,17 +39,57 @@
   border-color: #000;
   border-style: solid;
   font-weight: bold;
-  margin: 10px 0 30px 0;
+  margin: 10px 0 20px 0;
+  padding: 20px 0;
 }
 
-.QuarantineList .PrimaryButton button {
+.ListRow, .IndicatorRow {
+  display: grid !important;
+  grid-template-rows: 1.6em 1.6em;
+  text-align: center;
+}
+
+.QuarantineList .IndicatorRow {
+  color: var(--primary-blue);
+}
+
+.PrimaryButton button {
   background-color: var(--primary-blue) !important;
+}
+.Quarantines .PrimaryButton {
+  padding: 1rem 0;
+}
+.Quarantines .PrimaryButton button {
+  float: none;
+}
+
+.DeleteButton button {
+  background-color: hsla(358, 75%, 57%, 0.85);
+  margin: 0 10px;
+}
+
+.EditButton button {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid var(--primary-blue);
+  margin: 0 10px;
+}
+
+.ModalContainer > div {
+  height: auto;
+}
+
+.ConfirmButton {
+  background-color: hsla(199, 77%, 43%, 0.95);
+  margin-right: 1.2vw;
+}
+
+.CancelButton {
+  background-color: hsla(358, 75%, 57%, 0.85);
 }
 
 .ConfirmText {
-  font-weight: bold;
-  margin-bottom: 4vh;
-  max-height: 300px;
+  margin: 0 0 4vh 0;
 }
 
 .ConfirmButtons {
@@ -54,15 +106,6 @@
   cursor: pointer;
 }
 
-.ConfirmButton {
-  background-color: hsla(199, 77%, 43%, 0.95);
-  margin-right: 1.2vw;
-}
-
-.CancelButton {
-  background-color: hsla(358, 75%, 57%, 0.85);
-}
-
-.ModalContainer > div {
-  height: auto;
+.SpinnerContainer {
+  text-align: center;
 }
