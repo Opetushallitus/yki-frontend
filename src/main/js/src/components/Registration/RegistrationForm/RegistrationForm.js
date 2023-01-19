@@ -572,12 +572,12 @@ export const registrationForm = props => {
                   </strong>
                 </p>
                 <a
-                  href={'https://opintopolku.fi/wp/tietosuojaseloste/'}
+                  href={props.t('common.yki.consent.url')}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={props.t('common.newTab')}
                 >
-                  {props.t('common.yki.consent.link')}
+                  {props.t('common.yki.consent.description')}
                   <img
                     src={require('../../../assets/svg/external-link.svg')}
                     alt={props.t('common.newTab')}
