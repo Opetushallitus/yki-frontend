@@ -58,7 +58,7 @@ export class RelocateParticipant extends Component {
         <label>
           <select onChange={this.selectSession}>
             <option key="default" value={''}>
-              Valitse
+              {t('common.selectorDefault')}
             </option>
             {validSessions &&
               validSessions.length > 0 &&
