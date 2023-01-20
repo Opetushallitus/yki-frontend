@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
-import { PRIVACY_POLICY_LINK } from '../../../common/Constants';
 import ScrollToError from '../../../ScrollToFormTop';
 import * as actions from '../../../store/actions/index';
 import {
@@ -237,12 +236,12 @@ const ReEvaluationForm = props => {
                   </strong>
                 </p>
                 <a
-                  href={PRIVACY_POLICY_LINK}
+                  href={t('common.yki.consent.url')}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={t('common.newTab')}
                 >
-                  {t('common.yki.consent.link')}
+                  {t('common.yki.consent.description')}
                   <img
                     src={require('../../../assets/svg/external-link.svg')}
                     alt={t('common.newTab')}
