@@ -8,6 +8,7 @@ import { LANGUAGES, MOBILE_WIDTH, TABLET_WIDTH } from '../../common/Constants';
 import HeadlineContainer from '../../components/HeadlineContainer/HeadlineContainer';
 import ExamSessionList from '../../components/Registration/ExamSessionList/ExamSessionList';
 import Filters from '../../components/Registration/Filters/Filters';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
 import { getArraySize } from '../../util/util';
 import classes from './Registration.module.css';
@@ -133,19 +134,27 @@ class Registration extends Component {
                   onRegistrationFilterChange={this.onRegistrationFilterChange}
                 />
                 <hr />
-                <p className={classes.ResultCount}>
-                  <strong>{`${getArraySize(
-                    this.getValuesOnFilterChange(),
-                  )}`}</strong>{' '}
-                  {`${this.props.t('common.searchResults')}`}
-                </p>
+                {!this.props.loading && (
+                  <p className={classes.ResultCount}>
+                    <strong>{`${getArraySize(
+                      this.getValuesOnFilterChange(),
+                    )}`}</strong>{' '}
+                    {`${this.props.t('common.searchResults')}`}
+                  </p>
+                )}
               </div>
               {mobileOrTablet && <div className={classes.MobileSeparator} />}
-              <ExamSessionList
-                examSessions={this.getValuesOnFilterChange()}
-                language={this.props.language}
-                history={this.props.history}
-              />
+              {this.props.loading ? (
+                <div className={classes.SpinnerContainer}>
+                  <Spinner />
+                </div>
+              ) : (
+                <ExamSessionList
+                  examSessions={this.getValuesOnFilterChange()}
+                  language={this.props.language}
+                  history={this.props.history}
+                />
+              )}
             </div>
           </>
         </main>
