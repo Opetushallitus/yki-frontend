@@ -144,11 +144,11 @@ class Registration extends Component {
                 )}
               </div>
               {mobileOrTablet && <div className={classes.MobileSeparator} />}
-              { this.props.loading &&
+              {this.props.loading ? (
                 <div className={classes.SpinnerContainer}>
                   <Spinner />
-                </div>}
-              {!this.props.loading && (
+                </div>
+              ) : (
                 <ExamSessionList
                   examSessions={this.getValuesOnFilterChange()}
                   language={this.props.language}
