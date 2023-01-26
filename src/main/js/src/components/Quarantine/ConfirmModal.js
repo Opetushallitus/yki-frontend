@@ -1,9 +1,43 @@
+import moment from 'moment';
 import * as R from 'ramda';
 import React from 'react';
+
 import classes from './Quarantine.module.css';
+import { DATE_FORMAT, LANGUAGES } from '../../common/Constants';
 import Modal from '../../components/UI/Modal/Modal';
 import PropTypes from 'prop-types';
 import SpinnerOverlay from '../../components/UI/SpinnerOverlay/SpinnerOverlay';
+
+const QuarantineDetails = ({ quarantine, t }) => {
+  const { exam_date, form, language_code, state } = quarantine;
+  const examLanguage = LANGUAGES.find(({ code }) => code === language_code)
+    .name;
+
+  return (
+    <div className={classes.QuarantineDetails}>
+      <div>
+        <div>{t('registration.list.exam')}:</div>
+        <div>{t('common.name')}:</div>
+        <div>{t('common.birthdate')}:</div>
+        <div>{t('quarantine.paymentState')}:</div>
+      </div>
+      <div className={classes.ColumnBold}>
+        <div>
+          {examLanguage}, {moment(exam_date).format(DATE_FORMAT)}
+        </div>
+        <div>
+          {form.last_name}, {form.first_name}
+        </div>
+        <div>{moment(form.birthdate).format(DATE_FORMAT)}</div>
+        <div>
+          {state === 'COMPLETED' || state === 'PAID_AND_CANCELLED'
+            ? t('quarantine.paymentState.paid')
+            : t('quarantine.paymentState.notPaid')}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const QuarantineConfirmModal = props => {
   const {
@@ -11,7 +45,8 @@ const QuarantineConfirmModal = props => {
     confirm,
     cancel,
     loading,
-    description,
+    quarantineDetails,
+    isQuarantined,
   } = props;
 
   return (
@@ -21,22 +56,32 @@ const QuarantineConfirmModal = props => {
       modalClosed={cancel}
       className={classes.ConfirmModal}
     >
-      {loading && (<SpinnerOverlay />)}
-      <h3 className={classes.ConfirmText}>
-        {t('common.areYouSure')}
-      </h3>
-      <p>{description}</p>
+      {loading && <SpinnerOverlay />}
+      <h3 className={classes.ConfirmText}>{t('common.areYouSure')}</h3>
+      <p>
+        {isQuarantined
+          ? t('quarantine.dialog.confirm.description')
+          : t('quarantine.dialog.cancel.description')}
+      </p>
+      <QuarantineDetails quarantine={quarantineDetails} t={t} />
+      <p>
+        {isQuarantined
+          ? t('quarantine.dialog.confirm.note')
+          : t('quarantine.dialog.cancel.note')}
+      </p>
       <div className={classes.ConfirmButtons}>
         <button
           data-cy="confirm-set-quarantine-btn"
           onClick={confirm}
-          className={classes.ConfirmButton}>
+          className={classes.ConfirmButton}
+        >
           {t('common.confirm')}
         </button>
         <button
           data-cy="cancel-set-quarantine-btn"
           onClick={cancel}
-          className={classes.CancelButton}>
+          className={classes.CancelButton}
+        >
           {t('common.cancelConfirm')}
         </button>
       </div>
@@ -49,7 +94,8 @@ QuarantineConfirmModal.propTypes = {
   confirm: PropTypes.func.isRequired,
   cancel: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  description: PropTypes.string.isRequired,
+  quarantineDetails: PropTypes.object.isRequired,
+  isQuarantined: PropTypes.bool.isRequired,
 };
 
 export default QuarantineConfirmModal;
