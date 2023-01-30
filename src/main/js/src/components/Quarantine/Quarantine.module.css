@@ -8,7 +8,17 @@
 }
 
 .ConfirmModal {
-  height: 10rem;
+  block-size: fit-content;
+}
+
+.QuarantineDetails {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.ColumnBold > div {
+  font-weight: bold;
 }
 
 .MenuItem.Active, .MenuItem:hover {

@@ -179,7 +179,8 @@ const quarantineMatches = {
       last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567'
-    }
+    },
+    state: 'COMPLETED'
   }]
 }
 
@@ -207,7 +208,8 @@ const quarantineReviews = {
       last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567'
-    }
+    },
+    state: 'COMPLETED'
   },
   {
     quarantine_lang: 'fin',
@@ -232,7 +234,8 @@ const quarantineReviews = {
       last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567'
-    }
+    },
+    state: 'SUBMITTED'
   }]
 };
 

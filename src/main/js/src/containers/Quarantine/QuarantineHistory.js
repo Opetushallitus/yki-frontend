@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as R from 'ramda';
@@ -19,73 +19,72 @@ const QuarantineHistory = props => {
     t,
     reviews,
     onFetchQuarantineReviews,
-    setQuarantine,
     confirmQuarantine,
     closeConfirmQuarantine,
     confirm,
     loading,
     error,
   } = props;
-  const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
+  const findLang = language => LANGUAGES.find(l => l.code === language).name;
   const closeConfirmModal = () => closeConfirmQuarantine();
   const hasError = !R.isNil(error);
+
+  const [quarantineDetails, setQuarantineDetails] = useState(null);
+  useEffect(() => {
+    if (confirm && confirm.quarantineId && confirm.registrationId) {
+      setQuarantineDetails(
+        reviews.find(
+          r =>
+            r.quarantine_id === confirm.quarantineId &&
+            r.registration_id === confirm.registrationId,
+        ),
+      );
+    } else {
+      setQuarantineDetails(null);
+    }
+  }, [confirm, reviews]);
 
   useEffect(onFetchQuarantineReviews, [hasError]);
 
   const showQuarantineConfirm = (id, reg_id) =>
-    confirmQuarantine(() => setQuarantine(id, reg_id, true), t('quarantine.confirmDescription'));
+    confirmQuarantine(reg_id, id, true);
 
   const showCancelQuarantineConfirm = (id, reg_id) =>
-    confirmQuarantine(() => setQuarantine(id, reg_id, false), t('quarantine.confirmCancelDescription'));
+    confirmQuarantine(reg_id, id, false);
 
   return (
     <Page>
-      {R.isNil(error) && !R.isNil(confirm) && (
+      {R.isNil(error) && !R.isNil(confirm) && !R.isNil(quarantineDetails) && (
         <QuarantineConfirmModal
           t={t}
           confirm={confirm.callback}
           cancel={closeConfirmModal}
           loading={loading}
-          description={confirm.description}
+          quarantineDetails={quarantineDetails}
+          isQuarantined={confirm.quarantined}
         />
       )}
       <div className={classes.QuarantineMatches}>
-        <h1>
-          {t('quarantine.reviewsTitle')}
-        </h1>
+        <h1>{t('quarantine.reviewsTitle')}</h1>
 
         <QuarantineNav t={t} />
 
-        <p>
-          {t('quarantine.reviewsDescription')}
-        </p>
+        <p>{t('quarantine.reviewsDescription')}</p>
 
         <div className={classes.QuarantineList}>
-          <div className={classes.ListHeader}/>
-          <div className={classes.ListHeader}>
-            {t('common.examLanguage')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('quarantine.examDate')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('common.names')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('common.email')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('common.birthdate')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('common.phoneNumber')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('quarantine.status')}
-          </div>
-          <div/>
+          <div className={classes.ListHeader} />
+          <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
+          <div className={classes.ListHeader}>{t('quarantine.examDate')}</div>
+          <div className={classes.ListHeader}>{t('common.names')}</div>
+          <div className={classes.ListHeader}>{t('common.email')}</div>
+          <div className={classes.ListHeader}>{t('common.birthdate')}</div>
+          <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
+          <div className={classes.ListHeader}>{t('quarantine.status')}</div>
+          <div />
           {reviews.map(review => (
-            <React.Fragment key={`quarantine-match-row-${review.quarantine_id}`}>
+            <React.Fragment
+              key={`quarantine-match-row-${review.quarantine_id}`}
+            >
               <div className={classes.IndicatorRow}>
                 <span>{t('common.registration')}</span>
                 <span>{t('common.quarantine')}</span>
@@ -93,20 +92,20 @@ const QuarantineHistory = props => {
               <div>{findLang(review.language_code)}</div>
               <div>{moment(review.exam_date).format(DATE_FORMAT)}</div>
               <div className={classes.ListRow}>
-                <span>{review.form.first_name} {review.form.last_name}</span>
-                <span>{review.first_name} {review.last_name}</span>
+                <span>
+                  {review.form.first_name} {review.form.last_name}
+                </span>
+                <span>
+                  {review.first_name} {review.last_name}
+                </span>
               </div>
               <div className={classes.ListRow}>
                 <span>{review.form.email}</span>
                 <span>{review.email}</span>
               </div>
               <div className={classes.ListRow}>
-                <span>
-                  {moment(review.form.birthdate).format(DATE_FORMAT)}
-                </span>
-                <span>
-                  {moment(review.birthdate).format(DATE_FORMAT)}
-                </span>
+                <span>{moment(review.form.birthdate).format(DATE_FORMAT)}</span>
+                <span>{moment(review.birthdate).format(DATE_FORMAT)}</span>
               </div>
               <div className={classes.ListRow}>
                 <span>{review.phone_number}</span>
@@ -114,20 +113,24 @@ const QuarantineHistory = props => {
               </div>
               <div className={classes.ListRow}>
                 {review.is_quarantined
-                 ? t('quarantine.quarantined')
-                 : t('quarantine.notQuarantined')}
+                  ? t('quarantine.quarantined')
+                  : t('quarantine.notQuarantined')}
               </div>
               <div
-                data-cy={`${review.is_quarantined ? 'unset' : 'set'}-quarantine-btn`}
-                className={!review.is_quarantined ? '' : classes.PrimaryButton}>
+                data-cy={`${
+                  review.is_quarantined ? 'unset' : 'set'
+                }-quarantine-btn`}
+                className={!review.is_quarantined ? '' : classes.PrimaryButton}
+              >
                 {review.is_quarantined ? (
                   <Button
                     disabled={loading}
                     clicked={showCancelQuarantineConfirm.bind(
                       this,
                       review.quarantine_id,
-                      review.registration_id
-                    )}>
+                      review.registration_id,
+                    )}
+                  >
                     {t('quarantine.cancelQuarantine')}
                   </Button>
                 ) : (
@@ -136,8 +139,9 @@ const QuarantineHistory = props => {
                     clicked={showQuarantineConfirm.bind(
                       this,
                       review.quarantine_id,
-                      review.registration_id
-                    )}>
+                      review.registration_id,
+                    )}
+                  >
                     {t('quarantine.setQuarantine')}
                   </Button>
                 )}
@@ -150,7 +154,7 @@ const QuarantineHistory = props => {
             <Spinner />
           </div>
         )}
-     </div>
+      </div>
     </Page>
   );
 };
@@ -169,11 +173,22 @@ const mapDispatchToProps = dispatch => {
     onFetchQuarantineReviews: () => {
       dispatch(actions.fetchQuarantineReviews());
     },
-    setQuarantine: (id, reg_id, quarantined) => {
-      dispatch(actions.setQuarantine(id, reg_id, quarantined));
-    },
-    confirmQuarantine: (callback, description) => {
-      dispatch(actions.confirmQuarantine(callback, description));
+    confirmQuarantine: (
+      registrationId,
+      quarantineId,
+      quarantined,
+    ) => {
+      dispatch(
+        actions.confirmQuarantine(
+          () =>
+            dispatch(
+              actions.setQuarantine(quarantineId, registrationId, quarantined),
+            ),
+          registrationId,
+          quarantineId,
+          quarantined,
+        ),
+      );
     },
     closeConfirmQuarantine: () => {
       dispatch(actions.closeConfirmQuarantine());

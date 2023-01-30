@@ -139,12 +139,14 @@ export const closeConfirmQuarantine = () => dispatch => {
   });
 };
 
-export const confirmQuarantine = (callback, description) => dispatch => {
+export const confirmQuarantine = (callback, registrationId, quarantineId, quarantined) => dispatch => {
   return dispatch({
     type: actionTypes.CONFIRM_QUARANTINE,
     confirm: {
-      callback: callback,
-      description,
+      callback,
+      registrationId,
+      quarantineId,
+      quarantined
     },
   });
 };
