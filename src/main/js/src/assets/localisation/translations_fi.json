@@ -278,7 +278,7 @@
   "registration.form.confirmEmail": "Vahvista sähköposti",
   "registration.form.consent.confirm": "Hyväksyn ehdot.",
   "registration.form.consent.heading": "Ilmoittautuminen YKI-testiin on sitova. Et voi muuttaa ilmoittautumista vahvistamisen jälkeen. Tarkista, että olet ilmoittautumassa oikean kielen ja tason testiin.",
-  "registration.form.consent.info": "1.1.2023 alkaen tarvitset todistuksen sairaudesta tai muusta painavasta syystä, jos haluat siirtää tai perua ilmoittautumisesi YKI-testiin.",
+  "registration.form.consent.info": "1.1.2023 alkaen tarvitset todistuksen sairaudesta tai muusta painavasta syystä, jos haluat perua ilmoittautumisesi YKI-testiin.",
   "registration.form.email": "Sähköposti",
   "registration.form.examLang": "Tehtävien kieli",
   "registration.form.firstName": "Etunimet",

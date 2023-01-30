@@ -238,7 +238,7 @@
   "registration.form.confirmEmail": "Bekräfta e-postadressen",
   "registration.form.consent.confirm": "Jag godkänner villkoren.",
   "registration.form.consent.heading": "Anmälan till YKI-testet är bindande. Du kan inte ändra din anmälan efter att du har bekräftat den. Kontrollera att du anmäler dig till ett test på rätt språk och nivå.",
-  "registration.form.consent.info": "Fr.o.m. 1.1.2023 kommer du att behöva ett intyg över sjukdom eller något annat särskilt vägande skäl om du vill flytta eller avboka din anmälan i YKI-testet.",
+  "registration.form.consent.info": "Fr.o.m. 1.1.2023 kommer du att behöva ett intyg över sjukdom eller något annat särskilt vägande skäl om du vill avboka din anmälan i YKI-testet.",
   "registration.form.email": "E-post",
   "registration.form.examLang": "Uppgiftsspråket",
   "registration.form.firstName": "Förnamn",
