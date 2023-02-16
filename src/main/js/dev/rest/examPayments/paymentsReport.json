@@ -7,6 +7,7 @@
       "exam_language": "Suomi",
       "paid_at": "2022-07-27 12:46:39",
       "exam_date": "2025-03-10",
+      "original_exam_date": "2025-01-01",
       "reference": "YKI-EXAM-1-1-3bb752d0-df72-4f72-b673-338b5e90384e",
       "exam_level": "Perustaso",
       "organizer": "Salon seudun koulutus Oy"
@@ -29,6 +30,7 @@
       "exam_language": "Suomi",
       "paid_at": "2022-07-29 06:29:33",
       "exam_date": "2025-03-10",
+      "original_exam_date": "2022-12-06",
       "reference": "YKI-EXAM-1-1-ab2e1dd5-5fcc-4db5-bf49-73e213838155",
       "exam_level": "Perustaso",
       "organizer": "Salon seudun koulutus Oy"
