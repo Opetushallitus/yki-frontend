@@ -8,7 +8,7 @@ import classes from './ExamSessionDetails.module.css';
 import { DATE_FORMAT } from '../../../common/Constants';
 import { getLanguagesWithLevelDescriptions } from '../../../util/util';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import ParticipantList from '../../../components/UpcomingExamSessions/ParticipantList/ParticipantList';
+import ParticipantList from '../../../components/ExamSessions/ParticipantList/ParticipantList';
 import ExamSessionUpdateForm from './ExamSessionUpdateForm/ExamSessionUpdateForm';
 import * as actions from '../../../store/actions/index';
 import ExamSessionPostAdmission from './PostAdmission/ExamSessionPostAdmission';

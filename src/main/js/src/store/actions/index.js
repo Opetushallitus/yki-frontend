@@ -12,7 +12,6 @@ export {
   activatePostAdmission,
   deactivatePostAdmission,
   ResendPaymentEmail,
-  toggleAndFetchPastExamSessions,
 } from './examSession';
 export {
   fetchRegistryExamSessions,

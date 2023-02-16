@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 
 import classes from './ExamSessions.module.css';
 import Page from '../../hoc/Page/Page';
-import UpcomingExamSessions from '../../components/UpcomingExamSessions/UpcomingExamSessions';
+import UpcomingAndPastExamSessions from '../../components/ExamSessions/ExamSessions';
 import ExamSessionDetails from './ExamSessionDetails/ExamSessionDetails';
 import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer';
 import ExamSessionForm from '../../components/ExamSessionForm/ExamSessionForm';
@@ -80,11 +80,6 @@ class ExamSessions extends Component {
     this.closeExamSessionDetailsModalHandler();
   };
 
-  togglePastExamSessionsHandler = () => {
-    const days = !this.props.showPastSessionsFromDays ? 365 : null;
-    this.props.toggleAndFetchPastExamSessions(days);
-  }
-
   render() {
     const addExamSessionModal = (
       <React.Fragment>
@@ -131,11 +126,9 @@ class ExamSessions extends Component {
               this.props.i18n.lang,
             )}
           </h1>
-          <UpcomingExamSessions
+          <UpcomingAndPastExamSessions
             examSessions={this.props.examSessionContent.examSessions}
             examSessionSelected={this.openExamSessionDetailsModalHandler}
-            showPastExamSessions={!!this.props.showPastSessionsFromDays}
-            togglePastExamSessions={this.togglePastExamSessionsHandler}
           />
           <div
             className={classes.AddExamSessionButton}
@@ -173,7 +166,6 @@ const mapStateToProps = state => {
     examSessionContent: state.exam.examSessionContent,
     loading: state.exam.loading,
     error: state.exam.error,
-    showPastSessionsFromDays: state.exam.showPastSessionsFromDays,
   };
 };
 
@@ -188,8 +180,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.updateExamSession(examSession, oid)),
     onDeleteExamSession: (oid, examSessionId) =>
       dispatch(actions.deleteExamSession(oid, examSessionId)),
-    toggleAndFetchPastExamSessions: (activeState) =>
-      dispatch(actions.toggleAndFetchPastExamSessions(activeState)),
   };
 };
 
@@ -202,7 +192,6 @@ ExamSessions.propTypes = {
   onAddExamSession: PropTypes.func.isRequired,
   onUpdateExamSession: PropTypes.func.isRequired,
   onDeleteExamSession: PropTypes.func.isRequired,
-  toggleAndFetchPastExamSessions: PropTypes.func.isRequired,
 };
 
 export default connect(

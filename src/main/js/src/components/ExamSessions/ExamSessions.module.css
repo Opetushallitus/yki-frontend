@@ -38,14 +38,6 @@
   justify-items: stretch;
 }
 
-.CheckBox label:before {
-  border: 1px solid var(--secondary-blue);
-}
-
-.CheckboxContainer {
-  width: max-content;
-}
-
 @media (max-width: 900px) {
   .DesktopOnly {
     display: none;

@@ -3,7 +3,7 @@ import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import toJson from 'enzyme-to-json';
 
-import { upcomingExamSessions as UpcomingExamSessions } from './UpcomingExamSessions';
+import { upcomingAndPastExamSessions as UpcomingAndPastExamSessions } from './ExamSessions';
 
 configure({ adapter: new Adapter() });
 
@@ -37,10 +37,10 @@ jest.mock('i18next', () => ({
   t: k => k,
 }));
 
-describe('<UpcomingExamSessions />', () => {
+describe('<UpcomingAndPastExamSessions />', () => {
   it('should render exam session rows', () => {
     const wrapper = shallow(
-      <UpcomingExamSessions
+      <UpcomingAndPastExamSessions
         t={key => key}
         examSessions={examSessions}
         examSessionSelected={jest.fn()}
