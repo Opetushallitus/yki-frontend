@@ -94,7 +94,7 @@ exports[`<UpcomingAndPastExamSessions /> should render exam session rows 1`] = `
       </h2>
     </div>
     <p>
-      examSession.noPlannedSessions
+      examSession.noPastSessions
     </p>
   </div>
 </Fragment>

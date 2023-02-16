@@ -59,7 +59,7 @@ export const upcomingAndPastExamSessions = props => {
             {renderExamSessionRows(upcomingExamSessions)}
           </div>
         ) : (
-          <p>{props.t('examSession.noPlannedSessions')}</p>
+          <p>{props.t('examSession.noUpcomingSessions')}</p>
         )}
       </div>
       <div>
@@ -78,7 +78,7 @@ export const upcomingAndPastExamSessions = props => {
             {renderExamSessionRows(pastExamSessions)}
           </div>
         ) : (
-          <p>{props.t('examSession.noPlannedSessions')}</p>
+          <p>{props.t('examSession.noPastSessions')}</p>
         )}
       </div>
     </>
