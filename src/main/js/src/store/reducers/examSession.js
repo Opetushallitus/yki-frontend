@@ -12,7 +12,6 @@ const initialState = {
   participants: [],
   loading: false,
   error: null,
-  showPastSessionsFromDays: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -56,11 +55,6 @@ const reducer = (state = initialState, action) => {
           ...state,
           participants: action.participants,
           loading: false,
-        };
-      case actionTypes.TOGGLE_PAST_EXAM_SESSIONS:
-        return {
-          ...state,
-          showPastSessionsFromDays: action.days,
         };
       default:
         if (action.type.endsWith('_SUCCESS')) {
