@@ -112,7 +112,9 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     </div>
     <div
       className="StateItem"
-    />
+    >
+       
+    </div>
     <div
       className="StateItem"
     >
@@ -240,7 +242,9 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     </div>
     <div
       className="StateItem"
-    />
+    >
+       
+    </div>
     <div
       className="StateItem"
     >
