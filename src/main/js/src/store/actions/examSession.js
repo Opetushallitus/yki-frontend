@@ -37,7 +37,7 @@ const fetchExamSessionContentFail = error => {
   };
 };
 
-export const fetchExamSessionContent = (days = null) => {
+export const fetchExamSessionContent = () => {
   return dispatch => {
     dispatch(fetchExamSessionContentStart());
     const oneYearAgo = moment()
@@ -71,9 +71,6 @@ export const fetchExamSessionContent = (days = null) => {
                 examSessionRes,
                 examDateRes,
               ]) => {
-                flattenOrganizationHierarchy(
-                  organizationChildrenRes.data.organisaatiot,
-                );
                 dispatch(
                   fetchExamSessionContentSuccess({
                     organizer: organizer,
