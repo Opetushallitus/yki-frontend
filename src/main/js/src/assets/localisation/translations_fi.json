@@ -213,6 +213,7 @@
   "examSession.registration.confirmPayment": "Kuittaa maksetuksi",
   "examSession.registration.confirmPayment.cancel": "Älä kuittaa",
   "examSession.registration.confirmPayment.confirm": "Kuittaa",
+  "examSession.registration.originalExamDate": "Alkuperäinen tutkintopäivä: ",
   "examSession.registration.postAdmission": "Jälki-ilmoittautuminen",
   "examSession.registration.relocate": "Siirrä",
   "examSession.registration.relocate.confirm": "Siirrä",

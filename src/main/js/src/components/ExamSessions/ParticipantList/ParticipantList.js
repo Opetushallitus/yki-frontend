@@ -182,8 +182,20 @@ export const participantList = props => {
         >
           {registrationStatus(p)}
         </div>
-        <div className={classes.StateItem}>
-          {p.created && moment(p.created).format(DATE_FORMAT)}
+        <div
+          className={
+            p.original_exam_date
+              ? [classes.StateItem, classes.Notice].join(' ')
+              : classes.StateItem
+          }
+        >
+          {p.created && moment(p.created).format(DATE_FORMAT)}{' '}
+          {p.original_exam_date ? (
+            <p>
+              {props.t('examSession.registration.originalExamDate')}{' '}
+              {moment(p.original_exam_date).format(DATE_FORMAT)}
+            </p>
+          ) : null}
         </div>
         <div className={classes.StateItem}>
           {p.kind === 'ADMISSION'

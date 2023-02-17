@@ -17,6 +17,10 @@
   font-size: 0.875em;
 }
 
+.Notice {
+  font-weight: bold;
+}
+
 .ItemHeader {
   font-size: 0.875em;
   font-weight: bold;
