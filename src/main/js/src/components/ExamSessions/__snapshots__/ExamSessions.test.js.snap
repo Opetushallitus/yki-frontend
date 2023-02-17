@@ -3,16 +3,12 @@
 exports[`<UpcomingAndPastExamSessions /> should render exam session rows 1`] = `
 <Fragment>
   <div>
-    <div
-      className="TitleRow"
-    >
-      <h2>
-        examSession.upcomingExamSessions
-      </h2>
-    </div>
+    <h2>
+      examSession.upcomingExamSessions
+    </h2>
     <div
       className="Grid"
-      data-cy="exam-sessions-table"
+      data-cy="upcoming-exam-sessions-table"
     >
       <h3>
         common.examDate
@@ -33,7 +29,7 @@ exports[`<UpcomingAndPastExamSessions /> should render exam session rows 1`] = `
       </h3>
       <div
         className="Row"
-        data-cy="exam-sessions-table-row-0"
+        data-cy="upcoming-exam-sessions-table-row-0"
         key="0"
         onClick={[Function]}
       >
@@ -59,7 +55,7 @@ exports[`<UpcomingAndPastExamSessions /> should render exam session rows 1`] = `
       </div>
       <div
         className="Row"
-        data-cy="exam-sessions-table-row-1"
+        data-cy="upcoming-exam-sessions-table-row-1"
         key="1"
         onClick={[Function]}
       >
@@ -86,13 +82,9 @@ exports[`<UpcomingAndPastExamSessions /> should render exam session rows 1`] = `
     </div>
   </div>
   <div>
-    <div
-      className="TitleRow"
-    >
-      <h2>
-        examSession.pastExamSessions
-      </h2>
-    </div>
+    <h2>
+      examSession.pastExamSessions
+    </h2>
     <p>
       examSession.noPastSessions
     </p>
