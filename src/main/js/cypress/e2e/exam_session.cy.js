@@ -34,10 +34,16 @@ describe('Exam sessions', () => {
 
   it('front page contains list of upcoming exam sessions', () => {
     cy.get('[data-cy=exam-session-header]');
-    cy.get('[data-cy=exam-sessions-table]')
+    cy.get('[data-cy=upcoming-exam-sessions-table]')
       .find('div')
-      .should('have.length', 6);
+      .should('have.length', 4);
   });
+
+  it('front page contains list of past exam sessions', () => {
+    cy.get('[data-cy=past-exam-sessions-table]')
+      .find('div')
+      .should('have.length', 2);
+  })
 
   it('front page contains agreement data', () => {
     cy.get('[data-cy=exam-session-organizer-agreement]');
@@ -67,9 +73,9 @@ describe('Exam sessions', () => {
     cy.get('button')
       .contains('Tallenna tilaisuuden tiedot')
       .click();
-    cy.get('[data-cy=exam-sessions-table]')
+    cy.get('[data-cy=upcoming-exam-sessions-table]')
       .find('div')
-      .should('have.length', 7);
+      .should('have.length', 5);
   });
 
   it('exam session field validation errors disable submit button', () => {
@@ -90,9 +96,9 @@ describe('Exam sessions', () => {
     cy.get('button')
       .contains('Tallenna tilaisuuden tiedot')
       .click();
-    cy.get('[data-cy=exam-sessions-table]')
+    cy.get('[data-cy=upcoming-exam-sessions-table]')
       .find('div')
-      .should('have.length', 7);
+      .should('have.length', 5);
 
     cy.get('[data-cy=add-exam-session-button]').click();
     fillExamSessionForm();
@@ -125,8 +131,8 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=radio-2081-01-30]').should('not.be.checked');
   });
 
-  it('selecting upcoming exam session opens details with participant list', () => {
-    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+  it('selecting exam session opens details with participant list', () => {
+    cy.get('[data-cy=past-exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-list]').should('exist');
 
     cy.log('registration link is shown');
@@ -161,7 +167,7 @@ describe('Exam sessions', () => {
   });
 
   it('exam session can be updated', () => {
-    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=upcoming-exam-sessions-table-row-0]').click();
     cy.get('button')
       .contains('Tallenna muutokset')
       .should('be.disabled');
@@ -185,7 +191,7 @@ describe('Exam sessions', () => {
       .contains('Tallenna muutokset')
       .click();
 
-    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=upcoming-exam-sessions-table-row-0]').click();
     cy.get('[data-cy=input-max-participants]').should('have.value', '100');
     cy.get('[data-cy=input-location]').should('have.value', 'auditorio A3');
     cy.get('[data-cy=input-extra-fi]').should('have.value', 'extra-fi');
@@ -194,21 +200,21 @@ describe('Exam sessions', () => {
   });
 
   it('exam session can be deleted when registration has not started', () => {
-    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=past-exam-sessions-table-row-0]').click();
     cy.get('button')
       .contains('Poista')
       .should('not.exist');
 
     cy.visit('/tutkintotilaisuudet');
 
-    cy.get('[data-cy=exam-sessions-table-row-2]').click();
+    cy.get('[data-cy=upcoming-exam-sessions-table-row-0]').click();
     cy.get('button')
       .contains('Poista')
       .should('exist');
   });
 
   it('registration can be cancelled', () => {
-    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=past-exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-1]').should('exist');
 
     cy.get('button')
@@ -219,18 +225,8 @@ describe('Exam sessions', () => {
     cy.get('[data-cy=participant-1]').should('not.exist');
   });
 
-  it.skip('payment for not completed registration can be confirmed', () => {
-    cy.get('[data-cy=exam-sessions-table-row-0]').click();
-    cy.get('[data-cy=registration-SUBMITTED').should('exist');
-
-    cy.get('[data-cy=confirm-payment-icon]').click();
-    cy.get('[data-cy=button-confirm-action]').click();
-
-    cy.get('[data-cy=registration-SUBMITTED').should('not.exist');
-  });
-
   it('registration can be relocated to next exam session', () => {
-    cy.get('[data-cy=exam-sessions-table-row-0]').click();
+    cy.get('[data-cy=past-exam-sessions-table-row-0]').click();
     cy.get('[data-cy=participant-1]').should('exist');
     cy.get('[data-cy=button-action]')
       .first()
@@ -293,27 +289,27 @@ describe('Exam sessions', () => {
   it('post admission can be activated', () => {
     const quota = '5';
 
-    cy.get('[data-cy=exam-sessions-table-row-3]').click();
+    cy.get('[data-cy=upcoming-exam-sessions-table-row-1]').click();
     cy.get(paKey('add-button')).click();
     fillPostAdmissionForm(quota);
     postAdmissionFieldsValidate('26.11.2080', '20.12.2080', quota);
 
     cy.get('[data-cy=modal-close-button]').click();
-    cy.get('[data-cy=exam-sessions-table-row-3]').click();
+    cy.get('[data-cy=upcoming-exam-sessions-table-row-1]').click();
     postAdmissionFieldsValidate('26.11.2080', '20.12.2080', quota);
   });
 
   it('post admission quota can be edited', () => {
     const newQuota = '15';
 
-    cy.get('[data-cy=exam-sessions-table-row-4]').click();
+    cy.get('[data-cy=upcoming-exam-sessions-table-row-2]').click();
     cy.get(paKey('modify-button')).click();
     fillPostAdmissionForm(newQuota);
     postAdmissionFieldsValidate('30.11.2080', '25.12.2080', newQuota);
   });
 
   it('post admission can be deactivated', () => {
-    cy.get('[data-cy=exam-sessions-table-row-4]').click();
+    cy.get('[data-cy=upcoming-exam-sessions-table-row-2]').click();
 
     // Can be cancelled
     cy.get(paKey('deactivate-button')).click();

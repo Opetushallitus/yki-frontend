@@ -17,7 +17,7 @@ export const upcomingAndPastExamSessions = props => {
     today.isAfter(es.session_date, 'day'),
   );
 
-  const renderExamSessionRows = examSessions =>
+  const renderExamSessionRows = (examSessions, cyPrefix) =>
     examSessions.map((e, i) => {
       const registrationOpen = moment().isSameOrAfter(
         moment(e.registration_start_date),
@@ -28,7 +28,7 @@ export const upcomingAndPastExamSessions = props => {
         <div
           className={classes.Row}
           key={i}
-          data-cy={`exam-sessions-table-row-${i}`}
+          data-cy={`${cyPrefix}-exam-sessions-table-row-${i}`}
           onClick={() => props.examSessionSelected(e)}
         >
           <p>{moment(e.session_date).format(DATE_FORMAT)}</p>
@@ -53,7 +53,7 @@ export const upcomingAndPastExamSessions = props => {
       <div>
         <h2>{props.t('examSession.upcomingExamSessions')}</h2>
         {upcomingExamSessions.length > 0 ? (
-          <div className={classes.Grid} data-cy="exam-sessions-table">
+          <div className={classes.Grid} data-cy="upcoming-exam-sessions-table">
             <h3>{props.t('common.examDate')}</h3>
             <h3>{props.t('common.language')}</h3>
             <h3>{props.t('common.level')}</h3>
@@ -61,7 +61,7 @@ export const upcomingAndPastExamSessions = props => {
               {props.t('common.registationPeriod')}
             </h3>
             <h3>{props.t('examSession.participants')}</h3>
-            {renderExamSessionRows(upcomingExamSessions)}
+            {renderExamSessionRows(upcomingExamSessions, 'upcoming')}
           </div>
         ) : (
           <p>{props.t('examSession.noUpcomingSessions')}</p>
@@ -70,7 +70,7 @@ export const upcomingAndPastExamSessions = props => {
       <div>
         <h2>{props.t('examSession.pastExamSessions')}</h2>
         {pastExamSessions.length > 0 ? (
-          <div className={classes.Grid} data-cy="exam-sessions-table">
+          <div className={classes.Grid} data-cy="past-exam-sessions-table">
             <h3>{props.t('common.examDate')}</h3>
             <h3>{props.t('common.language')}</h3>
             <h3>{props.t('common.level')}</h3>
@@ -78,7 +78,7 @@ export const upcomingAndPastExamSessions = props => {
               {props.t('common.registationPeriod')}
             </h3>
             <h3>{props.t('examSession.participants')}</h3>
-            {renderExamSessionRows(pastExamSessions)}
+            {renderExamSessionRows(pastExamSessions, 'past')}
           </div>
         ) : (
           <p>{props.t('examSession.noPastSessions')}</p>
