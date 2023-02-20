@@ -11,7 +11,7 @@ const defaultCol = { wch: 12 };
 const columns = [
   defaultCol,
   defaultCol,
-  defaultCol,
+  { wch: 24 },
   { wch: 24 },
   defaultCol,
   defaultCol,
