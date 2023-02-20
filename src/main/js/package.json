@@ -47,7 +47,8 @@
   "scripts": {
     "start": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts start",
     "test": "react-scripts test",
-    "build": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts build",
+    "build": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts --openssl-legacy-provider build",
+    "build:no-legacy": "REACT_APP_GIT_SHA=`git rev-parse --short HEAD` react-scripts build",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
