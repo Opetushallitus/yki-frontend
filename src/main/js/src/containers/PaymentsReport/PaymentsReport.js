@@ -48,6 +48,7 @@ const exportToExcel = (payments, startDate, endDate) => {
     defaultCol,
     defaultCol,
     defaultCol,
+    defaultCol,
     { wch: 40 },
     { wch: 40 },
     defaultCol,
