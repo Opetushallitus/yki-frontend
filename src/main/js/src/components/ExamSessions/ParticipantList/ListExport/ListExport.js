@@ -11,7 +11,8 @@ const defaultCol = { wch: 12 };
 const columns = [
   defaultCol,
   defaultCol,
-  defaultCol,
+  { wch: 24 },
+  { wch: 24 },
   defaultCol,
   defaultCol,
   defaultCol,
@@ -64,6 +65,7 @@ export const listExport = props => {
         etunimi: p.form.first_name,
         sukunimi: p.form.last_name,
         tila: stateToText[p.state],
+        'alkup. tutkintopvm': p.original_exam_date,
         hetu: p.form.ssn,
         syntymaaika: p.form.birthdate,
         sukupuoli: p.form.gender ? (p.form.gender === '1' ? 'M' : 'N') : null,
