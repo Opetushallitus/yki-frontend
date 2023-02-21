@@ -48,6 +48,7 @@ const exportToExcel = (payments, startDate, endDate) => {
     defaultCol,
     defaultCol,
     defaultCol,
+    defaultCol,
     { wch: 40 },
     { wch: 40 },
     defaultCol,
@@ -58,6 +59,7 @@ const exportToExcel = (payments, startDate, endDate) => {
       "Järjestäjä": p.organizer,
       "Maksun aikaleima": p.paid_at,
       "Koepäivä": p.exam_date,
+      "Alkuperäinen koepäivä": p.original_exam_date,
       "Kieli": p.exam_language,
       "Taso": p.exam_level,
       "Osallistujan nimi": p.name,
@@ -68,7 +70,7 @@ const exportToExcel = (payments, startDate, endDate) => {
   });
   const workbook = XLSX.utils.book_new();
   const worksheet = XLSX.utils.json_to_sheet(data,
-    { header: ["Järjestäjä", "Maksun aikaleima", "Koepäivä", "Kieli", "Taso", "Osallistujan nimi",
+    { header: ["Järjestäjä", "Maksun aikaleima", "Koepäivä", "Alkuperäinen koepäivä", "Kieli", "Taso", "Osallistujan nimi",
      "Osallistujan sähköposti", "Summa (€)", "Maksun yksilöintitunnus"]});
 
   worksheet['!cols'] = columns;
