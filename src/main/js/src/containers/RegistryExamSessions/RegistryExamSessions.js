@@ -8,10 +8,10 @@ import moment from 'moment';
 import Page from '../../hoc/Page/Page';
 import classes from './RegistryExamSessions.module.css';
 import { Link } from 'react-router-dom';
-import UpcomingExamSessions from '../../components/UpcomingExamSessions/UpcomingExamSessions';
+import UpcomingAndPastExamSessions from '../../components/ExamSessions/ExamSessions';
+import ParticipantList from '../../components/ExamSessions/ParticipantList/ParticipantList';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
-import ParticipantList from '../../components/UpcomingExamSessions/ParticipantList/ParticipantList';
 import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
 import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer.js'
@@ -131,7 +131,7 @@ class RegistryExamSessions extends PureComponent {
 			<>{
 				loadingSessions()
 					? <Spinner />
-					: <UpcomingExamSessions
+					: <UpcomingAndPastExamSessions
 						examSessions={sessions}
 						examSessionSelected={this.selectSessionHandler}
 					/>

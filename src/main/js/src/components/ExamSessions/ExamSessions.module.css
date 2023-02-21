@@ -30,22 +30,6 @@
   cursor: pointer;
 }
 
-.TitleRow {
-  display: grid;
-  grid-template-columns: 80% auto 20px;
-  column-gap: 10px;
-  justify-content: start;
-  justify-items: stretch;
-}
-
-.CheckBox label:before {
-  border: 1px solid var(--secondary-blue);
-}
-
-.CheckboxContainer {
-  width: max-content;
-}
-
 @media (max-width: 900px) {
   .DesktopOnly {
     display: none;

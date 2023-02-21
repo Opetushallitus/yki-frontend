@@ -4,13 +4,15 @@ import moment from 'moment';
 
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 
-const flattenOrganizationHierarchy = (orgChildrenResponse) => {
-  const mapConcatOrgs = (orgs) => {
-    return orgs.map(o => [{ nimi: o.nimi, oid: o.oid }].concat(mapConcatOrgs(o.children)));
-  }
+const flattenOrganizationHierarchy = orgChildrenResponse => {
+  const mapConcatOrgs = orgs => {
+    return orgs.map(o =>
+      [{ nimi: o.nimi, oid: o.oid }].concat(mapConcatOrgs(o.children)),
+    );
+  };
 
   return mapConcatOrgs(orgChildrenResponse).flat(20);
-}
+};
 
 const fetchExamSessionContentStart = () => {
   return {
@@ -35,29 +37,13 @@ const fetchExamSessionContentFail = error => {
   };
 };
 
-export const togglePastExamSessions = days => {
-  return {
-    type: actionTypes.TOGGLE_PAST_EXAM_SESSIONS,
-    days: days
-  }
-}
-
-export const toggleAndFetchPastExamSessions = days => {
+export const fetchExamSessionContent = () => {
   return dispatch => {
-    dispatch(togglePastExamSessions(days));
-    dispatch(fetchExamSessionContent());
-  }
-}
-
-export const fetchExamSessionContent = (days = null) => {
-  return (dispatch, getState) => {
-    const { exam } = getState()
-
     dispatch(fetchExamSessionContentStart());
-    const today = moment().format(ISO_DATE_FORMAT_SHORT);
-    const daysParam = exam.showPastSessionsFromDays
-      ? `&days=${exam.showPastSessionsFromDays}`
-      : '';
+    const oneYearAgo = moment()
+      .subtract(365, 'days')
+      .format(ISO_DATE_FORMAT_SHORT);
+
     axios
       .get(`/yki/api/virkailija/organizer`)
       .then(orgRes => {
@@ -69,14 +55,14 @@ export const fetchExamSessionContent = (days = null) => {
               `/organisaatio-service/rest/organisaatio/v4/${organizer.oid}`,
             ),
             axios.get(
-              `/organisaatio-service/rest/organisaatio/v4/hierarkia/hae?aktiiviset=true&suunnitellut=true&lakkautetut=false&oid=${organizer.oid
-              }`,
+              `/organisaatio-service/rest/organisaatio/v4/hierarkia/hae?aktiiviset=true&suunnitellut=true&lakkautetut=false&oid=${organizer.oid}`,
             ),
             axios.get(
-              `/yki/api/virkailija/organizer/${organizer.oid
-              }/exam-session?from=${today}${daysParam}`,
+              `/yki/api/virkailija/organizer/${organizer.oid}/exam-session?from=${oneYearAgo}`,
             ),
-            axios.get(`/yki/api/virkailija/organizer/${organizer.oid}/exam-date`),
+            axios.get(
+              `/yki/api/virkailija/organizer/${organizer.oid}/exam-date`,
+            ),
           ])
             .then(
               ([
@@ -85,12 +71,13 @@ export const fetchExamSessionContent = (days = null) => {
                 examSessionRes,
                 examDateRes,
               ]) => {
-                flattenOrganizationHierarchy(organizationChildrenRes.data.organisaatiot);
                 dispatch(
                   fetchExamSessionContentSuccess({
                     organizer: organizer,
                     organization: organizationRes.data,
-                    organizationChildren: flattenOrganizationHierarchy(organizationChildrenRes.data.organisaatiot),
+                    organizationChildren: flattenOrganizationHierarchy(
+                      organizationChildrenRes.data.organisaatiot,
+                    ),
                     examSessions: examSessionRes.data.exam_sessions,
                     examDates: examDateRes.data.dates,
                   }),
@@ -412,40 +399,48 @@ const relocateExamSessionFail = error => {
 export const addPostAdmission = (orgOid, examSessionId, postAdmission) => {
   return dispatch => {
     axios
-      .post(`/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/activate`, postAdmission)
+      .post(
+        `/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/activate`,
+        postAdmission,
+      )
       .then(() => {
         dispatch(fetchExamSessionContent());
       })
       .catch(err => {
-        console.error(err)
+        console.error(err);
       });
-  }
-}
+  };
+};
 
 export const activatePostAdmission = (orgOid, examSessionId, postAdmission) => {
   return dispatch => {
     axios
-      .post(`/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/activate`, postAdmission)
+      .post(
+        `/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/activate`,
+        postAdmission,
+      )
       .then(() => {
         dispatch(fetchExamSessionContent());
       })
       .catch(err => {
-        console.error(err)
+        console.error(err);
       });
-  }
-}
+  };
+};
 export const deactivatePostAdmission = (orgOid, examSessionId) => {
   return dispatch => {
     axios
-      .post(`/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/deactivate`)
+      .post(
+        `/yki/api/virkailija/organizer/${orgOid}/exam-session/${examSessionId}/post-admission/deactivate`,
+      )
       .then(() => {
         dispatch(fetchExamSessionContent());
       })
       .catch(err => {
-        console.error(err)
+        console.error(err);
       });
-  }
-}
+  };
+};
 
 const ResendPaymentEmailStart = () => {
   return {
@@ -458,29 +453,36 @@ const ResendPaymentEmailSuccess = () => {
   return {
     type: actionTypes.EXAM_SESSION_RESEND_EMAIL_SUCCESS,
     loading: false,
-  }
-}
+  };
+};
 
 const ResendPaymentEmailFailure = () => {
   return {
     type: actionTypes.EXAM_SESSION_RESEND_EMAIL_FAIL,
     loading: false,
-  }
-}
+  };
+};
 
-export const ResendPaymentEmail = (orgId, examSessionId, registrationId, emailLang) => {
+export const ResendPaymentEmail = (
+  orgId,
+  examSessionId,
+  registrationId,
+  emailLang,
+) => {
   return dispatch => {
     dispatch(ResendPaymentEmailStart());
     axios
-      .post(`/yki/api/virkailija/organizer/${orgId}/exam-session/${examSessionId}/registration/${registrationId}/resendConfirmation?emailLang=${emailLang}`)
+      .post(
+        `/yki/api/virkailija/organizer/${orgId}/exam-session/${examSessionId}/registration/${registrationId}/resendConfirmation?emailLang=${emailLang}`,
+      )
       .then(() => {
         dispatch(ResendPaymentEmailSuccess());
-        alert("OK");
+        alert('OK');
       })
       .catch(err => {
         dispatch(ResendPaymentEmailFailure());
-        alert("Error");
+        alert('Error');
         console.error(err);
       });
-  }
-}
+  };
+};

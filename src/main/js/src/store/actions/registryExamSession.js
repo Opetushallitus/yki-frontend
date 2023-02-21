@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
 
-
 const fetchExamSessionsStart = () => {
   return {
     type: actionTypes.FETCH_REGISTRY_EXAM_SESSIONS_START,
@@ -30,41 +29,47 @@ const fetchExamSessionsFail = error => {
 
 const fetchExamSessionParticipantsStart = () => {
   return {
-    type: actionTypes.FETCH_REGISTRY_EXAM_SESSION_PARTICIPANTS_START
+    type: actionTypes.FETCH_REGISTRY_EXAM_SESSION_PARTICIPANTS_START,
   };
 };
 
 const fetchExamSessionParticipantsSuccess = participants => {
   return {
     type: actionTypes.FETCH_REGISTRY_EXAM_SESSION_PARTICIPANTS_SUCCESS,
-    participants
+    participants,
   };
 };
 
 const fetchExamSessionParticipantsFail = error => {
   return {
     type: actionTypes.FETCH_REGISTRY_EXAM_SESSION_PARTICIPANTS_FAIL,
-    error: Object.assign(error, { key: 'error.examSession.fetchFailed' })
+    error: Object.assign(error, { key: 'error.examSession.fetchFailed' }),
   };
 };
 
 export const fetchRegistryExamSessions = oid => {
   return dispatch => {
     dispatch(fetchExamSessionsStart());
-    const today = moment().format(ISO_DATE_FORMAT_SHORT);
+    const oneYearAgo = moment()
+      .subtract(365, 'days')
+      .format(ISO_DATE_FORMAT_SHORT);
     axios
-      .get(`/yki/api/virkailija/organizer/${oid}/exam-session?from=${today}`)
-      .then(res => {
-        dispatch(fetchExamSessionsSuccess(res.data.exam_sessions))
-      },
+      .get(
+        `/yki/api/virkailija/organizer/${oid}/exam-session?from=${oneYearAgo}`,
       )
+      .then(res => {
+        dispatch(fetchExamSessionsSuccess(res.data.exam_sessions));
+      })
       .catch(err => {
         dispatch(fetchExamSessionsFail);
       });
   };
 };
 
-export const fetchRegistryExamSessionParticipants = (organizerOid, examSessionId) => {
+export const fetchRegistryExamSessionParticipants = (
+  organizerOid,
+  examSessionId,
+) => {
   return dispatch => {
     dispatch(fetchExamSessionParticipantsStart());
     axios
@@ -79,6 +84,3 @@ export const fetchRegistryExamSessionParticipants = (organizerOid, examSessionId
       });
   };
 };
-
-
-
