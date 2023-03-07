@@ -44,34 +44,48 @@ const exportToExcel = (payments, startDate, endDate) => {
 
   const columns = [
     { wch: 40 },
-    defaultCol,
-    defaultCol,
-    defaultCol,
-    defaultCol,
-    defaultCol,
+    { wch: 30 },
+    { wch: 30 },
     { wch: 40 },
-    { wch: 40 },
+    defaultCol,
+    defaultCol,
+    defaultCol,
+    defaultCol,
+    defaultCol,
     defaultCol,
     { wch: 60 },
   ];
   const data = payments.map(p => {
     return {
-      "Järjestäjä": p.organizer,
-      "Maksun aikaleima": p.paid_at,
-      "Koepäivä": p.exam_date,
-      "Alkuperäinen koepäivä": p.original_exam_date,
-      "Kieli": p.exam_language,
-      "Taso": p.exam_level,
-      "Osallistujan nimi": p.name,
-      "Osallistujan sähköposti": p.email,
-      "Summa (€)": p.amount,
-      "Maksun yksilöintitunnus": p.reference,
+      Järjestäjä: p.organizer,
+      Sukunimi: p.last_name,
+      Etunimet: p.first_name,
+      Sähköpostiosoite: p.email,
+      'Maksun aikaleima': p.paid_at,
+      Koepäivä: p.exam_date,
+      'Alkuperäinen koepäivä': p.original_exam_date,
+      Kieli: p.exam_language,
+      Taso: p.exam_level,
+      'Summa (€)': p.amount,
+      'Maksun yksilöintitunnus': p.reference,
     };
   });
   const workbook = XLSX.utils.book_new();
-  const worksheet = XLSX.utils.json_to_sheet(data,
-    { header: ["Järjestäjä", "Maksun aikaleima", "Koepäivä", "Alkuperäinen koepäivä", "Kieli", "Taso", "Osallistujan nimi",
-     "Osallistujan sähköposti", "Summa (€)", "Maksun yksilöintitunnus"]});
+  const worksheet = XLSX.utils.json_to_sheet(data, {
+    header: [
+      'Järjestäjä',
+      'Sukunimi',
+      'Etunimet',
+      'Sähköpostiosoite',
+      'Maksun aikaleima',
+      'Koepäivä',
+      'Alkuperäinen koepäivä',
+      'Kieli',
+      'Taso',
+      'Summa (€)',
+      'Maksun yksilöintitunnus',
+    ],
+  });
 
   worksheet['!cols'] = columns;
   const sheetName = 'maksuraportti';
