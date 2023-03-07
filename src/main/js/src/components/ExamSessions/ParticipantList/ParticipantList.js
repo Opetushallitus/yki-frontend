@@ -243,7 +243,7 @@ export const participantList = props => {
       {props.participants.length > 0 && (
         <React.Fragment>
           <div className={classes.ListExport}>
-            <ListExport participants={props.participants} />
+            <ListExport participants={sortParticipantsFn(props.participants)} />
             {participantFiltering()}
           </div>
           <div className={classes.ParticipantList}>
