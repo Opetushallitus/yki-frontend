@@ -24,10 +24,13 @@ const stateComparator = () => (a, b) => {
   return 0;
 };
 
+const sortByNames = () => R.sortWith([
+  R.ascend(R.path(['form', 'last_name'])),
+  R.ascend(R.path(['form', 'first_name'])),
+]);
+
 export const participantList = props => {
-  const [sortParticipantsFn, setSortParticipantsFn] = useState(
-    R.sortBy(R.prop('created')),
-  );
+  const [sortParticipantsFn, setSortParticipantsFn] = useState(sortByNames);
 
   const getStateTranslationKey = state => {
     switch (state) {
@@ -88,7 +91,7 @@ export const participantList = props => {
   const handleFilterChange = event => {
     switch (event.target.value) {
       case 'name':
-        setSortParticipantsFn(() => R.sortBy(R.path(['form', 'first_name'])));
+        setSortParticipantsFn(sortByNames);
         break;
       case 'state':
         setSortParticipantsFn(() => R.sort(stateComparator()));
@@ -116,14 +119,14 @@ export const participantList = props => {
           className={classes.ParticipantFilter}
           onChange={handleFilterChange}
         >
+          <option value="name">
+            {props.t('examSession.participants.sortBy.name')}
+          </option>
           <option value="registrationTime">
             {props.t('examSession.participants.sortBy.registrationTime')}
           </option>
           <option value="registrationType">
             {props.t('examSession.participants.sortBy.registrationType')}
-          </option>
-          <option value="name">
-            {props.t('examSession.participants.sortBy.name')}
           </option>
           <option value="state">
             {props.t('examSession.participants.sortBy.state')}
