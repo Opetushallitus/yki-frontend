@@ -61,6 +61,11 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       onChange={[Function]}
     >
       <option
+        value="name"
+      >
+        examSession.participants.sortBy.name
+      </option>
+      <option
         value="registrationTime"
       >
         examSession.participants.sortBy.registrationTime
@@ -69,11 +74,6 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         value="registrationType"
       >
         examSession.participants.sortBy.registrationType
-      </option>
-      <option
-        value="name"
-      >
-        examSession.participants.sortBy.name
       </option>
       <option
         value="state"
@@ -95,9 +95,9 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="ItemHeader StateItem"
     >
-      Wallis
-       
       Michael
+      , 
+      Wallis
     </div>
     <div
       className="ItemHeader StatusCompleted StateItem"
@@ -223,9 +223,9 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="ItemHeader StateItem"
     >
-      Gaddens
-       
       Natalia
+      , 
+      Gaddens
     </div>
     <div
       className="ItemHeader Status StateItem"

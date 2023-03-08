@@ -62,8 +62,8 @@ export const listExport = props => {
   const exportToExcel = participants => {
     const data = participants.map(p => {
       return {
-        etunimi: p.form.first_name,
         sukunimi: p.form.last_name,
+        etunimet: p.form.first_name,
         tila: stateToText[p.state],
         'alkup. tutkintopvm': p.original_exam_date,
         hetu: p.form.ssn,
