@@ -24,10 +24,11 @@ const stateComparator = () => (a, b) => {
   return 0;
 };
 
-const sortByNames = () => R.sortWith([
-  R.ascend(R.path(['form', 'last_name'])),
-  R.ascend(R.path(['form', 'first_name'])),
-]);
+const sortByNames = () =>
+  R.sortWith([
+    R.ascend(R.path(['form', 'last_name'])),
+    R.ascend(R.path(['form', 'first_name'])),
+  ]);
 
 export const participantList = props => {
   const [sortParticipantsFn, setSortParticipantsFn] = useState(sortByNames);
@@ -103,7 +104,7 @@ export const participantList = props => {
         setSortParticipantsFn(() => R.sortBy(R.prop('kind')));
         break;
       default:
-        setSortParticipantsFn(() => R.sortBy(R.prop('created')));
+        setSortParticipantsFn(sortByNames);
         break;
     }
   };
@@ -174,7 +175,7 @@ export const participantList = props => {
           {i + 1}.
         </div>
         <div className={[classes.ItemHeader, classes.StateItem].join(' ')}>
-          {p.form.first_name} {p.form.last_name}
+          {p.form.last_name}, {p.form.first_name}
         </div>
         <div
           className={[
