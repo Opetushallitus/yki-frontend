@@ -95,9 +95,9 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="ItemHeader StateItem"
     >
-      Wallis
-       
       Michael
+      , 
+      Wallis
     </div>
     <div
       className="ItemHeader StatusCompleted StateItem"
@@ -223,9 +223,9 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     <div
       className="ItemHeader StateItem"
     >
-      Gaddens
-       
       Natalia
+      , 
+      Gaddens
     </div>
     <div
       className="ItemHeader Status StateItem"
