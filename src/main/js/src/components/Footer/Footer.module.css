@@ -6,7 +6,6 @@
   width: 100%;
   bottom: 0;
   padding-top: 2vh;
-  padding-bottom: 3vh;
 }
 
 .Footer a {
@@ -45,11 +44,6 @@
   letter-spacing: 0;
   color: var(--white);
   opacity: 1;
-}
-
-.AdditionalInfo p {
-  margin-block-start: 5px;
-  margin-block-end: 5px;
 }
 
 /* Small desktop and mobile screens */
