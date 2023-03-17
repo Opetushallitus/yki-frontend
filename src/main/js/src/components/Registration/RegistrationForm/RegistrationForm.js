@@ -12,6 +12,8 @@ import ScrollToError from '../../../ScrollToFormTop';
 import { useMobileView } from '../../../util/customHooks';
 import { checkBirthDate, containsSpecialCharacters } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
+import { useTranslation } from 'react-i18next';
+
 import PhoneNumberInput from '../../PhoneNumberInput/PhoneNumberInput';
 import Button from '../../UI/Button/Button';
 import Checkbox from '../../UI/Checkbox/Checkbox';
@@ -21,6 +23,26 @@ import RegistrationError from '../RegistrationError/RegistrationError';
 import GenderSelect from './GenderSelect/GenderSelect';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
 import classes from './RegistrationForm.module.css';
+
+const ExternalLink = ({ label, url }) => {
+  const { t } = useTranslation();
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={t('common.newTab')}
+    >
+      {label}
+      <img
+        className={classes.ExternalLinkIcon}
+        src={require('../../../assets/svg/external-link.svg')}
+        alt={t('common.newTab')}
+      />
+    </a>
+  );
+};
 
 export const registrationForm = props => {
   const mandatoryErrorMsg = props.t('error.mandatory');
@@ -256,9 +278,9 @@ export const registrationForm = props => {
   );
 
   const inputField = (name, required, extra, type = 'text', placeholder) => {
-    const isEmailInput = (name === 'email' || name === 'confirmEmail');
+    const isEmailInput = name === 'email' || name === 'confirmEmail';
     const handler = isEmailInput ? handleEmailActions : undefined;
-    
+
     return (
       <FormikInputField
         name={name}
@@ -266,26 +288,25 @@ export const registrationForm = props => {
         required={required}
         extra={extra}
         type={type}
-        autoComplete={isEmailInput ? "off" : undefined}
+        autoComplete={isEmailInput ? 'off' : undefined}
         onContextMenu={handler}
         onPaste={handler}
         onCopy={handler}
         onCut={handler}
         placeholder={placeholder || props.t(`registration.form.${name}`)}
       />
-    )
+    );
   };
-
 
   /**
    * Returns default disabled actions for the email inputs
-   * 
+   *
    * @returns false or undefined
    */
-  const handleEmailActions = (e) => {
+  const handleEmailActions = e => {
     e.preventDefault();
     return false;
-  }
+  };
 
   const readonlyWhenExistsInput = (name, initialValues, type) =>
     initialValues[name] && initialValues[name].length > 0 ? (
@@ -348,8 +369,8 @@ export const registrationForm = props => {
           ssn: props.initData.user.ssn || values.ssn,
           birthdate: values.birthdate
             ? moment(values.birthdate, DATE_FORMAT).format(
-              ISO_DATE_FORMAT_SHORT,
-            )
+                ISO_DATE_FORMAT_SHORT,
+              )
             : null,
           gender: values.gender,
           certificate_lang: values.certificateLang,
@@ -516,21 +537,15 @@ export const registrationForm = props => {
             </div>
           </div>
 
-          <p>{props.t('registration.form.specialArrangements.info')}
+          <p>
+            {props.t('registration.form.specialArrangements.info')}
             <br />
             {props.t('registration.form.specialArrangements.link.info')}:
             <br />
-            <a
-              href={props.t('registration.form.specialArrangements.link.url')}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={props.t('common.newTab')}>
-                  {props.t('registration.form.specialArrangements.link.url')}
-                  <img
-                    src={require('../../../assets/svg/external-link.svg')}
-                    alt={props.t('common.newTab')}
-                  />
-            </a>
+            <ExternalLink
+              label={props.t('registration.form.specialArrangements.link.url')}
+              url={props.t('registration.form.specialArrangements.link.url')}
+            />
           </p>
           <p>{props.t('registration.form.summary.info')}</p>
           <>
@@ -541,7 +556,14 @@ export const registrationForm = props => {
                     {props.t('registration.form.consent.heading')}
                   </strong>
                 </p>
-                <p>{props.t('registration.form.consent.info')}</p>
+                <p>
+                  {props.t('registration.form.consent.info')}
+                  <br />
+                  <ExternalLink
+                    label={props.t('registration.form.consent.ophLink.label')}
+                    url={props.t('registration.form.consent.ophLink.url')}
+                  />
+                </p>
               </article>
               <div className={classes.ConsentCheckbox}>
                 <Field
@@ -571,18 +593,10 @@ export const registrationForm = props => {
                     {props.t('registration.form.personalData.consent.heading')}
                   </strong>
                 </p>
-                <a
-                  href={props.t('common.yki.consent.url')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={props.t('common.newTab')}
-                >
-                  {props.t('common.yki.consent.description')}
-                  <img
-                    src={require('../../../assets/svg/external-link.svg')}
-                    alt={props.t('common.newTab')}
-                  />
-                </a>
+                <ExternalLink
+                  label={props.t('common.yki.consent.description')}
+                  url={props.t('common.yki.consent.url')}
+                />
               </article>
               <div className={classes.ConsentCheckbox}>
                 <Field
