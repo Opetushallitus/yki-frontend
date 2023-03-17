@@ -243,7 +243,7 @@
   "registration.form.certificateLang": "Certificate language",
   "registration.form.confirmEmail": "Confirm email",
   "registration.form.consent.confirm": "I accept the terms and conditions.",
-  "registration.form.consent.heading": "The registration for an YKI test is binding. Once you have confirmed your registration, you can no longer change it. Check that you are registering for a test of the correct language and level.",
+  "registration.form.consent.heading": "Check that you are registering for a test of the correct language and level. The registration for an YKI test is binding. Once you have confirmed your registration, you can no longer change it.",
   "registration.form.consent.info": "For more information on cancelling your test registration, please see the websites of the Finnish National Agency for Education:",
   "registration.form.consent.ophLink.label": "Before the YKI test",
   "registration.form.consent.ophLink.url": "https://www.oph.fi/en/koulutus-ja-tutkinnot/kieli-ja-kaantajatutkinnot/yleiset-kielitutkinnot-yki/ennen-testia",
