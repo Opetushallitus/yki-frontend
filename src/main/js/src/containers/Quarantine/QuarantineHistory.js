@@ -65,7 +65,7 @@ const QuarantineHistory = props => {
         />
       )}
       <div className={classes.QuarantineMatches}>
-        <h1>{t('quarantine.reviewsTitle')}</h1>
+        <h1>{t('quarantine.quarantines')}</h1>
 
         <QuarantineNav t={t} />
 
@@ -86,7 +86,7 @@ const QuarantineHistory = props => {
               key={`quarantine-match-row-${review.quarantine_id}`}
             >
               <div className={classes.IndicatorRow}>
-                <span>{t('common.registration')}</span>
+                <span>{t('common.participant')}</span>
                 <span>{t('common.quarantine')}</span>
               </div>
               <div>{findLang(review.language_code)}</div>

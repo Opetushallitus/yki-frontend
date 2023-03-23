@@ -132,9 +132,9 @@ const app = () => (
 
               <Route path="/tutkintopaivat" component={ExamDates} />
               <Route exact path="/maksuraportit" component={PaymentsReport} />
-              <Route exact path="/karenssi/mahdolliset" component={QuarantineMatches} />
-              <Route exact path="/karenssi/historia" component={QuarantineHistory} />
-              <Route exact path="/karenssi" component={Quarantine} />
+              <Route exact path="/osallistumiskiellot/odottavat" component={QuarantineMatches} />
+              <Route exact path="/osallistumiskiellot/aiemmat" component={QuarantineHistory} />
+              <Route exact path="/osallistumiskiellot/voimassa" component={Quarantine} />
               <Route
                 path="/saavutettavuus"
                 component={AccessibilityStatement}

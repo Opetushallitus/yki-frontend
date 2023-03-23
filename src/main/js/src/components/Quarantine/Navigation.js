@@ -10,7 +10,7 @@ const QuarantineNav = (props) => {
     <>
       <NavLink
         exact
-        to="/karenssi/mahdolliset"
+        to="/osallistumiskiellot/odottavat"
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >
@@ -18,7 +18,7 @@ const QuarantineNav = (props) => {
       </NavLink>
       <NavLink
         exact
-        to="/karenssi/historia"
+        to="/osallistumiskiellot/aiemmat"
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >
@@ -26,7 +26,7 @@ const QuarantineNav = (props) => {
       </NavLink>
       <NavLink
         exact
-        to="/karenssi"
+        to="/osallistumiskiellot/voimassa"
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >

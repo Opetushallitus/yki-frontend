@@ -66,7 +66,7 @@ const QuarantineMatches = props => {
         />
       )}
       <div className={classes.QuarantineMatches}>
-        <h1>{t('quarantine.matchesTitle')}</h1>
+        <h1>{t('quarantine.quarantines')}</h1>
 
         <QuarantineNav t={t} />
 
@@ -85,7 +85,7 @@ const QuarantineMatches = props => {
           {matches.map(match => (
             <React.Fragment key={`quarantine-match-row-${match.id}`}>
               <div className={classes.IndicatorRow}>
-                <span>{t('common.registration')}</span>
+                <span>{t('common.participant')}</span>
                 <span>{t('common.quarantine')}</span>
               </div>
               <div>{findLang(match.language_code)}</div>

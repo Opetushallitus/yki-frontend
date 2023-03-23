@@ -80,31 +80,40 @@ const Quarantine = props => {
     </Modal>
   );
 
-  const quarantineModal = (
-    <Modal
-      show={!R.isNil(showAddModal)}
-      smallModal
-      modalClosed={onShowAddModal.bind(this, null)}
-      className={classes.QuarantineModal}
-    >
-      {loading && (<SpinnerOverlay />)}
-      <h3 className={classes.ConfirmText}>
-        {t('quarantine.new')}
-      </h3>
-      <QuarantineForm
-        t={t}
-        i18n={i18n}
-        form={showAddModal ? showAddModal.form : initialForm}
-        onEdit={onEditQuarantine}
-        onAdd={onAddNewQuarantine}
-        onCancel={() => onShowAddModal(null)}
-      />
-    </Modal>
-  );
+  const quarantineModal = () => {
+    const form = showAddModal ? showAddModal.form : initialForm;
+    const isNewQuarantine = form === initialForm;
+
+    return (
+      <Modal
+        show={!R.isNil(showAddModal)}
+        smallModal
+        modalClosed={onShowAddModal.bind(this, null)}
+        className={classes.QuarantineModal}
+      >
+        {loading && (<SpinnerOverlay />)}
+        <h3 className={classes.ConfirmText}>
+          {isNewQuarantine ? (
+            t('quarantine.new')
+          ) : (
+            t('quarantine.edit')
+          )}
+        </h3>
+        <QuarantineForm
+          t={t}
+          i18n={i18n}
+          form={form}
+          onEdit={onEditQuarantine}
+          onAdd={onAddNewQuarantine}
+          onCancel={() => onShowAddModal(null)}
+        />
+      </Modal>
+    );
+  }
 
   return (
     <Page>
-      {R.isNil(error) && !R.isNil(showAddModal) && quarantineModal}
+      {R.isNil(error) && !R.isNil(showAddModal) && quarantineModal()}
       {R.isNil(error) && !R.isNil(confirm) && confirmDeleteModal}
       <div className={classes.Quarantines}>
         <h1>
@@ -121,7 +130,7 @@ const Quarantine = props => {
 
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader}>
-            {t('common.expires')}
+            {t('quarantine.expires')}
           </div>
           <div className={classes.ListHeader}>
             {t('common.examLanguage')}
