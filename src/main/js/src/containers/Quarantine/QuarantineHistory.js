@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { withTranslation } from 'react-i18next';
+import { Trans, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as R from 'ramda';
 
@@ -69,7 +69,23 @@ const QuarantineHistory = props => {
 
         <QuarantineNav t={t} />
 
-        <p>{t('quarantine.reviewsDescription')}</p>
+        <p>{t('quarantine.reviewsDescription.line1')}</p>
+        <p>
+          <Trans
+            t={t}
+            i18nKey={'quarantine.reviewsDescription.line2'}
+            values={{ col: t('quarantine.status') }}
+            components={[<strong />]}
+          />
+        </p>
+        <p>
+          <Trans
+            t={t}
+            i18nKey={'quarantine.reviewsDescription.line3'}
+            values={{ btn: t('quarantine.noQuarantine') }}
+            components={[<strong />]}
+          />
+        </p>
 
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader} />
@@ -86,7 +102,7 @@ const QuarantineHistory = props => {
               key={`quarantine-match-row-${review.quarantine_id}`}
             >
               <div className={classes.IndicatorRow}>
-                <span>{t('common.participant')}</span>
+                <span>{t('common.registree')}</span>
                 <span>{t('common.quarantine')}</span>
               </div>
               <div>{findLang(review.language_code)}</div>

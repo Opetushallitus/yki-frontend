@@ -85,7 +85,7 @@ const QuarantineMatches = props => {
           {matches.map(match => (
             <React.Fragment key={`quarantine-match-row-${match.id}`}>
               <div className={classes.IndicatorRow}>
-                <span>{t('common.participant')}</span>
+                <span>{t('common.registree')}</span>
                 <span>{t('common.quarantine')}</span>
               </div>
               <div>{findLang(match.language_code)}</div>
