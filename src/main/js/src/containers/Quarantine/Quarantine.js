@@ -62,7 +62,7 @@ const Quarantine = props => {
       <h3 className={classes.ConfirmText}>
         {t('common.areYouSure')}
       </h3>
-      <p>{t('quarantine.askDelete')}</p>
+      <p>{t('participationBan.askDelete')}</p>
       <div className={classes.ConfirmButtons}>
         <button
           data-cy="confirm-delete-quarantine-btn"
@@ -94,9 +94,9 @@ const Quarantine = props => {
         {loading && (<SpinnerOverlay />)}
         <h3 className={classes.ConfirmText}>
           {isNewQuarantine ? (
-            t('quarantine.new')
+            t('participationBan.new')
           ) : (
-            t('quarantine.edit')
+            t('participationBan.edit')
           )}
         </h3>
         <QuarantineForm
@@ -117,20 +117,20 @@ const Quarantine = props => {
       {R.isNil(error) && !R.isNil(confirm) && confirmDeleteModal}
       <div className={classes.Quarantines}>
         <h1>
-          {t('quarantine.quarantines')}
+          {t('participationBan.title')}
         </h1>
 
         <QuarantineNav t={t} />
 
         <div data-cy="add-quarantine-btn" className={classes.PrimaryButton}>
           <Button clicked={onShowAddModal.bind(this, { isVisible: true, form: initialForm })}>
-            {t('quarantine.addQuarantine')}
+            {t('participationBan.addBan')}
           </Button>
         </div>
 
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader}>
-            {t('quarantine.expires')}
+            {t('participationBan.expires')}
           </div>
           <div className={classes.ListHeader}>
             {t('common.examLanguage')}

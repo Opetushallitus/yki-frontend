@@ -19,7 +19,7 @@ const QuarantineDetails = ({ quarantine, t }) => {
         <div>{t('registration.list.exam')}:</div>
         <div>{t('common.name')}:</div>
         <div>{t('common.birthdate')}:</div>
-        <div>{t('quarantine.paymentState')}:</div>
+        <div>{t('participationBan.paymentState')}:</div>
       </div>
       <div className={classes.ColumnBold}>
         <div>
@@ -31,8 +31,8 @@ const QuarantineDetails = ({ quarantine, t }) => {
         <div>{moment(form.birthdate).format(DATE_FORMAT)}</div>
         <div>
           {state === 'COMPLETED' || state === 'PAID_AND_CANCELLED'
-            ? t('quarantine.paymentState.paid')
-            : t('quarantine.paymentState.notPaid')}
+            ? t('participationBan.paymentState.paid')
+            : t('participationBan.paymentState.notPaid')}
         </div>
       </div>
     </div>
@@ -60,14 +60,14 @@ const QuarantineConfirmModal = props => {
       <h3 className={classes.ConfirmText}>{t('common.areYouSure')}</h3>
       <p>
         {isQuarantined
-          ? t('quarantine.dialog.confirm.description')
-          : t('quarantine.dialog.cancel.description')}
+          ? t('participationBan.dialog.confirm.description')
+          : t('participationBan.dialog.cancel.description')}
       </p>
       <QuarantineDetails quarantine={quarantineDetails} t={t} />
       <p>
         {isQuarantined
-          ? t('quarantine.dialog.confirm.note')
-          : t('quarantine.dialog.cancel.note')}
+          ? t('participationBan.dialog.confirm.note')
+          : t('participationBan.dialog.cancel.note')}
       </p>
       <div className={classes.ConfirmButtons}>
         <button

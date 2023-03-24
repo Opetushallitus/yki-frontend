@@ -119,7 +119,7 @@ const QuarantineForm = props => {
             </div>
 
             <div className={classes.QuarantineFormField}>
-              <label htmlFor="end_date">{t('quarantine.expires')}</label>
+              <label htmlFor="end_date">{t('participationBan.expires')}</label>
               <DatePicker
                 options={{
                   defaultDate: endDate,

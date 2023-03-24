@@ -65,24 +65,24 @@ const QuarantineHistory = props => {
         />
       )}
       <div className={classes.QuarantineMatches}>
-        <h1>{t('quarantine.quarantines')}</h1>
+        <h1>{t('participationBan.title')}</h1>
 
         <QuarantineNav t={t} />
 
-        <p>{t('quarantine.reviewsDescription.line1')}</p>
+        <p>{t('participationBan.reviewsDescription.line1')}</p>
         <p>
           <Trans
             t={t}
-            i18nKey={'quarantine.reviewsDescription.line2'}
-            values={{ col: t('quarantine.status') }}
+            i18nKey={'participationBan.reviewsDescription.line2'}
+            values={{ col: t('participationBan.status') }}
             components={[<strong />]}
           />
         </p>
         <p>
           <Trans
             t={t}
-            i18nKey={'quarantine.reviewsDescription.line3'}
-            values={{ btn: t('quarantine.noQuarantine') }}
+            i18nKey={'participationBan.reviewsDescription.line3'}
+            values={{ btn: t('participationBan.returnParticipation') }}
             components={[<strong />]}
           />
         </p>
@@ -90,12 +90,12 @@ const QuarantineHistory = props => {
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader} />
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
-          <div className={classes.ListHeader}>{t('quarantine.examDate')}</div>
+          <div className={classes.ListHeader}>{t('participationBan.examDate')}</div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
           <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
-          <div className={classes.ListHeader}>{t('quarantine.status')}</div>
+          <div className={classes.ListHeader}>{t('participationBan.status')}</div>
           <div />
           {reviews.map(review => (
             <React.Fragment
@@ -103,7 +103,7 @@ const QuarantineHistory = props => {
             >
               <div className={classes.IndicatorRow}>
                 <span>{t('common.registree')}</span>
-                <span>{t('common.quarantine')}</span>
+                <span>{t('common.participationBan')}</span>
               </div>
               <div>{findLang(review.language_code)}</div>
               <div>{moment(review.exam_date).format(DATE_FORMAT)}</div>
@@ -129,8 +129,8 @@ const QuarantineHistory = props => {
               </div>
               <div className={classes.ListRow}>
                 {review.is_quarantined
-                  ? t('quarantine.quarantined')
-                  : t('quarantine.notQuarantined')}
+                  ? t('participationBan.banned')
+                  : t('participationBan.notBanned')}
               </div>
               <div
                 data-cy={`${
@@ -147,7 +147,7 @@ const QuarantineHistory = props => {
                       review.registration_id,
                     )}
                   >
-                    {t('quarantine.cancelQuarantine')}
+                    {t('participationBan.cancelBan')}
                   </Button>
                 ) : (
                   <Button
@@ -158,7 +158,7 @@ const QuarantineHistory = props => {
                       review.registration_id,
                     )}
                   >
-                    {t('quarantine.setQuarantine')}
+                    {t('participationBan.setBan')}
                   </Button>
                 )}
               </div>

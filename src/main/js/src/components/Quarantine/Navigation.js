@@ -14,7 +14,7 @@ const QuarantineNav = (props) => {
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >
-        {t('quarantine.pendingQuarantines')}
+        {t('participationBan.pending')}
       </NavLink>
       <NavLink
         exact
@@ -22,7 +22,7 @@ const QuarantineNav = (props) => {
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >
-        {t('quarantine.reviewedQuarantines')}
+        {t('participationBan.reviewed')}
       </NavLink>
       <NavLink
         exact
@@ -30,7 +30,7 @@ const QuarantineNav = (props) => {
         className={classes.MenuItem}
         activeClassName={classes.Active}
       >
-        {t('quarantine.activeQuarantines')}
+        {t('participationBan.active')}
       </NavLink>
     </>
   );
