@@ -110,7 +110,7 @@
   "participationBan.reviewsDescription.line2": "Sarakkeessa <0>{{col}}</0> näet, onko ilmoittautuminen hyväksytty vai peruttu.",
   "participationBan.reviewsDescription.line3": "Voit muuttaa päätöstä jälkikäteen <0>{{setBan}}</0> tai <0>{{returnParticipation}}</0> -painikkeesta.",
   "participationBan.dialog.return.description": "Olet palauttamassa seuraavan ilmoittautumisen:",
-  "participationBan.dialog.return.note": "Ilmoittautumisen palauttamisen jälkeen ilmoittauneen tulee ilmoittautua tutkintoon uudelleen.",
+  "participationBan.dialog.return.note": "Ilmoittautumisen palauttamisen jälkeen ilmoittautuneen tulee ilmoittautua tutkintoon uudelleen.",
   "participationBan.dialog.confirm.description": "Olet vahvistamassa seuraavan osallistumiskiellon:",
   "participationBan.dialog.confirm.note": "Osallistumiskiellon lisääminen peruuttaa ilmoittautumisen. Hoidathan peruutusilmoituksen, maksun palautuksen ja tiedon välityksen SOLKI-järjestelmään.",
   "participationBan.paymentState": "Maksun tila",
