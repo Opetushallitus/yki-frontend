@@ -139,7 +139,7 @@ const QuarantineHistory = props => {
                 data-cy={`${
                   review.is_quarantined ? 'unset' : 'set'
                 }-quarantine-btn`}
-                className={!review.is_quarantined ? classes.PrimaryButton : ''}
+                className={!review.is_quarantined ? classes.PrimaryButton : classes.DeleteButton}
               >
                 {review.is_quarantined ? (
                   <Button
