@@ -133,7 +133,7 @@ const QuarantineMatches = props => {
                     false,
                   )}
                 >
-                  {t('participationBan.returnParticipation')}
+                  {t('participationBan.acceptParticipation')}
                 </Button>
               </div>
             </React.Fragment>

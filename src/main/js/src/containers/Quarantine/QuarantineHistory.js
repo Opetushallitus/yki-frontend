@@ -82,8 +82,11 @@ const QuarantineHistory = props => {
           <Trans
             t={t}
             i18nKey={'participationBan.reviewsDescription.line3'}
-            values={{ btn: t('participationBan.returnParticipation') }}
-            components={[<strong />]}
+            values={{
+              setBan: t('participationBan.setBan'),
+              returnParticipation: t('participationBan.returnParticipation'),
+            }}
+            components={[<strong />, <strong/>]}
           />
         </p>
 
@@ -136,7 +139,7 @@ const QuarantineHistory = props => {
                 data-cy={`${
                   review.is_quarantined ? 'unset' : 'set'
                 }-quarantine-btn`}
-                className={!review.is_quarantined ? '' : classes.PrimaryButton}
+                className={!review.is_quarantined ? classes.PrimaryButton : ''}
               >
                 {review.is_quarantined ? (
                   <Button
@@ -147,7 +150,7 @@ const QuarantineHistory = props => {
                       review.registration_id,
                     )}
                   >
-                    {t('participationBan.cancelBan')}
+                    {t('participationBan.returnParticipation')}
                   </Button>
                 ) : (
                   <Button

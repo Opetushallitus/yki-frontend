@@ -61,13 +61,13 @@ const QuarantineConfirmModal = props => {
       <p>
         {isQuarantined
           ? t('participationBan.dialog.confirm.description')
-          : t('participationBan.dialog.cancel.description')}
+          : t('participationBan.dialog.return.description')}
       </p>
       <QuarantineDetails quarantine={quarantineDetails} t={t} />
       <p>
         {isQuarantined
           ? t('participationBan.dialog.confirm.note')
-          : t('participationBan.dialog.cancel.note')}
+          : t('participationBan.dialog.return.note')}
       </p>
       <div className={classes.ConfirmButtons}>
         <button
