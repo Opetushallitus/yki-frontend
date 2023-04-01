@@ -318,10 +318,10 @@ export const registrationForm = props => {
       inputField(name, true, null, type)
     );
 
-  const showExamLangOptions = () => {
+  const hideExamLangOptions = () => {
     const { language_code, level_code } = props.initData.exam_session;
 
-    return !['fin', 'swe', 'eng'].includes(language_code) || (language_code === 'eng' && level_code === 'PERUS');
+    return language_code === 'fin' || language_code === 'swe' || (language_code === 'eng' && level_code !== 'PERUS');
   };
 
   const emptyIfAbsent = value => {
@@ -480,7 +480,7 @@ export const registrationForm = props => {
               </div>
             )}
             <div className={classes.InputGroup}>
-              {showExamLangOptions() && (
+              {!hideExamLangOptions() && (
                 <>
                   <RadioButtonGroup
                     label={props.t('registration.form.examLang')}
