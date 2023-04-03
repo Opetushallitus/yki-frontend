@@ -318,10 +318,10 @@ export const registrationForm = props => {
       inputField(name, true, null, type)
     );
 
-  const showExamLang = () => {
-    const lang = props.initData.exam_session.language_code;
+  const hideExamLangOptions = () => {
+    const { language_code, level_code } = props.initData.exam_session;
 
-    return !(lang === 'fin' || lang === 'swe');
+    return language_code === 'fin' || language_code === 'swe' || (language_code === 'eng' && level_code !== 'PERUS');
   };
 
   const emptyIfAbsent = value => {
@@ -480,29 +480,33 @@ export const registrationForm = props => {
               </div>
             )}
             <div className={classes.InputGroup}>
-              {showExamLang() && (
-                <RadioButtonGroup
-                  label={props.t('registration.form.examLang')}
-                  value={values.examLang}
-                  error={errors.examLang}
-                >
-                  <div className={classes.RadioButtons}>
-                    <Field
-                      component={RadioButtonComponent}
-                      name="examLang"
-                      id={'examLang-fi'}
-                      checkedValue={'fi'}
-                      label={props.t('common.language.fin')}
-                    />
-                    <Field
-                      component={RadioButtonComponent}
-                      name="examLang"
-                      id={'examLang-sv'}
-                      checkedValue={'sv'}
-                      label={props.t('common.language.swe')}
-                    />
-                  </div>
-                </RadioButtonGroup>
+              {!hideExamLangOptions() && (
+                <>
+                  <RadioButtonGroup
+                    label={props.t('registration.form.examLang')}
+                    value={values.examLang}
+                    error={errors.examLang}
+                  >
+                    <div className={classes.RadioButtons}>
+                      <Field
+                        component={RadioButtonComponent}
+                        name="examLang"
+                        id={'examLang-fi'}
+                        checkedValue={'fi'}
+                        label={props.t('common.language.fin')}
+                      />
+                      <Field
+                        component={RadioButtonComponent}
+                        name="examLang"
+                        id={'examLang-sv'}
+                        checkedValue={'sv'}
+                        label={props.t('common.language.swe')}
+                      />
+                    </div>
+                  </RadioButtonGroup>
+                  <span />
+                  <span />
+                </>
               )}
 
               <RadioButtonGroup
