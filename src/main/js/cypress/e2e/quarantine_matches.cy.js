@@ -1,6 +1,6 @@
-describe('Quarantine CRUD page', () => {
+describe('Quarantine matches page', () => {
   beforeEach(() => {
-    cy.visit('/karenssi/mahdolliset');
+    cy.visit('/osallistumiskiellot/odottavat');
   });
 
   afterEach(() => {

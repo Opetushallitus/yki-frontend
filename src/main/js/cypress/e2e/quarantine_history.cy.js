@@ -1,6 +1,6 @@
-describe('Quarantine CRUD page', () => {
+describe('Quarantine history page', () => {
   beforeEach(() => {
-    cy.visit('/karenssi/historia');
+    cy.visit('/osallistumiskiellot/aiemmat');
   });
 
   afterEach(() => {

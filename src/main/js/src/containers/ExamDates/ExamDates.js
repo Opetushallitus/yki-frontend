@@ -304,7 +304,7 @@ class ExamDates extends Component {
     ) : (
       <>
         <div className={classes.ExamDatesListHeader}>
-          <h2>{t('common.examDates')}</h2>
+          <h1>{t('common.examDates')}</h1>
         </div>
         {examDates.length > 0 ? (
           <div>

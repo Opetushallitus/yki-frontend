@@ -1,6 +1,6 @@
 describe('Quarantine CRUD page', () => {
   beforeEach(() => {
-    cy.visit('/karenssi');
+    cy.visit('/osallistumiskiellot/voimassa');
   });
 
   afterEach(() => {

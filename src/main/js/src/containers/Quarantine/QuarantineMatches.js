@@ -66,16 +66,16 @@ const QuarantineMatches = props => {
         />
       )}
       <div className={classes.QuarantineMatches}>
-        <h1>{t('quarantine.matchesTitle')}</h1>
+        <h1>{t('participationBan.title')}</h1>
 
         <QuarantineNav t={t} />
 
-        <p>{t('quarantine.matchesDescription')}</p>
+        <p>{t('participationBan.matchesDescription')}</p>
 
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader} />
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
-          <div className={classes.ListHeader}>{t('quarantine.examDate')}</div>
+          <div className={classes.ListHeader}>{t('participationBan.examDate')}</div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
           <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
@@ -85,8 +85,8 @@ const QuarantineMatches = props => {
           {matches.map(match => (
             <React.Fragment key={`quarantine-match-row-${match.id}`}>
               <div className={classes.IndicatorRow}>
-                <span>{t('common.registration')}</span>
-                <span>{t('common.quarantine')}</span>
+                <span>{t('common.registree')}</span>
+                <span>{t('common.participationBan')}</span>
               </div>
               <div>{findLang(match.language_code)}</div>
               <div>{moment(match.exam_date).format(DATE_FORMAT)}</div>
@@ -121,7 +121,7 @@ const QuarantineMatches = props => {
                     match.registration_id,
                   )}
                 >
-                  {t('quarantine.setQuarantine')}
+                  {t('participationBan.setBan')}
                 </Button>
               </div>
               <div data-cy="set-no-quarantine-btn">
@@ -133,7 +133,7 @@ const QuarantineMatches = props => {
                     false,
                   )}
                 >
-                  {t('quarantine.noQuarantine')}
+                  {t('participationBan.acceptParticipation')}
                 </Button>
               </div>
             </React.Fragment>

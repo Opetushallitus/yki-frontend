@@ -20,8 +20,8 @@ const items = props => {
         {props.t('common.paymentsReports')}
       </NavigationItem>
       <div className={classes.Separator} />
-      <NavigationItem link="/karenssi">
-        {props.t('quarantine.quarantines')}
+      <NavigationItem link="/osallistumiskiellot/odottavat">
+        {props.t('participationBan.title')}
       </NavigationItem>
     </React.Fragment>
   ) : (

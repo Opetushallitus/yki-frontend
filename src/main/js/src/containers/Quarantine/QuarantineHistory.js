@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { withTranslation } from 'react-i18next';
+import { Trans, withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import * as R from 'ramda';
 
@@ -65,29 +65,48 @@ const QuarantineHistory = props => {
         />
       )}
       <div className={classes.QuarantineMatches}>
-        <h1>{t('quarantine.reviewsTitle')}</h1>
+        <h1>{t('participationBan.title')}</h1>
 
         <QuarantineNav t={t} />
 
-        <p>{t('quarantine.reviewsDescription')}</p>
+        <p>{t('participationBan.reviewsDescription.line1')}</p>
+        <p>
+          <Trans
+            t={t}
+            i18nKey={'participationBan.reviewsDescription.line2'}
+            values={{ col: t('participationBan.status') }}
+            components={[<strong />]}
+          />
+        </p>
+        <p>
+          <Trans
+            t={t}
+            i18nKey={'participationBan.reviewsDescription.line3'}
+            values={{
+              setBan: t('participationBan.setBan'),
+              returnParticipation: t('participationBan.returnParticipation'),
+            }}
+            components={[<strong />, <strong/>]}
+          />
+        </p>
 
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader} />
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
-          <div className={classes.ListHeader}>{t('quarantine.examDate')}</div>
+          <div className={classes.ListHeader}>{t('participationBan.examDate')}</div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
           <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
-          <div className={classes.ListHeader}>{t('quarantine.status')}</div>
+          <div className={classes.ListHeader}>{t('participationBan.status')}</div>
           <div />
           {reviews.map(review => (
             <React.Fragment
               key={`quarantine-match-row-${review.quarantine_id}`}
             >
               <div className={classes.IndicatorRow}>
-                <span>{t('common.registration')}</span>
-                <span>{t('common.quarantine')}</span>
+                <span>{t('common.registree')}</span>
+                <span>{t('common.participationBan')}</span>
               </div>
               <div>{findLang(review.language_code)}</div>
               <div>{moment(review.exam_date).format(DATE_FORMAT)}</div>
@@ -113,14 +132,14 @@ const QuarantineHistory = props => {
               </div>
               <div className={classes.ListRow}>
                 {review.is_quarantined
-                  ? t('quarantine.quarantined')
-                  : t('quarantine.notQuarantined')}
+                  ? t('participationBan.banned')
+                  : t('participationBan.notBanned')}
               </div>
               <div
                 data-cy={`${
                   review.is_quarantined ? 'unset' : 'set'
                 }-quarantine-btn`}
-                className={!review.is_quarantined ? '' : classes.PrimaryButton}
+                className={!review.is_quarantined ? classes.PrimaryButton : classes.DeleteButton}
               >
                 {review.is_quarantined ? (
                   <Button
@@ -131,7 +150,7 @@ const QuarantineHistory = props => {
                       review.registration_id,
                     )}
                   >
-                    {t('quarantine.cancelQuarantine')}
+                    {t('participationBan.returnParticipation')}
                   </Button>
                 ) : (
                   <Button
@@ -142,7 +161,7 @@ const QuarantineHistory = props => {
                       review.registration_id,
                     )}
                   >
-                    {t('quarantine.setQuarantine')}
+                    {t('participationBan.setBan')}
                   </Button>
                 )}
               </div>
