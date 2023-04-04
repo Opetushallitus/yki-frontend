@@ -22,6 +22,7 @@ const initialForm = {
   phone_number: '',
   first_name: '',
   last_name: '',
+  start_date: '',
   end_date: '',
   birthdate: '',
   diary_number: '',

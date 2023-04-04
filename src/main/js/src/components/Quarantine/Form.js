@@ -25,16 +25,22 @@ const QuarantineForm = props => {
     onAdd,
     onCancel,
   } = props;
-  const initialEndDate = form.end_date
-        ? formatDate(form.end_date)
-        : null;
-  const initialBirthdate = form.birthdate
-        ? formatDate(form.birthdate)
-        : null;
 
-  // Datepicker doesn't work with formik so we store it in state instead
-  const [endDate, setEndDate] = useState(initialEndDate);
+  const initialBirthdate = form.birthdate
+    ? formatDate(form.birthdate)
+    : null;
+  const initialStartDate = form.start_date
+    ? formatDate(form.start_date)
+    : null;
+  const initialEndDate = form.end_date
+    ? formatDate(form.end_date)
+    : null;
+
+  // Datepicker doesn't work with formik, so we store it in state instead
   const [birthdate, setBirthdate] = useState(initialBirthdate);
+  const [startDate, setStartDate] = useState(initialStartDate);
+  const [endDate, setEndDate] = useState(initialEndDate);
+
   const today = moment(new Date()).format('YYYY-MM-DD');
   const cancelForm = (e) => {
     e.stopPropagation();
@@ -49,14 +55,19 @@ const QuarantineForm = props => {
   });
 
   const parsedBirthdate = birthdate
-        ? dateToString(moment(birthdate, DATE_FORMAT))
-        : null;
+    ? dateToString(moment(birthdate, DATE_FORMAT))
+    : null;
+  const parsedStartDate = startDate
+    ? dateToString(moment(startDate, DATE_FORMAT))
+    : null;
   const parsedEndDate = endDate
-        ? dateToString(moment(endDate, DATE_FORMAT))
-        : null;
+    ? dateToString(moment(endDate, DATE_FORMAT))
+    : null;
 
+  const isBirthdateValid = !R.isNil(parsedBirthdate) && !R.isEmpty(parsedBirthdate);
+  const isStartDateValid = !R.isNil(parsedStartDate) && !R.isEmpty(parsedStartDate);
   const isEndDateValid = !R.isNil(parsedEndDate) && !R.isEmpty(parsedEndDate);
-  const isBirthdateValid = !R.isNil(parsedEndDate) && !R.isEmpty(parsedEndDate);
+
   const onFormSubmit = (values) => {
     // Datepicker uses different date format
     const payload = {
@@ -67,6 +78,7 @@ const QuarantineForm = props => {
       last_name: valueOrNull(values.last_name),
       diary_number: valueOrNull(values.diary_number),
       birthdate: parsedBirthdate,
+      start_date: parsedStartDate,
       end_date: parsedEndDate,
     };
 
@@ -83,7 +95,12 @@ const QuarantineForm = props => {
       setBirthdate(moment(dates[0]).format(DATE_FORMAT));
     }
   };
-
+  const setPickerStartDate = (dates) => {
+    // Datepicker sends SyntheticEvents when typing dates
+    if (dates.constructor.name !== 'SyntheticEvent') {
+      setStartDate(moment(dates[0]).format(DATE_FORMAT));
+    }
+  };
   const setPickerEndDate = (dates) => {
     // Datepicker sends SyntheticEvents when typing dates
     if (dates.constructor.name !== 'SyntheticEvent') {
@@ -207,7 +224,7 @@ const QuarantineForm = props => {
               className={classes.ConfirmButton}
               type="submit"
               tabIndex="9"
-              disabled={(dirty && !isValid) || (!form.id && !isValid) || (!isBirthdateValid || !isEndDateValid)}>
+              disabled={(dirty && !isValid) || (!form.id && !isValid) || (!isBirthdateValid || !isStartDateValid || !isEndDateValid)}>
               {t('common.send')}
             </button>
             <button className={classes.CancelButton} onClick={cancelForm} tabIndex="10">

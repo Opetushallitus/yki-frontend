@@ -20,6 +20,7 @@ describe('Quarantine CRUD page', () => {
     const payload = {
       birthdate: '1990-02-15',
       email: 'test@invalid.invalid',
+      start_date: '2050-01-01',
       end_date: '2050-03-05',
       first_name: 'Testi',
       language_code: 'swe',
@@ -62,6 +63,7 @@ describe('Quarantine CRUD page', () => {
       name: 'Max Syöttöpaine',
       ssn: '301079-900U',
       created: '2022-12-02T10:32:11.888Z',
+      start_date: '2027-07-01',
       end_date: '2028-01-01',
       id: 1,
       last_name: 'Syöttöpaine',
