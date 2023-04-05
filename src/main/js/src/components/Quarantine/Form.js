@@ -117,55 +117,28 @@ const QuarantineForm = props => {
       render={({ values, handleChange, isValid, dirty }) => (
         <Form>
           <div className={classes.QuarantineFormFields}>
-            <div className={classes.QuarantineFormField}>
-              <label htmlFor="language_code">
-                {t('common.examLanguage')}
-              </label>
-              <select
-                value={values.language_code}
-                name="language_code"
-                onChange={handleChange}
-                id="language_code"
-                tabIndex="1">
-                {LANGUAGES.map((lang) => (
-                  <option key={`lang-option-${lang.code}`} value={lang.code}>
-                    {lang.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className={classes.QuarantineFormField}>
-              <label htmlFor="end_date">{t('participationBan.expires')}</label>
-              <DatePicker
-                options={{
-                  defaultDate: endDate,
-                  value: endDate,
-                  minDate: today,
-                  allowInput: true,
-                  dateFormat: DATE_FORMAT_PICKER,
-                  noMinDateUpdate: true,
-                }}
-                autoComplete="off"
-                tabIndex="2"
-                id="end_date"
-                locale={i18n.language}
-                onChange={setPickerEndDate}
-                onBlur={(event) => setEndDate(event.target.value)}
-              />
-              {!isEndDateValid && errorMsg}
-            </div>
+            <h3>{t('participationBan.participantPersonalInformation')}</h3>
+            <span />
+            <span />
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="first_name">{t('common.first_name')}</label>
-              <Field autoFocus={true} id="first_name" tabIndex="3" name="first_name" />
+              <Field autoFocus={true} id="first_name" tabIndex="1" name="first_name" />
               <ErrorMessage
                 name="first_name"
                 component="span"
                 className={classes.ErrorMessage}
               />
             </div>
-
+            <div className={classes.QuarantineFormField}>
+              <label htmlFor="last_name">{t('common.last_name')}</label>
+              <Field id="last_name" tabIndex="2" name="last_name" />
+              <ErrorMessage
+                name="last_name"
+                component="span"
+                className={classes.ErrorMessage}
+              />
+            </div>
             <div className={classes.QuarantineFormField}>
               <label htmlFor="birthdate">{t('common.birthdate')}</label>
               <DatePicker
@@ -178,7 +151,7 @@ const QuarantineForm = props => {
                   noMinDateUpdate: true,
                 }}
                 autoComplete="off"
-                tabIndex="4"
+                tabIndex="3"
                 locale={i18n.language}
                 onChange={setPickerBirthdate}
                 onBlur={(event) => setBirthdate(event.target.value)}
@@ -188,34 +161,87 @@ const QuarantineForm = props => {
             </div>
 
             <div className={classes.QuarantineFormField}>
-              <label htmlFor="last_name">{t('common.last_name')}</label>
-              <Field id="last_name" tabIndex="5" name="last_name" />
-              <ErrorMessage
-                name="last_name"
-                component="span"
-                className={classes.ErrorMessage}
-              />
-            </div>
-
-            <div className={classes.QuarantineFormField}>
               <label htmlFor="email">{t('common.email')}</label>
-              <Field name="email" tabIndex="6" id="email" />
+              <Field name="email" tabIndex="4" id="email" />
             </div>
-
             <div className={classes.QuarantineFormField}>
               <label htmlFor="phone_number">{t('common.phoneNumber')}</label>
-              <Field name="phone_number" tabIndex="7" id="phone_number" />
+              <Field name="phone_number" tabIndex="5" id="phone_number" />
             </div>
+            <span />
+
+            <h3>{t('participationBan.generalInformation')}</h3>
+            <span />
+            <span />
 
             <div className={classes.QuarantineFormField}>
+              <label htmlFor="language_code">
+                {t('common.examLanguage')}
+              </label>
+              <select
+                value={values.language_code}
+                name="language_code"
+                onChange={handleChange}
+                id="language_code"
+                tabIndex="6">
+                {LANGUAGES.map((lang) => (
+                  <option key={`lang-option-${lang.code}`} value={lang.code}>
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={classes.QuarantineFormField}>
               <label htmlFor="diary_number">{t('common.diaryNumber')}</label>
-              <Field name="diary_number" tabIndex="8" id="diary_number" />
+              <Field name="diary_number" tabIndex="7" id="diary_number" />
               <ErrorMessage
                 name="diary_number"
                 component="span"
                 className={classes.ErrorMessage}
               />
             </div>
+            <span />
+
+            <div className={classes.QuarantineFormField}>
+              <label htmlFor="start_date">{t('participationBan.startDate')}</label>
+              <DatePicker
+                options={{
+                  defaultDate: startDate,
+                  value: startDate,
+                  allowInput: true,
+                  dateFormat: DATE_FORMAT_PICKER,
+                  noMinDateUpdate: true,
+                }}
+                autoComplete="off"
+                tabIndex="8"
+                id="start_date"
+                locale={i18n.language}
+                onChange={setPickerStartDate}
+                onBlur={(event) => setStartDate(event.target.value)}
+              />
+              {!isStartDateValid && errorMsg}
+            </div>
+            <div className={classes.QuarantineFormField}>
+              <label htmlFor="end_date">{t('participationBan.endDate')}</label>
+              <DatePicker
+                options={{
+                  defaultDate: endDate,
+                  value: endDate,
+                  minDate: today,
+                  allowInput: true,
+                  dateFormat: DATE_FORMAT_PICKER,
+                  noMinDateUpdate: true,
+                }}
+                autoComplete="off"
+                tabIndex="9"
+                id="end_date"
+                locale={i18n.language}
+                onChange={setPickerEndDate}
+                onBlur={(event) => setEndDate(event.target.value)}
+              />
+              {!isEndDateValid && errorMsg}
+            </div>
+            <span />
           </div>
 
           <div className={classes.ConfirmButtons}>
@@ -223,11 +249,11 @@ const QuarantineForm = props => {
               data-cy="submit-quarantine-btn"
               className={classes.ConfirmButton}
               type="submit"
-              tabIndex="9"
+              tabIndex="10"
               disabled={(dirty && !isValid) || (!form.id && !isValid) || (!isBirthdateValid || !isStartDateValid || !isEndDateValid)}>
               {t('common.send')}
             </button>
-            <button className={classes.CancelButton} onClick={cancelForm} tabIndex="10">
+            <button className={classes.CancelButton} onClick={cancelForm} tabIndex="11">
               {t('common.cancelConfirm')}
             </button>
           </div>

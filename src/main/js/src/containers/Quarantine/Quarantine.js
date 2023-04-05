@@ -93,13 +93,13 @@ const Quarantine = props => {
         className={classes.QuarantineModal}
       >
         {loading && (<SpinnerOverlay />)}
-        <h3 className={classes.ConfirmText}>
+        <h2 className={classes.ConfirmText}>
           {isNewQuarantine ? (
             t('participationBan.new')
           ) : (
             t('participationBan.edit')
           )}
-        </h3>
+        </h2>
         <QuarantineForm
           t={t}
           i18n={i18n}
@@ -131,7 +131,7 @@ const Quarantine = props => {
 
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader}>
-            {t('participationBan.expires')}
+            {t('participationBan.periodValid')}
           </div>
           <div className={classes.ListHeader}>
             {t('common.examLanguage')}
@@ -152,7 +152,7 @@ const Quarantine = props => {
           <div/>
           {quarantines.map((quarantine) => (
             <React.Fragment key={`quarantine-row-${quarantine.id}`}>
-              <div>{moment(quarantine.end_date).format(DATE_FORMAT)}</div>
+              <div>{moment(quarantine.start_date).format(DATE_FORMAT)} - {moment(quarantine.end_date).format(DATE_FORMAT)}</div>
               <div>{findLang(quarantine.language_code)}</div>
               <div>
                 {quarantine.first_name} {quarantine.last_name}

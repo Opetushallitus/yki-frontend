@@ -67,9 +67,9 @@
 
 .QuarantineFormFields {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 5px;
-  grid-row-gap: 20px;
+  grid-row-gap: 10px;
 }
 
 .QuarantineFormField label {
