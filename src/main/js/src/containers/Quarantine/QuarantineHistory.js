@@ -95,8 +95,8 @@ const QuarantineHistory = props => {
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
           <div className={classes.ListHeader}>{t('participationBan.examDate')}</div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
-          <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
+          <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
           <div className={classes.ListHeader}>{t('participationBan.status')}</div>
           <div />
@@ -119,12 +119,12 @@ const QuarantineHistory = props => {
                 </span>
               </div>
               <div className={classes.ListRow}>
-                <span>{review.form.email}</span>
-                <span>{review.email}</span>
-              </div>
-              <div className={classes.ListRow}>
                 <span>{moment(review.form.birthdate).format(DATE_FORMAT)}</span>
                 <span>{moment(review.birthdate).format(DATE_FORMAT)}</span>
+              </div>
+              <div className={classes.ListRow}>
+                <span>{review.form.email}</span>
+                <span>{review.email}</span>
               </div>
               <div className={classes.ListRow}>
                 <span>{review.phone_number}</span>

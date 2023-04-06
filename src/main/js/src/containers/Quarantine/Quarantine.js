@@ -140,10 +140,10 @@ const Quarantine = props => {
             {t('common.names')}
           </div>
           <div className={classes.ListHeader}>
-            {t('common.email')}
+            {t('common.birthdate')}
           </div>
           <div className={classes.ListHeader}>
-            {t('common.birthdate')}
+            {t('common.email')}
           </div>
           <div className={classes.ListHeader}>
             {t('common.phoneNumber')}
@@ -158,10 +158,10 @@ const Quarantine = props => {
                 {quarantine.first_name} {quarantine.last_name}
               </div>
               <div>
-                {quarantine.email}
+                {moment(quarantine.birthdate).format(DATE_FORMAT)}
               </div>
               <div>
-                {moment(quarantine.birthdate).format(DATE_FORMAT)}
+                {quarantine.email}
               </div>
               <div>
                 {quarantine.phone_number}
