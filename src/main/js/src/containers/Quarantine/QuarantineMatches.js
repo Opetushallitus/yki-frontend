@@ -77,8 +77,8 @@ const QuarantineMatches = props => {
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
           <div className={classes.ListHeader}>{t('participationBan.examDate')}</div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
-          <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
+          <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
           <div />
           <div />
@@ -99,12 +99,12 @@ const QuarantineMatches = props => {
                 </span>
               </div>
               <div className={classes.ListRow}>
-                <span>{match.form.email}</span>
-                <span>{match.email}</span>
-              </div>
-              <div className={classes.ListRow}>
                 <span>{moment(match.form.birthdate).format(DATE_FORMAT)}</span>
                 <span>{moment(match.birthdate).format(DATE_FORMAT)}</span>
+              </div>
+              <div className={classes.ListRow}>
+                <span>{match.form.email}</span>
+                <span>{match.email}</span>
               </div>
               <div className={classes.ListRow}>
                 <span>{match.form.phone_number}</span>

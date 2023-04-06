@@ -171,7 +171,6 @@ const quarantineMatches = {
     registration_id: 2,
     created: '2022-12-02T10:32:11.888Z',
     exam_date: '2025-03-10',
-    end_date: '2028-01-01',
     id: 1,
     form: {
       email: 'email@invalid.invalid',
@@ -200,7 +199,6 @@ const quarantineReviews = {
     registration_id: 2,
     created: '2022-12-02T10:32:11.888Z',
     exam_date: '2025-03-10',
-    end_date: '2028-01-01',
     id: 1,
     form: {
       email: 'email@invalid.invalid',
@@ -226,7 +224,6 @@ const quarantineReviews = {
     registration_id: 3,
     created: '2022-12-02T10:32:11.888Z',
     exam_date: '2025-03-10',
-    end_date: '2028-01-01',
     id: 1,
     form: {
       email: 'email@invalid.invalid',
@@ -249,6 +246,7 @@ const quarantines = {
     name: 'Max Syöttöpaine',
     ssn: '301079-900U',
     created: '2022-12-02T10:32:11.888Z',
+    start_date: '2027-07-01',
     end_date: '2028-01-01',
     id: 1,
     last_name: 'Syöttöpaine',

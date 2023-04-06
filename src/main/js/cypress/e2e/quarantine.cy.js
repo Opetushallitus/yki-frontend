@@ -20,6 +20,7 @@ describe('Quarantine CRUD page', () => {
     const payload = {
       birthdate: '1990-02-15',
       email: 'test@invalid.invalid',
+      start_date: '2049-03-05',
       end_date: '2050-03-05',
       first_name: 'Testi',
       language_code: 'swe',
@@ -35,11 +36,12 @@ describe('Quarantine CRUD page', () => {
     cy.get('#first_name').should('be.visible').type('Testi');
     cy.get('#last_name').should('be.visible').type('Testi');
 
-    cy.get('#end_date').click();
-    chooseFlatpickerDate('5', 'maaliskuu', 2050);
-
     cy.get('#birthdate').click();
     chooseFlatpickerDate('15', 'helmikuu', 1990);
+    cy.get('#start_date').click();
+    chooseFlatpickerDate('5', 'maaliskuu', 2049);
+    cy.get('#end_date').click();
+    chooseFlatpickerDate('5', 'maaliskuu', 2050);
 
     cy.get('#email').should('be.visible').type('test@invalid.invalid');
     cy.get('#phone_number').should('be.visible').type('0401234567');
@@ -62,6 +64,7 @@ describe('Quarantine CRUD page', () => {
       name: 'Max Syöttöpaine',
       ssn: '301079-900U',
       created: '2022-12-02T10:32:11.888Z',
+      start_date: '2027-07-01',
       end_date: '2028-01-01',
       id: 1,
       last_name: 'Syöttöpaine',
@@ -76,6 +79,7 @@ describe('Quarantine CRUD page', () => {
     cy.get('#phone_number').should('be.visible').should('have.value', '0401234567');
     cy.get('#first_name').should('be.visible').should('have.value', 'Max');
     cy.get('#last_name').should('be.visible').should('have.value', 'Syöttöpaine');
+    cy.get('#start_date').should('have.value', '1.7.2027');
     cy.get('#end_date').should('have.value', '1.1.2028');
     cy.get('#birthdate').should('have.value', '1.2.2018');
     cy.get('#first_name').type(' 2');
