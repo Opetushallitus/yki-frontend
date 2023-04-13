@@ -88,7 +88,12 @@ const examSessionListItem = ({
     const displayRegistrationPeriod = (startDate, endDate) => {
       const start = moment(startDate).format(DATE_FORMAT);
       const end = moment(endDate).format(DATE_FORMAT);
-      return `${start} ${t('registration.examDetails.card.time')} 10 - ${end} ${t('registration.examDetails.card.time')} 16`;
+
+      if (start !== end) {
+        return `${start} ${t('registration.examDetails.card.time')} 10 - ${end} ${t('registration.examDetails.card.time')} 16`;
+      }
+
+      return `${start} ${t('registration.examDetails.card.time')} 10 - 16`;
     };
 
   const registrationOpenDesktop = (

@@ -59,19 +59,9 @@ const examDetailsPage = ({
   const queueFull = session.queue_full;
   const examSessionId = Number(match.params.examSessionId);
 
-  const registrationPeriod = (
-    <div className={classes.InfoText}>
-      <p data-cy="exam-details-registrationPeriod">{`${t(
-        'registration.examDetails.registrationPeriod',
-      )} ${moment(session.registration_start_date).format(
-        DATE_FORMAT_WITHOUT_YEAR,
-      )} ${t('registration.examDetails.card.time')} 10.00 - ${moment(
-        session.registration_end_date,
-      ).format(DATE_FORMAT_WITHOUT_YEAR)} ${t(
-        'registration.examDetails.card.time',
-      )} 16.00`}</p>
-    </div>
-  );
+  const registrationPeriodText = session.registration_start_date !== session.registration_end_date
+    ? `${t('registration.examDetails.registrationPeriod')} ${moment(session.registration_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} ${t('registration.examDetails.card.time')} 10.00 - ${moment(session.registration_end_date).format(DATE_FORMAT_WITHOUT_YEAR)} ${t('registration.examDetails.card.time')} 16.00`
+    : `${t('registration.examDetails.registrationPeriod')} ${moment(session.registration_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} ${t('registration.examDetails.card.time')} 10.00 - 16.00`;
 
   const languageAndLevel = (
     <p>{`${t(`common.language.${session.language_code}`)}, ${levelDescription(
@@ -79,11 +69,6 @@ const examDetailsPage = ({
     ).toLowerCase()}`}</p>
   );
 
-  /**
-   TODO: heroimaget headlineImageksi, kun saadaan OPH:n viestinnältä sopivat kuvat:
-    esim enum, joka palauttaa kuvan kielen koodin perusteella:
-    headlineImage={languageHeroImages[session.language_code]}
-   */
   return (
     <main id="main">
       {loading ? (
@@ -164,16 +149,11 @@ const examDetailsPage = ({
                 ) : null}
               </>
             ) : (
-              <>
-                {registrationPeriod}
-                {/* 
-                      Pre registration signup hidden since backend does not support it yet
-                    
-                    <NotificationSignup
-                      examSessionId={match.params.examSessionId}
-                      registrationOpen={registrationOpen}
-                    /> */}
-              </>
+              <div className={classes.InfoText}>
+                <p data-cy="exam-details-registrationPeriod">
+                  {registrationPeriodText}
+                </p>
+              </div>
             )}
           </div>
         </>
