@@ -26,54 +26,48 @@ export const isPostAdmissionAvailable = session => {
 };
 
 export const isPostAdmissionActive = session => {
-  return isPostAdmissionAvailable(session) &&
-    nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date)) && session.open;
-}
+  return (
+    isPostAdmissionAvailable(session) &&
+    nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date))
+  );
+};
 
 export const isAdmissionActive = session => {
   return (
     session.registration_end_date &&
     session.registration_start_date &&
-    session.open &&
-    nowBetweenDates(
-      moment(session.registration_start_date),
-      moment(session.registration_end_date),
-    )
+    nowBetweenDates(moment(session.registration_start_date), moment(session.registration_end_date))
   );
+};
+
+export const isAdmissionStarted = session => {
+  return session.registration_start_date && moment(session.registration_start_date).isSameOrBefore(moment());
 };
 
 export const isAdmissionEnded = session => {
-  return (
-    session.registration_end_date &&
-    moment(session.registration_end_date).isBefore(moment()) &&
-    !session.open
-  );
+  return session.registration_end_date && moment(session.registration_end_date).isBefore(moment());
 };
 
 export const isPostAdmissionEnded = session => {
-  return (
-    session.post_admission_end_date &&
-    moment(session.post_admission_end_date).isBefore(moment()) &&
-    !session.open
-  );
+  return session.post_admission_end_date && moment(session.post_admission_end_date).isBefore(moment());
 };
 
-export const isRegisterButtonShown = session => {
-  return !isAdmissionEnded(session) || (isPostAdmissionAvailable(session) && !isPostAdmissionEnded(session));
+export const isRegistrationPeriodEnded = session => {
+  return isAdmissionEnded(session) && (!isPostAdmissionAvailable(session) || isPostAdmissionEnded(session));
 };
 
 export const hasRoom = session => {
   return getSpotsAvailableForSession(session) > 0;
 };
 
+export const hasFullQueue = session => {
+  return session.queue_full;
+};
+
 export const getSpotsAvailableForSession = session => {
   return isAdmissionEnded(session)
     ? postAdmissionOpenSpots(session)
     : admissionOpenSpots(session);
-};
-
-export const admissionActiveAndQueueNotFull = session => {
-  return isAdmissionActive(session) && !session.queue_full;
 };
 
 export const examLanguageAndLevel = session => {

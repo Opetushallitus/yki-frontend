@@ -9,12 +9,14 @@ import * as actions from '../../../../store/actions/index';
 import {useMobileView} from '../../../../util/customHooks';
 import {
   getSpotsAvailableForSession,
+  hasFullQueue,
   hasRoom,
   isAdmissionActive,
   isAdmissionEnded,
+  isAdmissionStarted,
   isPostAdmissionActive,
   isPostAdmissionAvailable,
-  isRegisterButtonShown,
+  isRegistrationPeriodEnded,
 } from '../../../../util/examSessionUtil';
 import {getDeviceOrientation, levelDescription} from '../../../../util/util';
 import classes from './ExamSessionListItem.module.css';
@@ -70,7 +72,7 @@ const examSessionListItem = ({
     const availability = (
       <div>
         <strong>
-          {hasRoom(session) && isRegisterButtonShown(session) ? (
+          {!isRegistrationPeriodEnded(session) && hasRoom(session) ? (
             <>
               <span>{availableSpots}</span>
               {' '}
@@ -128,23 +130,29 @@ const examSessionListItem = ({
       </div>
     );
 
-    const buttonText = availableSpots
-      ? t('registration.register')
-      : session.queue_full
-        ? t('registration.register.queueFull')
-        : t('registration.register.forQueue');
+    const getRegistrationButtonText = () => {
+      if (hasFullQueue(session)) {
+        return t('registration.register.queueFull');
+      }
+
+      if (!availableSpots) {
+        return t('registration.register.forQueue');
+      }
+
+      return t('registration.register');
+    };
 
     const registrationOpenText = isAdmissionEnded(session) && isPostAdmissionAvailable(session)
       ? `${t('examSession.postAdmission')}: ${displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}`
       : `${t('registration.list.signupOpen')}: ${displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}`;
 
-    const srLabel = `${buttonText} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${availableSpots} ${availableSpotsText}.`;
+    const srLabel = `${getRegistrationButtonText()} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${availableSpots} ${availableSpotsText}.`;
 
-    const registerButtonEnabled = isAdmissionActive(session) || isPostAdmissionActive(session)
+    const registerButtonEnabled = (isAdmissionActive(session) || isPostAdmissionActive(session)) && !hasFullQueue(session);
 
     const registerButton = (
       <div>
-        {isRegisterButtonShown(session) ? (
+        {isAdmissionStarted(session) && !isRegistrationPeriodEnded(session) ? (
           <button
             className={`YkiButton ${classes.RegisterButton}`}
             onClick={selectExamSession}
@@ -152,7 +160,7 @@ const examSessionListItem = ({
             aria-label={srLabel}
             disabled={!registerButtonEnabled}
           >
-            {buttonText}
+            {getRegistrationButtonText()}
           </button>
         ) : null}
       </div>
@@ -174,7 +182,7 @@ const examSessionListItem = ({
             <td>{registrationOpenMobile}</td>
             <td>
               <div>{availability}</div>
-              {session.queue_full ? null : (
+              {hasFullQueue(session) ? null : (
                 <div>{examFee}</div>
               )}
             </td>

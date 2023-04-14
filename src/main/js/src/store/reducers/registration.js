@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
 import {
-  admissionActiveAndQueueNotFull,
+  hasFullQueue,
   hasRoom,
 } from '../../util/examSessionUtil';
 import * as actionTypes from '../actions/actionTypes';
@@ -70,8 +70,6 @@ const sortSessionsByDate = (sessionA, sessionB) => {
 const sortSessionsByRoom = (sessionA, sessionB) => {
   const hasRoomA = hasRoom(sessionA);
   const hasRoomB = hasRoom(sessionB);
-  const queueSpaceA = admissionActiveAndQueueNotFull(sessionA);
-  const queueSpaceB = admissionActiveAndQueueNotFull(sessionB);
 
   if (hasRoomA && !hasRoomB) {
     return -1;
@@ -79,6 +77,13 @@ const sortSessionsByRoom = (sessionA, sessionB) => {
   if (!hasRoomA && hasRoomB) {
     return 1;
   }
+  return 0;
+};
+
+const sortSessionsByQueue = (sessionA, sessionB) => {
+  const queueSpaceA = !hasFullQueue(sessionA);
+  const queueSpaceB = !hasFullQueue(sessionB);
+
   if (queueSpaceA && !queueSpaceB) {
     return -1;
   }
@@ -90,6 +95,7 @@ const sortSessionsByRoom = (sessionA, sessionB) => {
 
 const sortSessions = sessions => {
   if (!sessions || sessions.length === 0) return [];
+  sessions.sort(sortSessionsByQueue);
   sessions.sort(sortSessionsByDate);
   sessions.sort(sortSessionsByRoom);
   return sessions;
