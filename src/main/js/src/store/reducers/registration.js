@@ -80,24 +80,10 @@ const sortSessionsByRoom = (sessionA, sessionB) => {
   return 0;
 };
 
-const sortSessionsByQueue = (sessionA, sessionB) => {
-  const queueSpaceA = !hasFullQueue(sessionA);
-  const queueSpaceB = !hasFullQueue(sessionB);
-
-  if (queueSpaceA && !queueSpaceB) {
-    return -1;
-  }
-  if (!queueSpaceA && queueSpaceB) {
-    return 1;
-  }
-  return 0;
-};
-
 const sortSessions = sessions => {
   if (!sessions || sessions.length === 0) return [];
-  sessions.sort(sortSessionsByQueue);
-  sessions.sort(sortSessionsByDate);
   sessions.sort(sortSessionsByRoom);
+  sessions.sort(sortSessionsByDate);
   return sessions;
 }
 

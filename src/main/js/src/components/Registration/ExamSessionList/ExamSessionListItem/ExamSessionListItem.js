@@ -13,7 +13,6 @@ import {
   hasRoom,
   isAdmissionActive,
   isAdmissionEnded,
-  isAdmissionStarted,
   isPostAdmissionActive,
   isPostAdmissionAvailable,
   isRegistrationPeriodEnded,
@@ -97,16 +96,13 @@ const examSessionListItem = ({
     };
 
   const registrationOpenDesktop = (
-      <div>
-        {isAdmissionEnded(session) && isPostAdmissionAvailable(session)
-          ? (
-            <p>{displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}</p>
-          ) : (
-            <p>{displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}</p>
-          )
-        }
-      </div>
-    );
+    <div>
+      <p>{displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}</p>
+      {isPostAdmissionAvailable(session) && (
+        <p>{displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}</p>
+      )}
+    </div>
+  );
 
     const registrationOpenMobile = (
       <div style={{display: 'block'}}>
@@ -115,18 +111,15 @@ const examSessionListItem = ({
           {':'}
           <span style={{marginLeft: 5}}>
             {displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}
+            {isPostAdmissionAvailable(session) && (
+              <>
+                <br />
+                <br />
+                {displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}
+              </>
+            )}
           </span>
         </div>
-
-        {isPostAdmissionAvailable(session) && (
-          <div className={classes.RegistrationOpen}>
-            {t('examSession.postAdmission')}
-            {':'}
-            <span style={{marginLeft: 5}}>
-              {displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}
-            </span>
-          </div>
-        )}
       </div>
     );
 
@@ -152,7 +145,7 @@ const examSessionListItem = ({
 
     const registerButton = (
       <div>
-        {isAdmissionStarted(session) && !isRegistrationPeriodEnded(session) ? (
+        {!isRegistrationPeriodEnded(session) && (
           <button
             className={`YkiButton ${classes.RegisterButton}`}
             onClick={selectExamSession}
@@ -162,7 +155,7 @@ const examSessionListItem = ({
           >
             {getRegistrationButtonText()}
           </button>
-        ) : null}
+        )}
       </div>
     );
 
