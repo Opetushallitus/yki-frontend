@@ -3,7 +3,7 @@ import moment from 'moment';
 import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
 import {
   admissionActiveAndQueueNotFull,
-  signupPossible,
+  hasRoom,
 } from '../../util/examSessionUtil';
 import * as actionTypes from '../actions/actionTypes';
 
@@ -67,16 +67,16 @@ const sortSessionsByDate = (sessionA, sessionB) => {
   return 0;
 };
 
-const sortSessionsByOpenSignups = (sessionA, sessionB) => {
-  const isOpenA = signupPossible(sessionA);
-  const isOpenB = signupPossible(sessionB);
+const sortSessionsByRoom = (sessionA, sessionB) => {
+  const hasRoomA = hasRoom(sessionA);
+  const hasRoomB = hasRoom(sessionB);
   const queueSpaceA = admissionActiveAndQueueNotFull(sessionA);
   const queueSpaceB = admissionActiveAndQueueNotFull(sessionB);
 
-  if (isOpenA && !isOpenB) {
+  if (hasRoomA && !hasRoomB) {
     return -1;
   }
-  if (!isOpenA && isOpenB) {
+  if (!hasRoomA && hasRoomB) {
     return 1;
   }
   if (queueSpaceA && !queueSpaceB) {
@@ -91,7 +91,7 @@ const sortSessionsByOpenSignups = (sessionA, sessionB) => {
 const sortSessions = sessions => {
   if (!sessions || sessions.length === 0) return [];
   sessions.sort(sortSessionsByDate);
-  sessions.sort(sortSessionsByOpenSignups);
+  sessions.sort(sortSessionsByRoom);
   return sessions;
 }
 
