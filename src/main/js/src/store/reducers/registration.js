@@ -1,10 +1,7 @@
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
-import {
-  hasFullQueue,
-  hasRoom,
-} from '../../util/examSessionUtil';
+import { hasRoom } from '../../util/examSessionUtil';
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
