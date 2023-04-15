@@ -95,7 +95,7 @@ export const formatDate = (session, key) =>
   moment(session[key]).format(DATE_FORMAT);
 
 export const examSessionParticipantsCount = (session) => {
-  if (isPostAdmissionAvailable(session)) {
+  if (isAdmissionEnded(session) && isPostAdmissionAvailable(session)) {
     return {
       participants: session.participants + session.pa_participants,
       maxParticipants: session.participants + session.post_admission_quota,
