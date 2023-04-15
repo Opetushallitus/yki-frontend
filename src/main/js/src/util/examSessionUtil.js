@@ -79,9 +79,9 @@ export const isOpen = session => {
 }
 
 export const getSpotsAvailableForSession = session => {
-  return isAdmissionEnded(session)
-    ? postAdmissionOpenSpots(session)
-    : admissionOpenSpots(session);
+  return isOpen(session) && !isAdmissionEnded(session)
+    ? admissionOpenSpots(session)
+    : postAdmissionOpenSpots(session);
 };
 
 export const examLanguageAndLevel = session => {
