@@ -71,14 +71,14 @@ const examSessionListItem = ({
     const availability = (
       <div>
         <strong>
-          {!isRegistrationPeriodEnded(session) && hasRoom(session) ? (
+          {!hasRoom(session) || isRegistrationPeriodEnded(session) ? (
+            <span>{t('registration.examSpots.full')}</span>
+          ) : (
             <>
               <span>{availableSpots}</span>
               {' '}
               <span>{availableSpotsText}</span>
             </>
-          ) : (
-            <span>{t('registration.examSpots.full')}</span>
           )}
         </strong>
       </div>

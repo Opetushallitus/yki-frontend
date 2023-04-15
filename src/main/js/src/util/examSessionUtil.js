@@ -25,10 +25,13 @@ export const isPostAdmissionAvailable = session => {
   );
 };
 
+// the purpose of session.open checks in methods below might be for handling 00.00-10.00 period during start date, and
+// 16.00-23.59 during end date but not sure if it really works / does backend handle those periods properly
 export const isPostAdmissionActive = session => {
   return (
     isPostAdmissionAvailable(session) &&
-    nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date))
+    nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date)) &&
+    session.open
   );
 };
 
@@ -36,24 +39,33 @@ export const isAdmissionActive = session => {
   return (
     session.registration_end_date &&
     session.registration_start_date &&
-    nowBetweenDates(moment(session.registration_start_date), moment(session.registration_end_date))
+    nowBetweenDates(moment(session.registration_start_date), moment(session.registration_end_date)) &&
+    session.open
   );
 };
 
-export const isAdmissionStarted = session => {
-  return session.registration_start_date && moment(session.registration_start_date).isSameOrBefore(moment());
-};
-
 export const isAdmissionEnded = session => {
-  return session.registration_end_date && moment(session.registration_end_date).isBefore(moment());
+  return (
+    session.registration_end_date &&
+    moment(session.registration_end_date).isBefore(moment()) &&
+    !session.open
+  );
 };
 
 export const isPostAdmissionEnded = session => {
-  return session.post_admission_end_date && moment(session.post_admission_end_date).isBefore(moment());
+  return (
+    session.post_admission_end_date &&
+    moment(session.post_admission_end_date).isBefore(moment()) &&
+    !session.open
+  );
 };
 
 export const isRegistrationPeriodEnded = session => {
-  return isAdmissionEnded(session) && (!isPostAdmissionAvailable(session) || isPostAdmissionEnded(session));
+  if (isPostAdmissionAvailable(session)) {
+    return isPostAdmissionEnded(session);
+  }
+
+  return isAdmissionEnded(session);
 };
 
 export const hasRoom = session => {
