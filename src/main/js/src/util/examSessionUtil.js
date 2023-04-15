@@ -25,13 +25,13 @@ export const isPostAdmissionAvailable = session => {
   );
 };
 
-// the purpose of session.open checks in methods below might be for handling 00.00-10.00 period during start date, and
+// the purpose of `isOpen` checks in methods below might be for handling 00.00-10.00 period during start date, and
 // 16.00-23.59 during end date but not sure if it really works / does backend handle those periods properly
 export const isPostAdmissionActive = session => {
   return (
     isPostAdmissionAvailable(session) &&
     nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date)) &&
-    session.open
+    isOpen(session)
   );
 };
 
@@ -40,32 +40,30 @@ export const isAdmissionActive = session => {
     session.registration_end_date &&
     session.registration_start_date &&
     nowBetweenDates(moment(session.registration_start_date), moment(session.registration_end_date)) &&
-    session.open
+    isOpen(session)
   );
 };
 
 export const isAdmissionEnded = session => {
   return (
     session.registration_end_date &&
-    moment(session.registration_end_date).isBefore(moment()) &&
-    !session.open
+    moment(session.registration_end_date).isBefore(moment())
   );
 };
 
 export const isPostAdmissionEnded = session => {
   return (
     session.post_admission_end_date &&
-    moment(session.post_admission_end_date).isBefore(moment()) &&
-    !session.open
+    moment(session.post_admission_end_date).isBefore(moment())
   );
 };
 
 export const isRegistrationPeriodEnded = session => {
   if (isPostAdmissionAvailable(session)) {
-    return isPostAdmissionEnded(session);
+    return !isOpen(session) && isPostAdmissionEnded(session);
   }
 
-  return isAdmissionEnded(session);
+  return !isOpen(session) && isAdmissionEnded(session);
 };
 
 export const hasRoom = session => {
@@ -75,6 +73,10 @@ export const hasRoom = session => {
 export const hasFullQueue = session => {
   return session.queue_full;
 };
+
+export const isOpen = session => {
+  return session.open;
+}
 
 export const getSpotsAvailableForSession = session => {
   return isAdmissionEnded(session)
@@ -93,10 +95,15 @@ export const formatDate = (session, key) =>
   moment(session[key]).format(DATE_FORMAT);
 
 export const examSessionParticipantsCount = (session) => {
-  const postAdmissionOpen = session.post_admission_enabled && moment()
-      .isSameOrAfter(moment(session.registration_end_date));
+  if (isPostAdmissionAvailable(session)) {
+    return {
+      participants: session.participants + session.pa_participants,
+      maxParticipants: session.participants + session.post_admission_quota,
+    };
+  }
 
-  const participants = session.participants + (session.post_admission_quota ? session.pa_participants : 0);
-  const max_participants = postAdmissionOpen ? (session.post_admission_quota + session.participants): session.max_participants;
-  return {participants: participants, maxParticipants: max_participants};
-}
+  return {
+    participants: session.participants,
+    maxParticipants: session.max_participants,
+  };
+};
