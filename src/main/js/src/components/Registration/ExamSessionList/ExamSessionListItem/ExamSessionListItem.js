@@ -11,9 +11,8 @@ import {
   getSpotsAvailableForSession,
   hasFullQueue,
   hasRoom,
-  isAdmissionActive,
   isAdmissionEnded,
-  isPostAdmissionActive,
+  isOpen,
   isPostAdmissionAvailable,
   isRegistrationPeriodEnded,
 } from '../../../../util/examSessionUtil';
@@ -62,7 +61,6 @@ const examSessionListItem = ({
     </div>
   );
 
-  // TODO: this is true also when registration period has ended on the last registration date
   const showAvailableSpots = hasRoom(session) && !isRegistrationPeriodEnded(session);
 
   const availableSpots = getSpotsAvailableForSession(session);
@@ -144,8 +142,6 @@ const examSessionListItem = ({
 
     const srLabel = `${getRegistrationButtonText()} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${availableSpots} ${availableSpotsText}.`;
 
-    const registerButtonEnabled = (isAdmissionActive(session) || isPostAdmissionActive(session)) && !hasFullQueue(session);
-
     const registerButton = (
       <div>
         {!isRegistrationPeriodEnded(session) && (
@@ -154,7 +150,7 @@ const examSessionListItem = ({
             onClick={selectExamSession}
             role="link"
             aria-label={srLabel}
-            disabled={!registerButtonEnabled}
+            disabled={!isOpen(session) || hasFullQueue(session)}
           >
             {getRegistrationButtonText()}
           </button>

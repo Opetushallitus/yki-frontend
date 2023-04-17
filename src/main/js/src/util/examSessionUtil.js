@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import moment from 'moment';
 
 import { DATE_FORMAT } from '../common/Constants';
-import { levelDescription, nowBetweenDates } from './util';
+import { levelDescription } from './util';
 
 const postAdmissionOpenSpots = session => {
   if (isPostAdmissionAvailable(session)) {
@@ -25,37 +25,27 @@ export const isPostAdmissionAvailable = session => {
   );
 };
 
-// the purpose of `isOpen` checks in methods below might be for handling 00.00-10.00 period during start date, and
-// 16.00-23.59 during end date but not sure if it really works / does backend handle those periods properly
-export const isPostAdmissionActive = session => {
-  return (
-    isPostAdmissionAvailable(session) &&
-    nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date)) &&
-    isOpen(session)
-  );
-};
-
-export const isAdmissionActive = session => {
-  return (
-    session.registration_end_date &&
-    session.registration_start_date &&
-    nowBetweenDates(moment(session.registration_start_date), moment(session.registration_end_date)) &&
-    isOpen(session)
-  );
-};
-
 export const isAdmissionEnded = session => {
-  return (
-    session.registration_end_date &&
-    moment().isAfter(moment(session.registration_end_date), 'day')
-  );
+  if (!session.registration_end_date) {
+    return false;
+  }
+
+  const now = moment();
+  const endDate = moment(session.registration_end_date);
+
+  // Openness check only for the endDate because the session is also open during post admission (which is after endDate)
+  return now.isAfter(endDate, 'day') || (now.isSame(endDate, 'day') && !isOpen(session));
 };
 
 export const isPostAdmissionEnded = session => {
-  return (
-    session.post_admission_end_date &&
-    moment().isAfter(moment(session.post_admission_end_date), 'day')
-  );
+  if (!session.post_admission_end_date) {
+    return false;
+  }
+
+  const now = moment();
+  const endDate = moment(session.post_admission_end_date);
+
+  return now.isAfter(endDate, 'day') || (now.isSame(endDate, 'day') && !isOpen(session));
 };
 
 export const isRegistrationPeriodEnded = session => {
