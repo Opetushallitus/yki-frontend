@@ -62,6 +62,9 @@ const examSessionListItem = ({
     </div>
   );
 
+  // TODO: this is true also when registration period has ended on the last registration date
+  const showAvailableSpots = hasRoom(session) && !isRegistrationPeriodEnded(session);
+
   const availableSpots = getSpotsAvailableForSession(session);
 
   const availableSpotsText = availableSpots === 1
@@ -71,14 +74,14 @@ const examSessionListItem = ({
     const availability = (
       <div>
         <strong>
-          {!hasRoom(session) || isRegistrationPeriodEnded(session) ? (
-            <span>{t('registration.examSpots.full')}</span>
-          ) : (
+          {showAvailableSpots ? (
             <>
               <span>{availableSpots}</span>
               {' '}
               <span>{availableSpotsText}</span>
             </>
+          ) : (
+            <span>{t('registration.examSpots.full')}</span>
           )}
         </strong>
       </div>

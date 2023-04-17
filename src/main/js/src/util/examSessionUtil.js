@@ -47,23 +47,23 @@ export const isAdmissionActive = session => {
 export const isAdmissionEnded = session => {
   return (
     session.registration_end_date &&
-    moment(session.registration_end_date).isBefore(moment())
+    moment().isAfter(moment(session.registration_end_date), 'day')
   );
 };
 
 export const isPostAdmissionEnded = session => {
   return (
     session.post_admission_end_date &&
-    moment(session.post_admission_end_date).isBefore(moment())
+    moment().isAfter(moment(session.post_admission_end_date), 'day')
   );
 };
 
 export const isRegistrationPeriodEnded = session => {
   if (isPostAdmissionAvailable(session)) {
-    return !isOpen(session) && isPostAdmissionEnded(session);
+    return isPostAdmissionEnded(session);
   }
 
-  return !isOpen(session) && isAdmissionEnded(session);
+  return isAdmissionEnded(session);
 };
 
 export const hasRoom = session => {
@@ -79,7 +79,7 @@ export const isOpen = session => {
 }
 
 export const getSpotsAvailableForSession = session => {
-  return isOpen(session) && !isAdmissionEnded(session)
+  return !isAdmissionEnded(session)
     ? admissionOpenSpots(session)
     : postAdmissionOpenSpots(session);
 };
