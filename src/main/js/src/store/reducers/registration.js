@@ -1,7 +1,11 @@
 import moment from 'moment';
 
-import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
-import { hasRoom, isOpen } from '../../util/examSessionUtil';
+import { LANGUAGES } from '../../common/Constants';
+import {
+  hasRoom,
+  isOpen,
+  isRegistrationPeriodEnded
+} from '../../util/examSessionUtil';
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
@@ -77,12 +81,27 @@ const sortSessionsByRoom = (sessionA, sessionB) => {
   return 0;
 };
 
+const sortSessionsByRegistrationEnding = (sessionA, sessionB) => {
+  const registrationEndedA = isRegistrationPeriodEnded(sessionA);
+  const registrationEndedB = isRegistrationPeriodEnded(sessionB);
+
+  if (registrationEndedA && !registrationEndedB) {
+    return 1;
+  }
+  if (!registrationEndedA && registrationEndedB) {
+    return -1;
+  }
+  return 0;
+};
+
 const sortSessions = sessions => {
   if (!sessions || sessions.length === 0) return [];
   sessions.sort(sortSessionsByRoom);
   sessions.sort(sortSessionsByDate);
+  sessions.sort(sortSessionsByRegistrationEnding);
+
   return sessions;
-}
+};
 
 const getStateFilteredByAvailability = state => {
   const filteredExams = filteredSessions(state);
@@ -136,8 +155,6 @@ const getStateFilteredByAvailabilityAndRegistration = state => {
     filteredExamsByAvailabilityAndRegistration: sortSessions(filteredAvailableAndOpen),
   };
 }
-
-const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
