@@ -96,29 +96,36 @@ const examSessionListItem = ({
       return `${start} ${t('registration.examDetails.card.time')} 10 - 16`;
     };
 
+  const displayPostAdmissionPeriod = isAdmissionEnded(session) && isPostAdmissionAvailable(session);
+
+  const registrationPeriodText = displayPostAdmissionPeriod
+    ? displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)
+    : displayRegistrationPeriod(session.registration_start_date, session.registration_end_date);
+
+  const registrationPeriodAriaLabelText = displayPostAdmissionPeriod
+    ? `${t('examSession.postAdmission')}: ${registrationPeriodText}`
+    : `${t('registration.list.signupOpen')}: ${registrationPeriodText}`;
+
   const registrationOpenDesktop = (
     <div>
-      <p>{displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}</p>
-      {isPostAdmissionAvailable(session) && (
-        <p>{displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}</p>
+      {displayPostAdmissionPeriod && (
+        <p>{t('examSession.postAdmission')}:</p>
       )}
+      <p>{registrationPeriodText}</p>
     </div>
   );
 
     const registrationOpenMobile = (
       <div style={{display: 'block'}}>
         <div className={classes.RegistrationOpen}>
-          {t('registration.list.signupOpen')}
+          {displayPostAdmissionPeriod ? (
+            t('examSession.postAdmission')
+          ) : (
+            t('registration.list.signupOpen')
+          )}
           {':'}
           <span style={{marginLeft: 5}}>
-            {displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}
-            {isPostAdmissionAvailable(session) && (
-              <>
-                <br />
-                <br />
-                {displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}
-              </>
-            )}
+            {registrationPeriodText}
           </span>
         </div>
       </div>
@@ -136,11 +143,7 @@ const examSessionListItem = ({
       return t('registration.register');
     };
 
-    const registrationOpenText = isAdmissionEnded(session) && isPostAdmissionAvailable(session)
-      ? `${t('examSession.postAdmission')}: ${displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)}`
-      : `${t('registration.list.signupOpen')}: ${displayRegistrationPeriod(session.registration_start_date, session.registration_end_date)}`;
-
-    const srLabel = `${getRegistrationButtonText()} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationOpenText}, ${availableSpots} ${availableSpotsText}.`;
+    const srLabel = `${getRegistrationButtonText()} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationPeriodAriaLabelText}, ${availableSpots} ${availableSpotsText}.`;
 
     const registerButton = (
       <div>
