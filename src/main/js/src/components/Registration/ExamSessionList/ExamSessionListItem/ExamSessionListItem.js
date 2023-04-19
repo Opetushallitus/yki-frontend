@@ -11,9 +11,8 @@ import {
   getSpotsAvailableForSession,
   hasFullQueue,
   hasRoom,
-  isAdmissionEnded,
   isOpen,
-  isPostAdmissionAvailable,
+  isPostAdmissionActive,
   isRegistrationPeriodEnded,
 } from '../../../../util/examSessionUtil';
 import {getDeviceOrientation, levelDescription} from '../../../../util/util';
@@ -96,7 +95,7 @@ const examSessionListItem = ({
       return `${start} ${t('registration.examDetails.card.time')} 10 - 16`;
     };
 
-  const displayPostAdmissionPeriod = isAdmissionEnded(session) && isPostAdmissionAvailable(session);
+  const displayPostAdmissionPeriod = isPostAdmissionActive(session);
 
   const registrationPeriodText = displayPostAdmissionPeriod
     ? displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)

@@ -74,6 +74,10 @@ export const getSpotsAvailableForSession = session => {
     : postAdmissionOpenSpots(session);
 };
 
+export const isPostAdmissionActive = session => {
+  return isAdmissionEnded(session) && isPostAdmissionAvailable(session);
+};
+
 export const examLanguageAndLevel = session => {
   const examLanguage = i18next.t(`common.language.${session.language_code}`);
   const examLevel = levelDescription(session.level_code).toLowerCase();

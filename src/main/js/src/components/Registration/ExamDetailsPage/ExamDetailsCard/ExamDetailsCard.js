@@ -2,20 +2,15 @@ import moment from 'moment';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  DATE_FORMAT,
-  ISO_DATE_FORMAT_SHORT,
-} from '../../../../common/Constants';
-import { evaluationTexts, getLanguageAndLevel } from '../../../../util/util';
+import { DATE_FORMAT } from '../../../../common/Constants';
 import classes from './ExamDetailsCard.module.css';
+import { examSessionParticipantsCount, isPostAdmissionActive } from "../../../../util/examSessionUtil";
+import { evaluationTexts, getLanguageAndLevel } from '../../../../util/util';
 
 const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
   const [t, i18n] = useTranslation();
 
-  const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
-  const registrationClosed = moment(exam.registration_end_date).isBefore(
-    currentDate,
-  );
+  const { participants, maxParticipants } = examSessionParticipantsCount(exam);
 
   const exceptionStatus = isFull ? (
     <p className={classes.Exception} data-cy={'exam-details-exception-status'}>
@@ -67,37 +62,40 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
 
   const registrationPeriod = (
     <p>
-      {t('common.registration')}:
+      {t('common.registration')}
+      {': '}
       <strong>
-        {` ${moment(exam.registration_start_date).format(
+        {`${moment(exam.registration_start_date).format(
           DATE_FORMAT,
         )} - ${moment(exam.registration_end_date).format(DATE_FORMAT)}`}
       </strong>
     </p>
   );
 
-  const availableSeats = (
+  const postAdmissionPeriodText = exam.post_admission_start_date === exam.post_admission_end_date
+    ? moment(exam.post_admission_start_date).format(DATE_FORMAT)
+    : `${moment(exam.post_admission_start_date).format(DATE_FORMAT)} - ${moment(exam.post_admission_end_date).format(DATE_FORMAT)}`;
+
+  const postAdmissionPeriod = (
     <>
-      {!registrationClosed ? (
+      {isPostAdmissionActive(exam) ? (
         <p>
-          {t('registration.list.examSpots')}:
-          <strong>
-            {` ${exam.max_participants - exam.participants} / ${
-              exam.max_participants
-            }`}
-          </strong>
-        </p>
-      ) : exam.post_admission_active ? (
-        <p>
-          {t('registration.list.examSpots')}:
-          <strong>
-            {` ${exam.post_admission_quota - exam.pa_participants} / ${
-              exam.post_admission_quota
-            }`}
-          </strong>
+          {t('examSession.postAdmission')}
+          {': '}
+          <strong>{postAdmissionPeriodText}</strong>
         </p>
       ) : null}
     </>
+  )
+
+  const availableSeats = (
+    <p>
+      {t('registration.list.examSpots')}
+      {': '}
+      <strong>
+        {`${maxParticipants - participants} / ${maxParticipants}`}
+      </strong>
+    </p>
   );
 
   const contactDetails = (
@@ -155,6 +153,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
           <div className={classes.DetailsCard}>
             {date}
             {registrationPeriod}
+            {postAdmissionPeriod}
             {locationDetails}
             {extra}
             {exam.subtests &&

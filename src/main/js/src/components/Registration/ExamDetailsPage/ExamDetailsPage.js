@@ -8,8 +8,6 @@ import { connect } from 'react-redux';
 import tempHeroImage from '../../../assets/images/ophYki_image2.png';
 import { DATE_FORMAT_WITHOUT_YEAR } from '../../../common/Constants';
 import * as actions from '../../../store/actions/index';
-import { levelDescription } from '../../../util/util';
-import { nowBetweenDates } from '../../../util/util';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import Spinner from '../../UI/Spinner/Spinner';
 import AuthButton from '../AuthButton/AuthButton';
@@ -18,6 +16,12 @@ import LoginLink from '../LoginLink/LoginLink';
 import NotificationSignup from '../NotificationSignup/NotificationSignup';
 import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
 import classes from './ExamDetailsPage.module.css';
+import {
+  hasFullQueue,
+  hasRoom,
+  isOpen,
+} from "../../../util/examSessionUtil";
+import { levelDescription } from '../../../util/util';
 
 const examDetailsPage = ({
   location,
@@ -39,24 +43,8 @@ const examDetailsPage = ({
   const { status } = queryString.parse(location.search);
   const validationFailed = status && status === 'validation-fail';
 
-  const registrationOpen = session.open;
-
-  const postAdmissionActive =
-    registrationOpen &&
-    session.post_admission_end_date &&
-    session.post_admission_start_date &&
-    session.post_admission_active &&
-    session.post_admission_quota &&
-    nowBetweenDates(
-      moment(session.post_admission_start_date),
-      moment(session.post_admission_end_date),
-    );
-
-  const seatsAvailable = postAdmissionActive
-    ? session.post_admission_quota - session.pa_participants > 0
-    : session.max_participants - session.participants > 0;
-
-  const queueFull = session.queue_full;
+  const seatsAvailable = hasRoom(session);
+  const queueFull = hasFullQueue(session);
   const examSessionId = Number(match.params.examSessionId);
 
   const registrationPeriodText = session.registration_start_date !== session.registration_end_date
@@ -86,7 +74,7 @@ const examDetailsPage = ({
           />
           <div className={classes.Content}>
             <BackButton href="/yki/ilmoittautuminen/valitse-tutkintotilaisuus" />
-            {registrationOpen ? (
+            {isOpen(session) ? (
               <>
                 {validationFailed && (
                   <div className={classes.NotifyText}>
