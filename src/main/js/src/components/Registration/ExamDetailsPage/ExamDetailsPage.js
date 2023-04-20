@@ -8,8 +8,6 @@ import { connect } from 'react-redux';
 import tempHeroImage from '../../../assets/images/ophYki_image2.png';
 import { DATE_FORMAT_WITHOUT_YEAR } from '../../../common/Constants';
 import * as actions from '../../../store/actions/index';
-import { levelDescription } from '../../../util/util';
-import { nowBetweenDates } from '../../../util/util';
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import Spinner from '../../UI/Spinner/Spinner';
 import AuthButton from '../AuthButton/AuthButton';
@@ -18,6 +16,12 @@ import LoginLink from '../LoginLink/LoginLink';
 import NotificationSignup from '../NotificationSignup/NotificationSignup';
 import ExamDetailsCard from './ExamDetailsCard/ExamDetailsCard';
 import classes from './ExamDetailsPage.module.css';
+import {
+  hasFullQueue,
+  hasRoom,
+  isOpen,
+} from "../../../util/examSessionUtil";
+import { levelDescription } from '../../../util/util';
 
 const examDetailsPage = ({
   location,
@@ -39,39 +43,13 @@ const examDetailsPage = ({
   const { status } = queryString.parse(location.search);
   const validationFailed = status && status === 'validation-fail';
 
-  const registrationOpen = session.open;
-
-  const postAdmissionActive =
-    registrationOpen &&
-    session.post_admission_end_date &&
-    session.post_admission_start_date &&
-    session.post_admission_active &&
-    session.post_admission_quota &&
-    nowBetweenDates(
-      moment(session.post_admission_start_date),
-      moment(session.post_admission_end_date),
-    );
-
-  const seatsAvailable = postAdmissionActive
-    ? session.post_admission_quota - session.pa_participants > 0
-    : session.max_participants - session.participants > 0;
-
-  const queueFull = session.queue_full;
+  const seatsAvailable = hasRoom(session);
+  const queueFull = hasFullQueue(session);
   const examSessionId = Number(match.params.examSessionId);
 
-  const registrationPeriod = (
-    <div className={classes.InfoText}>
-      <p data-cy="exam-details-registrationPeriod">{`${t(
-        'registration.examDetails.registrationPeriod',
-      )} ${moment(session.registration_start_date).format(
-        DATE_FORMAT_WITHOUT_YEAR,
-      )} ${t('registration.examDetails.card.time')} 10.00 - ${moment(
-        session.registration_end_date,
-      ).format(DATE_FORMAT_WITHOUT_YEAR)} ${t(
-        'registration.examDetails.card.time',
-      )} 16.00`}</p>
-    </div>
-  );
+  const registrationPeriodText = session.registration_start_date !== session.registration_end_date
+    ? `${t('registration.examDetails.registrationPeriod')} ${moment(session.registration_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} ${t('registration.examDetails.card.time')} 10.00 - ${moment(session.registration_end_date).format(DATE_FORMAT_WITHOUT_YEAR)} ${t('registration.examDetails.card.time')} 16.00`
+    : `${t('registration.examDetails.registrationPeriod')} ${moment(session.registration_start_date).format(DATE_FORMAT_WITHOUT_YEAR)} ${t('registration.examDetails.card.time')} 10.00 - 16.00`;
 
   const languageAndLevel = (
     <p>{`${t(`common.language.${session.language_code}`)}, ${levelDescription(
@@ -79,11 +57,6 @@ const examDetailsPage = ({
     ).toLowerCase()}`}</p>
   );
 
-  /**
-   TODO: heroimaget headlineImageksi, kun saadaan OPH:n viestinnältä sopivat kuvat:
-    esim enum, joka palauttaa kuvan kielen koodin perusteella:
-    headlineImage={languageHeroImages[session.language_code]}
-   */
   return (
     <main id="main">
       {loading ? (
@@ -101,7 +74,7 @@ const examDetailsPage = ({
           />
           <div className={classes.Content}>
             <BackButton href="/yki/ilmoittautuminen/valitse-tutkintotilaisuus" />
-            {registrationOpen ? (
+            {isOpen(session) ? (
               <>
                 {validationFailed && (
                   <div className={classes.NotifyText}>
@@ -164,16 +137,11 @@ const examDetailsPage = ({
                 ) : null}
               </>
             ) : (
-              <>
-                {registrationPeriod}
-                {/* 
-                      Pre registration signup hidden since backend does not support it yet
-                    
-                    <NotificationSignup
-                      examSessionId={match.params.examSessionId}
-                      registrationOpen={registrationOpen}
-                    /> */}
-              </>
+              <div className={classes.InfoText}>
+                <p data-cy="exam-details-registrationPeriod">
+                  {registrationPeriodText}
+                </p>
+              </div>
             )}
           </div>
         </>

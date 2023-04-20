@@ -4,8 +4,8 @@
       "level_code": "YLIN",
       "max_participants": 15,
       "language_code": "fin",
-      "participants": 15,
-      "pa_participants": 4,
+      "participants": 14,
+      "pa_participants": 7,
       "contact": [
         {
           "email": "contact.person@testi.invalid"
@@ -13,10 +13,10 @@
       ],
       "office_oid": "1.2.246.562.10.29461948951",
       "published_at": "2019-01-15T11:16:37.959Z",
-      "session_date": "2039-12-29",
+      "session_date": "2030-01-01",
       "organizer_oid": "1.2.246.562.10.28646781493",
       "id": 25,
-      "registration_start_date": "2030-12-01",
+      "registration_start_date": "2023-01-01",
       "location": [
         {
           "lang": "fi",
@@ -47,14 +47,13 @@
         }
       ],
       "exam_fee": "100.00",
-      "registration_end_date": "2039-12-10",
-      "open": true,
+      "registration_end_date": "2023-02-02",
       "queue_full": false,
-      "queue": 0,
       "post_admission_quota": 10,
-      "post_admission_start_date": "2020-12-11",
-      "post_admission_end_date": "2020-12-20",
-      "post_admission_active": true
+      "post_admission_start_date": "2023-03-03",
+      "post_admission_end_date": "2029-12-12",
+      "post_admission_active": true,
+      "open": true
     },
     {
       "level_code": "PERUS",
@@ -69,7 +68,7 @@
       "pa_participants": 0,
       "office_oid": "1.2.246.562.10.29461948951",
       "published_at": "2019-01-15T11:16:37.959Z",
-      "session_date": "2019-05-26",
+      "session_date": "2040-05-26",
       "organizer_oid": "1.2.246.562.10.28646781493",
       "id": 10,
       "registration_start_date": "2025-12-03",
@@ -104,10 +103,8 @@
       ],
       "exam_fee": "100.00",
       "registration_end_date": "2039-12-14",
-      "open": false,
       "queue_full": false,
-      "queue": 0,
-      "post_admission": null
+      "open": false
     },
     {
       "level_code": "KESKI",
@@ -159,10 +156,8 @@
       ],
       "exam_fee": "123.00",
       "registration_end_date": "2039-02-28",
-      "open": true,
       "queue_full": false,
-      "queue": 0,
-      "post_admission": null
+      "open": true
     },
     {
       "level_code": "KESKI",
@@ -212,10 +207,8 @@
       ],
       "exam_fee": "100.00",
       "registration_end_date": "2039-02-28",
-      "open": true,
       "queue_full": false,
-      "queue": 0,
-      "post_admission": null
+      "open": true
     },
     {
       "level_code": "YLIN",
@@ -265,9 +258,8 @@
       ],
       "exam_fee": "160.00",
       "registration_end_date": "2029-02-28",
-      "open": true,
       "queue_full": false,
-      "post_admission": null
+      "open": true
     },
     {
       "level_code": "PERUS",
@@ -282,10 +274,10 @@
       "pa_participants": 0,
       "office_oid": "1.2.246.562.5.22724043777",
       "published_at": "2019-01-17T12:32:00.000Z",
-      "session_date": "2019-04-06",
+      "session_date": "2027-10-16",
       "organizer_oid": "1.2.246.562.10.39706139522",
       "id": 14,
-      "registration_start_date": "2019-02-01",
+      "registration_start_date": "2023-03-15",
       "location": [
         {
           "lang": "fi",
@@ -316,16 +308,15 @@
         }
       ],
       "exam_fee": "100.00",
-      "registration_end_date": "2039-02-28",
-      "open": true,
+      "registration_end_date": "2024-12-29",
       "queue_full": false,
-      "post_admission": null
+      "open": true
     },
     {
       "level_code": "PERUS",
       "max_participants": 20,
       "language_code": "fin",
-      "participants": 20,
+      "participants": 5,
       "contact": [
         {
           "email": "contact.person@testi.invalid"
@@ -369,9 +360,8 @@
       ],
       "exam_fee": "100.00",
       "registration_end_date": "2039-02-28",
-      "open": true,
       "queue_full": true,
-      "post_admission": null
+      "open": true
     },
     {
       "level_code": "KESKI",
@@ -388,7 +378,7 @@
       "pa_participants": 0,
       "office_oid": "1.2.246.562.5.22724043777",
       "published_at": "2019-01-17T12:32:00.001Z",
-      "session_date": "2021-01-06",
+      "session_date": "2025-10-07",
       "organizer_oid": "1.2.246.562.10.39706139523",
       "id": 16,
       "registration_start_date": "2020-11-01",
@@ -423,9 +413,8 @@
       ],
       "exam_fee": "123.00",
       "registration_end_date": "2020-12-02",
-      "open": true,
-      "queue_full": true,
-      "post_admission": null
+      "queue_full": false,
+      "open": false
     }
   ]
 }

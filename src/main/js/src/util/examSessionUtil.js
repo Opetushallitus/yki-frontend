@@ -2,17 +2,21 @@ import i18next from 'i18next';
 import moment from 'moment';
 
 import { DATE_FORMAT } from '../common/Constants';
-import { levelDescription, nowBetweenDates } from './util';
+import { levelDescription } from './util';
 
-const postAdmissionOpenSposts = session => {
-  return session.post_admission_quota - session.pa_participants;
+const postAdmissionOpenSpots = session => {
+  if (isPostAdmissionAvailable(session)) {
+    return session.post_admission_quota - session.pa_participants;
+  }
+
+  return 0;
 };
 
 const admissionOpenSpots = session => {
   return session.max_participants - session.participants;
 };
 
-export const postAdmissionAvailable = session => {
+export const isPostAdmissionAvailable = session => {
   return (
     session.post_admission_end_date &&
     session.post_admission_start_date &&
@@ -21,73 +25,57 @@ export const postAdmissionAvailable = session => {
   );
 };
 
-export const isPostAdmissionActive = session => {
-  return postAdmissionAvailable(session) &&
-    nowBetweenDates(moment(session.post_admission_start_date), moment(session.post_admission_end_date)) && session.open;
+export const isAdmissionEnded = session => {
+  if (!session.registration_end_date) {
+    return false;
+  }
+
+  const now = moment();
+  const endDate = moment(session.registration_end_date);
+
+  // Openness check only for the endDate because the session is also open during post admission (which is after endDate)
+  return now.isAfter(endDate, 'day') || (now.isSame(endDate, 'day') && !isOpen(session));
+};
+
+export const isPostAdmissionEnded = session => {
+  if (!session.post_admission_end_date) {
+    return false;
+  }
+
+  const now = moment();
+  const endDate = moment(session.post_admission_end_date);
+
+  return now.isAfter(endDate, 'day') || (now.isSame(endDate, 'day') && !isOpen(session));
+};
+
+export const isRegistrationPeriodEnded = session => {
+  if (isPostAdmissionAvailable(session)) {
+    return isPostAdmissionEnded(session);
+  }
+
+  return isAdmissionEnded(session);
+};
+
+export const hasRoom = session => {
+  return getSpotsAvailableForSession(session) > 0;
+};
+
+export const hasFullQueue = session => {
+  return session.queue_full;
+};
+
+export const isOpen = session => {
+  return session.open;
 }
 
-export const isAdmissionActive = session => {
-  return (
-    session.registration_end_date &&
-    session.registration_start_date &&
-    session.open &&
-    nowBetweenDates(
-      moment(session.registration_start_date),
-      moment(session.registration_end_date),
-    )
-  );
+export const getSpotsAvailableForSession = session => {
+  return !isAdmissionEnded(session)
+    ? admissionOpenSpots(session)
+    : postAdmissionOpenSpots(session);
 };
 
-export const admissionNotStarted = session => {
-  return (
-    (session.registration_start_date &&
-      moment(session.registration_start_date) > moment()) ||
-    (moment(session.registration_start_date).isSame(moment(), 'day') &&
-      !session.open)
-  );
-};
-export const admissionClosed = session => {
-  return (
-    session.registration_end_date &&
-    moment(session.registration_end_date).isBefore(moment()) &&
-    !session.open
-  );
-};
-
-export const showAvailableSpots = session => {
-  return (
-    spotsAvailableForSession(session) > 0 &&
-    !admissionClosed(session) &&
-    (admissionNotStarted(session) ||
-      isPostAdmissionActive(session) ||
-      isAdmissionActive(session))
-  );
-};
-
-export const spotsAvailableForSession = session => {
-  return isPostAdmissionActive(session)
-    ? postAdmissionOpenSposts(session)
-    : admissionOpenSpots(session);
-};
-
-export const admissionActiveAndQueueNotFull = session => {
-  return isAdmissionActive(session) && !session.queue_full;
-};
-
-export const canSignupForPostAdmission = session => {
-  return isPostAdmissionActive(session) && postAdmissionOpenSposts(session) > 0;
-};
-
-export const signupPossible = session => {
-  // For now a session that has a registration period in the future is read as being open
-  // Reason for this is  ui design where signup button takes you to order an email notification
-  // Should be changed for something more usable
-  return (
-    spotsAvailableForSession(session) > 0 &&
-    (admissionNotStarted(session) ||
-      isAdmissionActive(session) ||
-      (postAdmissionAvailable(session) && isPostAdmissionActive(session)))
-  );
+export const isPostAdmissionActive = session => {
+  return isAdmissionEnded(session) && isPostAdmissionAvailable(session);
 };
 
 export const examLanguageAndLevel = session => {
@@ -101,10 +89,15 @@ export const formatDate = (session, key) =>
   moment(session[key]).format(DATE_FORMAT);
 
 export const examSessionParticipantsCount = (session) => {
-  const postAdmissionOpen = session.post_admission_enabled && moment()
-      .isSameOrAfter(moment(session.registration_end_date));
+  if (isAdmissionEnded(session) && isPostAdmissionAvailable(session)) {
+    return {
+      participants: session.participants + session.pa_participants,
+      maxParticipants: session.participants + session.post_admission_quota,
+    };
+  }
 
-  const participants = session.participants + (session.post_admission_quota ? session.pa_participants : 0);
-  const max_participants = postAdmissionOpen ? (session.post_admission_quota + session.participants): session.max_participants;
-  return {participants: participants, maxParticipants: max_participants};
-}
+  return {
+    participants: session.participants,
+    maxParticipants: session.max_participants,
+  };
+};

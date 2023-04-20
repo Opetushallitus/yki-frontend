@@ -1042,20 +1042,6 @@ module.exports = function(app) {
           if (es.session_date === '2019-05-26') {
             es.session_date = twoMonthFromNow;
           }
-
-          // postadmission active
-          if (es.session_date === '2039-12-29') {
-            const yesterday = moment()
-              .subtract(1, 'days')
-              .format('YYYY-MM-DD');
-            const today = moment().format('YYYY-MM-DD');
-
-            es.session_date = monthFromNow;
-            es.registration_start_date = monthMinusThreeDaysPast;
-            es.registration_end_date = yesterday;
-            es.post_admission_start_date = today;
-            es.post_admission_end_date = weekFromNow;
-          }
         });
         res.send(allExamSessions);
       } catch (err) {

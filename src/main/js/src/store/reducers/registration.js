@@ -1,9 +1,10 @@
 import moment from 'moment';
 
-import { ISO_DATE_FORMAT_SHORT, LANGUAGES } from '../../common/Constants';
+import { LANGUAGES } from '../../common/Constants';
 import {
-  admissionActiveAndQueueNotFull,
-  signupPossible,
+  hasRoom,
+  isOpen,
+  isRegistrationPeriodEnded
 } from '../../util/examSessionUtil';
 import * as actionTypes from '../actions/actionTypes';
 
@@ -67,59 +68,50 @@ const sortSessionsByDate = (sessionA, sessionB) => {
   return 0;
 };
 
-const sortSessionsByOpenSignups = (sessionA, sessionB) => {
-  const isOpenA = signupPossible(sessionA);
-  const isOpenB = signupPossible(sessionB);
-  const queueSpaceA = admissionActiveAndQueueNotFull(sessionA);
-  const queueSpaceB = admissionActiveAndQueueNotFull(sessionB);
+const sortSessionsByRoom = (sessionA, sessionB) => {
+  const hasRoomA = hasRoom(sessionA);
+  const hasRoomB = hasRoom(sessionB);
 
-  if (isOpenA && !isOpenB) {
+  if (hasRoomA && !hasRoomB) {
     return -1;
   }
-  if (!isOpenA && isOpenB) {
+  if (!hasRoomA && hasRoomB) {
     return 1;
   }
-  if (queueSpaceA && !queueSpaceB) {
+  return 0;
+};
+
+const sortSessionsByRegistrationEnding = (sessionA, sessionB) => {
+  const registrationEndedA = isRegistrationPeriodEnded(sessionA);
+  const registrationEndedB = isRegistrationPeriodEnded(sessionB);
+
+  if (registrationEndedA && !registrationEndedB) {
+    return 1;
+  }
+  if (!registrationEndedA && registrationEndedB) {
     return -1;
-  }
-  if (!queueSpaceA && queueSpaceB) {
-    return 1;
   }
   return 0;
 };
 
 const sortSessions = sessions => {
   if (!sessions || sessions.length === 0) return [];
+  sessions.sort(sortSessionsByRoom);
   sessions.sort(sortSessionsByDate);
-  sessions.sort(sortSessionsByOpenSignups);
-  return sessions;
-}
+  sessions.sort(sortSessionsByRegistrationEnding);
 
-const getStateFilteredByAvailalbility = state => {
+  return sessions;
+};
+
+const getStateFilteredByAvailability = state => {
   const filteredExams = filteredSessions(state);
   let filteredArray = [];
 
   for (let i in filteredExams) {
     const item = filteredExams[i];
 
-    // Not open yet or opening today, filter in spots left
-    if (moment(item.registration_start_date).isSameOrAfter(currentDate)) {
-      if (item.participants < item.max_participants) {
-        filteredArray.push(item);
-      }
-    }
-
-    else if (item.open && !item.queue_full) {
-      // Check if admission or post admission. Filter in the corresponding spots
-      if (moment(item.registration_end_date).isSameOrAfter(currentDate)) {
-        if (item.participants < item.max_participants) {
-          filteredArray.push(item);
-        }
-      } else if (item.post_admission_end_date && moment(item.post_admission_end_date).isSameOrAfter(currentDate)) {
-        if (item.post_admission_quota && (item.pa_participants < item.post_admission_quota)) {
-          filteredArray.push(item);
-        }
-      }
+    if (hasRoom(item)) {
+      filteredArray.push(item);
     }
   }
   return {
@@ -135,7 +127,7 @@ const getStateFilteredByOpenRegistration = state => {
   for (let i in filteredExamsForOpens) {
     const item = filteredExamsForOpens[i];
 
-    if (item.open && !item.queue_full) {
+    if (isOpen(item)) {
       filteredOpenExams.push(item);
     }
   }
@@ -148,33 +140,21 @@ const getStateFilteredByOpenRegistration = state => {
 
 const getStateFilteredByAvailabilityAndRegistration = state => {
   const filteredExamData = filteredSessions(state);
-
   let filteredAvailableAndOpen = []
 
   for (let i in filteredExamData) {
     const item = filteredExamData[i];
-    if (item.open && !item.queue_full) {
-      if (moment(item.registration_end_date).isSameOrAfter(currentDate)) {
-        if (item.participants < item.max_participants) {
-          filteredAvailableAndOpen.push(item);
-        }
-      } else if (item.post_admission_end_date && moment(item.post_admission_end_date).isSameOrAfter(currentDate)) {
-        if (item.post_admission_quota && (item.pa_participants < item.post_admission_quota)) {
-          filteredAvailableAndOpen.push(item);
-        }
-      }
+
+    if (isOpen(item) && hasRoom(item)) {
+      filteredAvailableAndOpen.push(item);
     }
   }
-
 
   return {
     ...state,
     filteredExamsByAvailabilityAndRegistration: sortSessions(filteredAvailableAndOpen),
   };
 }
-
-
-const currentDate = moment().format(ISO_DATE_FORMAT_SHORT);
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -265,7 +245,7 @@ const reducer = (state = initialState, action) => {
         return getStateFilteredByAvailabilityAndRegistration(state);
       }
       if (state.availabilityFilter) {
-        return getStateFilteredByAvailalbility(state);
+        return getStateFilteredByAvailability(state);
       }
       if (state.openRegistrationFilter) {
         return getStateFilteredByOpenRegistration(state);
@@ -276,7 +256,7 @@ const reducer = (state = initialState, action) => {
       }
 
     case actionTypes.FILTER_BY_AVAILABILITY:
-      return getStateFilteredByAvailalbility(state);
+      return getStateFilteredByAvailability(state);
 
     case actionTypes.FILTER_BY_OPEN_REGISTRATION:
       return getStateFilteredByOpenRegistration(state);

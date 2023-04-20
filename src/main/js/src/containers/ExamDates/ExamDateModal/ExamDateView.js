@@ -77,9 +77,9 @@ const ExamDateView = props => {
   const minPostAdmissionStartDate =
     registrationEndDate && moment(registrationEndDate).add(1, 'days').format('YYYY-MM-DD');
   const maxPostAdmissionStartDate =
-    postAdmissionEndDate && moment(postAdmissionEndDate).subtract(1, 'days').format('YYYY-MM-DD');
+    postAdmissionEndDate && moment(postAdmissionEndDate).format('YYYY-MM-DD');
   const minPostAdmissionEndDate =
-    postAdmissionStartDate && moment(postAdmissionStartDate).add(1, 'days').format('YYYY-MM-DD');
+    postAdmissionStartDate && moment(postAdmissionStartDate).format('YYYY-MM-DD');
   const maxPostAdmissionEndDate =
     date && moment(date).subtract(1, 'days').format('YYYY-MM-DD');
 
@@ -87,9 +87,9 @@ const ExamDateView = props => {
     return !postAdmissionEnabled || (
       postAdmissionStartDate &&
       postAdmissionEndDate &&
-      moment(date).isAfter(postAdmissionEndDate, 'day') &&
-      moment(postAdmissionEndDate).isAfter(postAdmissionStartDate, 'day') &&
-      moment(postAdmissionStartDate).isAfter(registrationEndDate, 'day')
+      moment(postAdmissionStartDate).isAfter(registrationEndDate, 'day') &&
+      !moment(postAdmissionStartDate).isAfter(postAdmissionEndDate, 'day') &&
+      moment(date).isAfter(postAdmissionEndDate, 'day')
     );
   };
 
