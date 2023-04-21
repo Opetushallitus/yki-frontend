@@ -69,6 +69,11 @@ const sortSessionsByDate = (sessionA, sessionB) => {
   return 0;
 };
 
+/**
+ * Sorting criteria for returning those sessions first of which have room. If both compared sessions are full
+ * / neither one has room, they're next compared based on queue. If one has full queue and the other one has
+ * not, the one with non-full queue is returned first.
+ */
 const sortSessionsByRoom = (sessionA, sessionB) => {
   const hasRoomA = hasRoom(sessionA);
   const hasRoomB = hasRoom(sessionB);
