@@ -308,7 +308,6 @@
   "registration.reeval.total": "Total",
   "registration.register": "Register",
   "registration.register.forQueue": "Register for waiting list",
-  "registration.register.queueFull": "The queue is full",
   "registration.return": "Return",
   "registration.search.noResults": "No results found with the submitted selection criteria.",
   "registration.success.header": "Your registration was successful!",
