@@ -308,7 +308,6 @@
   "registration.reeval.total": "Totalt",
   "registration.register": "Anmäl dig",
   "registration.register.forQueue": "Anmäl dig på en reservplats",
-  "registration.register.queueFull": "Kön är fullbokad",
   "registration.return": "Tillbaka",
   "registration.search.noResults": "Inga examenstillfällen hittades med de angivna sökvillkoren.",
   "registration.success.header": "Anmälan lyckades!",

@@ -360,7 +360,6 @@
   "registration.reeval.total": "Yhteensä",
   "registration.register": "Ilmoittaudu",
   "registration.register.forQueue": "Ilmoittaudu varasijalle",
-  "registration.register.queueFull": "Jono täynnä",
   "registration.return": "Takaisin",
   "registration.search.noResults": "Annetuilla hakuehdoilla ei löytynyt tutkintotilaisuuksia.",
   "registration.success.header": "Ilmoittautuminen onnistui!",

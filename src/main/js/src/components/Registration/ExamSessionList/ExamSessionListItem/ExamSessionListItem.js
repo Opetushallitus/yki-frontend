@@ -131,28 +131,24 @@ const examSessionListItem = ({
     );
 
     const getRegistrationButtonText = () => {
-      if (hasFullQueue(session)) {
-        return t('registration.register.queueFull');
+      if (availableSpots) {
+        return t('registration.register');
       }
 
-      if (!availableSpots) {
-        return t('registration.register.forQueue');
-      }
-
-      return t('registration.register');
+      return t('registration.register.forQueue');
     };
 
     const srLabel = `${getRegistrationButtonText()} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationPeriodAriaLabelText}, ${availableSpots} ${availableSpotsText}.`;
 
     const registerButton = (
       <div>
-        {!isRegistrationPeriodEnded(session) && (
+        {!isRegistrationPeriodEnded(session) && !hasFullQueue(session) && (
           <button
             className={`YkiButton ${classes.RegisterButton}`}
             onClick={selectExamSession}
             role="link"
             aria-label={srLabel}
-            disabled={!isOpen(session) || hasFullQueue(session)}
+            disabled={!isOpen(session)}
           >
             {getRegistrationButtonText()}
           </button>
@@ -176,9 +172,7 @@ const examSessionListItem = ({
             <td>{registrationOpenMobile}</td>
             <td>
               <div>{availability}</div>
-              {hasFullQueue(session) ? null : (
-                <div>{examFee}</div>
-              )}
+              <div>{examFee}</div>
             </td>
             <td>
               {location}
