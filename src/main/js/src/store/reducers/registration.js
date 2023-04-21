@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import { LANGUAGES } from '../../common/Constants';
 import {
+  hasFullQueue,
   hasRoom,
   isOpen,
   isRegistrationPeriodEnded
@@ -78,6 +79,17 @@ const sortSessionsByRoom = (sessionA, sessionB) => {
   if (!hasRoomA && hasRoomB) {
     return 1;
   }
+
+  const hasFullQueueA = hasFullQueue(sessionA);
+  const hasFullQueueB = hasFullQueue(sessionB);
+
+  if (hasFullQueueA && !hasFullQueueB) {
+    return 1;
+  }
+  if (!hasFullQueueA && hasFullQueueB) {
+    return -1;
+  }
+
   return 0;
 };
 
