@@ -75,7 +75,7 @@ describe('<ParticipantList />', () => {
         onConfirmPayment={jest.fn()}
         onRelocate={jest.fn()}
         onResendLink={jest.fn()}
-        disableControls={false}
+        isAdminView={false}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();

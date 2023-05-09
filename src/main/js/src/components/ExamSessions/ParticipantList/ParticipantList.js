@@ -164,6 +164,10 @@ export const participantList = props => {
   };
 
   const participantRows = participants => {
+    const renderCancelButton = (p) => {
+      return p.state === 'SUBMITTED' || (p.state === 'COMPLETED' && props.isAdminView);
+    };
+
     return sortParticipantsFn(participants).map((p, i) => (
       <React.Fragment key={i}>
         <div
@@ -196,8 +200,8 @@ export const participantList = props => {
             ? props.t('examSession.registration')
             : props.t('examSession.registration.postAdmission')}
         </div>
-        <div className={classes.FirstShowOnHover}>
-          {p.state === 'COMPLETED' && !props.disableControls
+        <div className={classes.StateItem}>
+          {p.state === 'COMPLETED'
             ? relocateParticipant(p)
             : null}
         </div>
@@ -210,9 +214,8 @@ export const participantList = props => {
         </div>
         <div className={classes.Item}>{getPhoneNumber(p)}</div>
         <div className={classes.Item}> {p.form.email}</div>
-        <div className={classes.ShowOnHover}>
-          {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') &&
-          !props.disableControls
+        <div className={classes.Item}>
+          {renderCancelButton(p)
             ? cancelRegistrationButton(p)
             : null}
         </div>
@@ -297,7 +300,10 @@ participantList.propTypes = {
   onConfirmPayment: PropTypes.func.isRequired,
   onRelocate: PropTypes.func.isRequired,
   onResendLink: PropTypes.func.isRequired,
-  disableControls: PropTypes.bool,
+  isAdminView: PropTypes.bool.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(withTranslation()(participantList));
+export default connect(
+  null,
+  mapDispatchToProps,
+)(withTranslation()(participantList));

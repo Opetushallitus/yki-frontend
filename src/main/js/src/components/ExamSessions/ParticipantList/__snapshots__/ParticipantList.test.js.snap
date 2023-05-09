@@ -119,7 +119,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       examSession.registration.postAdmission
     </div>
     <div
-      className="FirstShowOnHover"
+      className="StateItem"
     >
       <withI18nextTranslation(RelocateParticipant)
         confirmText="examSession.registration.relocate.confirm"
@@ -191,22 +191,8 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       michael.wallis@test.com
     </div>
     <div
-      className="ShowOnHover"
-    >
-      <ActionButton
-        cancelText="examSession.registration.cancel.cancel"
-        confirmOnRight={true}
-        confirmText="examSession.registration.cancel.confirm"
-        onClick={[Function]}
-      >
-        <img
-          alt=""
-          src="trashcan.svg"
-        />
-         
-        examSession.registration.cancel
-      </ActionButton>
-    </div>
+      className="Item"
+    />
     <span
       className="Line"
     />
@@ -247,7 +233,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       examSession.registration.postAdmission
     </div>
     <div
-      className="FirstShowOnHover"
+      className="StateItem"
     />
     <div
       className="Item"
@@ -278,7 +264,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       natalia.gaddens@test.com
     </div>
     <div
-      className="ShowOnHover"
+      className="Item"
     >
       <ActionButton
         cancelText="examSession.registration.cancel.cancel"

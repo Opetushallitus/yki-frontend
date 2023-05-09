@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import classes from './ExamSessionDetails.module.css';
 import { DATE_FORMAT } from '../../../common/Constants';
 import { getLanguagesWithLevelDescriptions } from '../../../util/util';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -35,10 +34,10 @@ export class ExamSessionDetails extends Component {
     );
     return (
       <div data-cy="exam-session-details">
-        <h2 className={classes.ExamSessionDetailsHeader}>
+        <h2>
           {location || this.props.examSession.location[0].name}
         </h2>
-        <h2 className={classes.ExamSessionDetailsHeader}>
+        <h2>
           {this.props.t('examSession')}
           {': '}
           {getLanguagesWithLevelDescriptions([
@@ -59,7 +58,7 @@ export class ExamSessionDetails extends Component {
               examSession={this.props.examSession}
               participants={this.props.participants}
               examSessions={this.props.examSessions}
-              disableControls={false}
+              isAdminView={false}
             />
           </>
         )}
