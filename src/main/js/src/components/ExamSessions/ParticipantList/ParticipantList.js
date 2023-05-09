@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import React, { useState } from 'react';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import checkMarkDone from '../../../assets/svg/checkmark-done.svg';
 import checkMarkNotDone from '../../../assets/svg/checkmark-not-done.svg';
@@ -14,6 +15,7 @@ import ListExport from './ListExport/ListExport';
 import RelocateParticipant from './RelocateParticipant/RelocateParticipant';
 import classes from './ParticipantList.module.css';
 import { examSessionParticipantsCount } from '../../../util/examSessionUtil';
+import * as actions from "../../../store/actions";
 
 const stateComparator = () => (a, b) => {
   if (a.state === 'COMPLETED') return -1;
@@ -149,7 +151,7 @@ export const participantList = props => {
         children={cancelRegistration}
         confirmOnRight={true}
         onClick={() =>
-          props.onCancel(
+          props.onCancelRegistration(
             props.examSession.organizer_oid,
             props.examSession.id,
             p.registration_id,
@@ -256,15 +258,46 @@ export const participantList = props => {
   );
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onCancelRegistration: (organizerOid, examSessionId, registrationId) =>
+      dispatch(
+        actions.cancelRegistration(organizerOid, examSessionId, registrationId),
+      ),
+    onConfirmPayment: (organizerOid, examSessionId, registrationId) =>
+      dispatch(
+        actions.confirmPayment(organizerOid, examSessionId, registrationId),
+      ),
+    onRelocate: (
+      organizerOid,
+      examSessionId,
+      registrationId,
+      toExamSessionId,
+    ) =>
+      dispatch(
+        actions.relocateExamSession(
+          organizerOid,
+          examSessionId,
+          registrationId,
+          toExamSessionId,
+        ),
+      ),
+    onResendLink: (organizerOid, examSessionId, registrationId, emailLang) =>
+      dispatch(
+        actions.ResendPaymentEmail(organizerOid, examSessionId, registrationId, emailLang),
+      ),
+  };
+};
+
 participantList.propTypes = {
   examSession: PropTypes.object.isRequired,
   examSessions: PropTypes.array.isRequired,
   participants: PropTypes.array.isRequired,
-  onCancel: PropTypes.func.isRequired,
+  onCancelRegistration: PropTypes.func.isRequired,
   onConfirmPayment: PropTypes.func.isRequired,
   onRelocate: PropTypes.func.isRequired,
   onResendLink: PropTypes.func.isRequired,
   disableControls: PropTypes.bool,
 };
 
-export default withTranslation()(participantList);
+export default connect(null, mapDispatchToProps)(withTranslation()(participantList));
