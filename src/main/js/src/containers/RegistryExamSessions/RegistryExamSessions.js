@@ -153,11 +153,9 @@ class RegistryExamSessions extends PureComponent {
 									examSession={this.state.selectedSession}
 									participants={participants}
 									examSessions={this.props.sessions}
-									onCancel={() => { }}
-									onConfirmPayment={() => { }}
-									onRelocate={() => { }}
-									onResendLink={() => { }}
-									disableControls={true} /></>
+									disableControls={false}
+								/>
+							</>
 						}
 						</>}
 				</>

@@ -59,10 +59,7 @@ export class ExamSessionDetails extends Component {
               examSession={this.props.examSession}
               participants={this.props.participants}
               examSessions={this.props.examSessions}
-              onCancel={this.props.onCancelRegistration}
-              onConfirmPayment={this.props.onConfirmPayment}
-              onRelocate={this.props.onRelocate}
-              onResendLink={this.props.onResendLink}
+              disableControls={false}
             />
           </>
         )}
@@ -86,33 +83,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         actions.fetchExamSessionParticipants(organizerOid, examSessionId),
       ),
-    onCancelRegistration: (organizerOid, examSessionId, registrationId) =>
-      dispatch(
-        actions.cancelRegistration(organizerOid, examSessionId, registrationId),
-      ),
-    onConfirmPayment: (organizerOid, examSessionId, registrationId) =>
-      dispatch(
-        actions.confirmPayment(organizerOid, examSessionId, registrationId),
-      ),
-    onResendLink: (organizerOid, examSessionId, registrationId, emailLang) =>
-      dispatch(
-        actions.ResendPaymentEmail(organizerOid, examSessionId, registrationId, emailLang),
-      ),
-    errorConfirmedHandler: () => dispatch(actions.examSessionFailReset()),
-    onRelocate: (
-      organizerOid,
-      examSessionId,
-      registrationId,
-      toExamSessionId,
-    ) =>
-      dispatch(
-        actions.relocateExamSession(
-          organizerOid,
-          examSessionId,
-          registrationId,
-          toExamSessionId,
-        ),
-      ),
   };
 };
 
@@ -124,11 +94,8 @@ ExamSessionDetails.propTypes = {
   error: PropTypes.object,
   oid: PropTypes.string.isRequired,
   onFetchExamSessionParticipants: PropTypes.func.isRequired,
-  onCancelRegistration: PropTypes.func.isRequired,
   onSubmitUpdateExamSession: PropTypes.func.isRequired,
   onSubmitDeleteExamSession: PropTypes.func.isRequired,
-  errorConfirmedHandler: PropTypes.func.isRequired,
-  onRelocate: PropTypes.func.isRequired,
 };
 
 export default connect(
