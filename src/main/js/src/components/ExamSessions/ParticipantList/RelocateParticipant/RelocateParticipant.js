@@ -76,7 +76,7 @@ export class RelocateParticipant extends Component {
     };
 
     const confirmButton = () => {
-      const disabled = !this.state.selectedSession;
+      const disabled = this.props.buttonsDisabled;
       return (
         <button
           type="button"
@@ -121,6 +121,7 @@ RelocateParticipant.propTypes = {
   examSessions: PropTypes.array.isRequired,
   onRelocate: PropTypes.func.isRequired,
   confirmText: PropTypes.string.isRequired,
+  buttonsDisabled: PropTypes.bool.isRequired,
 };
 
 export default withTranslation()(RelocateParticipant);

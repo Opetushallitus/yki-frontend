@@ -22,6 +22,7 @@ export class ActionButton extends Component {
         data-cy="button-cancel-action"
         className={styles}
         autoFocus
+        disabled={this.props.buttonsDisabled}
       >
         {this.props.cancelText}
       </button>
@@ -32,6 +33,7 @@ export class ActionButton extends Component {
         onClick={this.props.onClick}
         data-cy="button-confirm-action"
         className={styles}
+        disabled={this.props.buttonsDisabled}
       >
         {this.props.confirmText}
       </button>
@@ -65,6 +67,7 @@ ActionButton.propTypes = {
   confirmOnRight: PropTypes.bool,
   confirmText: PropTypes.string.isRequired,
   cancelText: PropTypes.string.isRequired,
+  buttonsDisabled: PropTypes.bool,
 };
 
 export default ActionButton;

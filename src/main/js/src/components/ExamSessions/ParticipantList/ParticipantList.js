@@ -33,6 +33,7 @@ const sortByNames = () =>
   ]);
 
 export const participantList = props => {
+  const [actionButtonsDisabled, setActionButtonsDisabled] = useState(false);
   const [sortParticipantsFn, setSortParticipantsFn] = useState(sortByNames);
 
   const getStateTranslationKey = state => {
@@ -78,16 +79,19 @@ export const participantList = props => {
       <RelocateParticipant
         examSession={props.examSession}
         examSessions={props.examSessions}
-        onRelocate={newSessionId =>
+        onRelocate={newSessionId => {
+          setActionButtonsDisabled(true);
+
           props.onRelocate(
             props.examSession.organizer_oid,
             props.examSession.id,
             participant.registration_id,
             newSessionId,
             props.isAdminView,
-          )
-        }
+          );
+        }}
         confirmText={props.t('examSession.registration.relocate.confirm')}
+        buttonsDisabled={actionButtonsDisabled}
       />
     );
   };
@@ -151,16 +155,19 @@ export const participantList = props => {
       <ActionButton
         children={cancelRegistration}
         confirmOnRight={true}
-        onClick={() =>
+        onClick={() => {
+          setActionButtonsDisabled(true);
+
           props.onCancelRegistration(
             props.examSession.organizer_oid,
             props.examSession.id,
             p.registration_id,
             props.isAdminView,
-          )
-        }
+          );
+        }}
         confirmText={props.t('examSession.registration.cancel.confirm')}
         cancelText={props.t('examSession.registration.cancel.cancel')}
+        buttonsDisabled={actionButtonsDisabled}
       />
     );
   };

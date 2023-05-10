@@ -122,6 +122,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       className="StateItem"
     >
       <withI18nextTranslation(RelocateParticipant)
+        buttonsDisabled={false}
         confirmText="examSession.registration.relocate.confirm"
         examSession={
           Object {
@@ -267,6 +268,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
       className="Item"
     >
       <ActionButton
+        buttonsDisabled={false}
         cancelText="examSession.registration.cancel.cancel"
         confirmOnRight={true}
         confirmText="examSession.registration.cancel.confirm"
