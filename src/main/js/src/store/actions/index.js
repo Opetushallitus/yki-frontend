@@ -6,12 +6,10 @@ export {
   updateExamSession,
   deleteExamSession,
   cancelRegistration,
-  confirmPayment,
   relocateExamSession,
   addPostAdmission,
   activatePostAdmission,
   deactivatePostAdmission,
-  ResendPaymentEmail,
 } from './examSession';
 export {
   fetchRegistryExamSessions,

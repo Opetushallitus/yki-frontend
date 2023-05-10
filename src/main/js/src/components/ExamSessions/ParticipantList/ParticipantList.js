@@ -84,6 +84,7 @@ export const participantList = props => {
             props.examSession.id,
             participant.registration_id,
             newSessionId,
+            props.isAdminView,
           )
         }
         confirmText={props.t('examSession.registration.relocate.confirm')}
@@ -155,6 +156,7 @@ export const participantList = props => {
             props.examSession.organizer_oid,
             props.examSession.id,
             p.registration_id,
+            props.isAdminView,
           )
         }
         confirmText={props.t('examSession.registration.cancel.confirm')}
@@ -263,19 +265,16 @@ export const participantList = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCancelRegistration: (organizerOid, examSessionId, registrationId) =>
+    onCancelRegistration: (organizerOid, examSessionId, registrationId, isAdminView) =>
       dispatch(
-        actions.cancelRegistration(organizerOid, examSessionId, registrationId),
-      ),
-    onConfirmPayment: (organizerOid, examSessionId, registrationId) =>
-      dispatch(
-        actions.confirmPayment(organizerOid, examSessionId, registrationId),
+        actions.cancelRegistration(organizerOid, examSessionId, registrationId, isAdminView),
       ),
     onRelocate: (
       organizerOid,
       examSessionId,
       registrationId,
       toExamSessionId,
+      isAdminView,
     ) =>
       dispatch(
         actions.relocateExamSession(
@@ -283,11 +282,8 @@ const mapDispatchToProps = dispatch => {
           examSessionId,
           registrationId,
           toExamSessionId,
+          isAdminView,
         ),
-      ),
-    onResendLink: (organizerOid, examSessionId, registrationId, emailLang) =>
-      dispatch(
-        actions.ResendPaymentEmail(organizerOid, examSessionId, registrationId, emailLang),
       ),
   };
 };
@@ -297,9 +293,7 @@ participantList.propTypes = {
   examSessions: PropTypes.array.isRequired,
   participants: PropTypes.array.isRequired,
   onCancelRegistration: PropTypes.func.isRequired,
-  onConfirmPayment: PropTypes.func.isRequired,
   onRelocate: PropTypes.func.isRequired,
-  onResendLink: PropTypes.func.isRequired,
   isAdminView: PropTypes.bool.isRequired,
 };
 

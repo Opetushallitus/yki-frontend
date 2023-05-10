@@ -3,6 +3,7 @@ import axios from '../../axios';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
+import { fetchRegistryExamSessionParticipants } from "./registryExamSession";
 
 const flattenOrganizationHierarchy = orgChildrenResponse => {
   const mapConcatOrgs = orgs => {
@@ -269,7 +270,7 @@ const deleteExamSessionFail = error => {
   };
 };
 
-export const cancelRegistration = (oid, examSessionId, registrationId) => {
+export const cancelRegistration = (oid, examSessionId, registrationId, isAdminView) => {
   return dispatch => {
     dispatch(cancelRegistrationStart());
     axios
@@ -278,7 +279,9 @@ export const cancelRegistration = (oid, examSessionId, registrationId) => {
       )
       .then(() => {
         dispatch(cancelRegistrationSuccess());
-        dispatch(fetchExamSessionParticipants(oid, examSessionId));
+        isAdminView
+          ? dispatch(fetchRegistryExamSessionParticipants(oid, examSessionId))
+          : dispatch(fetchExamSessionParticipants(oid, examSessionId));
       })
       .catch(err => {
         dispatch(cancelRegistrationFail(err));
@@ -308,52 +311,12 @@ const cancelRegistrationFail = error => {
   };
 };
 
-export const confirmPayment = (oid, examSessionId, registrationId) => {
-  return dispatch => {
-    dispatch(confirmPaymentStart());
-    axios
-      .post(
-        `/yki/api/virkailija/organizer/${oid}/exam-session/${examSessionId}/registration/${registrationId}/confirm-payment`,
-      )
-      .then(() => {
-        dispatch(confirmPaymentSuccess());
-        dispatch(fetchExamSessionParticipants(oid, examSessionId));
-      })
-      .catch(err => {
-        dispatch(confirmPaymentFail(err));
-      });
-  };
-};
-
-const confirmPaymentStart = () => {
-  return {
-    type: actionTypes.EXAM_SESSION_CONFIRM_PAYMENT_START,
-    loading: true,
-  };
-};
-
-const confirmPaymentSuccess = () => {
-  return {
-    type: actionTypes.EXAM_SESSION_CONFIRM_PAYMENT_SUCCESS,
-    loading: false,
-  };
-};
-
-const confirmPaymentFail = error => {
-  return {
-    type: actionTypes.EXAM_SESSION_CONFIRM_PAYMENT_FAIL,
-    error: Object.assign(error, {
-      key: 'error.examSession.registration.confirmPaymentFailed',
-    }),
-    loading: false,
-  };
-};
-
 export const relocateExamSession = (
   oid,
   examSessionId,
   registrationId,
   toExamSessionId,
+  isAdminView,
 ) => {
   return dispatch => {
     dispatch(relocateExamSessionStart());
@@ -364,7 +327,9 @@ export const relocateExamSession = (
       )
       .then(() => {
         dispatch(relocateExamSessionSuccess());
-        dispatch(fetchExamSessionParticipants(oid, examSessionId));
+        isAdminView
+          ? dispatch(fetchRegistryExamSessionParticipants(oid, examSessionId))
+          : dispatch(fetchExamSessionParticipants(oid, examSessionId));
       })
       .catch(err => {
         dispatch(relocateExamSessionFail(err));
@@ -437,51 +402,6 @@ export const deactivatePostAdmission = (orgOid, examSessionId) => {
         dispatch(fetchExamSessionContent());
       })
       .catch(err => {
-        console.error(err);
-      });
-  };
-};
-
-const ResendPaymentEmailStart = () => {
-  return {
-    type: actionTypes.EXAM_SESSION_RESEND_EMAIL_START,
-    loading: true,
-  };
-};
-
-const ResendPaymentEmailSuccess = () => {
-  return {
-    type: actionTypes.EXAM_SESSION_RESEND_EMAIL_SUCCESS,
-    loading: false,
-  };
-};
-
-const ResendPaymentEmailFailure = () => {
-  return {
-    type: actionTypes.EXAM_SESSION_RESEND_EMAIL_FAIL,
-    loading: false,
-  };
-};
-
-export const ResendPaymentEmail = (
-  orgId,
-  examSessionId,
-  registrationId,
-  emailLang,
-) => {
-  return dispatch => {
-    dispatch(ResendPaymentEmailStart());
-    axios
-      .post(
-        `/yki/api/virkailija/organizer/${orgId}/exam-session/${examSessionId}/registration/${registrationId}/resendConfirmation?emailLang=${emailLang}`,
-      )
-      .then(() => {
-        dispatch(ResendPaymentEmailSuccess());
-        alert('OK');
-      })
-      .catch(err => {
-        dispatch(ResendPaymentEmailFailure());
-        alert('Error');
         console.error(err);
       });
   };

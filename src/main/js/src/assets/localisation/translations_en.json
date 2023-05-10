@@ -89,7 +89,6 @@
   "error.examSession.addFailed": "Failed to add language proficiency test",
   "error.examSession.fetchFailed": "Search for language proficiency tests failed",
   "error.examSession.fetchParticipantsFailed": "Failed to fetch participants for language proficiency test",
-  "error.examSession.registration.confirmPaymentFailed": "Failed to confirm registration payment as paid",
   "error.examSession.registration.relocateExamSessionFailed": "Relocation failed",
   "error.examSession.updateFailed": "Failed to update language proficiency test",
   "error.generic.info": "Try again in a while",

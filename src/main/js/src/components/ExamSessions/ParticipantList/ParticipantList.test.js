@@ -72,9 +72,7 @@ describe('<ParticipantList />', () => {
         participants={participants}
         t={t => t}
         onCancelRegistration={jest.fn()}
-        onConfirmPayment={jest.fn()}
         onRelocate={jest.fn()}
-        onResendLink={jest.fn()}
         isAdminView={false}
       />,
     );
