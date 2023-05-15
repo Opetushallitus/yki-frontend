@@ -198,6 +198,7 @@
   "payment.status.error": "Betalningen misslyckades",
   "payment.status.error.evaluation": "Något gick fel, försök på nytt",
   "payment.status.error.info1": "Du kan försöka betala på nytt genom att använda länken i e-postmeddelandet.",
+  "payment.status.success.evaluation": "Du har fått en bekräftelse om din begäran om kontrollbedömning per e-post. E-posten innehåller också information om din avgift för kontrollbedömning. Om du inte har fått meddelandet, kolla din skräppostmapp.",
   "payment.status.success.info2": "En bekräftelse har skickats till dig per e-post.",
   "paymentsReport.button.download": "Ladda ner rapporten",
   "paymentsReport.document.title": "Rapportering av examinationsavgifter",

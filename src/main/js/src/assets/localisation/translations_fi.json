@@ -245,6 +245,7 @@
   "payment.status.error": "Maksu epäonnistui.",
   "payment.status.error.evaluation": "Jokin meni pieleen, yritä uudelleen",
   "payment.status.error.info1": "Voit yrittää maksaa uudelleen käyttämällä sähköpostissasi olevaa linkkiä.",
+  "payment.status.success.evaluation": "Sinulle on lähetetty vahvistus tarkistusarviointipyynnöstäsi sähköpostilla. Sähköpostissa on myös tiedot tarkistusarviointimaksustasi. Jos et ole saanut viestiä, tarkista roskapostikansiosi.",
   "payment.status.success.info2": "Sinulle on lähetetty varmistus sähköpostilla.",
   "paymentsReport.button.download": "Lataa raportti",
   "paymentsReport.document.text1": "Valitse alta päivämäärät joiden ajalta haluat tarkastella toteutuneita tutkintomaksuja.",

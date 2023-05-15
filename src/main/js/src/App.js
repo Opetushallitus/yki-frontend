@@ -144,6 +144,7 @@ const app = () => (
                 render={props => (
                   <PaymentStatus
                     {...props}
+                    successMessage={'payment.status.success.evaluation'}
                     failMessage={'payment.status.error.evaluation'}
                     cancelMessage={'payment.status.error.evaluation'}
                     infoUrl={'/yki/api/evaluation/order/'}

@@ -198,6 +198,7 @@
   "payment.status.error": "Payment failed!",
   "payment.status.error.evaluation": "Something went wrong, please try again",
   "payment.status.error.info1": "You can try to pay again via the link in the email.",
+  "payment.status.success.evaluation": "You have received a confirmation of your request for reassessment by email. The email also contains information on the reassessment fee. If you have not received the email, please check your spam folder.",
   "payment.status.success.info2": "An email confirmation has been sent to you.",
   "paymentsReport.button.download": "Download report",
   "paymentsReport.document.title": "Reporting of exam payments",
