@@ -119,8 +119,12 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           <div style={{ marginRight: '1rem' }}>
             <article className={classes.ArticleContent}>
               <p>{t('registration.description.text2')}</p>
-              <p>{t('registration.description.text3')}</p>
-              <p>{t('registration.description.text4')}</p>
+              <a
+                href={t('registration.description.text2.link.url')}
+                target="_blank"
+              >
+                {t('registration.description.text2.link.text')}
+              </a>
             </article>
             {tutorialVideo}
           </div>
@@ -186,8 +190,12 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
     >
       <article className={classes.ArticleContent}>
         <p>{t('registration.description.text2')}</p>
-        <p>{t('registration.description.text3')}</p>
-        <p>{t('registration.description.text4')}</p>
+        <a
+          href={t('registration.description.text2.link.url')}
+          target="_blank"
+        >
+          {t('registration.description.text2.link.text')}
+        </a>
       </article>
       {tutorialVideo}
       <div
@@ -254,8 +262,19 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
       <main id="main" className={'Container'}>
         <HeadlineContainer
           headlineTitle={t('registration.description.title')}
-          headlineContent={<p>{t('registration.description.text1')}</p>}
+          headlineContent={
+            <>
+              <p>{t('registration.description.text1')}</p>
+              <a
+                style={{ color: 'white' }}
+                href={t('registration.description.text1.link.url')}
+                target="_blank">
+                  {t('registration.description.text1.link.text')}
+              </a>
+            </>
+          }
           headlineImage={YkiImage1}
+          desktopBaseContainerCss={{ height: '590px' }}
         />
         {isMobile || (isMobile && getDeviceOrientation() === 'landscape') ? (
           <>{mobileContent}</>

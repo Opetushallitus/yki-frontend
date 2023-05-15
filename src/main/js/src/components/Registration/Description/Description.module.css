@@ -6,26 +6,6 @@
   margin-bottom: 10%;
 }
 
-.ArticleContent h1 {
-  font-weight: 400;
-  font-size: 1.5em;
-  margin: 32px 0;
-}
-
-.ArticleContent p {
-  margin-bottom: 0 !important;
-}
-
-.ArticleContent p:nth-of-type(5),
-.ArticleContent p:nth-of-type(6),
-.ArticleContent p:nth-of-type(7) {
-  margin: 0;
-}
-
-.ArticleContent p:last-of-type {
-  margin-top: 20px;
-}
-
 .TutorialVideo {
   position: relative;
   padding-bottom: 56.25%;
@@ -70,18 +50,6 @@
     max-width: 425px;
   }
 
-  .ArticleContent p {
-    margin-bottom: 25px;
-  }
-
-  .ArticleContent p:nth-child(2) {
-    margin-bottom: 50px;
-  }
-
-  .ArticleContent p:last-child {
-    margin-bottom: 50px;
-  }
-
   .YkiButton {
     margin-left: 90px;
   }
@@ -93,18 +61,6 @@
 
 /* Mobile view */
 @media screen and (max-width: 760px) and (orientation: landscape) {
-  .ArticleContent p {
-    margin-bottom: 25px;
-  }
-
-  .ArticleContent p:nth-child(2) {
-    margin-bottom: 50px;
-  }
-
-  .ArticleContent p:last-child {
-    margin-bottom: 50px;
-  }
-
   .YkiButton {
     margin-left: 90px;
   }

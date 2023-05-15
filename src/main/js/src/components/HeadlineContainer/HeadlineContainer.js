@@ -15,16 +15,16 @@ const HeadlineContainer = props => {
     headlineContent,
     headlineImage,
     disableContent,
+    desktopBaseContainerCss,
   } = props;
 
-  const landscape = useMobileView(false, false, true);
-  const mobileLandscape = landscape;
-
   const mobile = useMobileView(true, false);
+  const mobileLandscape = useMobileView(false, false, true);
+  const isTablet = useMobileView(false, true);
 
   return (
     <div className={classes.Headline}>
-      <div className={classes.BaseContainer}>
+      <div style={isTablet ? {} : desktopBaseContainerCss} className={classes.BaseContainer}>
         {mobile || mobileLandscape ? (
           <>
             <div
@@ -72,6 +72,7 @@ HeadlineContainer.propTypes = {
   headlineTitle: PropTypes.string.isRequired,
   headlineContent: PropTypes.element,
   headlineImage: PropTypes.string,
+  desktopBaseContainerCss: PropTypes.node,
 };
 
 export default HeadlineContainer;
