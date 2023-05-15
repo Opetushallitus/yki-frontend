@@ -16,7 +16,7 @@ import classes from './ReEvaluation.module.css';
 
 const headers = [
   { title: 'registration.list.exam', key: 'language_code', sortable: true },
-  { title: 'registration.list.date', key: 'exam_date', sortable: true },
+  { title: 'common.testDay', key: 'exam_date', sortable: true },
   {
     title: 'registration.list.evalPossible',
     key: 'evaluation_start_date',
@@ -65,7 +65,10 @@ const ReEvaluation = ({
       <div style={{ display: 'flex', paddingBottom: '1rem' }}>
         <div style={{ marginRight: '1rem' }}>
           <article className={classes.ArticleContent}>
+            <h2>{t('registration.reeval.heading1')}</h2>
+            <p>{t('registration.reeval.text1')}</p>
             <p>{t('registration.reeval.text2')}</p>
+            <h2 style={{ marginTop: '2rem' }}>{t('registration.reeval.heading2')}</h2>
             <p>{t('registration.reeval.text3')}</p>
             <p>{t('registration.reeval.text4')}</p>
             <p>{t('registration.reeval.text5')}</p>
@@ -86,7 +89,10 @@ const ReEvaluation = ({
   const mobileContent = (
     <div style={{ width: `calc(${window.screen.availWidth}px - 20px)` }}>
       <article className={classes.ArticleContent}>
+        <h2>{t('registration.reeval.heading1')}</h2>
+        <p>{t('registration.reeval.text1')}</p>
         <p>{t('registration.reeval.text2')}</p>
+        <h2 style={{ marginTop: '2rem' }}>{t('registration.reeval.heading2')}</h2>
         <p>{t('registration.reeval.text3')}</p>
         <p>{t('registration.reeval.text4')}</p>
         <p>{t('registration.reeval.text5')}</p>
