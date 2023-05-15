@@ -201,7 +201,9 @@ const ReEvaluationForm = props => {
         return (
           <Form id="form">
             <ScrollToError isValid={isValid} isSubmitting={isSubmitting} />
-            <h2>{t('registration.reeval.formpage.title2')}</h2>
+            <br />
+            <h2>{t('registration.reeval.formpage.heading1')}</h2>
+            <p>{t('registration.reeval.formpage.title2')}</p>
             {evaluationPrices.map(price => {
               return priceElement(price, values, setFieldValue);
             })}
@@ -217,9 +219,10 @@ const ReEvaluationForm = props => {
                 {calculatePrice(values.subtests)} €
               </strong>
             </div>
-            <p>{t('registration.reeval.formpage.text')}</p>
+            <p>{t('registration.reeval.formpage.text1')}</p>
             <br />
             <h2>{t('registration.reeval.formpage.title3')}</h2>
+            <p>{t('registration.reeval.formpage.text2')}</p>
             <div className={classes.FieldRow}>
               {inputField('firstName', true)}
               {inputField('lastName', true)}
