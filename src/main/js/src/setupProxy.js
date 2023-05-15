@@ -725,11 +725,14 @@ module.exports = function(app) {
     (req, res) => {
       try {
         const { id, examSessionId } = req.params;
-        const foundIndex = registrations[examSessionId].participants.findIndex(
+        const i = registrations[examSessionId].participants.findIndex(
           x => x.registration_id == id,
         );
+        const newState = registrations[examSessionId].participants[i].state === 'COMPLETED'
+          ? 'PAID_AND_CANCELLED'
+          : 'CANCELLED';
 
-        registrations[examSessionId].participants.splice(foundIndex, 1);
+        registrations[examSessionId].participants[i].state = newState;
         res.send({ success: true });
       } catch (err) {
         printError(req, err);

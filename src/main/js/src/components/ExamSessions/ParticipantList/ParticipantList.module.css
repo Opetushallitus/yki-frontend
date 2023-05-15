@@ -71,35 +71,3 @@
   border-radius: 2px;
   background-color: hsl(0, 0%, 100%);
 }
-
-.ShowOnHover {
-  opacity: 0;
-}
-
-.ShowOnHover:hover {
-  opacity: 1;
-}
-
-.Item:hover ~ .ShowOnHover {
-  opacity: 1;
-}
-
-.Item:hover ~ .ShowOnHover + .Line ~ .ShowOnHover {
-  opacity: 0;
-}
-
-.FirstShowOnHover {
-  opacity: 0;
-}
-
-.FirstShowOnHover:hover {
-  opacity: 1;
-}
-
-.StateItem:hover ~ .FirstShowOnHover {
-  opacity: 1;
-}
-
-.StateItem:hover ~ .ShowOnHover + .Line ~ .FirstShowOnHover {
-  opacity: 0;
-}

@@ -16,7 +16,6 @@ import { getLanguagesWithLevelDescriptions } from '../../util/util';
 import { DATE_FORMAT } from '../../common/Constants';
 import ExamSessionOrganizer from '../../components/ExamSessionOrganizer/ExamSessionOrganizer.js'
 
-
 class RegistryExamSessions extends PureComponent {
 	state = {
 		registryItem: null,
@@ -26,7 +25,7 @@ class RegistryExamSessions extends PureComponent {
 		showModal: false,
 	};
 
-	getOrgazationFromRegistry = () => {
+	getOrganizationFromRegistry = () => {
 		if (!this.state.registryItem && !this.state.organizationNotFound && this.props.orgRegistry.length > 0) {
 			const oid = this.props.match.params.oid;
 			let matchingRegistryItem;
@@ -45,13 +44,12 @@ class RegistryExamSessions extends PureComponent {
 		}
 	}
 
-
 	componentDidMount = () => {
 		this.props.match.params.oid && this.props.onFetchExamSessions(this.props.match.params.oid);
 		if (this.props.orgRegistry.length === 0) {
 			this.props.onFetchRegistryContent()
 		}
-		this.getOrgazationFromRegistry()
+		this.getOrganizationFromRegistry()
 	};
 
 	componentDidUpdate = (prevProps, prevState) => {
@@ -59,9 +57,8 @@ class RegistryExamSessions extends PureComponent {
 			this.props.onFetchSessionParticipants(this.props.match.params.oid, this.state.selectedSession.id)
 		}
 
-		this.getOrgazationFromRegistry()
+		this.getOrganizationFromRegistry()
 	};
-
 
 	selectSessionHandler = session =>
 		this.setState({ selectedSession: session });
@@ -69,7 +66,6 @@ class RegistryExamSessions extends PureComponent {
 	clearSessionHandler = () => {
 		this.setState({ selectedSession: null });
 	}
-
 
 	render() {
 		const { sessions, participants } = this.props;
@@ -99,14 +95,16 @@ class RegistryExamSessions extends PureComponent {
 		const sessionInfo = (
 			<>
 				{this.state.selectedSession && <>
-					<h1 className={classes.ExamSessionDetailsHeader}>
+					<h1>
 						{getLocationName()}
 					</h1>
-					<h2 className={classes.SubTitle}>
-						{moment(this.state.selectedSession.session_date).format(DATE_FORMAT)}{' '}
+					<h2>
+						{this.props.t('examSession')}
+						{': '}
 						{getLanguagesWithLevelDescriptions([
 							this.state.selectedSession,
 						])[0].toLowerCase()}{' '}
+						{moment(this.state.selectedSession.session_date).format(DATE_FORMAT)}
 					</h2>
 				</>}
 			</>
@@ -120,7 +118,7 @@ class RegistryExamSessions extends PureComponent {
 			</Link>
 		)
 
-		const organizatioNotFoundComponent = (
+		const organizationNotFoundComponent = (
 			<div className={classes.Content}>
 				{backLink}
 				<h1>{this.props.t('registry.examSession.organizationNotFound')}</h1>
@@ -153,11 +151,9 @@ class RegistryExamSessions extends PureComponent {
 									examSession={this.state.selectedSession}
 									participants={participants}
 									examSessions={this.props.sessions}
-									onCancel={() => { }}
-									onConfirmPayment={() => { }}
-									onRelocate={() => { }}
-									onResendLink={() => { }}
-									disableControls={true} /></>
+									isAdminView={true}
+								/>
+							</>
 						}
 						</>}
 				</>
@@ -188,7 +184,7 @@ class RegistryExamSessions extends PureComponent {
 			<Page>
 				{participantsModal}
 				{this.state.organizationNotFound
-					? organizatioNotFoundComponent
+					? organizationNotFoundComponent
 					: (<div className={classes.Content}>
 						{backLink}
 						{organisationHeaderComponent()}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import React, { useState } from 'react';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import checkMarkDone from '../../../assets/svg/checkmark-done.svg';
 import checkMarkNotDone from '../../../assets/svg/checkmark-not-done.svg';
@@ -14,6 +15,7 @@ import ListExport from './ListExport/ListExport';
 import RelocateParticipant from './RelocateParticipant/RelocateParticipant';
 import classes from './ParticipantList.module.css';
 import { examSessionParticipantsCount } from '../../../util/examSessionUtil';
+import * as actions from "../../../store/actions";
 
 const stateComparator = () => (a, b) => {
   if (a.state === 'COMPLETED') return -1;
@@ -31,6 +33,7 @@ const sortByNames = () =>
   ]);
 
 export const participantList = props => {
+  const [actionButtonsDisabled, setActionButtonsDisabled] = useState(false);
   const [sortParticipantsFn, setSortParticipantsFn] = useState(sortByNames);
 
   const getStateTranslationKey = state => {
@@ -76,15 +79,19 @@ export const participantList = props => {
       <RelocateParticipant
         examSession={props.examSession}
         examSessions={props.examSessions}
-        onRelocate={newSessionId =>
+        onRelocate={newSessionId => {
+          setActionButtonsDisabled(true);
+
           props.onRelocate(
             props.examSession.organizer_oid,
             props.examSession.id,
             participant.registration_id,
             newSessionId,
-          )
-        }
+            props.isAdminView,
+          );
+        }}
         confirmText={props.t('examSession.registration.relocate.confirm')}
+        buttonsDisabled={actionButtonsDisabled}
       />
     );
   };
@@ -148,20 +155,28 @@ export const participantList = props => {
       <ActionButton
         children={cancelRegistration}
         confirmOnRight={true}
-        onClick={() =>
-          props.onCancel(
+        onClick={() => {
+          setActionButtonsDisabled(true);
+
+          props.onCancelRegistration(
             props.examSession.organizer_oid,
             props.examSession.id,
             p.registration_id,
-          )
-        }
+            props.isAdminView,
+          );
+        }}
         confirmText={props.t('examSession.registration.cancel.confirm')}
         cancelText={props.t('examSession.registration.cancel.cancel')}
+        buttonsDisabled={actionButtonsDisabled}
       />
     );
   };
 
   const participantRows = participants => {
+    const renderCancelButton = (p) => {
+      return p.state === 'SUBMITTED' || (p.state === 'COMPLETED' && props.isAdminView);
+    };
+
     return sortParticipantsFn(participants).map((p, i) => (
       <React.Fragment key={i}>
         <div
@@ -194,8 +209,8 @@ export const participantList = props => {
             ? props.t('examSession.registration')
             : props.t('examSession.registration.postAdmission')}
         </div>
-        <div className={classes.FirstShowOnHover}>
-          {p.state === 'COMPLETED' && !props.disableControls
+        <div className={classes.StateItem}>
+          {p.state === 'COMPLETED'
             ? relocateParticipant(p)
             : null}
         </div>
@@ -208,9 +223,8 @@ export const participantList = props => {
         </div>
         <div className={classes.Item}>{getPhoneNumber(p)}</div>
         <div className={classes.Item}> {p.form.email}</div>
-        <div className={classes.ShowOnHover}>
-          {(p.state === 'SUBMITTED' || p.state === 'COMPLETED') &&
-          !props.disableControls
+        <div className={classes.Item}>
+          {renderCancelButton(p)
             ? cancelRegistrationButton(p)
             : null}
         </div>
@@ -256,15 +270,41 @@ export const participantList = props => {
   );
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onCancelRegistration: (organizerOid, examSessionId, registrationId, isAdminView) =>
+      dispatch(
+        actions.cancelRegistration(organizerOid, examSessionId, registrationId, isAdminView),
+      ),
+    onRelocate: (
+      organizerOid,
+      examSessionId,
+      registrationId,
+      toExamSessionId,
+      isAdminView,
+    ) =>
+      dispatch(
+        actions.relocateExamSession(
+          organizerOid,
+          examSessionId,
+          registrationId,
+          toExamSessionId,
+          isAdminView,
+        ),
+      ),
+  };
+};
+
 participantList.propTypes = {
   examSession: PropTypes.object.isRequired,
   examSessions: PropTypes.array.isRequired,
   participants: PropTypes.array.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onConfirmPayment: PropTypes.func.isRequired,
+  onCancelRegistration: PropTypes.func.isRequired,
   onRelocate: PropTypes.func.isRequired,
-  onResendLink: PropTypes.func.isRequired,
-  disableControls: PropTypes.bool,
+  isAdminView: PropTypes.bool.isRequired,
 };
 
-export default withTranslation()(participantList);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(withTranslation()(participantList));

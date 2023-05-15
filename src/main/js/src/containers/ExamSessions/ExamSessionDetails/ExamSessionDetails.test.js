@@ -35,11 +35,8 @@ describe('<ExamSessionDetails />', () => {
         t={t => t}
         oid={oid}
         onFetchExamSessionParticipants={jest.fn()}
-        onCancelRegistration={jest.fn()}
-        errorConfirmedHandler={jest.fn()}
         onSubmitUpdateExamSession={jest.fn()}
         onSubmitDeleteExamSession={jest.fn()}
-        onRelocate={jest.fn()}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();

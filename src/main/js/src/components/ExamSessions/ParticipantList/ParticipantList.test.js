@@ -71,10 +71,9 @@ describe('<ParticipantList />', () => {
         examSessions={[examSessionFirst, examSessionSecond]}
         participants={participants}
         t={t => t}
-        onCancel={jest.fn()}
-        onConfirmPayment={jest.fn()}
+        onCancelRegistration={jest.fn()}
         onRelocate={jest.fn()}
-        onResendLink={jest.fn()}
+        isAdminView={false}
       />,
     );
     expect(toJson(wrapper)).toMatchSnapshot();

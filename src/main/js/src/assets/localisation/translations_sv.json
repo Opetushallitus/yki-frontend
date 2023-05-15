@@ -89,7 +89,6 @@
   "error.examSession.addFailed": "Att lägga till examenstillfälle misslyckades",
   "error.examSession.fetchFailed": "Att söka examenstillfällen misslyckades",
   "error.examSession.fetchParticipantsFailed": "Att söka deltagare i examenstillfället misslyckades",
-  "error.examSession.registration.confirmPaymentFailed": "Verifiering av att anmälningen betalats misslyckades",
   "error.examSession.registration.relocateExamSessionFailed": "Överföring misslyckades",
   "error.examSession.updateFailed": "Uppdatering av examenstillfälle misslyckades",
   "error.generic.info": "Försök på nytt om en stund.",
