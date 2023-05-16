@@ -158,10 +158,7 @@ const app = () => (
                   <PaymentStatus
                     {...props}
                     renderSuccessHeadline={examSession => (
-                      <ReEvaluationSuccessHeadline
-                        examSession={examSession}
-                        t={props.t}
-                      />
+                      <ReEvaluationSuccessHeadline t={props.t} />
                     )}
                     successContent={<ReEvaluationSuccessContent t={props.t} />}
                     cancelMessage={'payment.status.error.evaluation'}

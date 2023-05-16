@@ -7,6 +7,9 @@ import classes from './ExamDetailsCard.module.css';
 import { examSessionParticipantsCount, isPostAdmissionActive } from "../../../../util/examSessionUtil";
 import { evaluationTexts, getLanguageAndLevel } from '../../../../util/util';
 
+// TODO: it seems successHeader is only used for displaying exam session data when enrollment payment is canceled or error occurs during payment
+// successHeader could thus be removed and its use case from PaymentStatus under `headlineContent` method be replaced by showing exam session details
+// in the same way as during enrollment.
 const ExamDetailsCard = ({ exam, isFull, showExam, successHeader }) => {
   const [t, i18n] = useTranslation();
 
