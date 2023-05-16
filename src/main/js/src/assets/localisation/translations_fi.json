@@ -272,7 +272,6 @@
   "registration.document.title": "Tutkintotilaisuudet - YKI",
   "registration.error.form.expired": "Lomakkeen täyttöaika on umpeutunut",
   "registration.examDetails.card.price": "Tutkintomaksu",
-  "registration.examDetails.card.reeval.price": "Tarkistusarviointimaksu",
   "registration.examDetails.card.time": "klo",
   "registration.examDetails.futureInfo": "Tarkista, että olet ilmoittautumassa oikean kielen ja tason testiin. Ilmoittautuminen YKI-testiin on sitova. Et voi muuttaa ilmoittautumista vahvistamisen jälkeen.",
   "registration.examDetails.identify": "Tunnistaudu ilmoittautumista varten",

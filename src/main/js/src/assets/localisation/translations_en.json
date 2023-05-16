@@ -220,7 +220,6 @@
   "registration.document.title": "Test sessions - YKI",
   "registration.error.form.expired": "Your session has expired",
   "registration.examDetails.card.price": "Test fee",
-  "registration.examDetails.card.reeval.price": "Reassessment fee",
   "registration.examDetails.card.time": "at",
   "registration.examDetails.futureInfo": "Check that you are registering for the correct YKI test (including language and proficiency level). Registration for YKI test is binding. Once you have confirmed your registration, you can no longer change it.",
   "registration.examDetails.identify": "Identify yourself for registration",

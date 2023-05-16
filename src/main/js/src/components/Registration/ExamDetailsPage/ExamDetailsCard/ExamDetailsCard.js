@@ -5,12 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { DATE_FORMAT } from '../../../../common/Constants';
 import classes from './ExamDetailsCard.module.css';
 import { examSessionParticipantsCount, isPostAdmissionActive } from "../../../../util/examSessionUtil";
-import { evaluationTexts, getLanguageAndLevel } from '../../../../util/util';
+import { getLanguageAndLevel } from '../../../../util/util';
 
-// TODO: it seems successHeader is only used for displaying exam session data when enrollment payment is canceled or error occurs during payment
-// successHeader could thus be removed and its use case from PaymentStatus under `headlineContent` method be replaced by showing exam session details
-// in the same way as during enrollment.
-const ExamDetailsCard = ({ exam, isFull, showExam, successHeader }) => {
+const ExamDetailsCard = ({ exam, isFull, showExam }) => {
   const [t, i18n] = useTranslation();
 
   const { participants, maxParticipants } = examSessionParticipantsCount(exam);
@@ -120,61 +117,25 @@ const ExamDetailsCard = ({ exam, isFull, showExam, successHeader }) => {
     </>
   );
 
-  const registrationSuccessContent = (
-    <div data-cy="exam-details-card" className={classes.SuccessDetailsCard}>
-      <p>{getLanguageAndLevel(exam)}</p>
-      <p>{moment(exam.session_date).format(DATE_FORMAT)}</p>
-      <p>
-        {organizer}
-        {address}
-      </p>
-      {exam.subtests ? (
-        <>
-          {exam.subtests.map(s => {
-            return <p>{t(evaluationTexts[s])}</p>;
-          })}
-          <p>{`${t('registration.examDetails.card.reeval.price')} ${
-            exam.amount
-          } €`}</p>
-        </>
-      ) : (
-        <p>{`${t('registration.examDetails.card.price')} ${
-          exam.exam_fee
-        } €`}</p>
-      )}
-      {contactDetails}
-    </div>
-  );
-
   return (
     <div data-cy="exam-details-card" className={classes.DetailsContainer}>
-      {successHeader ? (
-        registrationSuccessContent
-      ) : (
-        <>
-          {exceptionStatus}
-          <div className={classes.DetailsCard}>
-            {showExam && (
-              <p>
-                {t('common.exam')}:{' '}
-                <strong>{getLanguageAndLevel(exam)}</strong>
-              </p>
-            )}
-            {date}
-            {registrationPeriod}
-            {postAdmissionPeriod}
-            {locationDetails}
-            {extra}
-            {exam.subtests &&
-              exam.subtests.map(s => {
-                return <p>{t(evaluationTexts[s])}</p>;
-              })}
-            {price}
-            {availableSeats}
-            {contactDetails}
-          </div>
-        </>
-      )}
+      {exceptionStatus}
+      <div className={classes.DetailsCard}>
+        {showExam && (
+          <p>
+            {t('common.exam')}:{' '}
+            <strong>{getLanguageAndLevel(exam)}</strong>
+          </p>
+        )}
+        {date}
+        {registrationPeriod}
+        {postAdmissionPeriod}
+        {locationDetails}
+        {extra}
+        {price}
+        {availableSeats}
+        {contactDetails}
+      </div>
     </div>
   );
 };

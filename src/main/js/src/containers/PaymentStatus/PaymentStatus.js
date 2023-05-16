@@ -79,7 +79,7 @@ export class PaymentStatus extends Component {
       <ExamDetailsCard
         isFull={false}
         exam={this.state.examSession}
-        successHeader={true}
+        showExam={true}
       />
     );
 

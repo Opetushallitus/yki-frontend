@@ -220,7 +220,6 @@
   "registration.document.title": "Examenstillfällen – YKI",
   "registration.error.form.expired": "Tiden för att fylla i blanketten har gått ut",
   "registration.examDetails.card.price": "Examensavgift",
-  "registration.examDetails.card.reeval.price": "Avgift för kontrollbedömningen",
   "registration.examDetails.card.time": "kl.",
   "registration.examDetails.futureInfo": "Kontrollera att du anmäler dig till ett test på rätt språk och nivå. Anmälan till YKI-testet är bindande. Du kan inte ändra din anmälan efter att du har bekräftat den.",
   "registration.examDetails.identify": "Identifiera dig för anmälan",
