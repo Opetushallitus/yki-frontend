@@ -27,7 +27,7 @@ export class PaymentStatus extends Component {
       // only get exam session if url contains id query parameter
       if (id) {
         axios
-          .get(`${this.props.infoUrl}${id}`)
+          .get(`${this.props.entityUrl}${id}`)
           .then(({ data }) => {
             this.setState({ examSession: data, loading: false });
           })
@@ -43,26 +43,18 @@ export class PaymentStatus extends Component {
     const success = this.state.loading ? (
       <Spinner />
     ) : (
-      <>
-        <p data-cy="payment-status-text">
-          {this.props.t(
-            this.props.successMessage || 'payment.status.success.info2',
-          )}
-        </p>
-      </>
+      <>{this.props.successContent}</>
     );
 
     const cancel = (
       <p data-cy="payment-status-text">
-        {this.props.t(
-          this.props.cancelMessage || 'payment.status.cancel.info1',
-        )}
+        {this.props.t(this.props.cancelMessage)}
       </p>
     );
 
     const error = (
       <p data-cy="payment-status-text">
-        {this.props.t(this.props.failMessage || 'payment.status.error.info1')}
+        {this.props.t(this.props.failMessage)}
       </p>
     );
 
@@ -95,15 +87,7 @@ export class PaymentStatus extends Component {
       if (!this.state.loading) {
         switch (status) {
           case 'payment-success': {
-            return (
-              <HeadlineContainer
-                headlineTitle={`${this.props.t(
-                  'email.payment_success.subject',
-                )}!`}
-                headlineContent={headlineContent()}
-                headlineImage={YkiImage2}
-              />
-            );
+            return this.props.renderSuccessHeadline(this.state.examSession);
           }
           case 'payment-cancel': {
             return (
@@ -145,6 +129,12 @@ export class PaymentStatus extends Component {
 
 PaymentStatus.propTypes = {
   location: PropTypes.object.isRequired,
+  renderSuccessHeadline: PropTypes.func.isRequired,
+  successContent: PropTypes.element.isRequired,
+  cancelMessage: PropTypes.string.isRequired,
+  failMessage: PropTypes.string.isRequired,
+  entityUrl: PropTypes.string.isRequired,
+  returnUrl: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => {

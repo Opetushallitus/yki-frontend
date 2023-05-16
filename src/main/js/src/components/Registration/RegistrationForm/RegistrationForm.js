@@ -12,8 +12,8 @@ import ScrollToError from '../../../ScrollToFormTop';
 import { useMobileView } from '../../../util/customHooks';
 import { checkBirthDate, containsSpecialCharacters } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
-import { useTranslation } from 'react-i18next';
 
+import { ExternalLink } from "../../ExternalLink/ExternalLink";
 import PhoneNumberInput from '../../PhoneNumberInput/PhoneNumberInput';
 import Button from '../../UI/Button/Button';
 import Checkbox from '../../UI/Checkbox/Checkbox';
@@ -23,26 +23,6 @@ import RegistrationError from '../RegistrationError/RegistrationError';
 import GenderSelect from './GenderSelect/GenderSelect';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
 import classes from './RegistrationForm.module.css';
-
-const ExternalLink = ({ label, url }) => {
-  const { t } = useTranslation();
-
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={t('common.newTab')}
-    >
-      {label}
-      <img
-        className={classes.ExternalLinkIcon}
-        src={require('../../../assets/svg/external-link.svg')}
-        alt={t('common.newTab')}
-      />
-    </a>
-  );
-};
 
 export const registrationForm = props => {
   const mandatoryErrorMsg = props.t('error.mandatory');

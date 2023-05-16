@@ -12,6 +12,10 @@ import Description from './components/Registration/Description/Description';
 import ExamDetailsPage from './components/Registration/ExamDetailsPage/ExamDetailsPage';
 import ReEvaluation from './components/Registration/ReEvaluation/ReEvaluation';
 import ReEvaluationFormPage from './components/Registration/ReEvaluationForm/ReEvaluationFormPage';
+import ReEvaluationSuccessContent from "./components/Registration/ReEvaluationSuccess/ReEvaluationSuccessContent";
+import ReEvaluationSuccessHeadline from "./components/Registration/ReEvaluationSuccess/ReEvaluationSuccessHeadline";
+import RegistrationPaidContent from './components/Registration/RegistrationPaid/RegistrationPaidContent';
+import RegistrationPaidHeadline from "./components/Registration/RegistrationPaid/RegistrationPaidHeadline";
 import Spinner from './components/UI/Spinner/Spinner';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import NewEvaluationPaymentRedirect from './containers/NewEvaluationPaymentRedirect/NewEvaluationPaymentRedirect';
@@ -111,8 +115,17 @@ const app = () => (
                 render={props => (
                   <PaymentStatus
                     {...props}
-                    infoUrl={'/yki/api/exam-session/'}
-                    returnUrl="/yki/"
+                    renderSuccessHeadline={examSession => (
+                      <RegistrationPaidHeadline
+                        examSession={examSession}
+                        t={props.t}
+                      />
+                    )}
+                    successContent={<RegistrationPaidContent t={props.t} />}
+                    cancelMessage={'payment.status.cancel.info1'}
+                    failMessage={'payment.status.error.info1'}
+                    entityUrl={'/yki/api/exam-session/'}
+                    returnUrl={'/yki'}
                   />
                 )}
               />
@@ -144,11 +157,17 @@ const app = () => (
                 render={props => (
                   <PaymentStatus
                     {...props}
-                    successMessage={'payment.status.success.evaluation'}
-                    failMessage={'payment.status.error.evaluation'}
+                    renderSuccessHeadline={examSession => (
+                      <ReEvaluationSuccessHeadline
+                        examSession={examSession}
+                        t={props.t}
+                      />
+                    )}
+                    successContent={<ReEvaluationSuccessContent t={props.t} />}
                     cancelMessage={'payment.status.error.evaluation'}
-                    infoUrl={'/yki/api/evaluation/order/'}
-                    returnUrl="/yki/tarkistusarviointi"
+                    failMessage={'payment.status.error.evaluation'}
+                    entityUrl={'/yki/api/evaluation/order/'}
+                    returnUrl={'/yki/tarkistusarviointi'}
                   />
                 )}
               />

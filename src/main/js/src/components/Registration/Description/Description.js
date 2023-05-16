@@ -13,6 +13,7 @@ import {
   levelTranslations,
 } from '../../../util/util';
 import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCollapsible';
+import { ExternalLink } from "../../ExternalLink/ExternalLink";
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import classes from './Description.module.css';
@@ -119,12 +120,10 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           <div style={{ marginRight: '1rem' }}>
             <article className={classes.ArticleContent}>
               <p>{t('registration.description.text2')}</p>
-              <a
-                href={t('registration.description.text2.link.url')}
-                target="_blank"
-              >
-                {t('registration.description.text2.link.text')}
-              </a>
+              <ExternalLink
+                label={t('registration.description.text2.link.text')}
+                url={t('registration.description.text2.link.url')}
+              />
             </article>
             {tutorialVideo}
           </div>
@@ -190,12 +189,10 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
     >
       <article className={classes.ArticleContent}>
         <p>{t('registration.description.text2')}</p>
-        <a
-          href={t('registration.description.text2.link.url')}
-          target="_blank"
-        >
-          {t('registration.description.text2.link.text')}
-        </a>
+        <ExternalLink
+          label={t('registration.description.text2.link.text')}
+          url={t('registration.description.text2.link.url')}
+        />
       </article>
       {tutorialVideo}
       <div
@@ -265,12 +262,11 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           headlineContent={
             <>
               <p>{t('registration.description.text1')}</p>
-              <a
+              <ExternalLink
+                label={t('registration.description.text1.link.text')}
+                url={t('registration.description.text1.link.url')}
                 style={{ color: 'white' }}
-                href={t('registration.description.text1.link.url')}
-                target="_blank">
-                  {t('registration.description.text1.link.text')}
-              </a>
+              />
             </>
           }
           headlineImage={YkiImage1}
