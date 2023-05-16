@@ -318,6 +318,13 @@ export const registrationForm = props => {
       inputField(name, true, null, type)
     );
 
+  const displayInfoTextAboutFillingName = (initialValues) => {
+    const firstName = initialValues['firstName'];
+    const lastName = initialValues['lastName'];
+
+    return !firstName || !lastName;
+  };
+
   const hideExamLangOptions = () => {
     const { language_code, level_code } = props.initData.exam_session;
 
@@ -401,8 +408,11 @@ export const registrationForm = props => {
         <Form className={classes.Form} id="form">
           <ScrollToError isValid={isValid} isSubmitting={isSubmitting} />
           <div data-cy="registration-form">
-            <p>{props.t('registration.form.info')}</p>
-            <div className={classes.InputGroup}>
+            <p>{props.t('registration.form.info.text1')}</p>
+            {displayInfoTextAboutFillingName(initialValues) && (
+              <p>{props.t('registration.form.info.text2')}</p>
+            )}
+            <div style={{ marginTop: '2rem' }} className={classes.InputGroup}>
               {readonlyWhenExistsInput('firstName', initialValues)}
               {readonlyWhenExistsInput('lastName', initialValues)}
             </div>
@@ -540,18 +550,6 @@ export const registrationForm = props => {
               </RadioButtonGroup>
             </div>
           </div>
-
-          <p>
-            {props.t('registration.form.specialArrangements.info')}
-            <br />
-            {props.t('registration.form.specialArrangements.link.info')}:
-            <br />
-            <ExternalLink
-              label={props.t('registration.form.specialArrangements.link.url')}
-              url={props.t('registration.form.specialArrangements.link.url')}
-            />
-          </p>
-          <p>{props.t('registration.form.summary.info')}</p>
           <>
             <div className={classes.ConsentContainer}>
               <article>
@@ -634,6 +632,9 @@ export const registrationForm = props => {
               </div>
             </div>
           </>
+          <p style={{ marginTop: '2rem' }}>
+            {props.t('registration.form.summary.info')}
+          </p>
           <Button
             type="submit"
             disabled={props.submitting}
