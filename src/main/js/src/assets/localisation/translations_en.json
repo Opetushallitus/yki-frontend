@@ -273,7 +273,7 @@
   "registration.form.streetAddress": "Street address",
   "registration.form.streetAddress.placeholder": "Street name, number",
   "registration.form.submit.button": "Send",
-  "registration.form.summary.info": "-",
+  "registration.form.summary.info": "After you have confirmed your registration, you will receive a payment link by email.",
   "registration.init.error.generic": " ",
   "registration.init.error.session.closed": "Registration period has ended.",
   "registration.init.error.session.full": "Language proficiency test is full.",

@@ -273,7 +273,7 @@
   "registration.form.streetAddress": "Gatuadress",
   "registration.form.streetAddress.placeholder": "Gatunamn, nummer",
   "registration.form.submit.button": "Skicka",
-  "registration.form.summary.info": "-",
+  "registration.form.summary.info": "Efter att du bekräftat din anmälan får du en länk i din e-post för betalning.",
   "registration.init.error.generic": "Att hämta uppgifter i anmälningsblanketten misslyckades.",
   "registration.init.error.session.closed": "Anmälningstiden har gått ut.",
   "registration.init.error.session.full": "Examenstillfället är fullsatt.",
