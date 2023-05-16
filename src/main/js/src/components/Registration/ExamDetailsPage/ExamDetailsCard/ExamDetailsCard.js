@@ -24,7 +24,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
 
   const date = (
     <p>
-      {t('common.examDate')}:{' '}
+      {t('common.testDay')}:{' '}
       <strong>{moment(exam.session_date).format(DATE_FORMAT)} </strong>
     </p>
   );
@@ -38,7 +38,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
 
   const locationDetails = (
     <p>
-      {t('common.address')}:
+      {t('common.testPlace')}:
       {organizer}
       {address}
     </p>
@@ -62,7 +62,7 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
 
   const registrationPeriod = (
     <p>
-      {t('common.registration')}
+      {t('common.registrationPeriod')}
       {': '}
       <strong>
         {`${moment(exam.registration_start_date).format(
