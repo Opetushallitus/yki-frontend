@@ -22,7 +22,7 @@ exports[`<UpcomingAndPastExamSessions /> should render exam session rows 1`] = `
       <h3
         className="DesktopOnly"
       >
-        common.registationPeriod
+        common.registrationPeriod
       </h3>
       <h3>
         examSession.participants

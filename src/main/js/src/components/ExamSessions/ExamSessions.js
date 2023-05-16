@@ -58,7 +58,7 @@ export const upcomingAndPastExamSessions = props => {
             <h3>{props.t('common.language')}</h3>
             <h3>{props.t('common.level')}</h3>
             <h3 className={classes.DesktopOnly}>
-              {props.t('common.registationPeriod')}
+              {props.t('common.registrationPeriod')}
             </h3>
             <h3>{props.t('examSession.participants')}</h3>
             {renderExamSessionRows(upcomingExamSessions, 'upcoming')}
@@ -75,7 +75,7 @@ export const upcomingAndPastExamSessions = props => {
             <h3>{props.t('common.language')}</h3>
             <h3>{props.t('common.level')}</h3>
             <h3 className={classes.DesktopOnly}>
-              {props.t('common.registationPeriod')}
+              {props.t('common.registrationPeriod')}
             </h3>
             <h3>{props.t('examSession.participants')}</h3>
             {renderExamSessionRows(pastExamSessions, 'past')}

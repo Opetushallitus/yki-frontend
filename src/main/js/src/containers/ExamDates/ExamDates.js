@@ -202,7 +202,7 @@ class ExamDates extends Component {
           <div className={classes.Grid} data-cy="exam-dates-table-headers">
             <h3>{t('common.examDate')}</h3>
             <h3>{t('examDates.languageLevels')}</h3>
-            <h3>{t('common.registationPeriod')}</h3>
+            <h3>{t('common.registrationPeriod')}</h3>
             <h3>{t('common.postAdmission')}</h3>
             <h3>{t('common.reeval')}</h3>
             <h3>{t('common.edit')}</h3>

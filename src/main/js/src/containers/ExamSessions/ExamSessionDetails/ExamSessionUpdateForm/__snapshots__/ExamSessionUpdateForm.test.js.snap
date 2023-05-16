@@ -9,7 +9,7 @@ exports[`<ExamSessionUpdateForm /> should render form 1`] = `
       class="FormElement"
     >
       <h3>
-        common.registationPeriod
+        common.registrationPeriod
       </h3>
       <label>
         1.9. – 15.12.2028

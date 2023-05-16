@@ -103,7 +103,7 @@ const examSessionListItem = ({
 
   const registrationPeriodAriaLabelText = displayPostAdmissionPeriod
     ? `${t('examSession.postAdmission')}: ${registrationPeriodText}`
-    : `${t('registration.list.signupOpen')}: ${registrationPeriodText}`;
+    : `${t('common.registrationPeriod')}: ${registrationPeriodText}`;
 
   const registrationOpenDesktop = (
     <div>
@@ -120,7 +120,7 @@ const examSessionListItem = ({
           {displayPostAdmissionPeriod ? (
             t('examSession.postAdmission')
           ) : (
-            t('registration.list.signupOpen')
+            t('common.registrationPeriod')
           )}
           {':'}
           <span style={{marginLeft: 5}}>
