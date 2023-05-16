@@ -20,7 +20,7 @@ exports[`<RegistrationSuccess /> should render registration success page 1`] = `
           }
         }
         isFull={false}
-        successHeader={true}
+        showExam={true}
       />
     }
     headlineImage="ophYki_image2.png"
@@ -49,7 +49,6 @@ exports[`<RegistrationSuccess /> should render registration success page 1`] = `
     <div>
       <p>
         registration.success.info2
-         
       </p>
     </div>
     <div

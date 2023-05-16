@@ -16,7 +16,7 @@ const QuarantineDetails = ({ quarantine, t }) => {
   return (
     <div className={classes.QuarantineDetails}>
       <div>
-        <div>{t('registration.list.exam')}:</div>
+        <div>{t('common.exam')}:</div>
         <div>{t('common.name')}:</div>
         <div>{t('common.birthdate')}:</div>
         <div>{t('participationBan.paymentState')}:</div>

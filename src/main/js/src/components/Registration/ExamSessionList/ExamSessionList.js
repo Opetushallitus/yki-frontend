@@ -11,7 +11,7 @@ const examSessionList = ({ examSessions: sessions, language, t, history }) => (
       <table>
         <thead>
           <tr className={classes.ColumnHeaders}>
-            <th>{t('registration.list.exam')}</th>
+            <th>{t('common.exam')}</th>
             <th>{t('common.testDay')}</th>
             <th>{t('common.testPlace')}</th>
             <th>{t('common.registrationPeriod')}</th>

@@ -7,7 +7,7 @@ import classes from './ExamDetailsCard.module.css';
 import { examSessionParticipantsCount, isPostAdmissionActive } from "../../../../util/examSessionUtil";
 import { evaluationTexts, getLanguageAndLevel } from '../../../../util/util';
 
-const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
+const ExamDetailsCard = ({ exam, isFull, showExam, successHeader }) => {
   const [t, i18n] = useTranslation();
 
   const { participants, maxParticipants } = examSessionParticipantsCount(exam);
@@ -151,6 +151,12 @@ const ExamDetailsCard = ({ exam, isFull, successHeader }) => {
         <>
           {exceptionStatus}
           <div className={classes.DetailsCard}>
+            {showExam && (
+              <p>
+                {t('common.exam')}:{' '}
+                <strong>{getLanguageAndLevel(exam)}</strong>
+              </p>
+            )}
             {date}
             {registrationPeriod}
             {postAdmissionPeriod}

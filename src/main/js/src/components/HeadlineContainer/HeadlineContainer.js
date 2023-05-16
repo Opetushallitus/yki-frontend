@@ -72,7 +72,7 @@ HeadlineContainer.propTypes = {
   headlineTitle: PropTypes.string.isRequired,
   headlineContent: PropTypes.element,
   headlineImage: PropTypes.string,
-  desktopBaseContainerCss: PropTypes.node,
+  desktopBaseContainerCss: PropTypes.object,
 };
 
 export default HeadlineContainer;
