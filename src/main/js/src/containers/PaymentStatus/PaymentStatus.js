@@ -22,18 +22,21 @@ export class PaymentStatus extends Component {
   };
 
   componentDidMount() {
+    if (!this.props.fetchExamSession) {
+      this.setState({ loading: false });
+      return;
+    }
+
     if (!this.state.examSession) {
       const { id } = queryString.parse(this.props.location.search);
       // only get exam session if url contains id query parameter
       if (id) {
         axios
-          .get(`${this.props.entityUrl}${id}`)
+          .get(`/yki/api/exam-session/${id}`)
           .then(({ data }) => {
             this.setState({ examSession: data, loading: false });
           })
           .catch(() => this.setState({ loading: false }));
-      } else {
-        this.setState({ loading: false });
       }
     }
   }
@@ -72,16 +75,13 @@ export class PaymentStatus extends Component {
       }
     };
 
-    const headlineContent = () => {
-      if (!this.state.examSession) return null;
-      return (
-        <ExamDetailsCard
-          isFull={false}
-          exam={this.state.examSession}
-          successHeader={true}
-        />
-      );
-    };
+    const examDetailsCard = (
+      <ExamDetailsCard
+        isFull={false}
+        exam={this.state.examSession}
+        successHeader={true}
+      />
+    );
 
     const headLine = () => {
       if (!this.state.loading) {
@@ -93,7 +93,7 @@ export class PaymentStatus extends Component {
             return (
               <HeadlineContainer
                 headlineTitle={this.props.t('payment.status.cancel')}
-                headlineContent={headlineContent()}
+                headlineContent={this.state.examSession ? examDetailsCard : null}
                 headlineImage={YkiImage2}
                 disableContent={true}
               />
@@ -103,7 +103,7 @@ export class PaymentStatus extends Component {
             return (
               <HeadlineContainer
                 headlineTitle={this.props.t('payment.status.error')}
-                headlineContent={headlineContent()}
+                headlineContent={this.state.examSession ? examDetailsCard : null}
                 headlineImage={YkiImage2}
                 disableContent={true}
               />
@@ -133,8 +133,8 @@ PaymentStatus.propTypes = {
   successContent: PropTypes.element.isRequired,
   cancelMessage: PropTypes.string.isRequired,
   failMessage: PropTypes.string.isRequired,
-  entityUrl: PropTypes.string.isRequired,
   returnUrl: PropTypes.string.isRequired,
+  fetchExamSession: PropTypes.bool,
 };
 
 const mapStateToProps = state => {

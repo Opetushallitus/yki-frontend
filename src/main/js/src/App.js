@@ -124,8 +124,8 @@ const app = () => (
                     successContent={<RegistrationPaidContent t={props.t} />}
                     cancelMessage={'payment.status.cancel.info1'}
                     failMessage={'payment.status.error.info1'}
-                    entityUrl={'/yki/api/exam-session/'}
                     returnUrl={'/yki'}
+                    fetchExamSession={true}
                   />
                 )}
               />
@@ -163,7 +163,6 @@ const app = () => (
                     successContent={<ReEvaluationSuccessContent t={props.t} />}
                     cancelMessage={'payment.status.error.evaluation'}
                     failMessage={'payment.status.error.evaluation'}
-                    entityUrl={'/yki/api/evaluation/order/'}
                     returnUrl={'/yki/tarkistusarviointi'}
                   />
                 )}

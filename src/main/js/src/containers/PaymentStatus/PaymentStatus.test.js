@@ -23,7 +23,6 @@ describe('<PaymentStatus />', () => {
         successContent={<>content</>}
         cancelMessage={'msg.fail'}
         failMessage={'msg.cancel'}
-        entityUrl={'/yki/exam'}
         returnUrl='/'
         t={key => key}
         user={{ email: 'test@test.com' }}
@@ -46,8 +45,8 @@ describe('<PaymentStatus />', () => {
         successContent={<>content</>}
         cancelMessage={'msg.fail'}
         failMessage={'msg.cancel'}
-        entityUrl={'/yki/exam'}
         returnUrl='/'
+        fetchExamSession={true}
         t={key => key}
         user={{ email: 'test@test.com' }}
         location={{ search: '?status=payment-success&id=1' }}
@@ -74,7 +73,6 @@ describe('<PaymentStatus />', () => {
         successContent={<>content</>}
         cancelMessage={'msg.fail'}
         failMessage={'msg.cancel'}
-        entityUrl={'/yki/exam'}
         returnUrl='/'
         t={key => key}
         location={{ search: '?status=payment-error' }}
@@ -97,7 +95,6 @@ describe('<PaymentStatus />', () => {
         successContent={<>content</>}
         cancelMessage={'msg.fail'}
         failMessage={'msg.cancel'}
-        entityUrl={'/yki/exam'}
         returnUrl='/'
         t={key => key}
         location={{ search: '?status=payment-cancel' }}
