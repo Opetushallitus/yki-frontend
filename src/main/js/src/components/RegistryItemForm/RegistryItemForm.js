@@ -9,7 +9,6 @@ import { DATE_FORMAT } from '../../common/Constants';
 import LanguageCheckboxes from '../LanguageCheckboxes/LanguageCheckboxes';
 import Button from '../UI/Button/Button';
 import DatePicker from '../UI/DatePicker/DatePicker';
-import AgreementPdf from './AgreementPdf/AgreementPdf';
 import classes from './RegistryItemForm.module.css';
 
 const registryItemForm = props => {
@@ -108,12 +107,6 @@ const registryItemForm = props => {
                     />
                   </div>
                 </div>
-                {props.updating && (
-                  <AgreementPdf
-                    oid={props.oid}
-                    attachmentId={props.attachmentId}
-                  />
-                )}
               </div>
               <div className={classes.Languages}>
                 <h3>{props.t('common.exam.languages')}</h3>
@@ -217,7 +210,6 @@ registryItemForm.propTypes = {
   languages: PropTypes.array,
   extra: PropTypes.string,
   oid: PropTypes.string,
-  attachmentId: PropTypes.string,
   name: PropTypes.string,
   onSubmit: PropTypes.func,
   address: PropTypes.string,

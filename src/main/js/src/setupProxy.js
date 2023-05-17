@@ -2,7 +2,6 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const axios = require('axios');
 const moment = require('moment');
-const multer = require('multer');
 
 const getCurrentTime = () => {
   const tzoffset = new Date().getTimezoneOffset() * 60000;
@@ -114,7 +113,6 @@ let organizers = [
     contact_name: 'Iida Ikola',
     contact_email: 'iida.ikola@amiedu.fi',
     contact_phone_number: '0101234546',
-    attachments: null,
     languages: [
       {
         language_code: 'fin',
@@ -152,7 +150,6 @@ let organizers = [
     contact_phone_number: '01412345467',
     languages: null,
     extra: 'Sisäänkäynti hämyiseltä sivuovelta',
-    attachments: null,
   },
 ];
 
@@ -292,12 +289,6 @@ const unauthenticatedUser = {
 const getNumberBetween = (min, max) =>
   Math.trunc(Math.random() * (max - min) + min);
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 104857600 },
-});
-
-let uploadedFile;
 
 module.exports = function(app) {
   const getUrl = req => {
@@ -601,41 +592,6 @@ module.exports = function(app) {
       }
     },
   );
-
-  app.post(
-    '/yki/api/virkailija/organizer/:oid/file',
-    upload.single('file'),
-    (req, res) => {
-      try {
-        const { oid } = req.params;
-        const index = organizers.map(o => o.oid).indexOf(oid);
-        organizers[index].attachments = [
-          {
-            external_id: 'a0d5dfc2-4045-408e-8ee5-4fd1b74b2757',
-            created: '2019-04-04T13:49:21.02436+03:00',
-          },
-        ];
-        uploadedFile = req.file;
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    },
-  );
-
-  app.get('/yki/api/virkailija/organizer/:oid/file/:id', (req, res) => {
-    try {
-      res.set({
-        'Content-Disposition':
-          'attachment; filename=' + uploadedFile.originalname,
-        'Content-Type': uploadedFile.mimetype,
-      });
-      res.send(uploadedFile.buffer);
-    } catch (err) {
-      res.status(404).send(err.message);
-    }
-  });
 
   app.put('/yki/api/virkailija/organizer/:oid/exam-session/:id', (req, res) => {
     const mockCall = () => {

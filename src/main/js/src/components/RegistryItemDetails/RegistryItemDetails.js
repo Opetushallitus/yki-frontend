@@ -33,19 +33,6 @@ const registryItemDetails = props => {
     </div>
   );
 
-  const agreementPdf = props.item.attachmentId ? (
-    <div>
-      <a
-        href={`/yki/api/virkailija/organizer/${props.item.oid}/file/${props.item.attachmentId
-          }`}
-        className={classes.PdfLink}
-        download
-      >
-        {props.t('registryItem.agreement.loadPdf')}
-      </a>
-    </div>
-  ) : null;
-
   const agreement = (
     <div className={props.agreementActive ? null : classes.AgreementExpired}>
       <h3>{props.t('common.agreement')}</h3>
@@ -53,7 +40,6 @@ const registryItemDetails = props => {
         {moment(props.item.agreement.start).format(DATE_FORMAT)} -{' '}
         {moment(props.item.agreement.end).format(DATE_FORMAT)}
       </p>
-      {agreementPdf}
     </div>
   );
 
