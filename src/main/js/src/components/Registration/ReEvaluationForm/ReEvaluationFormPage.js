@@ -74,9 +74,9 @@ const ReEvaluationFormPage = ({
         />
 
         <div className={'InnerContainer'}>
-          <h2 style={{ marginTop: '2rem' }}>
+          <p style={{ marginTop: '2rem' }}>
             {t('registration.reeval.formpage.title1')}
-          </h2>
+          </p>
           <div className={classes.BasicInfoRow}>
             <p>{langAndLvl}</p>
             <p>{examDate}</p>

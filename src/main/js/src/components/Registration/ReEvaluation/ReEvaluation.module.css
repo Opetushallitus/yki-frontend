@@ -10,12 +10,6 @@
   margin-bottom: 0 !important;
 }
 
-.ArticleContent p:nth-of-type(5),
-.ArticleContent p:nth-of-type(6),
-.ArticleContent p:nth-of-type(7) {
-  margin: 0;
-}
-
 .ArticleContent p:last-of-type {
   margin-top: 20px;
 }
@@ -30,10 +24,6 @@
     margin-bottom: 25px;
   }
 
-  .ArticleContent p:nth-child(2) {
-    margin-bottom: 50px;
-  }
-
   .ArticleContent p:last-child {
     margin-bottom: 50px;
   }
@@ -43,10 +33,6 @@
 @media screen and (max-width: 760px) and (orientation: landscape) {
   .ArticleContent p {
     margin-bottom: 25px;
-  }
-
-  .ArticleContent p:nth-child(2) {
-    margin-bottom: 50px;
   }
 
   .ArticleContent p:last-child {

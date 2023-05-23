@@ -153,7 +153,7 @@ const ReEvaluationList = props => {
         </table>
       ) : (
         <p className={classes.NotFound}>
-          <b>{t('registration.search.noResults')}</b>
+          <b>{t('registration.reeval.noResults')}</b>
         </p>
       )}
     </div>
