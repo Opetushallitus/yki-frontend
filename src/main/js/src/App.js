@@ -30,7 +30,7 @@ import PaymentStatus from './containers/PaymentStatus/PaymentStatus';
 import Registration from './containers/Registration/Registration';
 import RegistrationPage from './containers/Registration/RegistrationPage/RegistrationPage';
 import RegistryExamSessions from './containers/RegistryExamSessions/RegistryExamSessions';
-import RegistrationRoute from './hoc/RegistrationRoute/RegistrationRoute';
+import RegistrationRoute, { RegistrationLayout } from './hoc/RegistrationRoute/RegistrationRoute';
 import ScrollToTop from './ScrollToTop';
 import examDatesReducer from './store/reducers/examDates';
 import examSessionReducer from './store/reducers/examSession';
@@ -113,27 +113,29 @@ const app = () => (
               <Route
                 path="/maksu/tila"
                 render={props => (
-                  <PaymentStatus
-                    {...props}
-                    renderSuccessHeadline={examSession => (
-                      <RegistrationPaidHeadline
-                        examSession={examSession}
-                        t={props.t}
-                      />
-                    )}
-                    successContent={<RegistrationPaidContent t={props.t} />}
-                    cancelMessage={'payment.status.cancel.info1'}
-                    failMessage={'payment.status.error.info1'}
-                    returnUrl={'/yki'}
-                    fetchExamSession={true}
-                  />
+                  <RegistrationLayout>
+                    <PaymentStatus
+                      {...props}
+                      renderSuccessHeadline={examSession => (
+                        <RegistrationPaidHeadline
+                          examSession={examSession}
+                          t={props.t}
+                        />
+                      )}
+                      successContent={<RegistrationPaidContent t={props.t} />}
+                      cancelMessage={'payment.status.cancel.info1'}
+                      failMessage={'payment.status.error.info1'}
+                      returnUrl={'/yki'}
+                      fetchExamSession={true}
+                    />
+                  </RegistrationLayout>
                 )}
               />
               <RegistrationRoute
                 path="/maksu/v2/ilmoittautuminen/:registrationId"
                 component={NewPaymentRedirect}
               />
-              <RegistrationRoute
+              <Route
                 path="/tutkintotilaisuudet"
                 component={() => <ExamSessions />}
               />
@@ -155,19 +157,21 @@ const app = () => (
               <Route
                 path="/tarkistusarviointi/maksu/tila"
                 render={props => (
-                  <PaymentStatus
-                    {...props}
-                    renderSuccessHeadline={examSession => (
-                      <ReEvaluationSuccessHeadline t={props.t} />
-                    )}
-                    successContent={<ReEvaluationSuccessContent t={props.t} />}
-                    cancelMessage={'payment.status.error.evaluation'}
-                    failMessage={'payment.status.error.evaluation'}
-                    returnUrl={'/yki/tarkistusarviointi'}
-                  />
+                  <RegistrationLayout>
+                    <PaymentStatus
+                      {...props}
+                      renderSuccessHeadline={examSession => (
+                        <ReEvaluationSuccessHeadline t={props.t} />
+                      )}
+                      successContent={<ReEvaluationSuccessContent t={props.t} />}
+                      cancelMessage={'payment.status.error.evaluation'}
+                      failMessage={'payment.status.error.evaluation'}
+                      returnUrl={'/yki/tarkistusarviointi'}
+                    />
+                  </RegistrationLayout>
                 )}
               />
-              <Route
+              <RegistrationRoute
                 path="/tarkistusarviointi/v2/tilaus/:evaluationOrderId"
                 component={NewEvaluationPaymentRedirect}
               />
