@@ -81,16 +81,11 @@ const examDetailsPage = ({
                     {t('registration.examDetails.validationError.info')}
                   </div>
                 )}
-                <div className={classes.InfoText}>
-                  {seatsAvailable && (
+                {seatsAvailable && (
+                  <div className={classes.InfoText}>
                     <p>{t('registration.examDetails.futureInfo')}</p>
-                  )}
-                  {!seatsAvailable && !queueFull && (
-                    <p className={classes.InfoText}>
-                      {t('registration.notification.signup.label')}
-                    </p>
-                  )}
-                </div>
+                  </div>
+                )}
                 {seatsAvailable ? (
                   <div className={classes.Identification}>
                     <p className={classes.IdentificationHeader}>
@@ -118,10 +113,8 @@ const examDetailsPage = ({
                   </div>
                 ) : (
                   !queueFull && (
-                    <div className={classes.Identification}>
-                      <NotificationSignup
-                        examSessionId={match.params.examSessionId}
-                      />
+                    <div style={{ marginTop: 0 }} className={classes.Identification}>
+                      <NotificationSignup examSessionId={match.params.examSessionId} />
                     </div>
                   )
                 )}

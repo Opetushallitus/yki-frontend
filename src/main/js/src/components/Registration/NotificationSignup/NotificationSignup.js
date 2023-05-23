@@ -10,7 +10,7 @@ import Alert from '../../Alert/Alert';
 import Button from '../../UI/Button/Button';
 import classes from './NotificationSignup.module.css';
 
-const notificationSignup = ({ examSessionId, registrationOpen }) => {
+const notificationSignup = ({ examSessionId }) => {
   const [t] = useTranslation();
   const [signup, updateSignup] = useState({});
   const mobileOrTablet = useMobileView(true, true);
@@ -55,15 +55,12 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
           }}
           render={({ isValid, status }) => (
             <Form className={classes.Form}>
-              {registrationOpen === false ? (
-                <h2>{t('registration.form.header.notifyWhenOpen')}</h2>
-              ) : (
-                <h2>{t('registration.form.header.notify')}</h2>
-              )}
+              <p>{t('registration.notifySignup.text1')}</p>
+              <p>{t('registration.notifySignup.text2')}</p>
               <div className={classes.EmailContainer}>
                 <div>
                   <label htmlFor="email" className={classes.BoldLabel}>
-                    {t('registration.form.email')}
+                    {t('registration.form.email')} *
                   </label>
                   <Field
                     className={classes.Field}
@@ -76,7 +73,7 @@ const notificationSignup = ({ examSessionId, registrationOpen }) => {
                 </div>
                 <div>
                   <label htmlFor="confirmEmail" className={classes.BoldLabel}>
-                    {t('registration.form.confirmEmail')}
+                    {t('registration.form.confirmEmail')} *
                   </label>
                   <Field
                     className={classes.Field}
