@@ -229,7 +229,7 @@ const examSessionForm = props => {
       const end = moment(examDate.registration_end_date).format(DATE_FORMAT);
       return (
         <p>
-          {props.t('common.registationPeriod')} {start} &ndash; {end}
+          {props.t('common.registrationPeriod')} {start} &ndash; {end}
         </p>
       );
     } else {

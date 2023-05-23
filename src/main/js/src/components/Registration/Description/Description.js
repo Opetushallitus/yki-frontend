@@ -13,6 +13,7 @@ import {
   levelTranslations,
 } from '../../../util/util';
 import DescriptionCollapsible from '../../DescriptionsCollapsible/DescriptionCollapsible';
+import { ExternalLink } from "../../ExternalLink/ExternalLink";
 import HeadlineContainer from '../../HeadlineContainer/HeadlineContainer';
 import PriceContainer from '../../PriceContainer/PriceContainer';
 import classes from './Description.module.css';
@@ -119,8 +120,10 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
           <div style={{ marginRight: '1rem' }}>
             <article className={classes.ArticleContent}>
               <p>{t('registration.description.text2')}</p>
-              <p>{t('registration.description.text3')}</p>
-              <p>{t('registration.description.text4')}</p>
+              <ExternalLink
+                label={t('registration.description.text2.link.text')}
+                url={t('registration.description.text2.link.url')}
+              />
             </article>
             {tutorialVideo}
           </div>
@@ -186,8 +189,10 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
     >
       <article className={classes.ArticleContent}>
         <p>{t('registration.description.text2')}</p>
-        <p>{t('registration.description.text3')}</p>
-        <p>{t('registration.description.text4')}</p>
+        <ExternalLink
+          label={t('registration.description.text2.link.text')}
+          url={t('registration.description.text2.link.url')}
+        />
       </article>
       {tutorialVideo}
       <div
@@ -254,8 +259,18 @@ const description = ({ history, prices, onFetchPrices, loadingPrices }) => {
       <main id="main" className={'Container'}>
         <HeadlineContainer
           headlineTitle={t('registration.description.title')}
-          headlineContent={<p>{t('registration.description.text1')}</p>}
+          headlineContent={
+            <>
+              <p>{t('registration.description.text1')}</p>
+              <ExternalLink
+                label={t('registration.description.text1.link.text')}
+                url={t('registration.description.text1.link.url')}
+                style={{ color: 'white' }}
+              />
+            </>
+          }
           headlineImage={YkiImage1}
+          desktopBaseContainerCss={{ height: '590px' }}
         />
         {isMobile || (isMobile && getDeviceOrientation() === 'landscape') ? (
           <>{mobileContent}</>

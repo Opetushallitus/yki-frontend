@@ -9,17 +9,13 @@ import BackButton from '../BackButton/BackButton';
 import ExamDetailsCard from '../ExamDetailsPage/ExamDetailsCard/ExamDetailsCard';
 import classes from './RegistrationSuccess.module.css';
 
-export const registrationSuccess = ({ initData, formData, history, t }) => {
+export const registrationSuccess = ({ initData, t }) => {
   return (
     <main id="main">
       <HeadlineContainer
         headlineTitle={t('registration.success.header')}
         headlineContent={
-          <ExamDetailsCard
-            exam={initData.exam_session}
-            isFull={false}
-            successHeader
-          />
+          <ExamDetailsCard exam={initData.exam_session} isFull={false} showExam={true} />
         }
         headlineImage={YkiImage3}
       />
@@ -32,9 +28,7 @@ export const registrationSuccess = ({ initData, formData, history, t }) => {
           </p>
         </div>
         <div>
-          <p>
-            {t('registration.success.info2')} {formData.email}
-          </p>
+          <p>{t('registration.success.info2')}</p>
         </div>
         <div data-cy={'success-details-extra'}>
           <p>
@@ -49,7 +43,6 @@ export const registrationSuccess = ({ initData, formData, history, t }) => {
 
 registrationSuccess.propTypes = {
   initData: PropTypes.object.isRequired,
-  formData: PropTypes.object.isRequired,
 };
 
 export default withTranslation()(registrationSuccess);

@@ -176,7 +176,7 @@ export class ExamSessionUpdateForm extends Component {
           <Form className={classes.Form}>
             <div>
               <div className={classes.FormElement}>
-                <h3>{t('common.registationPeriod')}</h3>
+                <h3>{t('common.registrationPeriod')}</h3>
                 {registrationPediod(examSession)}
               </div>
               <div className={classes.FormElement}>

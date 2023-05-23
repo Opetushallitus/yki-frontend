@@ -12,8 +12,8 @@ import ScrollToError from '../../../ScrollToFormTop';
 import { useMobileView } from '../../../util/customHooks';
 import { checkBirthDate, containsSpecialCharacters } from '../../../util/util';
 import FormikInputField from '../../FormikInputField/FormikInputField';
-import { useTranslation } from 'react-i18next';
 
+import { ExternalLink } from "../../ExternalLink/ExternalLink";
 import PhoneNumberInput from '../../PhoneNumberInput/PhoneNumberInput';
 import Button from '../../UI/Button/Button';
 import Checkbox from '../../UI/Checkbox/Checkbox';
@@ -23,26 +23,6 @@ import RegistrationError from '../RegistrationError/RegistrationError';
 import GenderSelect from './GenderSelect/GenderSelect';
 import NationalitySelect from './NationalitySelect/NationalitySelect';
 import classes from './RegistrationForm.module.css';
-
-const ExternalLink = ({ label, url }) => {
-  const { t } = useTranslation();
-
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={t('common.newTab')}
-    >
-      {label}
-      <img
-        className={classes.ExternalLinkIcon}
-        src={require('../../../assets/svg/external-link.svg')}
-        alt={t('common.newTab')}
-      />
-    </a>
-  );
-};
 
 export const registrationForm = props => {
   const mandatoryErrorMsg = props.t('error.mandatory');
@@ -318,6 +298,13 @@ export const registrationForm = props => {
       inputField(name, true, null, type)
     );
 
+  const displayInfoTextAboutFillingName = (initialValues) => {
+    const firstName = initialValues['firstName'];
+    const lastName = initialValues['lastName'];
+
+    return !firstName || !lastName;
+  };
+
   const hideExamLangOptions = () => {
     const { language_code, level_code } = props.initData.exam_session;
 
@@ -401,8 +388,11 @@ export const registrationForm = props => {
         <Form className={classes.Form} id="form">
           <ScrollToError isValid={isValid} isSubmitting={isSubmitting} />
           <div data-cy="registration-form">
-            <p>{props.t('registration.form.info')}</p>
-            <div className={classes.InputGroup}>
+            <p>{props.t('registration.form.info.text1')}</p>
+            {displayInfoTextAboutFillingName(initialValues) && (
+              <p>{props.t('registration.form.info.text2')}</p>
+            )}
+            <div style={{ marginTop: '2rem' }} className={classes.InputGroup}>
               {readonlyWhenExistsInput('firstName', initialValues)}
               {readonlyWhenExistsInput('lastName', initialValues)}
             </div>
@@ -540,18 +530,6 @@ export const registrationForm = props => {
               </RadioButtonGroup>
             </div>
           </div>
-
-          <p>
-            {props.t('registration.form.specialArrangements.info')}
-            <br />
-            {props.t('registration.form.specialArrangements.link.info')}:
-            <br />
-            <ExternalLink
-              label={props.t('registration.form.specialArrangements.link.url')}
-              url={props.t('registration.form.specialArrangements.link.url')}
-            />
-          </p>
-          <p>{props.t('registration.form.summary.info')}</p>
           <>
             <div className={classes.ConsentContainer}>
               <article>
@@ -634,6 +612,9 @@ export const registrationForm = props => {
               </div>
             </div>
           </>
+          <p style={{ marginTop: '2rem' }}>
+            {props.t('registration.form.summary.info')}
+          </p>
           <Button
             type="submit"
             disabled={props.submitting}

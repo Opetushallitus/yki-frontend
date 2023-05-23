@@ -12,7 +12,7 @@ const RegistrationPeriod = props => {
 
   return (
     <>
-      <label>{t('common.registationPeriod')}</label>
+      <label>{t('common.registrationPeriod')}</label>
       <div className={classes.DatePeriodGrid}>
         <div className={classes.DatePickerWrapper}>
           <DatePicker

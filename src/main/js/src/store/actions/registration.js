@@ -289,7 +289,7 @@ export const submitRegistrationForm = (registrationId, registrationForm) => {
     axios
       .post(`/yki/api/registration/${registrationId}/submit`, registrationForm)
       .then(res => {
-        dispatch(submitRegistrationFormSuccess(registrationForm));
+        dispatch(submitRegistrationFormSuccess());
       })
       .catch(err => {
         dispatch(submitRegistrationFormFail(err));
@@ -303,10 +303,9 @@ const submitRegistrationFormStart = () => {
   };
 };
 
-const submitRegistrationFormSuccess = registrationForm => {
+const submitRegistrationFormSuccess = () => {
   return {
     type: actionTypes.SUBMIT_REGISTRATION_FORM_SUCCESS,
-    formData: registrationForm,
   };
 };
 

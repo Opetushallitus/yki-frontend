@@ -22,18 +22,21 @@ export class PaymentStatus extends Component {
   };
 
   componentDidMount() {
+    if (!this.props.fetchExamSession) {
+      this.setState({ loading: false });
+      return;
+    }
+
     if (!this.state.examSession) {
       const { id } = queryString.parse(this.props.location.search);
       // only get exam session if url contains id query parameter
       if (id) {
         axios
-          .get(`${this.props.infoUrl}${id}`)
+          .get(`/yki/api/exam-session/${id}`)
           .then(({ data }) => {
             this.setState({ examSession: data, loading: false });
           })
           .catch(() => this.setState({ loading: false }));
-      } else {
-        this.setState({ loading: false });
       }
     }
   }
@@ -43,26 +46,18 @@ export class PaymentStatus extends Component {
     const success = this.state.loading ? (
       <Spinner />
     ) : (
-      <>
-        <p data-cy="payment-status-text">
-          {this.props.t(
-            this.props.successMessage || 'payment.status.success.info2',
-          )}
-        </p>
-      </>
+      <>{this.props.successContent}</>
     );
 
     const cancel = (
       <p data-cy="payment-status-text">
-        {this.props.t(
-          this.props.cancelMessage || 'payment.status.cancel.info1',
-        )}
+        {this.props.t(this.props.cancelMessage)}
       </p>
     );
 
     const error = (
       <p data-cy="payment-status-text">
-        {this.props.t(this.props.failMessage || 'payment.status.error.info1')}
+        {this.props.t(this.props.failMessage)}
       </p>
     );
 
@@ -80,36 +75,25 @@ export class PaymentStatus extends Component {
       }
     };
 
-    const headlineContent = () => {
-      if (!this.state.examSession) return null;
-      return (
-        <ExamDetailsCard
-          isFull={false}
-          exam={this.state.examSession}
-          successHeader={true}
-        />
-      );
-    };
+    const examDetailsCard = (
+      <ExamDetailsCard
+        isFull={false}
+        exam={this.state.examSession}
+        showExam={true}
+      />
+    );
 
     const headLine = () => {
       if (!this.state.loading) {
         switch (status) {
           case 'payment-success': {
-            return (
-              <HeadlineContainer
-                headlineTitle={`${this.props.t(
-                  'email.payment_success.subject',
-                )}!`}
-                headlineContent={headlineContent()}
-                headlineImage={YkiImage2}
-              />
-            );
+            return this.props.renderSuccessHeadline(this.state.examSession);
           }
           case 'payment-cancel': {
             return (
               <HeadlineContainer
                 headlineTitle={this.props.t('payment.status.cancel')}
-                headlineContent={headlineContent()}
+                headlineContent={this.state.examSession ? examDetailsCard : null}
                 headlineImage={YkiImage2}
                 disableContent={true}
               />
@@ -119,7 +103,7 @@ export class PaymentStatus extends Component {
             return (
               <HeadlineContainer
                 headlineTitle={this.props.t('payment.status.error')}
-                headlineContent={headlineContent()}
+                headlineContent={this.state.examSession ? examDetailsCard : null}
                 headlineImage={YkiImage2}
                 disableContent={true}
               />
@@ -145,6 +129,12 @@ export class PaymentStatus extends Component {
 
 PaymentStatus.propTypes = {
   location: PropTypes.object.isRequired,
+  renderSuccessHeadline: PropTypes.func.isRequired,
+  successContent: PropTypes.element.isRequired,
+  cancelMessage: PropTypes.string.isRequired,
+  failMessage: PropTypes.string.isRequired,
+  returnUrl: PropTypes.string.isRequired,
+  fetchExamSession: PropTypes.bool,
 };
 
 const mapStateToProps = state => {

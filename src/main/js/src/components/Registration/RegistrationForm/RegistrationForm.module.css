@@ -20,11 +20,6 @@
   border: none;
 }
 
-.Form button {
-  width: 17vw;
-  margin-top: 5vh !important;
-}
-
 .InputGroup {
   display: grid;
   grid-template-columns: repeat(3, 33%);
@@ -64,7 +59,7 @@
 
 .ConsentContainer {
   padding-top: 1vh;
-  margin-top: 5vh;
+  margin-top: 2vh;
   border: 1px solid var(--light-gray);
   border-radius: 4px;
   background: var(--light-gray);

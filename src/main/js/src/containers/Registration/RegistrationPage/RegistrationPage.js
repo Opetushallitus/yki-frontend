@@ -31,7 +31,7 @@ export const RegistrationPage = props => {
   ) : null;
 
   const successPage = props.submitSuccess ? (
-    <RegistrationSuccess initData={initData} formData={props.formData} />
+    <RegistrationSuccess initData={initData} />
   ) : null;
 
   const registrationPage = props.initDataLoading ? (
@@ -65,7 +65,6 @@ export const RegistrationPage = props => {
 const mapStateToProps = state => {
   return {
     initData: state.registration.form.initData,
-    formData: state.registration.form.formData,
     initDataLoading: state.registration.form.initDataLoading,
     initDataError: state.registration.form.initDataError,
     submitResponse: state.registration.form.submitResponse,

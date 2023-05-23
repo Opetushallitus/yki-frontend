@@ -24,7 +24,6 @@ describe('<RegistrationSuccess />', () => {
       <RegistrationSuccess
         t={key => key}
         initData={{ exam_session: examSession }}
-        formData={{ user: { email: 'test@test.com' } }}
       />,
     );
 
