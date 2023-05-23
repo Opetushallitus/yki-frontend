@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<RegistrationSuccess /> should render registration success page 1`] = `
-<main
-  id="main"
->
+<Fragment>
   <HeadlineContainer
     headlineContent={
       <ExamDetailsCard
@@ -63,5 +61,5 @@ exports[`<RegistrationSuccess /> should render registration success page 1`] = `
       </p>
     </div>
   </div>
-</main>
+</Fragment>
 `;

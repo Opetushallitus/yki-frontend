@@ -55,7 +55,7 @@ export const RegistrationPage = props => {
   return (
     <>
       {!successPage}
-      <main id="main" className={'Container'}>
+      <main id="main" className={successPage ? '' : 'Container'}>
         {initError ? initError : successPage ? successPage : registrationPage}
       </main>
     </>
