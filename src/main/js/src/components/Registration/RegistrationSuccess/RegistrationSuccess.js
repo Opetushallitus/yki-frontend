@@ -11,7 +11,7 @@ import classes from './RegistrationSuccess.module.css';
 
 export const registrationSuccess = ({ initData, t }) => {
   return (
-    <main id="main">
+    <>
       <HeadlineContainer
         headlineTitle={t('registration.success.header')}
         headlineContent={
@@ -37,7 +37,7 @@ export const registrationSuccess = ({ initData, t }) => {
           </p>
         </div>
       </div>
-    </main>
+    </>
   );
 };
 
