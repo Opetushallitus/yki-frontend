@@ -86,19 +86,23 @@ const QuarantineHistory = props => {
               setBan: t('participationBan.setBan'),
               returnParticipation: t('participationBan.returnParticipation'),
             }}
-            components={[<strong />, <strong/>]}
+            components={[<strong />, <strong />]}
           />
         </p>
 
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader} />
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
-          <div className={classes.ListHeader}>{t('participationBan.examDate')}</div>
+          <div className={classes.ListHeader}>
+            {t('participationBan.examDate')}
+          </div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
           <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
-          <div className={classes.ListHeader}>{t('participationBan.status')}</div>
+          <div className={classes.ListHeader}>
+            {t('participationBan.status')}
+          </div>
           <div />
           {reviews.map(review => (
             <React.Fragment
@@ -135,36 +139,44 @@ const QuarantineHistory = props => {
                   ? t('participationBan.banned')
                   : t('participationBan.notBanned')}
               </div>
-              <div
-                data-cy={`${
-                  review.is_quarantined ? 'unset' : 'set'
-                }-quarantine-btn`}
-                className={!review.is_quarantined ? classes.PrimaryButton : classes.DeleteButton}
-              >
-                {review.is_quarantined ? (
-                  <Button
-                    disabled={loading}
-                    clicked={showCancelQuarantineConfirm.bind(
-                      this,
-                      review.quarantine_id,
-                      review.registration_id,
-                    )}
-                  >
-                    {t('participationBan.returnParticipation')}
-                  </Button>
-                ) : (
-                  <Button
-                    disabled={loading}
-                    clicked={showQuarantineConfirm.bind(
-                      this,
-                      review.quarantine_id,
-                      review.registration_id,
-                    )}
-                  >
-                    {t('participationBan.setBan')}
-                  </Button>
-                )}
-              </div>
+              {moment(review.exam_date).isBefore(moment(), 'day') ? (
+                <div />
+              ) : (
+                <div
+                  data-cy={`${
+                    review.is_quarantined ? 'unset' : 'set'
+                  }-quarantine-btn`}
+                  className={
+                    !review.is_quarantined
+                      ? classes.PrimaryButton
+                      : classes.DeleteButton
+                  }
+                >
+                  {review.is_quarantined ? (
+                    <Button
+                      disabled={loading}
+                      clicked={showCancelQuarantineConfirm.bind(
+                        this,
+                        review.quarantine_id,
+                        review.registration_id,
+                      )}
+                    >
+                      {t('participationBan.returnParticipation')}
+                    </Button>
+                  ) : (
+                    <Button
+                      disabled={loading}
+                      clicked={showQuarantineConfirm.bind(
+                        this,
+                        review.quarantine_id,
+                        review.registration_id,
+                      )}
+                    >
+                      {t('participationBan.setBan')}
+                    </Button>
+                  )}
+                </div>
+              )}
             </React.Fragment>
           ))}
         </div>
@@ -192,11 +204,7 @@ const mapDispatchToProps = dispatch => {
     onFetchQuarantineReviews: () => {
       dispatch(actions.fetchQuarantineReviews());
     },
-    confirmQuarantine: (
-      registrationId,
-      quarantineId,
-      quarantined,
-    ) => {
+    confirmQuarantine: (registrationId, quarantineId, quarantined) => {
       dispatch(
         actions.confirmQuarantine(
           () =>
