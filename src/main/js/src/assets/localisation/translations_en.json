@@ -198,7 +198,7 @@
   "payment.status.error": "Payment failed!",
   "payment.status.error.evaluation": "Something went wrong, please try again",
   "payment.status.error.info1": "You can try to pay again via the link in the email.",
-  "payment.status.success.evaluation": "A confirmation email of your reassesment request has been sent to you. The email also contains information on the reassessment fee. If you have not received the email, please check your spam folder.",
+  "payment.status.success.evaluation": "A confirmation email of your reassessment request has been sent to you. The email also contains information on the reassessment fee. If you have not received the email, please check your spam folder.",
   "paymentsReport.button.download": "Download report",
   "paymentsReport.document.title": "Reporting of exam payments",
   "registration.auth.button": "Identify via Suomi.fi",
