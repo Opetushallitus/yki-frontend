@@ -105,6 +105,7 @@
   "participationBan.edit": "Muokkaa osallistumiskieltoa",
   "participationBan.status": "Ilmoittautumisen tila",
   "participationBan.banned": "Peruttu",
+  "participationBan.bannedLate": "Peruttu myöhässä",
   "participationBan.notBanned": "Hyväksytty",
   "participationBan.setBan": "Peru ilmoitt.",
   "participationBan.returnParticipation": "Palauta ilmoitt.",

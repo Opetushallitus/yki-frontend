@@ -136,7 +136,9 @@ const QuarantineHistory = props => {
               </div>
               <div className={classes.ListRow}>
                 {review.is_quarantined
-                  ? t('participationBan.banned')
+                  ? moment(review.updated).isAfter(review.exam_date, 'day')
+                    ? t('participationBan.bannedLate')
+                    : t('participationBan.banned')
                   : t('participationBan.notBanned')}
               </div>
               {moment(review.exam_date).isBefore(moment(), 'day') ? (
