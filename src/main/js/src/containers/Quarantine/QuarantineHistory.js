@@ -123,7 +123,11 @@ const QuarantineHistory = props => {
                 </span>
               </div>
               <div className={classes.ListRow}>
-                <span>{moment(review.form.birthdate).format(DATE_FORMAT)}</span>
+                <span>
+                  {review.form.birthdate
+                    ? moment(review.form.birthdate).format(DATE_FORMAT)
+                    : review.form.ssn}
+                </span>
                 <span>{moment(review.birthdate).format(DATE_FORMAT)}</span>
               </div>
               <div className={classes.ListRow}>
