@@ -53,6 +53,8 @@ const QuarantineMatches = props => {
   const doSetQuarantine = (id, reg_id, quarantined) =>
     setQuarantine(id, reg_id, quarantined);
 
+  const isUpcomingExamDate = match => moment().isBefore(match.exam_date, 'day');
+
   return (
     <Page>
       {R.isNil(error) && !R.isNil(confirm) && !R.isNil(quarantineDetails) && (
@@ -75,7 +77,9 @@ const QuarantineMatches = props => {
         <div className={classes.QuarantineList}>
           <div className={classes.ListHeader} />
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
-          <div className={classes.ListHeader}>{t('participationBan.examDate')}</div>
+          <div className={classes.ListHeader}>
+            {t('participationBan.examDate')}
+          </div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
           <div className={classes.ListHeader}>{t('common.email')}</div>
@@ -121,7 +125,9 @@ const QuarantineMatches = props => {
                     match.registration_id,
                   )}
                 >
-                  {t('participationBan.setBan')}
+                  {isUpcomingExamDate(match)
+                    ? t('participationBan.setBan')
+                    : t('participationBan.moveToHistory')}
                 </Button>
               </div>
               <div data-cy="set-no-quarantine-btn">
@@ -166,20 +172,12 @@ const mapDispatchToProps = dispatch => {
     setQuarantine: (id, reg_id, quarantined) => {
       dispatch(actions.setQuarantine(id, reg_id, quarantined));
     },
-    confirmQuarantine: (
-      registrationId,
-      quarantineId,
-      quarantined,
-    ) => {
+    confirmQuarantine: (registrationId, quarantineId, quarantined) => {
       dispatch(
         actions.confirmQuarantine(
           () =>
             dispatch(
-              actions.setQuarantine(
-                quarantineId,
-                registrationId,
-                quarantined,
-              ),
+              actions.setQuarantine(quarantineId, registrationId, quarantined),
             ),
           registrationId,
           quarantineId,

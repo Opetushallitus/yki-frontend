@@ -66,7 +66,9 @@ const QuarantineConfirmModal = props => {
       <QuarantineDetails quarantine={quarantineDetails} t={t} />
       <p>
         {isQuarantined
-          ? t('participationBan.dialog.confirm.note')
+          ? moment().isBefore(quarantineDetails.exam_date, 'day')
+            ? t('participationBan.dialog.confirm.note')
+            : t('participationBan.dialog.confirm.pastExam')
           : t('participationBan.dialog.return.note')}
       </p>
       <div className={classes.ConfirmButtons}>
