@@ -53,8 +53,7 @@ const QuarantineMatches = props => {
   const doSetQuarantine = (id, reg_id, quarantined) =>
     setQuarantine(id, reg_id, quarantined);
 
-  const isPastExamDate = match =>
-    moment(match.exam_date).isBefore(moment(), 'day');
+  const isUpcomingExamDate = match => moment().isBefore(match.exam_date, 'day');
 
   return (
     <Page>
@@ -130,9 +129,9 @@ const QuarantineMatches = props => {
                     match.registration_id,
                   )}
                 >
-                  {isPastExamDate(match)
-                    ? t('participationBan.moveToHistory')
-                    : t('participationBan.setBan')}
+                  {isUpcomingExamDate(match)
+                    ? t('participationBan.setBan')
+                    : t('participationBan.moveToHistory')}
                 </Button>
               </div>
               <div data-cy="set-no-quarantine-btn">

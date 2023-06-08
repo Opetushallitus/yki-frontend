@@ -140,14 +140,12 @@ const QuarantineHistory = props => {
               </div>
               <div className={classes.ListRow}>
                 {review.is_quarantined
-                  ? moment(review.updated).isAfter(review.exam_date, 'day')
-                    ? t('participationBan.bannedLate')
-                    : t('participationBan.banned')
+                  ? moment(review.updated).isBefore(review.exam_date, 'day')
+                    ? t('participationBan.banned')
+                    : t('participationBan.bannedLate')
                   : t('participationBan.notBanned')}
               </div>
-              {moment(review.exam_date).isBefore(moment(), 'day') ? (
-                <div />
-              ) : (
+              {moment().isBefore(review.exam_date, 'day') ? (
                 <div
                   data-cy={`${
                     review.is_quarantined ? 'unset' : 'set'
@@ -182,6 +180,8 @@ const QuarantineHistory = props => {
                     </Button>
                   )}
                 </div>
+              ) : (
+                <div />
               )}
             </React.Fragment>
           ))}
