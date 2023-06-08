@@ -103,11 +103,7 @@ const QuarantineMatches = props => {
                 </span>
               </div>
               <div className={classes.ListRow}>
-                <span>
-                  {match.form.birthdate
-                    ? moment(match.form.birthdate).format(DATE_FORMAT)
-                    : match.form.ssn}
-                </span>
+                <span>{moment(match.form.birthdate).format(DATE_FORMAT)}</span>
                 <span>{moment(match.birthdate).format(DATE_FORMAT)}</span>
               </div>
               <div className={classes.ListRow}>
