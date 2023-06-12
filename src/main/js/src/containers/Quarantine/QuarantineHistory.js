@@ -131,8 +131,8 @@ const QuarantineHistory = props => {
                 <span>{review.email}</span>
               </div>
               <div className={classes.ListRow}>
-                <span>{review.phone_number}</span>
                 <span>{review.form.phone_number}</span>
+                <span>{review.phone_number}</span>
               </div>
               <div className={classes.ListRow}>
                 {review.is_quarantined
