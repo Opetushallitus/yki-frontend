@@ -142,7 +142,7 @@ const examSessionListItem = ({
 
     const registerButton = (
       <div>
-        {!isRegistrationPeriodEnded(session) && !hasFullQueue(session) && (
+        {!isRegistrationPeriodEnded(session) && !(isAdmissionEnded(session) && hasFullQueue(session)) && (
           <button
             className={`YkiButton ${classes.RegisterButton}`}
             onClick={selectExamSession}
