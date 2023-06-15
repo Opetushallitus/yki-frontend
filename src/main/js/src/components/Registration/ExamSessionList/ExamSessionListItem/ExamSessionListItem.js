@@ -11,6 +11,7 @@ import {
   getSpotsAvailableForSession,
   hasFullQueue,
   hasRoom,
+  isAdmissionEnded,
   isOpen,
   isPostAdmissionActive,
   isRegistrationPeriodEnded,
