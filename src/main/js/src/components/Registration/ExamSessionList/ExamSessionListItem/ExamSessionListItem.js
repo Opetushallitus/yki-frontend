@@ -143,10 +143,12 @@ const examSessionListItem = ({
   const srLabel = `${getRegistrationButtonText()} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationPeriodAriaLabelText}, ${availableSpots} ${availableSpotsText}.`;
 
   // Don't show registration button if admission period (and possible post-admission period) has ended
-  // OR (if there are no places left (regular or post admission) AND queue is full)
+  // OR we're within regular admission period and both ordinary quota and queue are full
+  // OR we're within post admission period and ordinary quota is full (as notifications are not sent to queue outside of the regular admission period.).
   const hideRegisterButton =
     isRegistrationPeriodEnded(session) ||
-    (!hasRoom(session) && hasFullQueue(session));
+    (!hasRoom(session) &&
+      (hasFullQueue(session) || isPostAdmissionActive(session)));
 
   const registerButton = (
     <div>
