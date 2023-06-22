@@ -10,6 +10,61 @@
           "email": "contact.person@testi.invalid"
         }
       ],
+      "pa_participants": 7,
+      "post_admission_quota": 7,
+      "post_admission_start_date": "2023-03-03",
+      "post_admission_end_date": "2029-12-12",
+      "post_admission_active": true,
+      "office_oid": "1.2.246.562.5.22724043777",
+      "published_at": "2019-01-17T12:32:00.001Z",
+      "session_date": "2025-04-06",
+      "organizer_oid": "1.2.246.562.10.39706139523",
+      "id": 999,
+      "registration_start_date": "2019-02-01",
+      "location": [
+        {
+          "lang": "fi",
+          "extra_information": null,
+          "name": "FOOBARIA",
+          "other_location_info": "Sali Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINKI",
+          "zip": "00250"
+        },
+        {
+          "lang": "sv",
+          "extra_information": null,
+          "name": "FOOBARIA",
+          "other_location_info": "Hall Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINGFORSS",
+          "zip": "00250"
+        },
+        {
+          "lang": "en",
+          "extra_information": null,
+          "name": "FOOBARIA",
+          "other_location_info": "Hall Koivisto",
+          "street_address": "Töölöntullinkatu 8",
+          "post_office": "HELSINKI",
+          "zip": "00250"
+        }
+      ],
+      "exam_fee": "100.00",
+      "registration_end_date": "2020-01-01",
+      "queue_full": false,
+      "open": true
+    },
+    {
+      "level_code": "PERUS",
+      "max_participants": 20,
+      "language_code": "fin",
+      "participants": 20,
+      "contact": [
+        {
+          "email": "contact.person@testi.invalid"
+        }
+      ],
       "pa_participants": 0,
       "office_oid": "1.2.246.562.5.22724043777",
       "published_at": "2019-01-17T12:32:00.001Z",
