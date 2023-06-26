@@ -1,12 +1,12 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {connect} from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
-import {DATE_FORMAT} from '../../../../common/Constants';
+import { DATE_FORMAT } from '../../../../common/Constants';
 import * as actions from '../../../../store/actions/index';
-import {useMobileView} from '../../../../util/customHooks';
+import { useMobileView } from '../../../../util/customHooks';
 import {
   getSpotsAvailableForSession,
   hasFullQueue,
@@ -15,7 +15,7 @@ import {
   isPostAdmissionActive,
   isRegistrationPeriodEnded,
 } from '../../../../util/examSessionUtil';
-import {getDeviceOrientation, levelDescription} from '../../../../util/util';
+import { getDeviceOrientation, levelDescription } from '../../../../util/util';
 import classes from './ExamSessionListItem.module.css';
 
 const examSessionListItem = ({
@@ -54,52 +54,60 @@ const examSessionListItem = ({
 
   const location = (
     <div className={classes.Location}>
-      {name} <br/>
-      {address} <br/>
+      {name} <br />
+      {address} <br />
       <strong>{city}</strong>
     </div>
   );
 
-  const showAvailableSpots = hasRoom(session) && !isRegistrationPeriodEnded(session);
+  const showAvailableSpots =
+    hasRoom(session) && !isRegistrationPeriodEnded(session);
 
   const availableSpots = getSpotsAvailableForSession(session);
 
-  const availableSpotsText = availableSpots === 1
-    ? t('registration.examSpots.singleFree')
-    : t('registration.examSpots.free');
+  const availableSpotsText =
+    availableSpots === 1
+      ? t('registration.examSpots.singleFree')
+      : t('registration.examSpots.free');
 
-    const availability = (
-      <div>
-        <strong>
-          {showAvailableSpots ? (
-            <>
-              <span>{availableSpots}</span>
-              {' '}
-              <span>{availableSpotsText}</span>
-            </>
-          ) : (
-            <span>{t('registration.examSpots.full')}</span>
-          )}
-        </strong>
-      </div>
-    );
+  const availability = (
+    <div>
+      <strong>
+        {showAvailableSpots ? (
+          <>
+            <span>{availableSpots}</span> <span>{availableSpotsText}</span>
+          </>
+        ) : (
+          <span>{t('registration.examSpots.full')}</span>
+        )}
+      </strong>
+    </div>
+  );
 
-    const displayRegistrationPeriod = (startDate, endDate) => {
-      const start = moment(startDate).format(DATE_FORMAT);
-      const end = moment(endDate).format(DATE_FORMAT);
+  const displayRegistrationPeriod = (startDate, endDate) => {
+    const start = moment(startDate).format(DATE_FORMAT);
+    const end = moment(endDate).format(DATE_FORMAT);
 
-      if (start !== end) {
-        return `${start} ${t('registration.examDetails.card.time')} 10 - ${end} ${t('registration.examDetails.card.time')} 16`;
-      }
+    if (start !== end) {
+      return `${start} ${t(
+        'registration.examDetails.card.time',
+      )} 10 - ${end} ${t('registration.examDetails.card.time')} 16`;
+    }
 
-      return `${start} ${t('registration.examDetails.card.time')} 10 - 16`;
-    };
+    return `${start} ${t('registration.examDetails.card.time')} 10 - 16`;
+  };
 
   const displayPostAdmissionPeriod = isPostAdmissionActive(session);
 
   const registrationPeriodText = displayPostAdmissionPeriod
-    ? displayRegistrationPeriod(session.post_admission_start_date, session.post_admission_end_date)
-    : displayRegistrationPeriod(session.registration_start_date, session.registration_end_date);
+    ? displayRegistrationPeriod(
+        session.post_admission_start_date,
+        session.post_admission_end_date,
+      )
+    : displayRegistrationPeriod(
+        session.registration_start_date,
+        session.registration_end_date,
+      );
 
   const registrationPeriodAriaLabelText = displayPostAdmissionPeriod
     ? `${t('examSession.postAdmission')}: ${registrationPeriodText}`
@@ -107,93 +115,95 @@ const examSessionListItem = ({
 
   const registrationOpenDesktop = (
     <div>
-      {displayPostAdmissionPeriod && (
-        <p>{t('examSession.postAdmission')}:</p>
-      )}
+      {displayPostAdmissionPeriod && <p>{t('examSession.postAdmission')}:</p>}
       <p>{registrationPeriodText}</p>
     </div>
   );
 
-    const registrationOpenMobile = (
-      <div style={{display: 'block'}}>
-        <div className={classes.RegistrationOpen}>
-          {displayPostAdmissionPeriod ? (
-            t('examSession.postAdmission')
-          ) : (
-            t('common.registrationPeriod')
-          )}
-          {':'}
-          <span style={{marginLeft: 5}}>
-            {registrationPeriodText}
-          </span>
-        </div>
+  const registrationOpenMobile = (
+    <div style={{ display: 'block' }}>
+      <div className={classes.RegistrationOpen}>
+        {displayPostAdmissionPeriod
+          ? t('examSession.postAdmission')
+          : t('common.registrationPeriod')}
+        {':'}
+        <span style={{ marginLeft: 5 }}>{registrationPeriodText}</span>
       </div>
-    );
+    </div>
+  );
 
-    const getRegistrationButtonText = () => {
-      if (availableSpots) {
-        return t('registration.register');
-      }
+  const getRegistrationButtonText = () => {
+    if (availableSpots) {
+      return t('registration.register');
+    }
 
-      return t('registration.register.forQueue');
-    };
+    return t('registration.register.forQueue');
+  };
 
-    const srLabel = `${getRegistrationButtonText()} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationPeriodAriaLabelText}, ${availableSpots} ${availableSpotsText}.`;
+  const srLabel = `${getRegistrationButtonText()} ${examLanguage} ${examLevel}. ${examDate}. ${name}, ${address}, ${city}. ${registrationPeriodAriaLabelText}, ${availableSpots} ${availableSpotsText}.`;
 
-    const registerButton = (
-      <div>
-        {!isRegistrationPeriodEnded(session) && !hasFullQueue(session) && (
-          <button
-            className={`YkiButton ${classes.RegisterButton}`}
-            onClick={selectExamSession}
-            role="link"
-            aria-label={srLabel}
-            disabled={!isOpen(session)}
-          >
-            {getRegistrationButtonText()}
-          </button>
-        )}
-      </div>
-    );
+  // Don't show registration button if admission period (and possible post-admission period) has ended
+  // OR we're within regular admission period and both ordinary quota and queue are full
+  // OR we're within post admission period and ordinary quota is full (as notifications are not sent to queue outside the regular admission period.).
+  const hideRegisterButton =
+    isRegistrationPeriodEnded(session) ||
+    (!hasRoom(session) &&
+      (hasFullQueue(session) || isPostAdmissionActive(session)));
 
-    return (
-      <>
-        {mobile ||
-        tablet ||
-        (tablet && getDeviceOrientation() === 'landscape') ? (
-          <tr
-            className={classes.ExamSessionListItem}
-            data-cy="exam-session-list-item"
-          >
-            <td>
-              <div>{exam}</div>
-              <div>{date}</div>
-            </td>
-            <td>{registrationOpenMobile}</td>
-            <td>
-              <div>{availability}</div>
-              <div>{examFee}</div>
-            </td>
-            <td>
-              {location}
-              {registerButton}
-            </td>
-          </tr>
-        ) : (
-          <tr
-            className={classes.ExamSessionListItem}
-            data-cy="exam-session-list-item"
-          >
-            <td>{exam}</td>
-            <td>{date}</td>
-            <td>{location}</td>
-            <td>{registrationOpenDesktop}</td>
-            <td>{availability}</td>
-            <td>{registerButton}</td>
-          </tr>
-        )}
-      </>
-    );
+  const registerButton = (
+    <div>
+      {!hideRegisterButton && (
+        <button
+          className={`YkiButton ${classes.RegisterButton}`}
+          onClick={selectExamSession}
+          role="link"
+          aria-label={srLabel}
+          disabled={!isOpen(session)}
+        >
+          {getRegistrationButtonText()}
+        </button>
+      )}
+    </div>
+  );
+
+  return (
+    <>
+      {mobile ||
+      tablet ||
+      (tablet && getDeviceOrientation() === 'landscape') ? (
+        <tr
+          className={classes.ExamSessionListItem}
+          data-cy="exam-session-list-item"
+        >
+          <td>
+            <div>{exam}</div>
+            <div>{date}</div>
+          </td>
+          <td>{registrationOpenMobile}</td>
+          <td>
+            <div>{availability}</div>
+            <div>{examFee}</div>
+          </td>
+          <td>
+            {location}
+            {registerButton}
+          </td>
+        </tr>
+      ) : (
+        <tr
+          className={classes.ExamSessionListItem}
+          data-cy="exam-session-list-item"
+        >
+          <td>{exam}</td>
+          <td>{date}</td>
+          <td>{location}</td>
+          <td>{registrationOpenDesktop}</td>
+          <td>{availability}</td>
+          <td>{registerButton}</td>
+        </tr>
+      )}
+    </>
+  );
 };
 
 examSessionListItem.propTypes = {
