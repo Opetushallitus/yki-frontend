@@ -181,6 +181,7 @@ const QuarantineForm = props => {
                 type="text"
                 value={ssn}
                 onChange={e => setSsn(e.target.value)}
+                tabIndex="4"
               />
               {!validateSsn(ssn) && (
                 <span className={classes.ErrorMessage}>
