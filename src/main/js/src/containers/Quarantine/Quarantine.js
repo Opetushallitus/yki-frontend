@@ -26,6 +26,7 @@ const initialForm = {
   end_date: '',
   birthdate: '',
   diary_number: '',
+  ssn: '',
 };
 
 const Quarantine = props => {
@@ -45,8 +46,8 @@ const Quarantine = props => {
     loading,
     error,
   } = props;
-  const findLang = (language) => LANGUAGES.find(l => l.code === language).name;
-  const doDelete = (id) => {
+  const findLang = language => LANGUAGES.find(l => l.code === language).name;
+  const doDelete = id => {
     onConfirmModal(onDeleteQuarantine.bind(this, id));
   };
   const hasError = !R.isNil(error);
@@ -59,22 +60,22 @@ const Quarantine = props => {
       confirmationModal
       modalClosed={closeConfirmModal}
     >
-      {loading && (<SpinnerOverlay />)}
-      <h3 className={classes.ConfirmText}>
-        {t('common.areYouSure')}
-      </h3>
+      {loading && <SpinnerOverlay />}
+      <h3 className={classes.ConfirmText}>{t('common.areYouSure')}</h3>
       <p>{t('participationBan.askDelete')}</p>
       <div className={classes.ConfirmButtons}>
         <button
           data-cy="confirm-delete-quarantine-btn"
           onClick={confirm && confirm.callback}
-          className={classes.ConfirmButton}>
+          className={classes.ConfirmButton}
+        >
           {t('common.confirm')}
         </button>
         <button
           data-cy="cancel-delete-quarantine-btn"
           onClick={closeConfirmModal}
-          className={classes.CancelButton}>
+          className={classes.CancelButton}
+        >
           {t('common.cancelConfirm')}
         </button>
       </div>
@@ -92,13 +93,11 @@ const Quarantine = props => {
         modalClosed={onShowAddModal.bind(this, null)}
         className={classes.QuarantineModal}
       >
-        {loading && (<SpinnerOverlay />)}
+        {loading && <SpinnerOverlay />}
         <h2 className={classes.ConfirmText}>
-          {isNewQuarantine ? (
-            t('participationBan.new')
-          ) : (
-            t('participationBan.edit')
-          )}
+          {isNewQuarantine
+            ? t('participationBan.new')
+            : t('participationBan.edit')}
         </h2>
         <QuarantineForm
           t={t}
@@ -110,68 +109,68 @@ const Quarantine = props => {
         />
       </Modal>
     );
-  }
+  };
 
   return (
     <Page>
       {R.isNil(error) && !R.isNil(showAddModal) && quarantineModal()}
       {R.isNil(error) && !R.isNil(confirm) && confirmDeleteModal}
       <div className={classes.Quarantines}>
-        <h1>
-          {t('participationBan.title')}
-        </h1>
+        <h1>{t('participationBan.title')}</h1>
 
         <QuarantineNav t={t} />
 
         <div data-cy="add-quarantine-btn" className={classes.PrimaryButton}>
-          <Button clicked={onShowAddModal.bind(this, { isVisible: true, form: initialForm })}>
+          <Button
+            clicked={onShowAddModal.bind(this, {
+              isVisible: true,
+              form: initialForm,
+            })}
+          >
             {t('participationBan.addBan')}
           </Button>
         </div>
 
-        <div className={classes.QuarantineList}>
+        <div className={`${classes.QuarantineList} ${classes.SavedQuarantinesList}`}>
           <div className={classes.ListHeader}>
             {t('participationBan.periodValid')}
           </div>
-          <div className={classes.ListHeader}>
-            {t('common.examLanguage')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('common.names')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('common.birthdate')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('common.email')}
-          </div>
-          <div className={classes.ListHeader}>
-            {t('common.phoneNumber')}
-          </div>
-          <div/>
-          <div/>
-          {quarantines.map((quarantine) => (
+          <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
+          <div className={classes.ListHeader}>{t('common.names')}</div>
+          <div className={classes.ListHeader}>{t('common.birthdate')}</div>
+          <div className={classes.ListHeader}>{t('common.ssn')}</div>
+          <div className={classes.ListHeader}>{t('common.email')}</div>
+          <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
+          <div />
+          <div />
+          {quarantines.map(quarantine => (
             <React.Fragment key={`quarantine-row-${quarantine.id}`}>
-              <div>{moment(quarantine.start_date).format(DATE_FORMAT)} - {moment(quarantine.end_date).format(DATE_FORMAT)}</div>
+              <div>
+                {moment(quarantine.start_date).format(DATE_FORMAT)} -{' '}
+                {moment(quarantine.end_date).format(DATE_FORMAT)}
+              </div>
               <div>{findLang(quarantine.language_code)}</div>
               <div>
                 {quarantine.first_name} {quarantine.last_name}
               </div>
-              <div>
-                {moment(quarantine.birthdate).format(DATE_FORMAT)}
-              </div>
-              <div>
-                {quarantine.email}
-              </div>
-              <div>
-                {quarantine.phone_number}
-              </div>
+              <div>{moment(quarantine.birthdate).format(DATE_FORMAT)}</div>
+              <div>{quarantine.ssn}</div>
+              <div>{quarantine.email}</div>
+              <div>{quarantine.phone_number}</div>
               <div data-cy="edit-quarantine-btn" className={classes.EditButton}>
-                <Button clicked={onShowAddModal.bind(this, { isVisible: true, form: quarantine })}>
+                <Button
+                  clicked={onShowAddModal.bind(this, {
+                    isVisible: true,
+                    form: quarantine,
+                  })}
+                >
                   {t('common.edit')}
                 </Button>
               </div>
-              <div data-cy="delete-quarantine-btn" className={classes.DeleteButton}>
+              <div
+                data-cy="delete-quarantine-btn"
+                className={classes.DeleteButton}
+              >
                 <Button clicked={doDelete.bind(this, quarantine.id)}>
                   {t('common.delete')}
                 </Button>
@@ -184,7 +183,7 @@ const Quarantine = props => {
             <Spinner />
           </div>
         )}
-     </div>
+      </div>
     </Page>
   );
 };
@@ -195,28 +194,28 @@ const mapStateToProps = state => {
     showAddModal: state.quarantine.showAddModal,
     error: state.quarantine.error,
     confirm: state.quarantine.confirm,
-    loading: state.quarantine.loading
+    loading: state.quarantine.loading,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onDeleteQuarantine: (id) => {
+    onDeleteQuarantine: id => {
       dispatch(actions.deleteQuarantine(id));
     },
     onFetchQuarantines: () => {
       dispatch(actions.fetchQuarantines());
     },
-    onAddNewQuarantine: (form) => {
+    onAddNewQuarantine: form => {
       dispatch(actions.addNewQuarantine(form));
     },
-    onEditQuarantine: (form) => {
+    onEditQuarantine: form => {
       dispatch(actions.editQuarantine(form));
     },
-    onShowAddModal: (isVisible) => {
+    onShowAddModal: isVisible => {
       dispatch(actions.showAddModal(isVisible));
     },
-    onConfirmModal: (callback) => {
+    onConfirmModal: callback => {
       dispatch(actions.confirmQuarantine(callback));
     },
     closeConfirmModal: () => {

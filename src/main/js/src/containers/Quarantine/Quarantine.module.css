@@ -10,17 +10,24 @@
 
 .QuarantineList {
   display: grid;
-  grid-template-columns: min-content 1fr 1fr 1.4fr 1fr 0.8fr min-content 1fr 1fr;
   grid-gap: 0;
   grid-row-gap: 5px;
 }
 
-.Quarantines .QuarantineList {
-  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr min-content min-content;
+.QuarantineReviewsList {
+  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr min-content min-content 1fr min-content;
+}
+
+.QuarantineMatchesList {
+  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr 1fr min-content 1fr 1fr;
+}
+
+.SavedQuarantinesList {
+  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr 1fr min-content min-content;
 }
 
 .QuarantineModal {
-  width: 900px;
+  width: fit-content;
   height: auto;
 }
 
