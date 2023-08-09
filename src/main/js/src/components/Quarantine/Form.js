@@ -29,7 +29,7 @@ const QuarantineForm = props => {
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialEndDate);
 
-  const [ssn, setSsn] = useState('');
+  const [ssn, setSsn] = useState(form.ssn || '');
 
   const validateSsn = value => !value || FinnishSSN.validate(value);
 
