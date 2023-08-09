@@ -10,20 +10,19 @@
 
 .QuarantineList {
   display: grid;
-  grid-gap: 0;
-  grid-row-gap: 5px;
+  row-gap: 0.5rem;
 }
 
 .QuarantineReviewsList {
-  grid-template-columns: 1fr 1fr 1.2fr max-content 1fr 1fr min-content min-content 1fr min-content;
+  grid-template-columns: repeat(10, max-content);
 }
 
 .QuarantineMatchesList {
-  grid-template-columns: 1fr 1fr 1.2fr max-content 1fr 1fr 1fr min-content 1fr 1fr;
+  grid-template-columns: repeat(10, max-content);
 }
 
 .SavedQuarantinesList {
-  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr 1fr min-content min-content;
+  grid-template-columns: repeat(7, 1fr) min-content min-content;
 }
 
 .QuarantineModal {
@@ -47,7 +46,7 @@
   border-style: solid;
   font-weight: bold;
   margin: 10px 0 20px 0;
-  padding: 20px 0;
+  padding: 1rem 0.5rem;
 }
 
 .ListRow, .IndicatorRow {
