@@ -53,6 +53,11 @@ const Quarantine = props => {
   const hasError = !R.isNil(error);
 
   useEffect(onFetchQuarantines, [hasError]);
+  const sortQuarantines = R.sortWith([
+    R.descend(R.prop('end_date')),
+    R.ascend(R.prop('last_name')),
+    R.ascend(R.prop('first_name')),
+  ]);
 
   const confirmDeleteModal = (
     <Modal
@@ -131,7 +136,9 @@ const Quarantine = props => {
           </Button>
         </div>
 
-        <div className={`${classes.QuarantineList} ${classes.SavedQuarantinesList}`}>
+        <div
+          className={`${classes.QuarantineList} ${classes.SavedQuarantinesList}`}
+        >
           <div className={classes.ListHeader}>
             {t('participationBan.periodValid')}
           </div>
@@ -143,7 +150,7 @@ const Quarantine = props => {
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
           <div />
           <div />
-          {quarantines.map(quarantine => (
+          {sortQuarantines(quarantines).map(quarantine => (
             <React.Fragment key={`quarantine-row-${quarantine.id}`}>
               <div>
                 {moment(quarantine.start_date).format(DATE_FORMAT)} -{' '}
