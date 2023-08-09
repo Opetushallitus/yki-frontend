@@ -15,11 +15,11 @@
 }
 
 .QuarantineReviewsList {
-  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr min-content min-content 1fr min-content;
+  grid-template-columns: 1fr 1fr 1.2fr max-content 1fr 1fr min-content min-content 1fr min-content;
 }
 
 .QuarantineMatchesList {
-  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr 1fr 1fr min-content 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1.2fr max-content 1fr 1fr 1fr min-content 1fr 1fr;
 }
 
 .SavedQuarantinesList {
