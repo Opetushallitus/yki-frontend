@@ -116,6 +116,10 @@ const Quarantine = props => {
     );
   };
 
+  const now = moment();
+  const isQuarantineInEffect = q =>
+    now.isBetween(moment(q.start_date), moment(q.end_date));
+
   return (
     <Page>
       {R.isNil(error) && !R.isNil(showAddModal) && quarantineModal()}
@@ -152,7 +156,13 @@ const Quarantine = props => {
           <div />
           {sortQuarantines(quarantines).map(quarantine => (
             <React.Fragment key={`quarantine-row-${quarantine.id}`}>
-              <div>
+              <div
+                style={
+                  isQuarantineInEffect(quarantine)
+                    ? { 'font-weight': 'bold' }
+                    : {}
+                }
+              >
                 {moment(quarantine.start_date).format(DATE_FORMAT)} -{' '}
                 {moment(quarantine.end_date).format(DATE_FORMAT)}
               </div>
