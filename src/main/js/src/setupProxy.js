@@ -208,7 +208,7 @@ const quarantineMatches = {
 const quarantineReviews = {
   reviews: [{
     quarantine_lang: 'fin',
-    birthdate: '2018-02-01',
+    birthdate: '1979-10-30',
     email: 'email@invalid.invalid',
     language_code: 'fin',
     phone_number: '0401234567',
@@ -224,7 +224,7 @@ const quarantineReviews = {
     id: 1,
     form: {
       email: 'email@invalid.invalid',
-      birthdate: '2018-02-01',
+      birthdate: '1979-10-30',
       last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567',
@@ -234,7 +234,6 @@ const quarantineReviews = {
   },
   {
     quarantine_lang: 'fin',
-    birthdate: '2018-02-01',
     email: 'email@invalid.invalid',
     language_code: 'fin',
     phone_number: '0401234567',
@@ -250,8 +249,9 @@ const quarantineReviews = {
     id: 2,
     form: {
       email: 'email@invalid.invalid',
-      birthdate: '2018-02-01',
-      last_name: 'De Ilmoittautuminen',
+      birthdate: '1979-10-30',
+      ssn: '301079-900U',
+      last_name: 'Von Karenssi',
       first_name: 'Max',
       phone_number: '0401234567'
     },
@@ -262,7 +262,7 @@ const quarantineReviews = {
 const quarantines = {
   quarantines: [{
     language_code: 'fin',
-    birthdate: '2018-02-01',
+    birthdate: '1979-10-30',
     email: 'email@invalid.invalid',
     phone_number: '0401234567',
     ssn: '301079-900U',
@@ -276,13 +276,13 @@ const quarantines = {
   },
   {
     language_code: 'swe',
-    birthdate: '2018-02-01',
+    birthdate: '1979-10-30',
     email: 'email@invalid.invalid',
     phone_number: '0401234567',
     ssn: '301079-900U',
     created: '2022-12-02T10:32:11.888Z',
     start_date: '2023-01-01',
-    end_date: '2023-07-01',
+    end_date: '2023-08-17',
     id: 2,
     last_name: 'Testitapaus',
     first_name: 'Tessa',
@@ -290,7 +290,7 @@ const quarantines = {
   },
   {
     language_code: 'eng',
-    birthdate: '2018-02-01',
+    birthdate: '1979-10-30',
     email: 'email@invalid.invalid',
     phone_number: '0401234567',
     ssn: '301079-900U',
@@ -304,7 +304,7 @@ const quarantines = {
   },
   {
     language_code: 'eng',
-    birthdate: '2018-02-01',
+    birthdate: '1979-10-30',
     email: 'email@invalid.invalid',
     phone_number: '0401234567',
     ssn: '301079-900U',

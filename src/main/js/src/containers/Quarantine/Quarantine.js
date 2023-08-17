@@ -15,6 +15,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import SpinnerOverlay from '../../components/UI/SpinnerOverlay/SpinnerOverlay';
 import QuarantineNav from '../../components/Quarantine/Navigation';
 import QuarantineForm from '../../components/Quarantine/Form';
+import { formatOptionalDate } from '../../util/util';
 
 const initialForm = {
   language_code: 'fin',
@@ -118,7 +119,7 @@ const Quarantine = props => {
 
   const now = moment();
   const isQuarantineInEffect = q =>
-    now.isBetween(moment(q.start_date), moment(q.end_date));
+    now.isBetween(moment(q.start_date), moment(q.end_date).endOf('day'));
 
   return (
     <Page>
@@ -170,7 +171,7 @@ const Quarantine = props => {
               <div>
                 {quarantine.first_name} {quarantine.last_name}
               </div>
-              <div>{moment(quarantine.birthdate).format(DATE_FORMAT)}</div>
+              <div>{formatOptionalDate(quarantine.birthdate)}</div>
               <div>{quarantine.ssn}</div>
               <div>{quarantine.email}</div>
               <div>{quarantine.phone_number}</div>

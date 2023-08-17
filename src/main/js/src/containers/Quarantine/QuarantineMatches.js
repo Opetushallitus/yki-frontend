@@ -13,6 +13,7 @@ import { DATE_FORMAT, LANGUAGES } from '../../common/Constants';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import QuarantineNav from '../../components/Quarantine/Navigation';
 import QuarantineConfirmModal from '../../components/Quarantine/ConfirmModal';
+import { formatOptionalDate } from '../../util/util';
 
 const QuarantineMatches = props => {
   const {
@@ -90,7 +91,9 @@ const QuarantineMatches = props => {
           <div />
           <div />
           {matches.map(match => (
-            <React.Fragment key={`quarantine-match-row-${match.id}-${match.registration_id}`}>
+            <React.Fragment
+              key={`quarantine-match-row-${match.id}-${match.registration_id}`}
+            >
               <div className={classes.IndicatorRow}>
                 <span>{t('common.registree')}</span>
                 <span>{t('common.participationBan')}</span>
@@ -106,8 +109,8 @@ const QuarantineMatches = props => {
                 </span>
               </div>
               <div className={classes.ListRow}>
-                <span>{moment(match.form.birthdate).format(DATE_FORMAT)}</span>
-                <span>{moment(match.birthdate).format(DATE_FORMAT)}</span>
+                <span>{formatOptionalDate(match.form.birthdate)}</span>
+                <span>{formatOptionalDate(match.birthdate)}</span>
               </div>
               <div className={classes.ListRow}>
                 <span>{match.form.ssn}</span>

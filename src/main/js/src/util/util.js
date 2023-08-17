@@ -123,6 +123,8 @@ export const getDeviceOrientation = () => {
 export const isoFormatDate = stringDate =>
   moment(stringDate, DATE_FORMAT).format(ISO_DATE_FORMAT_SHORT);
 
+export const formatOptionalDate = (date, defaultValue = '') => date ? moment(date).format(DATE_FORMAT) : defaultValue;
+
 export const sortObjectArray = (arr, sortBy, asc) => {
   const sortedArray = arr.sort((a, b) =>
     a[sortBy] > b[sortBy] ? 1 : b[sortBy] > a[sortBy] ? -1 : 0,
