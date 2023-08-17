@@ -74,7 +74,9 @@ const QuarantineMatches = props => {
 
         <p>{t('participationBan.matchesDescription')}</p>
 
-        <div className={classes.QuarantineList}>
+        <div
+          className={`${classes.QuarantineList} ${classes.QuarantineMatchesList}`}
+        >
           <div className={classes.ListHeader} />
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
           <div className={classes.ListHeader}>
@@ -82,12 +84,13 @@ const QuarantineMatches = props => {
           </div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
+          <div className={classes.ListHeader}>{t('common.ssn')}</div>
           <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
           <div />
           <div />
           {matches.map(match => (
-            <React.Fragment key={`quarantine-match-row-${match.id}`}>
+            <React.Fragment key={`quarantine-match-row-${match.id}-${match.registration_id}`}>
               <div className={classes.IndicatorRow}>
                 <span>{t('common.registree')}</span>
                 <span>{t('common.participationBan')}</span>
@@ -105,6 +108,10 @@ const QuarantineMatches = props => {
               <div className={classes.ListRow}>
                 <span>{moment(match.form.birthdate).format(DATE_FORMAT)}</span>
                 <span>{moment(match.birthdate).format(DATE_FORMAT)}</span>
+              </div>
+              <div className={classes.ListRow}>
+                <span>{match.form.ssn}</span>
+                <span>{match.ssn}</span>
               </div>
               <div className={classes.ListRow}>
                 <span>{match.form.email}</span>

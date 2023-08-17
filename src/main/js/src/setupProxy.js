@@ -177,6 +177,31 @@ const quarantineMatches = {
       phone_number: '0401234567'
     },
     state: 'COMPLETED'
+  },
+  {
+    quarantine_lang: 'swe',
+    birthdate: '1999-01-12',
+    email: 'email@invalid.invalid',
+    language_code: 'fin',
+    phone_number: '0401234567',
+    quarantine_id: null,
+    reviewed: '2022-12-20T12:23:52.501Z',
+    first_name: 'Max',
+    last_name: 'Von Koskull',
+    ssn: '120199-999X',
+    registration_id: 2,
+    created: '2022-12-02T10:32:11.888Z',
+    exam_date: '2025-03-10',
+    id: 2,
+    form: {
+      email: 'email@invalid.invalid',
+      birthdate: '1999-01-12',
+      ssn: '120199-999X',
+      last_name: 'De Ilmoittautuminen',
+      first_name: 'Max',
+      phone_number: '0401234567'
+    },
+    state: 'COMPLETED'
   }]
 }
 
@@ -202,7 +227,8 @@ const quarantineReviews = {
       birthdate: '2018-02-01',
       last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
-      phone_number: '0401234567'
+      phone_number: '0401234567',
+      ssn: '120199-999X'
     },
     state: 'COMPLETED'
   },
@@ -221,7 +247,7 @@ const quarantineReviews = {
     registration_id: 3,
     created: '2022-12-02T10:32:11.888Z',
     exam_date: '2025-03-10',
-    id: 1,
+    id: 2,
     form: {
       email: 'email@invalid.invalid',
       birthdate: '2018-02-01',

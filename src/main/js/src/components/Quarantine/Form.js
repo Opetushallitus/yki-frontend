@@ -1,5 +1,6 @@
+import { FinnishSSN } from 'finnish-ssn';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as R from 'ramda';
 import classes from './Quarantine.module.css';
 import PropTypes from 'prop-types';
@@ -17,41 +18,39 @@ const formatDate = date => moment(date).format(DATE_FORMAT);
 const valueOrNull = R.when(R.isEmpty, R.always(null));
 
 const QuarantineForm = props => {
-  const {
-    t,
-    i18n,
-    form,
-    onEdit,
-    onAdd,
-    onCancel,
-  } = props;
+  const { t, i18n, form, onEdit, onAdd, onCancel } = props;
 
-  const initialBirthdate = form.birthdate
-    ? formatDate(form.birthdate)
-    : null;
-  const initialStartDate = form.start_date
-    ? formatDate(form.start_date)
-    : null;
-  const initialEndDate = form.end_date
-    ? formatDate(form.end_date)
-    : null;
+  const initialBirthdate = form.birthdate ? formatDate(form.birthdate) : null;
+  const initialStartDate = form.start_date ? formatDate(form.start_date) : null;
+  const initialEndDate = form.end_date ? formatDate(form.end_date) : null;
 
   // Datepicker doesn't work with formik, so we store it in state instead
   const [birthdate, setBirthdate] = useState(initialBirthdate);
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialEndDate);
 
+  const [ssn, setSsn] = useState(form.ssn || '');
+
+  const validateSsn = value => !value || FinnishSSN.validate(value);
+
   const today = moment(new Date()).format('YYYY-MM-DD');
-  const cancelForm = (e) => {
+  const cancelForm = e => {
     e.stopPropagation();
     e.preventDefault();
     onCancel();
   };
 
   const validationSchema = Yup.object().shape({
-    first_name: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
-    last_name: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
-    diary_number: Yup.string().typeError(t('error.string')).required(t('error.mandatory')),
+    first_name: Yup.string()
+      .typeError(t('error.string'))
+      .required(t('error.mandatory')),
+    last_name: Yup.string()
+      .typeError(t('error.string'))
+      .required(t('error.mandatory')),
+    diary_number: Yup.string()
+      .typeError(t('error.string'))
+      .required(t('error.mandatory')),
+    ssn: Yup.string().test('invalid-ssn', t('error.ssn.invalid'), validateSsn),
   });
 
   const parsedBirthdate = birthdate
@@ -64,11 +63,21 @@ const QuarantineForm = props => {
     ? dateToString(moment(endDate, DATE_FORMAT))
     : null;
 
-  const isBirthdateValid = !R.isNil(parsedBirthdate) && !R.isEmpty(parsedBirthdate);
-  const isStartDateValid = !R.isNil(parsedStartDate) && !R.isEmpty(parsedStartDate);
+  const isBirthdateValid =
+    !R.isNil(parsedBirthdate) && !R.isEmpty(parsedBirthdate);
+  const isStartDateValid =
+    !R.isNil(parsedStartDate) && !R.isEmpty(parsedStartDate);
   const isEndDateValid = !R.isNil(parsedEndDate) && !R.isEmpty(parsedEndDate);
 
-  const onFormSubmit = (values) => {
+  const noBirthdateOrSsn = (!birthdate || !isBirthdateValid) && (!ssn || !validateSsn(ssn));
+  const getBirthdateError = useCallback(() => {
+    const error = noBirthdateOrSsn
+      ? t('error.birthdate.or.ssn.required')
+      : null;
+    return <span className={classes.ErrorMessage}>{error}</span>;
+  }, [noBirthdateOrSsn, t]);
+
+  const onFormSubmit = values => {
     // Datepicker uses different date format
     const payload = {
       ...values,
@@ -78,30 +87,31 @@ const QuarantineForm = props => {
       last_name: valueOrNull(values.last_name),
       diary_number: valueOrNull(values.diary_number),
       birthdate: parsedBirthdate,
+      ssn: valueOrNull(ssn),
       start_date: parsedStartDate,
       end_date: parsedEndDate,
     };
 
-    values.id
-      ? onEdit(payload)
-      : onAdd(payload);
+    values.id ? onEdit(payload) : onAdd(payload);
   };
 
-  const errorMsg = <span className={classes.ErrorMessage}>{t('error.mandatory')}</span>;
+  const errorMsg = (
+    <span className={classes.ErrorMessage}>{t('error.mandatory')}</span>
+  );
 
-  const setPickerBirthdate = (dates) => {
+  const setPickerBirthdate = dates => {
     // Datepicker sends SyntheticEvents when typing dates
     if (dates.constructor.name !== 'SyntheticEvent') {
       setBirthdate(moment(dates[0]).format(DATE_FORMAT));
     }
   };
-  const setPickerStartDate = (dates) => {
+  const setPickerStartDate = dates => {
     // Datepicker sends SyntheticEvents when typing dates
     if (dates.constructor.name !== 'SyntheticEvent') {
       setStartDate(moment(dates[0]).format(DATE_FORMAT));
     }
   };
-  const setPickerEndDate = (dates) => {
+  const setPickerEndDate = dates => {
     // Datepicker sends SyntheticEvents when typing dates
     if (dates.constructor.name !== 'SyntheticEvent') {
       setEndDate(moment(dates[0]).format(DATE_FORMAT));
@@ -123,7 +133,12 @@ const QuarantineForm = props => {
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="first_name">{t('common.first_name')}</label>
-              <Field autoFocus={true} id="first_name" tabIndex="1" name="first_name" />
+              <Field
+                autoFocus={true}
+                id="first_name"
+                tabIndex="1"
+                name="first_name"
+              />
               <ErrorMessage
                 name="first_name"
                 component="span"
@@ -154,37 +169,50 @@ const QuarantineForm = props => {
                 tabIndex="3"
                 locale={i18n.language}
                 onChange={setPickerBirthdate}
-                onBlur={(event) => setBirthdate(event.target.value)}
+                onBlur={event => setBirthdate(event.target.value)}
                 id="birthdate"
+                style={{ width: '100%' }}
               />
-              {!isBirthdateValid && errorMsg}
+              {getBirthdateError()}
+            </div>
+            <div className={classes.QuarantineFormField}>
+              <label htmlFor="ssn">{t('common.ssn')}</label>
+              <input
+                type="text"
+                value={ssn}
+                onChange={e => setSsn(e.target.value)}
+                tabIndex="4"
+              />
+              {!validateSsn(ssn) && (
+                <span className={classes.ErrorMessage}>
+                  {t('error.ssn.invalid')}
+                </span>
+              )}
             </div>
 
             <div className={classes.QuarantineFormField}>
               <label htmlFor="email">{t('common.email')}</label>
-              <Field name="email" tabIndex="4" id="email" />
+              <Field name="email" tabIndex="5" id="email" />
             </div>
             <div className={classes.QuarantineFormField}>
               <label htmlFor="phone_number">{t('common.phoneNumber')}</label>
-              <Field name="phone_number" tabIndex="5" id="phone_number" />
+              <Field name="phone_number" tabIndex="6" id="phone_number" />
             </div>
-            <span />
 
             <h3>{t('participationBan.generalInformation')}</h3>
             <span />
             <span />
 
             <div className={classes.QuarantineFormField}>
-              <label htmlFor="language_code">
-                {t('common.examLanguage')}
-              </label>
+              <label htmlFor="language_code">{t('common.examLanguage')}</label>
               <select
                 value={values.language_code}
                 name="language_code"
                 onChange={handleChange}
                 id="language_code"
-                tabIndex="6">
-                {LANGUAGES.map((lang) => (
+                tabIndex="7"
+              >
+                {LANGUAGES.map(lang => (
                   <option key={`lang-option-${lang.code}`} value={lang.code}>
                     {lang.name}
                   </option>
@@ -193,7 +221,7 @@ const QuarantineForm = props => {
             </div>
             <div className={classes.QuarantineFormField}>
               <label htmlFor="diary_number">{t('common.diaryNumber')}</label>
-              <Field name="diary_number" tabIndex="7" id="diary_number" />
+              <Field name="diary_number" tabIndex="8" id="diary_number" />
               <ErrorMessage
                 name="diary_number"
                 component="span"
@@ -203,7 +231,9 @@ const QuarantineForm = props => {
             <span />
 
             <div className={classes.QuarantineFormField}>
-              <label htmlFor="start_date">{t('participationBan.startDate')}</label>
+              <label htmlFor="start_date">
+                {t('participationBan.startDate')}
+              </label>
               <DatePicker
                 options={{
                   defaultDate: startDate,
@@ -213,11 +243,11 @@ const QuarantineForm = props => {
                   noMinDateUpdate: true,
                 }}
                 autoComplete="off"
-                tabIndex="8"
+                tabIndex="9"
                 id="start_date"
                 locale={i18n.language}
                 onChange={setPickerStartDate}
-                onBlur={(event) => setStartDate(event.target.value)}
+                onBlur={event => setStartDate(event.target.value)}
               />
               {!isStartDateValid && errorMsg}
             </div>
@@ -233,11 +263,11 @@ const QuarantineForm = props => {
                   noMinDateUpdate: true,
                 }}
                 autoComplete="off"
-                tabIndex="9"
+                tabIndex="10"
                 id="end_date"
                 locale={i18n.language}
                 onChange={setPickerEndDate}
-                onBlur={(event) => setEndDate(event.target.value)}
+                onBlur={event => setEndDate(event.target.value)}
               />
               {!isEndDateValid && errorMsg}
             </div>
@@ -249,16 +279,28 @@ const QuarantineForm = props => {
               data-cy="submit-quarantine-btn"
               className={classes.ConfirmButton}
               type="submit"
-              tabIndex="10"
-              disabled={(dirty && !isValid) || (!form.id && !isValid) || (!isBirthdateValid || !isStartDateValid || !isEndDateValid)}>
+              tabIndex="11"
+              disabled={
+                (dirty && !isValid) ||
+                (!form.id && !isValid) ||
+                noBirthdateOrSsn ||
+                !isStartDateValid ||
+                !isEndDateValid
+              }
+            >
               {t('common.send')}
             </button>
-            <button className={classes.CancelButton} onClick={cancelForm} tabIndex="11">
+            <button
+              className={classes.CancelButton}
+              onClick={cancelForm}
+              tabIndex="12"
+            >
               {t('common.cancelConfirm')}
             </button>
           </div>
         </Form>
-      )}/>
+      )}
+    />
   );
 };
 

@@ -89,8 +89,9 @@ const QuarantineHistory = props => {
             components={[<strong />, <strong />]}
           />
         </p>
-
-        <div className={classes.QuarantineList}>
+        <div
+          className={`${classes.QuarantineList} ${classes.QuarantineReviewsList}`}
+        >
           <div className={classes.ListHeader} />
           <div className={classes.ListHeader}>{t('common.examLanguage')}</div>
           <div className={classes.ListHeader}>
@@ -98,6 +99,7 @@ const QuarantineHistory = props => {
           </div>
           <div className={classes.ListHeader}>{t('common.names')}</div>
           <div className={classes.ListHeader}>{t('common.birthdate')}</div>
+          <div className={classes.ListHeader}>{t('common.ssn')}</div>
           <div className={classes.ListHeader}>{t('common.email')}</div>
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
           <div className={classes.ListHeader}>
@@ -106,7 +108,7 @@ const QuarantineHistory = props => {
           <div />
           {reviews.map(review => (
             <React.Fragment
-              key={`quarantine-match-row-${review.quarantine_id}`}
+              key={`quarantine-match-row-${review.id}`}
             >
               <div className={classes.IndicatorRow}>
                 <span>{t('common.registree')}</span>
@@ -125,6 +127,10 @@ const QuarantineHistory = props => {
               <div className={classes.ListRow}>
                 <span>{moment(review.form.birthdate).format(DATE_FORMAT)}</span>
                 <span>{moment(review.birthdate).format(DATE_FORMAT)}</span>
+              </div>
+              <div className={classes.ListRow}>
+                <span>{review.form.ssn}</span>
+                <span>{review.ssn}</span>
               </div>
               <div className={classes.ListRow}>
                 <span>{review.form.email}</span>
