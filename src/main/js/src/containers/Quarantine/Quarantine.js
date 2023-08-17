@@ -15,6 +15,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import SpinnerOverlay from '../../components/UI/SpinnerOverlay/SpinnerOverlay';
 import QuarantineNav from '../../components/Quarantine/Navigation';
 import QuarantineForm from '../../components/Quarantine/Form';
+import { formatOptionalDate } from '../../util/util';
 
 const initialForm = {
   language_code: 'fin',
@@ -53,6 +54,11 @@ const Quarantine = props => {
   const hasError = !R.isNil(error);
 
   useEffect(onFetchQuarantines, [hasError]);
+  const sortQuarantines = R.sortWith([
+    R.descend(R.prop('end_date')),
+    R.ascend(R.prop('last_name')),
+    R.ascend(R.prop('first_name')),
+  ]);
 
   const confirmDeleteModal = (
     <Modal
@@ -111,6 +117,10 @@ const Quarantine = props => {
     );
   };
 
+  const now = moment();
+  const isQuarantineInEffect = q =>
+    now.isBetween(moment(q.start_date), moment(q.end_date).endOf('day'));
+
   return (
     <Page>
       {R.isNil(error) && !R.isNil(showAddModal) && quarantineModal()}
@@ -131,7 +141,9 @@ const Quarantine = props => {
           </Button>
         </div>
 
-        <div className={`${classes.QuarantineList} ${classes.SavedQuarantinesList}`}>
+        <div
+          className={`${classes.QuarantineList} ${classes.SavedQuarantinesList}`}
+        >
           <div className={classes.ListHeader}>
             {t('participationBan.periodValid')}
           </div>
@@ -143,9 +155,15 @@ const Quarantine = props => {
           <div className={classes.ListHeader}>{t('common.phoneNumber')}</div>
           <div />
           <div />
-          {quarantines.map(quarantine => (
+          {sortQuarantines(quarantines).map(quarantine => (
             <React.Fragment key={`quarantine-row-${quarantine.id}`}>
-              <div>
+              <div
+                style={
+                  isQuarantineInEffect(quarantine)
+                    ? { 'font-weight': 'bold' }
+                    : {}
+                }
+              >
                 {moment(quarantine.start_date).format(DATE_FORMAT)} -{' '}
                 {moment(quarantine.end_date).format(DATE_FORMAT)}
               </div>
@@ -153,7 +171,7 @@ const Quarantine = props => {
               <div>
                 {quarantine.first_name} {quarantine.last_name}
               </div>
-              <div>{moment(quarantine.birthdate).format(DATE_FORMAT)}</div>
+              <div>{formatOptionalDate(quarantine.birthdate)}</div>
               <div>{quarantine.ssn}</div>
               <div>{quarantine.email}</div>
               <div>{quarantine.phone_number}</div>

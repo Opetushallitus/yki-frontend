@@ -208,7 +208,7 @@ const quarantineMatches = {
 const quarantineReviews = {
   reviews: [{
     quarantine_lang: 'fin',
-    birthdate: '2018-02-01',
+    birthdate: '1979-10-30',
     email: 'email@invalid.invalid',
     language_code: 'fin',
     phone_number: '0401234567',
@@ -224,7 +224,7 @@ const quarantineReviews = {
     id: 1,
     form: {
       email: 'email@invalid.invalid',
-      birthdate: '2018-02-01',
+      birthdate: '1979-10-30',
       last_name: 'De Ilmoittautuminen',
       first_name: 'Max',
       phone_number: '0401234567',
@@ -234,7 +234,6 @@ const quarantineReviews = {
   },
   {
     quarantine_lang: 'fin',
-    birthdate: '2018-02-01',
     email: 'email@invalid.invalid',
     language_code: 'fin',
     phone_number: '0401234567',
@@ -250,8 +249,9 @@ const quarantineReviews = {
     id: 2,
     form: {
       email: 'email@invalid.invalid',
-      birthdate: '2018-02-01',
-      last_name: 'De Ilmoittautuminen',
+      birthdate: '1979-10-30',
+      ssn: '301079-900U',
+      last_name: 'Von Karenssi',
       first_name: 'Max',
       phone_number: '0401234567'
     },
@@ -261,21 +261,62 @@ const quarantineReviews = {
 
 const quarantines = {
   quarantines: [{
-    quarantine_lang: 'fin',
-    birthdate: '2018-02-01',
-    email: 'email@invalid.invalid',
     language_code: 'fin',
+    birthdate: '1979-10-30',
+    email: 'email@invalid.invalid',
     phone_number: '0401234567',
-    name: 'Max Syöttöpaine',
     ssn: '301079-900U',
     created: '2022-12-02T10:32:11.888Z',
-    start_date: '2027-07-01',
-    end_date: '2028-01-01',
+    start_date: '2023-01-01',
+    end_date: '2024-01-01',
     id: 1,
     last_name: 'Syöttöpaine',
     first_name: 'Max',
-    diary_number: '1234',
-  }]
+    diary_number: 'OPH-feikki-123',
+  },
+  {
+    language_code: 'swe',
+    birthdate: '1979-10-30',
+    email: 'email@invalid.invalid',
+    phone_number: '0401234567',
+    ssn: '301079-900U',
+    created: '2022-12-02T10:32:11.888Z',
+    start_date: '2023-01-01',
+    end_date: '2023-08-17',
+    id: 2,
+    last_name: 'Testitapaus',
+    first_name: 'Tessa',
+    diary_number: 'OPH-feikki-456',
+  },
+  {
+    language_code: 'eng',
+    birthdate: '1979-10-30',
+    email: 'email@invalid.invalid',
+    phone_number: '0401234567',
+    ssn: '301079-900U',
+    created: '2022-12-02T10:32:11.888Z',
+    start_date: '2023-07-01',
+    end_date: '2024-06-01',
+    id: 3,
+    last_name: 'Ankka',
+    first_name: 'Aku',
+    diary_number: 'OPH-feikki-789',
+  },
+  {
+    language_code: 'eng',
+    birthdate: '1979-10-30',
+    email: 'email@invalid.invalid',
+    phone_number: '0401234567',
+    ssn: '301079-900U',
+    created: '2022-12-02T10:32:11.888Z',
+    start_date: '2023-06-01',
+    end_date: '2024-06-01',
+    id: 4,
+    last_name: 'Aalborg',
+    first_name: 'Akvavit',
+    diary_number: 'OPH-feikki-999',
+  },
+  ]
 };
 
 const initialOrganizers = [...organizers];

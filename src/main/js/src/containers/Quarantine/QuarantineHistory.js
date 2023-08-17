@@ -13,6 +13,7 @@ import { DATE_FORMAT, LANGUAGES } from '../../common/Constants';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import QuarantineNav from '../../components/Quarantine/Navigation';
 import QuarantineConfirmModal from '../../components/Quarantine/ConfirmModal';
+import { formatOptionalDate } from '../../util/util';
 
 const QuarantineHistory = props => {
   const {
@@ -125,8 +126,8 @@ const QuarantineHistory = props => {
                 </span>
               </div>
               <div className={classes.ListRow}>
-                <span>{moment(review.form.birthdate).format(DATE_FORMAT)}</span>
-                <span>{moment(review.birthdate).format(DATE_FORMAT)}</span>
+                <span>{formatOptionalDate(review.form.birthdate)}</span>
+                <span>{formatOptionalDate(review.birthdate)}</span>
               </div>
               <div className={classes.ListRow}>
                 <span>{review.form.ssn}</span>
