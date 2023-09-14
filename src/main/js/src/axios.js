@@ -13,6 +13,9 @@ instance.interceptors.request.use((config) => {
     'Caller-Id': `${OPH_OID}.yki`,
     'CSRF': getCookie('CSRF')
   };
+  // Include a lang parameter to API calls other than for fetching exam session data,
+  // The additional parameter interferes with caching of exam session responses,
+  // and the exam session responses contain details for multiple languages anyway.
   if (!(config.url && config.url.startsWith('/yki/api/exam-session') && config.method === 'get')) {
     const lang = i18next.language;
     config.params = { lang: lang ? lang : 'fi' };
