@@ -8,13 +8,15 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  const lang = i18next.language;
   config.headers = {
     ...config.headers,
     'Caller-Id': `${OPH_OID}.yki`,
     'CSRF': getCookie('CSRF')
   };
-  config.params = { lang: lang ? lang : 'fi' };
+  if (!(config.url && config.url.startsWith('/yki/api/exam-session') && config.method === 'get')) {
+    const lang = i18next.language;
+    config.params = { lang: lang ? lang : 'fi' };
+  }
   return config;
 });
 
