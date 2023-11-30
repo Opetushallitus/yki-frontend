@@ -9,23 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class YkiController {
 
     @GetMapping(value = {"/",
-            "/ilmoittautuminen",
             "/tutkintopaivat",
             "/jarjestajarekisteri",
             "/maksuraportit",
             "/tutkintotilaisuudet",
-            "/maksu",
-            "/tutkintotilaisuus",
             "/osallistumiskiellot/**",
-            "/saavutettavuus",
-            "/tarkistusarviointi",
-            "/ilmoittautuminen/**",
             "/tutkintopaivat/**",
             "/jarjestajarekisteri/**",
-            "/tutkintotilaisuudet/**",
-            "/maksu/**",
-            "/tutkintotilaisuus/**",
-            "/tarkistusarviointi/**"})
+            "/tutkintotilaisuudet/**",})
     public String index() {
         return "/index.html";
     }
