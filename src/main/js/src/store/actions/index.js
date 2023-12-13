@@ -24,28 +24,6 @@ export {
   registryFailReset,
 } from './registry';
 export {
-  fetchExamSessions,
-  selectLanguage,
-  selectLevel,
-  selectLocation,
-  selectExamSession,
-  setAll,
-  filterByPathParams,
-  toggleAvailabilityFilter,
-  toggleOpenRegistrationFilter,
-  fetchExamSession,
-  initRegistrationForm,
-  submitRegistrationForm,
-  filterExamByAvailability,
-  filteredExamSessionsByOpenRegistration,
-  filteredExamsByAvailabilityAndRegistration,
-  fetchPrices,
-  fetchReEvaluationPeriods,
-  fetchReEvaluationPeriod,
-  submitEvaluationForm,
-  evaluationFailReset,
-} from './registration';
-export {
   addExamDate,
   fetchExamDates,
   examDatesFailReset,

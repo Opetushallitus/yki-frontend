@@ -36,14 +36,6 @@ const getExamDates = () => {
 
 let examDates = getExamDates();
 
-const initRegistration = JSON.parse(
-  fs.readFileSync('./dev/rest/registration/registrationInit.json'),
-);
-
-const initRegistrationEmailAuth = JSON.parse(
-  fs.readFileSync('./dev/rest/registration/registrationInitEmailAuth.json'),
-);
-
 const getExamSessions = () => {
   return JSON.parse(
     fs.readFileSync('./dev/rest/examSessions/examSessions.json'),
@@ -84,26 +76,11 @@ const countries = JSON.parse(
 
 const genders = JSON.parse(fs.readFileSync('./dev/rest/codes/sukupuoli.json'));
 
-const prices = JSON.parse(
-  fs.readFileSync('./dev/rest/registration/prices.json'),
-);
-
 const evaluationPeriods = JSON.parse(
   fs.readFileSync('./dev/rest/registration/evaluationPeriods.json'),
 );
 
 const paymentsReport = JSON.parse(fs.readFileSync('./dev/rest/examPayments/paymentsReport.json'))
-
-const evaluationOrder = {
-  id: 1,
-  language_code: 'fin',
-  level_code: 'PERUS',
-  exam_date: '2021-05-27',
-  amount: 50,
-  lang: 'fi',
-  state: 'UNPAID',
-  subtests: ['READING'],
-};
 
 let organizers = [
   {
@@ -333,24 +310,6 @@ const adminUser = {
     ],
     lang: 'fi',
   },
-};
-
-const organizerUser = {
-  identity: {
-    username: 'ykijarjestaja',
-    oid: '1.2.246.562.24.62800798482',
-    organizations: [
-      {
-        oid: '1.2.246.562.10.28646781493',
-        permissions: [{ palvelu: 'YKI', oikeus: 'JARJESTAJA' }],
-      },
-    ],
-    lang: 'fi',
-  },
-};
-
-const unauthenticatedUser = {
-  identity: null,
 };
 
 const getNumberBetween = (min, max) =>
@@ -1007,31 +966,6 @@ module.exports = function(app) {
     }
   });
 
-  app.post('/yki/api/login-link', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyPostCall(req, res) : mockCall();
-  });
-
-  app.post('/yki/api/registration/init', (req, res) => {
-    const mockCall = () => {
-      try {
-        req.body.exam_session_id === 2
-          ? res.send(initRegistrationEmailAuth)
-          : res.send(initRegistration);
-      } catch (err) {
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyPostCall(req, res) : mockCall();
-  });
-
   app.get('/yki/api/exam-session', (req, res) => {
     const mockCall = () => {
       try {
@@ -1078,18 +1012,6 @@ module.exports = function(app) {
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
   });
 
-  app.get('/yki/api/exam-session/pricing', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send(prices);
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
-
   app.get('/yki/api/exam-session/:id', (req, res) => {
     const mockCall = () => {
       try {
@@ -1104,31 +1026,6 @@ module.exports = function(app) {
       }
     };
     useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
-
-  app.post('/yki/api/exam-session/:id/queue', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.set('Content-Type', 'application/json; charset=utf-8');
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyPostCall(req, res) : mockCall();
-  });
-
-  app.post('/yki/api/registration/:id/submit', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyPostCall(req, res) : mockCall();
   });
 
   app.get('/yki/api/code/maatjavaltiot2', (req, res) => {
@@ -1192,82 +1089,6 @@ module.exports = function(app) {
     const mockCall = () => {
       try {
         res.send(evaluationPeriods[0]);
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
-
-  app.get('/yki/api/evaluation/order/:id', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send(evaluationOrder);
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
-
-  app.post('/yki/api/evaluation/:id/order', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyPostCall(req, res) : mockCall();
-  });
-
-  app.get('/yki/api/payment/v2/paytrail/:lang/success', (req, res) => {
-    const mockCall = () => {
-      try {
-        console.log('paytrail payment success callback invoked');
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
-
-  app.get('/yki/api/payment/v2/paytrail/:lang/error', (req, res) => {
-    const mockCall = () => {
-      try {
-        console.log('paytrail payment error callback invoked');
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
-
-  app.get('/yki/api/payment/v2/:id/redirect', (req, res) => {
-    const mockCall = () => {
-      try {
-        console.log('payment redirect callback invoked');
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
-
-  app.get('/yki/api/evaluation-payment/v2/:id/redirect', (req, res) => {
-    const mockCall = () => {
-      try {
-        console.log('paytrail evaluation payment redirect callback invoked');
-        res.send({ success: true });
       } catch (err) {
         printError(req, err);
         res.status(404).send(err.message);
