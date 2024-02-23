@@ -60,35 +60,45 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
-    steps:
-      - uses: actions/checkout@v3
+    uses: Opetushallitus/.github/.github/workflows/push-scan-java-ecr.yml@main
+    with:
+      application: yki-frontend
+      base-image: baseimage-fatjar-openjdk17:master
+      configfolder: src/main/resources
+      jarfile: yki-frontend.jar
+      jarfolder: target
+    secrets:
+      AWS_UTILITY_ROLE_ARN: ${{ secrets.AWS_OPH_UTILITY_ROLE_ARN }}
 
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: target
-          key: ${{ github.sha }}
+    # steps:
+    #   - uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_OPH_UTILITY_ROLE_ARN }}
-          aws-region: eu-west-1
+    #   - uses: actions/cache@v3
+    #     id: restore-build
+    #     with:
+    #       path: target
+    #       key: ${{ github.sha }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+    #   - name: Configure AWS credentials
+    #     uses: aws-actions/configure-aws-credentials@v4
+    #     with:
+    #       role-to-assume: ${{ secrets.AWS_OPH_UTILITY_ROLE_ARN }}
+    #       aws-region: eu-west-1
 
-      - name: Build and deploy Docker image
-        shell: bash
-        run: |
-          export BASE_IMAGE="baseimage-fatjar-openjdk11:master"
-          export ARTIFACT_NAME="yki-frontend"
-          git clone https://github.com/Opetushallitus/ci-tools.git
-          source ci-tools/common/setup-tools.sh
-          mv target/yki-frontend-*.jar $DOCKER_BUILD_DIR/artifact/${ARTIFACT_NAME}.jar
-          cp -vr src/main/resources/* $DOCKER_BUILD_DIR/config/
-          ./ci-tools/common/pull-image.sh
-          ./ci-tools/github-build/build-fatjar.sh $ARTIFACT_NAME
-          ./ci-tools/github-build/upload-image.sh $ARTIFACT_NAME
-          ./ci-tools/common/clean-docker-build-dir.sh
+    #   - name: Login to Amazon ECR
+    #     id: login-ecr
+    #     uses: aws-actions/amazon-ecr-login@v2
+
+    #   - name: Build and deploy Docker image
+    #     shell: bash
+    #     run: |
+    #       export BASE_IMAGE="baseimage-fatjar-openjdk11:master"
+    #       export ARTIFACT_NAME="yki-frontend"
+    #       git clone https://github.com/Opetushallitus/ci-tools.git
+    #       source ci-tools/common/setup-tools.sh
+    #       mv target/yki-frontend-*.jar $DOCKER_BUILD_DIR/artifact/${ARTIFACT_NAME}.jar
+    #       cp -vr src/main/resources/* $DOCKER_BUILD_DIR/config/
+    #       ./ci-tools/common/pull-image.sh
+    #       ./ci-tools/github-build/build-fatjar.sh $ARTIFACT_NAME
+    #       ./ci-tools/github-build/upload-image.sh $ARTIFACT_NAME
+    #       ./ci-tools/common/clean-docker-build-dir.sh
