@@ -62,7 +62,7 @@ jobs:
     uses: Opetushallitus/.github/.github/workflows/push-scan-java-ecr.yml@main
     with:
       application: yki-frontend
-      base-image: baseimage-fatjar-openjdk17:master
+      base-image: baseimage-fatjar-openjdk11:master
       configfolder: src/main/resources
       jarfile: yki-frontend.jar
       jarfolder: target
