@@ -51,6 +51,7 @@ const QuarantineForm = props => {
       .typeError(t('error.string'))
       .required(t('error.mandatory')),
     ssn: Yup.string().test('invalid-ssn', t('error.ssn.invalid'), validateSsn),
+    email: Yup.string().email(t('error.email')),
   });
 
   const parsedBirthdate = birthdate
@@ -69,7 +70,8 @@ const QuarantineForm = props => {
     !R.isNil(parsedStartDate) && !R.isEmpty(parsedStartDate);
   const isEndDateValid = !R.isNil(parsedEndDate) && !R.isEmpty(parsedEndDate);
 
-  const noBirthdateOrSsn = (!birthdate || !isBirthdateValid) && (!ssn || !validateSsn(ssn));
+  const noBirthdateOrSsn =
+    (!birthdate || !isBirthdateValid) && (!ssn || !validateSsn(ssn));
   const getBirthdateError = useCallback(() => {
     const error = noBirthdateOrSsn
       ? t('error.birthdate.or.ssn.required')
@@ -193,6 +195,11 @@ const QuarantineForm = props => {
             <div className={classes.QuarantineFormField}>
               <label htmlFor="email">{t('common.email')}</label>
               <Field name="email" tabIndex="5" id="email" />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className={classes.ErrorMessage}
+              />
             </div>
             <div className={classes.QuarantineFormField}>
               <label htmlFor="phone_number">{t('common.phoneNumber')}</label>
