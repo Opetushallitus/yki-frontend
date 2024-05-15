@@ -64,7 +64,7 @@ jobs:
       application: yki-frontend
       base-image: baseimage-fatjar-openjdk11:master
       configfolder: src/main/resources
-      jarfile: yki-frontend.jar
+      jarfile: yki-frontend
       jarfolder: target
     secrets:
       AWS_UTILITY_ROLE_ARN: ${{ secrets.AWS_OPH_UTILITY_ROLE_ARN }}
