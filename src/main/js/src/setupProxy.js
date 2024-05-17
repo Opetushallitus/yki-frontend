@@ -76,10 +76,6 @@ const countries = JSON.parse(
 
 const genders = JSON.parse(fs.readFileSync('./dev/rest/codes/sukupuoli.json'));
 
-const evaluationPeriods = JSON.parse(
-  fs.readFileSync('./dev/rest/registration/evaluationPeriods.json'),
-);
-
 const paymentsReport = JSON.parse(fs.readFileSync('./dev/rest/examPayments/paymentsReport.json'))
 
 let organizers = [
@@ -1071,30 +1067,6 @@ module.exports = function(app) {
     } catch (err) {
       res.status(404).send(err.message);
     }
-  });
-
-  app.get('/yki/api/evaluation', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send(evaluationPeriods);
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
-  });
-
-  app.get('/yki/api/evaluation/:id', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send(evaluationPeriods[0]);
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
-    useLocalProxy ? proxyGetCall(req, res) : mockCall();
   });
 
   app.get('/yki/api/payment/v2/report', (req, res) => {
