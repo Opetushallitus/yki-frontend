@@ -70,8 +70,21 @@ export const participantList = props => {
   };
 
   const getPhoneNumber = participant => {
-    const asNumber = parsePhoneNumberFromString(participant.form.phone_number);
-    return asNumber ? asNumber.formatInternational() : '';
+    const supplied = participant.form.phone_number || '';
+    let asNumber = parsePhoneNumberFromString(supplied);
+    if (asNumber) {
+      return asNumber.formatInternational();
+    } else {
+      // If phone number could not be parsed, try again with a default country code instead.
+      asNumber = parsePhoneNumberFromString(supplied, 'FI');
+      if (asNumber) {
+        // Return parsed number without the country code, as our guess may be incorrect.
+        return asNumber.formatNational(supplied);
+      } else {
+        // Otherwise, just return the string as is.
+        return supplied;
+      }
+    }
   };
 
   const relocateParticipant = participant => {
