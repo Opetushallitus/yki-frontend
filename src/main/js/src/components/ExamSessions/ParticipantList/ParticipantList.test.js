@@ -38,6 +38,7 @@ const participants = [
     },
     state: 'COMPLETED',
     registration_id: 1,
+    is_transferable: true,
   },
   {
     form: {
@@ -52,6 +53,7 @@ const participants = [
     },
     state: 'SUBMITTED',
     registration_id: 2,
+    is_transferable: false,
   },
 ];
 

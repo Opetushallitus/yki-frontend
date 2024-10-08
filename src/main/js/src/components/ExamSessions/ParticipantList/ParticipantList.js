@@ -223,7 +223,7 @@ export const participantList = props => {
             : props.t('examSession.registration.postAdmission')}
         </div>
         <div className={classes.StateItem}>
-          {p.state === 'COMPLETED'
+          {p.is_transferable
             ? relocateParticipant(p)
             : null}
         </div>
