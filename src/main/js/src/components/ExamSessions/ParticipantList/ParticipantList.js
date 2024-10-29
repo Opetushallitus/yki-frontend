@@ -46,6 +46,8 @@ export const participantList = props => {
         return 'examSession.expired';
       case 'PAID_AND_CANCELLED':
         return 'examSession.paidAndCancelled';
+      case 'TRANSFERED':
+        return 'examSession.paidAndTransfered';
       default:
         return 'examSession.notPaid';
     }
@@ -55,7 +57,9 @@ export const participantList = props => {
     const registrationState = participant.state;
     const image =
       registrationState === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
-    const text = props.t(getStateTranslationKey(registrationState));
+    const registrationShownState =
+      registrationState === 'COMPLETED' && participant.is_transfered ? 'TRANSFERED' : registrationState;
+    const text = props.t(getStateTranslationKey(registrationShownState));
 
     return (
       <React.Fragment>
