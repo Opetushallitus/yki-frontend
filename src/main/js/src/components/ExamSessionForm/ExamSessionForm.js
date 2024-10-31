@@ -70,7 +70,9 @@ const examSessionForm = props => {
     extraSv: Yup.string(),
     extraEn: Yup.string(),
     contactName: Yup.string(),
-    contactEmail: Yup.string().email(props.t('error.email')).required(props.t('error.mandatory')),
+    contactEmail: Yup.string()
+      .email(props.t('error.email'))
+      .required(props.t('error.mandatory')),
 
     contactPhoneNumber: Yup.string(),
   });
@@ -83,7 +85,7 @@ const examSessionForm = props => {
     extraLabel,
     disabled,
     setFieldValue,
-    values
+    values,
   }) => {
     return (
       <RadioButton
@@ -123,20 +125,24 @@ const examSessionForm = props => {
   const organizationSelection = (children, lang) => {
     let elements = [];
 
-    elements.push(<option value="" key="">{props.t('examSession.selectInstitution')}</option>)
+    elements.push(
+      <option value="" key="">
+        {props.t('examSession.selectInstitution')}
+      </option>,
+    );
 
     if (children) {
       children.forEach(org => {
         elements.push(
           <option value={org.oid} key={org.oid}>
             {`${getLocalizedName(org.nimi, lang)} (${org.oid ? org.oid : ''})`}
-          </option>
-        )
-      })
+          </option>,
+        );
+      });
     }
 
     return elements;
-  }
+  };
 
   const languageFields = languages => {
     const uniqueLanguageCodes = R.compose(R.uniq, R.pluck('language_code'));
@@ -158,7 +164,12 @@ const examSessionForm = props => {
     );
   };
 
-  const languageLevelFields = (languages, selectedLang, setFieldValue, values) => {
+  const languageLevelFields = (
+    languages,
+    selectedLang,
+    setFieldValue,
+    values,
+  ) => {
     const allLevels = R.keys(levelTranslations);
 
     return (
@@ -187,7 +198,13 @@ const examSessionForm = props => {
     );
   };
 
-  const examDateFields = (examDates, selectedLanguage, selectedLevel, setFieldValue, values) => {
+  const examDateFields = (
+    examDates,
+    selectedLanguage,
+    selectedLevel,
+    setFieldValue,
+    values,
+  ) => {
     // Disable date filtering in development because test data is not dynamic
     return examDates
       .filter(e => {
@@ -260,8 +277,8 @@ const examSessionForm = props => {
       onSubmit={values => {
         const office = values.officeOid
           ? props.examSessionContent.organizationChildren.find(
-            o => o.oid === values.officeOid,
-          )
+              o => o.oid === values.officeOid,
+            )
           : null;
 
         const orgOrOfficeName = office
@@ -277,13 +294,18 @@ const examSessionForm = props => {
           office_oid: values.officeOid ? values.officeOid : null,
           max_participants: Number.parseInt(values.maxParticipants),
           published_at: moment().toISOString(),
-          contact: contactName || contactEmail || contactPhoneNumber ? [
-            {
-              name: contactName ? contactName : null,
-              email: contactEmail ? contactEmail : null,
-              phone_number: contactPhoneNumber ? contactPhoneNumber : null,
-            },
-          ] : null,
+          contact:
+            contactName || contactEmail || contactPhoneNumber
+              ? [
+                  {
+                    name: contactName ? contactName : null,
+                    email: contactEmail ? contactEmail : null,
+                    phone_number: contactPhoneNumber
+                      ? contactPhoneNumber
+                      : null,
+                  },
+                ]
+              : null,
           location: [
             {
               name: getLocalizedName(orgOrOfficeName, 'fi'),
@@ -322,7 +344,8 @@ const examSessionForm = props => {
         };
         props.onSubmit(payload);
       }}
-      render={({ values, isValid, errors, setFieldValue }) => (
+    >
+      {({ values, isValid, errors, setFieldValue }) => (
         <Form className={classes.Form}>
           <h1>{props.t('examSession.add.header')}</h1>
           <h2>{props.t('examSession.add.subHeader')}</h2>
@@ -368,7 +391,7 @@ const examSessionForm = props => {
                   props.examSessionContent.organizer.languages || [],
                   values.language,
                   setFieldValue,
-                  values
+                  values,
                 )}
               </RadioButtonGroup>
             </div>
@@ -384,7 +407,7 @@ const examSessionForm = props => {
                   values.language,
                   values.level,
                   setFieldValue,
-                  values
+                  values,
                 )}
               </RadioButtonGroup>
               {registrationPediod(
@@ -512,7 +535,7 @@ const examSessionForm = props => {
           </Button>
         </Form>
       )}
-    />
+    </Formik>
   );
 };
 
