@@ -37,7 +37,9 @@ export class ExamSessionUpdateForm extends Component {
         })
         .required(t('error.mandatory')),
       location: Yup.string(),
-      contactEmail: Yup.string().email((t('error.email'))).required(t('error.mandatory')),
+      contactEmail: Yup.string()
+        .email(t('error.email'))
+        .required(t('error.mandatory')),
       extraFi: Yup.string(),
       extraSe: Yup.string(),
       extraEn: Yup.string(),
@@ -57,11 +59,14 @@ export class ExamSessionUpdateForm extends Component {
 
     const deleteButton = examSession => {
       // It is possible to delete the exam session on the registration start day before 10am
-      const registrationNotStarted = moment().subtract(1, 'days').isBefore(
-        moment(examSession.registration_start_date),
-      );
+      const registrationNotStarted = moment()
+        .subtract(1, 'days')
+        .isBefore(moment(examSession.registration_start_date));
 
-      const canBeDeleted = !examSession.open && examSession.participants === 0 && registrationNotStarted;
+      const canBeDeleted =
+        !examSession.open &&
+        examSession.participants === 0 &&
+        registrationNotStarted;
       return canBeDeleted ? (
         <div className={classes.ActionButton}>
           <ActionButton
@@ -76,9 +81,7 @@ export class ExamSessionUpdateForm extends Component {
     };
 
     const getLocationByLang = lang => {
-      const location = examSession.location.find(
-        l => l.lang === lang,
-      );
+      const location = examSession.location.find(l => l.lang === lang);
       return location ? location : examSession.location[0];
     };
 
@@ -93,7 +96,6 @@ export class ExamSessionUpdateForm extends Component {
       const location = getLocationByLang(lang);
       return location.name;
     };
-
 
     const createRegistrationUrl = examSessionId => {
       return `https://${window.location.hostname.replace(
@@ -115,25 +117,29 @@ export class ExamSessionUpdateForm extends Component {
           extraFi: getLocationExtraByLang('fi'),
           extraSv: getLocationExtraByLang('sv'),
           extraEn: getLocationExtraByLang('en'),
-          contactName: contact ? contact.name : "",
-          contactEmail: contact ? contact.email : "",
-          contactPhoneNumber: contact ? contact.phone_number : "",
+          contactName: contact ? contact.name : '',
+          contactEmail: contact ? contact.email : '',
+          contactPhoneNumber: contact ? contact.phone_number : '',
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
-
           const { contactName, contactEmail, contactPhoneNumber } = values;
 
           const payload = {
             ...examSession,
             max_participants: Number.parseInt(values.maxParticipants),
-            contact: contactName || contactEmail || contactPhoneNumber ? [
-              {
-                name: contactName ? contactName : null,
-                email: contactEmail ? contactEmail : null,
-                phone_number: contactPhoneNumber ? contactPhoneNumber : null,
-              },
-            ] : null,
+            contact:
+              contactName || contactEmail || contactPhoneNumber
+                ? [
+                    {
+                      name: contactName ? contactName : null,
+                      email: contactEmail ? contactEmail : null,
+                      phone_number: contactPhoneNumber
+                        ? contactPhoneNumber
+                        : null,
+                    },
+                  ]
+                : null,
             location: [
               {
                 name: getLocationNameByLang('fi'),
@@ -172,7 +178,8 @@ export class ExamSessionUpdateForm extends Component {
           };
           this.props.onSubmit(payload);
         }}
-        render={({ isValid, setFieldValue, values }) => (
+      >
+        {({ isValid, setFieldValue, values }) => (
           <Form className={classes.Form}>
             <div>
               <div className={classes.FormElement}>
@@ -317,7 +324,7 @@ export class ExamSessionUpdateForm extends Component {
             </div>
           </Form>
         )}
-      />
+      </Formik>
     );
   }
 }

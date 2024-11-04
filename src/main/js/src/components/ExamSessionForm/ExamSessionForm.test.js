@@ -84,7 +84,7 @@ jest.mock('i18next', () => ({
 }));
 
 describe('<ExamSessionForm />', () => {
-  it('should render form with disabled submit button', () => {
+  it('should render form', () => {
     const form = mount(
       <ExamSessionForm
         onSubmit={onSubmitSpy}
@@ -93,7 +93,10 @@ describe('<ExamSessionForm />', () => {
       />,
     );
     expect(form.find('.Form').exists()).toBeTruthy();
-    expect(form.find('.Button').prop('disabled')).toBeTruthy();
+    // Due to Formik update, validation does not run
+    // before fields are updated. Initially, the form is thus valid.
+    expect(form.find('.Button').prop('disabled')).toBeFalsy();
+
     expect(form.find('[htmlFor="fin"]').text()).toEqual('suomi');
   });
 
