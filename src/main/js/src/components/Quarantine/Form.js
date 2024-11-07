@@ -68,7 +68,7 @@ const QuarantineForm = props => {
     !R.isNil(parsedBirthdate) && !R.isEmpty(parsedBirthdate);
   const isStartDateValid =
     !R.isNil(parsedStartDate) && !R.isEmpty(parsedStartDate);
-  const isEndDateValid = !R.isNil(parsedEndDate) && !R.isEmpty(parsedEndDate);
+  const isEndDateValid = !R.isNil(parsedEndDate) && !R.isEmpty(parsedEndDate) && (!isStartDateValid || moment(parsedStartDate).isBefore(moment(parsedEndDate)));
 
   const noBirthdateOrSsn =
     (!birthdate || !isBirthdateValid) && (!ssn || !validateSsn(ssn));
@@ -264,7 +264,6 @@ const QuarantineForm = props => {
                 options={{
                   defaultDate: endDate,
                   value: endDate,
-                  minDate: today,
                   allowInput: true,
                   dateFormat: DATE_FORMAT_PICKER,
                   noMinDateUpdate: true,
