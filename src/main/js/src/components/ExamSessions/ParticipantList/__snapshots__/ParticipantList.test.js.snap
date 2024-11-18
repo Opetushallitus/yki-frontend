@@ -195,7 +195,22 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     </div>
     <div
       className="Item"
-    />
+    >
+      <ActionButton
+        buttonsDisabled={false}
+        cancelText="examSession.registration.cancel.cancel"
+        confirmOnRight={true}
+        confirmText="examSession.registration.cancel.confirm"
+        onClick={[Function]}
+      >
+        <img
+          alt=""
+          src="trashcan.svg"
+        />
+         
+        examSession.registration.cancel
+      </ActionButton>
+    </div>
     <span
       className="Line"
     />

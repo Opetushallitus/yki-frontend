@@ -191,7 +191,7 @@ export const participantList = props => {
 
   const participantRows = participants => {
     const renderCancelButton = (p) => {
-      return p.state === 'SUBMITTED' || (p.state === 'COMPLETED' && props.isAdminView);
+      return p.state === 'SUBMITTED' || p.state === 'COMPLETED';
     };
 
     return sortParticipantsFn(participants).map((p, i) => (
