@@ -27,15 +27,10 @@ export class RelocateParticipant extends Component {
 
   render() {
     const { t, examSession, examSessions } = this.props;
-    const { id, level_code, language_code, organizer_oid } = examSession;
 
     const canBeRelocatedTo = e => {
       return (
-        e.id !== id &&
-        moment(e.session_date).isSameOrAfter(moment(), 'day') &&
-        e.level_code === level_code &&
-        e.language_code === language_code &&
-        e.organizer_oid === organizer_oid
+          examSession.transfer_targets.includes(e.id)
       );
     };
 

@@ -152,6 +152,7 @@
   "examSession.office": "Verksamhetsställe",
   "examSession.paid": "Har betalat",
   "examSession.paidAndCancelled": "Har betalat och återkallat",
+  "examSession.paidAndTransfered": "Har betalat och flyttats",
   "examSession.participants": "Anmälda",
   "examSession.participants.sortBy": "Sorteringsvillkor",
   "examSession.participants.sortBy.name": "Namn",

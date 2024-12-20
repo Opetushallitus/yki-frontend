@@ -204,6 +204,7 @@
   "examSession.office": "Oppilaitos tai toimipiste",
   "examSession.paid": "Maksanut",
   "examSession.paidAndCancelled": "Maksanut ja peruttu",
+  "examSession.paidAndTransfered": "Maksanut ja siirretty",
   "examSession.participants": "Ilmoittautuneet",
   "examSession.participants.sortBy": "Lajitteluehto",
   "examSession.participants.sortBy.name": "Nimi",

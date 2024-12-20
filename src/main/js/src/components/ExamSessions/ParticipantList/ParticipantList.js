@@ -46,6 +46,8 @@ export const participantList = props => {
         return 'examSession.expired';
       case 'PAID_AND_CANCELLED':
         return 'examSession.paidAndCancelled';
+      case 'TRANSFERED':
+        return 'examSession.paidAndTransfered';
       default:
         return 'examSession.notPaid';
     }
@@ -55,7 +57,9 @@ export const participantList = props => {
     const registrationState = participant.state;
     const image =
       registrationState === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
-    const text = props.t(getStateTranslationKey(registrationState));
+    const registrationShownState =
+      registrationState === 'COMPLETED' && participant.is_transfered ? 'TRANSFERED' : registrationState;
+    const text = props.t(getStateTranslationKey(registrationShownState));
 
     return (
       <React.Fragment>
@@ -187,7 +191,7 @@ export const participantList = props => {
 
   const participantRows = participants => {
     const renderCancelButton = (p) => {
-      return p.state === 'SUBMITTED' || (p.state === 'COMPLETED' && props.isAdminView);
+      return p.state === 'SUBMITTED' || p.state === 'COMPLETED';
     };
 
     return sortParticipantsFn(participants).map((p, i) => (
@@ -223,7 +227,7 @@ export const participantList = props => {
             : props.t('examSession.registration.postAdmission')}
         </div>
         <div className={classes.StateItem}>
-          {p.state === 'COMPLETED'
+          {p.is_transferable
             ? relocateParticipant(p)
             : null}
         </div>

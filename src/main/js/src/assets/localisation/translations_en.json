@@ -152,6 +152,7 @@
   "examSession.office": "Office",
   "examSession.paid": "Paid",
   "examSession.paidAndCancelled": "Paid and cancelled",
+  "examSession.paidAndTransfered": "Paid and rescheduled",
   "examSession.participants": "Participants",
   "examSession.participants.sortBy": "Sorting condition",
   "examSession.participants.sortBy.name": "Name",

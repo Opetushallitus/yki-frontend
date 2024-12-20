@@ -30,6 +30,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
               "street_address": "Revontulentie 13 C 2",
               "zip": "02100",
             },
+            "is_transferable": true,
             "registration_id": 1,
             "state": "COMPLETED",
           },
@@ -44,6 +45,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
               "street_address": "Revontulentie 13 C 2",
               "zip": "02100",
             },
+            "is_transferable": false,
             "registration_id": 2,
             "state": "SUBMITTED",
           },
@@ -193,7 +195,22 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     </div>
     <div
       className="Item"
-    />
+    >
+      <ActionButton
+        buttonsDisabled={false}
+        cancelText="examSession.registration.cancel.cancel"
+        confirmOnRight={true}
+        confirmText="examSession.registration.cancel.confirm"
+        onClick={[Function]}
+      >
+        <img
+          alt=""
+          src="trashcan.svg"
+        />
+         
+        examSession.registration.cancel
+      </ActionButton>
+    </div>
     <span
       className="Line"
     />

@@ -205,13 +205,7 @@ const examSessionForm = props => {
     setFieldValue,
     values,
   ) => {
-    // Disable date filtering in development because test data is not dynamic
     return examDates
-      .filter(e => {
-        return process.env.NODE_ENV !== 'development'
-          ? moment(e.exam_date).isBefore(moment().add(1, 'year'))
-          : e.exam_date;
-      })
       .map(examDate => {
         const enabled = R.includes(
           { language_code: selectedLanguage, level_code: selectedLevel },
