@@ -49,6 +49,7 @@
             <version>2.0.6</version>      
         </dependency>
     </dependencies>
+
     <repositories>
         <repository>
             <id>oph-sade-artifactory-snapshots</id>
