@@ -20,12 +20,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.18</version>
+        <version>3.4.2</version>
     </parent>
 
     <properties>
-        <java.version>11</java.version>
-        <logback.version>1.1.9</logback.version>
+        <java.version>17</java.version>
+        <logback.version>1.5.16</logback.version>
     </properties>
 
     <dependencies>
@@ -35,10 +35,21 @@
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-access</artifactId>
-            <version>1.2.13</version>
+            <artifactId>logback-core</artifactId>
+            <version>1.5.16</version>
+        </dependency>    
+        <dependency>
+            <groupId>ch.qos.logback.access</groupId>
+            <artifactId>logback-access-common</artifactId>
+            <version>2.0.6</version>
+        </dependency>    
+        <dependency> 
+            <groupId>ch.qos.logback.access</groupId>
+            <artifactId>logback-access-tomcat</artifactId>
+            <version>2.0.6</version>      
         </dependency>
     </dependencies>
+
     <repositories>
         <repository>
             <id>oph-sade-artifactory-snapshots</id>
