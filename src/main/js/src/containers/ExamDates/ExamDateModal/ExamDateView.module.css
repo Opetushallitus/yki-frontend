@@ -112,36 +112,12 @@
   grid-gap: 20px;
 }
 
-.PostAdmission {
-  margin-top: 1em;
-}
-
-.PostAdmissionContainer {
-  display: grid;
-  /*grid-template-columns: 160px 150px 150px 5px 150px;*/
-  /*grid-template-columns: 160px 110px 300px 5px 300px;*/
-  grid-template-columns: 160px 110px 650px;
-  grid-gap: 20px;
-}
-
 .Toggle {
   display: flex;
 }
 
 .Toggle p {
   font-size: 14px;
-}
-
-.PostAdmissionContainer label {
-  margin-block-start: 12px;
-}
-
-.PostAdmissionContainer p {
-  margin-block-start: 20px;
-  margin-block-end: 0;
-  margin-inline-start: 1em;
-  margin-inline-end: 0;
-  padding-right: 20px;
 }
 
 .Label {

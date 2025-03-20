@@ -10,7 +10,6 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import ParticipantList from '../../../components/ExamSessions/ParticipantList/ParticipantList';
 import ExamSessionUpdateForm from './ExamSessionUpdateForm/ExamSessionUpdateForm';
 import * as actions from '../../../store/actions/index';
-import ExamSessionPostAdmission from './PostAdmission/ExamSessionPostAdmission';
 
 export class ExamSessionDetails extends Component {
   componentDidMount = () => {
@@ -20,23 +19,13 @@ export class ExamSessionDetails extends Component {
     );
   };
 
-  PostAdmissionHeader = () => {
-    if (this.props.examSession.post_admission_end_date && this.props.examSession.post_admission_active) {
-      return <h2>{`${this.props.t('examSession.postAdmission')} (${this.props.t('examSession.postAdmission.active')})`}</h2>
-    }
-
-    return <h2>{`${this.props.t('examSession.postAdmission')} (${this.props.t('examSession.postAdmission.inactive')})`}</h2>
-  }
-
   render() {
     const location = this.props.examSession.location.find(
       l => l.lang === this.props.language,
     );
     return (
       <div data-cy="exam-session-details">
-        <h2>
-          {location || this.props.examSession.location[0].name}
-        </h2>
+        <h2>{location || this.props.examSession.location[0].name}</h2>
         <h2>
           {this.props.t('examSession')}
           {': '}
@@ -50,17 +39,15 @@ export class ExamSessionDetails extends Component {
           onDelete={this.props.onSubmitDeleteExamSession}
           examSession={this.props.examSession}
         />
-        {this.PostAdmissionHeader()}
-        {this.props.loading ? <Spinner /> : (
-          <>
-            <ExamSessionPostAdmission examSession={this.props.examSession} oid={this.props.oid} />
-            <ParticipantList
-              examSession={this.props.examSession}
-              participants={this.props.participants}
-              examSessions={this.props.examSessions}
-              isAdminView={false}
-            />
-          </>
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <ParticipantList
+            examSession={this.props.examSession}
+            participants={this.props.participants}
+            examSessions={this.props.examSessions}
+            isAdminView={false}
+          />
         )}
       </div>
     );
