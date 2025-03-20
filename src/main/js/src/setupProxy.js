@@ -558,52 +558,6 @@ module.exports = function(app) {
   });
 
   app.post(
-    '/yki/api/virkailija/organizer/:oid/exam-session/:id/post-admission',
-    (req, res) => {
-      try {
-        const postadmission = req.body;
-        const requestPostAdmissionId = req.params.id;
-        const examSessionIndex = examSessions.exam_sessions.findIndex(
-          x => x.id == requestPostAdmissionId,
-        );
-        const examsSession = examSessions.exam_sessions[examSessionIndex];
-
-        examsSession.post_admission_quota = postadmission.post_admission_quota;
-        examsSession.post_admission_start_date =
-          postadmission.post_admission_start_date;
-        examsSession.post_admission_active =
-          postadmission.post_admission_active;
-
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    },
-  );
-
-  app.post(
-    '/yki/api/virkailija/organizer/:oid/exam-session/:id/post-admission/activation',
-    (req, res) => {
-      try {
-        const postadmissionstate = req.body.post_admission_active;
-        const requestPostAdmissionId = req.params.id;
-        const examSessionIndex = examSessions.exam_sessions.findIndex(
-          x => x.id == requestPostAdmissionId,
-        );
-        const examsSession = examSessions.exam_sessions[examSessionIndex];
-
-        examsSession.post_admission_active = postadmissionstate;
-
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    },
-  );
-
-  app.post(
     '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id/resendConfirmation',
     (req, res) => {
       try {

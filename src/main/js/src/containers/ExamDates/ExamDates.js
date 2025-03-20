@@ -203,7 +203,6 @@ class ExamDates extends Component {
             <h3>{t('common.examDate')}</h3>
             <h3>{t('examDates.languageLevels')}</h3>
             <h3>{t('common.registrationPeriod')}</h3>
-            <h3>{t('common.postAdmission')}</h3>
             <h3>{t('common.reeval')}</h3>
             <h3>{t('common.edit')}</h3>
           </div>
@@ -229,13 +228,6 @@ class ExamDates extends Component {
               );
             });
 
-          const postAdmissionDate =
-            e.post_admission_start_date && e.post_admission_end_date
-              ? `${moment(e.post_admission_start_date).format(
-                  DATE_FORMAT,
-                )} - ${moment(e.post_admission_end_date).format(DATE_FORMAT)}`
-              : '';
-
           const reEvaluationDate =
             e.evaluation_start_date &&
             e.evaluation_end_date &&
@@ -255,12 +247,6 @@ class ExamDates extends Component {
                 {languageLevel}
               </ul>
               <ExamDatesRegistrationPeriod period={e} />
-              <p data-cy={`exam-dates-list-post-admission-${e.exam_date}`}>
-                {postAdmissionDate
-                  ? `${postAdmissionDate}`
-                  : t('examDates.postAdmission.closed')}
-              </p>
-
               {reEvaluationDate ? (
                 <p data-cy={`exam-dates-add-eval-text-${e.exam_date}`}>
                   {reEvaluationDate}

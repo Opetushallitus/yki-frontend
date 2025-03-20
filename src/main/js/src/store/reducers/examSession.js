@@ -15,28 +15,6 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  if (action.type.includes('POST_ADMISSION')) {
-    switch (action.type) {
-      case actionTypes.ADD_POST_ADMISSION_START:
-        return {
-          ...state,
-          loading: true,
-        };
-      case actionTypes.ADD_POST_ADMISSION_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-        }
-      case actionTypes.ADD_POST_ADMISSION_FAIL:
-        return {
-          ...state,
-          loading: false,
-        }
-      default:
-        return state;
-    }
-  }
-
   if (action.type.includes('EXAM_SESSION')) {
     switch (action.type) {
       case actionTypes.FETCH_EXAM_SESSION_CONTENT_SUCCESS:
