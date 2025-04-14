@@ -13,6 +13,7 @@ const columns = [
   defaultCol,
   { wch: 24 },
   { wch: 24 },
+  { wch: 24 },
   defaultCol,
   defaultCol,
   defaultCol,
@@ -59,12 +60,19 @@ export const listExport = props => {
     PAID_AND_CANCELLED: 'Maksanut ja peruttu',
   };
 
+  const kindToText = {
+    ADMISSION: 'Varsinainen ilmoittautuminen',
+    POST_ADMISSION: 'Jälki-ilmoittautuminen',
+    QUEUE: 'Jonoilmoittautuminen',
+  };
+
   const exportToExcel = participants => {
     const data = participants.map(p => {
       return {
         sukunimi: p.form.last_name,
         etunimet: p.form.first_name,
         tila: stateToText[p.state],
+        tyyppi: kindToText[p.kind],
         'alkup. tutkintopvm': p.original_exam_date,
         hetu: p.form.ssn,
         syntymaaika: p.form.birthdate,
