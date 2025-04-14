@@ -11,6 +11,7 @@ const examSessionFirst = {
   registration_end_date: '2028-12-15',
   session_date: '2028-12-30',
   participants: 2,
+  queue: 1,
   max_participants: 50,
   pa_participants: 0,
   registration_start_date: '2018-09-01',
@@ -28,7 +29,7 @@ const participants = [
   {
     form: {
       post_office: 'Espoo',
-      ssn: '011088-1234 ',
+      ssn: '011088-1234',
       phone_number: '+358405131441',
       email: 'michael.wallis@test.com',
       last_name: 'Michael',
@@ -36,6 +37,7 @@ const participants = [
       street_address: 'Revontulentie 13 C 2',
       zip: '02100',
     },
+    kind: 'ADMISSION',
     state: 'COMPLETED',
     registration_id: 1,
     is_transferable: true,
@@ -43,7 +45,7 @@ const participants = [
   {
     form: {
       post_office: 'Espoo',
-      ssn: '011088-1234 ',
+      ssn: '011089-1245',
       phone_number: '+358405131441',
       email: 'natalia.gaddens@test.com',
       last_name: 'Natalia',
@@ -51,18 +53,37 @@ const participants = [
       street_address: 'Revontulentie 13 C 2',
       zip: '02100',
     },
+    kind: 'POST_ADMISSION',
     state: 'SUBMITTED',
     registration_id: 2,
     is_transferable: false,
   },
+  {
+    form: {
+      post_office: 'Espoo',
+      ssn: '011088-1234',
+      phone_number: '+358405131441',
+      email: 'veikko.vesipera@test.com',
+      last_name: 'Vesiperä',
+      first_name: 'Veikko',
+      street_address: 'Revontulentie 13 C 2',
+      zip: '02100',
+    },
+    kind: 'QUEUE',
+    state: 'CANCELLED',
+    registration_id: 3,
+    is_transferable: false,
+  }
 ];
 
 // TODO Remove the below workaround, provide instead suitable Jest configs?
 // Mock parsePhoneNumberFromString as jest for some reason can't seem to find the correct import.
 jest.mock('libphonenumber-js', () => {
-  return { parsePhoneNumberFromString: (_) => {
-    return { formatInternational: () => '+358 40 5131441' }
-  } }
+  return {
+    parsePhoneNumberFromString: _ => {
+      return { formatInternational: () => '+358 40 5131441' };
+    },
+  };
 });
 
 describe('<ParticipantList />', () => {
