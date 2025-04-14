@@ -15,15 +15,22 @@ import ListExport from './ListExport/ListExport';
 import RelocateParticipant from './RelocateParticipant/RelocateParticipant';
 import classes from './ParticipantList.module.css';
 import { examSessionParticipantsCount } from '../../../util/examSessionUtil';
-import * as actions from "../../../store/actions";
+import * as actions from '../../../store/actions';
 
 const stateComparator = () => (a, b) => {
-  // TODO Consider registration kind in sort order?
-  // -> Queued registrations last?
   if (a.state === 'COMPLETED') return -1;
   if (b.state === 'COMPLETED') return 1;
   if (a.state === 'SUBMITTED') return -1;
   if (b.state === 'SUBMITTED') return 1;
+
+  return 0;
+};
+
+const kindComparator = () => (a, b) => {
+  if (a.kind === 'ADMISSION') return -1;
+  if (b.kind === 'ADMISSION') return 1;
+  if (a.kind === 'POST_ADMISSION') return -1;
+  if (b.kind === 'POST_ADMISSION') return 1;
 
   return 0;
 };
@@ -60,7 +67,9 @@ export const participantList = props => {
     const image =
       registrationState === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
     const registrationShownState =
-      registrationState === 'COMPLETED' && participant.is_transfered ? 'TRANSFERED' : registrationState;
+      registrationState === 'COMPLETED' && participant.is_transfered
+        ? 'TRANSFERED'
+        : registrationState;
     const text = props.t(getStateTranslationKey(registrationShownState));
 
     return (
@@ -127,7 +136,7 @@ export const participantList = props => {
         setSortParticipantsFn(() => R.sortBy(R.prop('created')));
         break;
       case 'registrationType':
-        setSortParticipantsFn(() => R.sortBy(R.prop('kind')));
+        setSortParticipantsFn(() => R.sort(kindComparator()));
         break;
       default:
         setSortParticipantsFn(sortByNames);
@@ -192,7 +201,7 @@ export const participantList = props => {
   };
 
   const participantRows = participants => {
-    const renderCancelButton = (p) => {
+    const renderCancelButton = p => {
       return p.state === 'SUBMITTED' || p.state === 'COMPLETED';
     };
 
@@ -226,13 +235,12 @@ export const participantList = props => {
         <div className={classes.StateItem}>
           {p.kind === 'ADMISSION'
             ? props.t('examSession.registration')
-            //  TODO Add support for queued registrations!
-            : props.t('examSession.registration.postAdmission')}
+            : p.kind === 'POST_ADMISSION'
+            ? props.t('examSession.registration.postAdmission')
+            : props.t('examSession.registration.queue')}
         </div>
         <div className={classes.StateItem}>
-          {p.is_transferable
-            ? relocateParticipant(p)
-            : null}
+          {p.is_transferable ? relocateParticipant(p) : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
@@ -244,9 +252,7 @@ export const participantList = props => {
         <div className={classes.Item}>{getPhoneNumber(p)}</div>
         <div className={classes.Item}> {p.form.email}</div>
         <div className={classes.Item}>
-          {renderCancelButton(p)
-            ? cancelRegistrationButton(p)
-            : null}
+          {renderCancelButton(p) ? cancelRegistrationButton(p) : null}
         </div>
         <span className={classes.Line} />
         <span className={classes.LineEnd} />
@@ -292,9 +298,19 @@ export const participantList = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCancelRegistration: (organizerOid, examSessionId, registrationId, isAdminView) =>
+    onCancelRegistration: (
+      organizerOid,
+      examSessionId,
+      registrationId,
+      isAdminView,
+    ) =>
       dispatch(
-        actions.cancelRegistration(organizerOid, examSessionId, registrationId, isAdminView),
+        actions.cancelRegistration(
+          organizerOid,
+          examSessionId,
+          registrationId,
+          isAdminView,
+        ),
       ),
     onRelocate: (
       organizerOid,

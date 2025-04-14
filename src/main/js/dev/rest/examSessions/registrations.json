@@ -177,6 +177,50 @@
         "registration_id": 8,
         "kind": "ADMISSION",
         "order_number": null
+      },
+      {
+        "form": {
+          "post_office": "Kittilä",
+          "ssn": "010199-913F",
+          "exam_lang": "fi",
+          "phone_number": "+358401234123",
+          "gender": "2",
+          "email": "cancelled@queued.invalid",
+          "certificate_lang": "fi",
+          "last_name": "Jonottaja",
+          "first_name": "Peruuttanut",
+          "nationalities": ["246"],
+          "nationality_desc": "Suomi",
+          "street_address": "Käenkukka 1",
+          "zip": "99100"
+        },
+        "state": "CANCELLED",
+        "created": "2025-03-01T10:11:13.123Z",
+        "registration_id": 9,
+        "kind": "QUEUE",
+        "order_number": null
+      },
+      {
+        "form": {
+          "post_office": "Helsinki",
+          "ssn": "030397-102T",
+          "exam_lang": "fi",
+          "phone_number": "+358501122121",
+          "gender": "1",
+          "email": "submitted@queued.invalid",
+          "certificate_lang": "fi",
+          "last_name": "Jonottaja",
+          "first_name": "Ikuisa",
+          "nationalities": ["246"],
+          "nationality_desc": "Suomi",
+          "street_address": "Aleksanterinkatu 1",
+          "zip": "00100"
+        },
+        "state": "SUBMITTED",
+        "created": "2025-03-02T11:12:14.123Z",
+        "registration_id": 10,
+        "kind": "QUEUE",
+        "order_number": null
       }
     ]
   }
