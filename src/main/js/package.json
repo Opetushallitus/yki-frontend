@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "/yki",
   "dependencies": {
-    "axios": "^0.28.0",
+    "axios": "^1.8.4",
     "finnish-ssn": "^2.0.4",
     "flatpickr": "^4.5.7",
     "formik": "^2.4.6",
