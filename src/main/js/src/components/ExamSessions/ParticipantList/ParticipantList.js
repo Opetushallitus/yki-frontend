@@ -35,15 +35,27 @@ const kindComparator = () => (a, b) => {
   return 0;
 };
 
-const sortByNames = () =>
-  R.sortWith([
-    R.ascend(R.path(['form', 'last_name'])),
-    R.ascend(R.path(['form', 'first_name'])),
-  ]);
+const fiCollator = new Intl.Collator('fi', { sensitivity: 'base' });
+const namesComparator = () => (a, b) => {
+  const lastNamesComparison = fiCollator.compare(a.form.last_name, b.form.last_name);
+  if (lastNamesComparison < 0) {
+    return -1;
+  } else if (lastNamesComparison > 0) {
+    return 1;
+  }
+  const firstNamesComparison = fiCollator.compare(a.form.first_name, b.form.first_name);
+  if (firstNamesComparison < 0) {
+    return -1;
+  } else if (firstNamesComparison > 0) {
+    return 1;
+  }
+  return 0;
+}
 
 export const participantList = props => {
   const [actionButtonsDisabled, setActionButtonsDisabled] = useState(false);
-  const [sortParticipantsFn, setSortParticipantsFn] = useState(sortByNames);
+
+  const [sortParticipantsFn, setSortParticipantsFn] = useState(() => R.sort(namesComparator()));
 
   const getStateTranslationKey = state => {
     switch (state) {
@@ -127,7 +139,7 @@ export const participantList = props => {
   const handleFilterChange = event => {
     switch (event.target.value) {
       case 'name':
-        setSortParticipantsFn(sortByNames);
+        setSortParticipantsFn(() => R.sort(namesComparator()));
         break;
       case 'state':
         setSortParticipantsFn(() => R.sort(stateComparator()));
@@ -139,7 +151,7 @@ export const participantList = props => {
         setSortParticipantsFn(() => R.sort(kindComparator()));
         break;
       default:
-        setSortParticipantsFn(sortByNames);
+        setSortParticipantsFn(() => R.sort(namesComparator()));
         break;
     }
   };

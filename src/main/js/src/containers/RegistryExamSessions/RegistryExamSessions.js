@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import * as actions from '../../store/actions/index';
-import * as registryUtil from '../../util/registryUtil.js'
+import * as registryUtil from '../../util/registryUtil.js';
 import moment from 'moment';
 import Page from '../../hoc/Page/Page';
 import classes from './RegistryExamSessions.module.css';
