@@ -4,21 +4,37 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
 <div
   data-cy="participant-list"
 >
-  <h2>
-    examSession.participants
-    :
-     
-    2
-     /
-     
-    50
-  </h2>
-  <h3>
-    examSession.inQueue
-    :
-     
-    1
-  </h3>
+  <div
+    className="Tabs"
+  >
+    <a
+      onClick={[Function]}
+    >
+      <span
+        className="Selected"
+      >
+        examSession.participants
+         (
+        2
+        /
+        50
+        )
+      </span>
+    </a>
+    <a
+      onClick={[Function]}
+    >
+      <span
+        className="NotSelected"
+      >
+        examSession.inQueue
+         (
+        1
+        )
+      </span>
+    </a>
+    <span />
+  </div>
   <div
     className="ListExport"
   >
@@ -57,33 +73,17 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
             "registration_id": 2,
             "state": "SUBMITTED",
           },
-          Object {
-            "form": Object {
-              "email": "veikko.vesipera@test.com",
-              "first_name": "Veikko",
-              "last_name": "Vesiperä",
-              "phone_number": "+358405131441",
-              "post_office": "Espoo",
-              "ssn": "011088-1234",
-              "street_address": "Revontulentie 13 C 2",
-              "zip": "02100",
-            },
-            "is_transferable": false,
-            "kind": "QUEUE",
-            "registration_id": 3,
-            "state": "CANCELLED",
-          },
         ]
       }
     />
     <label
-      htmlFor="participantFilter"
+      htmlFor="participantSort"
     >
       examSession.participants.sortBy
     </label>
     <select
-      className="ParticipantFilter"
-      id="ParticipantFilter"
+      className="ParticipantSort"
+      id="participantSort"
       onChange={[Function]}
     >
       <option
@@ -326,79 +326,6 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         examSession.registration.cancel
       </ActionButton>
     </div>
-    <span
-      className="Line"
-    />
-    <span
-      className="LineEnd"
-    />
-    <div
-      className="ItemHeader Index StateItem"
-      data-cy="participant-3"
-    >
-      3
-      .
-    </div>
-    <div
-      className="ItemHeader StateItem"
-    >
-      Vesiperä
-      , 
-      Veikko
-    </div>
-    <div
-      className="ItemHeader Status StateItem"
-    >
-      <img
-        alt=""
-        data-cy="registration-CANCELLED"
-        src="checkmark-not-done.svg"
-      />
-       
-      examSession.cancelled
-    </div>
-    <div
-      className="StateItem"
-    />
-    <div
-      className="StateItem"
-    >
-      examSession.registration.queue
-    </div>
-    <div
-      className="StateItem"
-    />
-    <div
-      className="Item"
-    />
-    <div
-      className="Item"
-    >
-      011088-1234
-    </div>
-    <div
-      className="Item"
-    >
-      Revontulentie 13 C 2
-       
-      02100
-      , 
-      Espoo
-    </div>
-    <div
-      className="Item"
-    >
-      +358 40 5131441
-    </div>
-    <div
-      className="Item"
-    >
-       
-      veikko.vesipera@test.com
-    </div>
-    <div
-      className="Item"
-    />
     <span
       className="Line"
     />

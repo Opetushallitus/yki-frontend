@@ -37,25 +37,34 @@ const kindComparator = () => (a, b) => {
 
 const fiCollator = new Intl.Collator('fi', { sensitivity: 'base' });
 const namesComparator = () => (a, b) => {
-  const lastNamesComparison = fiCollator.compare(a.form.last_name, b.form.last_name);
+  const lastNamesComparison = fiCollator.compare(
+    a.form.last_name,
+    b.form.last_name,
+  );
   if (lastNamesComparison < 0) {
     return -1;
   } else if (lastNamesComparison > 0) {
     return 1;
   }
-  const firstNamesComparison = fiCollator.compare(a.form.first_name, b.form.first_name);
+  const firstNamesComparison = fiCollator.compare(
+    a.form.first_name,
+    b.form.first_name,
+  );
   if (firstNamesComparison < 0) {
     return -1;
   } else if (firstNamesComparison > 0) {
     return 1;
   }
   return 0;
-}
+};
 
 export const participantList = props => {
   const [actionButtonsDisabled, setActionButtonsDisabled] = useState(false);
+  const [displayingQueue, setDisplayingQueue] = useState(false);
 
-  const [sortParticipantsFn, setSortParticipantsFn] = useState(() => R.sort(namesComparator()));
+  const [sortParticipantsFn, setSortParticipantsFn] = useState(() =>
+    R.sort(namesComparator()),
+  );
 
   const getStateTranslationKey = state => {
     switch (state) {
@@ -136,7 +145,7 @@ export const participantList = props => {
     );
   };
 
-  const handleFilterChange = event => {
+  const handleSortChange = event => {
     switch (event.target.value) {
       case 'name':
         setSortParticipantsFn(() => R.sort(namesComparator()));
@@ -156,16 +165,16 @@ export const participantList = props => {
     }
   };
 
-  const participantFiltering = () => {
+  const participantOrdering = () => {
     return (
       <>
-        <label htmlFor="participantFilter">
+        <label htmlFor="participantSort">
           {props.t('examSession.participants.sortBy')}
         </label>
         <select
-          id="ParticipantFilter"
-          className={classes.ParticipantFilter}
-          onChange={handleFilterChange}
+          id="participantSort"
+          className={classes.ParticipantSort}
+          onChange={handleSortChange}
         >
           <option value="name">
             {props.t('examSession.participants.sortBy.name')}
@@ -272,35 +281,40 @@ export const participantList = props => {
     ));
   };
 
-  const participantsHeader = () => {
-    const participantsCount = examSessionParticipantsCount(props.examSession);
-    return (
-      <h2>
-        {props.t('examSession.participants')}
-        {':'} {participantsCount.participants} /{' '}
-        {participantsCount.maxParticipants}
-      </h2>
-    );
-  };
+  const participantsCount = examSessionParticipantsCount(props.examSession);
+  const filteredParticipants = displayingQueue
+    ? props.participants.filter(p => p.kind === 'QUEUE')
+    : props.participants.filter(p => p.kind !== 'QUEUE');
+
   return (
     <div data-cy="participant-list">
-      {participantsHeader()}
-
-      {props.examSession.queue > 0 && (
-        <h3>
-          {props.t('examSession.inQueue')}
-          {':'} {props.examSession.queue}
-        </h3>
-      )}
-
-      {props.participants.length > 0 && (
+      <div className={classes.Tabs}>
+        <a onClick={() => setDisplayingQueue(false)}>
+          <span
+            className={displayingQueue ? classes.NotSelected : classes.Selected}
+          >
+            {props.t('examSession.participants')} (
+            {participantsCount.participants}/{participantsCount.maxParticipants}
+            )
+          </span>
+        </a>
+        <a onClick={() => setDisplayingQueue(true)}>
+          <span
+            className={displayingQueue ? classes.Selected : classes.NotSelected}
+          >
+            {props.t('examSession.inQueue')} ({props.examSession.queue})
+          </span>
+        </a>
+        <span />
+      </div>
+      {filteredParticipants.length > 0 && (
         <React.Fragment>
           <div className={classes.ListExport}>
-            <ListExport participants={sortParticipantsFn(props.participants)} />
-            {participantFiltering()}
+            <ListExport participants={sortParticipantsFn(filteredParticipants)} />
+            {participantOrdering()}
           </div>
           <div className={classes.ParticipantList}>
-            {participantRows(props.participants)}
+            {participantRows(filteredParticipants)}
           </div>
         </React.Fragment>
       )}
