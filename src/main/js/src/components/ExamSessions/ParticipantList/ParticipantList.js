@@ -288,29 +288,37 @@ export const participantList = props => {
 
   return (
     <div data-cy="participant-list">
-      <div className={classes.Tabs}>
-        <a onClick={() => setDisplayingQueue(false)}>
-          <span
-            className={displayingQueue ? classes.NotSelected : classes.Selected}
-          >
+      <div className={classes.Tabs} role="tablist">
+        <button
+          onClick={() => setDisplayingQueue(false)}
+          role="tab"
+          aria-selected={!displayingQueue}
+          className={displayingQueue ? classes.NotSelected : classes.Selected}
+        >
+          <span>
             {props.t('examSession.participants')} (
             {participantsCount.participants}/{participantsCount.maxParticipants}
             )
           </span>
-        </a>
-        <a onClick={() => setDisplayingQueue(true)}>
-          <span
-            className={displayingQueue ? classes.Selected : classes.NotSelected}
-          >
+        </button>
+        <button
+          onClick={() => setDisplayingQueue(true)}
+          role="tab"
+          aria-selected={displayingQueue}
+          className={displayingQueue ? classes.Selected : classes.NotSelected}
+        >
+          <span>
             {props.t('examSession.inQueue')} ({props.examSession.queue})
           </span>
-        </a>
+        </button>
         <span />
       </div>
       {filteredParticipants.length > 0 && (
         <React.Fragment>
           <div className={classes.ListExport}>
-            <ListExport participants={sortParticipantsFn(filteredParticipants)} />
+            <ListExport
+              participants={sortParticipantsFn(filteredParticipants)}
+            />
             {participantOrdering()}
           </div>
           <div className={classes.ParticipantList}>

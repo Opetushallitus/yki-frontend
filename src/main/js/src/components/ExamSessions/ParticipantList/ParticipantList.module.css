@@ -83,14 +83,25 @@
   line-height: 24px;
 }
 
-.Tabs a {
-  text-decoration: none;
+.Tabs button {
+  border: 0;
+  cursor: pointer;
+  appearance: none;
+  background-color: var(--white);
+  font-size: 16px;
+}
+
+.Tabs span {
+  line-height: 24px;
 }
 
 .Tabs .Selected {
-  border-bottom: 3px solid #3693af;
   color: #3693af;
   padding-bottom: 0;
+}
+
+.Tabs button.Selected {
+  border-bottom: 3px solid #3693af;
 }
 
 .Tabs .NotSelected {

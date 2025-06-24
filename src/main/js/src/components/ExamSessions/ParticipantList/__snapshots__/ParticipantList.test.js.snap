@@ -6,13 +6,15 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
 >
   <div
     className="Tabs"
+    role="tablist"
   >
-    <a
+    <button
+      aria-selected={true}
+      className="Selected"
       onClick={[Function]}
+      role="tab"
     >
-      <span
-        className="Selected"
-      >
+      <span>
         examSession.participants
          (
         2
@@ -20,19 +22,20 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
         50
         )
       </span>
-    </a>
-    <a
+    </button>
+    <button
+      aria-selected={false}
+      className="NotSelected"
       onClick={[Function]}
+      role="tab"
     >
-      <span
-        className="NotSelected"
-      >
+      <span>
         examSession.inQueue
          (
         1
         )
       </span>
-    </a>
+    </button>
     <span />
   </div>
   <div
