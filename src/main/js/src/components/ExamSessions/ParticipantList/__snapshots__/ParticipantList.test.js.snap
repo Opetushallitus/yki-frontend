@@ -86,6 +86,7 @@ exports[`<ParticipantList /> should render participant rows 1`] = `
     </label>
     <select
       className="ParticipantSort"
+      defaultValue="registrationTime"
       id="participantSort"
       onChange={[Function]}
     >

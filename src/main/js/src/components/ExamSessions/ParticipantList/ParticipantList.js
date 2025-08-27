@@ -62,9 +62,7 @@ export const participantList = props => {
   const [actionButtonsDisabled, setActionButtonsDisabled] = useState(false);
   const [displayingQueue, setDisplayingQueue] = useState(false);
 
-  const [sortParticipantsFn, setSortParticipantsFn] = useState(() =>
-    R.sort(namesComparator()),
-  );
+  const [sortParticipantsFn, setSortParticipantsFn] = useState(() => R.sortBy(R.prop('created')));
 
   const getStateTranslationKey = state => {
     switch (state) {
@@ -160,7 +158,7 @@ export const participantList = props => {
         setSortParticipantsFn(() => R.sort(kindComparator()));
         break;
       default:
-        setSortParticipantsFn(() => R.sort(namesComparator()));
+        setSortParticipantsFn(() => R.sortBy(R.prop('created')));
         break;
     }
   };
@@ -175,6 +173,7 @@ export const participantList = props => {
           id="participantSort"
           className={classes.ParticipantSort}
           onChange={handleSortChange}
+          defaultValue="registrationTime"
         >
           <option value="name">
             {props.t('examSession.participants.sortBy.name')}
