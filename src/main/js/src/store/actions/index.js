@@ -7,9 +7,6 @@ export {
   deleteExamSession,
   cancelRegistration,
   relocateExamSession,
-  addPostAdmission,
-  activatePostAdmission,
-  deactivatePostAdmission,
 } from './examSession';
 export {
   fetchRegistryExamSessions,

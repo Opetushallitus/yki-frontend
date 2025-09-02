@@ -18,6 +18,8 @@ import { examSessionParticipantsCount } from '../../../util/examSessionUtil';
 import * as actions from "../../../store/actions";
 
 const stateComparator = () => (a, b) => {
+  // TODO Consider registration kind in sort order?
+  // -> Queued registrations last?
   if (a.state === 'COMPLETED') return -1;
   if (b.state === 'COMPLETED') return 1;
   if (a.state === 'SUBMITTED') return -1;
@@ -224,6 +226,7 @@ export const participantList = props => {
         <div className={classes.StateItem}>
           {p.kind === 'ADMISSION'
             ? props.t('examSession.registration')
+            //  TODO Add support for queued registrations!
             : props.t('examSession.registration.postAdmission')}
         </div>
         <div className={classes.StateItem}>

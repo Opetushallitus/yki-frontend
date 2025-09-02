@@ -7,7 +7,6 @@ import { withTranslation } from 'react-i18next';
 import { LANGUAGES } from '../../../common/Constants';
 import ExamDateDate from "./ExamDateDate";
 import LanguageLevelSelector from './LanguageLevelSelector';
-import PostAdmission from "./PostAdmission";
 import RegistrationPeriod from "./RegistrationPeriod";
 
 import classes from './ExamDateView.module.css';
@@ -64,35 +63,6 @@ const ExamDateView = props => {
   const maxRegistrationEndDate = date && moment(date).subtract(1, 'days').format('YYYY-MM-DD');
   const minDate = registrationEndDate && moment(registrationEndDate).add(1, 'days').format('YYYY-MM-DD');
 
-  const [postAdmissionEnabled, setPostAdmissionEnabled] = useState(
-    examDate && examDate.post_admission_enabled,
-  );
-  const [postAdmissionStartDate, setPostAdmissionStartDate] = useState(
-    examDate && examDate.post_admission_start_date,
-  );
-  const [postAdmissionEndDate, setPostAdmissionEndDate] = useState(
-    examDate && examDate.post_admission_end_date,
-  );
-
-  const minPostAdmissionStartDate =
-    registrationEndDate && moment(registrationEndDate).add(1, 'days').format('YYYY-MM-DD');
-  const maxPostAdmissionStartDate =
-    postAdmissionEndDate && moment(postAdmissionEndDate).format('YYYY-MM-DD');
-  const minPostAdmissionEndDate =
-    postAdmissionStartDate && moment(postAdmissionStartDate).format('YYYY-MM-DD');
-  const maxPostAdmissionEndDate =
-    date && moment(date).subtract(1, 'days').format('YYYY-MM-DD');
-
-  const validPostAdmissionDetails = () => {
-    return !postAdmissionEnabled || (
-      postAdmissionStartDate &&
-      postAdmissionEndDate &&
-      moment(postAdmissionStartDate).isAfter(registrationEndDate, 'day') &&
-      !moment(postAdmissionStartDate).isAfter(postAdmissionEndDate, 'day') &&
-      moment(date).isAfter(postAdmissionEndDate, 'day')
-    );
-  };
-
   const dateChangeDisabled = examDate && examDate.exam_session_count && examDate.exam_session_count > 0;
   const languageChangesDisabled = dateChangeDisabled;
   const deleteDisabled = dateChangeDisabled;
@@ -103,8 +73,7 @@ const ExamDateView = props => {
     registrationStartDate &&
     registrationEndDate &&
     moment(date).isAfter(registrationEndDate, 'day') &&
-    moment(registrationEndDate).isAfter(registrationStartDate, 'day') &&
-    validPostAdmissionDetails();
+    moment(registrationEndDate).isAfter(registrationStartDate, 'day');
 
   const confirmDeletion = (e) => {
     if (window.confirm(t('examDates.edit.delete.confirm'))) {
@@ -130,9 +99,6 @@ const ExamDateView = props => {
           : {
             ...createExamDatePayload,
             examDateId: examDate.id,
-            post_admission_enabled: postAdmissionEnabled,
-            post_admission_start_date: postAdmissionStartDate,
-            post_admission_end_date: postAdmissionEndDate,
           };
 
         props.onSave(payload);
@@ -155,20 +121,6 @@ const ExamDateView = props => {
             setStartDate={setRegistrationStartDate}
             setEndDate={setRegistrationEndDate}
           />
-          {examDate && (
-            <PostAdmission
-              isEnabled={postAdmissionEnabled}
-              setIsEnabled={setPostAdmissionEnabled}
-              startDate={postAdmissionStartDate}
-              endDate={postAdmissionEndDate}
-              setStartDate={setPostAdmissionStartDate}
-              setEndDate={setPostAdmissionEndDate}
-              minStartDate={minPostAdmissionStartDate}
-              maxStartDate={maxPostAdmissionStartDate}
-              minEndDate={minPostAdmissionEndDate}
-              maxEndDate={maxPostAdmissionEndDate}
-            />
-          )}
           <div className={classes.LanguageAndLevelGrid}>
             <LanguageLevelSelector
               languageLevels={languageLevels}
