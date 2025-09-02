@@ -15,11 +15,9 @@ import ListExport from './ListExport/ListExport';
 import RelocateParticipant from './RelocateParticipant/RelocateParticipant';
 import classes from './ParticipantList.module.css';
 import { examSessionParticipantsCount } from '../../../util/examSessionUtil';
-import * as actions from "../../../store/actions";
+import * as actions from '../../../store/actions';
 
 const stateComparator = () => (a, b) => {
-  // TODO Consider registration kind in sort order?
-  // -> Queued registrations last?
   if (a.state === 'COMPLETED') return -1;
   if (b.state === 'COMPLETED') return 1;
   if (a.state === 'SUBMITTED') return -1;
@@ -28,15 +26,43 @@ const stateComparator = () => (a, b) => {
   return 0;
 };
 
-const sortByNames = () =>
-  R.sortWith([
-    R.ascend(R.path(['form', 'last_name'])),
-    R.ascend(R.path(['form', 'first_name'])),
-  ]);
+const kindComparator = () => (a, b) => {
+  if (a.kind === 'ADMISSION') return -1;
+  if (b.kind === 'ADMISSION') return 1;
+  if (a.kind === 'POST_ADMISSION') return -1;
+  if (b.kind === 'POST_ADMISSION') return 1;
+
+  return 0;
+};
+
+const fiCollator = new Intl.Collator('fi', { sensitivity: 'base' });
+const namesComparator = () => (a, b) => {
+  const lastNamesComparison = fiCollator.compare(
+    a.form.last_name,
+    b.form.last_name,
+  );
+  if (lastNamesComparison < 0) {
+    return -1;
+  } else if (lastNamesComparison > 0) {
+    return 1;
+  }
+  const firstNamesComparison = fiCollator.compare(
+    a.form.first_name,
+    b.form.first_name,
+  );
+  if (firstNamesComparison < 0) {
+    return -1;
+  } else if (firstNamesComparison > 0) {
+    return 1;
+  }
+  return 0;
+};
 
 export const participantList = props => {
   const [actionButtonsDisabled, setActionButtonsDisabled] = useState(false);
-  const [sortParticipantsFn, setSortParticipantsFn] = useState(sortByNames);
+  const [displayingQueue, setDisplayingQueue] = useState(false);
+
+  const [sortParticipantsFn, setSortParticipantsFn] = useState(() => R.sortBy(R.prop('created')));
 
   const getStateTranslationKey = state => {
     switch (state) {
@@ -60,7 +86,9 @@ export const participantList = props => {
     const image =
       registrationState === 'COMPLETED' ? checkMarkDone : checkMarkNotDone;
     const registrationShownState =
-      registrationState === 'COMPLETED' && participant.is_transfered ? 'TRANSFERED' : registrationState;
+      registrationState === 'COMPLETED' && participant.is_transfered
+        ? 'TRANSFERED'
+        : registrationState;
     const text = props.t(getStateTranslationKey(registrationShownState));
 
     return (
@@ -115,10 +143,10 @@ export const participantList = props => {
     );
   };
 
-  const handleFilterChange = event => {
+  const handleSortChange = event => {
     switch (event.target.value) {
       case 'name':
-        setSortParticipantsFn(sortByNames);
+        setSortParticipantsFn(() => R.sort(namesComparator()));
         break;
       case 'state':
         setSortParticipantsFn(() => R.sort(stateComparator()));
@@ -127,24 +155,25 @@ export const participantList = props => {
         setSortParticipantsFn(() => R.sortBy(R.prop('created')));
         break;
       case 'registrationType':
-        setSortParticipantsFn(() => R.sortBy(R.prop('kind')));
+        setSortParticipantsFn(() => R.sort(kindComparator()));
         break;
       default:
-        setSortParticipantsFn(sortByNames);
+        setSortParticipantsFn(() => R.sortBy(R.prop('created')));
         break;
     }
   };
 
-  const participantFiltering = () => {
+  const participantOrdering = () => {
     return (
       <>
-        <label htmlFor="participantFilter">
+        <label htmlFor="participantSort">
           {props.t('examSession.participants.sortBy')}
         </label>
         <select
-          id="ParticipantFilter"
-          className={classes.ParticipantFilter}
-          onChange={handleFilterChange}
+          id="participantSort"
+          className={classes.ParticipantSort}
+          onChange={handleSortChange}
+          defaultValue="registrationTime"
         >
           <option value="name">
             {props.t('examSession.participants.sortBy.name')}
@@ -192,7 +221,7 @@ export const participantList = props => {
   };
 
   const participantRows = participants => {
-    const renderCancelButton = (p) => {
+    const renderCancelButton = p => {
       return p.state === 'SUBMITTED' || p.state === 'COMPLETED';
     };
 
@@ -226,13 +255,12 @@ export const participantList = props => {
         <div className={classes.StateItem}>
           {p.kind === 'ADMISSION'
             ? props.t('examSession.registration')
-            //  TODO Add support for queued registrations!
-            : props.t('examSession.registration.postAdmission')}
+            : p.kind === 'POST_ADMISSION'
+            ? props.t('examSession.registration.postAdmission')
+            : props.t('examSession.registration.queue')}
         </div>
         <div className={classes.StateItem}>
-          {p.is_transferable
-            ? relocateParticipant(p)
-            : null}
+          {p.is_transferable ? relocateParticipant(p) : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
@@ -244,9 +272,7 @@ export const participantList = props => {
         <div className={classes.Item}>{getPhoneNumber(p)}</div>
         <div className={classes.Item}> {p.form.email}</div>
         <div className={classes.Item}>
-          {renderCancelButton(p)
-            ? cancelRegistrationButton(p)
-            : null}
+          {renderCancelButton(p) ? cancelRegistrationButton(p) : null}
         </div>
         <span className={classes.Line} />
         <span className={classes.LineEnd} />
@@ -254,35 +280,48 @@ export const participantList = props => {
     ));
   };
 
-  const participantsHeader = () => {
-    const participantsCount = examSessionParticipantsCount(props.examSession);
-    return (
-      <h2>
-        {props.t('examSession.participants')}
-        {':'} {participantsCount.participants} /{' '}
-        {participantsCount.maxParticipants}
-      </h2>
-    );
-  };
+  const participantsCount = examSessionParticipantsCount(props.examSession);
+  const filteredParticipants = displayingQueue
+    ? props.participants.filter(p => p.kind === 'QUEUE')
+    : props.participants.filter(p => p.kind !== 'QUEUE');
+
   return (
     <div data-cy="participant-list">
-      {participantsHeader()}
-
-      {props.examSession.queue > 0 && (
-        <h3>
-          {props.t('examSession.inQueue')}
-          {':'} {props.examSession.queue}
-        </h3>
-      )}
-
-      {props.participants.length > 0 && (
+      <div className={classes.Tabs} role="tablist">
+        <button
+          onClick={() => setDisplayingQueue(false)}
+          role="tab"
+          aria-selected={!displayingQueue}
+          className={displayingQueue ? classes.NotSelected : classes.Selected}
+        >
+          <span>
+            {props.t('examSession.participants')} (
+            {participantsCount.participants}/{participantsCount.maxParticipants}
+            )
+          </span>
+        </button>
+        <button
+          onClick={() => setDisplayingQueue(true)}
+          role="tab"
+          aria-selected={displayingQueue}
+          className={displayingQueue ? classes.Selected : classes.NotSelected}
+        >
+          <span>
+            {props.t('examSession.inQueue')} ({props.examSession.queue})
+          </span>
+        </button>
+        <span />
+      </div>
+      {filteredParticipants.length > 0 && (
         <React.Fragment>
           <div className={classes.ListExport}>
-            <ListExport participants={sortParticipantsFn(props.participants)} />
-            {participantFiltering()}
+            <ListExport
+              participants={sortParticipantsFn(filteredParticipants)}
+            />
+            {participantOrdering()}
           </div>
           <div className={classes.ParticipantList}>
-            {participantRows(props.participants)}
+            {participantRows(filteredParticipants)}
           </div>
         </React.Fragment>
       )}
@@ -292,9 +331,19 @@ export const participantList = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCancelRegistration: (organizerOid, examSessionId, registrationId, isAdminView) =>
+    onCancelRegistration: (
+      organizerOid,
+      examSessionId,
+      registrationId,
+      isAdminView,
+    ) =>
       dispatch(
-        actions.cancelRegistration(organizerOid, examSessionId, registrationId, isAdminView),
+        actions.cancelRegistration(
+          organizerOid,
+          examSessionId,
+          registrationId,
+          isAdminView,
+        ),
       ),
     onRelocate: (
       organizerOid,
