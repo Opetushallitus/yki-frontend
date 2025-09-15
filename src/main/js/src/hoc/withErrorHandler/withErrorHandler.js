@@ -17,7 +17,7 @@ const withErrorHandler = WrappedComponent => {
                 props.error.key ? props.t(props.error.key) : props.t(defaultKey)
               }
             />
-            <p>{props.t('error.generic.info')}</p>
+            <p>{props.error.errorDetails ? props.t(props.error.errorDetails) : props.t('error.generic.info')}</p>
           </React.Fragment>
         ) : null}
       </Modal>

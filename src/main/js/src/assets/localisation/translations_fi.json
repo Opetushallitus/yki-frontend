@@ -138,6 +138,7 @@
   "error.examSession.fetchFailed": "Tutkintotilaisuuksien hakeminen epäonnistui.",
   "error.examSession.fetchParticipantsFailed": "Tutkintotilaisuuden osallistujien haku epäonnistui",
   "error.examSession.registration.relocateExamSessionFailed": "Siirtäminen epäonnistui",
+  "error.examSession.registration.relocateExamSessionFailed.alreadyRegistered": "Asiakas on jo ilmoittautunut tutkintoon samalle päivälle.",
   "error.examSession.updateFailed": "Tutkintotilaisuuden päivitys epäonnistui",
   "error.generic.info": "Yritä hetken kuluttua uudelleen.",
   "error.mandatory": "Pakollinen",
