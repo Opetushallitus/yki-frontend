@@ -360,7 +360,6 @@ const relocateExamSessionFail = error => {
   const errorMsg =
     error && error.response && error.response.data && error.response.data.error;
   const registered = errorMsg === 'registered';
-  console.error('relocate failed! errorMsg:', errorMsg);
 
   return {
     type: actionTypes.EXAM_SESSION_RELOCATE_FAIL,
