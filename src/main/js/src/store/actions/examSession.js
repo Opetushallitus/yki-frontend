@@ -3,7 +3,7 @@ import axios from '../../axios';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
-import { fetchRegistryExamSessionParticipants } from "./registryExamSession";
+import { fetchRegistryExamSessionParticipants } from './registryExamSession';
 
 const flattenOrganizationHierarchy = orgChildrenResponse => {
   const mapConcatOrgs = orgs => {
@@ -270,7 +270,12 @@ const deleteExamSessionFail = error => {
   };
 };
 
-export const cancelRegistration = (oid, examSessionId, registrationId, isAdminView) => {
+export const cancelRegistration = (
+  oid,
+  examSessionId,
+  registrationId,
+  isAdminView,
+) => {
   return dispatch => {
     dispatch(cancelRegistrationStart());
     axios
@@ -352,11 +357,18 @@ const relocateExamSessionSuccess = () => {
 };
 
 const relocateExamSessionFail = error => {
+  const errorMsg =
+    error && error.response && error.response.data && error.response.data.error;
+  const registered = errorMsg === 'registered';
+
   return {
     type: actionTypes.EXAM_SESSION_RELOCATE_FAIL,
-    error: Object.assign(error, {
+    error: {
       key: 'error.examSession.registration.relocateExamSessionFailed',
-    }),
+      errorDetails:
+        registered &&
+        'error.examSession.registration.relocateExamSessionFailed.alreadyRegistered',
+    },
     loading: false,
   };
 };

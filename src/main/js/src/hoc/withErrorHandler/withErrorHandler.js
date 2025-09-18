@@ -7,23 +7,31 @@ import Alert from '../../components/Alert/Alert';
 const defaultKey = 'error.common';
 
 const withErrorHandler = WrappedComponent => {
-  const errorHandler = props => (
-    <React.Fragment>
-      <Modal show={!!props.error} modalClosed={props.errorConfirmedHandler}>
-        {!!props.error ? (
-          <React.Fragment>
-            <Alert
-              title={
-                props.error.key ? props.t(props.error.key) : props.t(defaultKey)
-              }
-            />
-            <p>{props.t('error.generic.info')}</p>
-          </React.Fragment>
-        ) : null}
-      </Modal>
-      <WrappedComponent {...props} />
-    </React.Fragment>
-  );
+  const errorHandler = props => {
+    return (
+      <React.Fragment>
+        <Modal show={!!props.error} modalClosed={props.errorConfirmedHandler}>
+          {!!props.error ? (
+            <React.Fragment>
+              <Alert
+                title={
+                  props.error.key
+                    ? props.t(props.error.key)
+                    : props.t(defaultKey)
+                }
+              />
+              <p>
+                {props.error.errorDetails
+                  ? props.t(props.error.errorDetails)
+                  : props.t('error.generic.info')}
+              </p>
+            </React.Fragment>
+          ) : null}
+        </Modal>
+        <WrappedComponent {...props} />
+      </React.Fragment>
+    );
+  };
 
   errorHandler.propTypes = {
     errorConfirmedHandler: PropTypes.func.isRequired,

@@ -89,6 +89,7 @@
   "error.examSession.fetchFailed": "Search for language proficiency tests failed",
   "error.examSession.fetchParticipantsFailed": "Failed to fetch participants for language proficiency test",
   "error.examSession.registration.relocateExamSessionFailed": "Relocation failed",
+  "error.examSession.registration.relocateExamSessionFailed.alreadyRegistered": "The participant is already enrolled to an exam on the same day.",
   "error.examSession.updateFailed": "Failed to update language proficiency test",
   "error.generic.info": "Try again in a while",
   "error.mandatory": "Mandatory",
