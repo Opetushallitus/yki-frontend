@@ -36,7 +36,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.5.18</version>
+            <version>1.5.19</version>
         </dependency>    
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
@@ -106,7 +106,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <echo message="writing target/classes/resources/buildversion.txt" />
+                                <echo message="writing target/classes/resources/buildversion.txt"/>
                                 <echo file="target/classes/resources/buildversion.txt">
                                     <![CDATA[artifactId=${project.artifactId}
 version=${project.version}
@@ -124,25 +124,25 @@ buildTime=${maven.build.timestamp}
                         <phase>generate-resources</phase>
                         <configuration>
                             <target name="webpack">
-                                <property environment="env" />
+                                <property environment="env"/>
 
                                 <exec executable="cmd.exe" dir="${project.basedir}/src/main/js/" osfamily="windows" resultproperty="cmdresult">
-                                    <env key="PATH" path="${env.PATH};${project.basedir}/node_modules/.bin" />
-                                    <env key="PROJECT_TARGET" path="${project.build.directory}/${project.build.finalName}" />
-                                    <arg line="npm install --no-optional &amp; npm run build" />
+                                    <env key="PATH" path="${env.PATH};${project.basedir}/node_modules/.bin"/>
+                                    <env key="PROJECT_TARGET" path="${project.build.directory}/${project.build.finalName}"/>
+                                    <arg line="npm install --no-optional &amp; npm run build"/>
                                 </exec>
 
                                 <exec executable="bash" dir="${project.basedir}/src/main/js/" osfamily="unix" resultproperty="cmdresult">
-                                    <env key="PATH" path="${env.PATH};${project.basedir}/node_modules/.bin" />
-                                    <env key="PROJECT_TARGET" path="${project.build.directory}/${project.build.finalName}" />
-                                    <arg value="-c" />
-                                    <arg value="npm install --no-optional; npm run build" />
+                                    <env key="PATH" path="${env.PATH};${project.basedir}/node_modules/.bin"/>
+                                    <env key="PROJECT_TARGET" path="${project.build.directory}/${project.build.finalName}"/>
+                                    <arg value="-c"/>
+                                    <arg value="npm install --no-optional; npm run build"/>
                                 </exec>
 
                                 <condition property="cmdsuccess">
-                                    <equals arg1="${cmdresult}" arg2="0" />
+                                    <equals arg1="${cmdresult}" arg2="0"/>
                                 </condition>
-                                <fail unless="cmdsuccess" />
+                                <fail unless="cmdsuccess"/>
                             </target>
                         </configuration>
                         <goals>
