@@ -69,21 +69,21 @@ export const listExport = props => {
   const exportToExcel = participants => {
     const data = participants.map(p => {
       return {
-        sukunimi: p.form.last_name,
-        etunimet: p.form.first_name,
+        sukunimi: p.last_name,
+        etunimet: p.first_name,
         tila: stateToText[p.state],
         tyyppi: kindToText[p.kind],
         'alkup. tutkintopvm': p.original_exam_date,
         hetu: p.form.ssn,
         syntymaaika: p.form.birthdate,
         sukupuoli: p.form.gender ? (p.form.gender === '1' ? 'M' : 'N') : null,
-        email: p.form.email,
-        puhelin: p.form.phone_number,
-        katuosoite: p.form.street_address,
+        email: p.email,
+        puhelin: p.phone_number,
+        katuosoite: p.street_address,
         tehtavakieli: p.form.exam_lang,
         todistuskieli: p.form.certificate_lang,
-        postinumero: p.form.zip,
-        postitoimipaikka: p.form.post_office,
+        postinumero: p.zip,
+        postitoimipaikka: p.post_office,
         kansalaisuus: p.form.nationality_desc ? p.form.nationality_desc : null,
       };
     });
