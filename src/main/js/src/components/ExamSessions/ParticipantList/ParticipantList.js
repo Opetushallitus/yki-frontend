@@ -38,8 +38,8 @@ const kindComparator = () => (a, b) => {
 const fiCollator = new Intl.Collator('fi', { sensitivity: 'base' });
 const namesComparator = () => (a, b) => {
   const lastNamesComparison = fiCollator.compare(
-    a.form.last_name,
-    b.form.last_name,
+    a.last_name,
+    b.last_name,
   );
   if (lastNamesComparison < 0) {
     return -1;
@@ -47,8 +47,8 @@ const namesComparator = () => (a, b) => {
     return 1;
   }
   const firstNamesComparison = fiCollator.compare(
-    a.form.first_name,
-    b.form.first_name,
+    a.first_name,
+    b.first_name,
   );
   if (firstNamesComparison < 0) {
     return -1;
@@ -104,7 +104,7 @@ export const participantList = props => {
   };
 
   const getPhoneNumber = participant => {
-    const supplied = participant.form.phone_number || '';
+    const supplied = participant.phone_number || '';
     let asNumber = parsePhoneNumberFromString(supplied);
     if (asNumber) {
       return asNumber.formatInternational();
@@ -238,7 +238,7 @@ export const participantList = props => {
           {i + 1}.
         </div>
         <div className={[classes.ItemHeader, classes.StateItem].join(' ')}>
-          {p.form.last_name}, {p.form.first_name}
+          {p.last_name}, {p.first_name}
         </div>
         <div
           className={[
@@ -265,12 +265,12 @@ export const participantList = props => {
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
         <div className={classes.Item}>
-          {p.form.street_address} {p.form.zip}
+          {p.street_address} {p.zip}
           {', '}
-          {p.form.post_office}
+          {p.post_office}
         </div>
         <div className={classes.Item}>{getPhoneNumber(p)}</div>
-        <div className={classes.Item}> {p.form.email}</div>
+        <div className={classes.Item}> {p.email}</div>
         <div className={classes.Item}>
           {renderCancelButton(p) ? cancelRegistrationButton(p) : null}
         </div>
