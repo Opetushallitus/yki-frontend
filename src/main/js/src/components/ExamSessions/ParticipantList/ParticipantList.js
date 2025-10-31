@@ -64,18 +64,35 @@ export const participantList = props => {
 
   const [sortParticipantsFn, setSortParticipantsFn] = useState(() => R.sortBy(R.prop('created')));
 
-  const getStateTranslationKey = state => {
+  const getStateTranslationKey = (state, isAdmin, isFreeRegistration, freeRegistrationBasis) => {
     switch (state) {
       case 'COMPLETED':
+        if (isFreeRegistration) {
+          return isAdmin
+            ? `${props.t('examSession.free')}, ${props.t(`examSession.freeRegistrationBasis.${freeRegistrationBasis}`)}`
+            : props.t('examSession.free');
+        }
         return 'examSession.paid';
       case 'CANCELLED':
         return 'examSession.cancelled';
       case 'EXPIRED':
         return 'examSession.expired';
       case 'PAID_AND_CANCELLED':
+        if (isFreeRegistration) {
+          return isAdmin 
+            ? `${props.t('examSession.freeAndCancelled')}, ${props.t(`examSession.freeRegistrationBasis.${freeRegistrationBasis}`)}`
+            : props.t('examSession.freeAndCancelled');
+        }
         return 'examSession.paidAndCancelled';
+        
       case 'TRANSFERED':
+        if (isFreeRegistration) {
+          return isAdmin
+            ? `${props.t('examSession.freeAndTransfered')}, ${props.t(`examSession.freeRegistrationBasis.${freeRegistrationBasis}`)}`
+            : props.t('examSession.freeAndTransfered'); 
+        }
         return 'examSession.paidAndTransfered';
+        
       default:
         return 'examSession.notPaid';
     }
@@ -89,8 +106,8 @@ export const participantList = props => {
       registrationState === 'COMPLETED' && participant.is_transfered
         ? 'TRANSFERED'
         : registrationState;
-    const text = props.t(getStateTranslationKey(registrationShownState));
-
+    const text = props.t(getStateTranslationKey(registrationShownState, props.user.isAdmin, participant.is_free_registration, participant.free_registration_basis));
+      
     return (
       <React.Fragment>
         <img src={image} data-cy={`registration-${registrationState}`} alt="" />{' '}
@@ -364,6 +381,12 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const mapStateToProps = state => {
+  return {
+    user: state.user.user,
+  };
+};
+
 participantList.propTypes = {
   examSession: PropTypes.object.isRequired,
   examSessions: PropTypes.array.isRequired,
@@ -374,6 +397,6 @@ participantList.propTypes = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(withTranslation()(participantList));
