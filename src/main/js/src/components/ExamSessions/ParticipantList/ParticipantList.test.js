@@ -2,8 +2,10 @@ import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import toJson from 'enzyme-to-json';
+import configureMockStore from 'redux-mock-store';
 
 import { participantList as ParticipantList } from './ParticipantList';
+import { Provider } from 'react-redux';
 
 configure({ adapter: new Adapter() });
 
@@ -86,18 +88,23 @@ jest.mock('libphonenumber-js', () => {
   };
 });
 
+const mockStore = configureMockStore();
+const store = mockStore({user: { user: { isAdmin: true} }});
+
 describe('<ParticipantList />', () => {
   it('should render participant rows', () => {
     const wrapper = shallow(
-      <ParticipantList
-        examSession={examSessionFirst}
-        examSessions={[examSessionFirst, examSessionSecond]}
-        participants={participants}
-        t={t => t}
-        onCancelRegistration={jest.fn()}
-        onRelocate={jest.fn()}
-        isAdminView={false}
-      />,
+      <Provider store={store}>
+        <ParticipantList
+          examSession={examSessionFirst}
+          examSessions={[examSessionFirst, examSessionSecond]}
+          participants={participants}
+          t={t => t}
+          onCancelRegistration={jest.fn()}
+          onRelocate={jest.fn()}
+          isAdminView={false}
+        />
+      </Provider>,
     );
     expect(toJson(wrapper)).toMatchSnapshot();
   });
