@@ -64,37 +64,42 @@ export const participantList = props => {
 
   const [sortParticipantsFn, setSortParticipantsFn] = useState(() => R.sortBy(R.prop('created')));
 
-  const getStateTranslationKey = (state, isAdmin, isFreeRegistration, freeRegistrationBasis) => {
+  const getFreeRegistrationDescription = (source, basis, is_foreign) => {
+      const t = (key) => props.t(`examSession.freeRegistration${key}`);
+      return ` (${t("Source." + source)}: ${is_foreign ? t('IsForeign') : ''}${t('Basis.' + basis)})`;
+  };
+
+  const getStateTranslationKey = (state, isAdmin, isFreeRegistration, freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign) => {
     switch (state) {
       case 'COMPLETED':
         if (isFreeRegistration) {
           return isAdmin
-            ? `${props.t('examSession.free')}, ${props.t(`examSession.freeRegistrationBasis.${freeRegistrationBasis}`)}`
+            ? `${props.t('examSession.free')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
             : props.t('examSession.free');
         }
         return 'examSession.paid';
       case 'CANCELLED':
-        return 'examSession.cancelled';
+        return props.t('examSession.cancelled');
       case 'EXPIRED':
-        return 'examSession.expired';
+        return props.t('examSession.expired');
       case 'PAID_AND_CANCELLED':
         if (isFreeRegistration) {
           return isAdmin 
-            ? `${props.t('examSession.freeAndCancelled')}, ${props.t(`examSession.freeRegistrationBasis.${freeRegistrationBasis}`)}`
+            ? `${props.t('examSession.freeAndCancelled')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
             : props.t('examSession.freeAndCancelled');
         }
-        return 'examSession.paidAndCancelled';
+        return props.t('examSession.paidAndCancelled');
         
       case 'TRANSFERED':
         if (isFreeRegistration) {
           return isAdmin
-            ? `${props.t('examSession.freeAndTransfered')}, ${props.t(`examSession.freeRegistrationBasis.${freeRegistrationBasis}`)}`
-            : props.t('examSession.freeAndTransfered'); 
+            ? `${props.t('examSession.freeAndTransfered')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
+            : props.t('examSession.freeAndTransfered');
         }
-        return 'examSession.paidAndTransfered';
+        return props.t('examSession.paidAndTransfered');
         
       default:
-        return 'examSession.notPaid';
+        return props.t('examSession.notPaid');
     }
   };
 
@@ -106,8 +111,8 @@ export const participantList = props => {
       registrationState === 'COMPLETED' && participant.is_transfered
         ? 'TRANSFERED'
         : registrationState;
-    const text = props.t(getStateTranslationKey(registrationShownState, props.user.isAdmin, participant.is_free_registration, participant.free_registration_basis));
-      
+    const text = getStateTranslationKey(registrationShownState, props.user.isAdmin, participant.is_free_registration, participant.free_registration_source, participant.free_registration_basis, participant.free_registration_is_foreign);
+
     return (
       <React.Fragment>
         <img src={image} data-cy={`registration-${registrationState}`} alt="" />{' '}
