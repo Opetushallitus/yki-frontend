@@ -39,6 +39,16 @@ const toArrayBuffer = s => {
   return buf;
 };
 
+const formatOptionalBoolean = val => {
+  if (val === true) {
+    return 'Kyllä';
+  }
+  if (val === false) {
+    return 'Ei';
+  }
+  return '-';
+};
+
 const exportToExcel = (payments, startDate, endDate) => {
   const defaultCol = { wch: 20 };
 
@@ -54,6 +64,13 @@ const exportToExcel = (payments, startDate, endDate) => {
     defaultCol,
     defaultCol,
     { wch: 60 },
+    defaultCol,
+    defaultCol,
+    defaultCol,
+    defaultCol,
+    defaultCol,
+    defaultCol,
+    defaultCol,
   ];
   const data = payments.map(p => {
     return {
@@ -68,6 +85,17 @@ const exportToExcel = (payments, startDate, endDate) => {
       Taso: p.exam_level,
       'Summa (€)': p.amount,
       'Maksun yksilöintitunnus': p.reference,
+      'Maksuttomuuden lähde': !p.fr_source
+        ? '-'
+        : p.fr_source === 'KOSKI'
+        ? 'KOSKI'
+        : 'Asiakas',
+      'Ulkomainen tutkinto': formatOptionalBoolean(p.fr_is_foreign),
+      Ylioppilastutkinto: formatOptionalBoolean(p.fr_matriculation_exam),
+      'EB-tutkinto': formatOptionalBoolean(p.fr_eb),
+      'DIA-tutkinto': formatOptionalBoolean(p.fr_dia),
+      Korkeakoulututkinto: formatOptionalBoolean(p.fr_higher_education_concluded),
+      Korkeakouluopinnot: formatOptionalBoolean(p.fr_higher_education_enrolled),
     };
   });
   const workbook = XLSX.utils.book_new();
@@ -84,6 +112,13 @@ const exportToExcel = (payments, startDate, endDate) => {
       'Taso',
       'Summa (€)',
       'Maksun yksilöintitunnus',
+      'Maksuttomuuden lähde',
+      'Ulkomainen tutkinto',
+      'Ylioppilastutkinto',
+      'EB-tutkinto',
+      'DIA-tutkinto',
+      'Korkeakoulututkinto',
+      'Korkeakouluopinnot',
     ],
   });
 

@@ -73,6 +73,24 @@
       "reference": "YKI-EXAM-1-1-088892fd-55b0-4eb5-ac5b-c21b7f2753ba",
       "exam_level": "Perustaso",
       "organizer": "Salon seudun koulutus Oy"
+    },
+    {
+      "amount": "0,00",
+      "email": "maksuttomuustesti@testi.fi",
+      "last_name": "Kosketar",
+      "first_name": "Katariina",
+      "exam_language": "Suomi",
+      "exam_level": "Ylin taso",
+      "paid_at": "2025-11-10 17:33:03",
+      "exam_date": "2025-12-24",
+      "organizer": "Salon seudun koulutus Oy",
+      "fr_source": "KOSKI",
+      "fr_is_foreign": false,
+      "fr_matriculation_exam": true,
+      "fr_eb": false,
+      "fr_dia": false,
+      "fr_higher_education_concluded": true,
+      "fr_higher_education_enrolled": false
     }
   ]
 }
