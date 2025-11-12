@@ -69,7 +69,7 @@ export const participantList = props => {
       return ` (${t("Source." + source)}: ${is_foreign ? t('IsForeign') : ''}${t('Basis.' + basis)})`;
   };
 
-  const getStateTranslationKey = (state, isAdmin, isFreeRegistration, freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign) => {
+  const getStateTranslation = (state, isAdmin, isFreeRegistration, freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign) => {
     switch (state) {
       case 'COMPLETED':
         if (isFreeRegistration) {
@@ -77,7 +77,7 @@ export const participantList = props => {
             ? `${props.t('examSession.free')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
             : props.t('examSession.free');
         }
-        return 'examSession.paid';
+        return props.t('examSession.paid');
       case 'CANCELLED':
         return props.t('examSession.cancelled');
       case 'EXPIRED':
@@ -111,7 +111,7 @@ export const participantList = props => {
       registrationState === 'COMPLETED' && participant.is_transfered
         ? 'TRANSFERED'
         : registrationState;
-    const text = getStateTranslationKey(registrationShownState, props.user.isAdmin, participant.is_free_registration, participant.free_registration_source, participant.free_registration_basis, participant.free_registration_is_foreign);
+    const text = getStateTranslation(registrationShownState, props.user.isAdmin, participant.is_free_registration, participant.free_registration_source, participant.free_registration_basis, participant.free_registration_is_foreign);
 
     return (
       <React.Fragment>
