@@ -64,20 +64,42 @@ export const participantList = props => {
 
   const [sortParticipantsFn, setSortParticipantsFn] = useState(() => R.sortBy(R.prop('created')));
 
-  const getStateTranslationKey = state => {
+  const getFreeRegistrationDescription = (source, basis, is_foreign) => {
+      const t = (key) => props.t(`examSession.freeRegistration${key}`);
+      return ` (${t("Source." + source)}: ${is_foreign ? t('IsForeign') : ''}${t('Basis.' + basis)})`;
+  };
+
+  const getStateTranslation = (state, isAdmin, isFreeRegistration, freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign) => {
     switch (state) {
       case 'COMPLETED':
-        return 'examSession.paid';
+        if (isFreeRegistration) {
+          return isAdmin
+            ? `${props.t('examSession.free')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
+            : props.t('examSession.free');
+        }
+        return props.t('examSession.paid');
       case 'CANCELLED':
-        return 'examSession.cancelled';
+        return props.t('examSession.cancelled');
       case 'EXPIRED':
-        return 'examSession.expired';
+        return props.t('examSession.expired');
       case 'PAID_AND_CANCELLED':
-        return 'examSession.paidAndCancelled';
+        if (isFreeRegistration) {
+          return isAdmin 
+            ? `${props.t('examSession.freeAndCancelled')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
+            : props.t('examSession.freeAndCancelled');
+        }
+        return props.t('examSession.paidAndCancelled');
+        
       case 'TRANSFERED':
-        return 'examSession.paidAndTransfered';
+        if (isFreeRegistration) {
+          return isAdmin
+            ? `${props.t('examSession.freeAndTransfered')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
+            : props.t('examSession.freeAndTransfered');
+        }
+        return props.t('examSession.paidAndTransfered');
+        
       default:
-        return 'examSession.notPaid';
+        return props.t('examSession.notPaid');
     }
   };
 
@@ -89,7 +111,7 @@ export const participantList = props => {
       registrationState === 'COMPLETED' && participant.is_transfered
         ? 'TRANSFERED'
         : registrationState;
-    const text = props.t(getStateTranslationKey(registrationShownState));
+    const text = getStateTranslation(registrationShownState, props.user.isAdmin, participant.is_free_registration, participant.free_registration_source, participant.free_registration_basis, participant.free_registration_is_foreign);
 
     return (
       <React.Fragment>
@@ -364,6 +386,12 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const mapStateToProps = state => {
+  return {
+    user: state.user.user,
+  };
+};
+
 participantList.propTypes = {
   examSession: PropTypes.object.isRequired,
   examSessions: PropTypes.array.isRequired,
@@ -374,6 +402,6 @@ participantList.propTypes = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(withTranslation()(participantList));

@@ -1,341 +1,125 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ParticipantList /> should render participant rows 1`] = `
-<div
-  data-cy="participant-list"
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Object {
+        "addNestedSub": [Function],
+        "getListeners": [Function],
+        "handleChangeWrapper": [Function],
+        "isSubscribed": [Function],
+        "notifyNestedSubs": [Function],
+        "trySubscribe": [Function],
+        "tryUnsubscribe": [Function],
+      },
+    }
+  }
 >
-  <div
-    className="Tabs"
-    role="tablist"
-  >
-    <button
-      aria-selected={true}
-      className="Selected"
-      onClick={[Function]}
-      role="tab"
-    >
-      <span>
-        examSession.participants
-         (
-        2
-        /
-        50
-        )
-      </span>
-    </button>
-    <button
-      aria-selected={false}
-      className="NotSelected"
-      onClick={[Function]}
-      role="tab"
-    >
-      <span>
-        examSession.inQueue
-         (
-        1
-        )
-      </span>
-    </button>
-    <span />
-  </div>
-  <div
-    className="ListExport"
-  >
-    <listExport
-      participants={
-        Array [
-          Object {
-            "email": "michael.wallis@test.com",
-            "first_name": "Wallis",
-            "form": Object {
-              "ssn": "011088-1234",
-            },
-            "is_transferable": true,
-            "kind": "ADMISSION",
-            "last_name": "Michael",
-            "phone_number": "+358405131441",
-            "post_office": "Espoo",
-            "registration_id": 1,
-            "state": "COMPLETED",
-            "street_address": "Revontulentie 13 C 2",
-            "zip": "02100",
-          },
-          Object {
-            "email": "natalia.gaddens@test.com",
-            "first_name": "Gaddens",
-            "form": Object {
-              "ssn": "011089-1245",
-            },
-            "is_transferable": false,
-            "kind": "POST_ADMISSION",
-            "last_name": "Natalia",
-            "phone_number": "+358405131441",
-            "post_office": "Espoo",
-            "registration_id": 2,
-            "state": "SUBMITTED",
-            "street_address": "Revontulentie 13 C 2",
-            "zip": "02100",
-          },
-        ]
+  <participantList
+    examSession={
+      Object {
+        "language_code": "eng",
+        "level_code": "KESKI",
+        "max_participants": 50,
+        "pa_participants": 0,
+        "participants": 2,
+        "queue": 1,
+        "registration_end_date": "2028-12-15",
+        "registration_start_date": "2018-09-01",
+        "session_date": "2028-12-30",
       }
-    />
-    <label
-      htmlFor="participantSort"
-    >
-      examSession.participants.sortBy
-    </label>
-    <select
-      className="ParticipantSort"
-      defaultValue="registrationTime"
-      id="participantSort"
-      onChange={[Function]}
-    >
-      <option
-        value="name"
-      >
-        examSession.participants.sortBy.name
-      </option>
-      <option
-        value="registrationTime"
-      >
-        examSession.participants.sortBy.registrationTime
-      </option>
-      <option
-        value="registrationType"
-      >
-        examSession.participants.sortBy.registrationType
-      </option>
-      <option
-        value="state"
-      >
-        examSession.participants.sortBy.state
-      </option>
-    </select>
-  </div>
-  <div
-    className="ParticipantList"
-  >
-    <div
-      className="ItemHeader Index StateItem"
-      data-cy="participant-1"
-    >
-      1
-      .
-    </div>
-    <div
-      className="ItemHeader StateItem"
-    >
-      Michael
-      , 
-      Wallis
-    </div>
-    <div
-      className="ItemHeader StatusCompleted StateItem"
-    >
-      <img
-        alt=""
-        data-cy="registration-COMPLETED"
-        src="checkmark-done.svg"
-      />
-       
-      examSession.paid
-    </div>
-    <div
-      className="StateItem"
-    />
-    <div
-      className="StateItem"
-    >
-      examSession.registration
-    </div>
-    <div
-      className="StateItem"
-    >
-      <withI18nextTranslation(RelocateParticipant)
-        buttonsDisabled={false}
-        confirmText="examSession.registration.relocate.confirm"
-        examSession={
-          Object {
-            "language_code": "eng",
-            "level_code": "KESKI",
-            "max_participants": 50,
-            "pa_participants": 0,
-            "participants": 2,
-            "queue": 1,
-            "registration_end_date": "2028-12-15",
-            "registration_start_date": "2018-09-01",
-            "session_date": "2028-12-30",
-          }
-        }
-        examSessions={
-          Array [
-            Object {
-              "language_code": "eng",
-              "level_code": "KESKI",
-              "max_participants": 50,
-              "pa_participants": 0,
-              "participants": 2,
-              "queue": 1,
-              "registration_end_date": "2028-12-15",
-              "registration_start_date": "2018-09-01",
-              "session_date": "2028-12-30",
-            },
-            Object {
-              "language_code": "eng",
-              "level_code": "KESKI",
-              "max_participants": 50,
-              "pa_participants": 0,
-              "participants": 2,
-              "queue": 1,
-              "registration_end_date": "2028-12-15",
-              "registration_start_date": "2018-09-01",
-              "session_date": "2029-01-01",
-            },
-          ]
-        }
-        onRelocate={[Function]}
-      />
-    </div>
-    <div
-      className="Item"
-    />
-    <div
-      className="Item"
-    >
-      011088-1234
-    </div>
-    <div
-      className="Item"
-    >
-      Revontulentie 13 C 2
-       
-      02100
-      , 
-      Espoo
-    </div>
-    <div
-      className="Item"
-    >
-      +358 40 5131441
-    </div>
-    <div
-      className="Item"
-    >
-       
-      michael.wallis@test.com
-    </div>
-    <div
-      className="Item"
-    >
-      <ActionButton
-        buttonsDisabled={false}
-        cancelText="examSession.registration.cancel.cancel"
-        confirmOnRight={true}
-        confirmText="examSession.registration.cancel.confirm"
-        onClick={[Function]}
-      >
-        <img
-          alt=""
-          src="trashcan.svg"
-        />
-         
-        examSession.registration.cancel
-      </ActionButton>
-    </div>
-    <span
-      className="Line"
-    />
-    <span
-      className="LineEnd"
-    />
-    <div
-      className="ItemHeader Index StateItem"
-      data-cy="participant-2"
-    >
-      2
-      .
-    </div>
-    <div
-      className="ItemHeader StateItem"
-    >
-      Natalia
-      , 
-      Gaddens
-    </div>
-    <div
-      className="ItemHeader Status StateItem"
-    >
-      <img
-        alt=""
-        data-cy="registration-SUBMITTED"
-        src="checkmark-not-done.svg"
-      />
-       
-      examSession.notPaid
-    </div>
-    <div
-      className="StateItem"
-    />
-    <div
-      className="StateItem"
-    >
-      examSession.registration.postAdmission
-    </div>
-    <div
-      className="StateItem"
-    />
-    <div
-      className="Item"
-    />
-    <div
-      className="Item"
-    >
-      011089-1245
-    </div>
-    <div
-      className="Item"
-    >
-      Revontulentie 13 C 2
-       
-      02100
-      , 
-      Espoo
-    </div>
-    <div
-      className="Item"
-    >
-      +358 40 5131441
-    </div>
-    <div
-      className="Item"
-    >
-       
-      natalia.gaddens@test.com
-    </div>
-    <div
-      className="Item"
-    >
-      <ActionButton
-        buttonsDisabled={false}
-        cancelText="examSession.registration.cancel.cancel"
-        confirmOnRight={true}
-        confirmText="examSession.registration.cancel.confirm"
-        onClick={[Function]}
-      >
-        <img
-          alt=""
-          src="trashcan.svg"
-        />
-         
-        examSession.registration.cancel
-      </ActionButton>
-    </div>
-    <span
-      className="Line"
-    />
-    <span
-      className="LineEnd"
-    />
-  </div>
-</div>
+    }
+    examSessions={
+      Array [
+        Object {
+          "language_code": "eng",
+          "level_code": "KESKI",
+          "max_participants": 50,
+          "pa_participants": 0,
+          "participants": 2,
+          "queue": 1,
+          "registration_end_date": "2028-12-15",
+          "registration_start_date": "2018-09-01",
+          "session_date": "2028-12-30",
+        },
+        Object {
+          "language_code": "eng",
+          "level_code": "KESKI",
+          "max_participants": 50,
+          "pa_participants": 0,
+          "participants": 2,
+          "queue": 1,
+          "registration_end_date": "2028-12-15",
+          "registration_start_date": "2018-09-01",
+          "session_date": "2029-01-01",
+        },
+      ]
+    }
+    isAdminView={false}
+    onCancelRegistration={[MockFunction]}
+    onRelocate={[MockFunction]}
+    participants={
+      Array [
+        Object {
+          "email": "michael.wallis@test.com",
+          "first_name": "Wallis",
+          "form": Object {
+            "ssn": "011088-1234",
+          },
+          "is_transferable": true,
+          "kind": "ADMISSION",
+          "last_name": "Michael",
+          "phone_number": "+358405131441",
+          "post_office": "Espoo",
+          "registration_id": 1,
+          "state": "COMPLETED",
+          "street_address": "Revontulentie 13 C 2",
+          "zip": "02100",
+        },
+        Object {
+          "email": "natalia.gaddens@test.com",
+          "first_name": "Gaddens",
+          "form": Object {
+            "ssn": "011089-1245",
+          },
+          "is_transferable": false,
+          "kind": "POST_ADMISSION",
+          "last_name": "Natalia",
+          "phone_number": "+358405131441",
+          "post_office": "Espoo",
+          "registration_id": 2,
+          "state": "SUBMITTED",
+          "street_address": "Revontulentie 13 C 2",
+          "zip": "02100",
+        },
+        Object {
+          "email": "veikko.vesipera@test.com",
+          "first_name": "Veikko",
+          "form": Object {
+            "ssn": "011088-1234",
+          },
+          "is_transferable": false,
+          "kind": "QUEUE",
+          "last_name": "Vesiperä",
+          "phone_number": "+358405131441",
+          "post_office": "Espoo",
+          "registration_id": 3,
+          "state": "CANCELLED",
+          "street_address": "Revontulentie 13 C 2",
+          "zip": "02100",
+        },
+      ]
+    }
+    t={[Function]}
+  />
+</ContextProvider>
 `;

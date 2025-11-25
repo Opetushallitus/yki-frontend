@@ -655,21 +655,24 @@ module.exports = function(app) {
   app.delete(
     '/yki/api/virkailija/organizer/:oid/exam-session/:examSessionId/registration/:id',
     (req, res) => {
-      try {
-        const { id, examSessionId } = req.params;
-        const i = registrations[examSessionId].participants.findIndex(
-          x => x.registration_id == id,
-        );
-        const newState = registrations[examSessionId].participants[i].state === 'COMPLETED'
-          ? 'PAID_AND_CANCELLED'
-          : 'CANCELLED';
+      const mockCall = () => {
+        try {
+          const { id, examSessionId } = req.params;
+          const i = registrations[examSessionId].participants.findIndex(
+            x => x.registration_id == id,
+          );
+          const newState = registrations[examSessionId].participants[i].state === 'COMPLETED'
+            ? 'PAID_AND_CANCELLED'
+            : 'CANCELLED';
 
-        registrations[examSessionId].participants[i].state = newState;
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
+          registrations[examSessionId].participants[i].state = newState;
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      };
+      useLocalProxy ? proxyDeleteCall(req, res) : mockCall();
     },
   );
 

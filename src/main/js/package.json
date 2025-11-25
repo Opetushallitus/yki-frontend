@@ -37,7 +37,8 @@
     "prettier": "^1.17.0",
     "react-scripts": "2.1.8",
     "react-test-renderer": "^16.8.6",
-    "redux-devtools-extension": "^2.13.8"
+    "redux-devtools-extension": "^2.13.8",
+    "redux-mock-store": "^1.5.5"
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
