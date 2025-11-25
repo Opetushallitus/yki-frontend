@@ -27,6 +27,25 @@ const columns = [
   defaultCol,
 ];
 
+const stateToText = ({ state, is_free_registration }) => {
+  switch (state) {
+    case 'COMPLETED':
+      return is_free_registration ? 'Maksuton' : 'Maksanut';
+    case 'PAID_AND_CANCELLED':
+      return is_free_registration
+        ? 'Maksuton ja peruttu'
+        : 'Maksanut ja peruttu';
+    case 'SUBMITTED':
+      return 'Ei maksanut';
+    case 'CANCELLED':
+      return 'Peruttu';
+    case 'EXPIRED':
+      return 'Erääntynyt';
+    default:
+      return '-';
+  }
+};
+
 export const listExport = props => {
   const { t } = useTranslation();
 
@@ -52,14 +71,6 @@ export const listExport = props => {
     }, 100);
   };
 
-  const stateToText = {
-    COMPLETED: 'Maksanut',
-    SUBMITTED: 'Ei maksanut',
-    CANCELLED: 'Peruttu',
-    EXPIRED: 'Erääntynyt',
-    PAID_AND_CANCELLED: 'Maksanut ja peruttu',
-  };
-
   const kindToText = {
     ADMISSION: 'Varsinainen ilmoittautuminen',
     POST_ADMISSION: 'Jälki-ilmoittautuminen',
@@ -71,7 +82,7 @@ export const listExport = props => {
       return {
         sukunimi: p.last_name,
         etunimet: p.first_name,
-        tila: stateToText[p.state],
+        tila: stateToText(p),
         tyyppi: kindToText[p.kind],
         'alkup. tutkintopvm': p.original_exam_date,
         hetu: p.form.ssn,
