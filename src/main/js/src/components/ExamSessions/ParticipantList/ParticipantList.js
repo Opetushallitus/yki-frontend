@@ -282,7 +282,7 @@ export const participantList = props => {
             : props.t('examSession.registration.queue')}
         </div>
         <div className={classes.StateItem}>
-          {p.is_transferable ? relocateParticipant(p) : null}
+          {(p.is_transferable && props.user.isAdmin) ? relocateParticipant(p) : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>
