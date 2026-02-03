@@ -2,17 +2,29 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 import moment from 'moment';
 
-import { ISO_DATE_FORMAT_SHORT } from '../../common/Constants';
+import {
+  ISO_DATE_FORMAT_SHORT,
+  ORG_TYPE_OPPILAITOS,
+  ORG_TYPE_TOIMIPISTE,
+} from '../../common/Constants';
 import { fetchRegistryExamSessionParticipants } from './registryExamSession';
 
 const flattenOrganizationHierarchy = orgChildrenResponse => {
   const mapConcatOrgs = orgs => {
     return orgs.map(o =>
-      [{ nimi: o.nimi, oid: o.oid }].concat(mapConcatOrgs(o.children)),
+      [{ nimi: o.nimi, oid: o.oid, tyypit: o.tyypit }].concat(
+        mapConcatOrgs(o.children),
+      ),
     );
   };
 
-  return mapConcatOrgs(orgChildrenResponse).flat(20);
+  return mapConcatOrgs(orgChildrenResponse)
+    .flat(20)
+    .filter(
+      ({ tyypit }) =>
+        tyypit.includes(ORG_TYPE_OPPILAITOS) ||
+        tyypit.includes(ORG_TYPE_TOIMIPISTE),
+    );
 };
 
 const fetchExamSessionContentStart = () => {
