@@ -308,6 +308,20 @@ const adminUser = {
   },
 };
 
+const solkiExtendedReadAccessUser = {
+  identity: {
+    username: 'ykitestaaja',
+    oid: '1.2.246.562.24.98107285507',
+    organizations: [
+      {
+        oid: '1.2.246.562.10.00000000001',
+        permissions: [{ palvelu: 'YKI', oikeus: 'ILMOITTAUTUMISET_R' }],
+      },
+    ],
+    lang: 'fi',
+  },
+}
+
 const getNumberBetween = (min, max) =>
   Math.trunc(Math.random() * (max - min) + min);
 
@@ -912,7 +926,7 @@ module.exports = function(app) {
   app.get('/yki/auth/user', (req, res) => {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(adminUser);
+      res.send(solkiExtendedReadAccessUser);
     } catch (err) {
       printError(req, err);
       res.status(404).send(err.message);

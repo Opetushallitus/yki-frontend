@@ -25,17 +25,29 @@ const fetchUserStart = () => {
 
 const fetchUserSuccess = identity => {
   if (identity) {
-    let isAdmin = false;
-    if (identity.organizations) {
-      isAdmin = identity.organizations.some(({ oid, permissions}) =>
+    const organizations = identity.organizations || [];
+    const isAdmin = organizations.some(
+      ({ oid, permissions }) =>
         oid === OPH_OID &&
         permissions.some(
-          ({ palvelu, oikeus }) => palvelu === "YKI" && oikeus === "YLLAPITAJA")
-        );
-    }
+          ({ palvelu, oikeus }) => palvelu === 'YKI' && oikeus === 'YLLAPITAJA',
+        ),
+    );
+    const isOrganizer = organizations.some(({ permissions }) =>
+      permissions.some(
+        ({ palvelu, oikeus }) => palvelu === 'YKI' && oikeus === 'JARJESTAJA',
+      ),
+    );
+    const isExtensiveReadAccessUser = organizations.some(({ permissions }) =>
+      permissions.some(
+        ({ palvelu, oikeus }) =>
+          palvelu === 'YKI' && oikeus === 'ILMOITTAUTUMISET_R',
+      ),
+    );
+
     return {
       type: actionTypes.FETCH_USER_SUCCESS,
-      user: { identity: identity, isAdmin: isAdmin },
+      user: { identity, isAdmin, isOrganizer, isExtensiveReadAccessUser },
       loading: false,
     };
   } else {

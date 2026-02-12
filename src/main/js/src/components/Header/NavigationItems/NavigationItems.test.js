@@ -20,7 +20,7 @@ describe('<NavigationItems />', () => {
     expect(wrapper.find(NavigationItem)).toHaveLength(4);
   });
   it('should render one <NavigationItem /> element for organizer', () => {
-    const wrapper = shallow(<NavigationItems user={{ isAdmin: false }} />);
+    const wrapper = shallow(<NavigationItems user={{ isOrganizer: true }} />);
     expect(wrapper.find(NavigationItem)).toHaveLength(1);
   });
 });
