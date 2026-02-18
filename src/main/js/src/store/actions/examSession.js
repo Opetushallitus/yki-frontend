@@ -72,6 +72,10 @@ export const fetchExamSessionContent = organizerOid => {
         if (!organizer) {
           organizer = orgRes.data.organizers[0];
         }
+        console.log('in fetchExamSessionsContent:', {
+          organizerOid,
+          organizationOid: organizer.oid,
+        });
         if (organizer) {
           Promise.all([
             axios.get(

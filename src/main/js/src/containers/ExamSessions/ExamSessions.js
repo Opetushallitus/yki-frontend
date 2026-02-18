@@ -24,10 +24,22 @@ class ExamSessions extends Component {
   };
 
   componentDidMount = () => {
-    this.props.onFetchExamSessionContent(this.props.user.organizerOrganizationOid);
+    const user = this.props.user;
+    if (!!user) {
+      console.log('componentDidMount, fetching details for???', user);
+      this.props.onFetchExamSessionContent(user.organizerOrganizationOid);
+    }
   };
 
   componentDidUpdate = prevProps => {
+    const currentUser = this.props.user;
+    const previousUser = prevProps.user;
+    const userDetailsUpdated = !!currentUser && !previousUser;
+    if (userDetailsUpdated) {
+      this.props.onFetchExamSessionContent(
+        currentUser.organizerOrganizationOid,
+      );
+    }
     // close open modals in case of error
     if (!prevProps.error && this.props.error) {
       if (this.state.showExamSessionDetailsModal) {
@@ -170,13 +182,13 @@ const mapStateToProps = state => {
     examSessionContent: state.exam.examSessionContent,
     loading: state.exam.loading,
     error: state.exam.error,
-    user: state.user,
+    user: state.user.user,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchExamSessionContent: (organizerOid) =>
+    onFetchExamSessionContent: organizerOid =>
       dispatch(actions.fetchExamSessionContent(organizerOid)),
     errorConfirmedHandler: () => dispatch(actions.examSessionFailReset()),
     onAddExamSession: (examSession, oid) =>
