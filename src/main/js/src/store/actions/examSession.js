@@ -64,17 +64,19 @@ export const fetchExamSessionContent = organizerOid => {
         // However, for certain users (admin, extensive read access) the above endpoint will return
         // data for multiple organizers. Especially in the case that a user is both an organizer AND has extensive read access,
         // this means that we should find the single organizer entry that matches the organization for which they have the organizer permission.
-        const organizers = orgRes.data;
+        const organizers = orgRes.data.organizers;
         let organizer;
         if (organizers && organizers.length > 1 && !!organizerOid) {
           organizer = organizers.find(({ oid }) => oid === organizerOid);
         }
+        // Fallback to previous behaviour in case we failed to find any suitable organizer above
         if (!organizer) {
           organizer = orgRes.data.organizers[0];
         }
         console.log('in fetchExamSessionsContent:', {
           organizerOid,
           organizationOid: organizer.oid,
+          organizers
         });
         if (organizer) {
           Promise.all([
