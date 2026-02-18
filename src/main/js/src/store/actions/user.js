@@ -33,11 +33,13 @@ const fetchUserSuccess = identity => {
           ({ palvelu, oikeus }) => palvelu === 'YKI' && oikeus === 'YLLAPITAJA',
         ),
     );
-    const isOrganizer = organizations.some(({ permissions }) =>
+    const organizerPermission = organizations.find(({ permissions }) =>
       permissions.some(
         ({ palvelu, oikeus }) => palvelu === 'YKI' && oikeus === 'JARJESTAJA',
       ),
     );
+    const isOrganizer = !!organizerPermission;
+    const organizerOrganizationOid = isOrganizer ? organizerPermission.oid : null;
     const isExtensiveReadAccessUser = organizations.some(({ permissions }) =>
       permissions.some(
         ({ palvelu, oikeus }) =>
@@ -47,7 +49,7 @@ const fetchUserSuccess = identity => {
 
     return {
       type: actionTypes.FETCH_USER_SUCCESS,
-      user: { identity, isAdmin, isOrganizer, isExtensiveReadAccessUser },
+      user: { identity, isAdmin, isOrganizer, isExtensiveReadAccessUser, organizerOrganizationOid },
       loading: false,
     };
   } else {

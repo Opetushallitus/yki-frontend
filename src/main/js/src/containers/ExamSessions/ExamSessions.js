@@ -24,7 +24,7 @@ class ExamSessions extends Component {
   };
 
   componentDidMount = () => {
-    this.props.onFetchExamSessionContent();
+    this.props.onFetchExamSessionContent(this.props.user.organizerOrganizationOid);
   };
 
   componentDidUpdate = prevProps => {
@@ -105,7 +105,9 @@ class ExamSessions extends Component {
             modalClosed={this.closeExamSessionDetailsModalHandler}
           >
             <ExamSessionDetails
-              examSession={this.props.examSessionContent.examSessions.find(es => es.id === this.state.selectedExamSession.id)}
+              examSession={this.props.examSessionContent.examSessions.find(
+                es => es.id === this.state.selectedExamSession.id,
+              )}
               oid={this.props.examSessionContent.organization.oid}
               onSubmitUpdateExamSession={this.updateExamSessionHandler}
               onSubmitDeleteExamSession={this.deleteExamSessionHandler}
@@ -138,7 +140,9 @@ class ExamSessions extends Component {
               {this.props.t('examSession.addExamSession')}
             </Button>
           </div>
-          <h2 className={classes.ContractTitle}>{this.props.t('common.agreement')}</h2>
+          <h2 className={classes.ContractTitle}>
+            {this.props.t('common.agreement')}
+          </h2>
           <ExamSessionOrganizer
             organizer={this.props.examSessionContent.organizer}
             organization={this.props.examSessionContent.organization}
@@ -146,8 +150,8 @@ class ExamSessions extends Component {
         </div>
       </div>
     ) : (
-          <p>{this.props.t('examSessions.agreementNotFound')}</p>
-        );
+      <p>{this.props.t('examSessions.agreementNotFound')}</p>
+    );
 
     return (
       <Page>
@@ -156,7 +160,7 @@ class ExamSessions extends Component {
           {examSessionDetailsModal}
           {content}
         </div>
-      </Page >
+      </Page>
     );
   }
 }
@@ -166,13 +170,14 @@ const mapStateToProps = state => {
     examSessionContent: state.exam.examSessionContent,
     loading: state.exam.loading,
     error: state.exam.error,
+    user: state.user,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchExamSessionContent: () =>
-      dispatch(actions.fetchExamSessionContent()),
+    onFetchExamSessionContent: (organizerOid) =>
+      dispatch(actions.fetchExamSessionContent(organizerOid)),
     errorConfirmedHandler: () => dispatch(actions.examSessionFailReset()),
     onAddExamSession: (examSession, oid) =>
       dispatch(actions.addExamSession(examSession, oid)),
