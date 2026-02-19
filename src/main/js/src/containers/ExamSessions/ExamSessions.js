@@ -64,7 +64,7 @@ class ExamSessions extends Component {
 
   closeExamSessionDetailsModalHandler = () => {
     this.setState({ showExamSessionDetailsModal: false });
-    this.props.onFetchExamSessionContent();
+    this.props.onFetchExamSessionContent(this.props.user.organizerOrganizationOid);
   };
 
   createExamSessionHandler = examSession => {
