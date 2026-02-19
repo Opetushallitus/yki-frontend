@@ -26,7 +26,6 @@ class ExamSessions extends Component {
   componentDidMount = () => {
     const user = this.props.user;
     if (!!user) {
-      console.log('componentDidMount, fetching details for???', user);
       this.props.onFetchExamSessionContent(user.organizerOrganizationOid);
     }
   };
