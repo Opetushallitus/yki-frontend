@@ -272,10 +272,19 @@ export const participantList = props => {
 
   const participantRows = participants => {
     const renderCancelButton = p => {
-      return (
-        (props.user.isAdmin || props.user.isOrganizer) &&
-        (p.state === 'SUBMITTED' || p.state === 'COMPLETED')
-      );
+      if (p.state !== 'SUBMITTED' && p.state !== 'COMPLETED') {
+        return false;
+      }
+      if (props.user.isAdmin) {
+        return true;
+      }
+      if (
+        props.user.isOrganizer &&
+        props.user.organizerOrganizationOid === props.examSession.organizer_oid
+      ) {
+        return true;
+      }
+      return false;
     };
 
     return sortParticipantsFn(participants).map((p, i) => (
