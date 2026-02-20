@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 import classes from './RegistryItemDetails.module.css';
 import Hyperlink from '../UI/Hyperlink/Hyperlink';
@@ -19,8 +20,7 @@ const registryItemDetails = props => {
     </div>
   );
 
-  const address = `${props.item.address.street}, ${props.item.address.zipCode
-    } ${props.item.address.city}`;
+  const address = `${props.item.address.street}, ${props.item.address.zipCode} ${props.item.address.city}`;
 
   const contact = (
     <div className={classes.Contact}>
@@ -51,7 +51,10 @@ const registryItemDetails = props => {
   );
 
   const inspectExamSessions = (
-    <div className={classes.InspectExamSessions} onClick={() => props.openSessions(props.item.oid)}>
+    <div
+      className={classes.InspectExamSessions}
+      onClick={() => props.openSessions(props.item.oid)}
+    >
       <p>{props.t('registryItem.viewAsOrganiser')}</p>
     </div>
   );
@@ -66,17 +69,28 @@ const registryItemDetails = props => {
       </div>
       <Link
         to={{
-          pathname: `/jarjestajarekisteri/${props.item.oid}/tutkintotilaisuudet`
+          pathname: `/jarjestajarekisteri/${props.item.oid}/tutkintotilaisuudet`,
         }}
-        className={[classes.Grid, classes.LinkStyle].join(" ")}
+        className={[classes.Grid, classes.LinkStyle].join(' ')}
       >
         {inspectExamSessions}
       </Link>
-      <button className={[classes.Update, classes.LinkStyle].join(" ")} onClick={props.modify}>
-        {props.t('common.modify')}
-      </button>
+      {props.isAdmin && (
+        <button
+          className={[classes.Update, classes.LinkStyle].join(' ')}
+          onClick={props.modify}
+        >
+          {props.t('common.modify')}
+        </button>
+      )}
     </div>
   );
+};
+
+const mapStateToProps = state => {
+  return {
+    isAdmin: state.user && state.user.user && state.user.user.isAdmin,
+  };
 };
 
 registryItemDetails.propTypes = {
@@ -85,4 +99,4 @@ registryItemDetails.propTypes = {
   openSessions: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(registryItemDetails);
+export default connect(mapStateToProps)(withTranslation()(registryItemDetails));

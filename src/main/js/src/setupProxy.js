@@ -76,7 +76,9 @@ const countries = JSON.parse(
 
 const genders = JSON.parse(fs.readFileSync('./dev/rest/codes/sukupuoli.json'));
 
-const paymentsReport = JSON.parse(fs.readFileSync('./dev/rest/examPayments/paymentsReport.json'))
+const paymentsReport = JSON.parse(
+  fs.readFileSync('./dev/rest/examPayments/paymentsReport.json'),
+);
 
 let organizers = [
   {
@@ -127,169 +129,174 @@ let organizers = [
 ];
 
 const quarantineMatches = {
-  quarantine_matches: [{
-    quarantine_lang: 'fin',
-    birthdate: '2018-02-01',
-    email: 'email@invalid.invalid',
-    language_code: 'fin',
-    phone_number: '0401234567',
-    quarantine_id: null,
-    reviewed: '2022-12-20T12:23:52.501Z',
-    first_name: 'Max',
-    last_name: 'Karenssi',
-    ssn: '301079-900U',
-    registration_id: 2,
-    created: '2022-12-02T10:32:11.888Z',
-    exam_date: '2025-03-10',
-    id: 1,
-    form: {
-      email: 'email@invalid.invalid',
+  quarantine_matches: [
+    {
+      quarantine_lang: 'fin',
       birthdate: '2018-02-01',
-      last_name: 'De Ilmoittautuminen',
-      first_name: 'Max',
-      phone_number: '0401234567'
-    },
-    state: 'COMPLETED'
-  },
-  {
-    quarantine_lang: 'swe',
-    birthdate: '1999-01-12',
-    email: 'email@invalid.invalid',
-    language_code: 'fin',
-    phone_number: '0401234567',
-    quarantine_id: null,
-    reviewed: '2022-12-20T12:23:52.501Z',
-    first_name: 'Max',
-    last_name: 'Von Koskull',
-    ssn: '120199-999X',
-    registration_id: 2,
-    created: '2022-12-02T10:32:11.888Z',
-    exam_date: '2025-03-10',
-    id: 2,
-    form: {
       email: 'email@invalid.invalid',
-      birthdate: '1999-01-12',
-      ssn: '120199-999X',
-      last_name: 'De Ilmoittautuminen',
+      language_code: 'fin',
+      phone_number: '0401234567',
+      quarantine_id: null,
+      reviewed: '2022-12-20T12:23:52.501Z',
       first_name: 'Max',
-      phone_number: '0401234567'
+      last_name: 'Karenssi',
+      ssn: '301079-900U',
+      registration_id: 2,
+      created: '2022-12-02T10:32:11.888Z',
+      exam_date: '2025-03-10',
+      id: 1,
+      form: {
+        email: 'email@invalid.invalid',
+        birthdate: '2018-02-01',
+        last_name: 'De Ilmoittautuminen',
+        first_name: 'Max',
+        phone_number: '0401234567',
+      },
+      state: 'COMPLETED',
     },
-    state: 'COMPLETED'
-  }]
-}
+    {
+      quarantine_lang: 'swe',
+      birthdate: '1999-01-12',
+      email: 'email@invalid.invalid',
+      language_code: 'fin',
+      phone_number: '0401234567',
+      quarantine_id: null,
+      reviewed: '2022-12-20T12:23:52.501Z',
+      first_name: 'Max',
+      last_name: 'Von Koskull',
+      ssn: '120199-999X',
+      registration_id: 2,
+      created: '2022-12-02T10:32:11.888Z',
+      exam_date: '2025-03-10',
+      id: 2,
+      form: {
+        email: 'email@invalid.invalid',
+        birthdate: '1999-01-12',
+        ssn: '120199-999X',
+        last_name: 'De Ilmoittautuminen',
+        first_name: 'Max',
+        phone_number: '0401234567',
+      },
+      state: 'COMPLETED',
+    },
+  ],
+};
 
 const quarantineReviews = {
-  reviews: [{
-    quarantine_lang: 'fin',
-    birthdate: '1979-10-30',
-    email: 'email@invalid.invalid',
-    language_code: 'fin',
-    phone_number: '0401234567',
-    quarantine_id: 1,
-    is_quarantined: false,
-    reviewed: '2022-12-20T12:23:52.501Z',
-    first_name: 'Max',
-    last_name: 'Von Karenssi',
-    ssn: '301079-900U',
-    registration_id: 2,
-    created: '2022-12-02T10:32:11.888Z',
-    exam_date: '2025-03-10',
-    id: 1,
-    form: {
-      email: 'email@invalid.invalid',
+  reviews: [
+    {
+      quarantine_lang: 'fin',
       birthdate: '1979-10-30',
-      last_name: 'De Ilmoittautuminen',
-      first_name: 'Max',
+      email: 'email@invalid.invalid',
+      language_code: 'fin',
       phone_number: '0401234567',
-      ssn: '120199-999X'
-    },
-    state: 'COMPLETED'
-  },
-  {
-    quarantine_lang: 'fin',
-    email: 'email@invalid.invalid',
-    language_code: 'fin',
-    phone_number: '0401234567',
-    quarantine_id: 2,
-    is_quarantined: true,
-    reviewed: '2022-12-20T12:23:52.501Z',
-    first_name: 'Max',
-    last_name: 'Von Karenssi',
-    ssn: '301079-900U',
-    registration_id: 3,
-    created: '2022-12-02T10:32:11.888Z',
-    exam_date: '2025-03-10',
-    id: 2,
-    form: {
-      email: 'email@invalid.invalid',
-      birthdate: '1979-10-30',
-      ssn: '301079-900U',
-      last_name: 'Von Karenssi',
+      quarantine_id: 1,
+      is_quarantined: false,
+      reviewed: '2022-12-20T12:23:52.501Z',
       first_name: 'Max',
-      phone_number: '0401234567'
+      last_name: 'Von Karenssi',
+      ssn: '301079-900U',
+      registration_id: 2,
+      created: '2022-12-02T10:32:11.888Z',
+      exam_date: '2025-03-10',
+      id: 1,
+      form: {
+        email: 'email@invalid.invalid',
+        birthdate: '1979-10-30',
+        last_name: 'De Ilmoittautuminen',
+        first_name: 'Max',
+        phone_number: '0401234567',
+        ssn: '120199-999X',
+      },
+      state: 'COMPLETED',
     },
-    state: 'SUBMITTED'
-  }]
+    {
+      quarantine_lang: 'fin',
+      email: 'email@invalid.invalid',
+      language_code: 'fin',
+      phone_number: '0401234567',
+      quarantine_id: 2,
+      is_quarantined: true,
+      reviewed: '2022-12-20T12:23:52.501Z',
+      first_name: 'Max',
+      last_name: 'Von Karenssi',
+      ssn: '301079-900U',
+      registration_id: 3,
+      created: '2022-12-02T10:32:11.888Z',
+      exam_date: '2025-03-10',
+      id: 2,
+      form: {
+        email: 'email@invalid.invalid',
+        birthdate: '1979-10-30',
+        ssn: '301079-900U',
+        last_name: 'Von Karenssi',
+        first_name: 'Max',
+        phone_number: '0401234567',
+      },
+      state: 'SUBMITTED',
+    },
+  ],
 };
 
 const quarantines = {
-  quarantines: [{
-    language_code: 'fin',
-    birthdate: '1979-10-30',
-    email: 'email@invalid.invalid',
-    phone_number: '0401234567',
-    ssn: '301079-900U',
-    created: '2022-12-02T10:32:11.888Z',
-    start_date: '2023-01-01',
-    end_date: '2024-01-01',
-    id: 1,
-    last_name: 'Syöttöpaine',
-    first_name: 'Max',
-    diary_number: 'OPH-feikki-123',
-  },
-  {
-    language_code: 'swe',
-    birthdate: '1979-10-30',
-    email: 'email@invalid.invalid',
-    phone_number: '0401234567',
-    ssn: '301079-900U',
-    created: '2022-12-02T10:32:11.888Z',
-    start_date: '2023-01-01',
-    end_date: '2023-08-17',
-    id: 2,
-    last_name: 'Testitapaus',
-    first_name: 'Tessa',
-    diary_number: 'OPH-feikki-456',
-  },
-  {
-    language_code: 'eng',
-    birthdate: '1979-10-30',
-    email: 'email@invalid.invalid',
-    phone_number: '0401234567',
-    ssn: '301079-900U',
-    created: '2022-12-02T10:32:11.888Z',
-    start_date: '2023-07-01',
-    end_date: '2024-06-01',
-    id: 3,
-    last_name: 'Ankka',
-    first_name: 'Aku',
-    diary_number: 'OPH-feikki-789',
-  },
-  {
-    language_code: 'eng',
-    birthdate: '1979-10-30',
-    email: 'email@invalid.invalid',
-    phone_number: '0401234567',
-    ssn: '301079-900U',
-    created: '2022-12-02T10:32:11.888Z',
-    start_date: '2023-06-01',
-    end_date: '2024-06-01',
-    id: 4,
-    last_name: 'Aalborg',
-    first_name: 'Akvavit',
-    diary_number: 'OPH-feikki-999',
-  },
-  ]
+  quarantines: [
+    {
+      language_code: 'fin',
+      birthdate: '1979-10-30',
+      email: 'email@invalid.invalid',
+      phone_number: '0401234567',
+      ssn: '301079-900U',
+      created: '2022-12-02T10:32:11.888Z',
+      start_date: '2023-01-01',
+      end_date: '2024-01-01',
+      id: 1,
+      last_name: 'Syöttöpaine',
+      first_name: 'Max',
+      diary_number: 'OPH-feikki-123',
+    },
+    {
+      language_code: 'swe',
+      birthdate: '1979-10-30',
+      email: 'email@invalid.invalid',
+      phone_number: '0401234567',
+      ssn: '301079-900U',
+      created: '2022-12-02T10:32:11.888Z',
+      start_date: '2023-01-01',
+      end_date: '2023-08-17',
+      id: 2,
+      last_name: 'Testitapaus',
+      first_name: 'Tessa',
+      diary_number: 'OPH-feikki-456',
+    },
+    {
+      language_code: 'eng',
+      birthdate: '1979-10-30',
+      email: 'email@invalid.invalid',
+      phone_number: '0401234567',
+      ssn: '301079-900U',
+      created: '2022-12-02T10:32:11.888Z',
+      start_date: '2023-07-01',
+      end_date: '2024-06-01',
+      id: 3,
+      last_name: 'Ankka',
+      first_name: 'Aku',
+      diary_number: 'OPH-feikki-789',
+    },
+    {
+      language_code: 'eng',
+      birthdate: '1979-10-30',
+      email: 'email@invalid.invalid',
+      phone_number: '0401234567',
+      ssn: '301079-900U',
+      created: '2022-12-02T10:32:11.888Z',
+      start_date: '2023-06-01',
+      end_date: '2024-06-01',
+      id: 4,
+      last_name: 'Aalborg',
+      first_name: 'Akvavit',
+      diary_number: 'OPH-feikki-999',
+    },
+  ],
 };
 
 const initialOrganizers = [...organizers];
@@ -308,9 +315,26 @@ const adminUser = {
   },
 };
 
+const solkiExtendedReadAccessUser = {
+  identity: {
+    username: 'ykitestaaja',
+    oid: '1.2.246.562.24.98107285507',
+    organizations: [
+      {
+        oid: '1.2.246.562.10.00000000001',
+        permissions: [{ palvelu: 'YKI', oikeus: 'ILMOITTAUTUMISET_R' }],
+      },
+      {
+        oid: '1.2.246.562.10.39706139522',
+        permissions: [{ palvelu: 'YKI', oikeus: 'JARJESTAJA' }],
+      },
+    ],
+    lang: 'fi',
+  },
+};
+
 const getNumberBetween = (min, max) =>
   Math.trunc(Math.random() * (max - min) + min);
-
 
 module.exports = function(app) {
   const getUrl = req => {
@@ -460,18 +484,21 @@ module.exports = function(app) {
     useLocalProxy ? proxyDeleteCall(req, res) : mockCall();
   });
 
-  app.put('/yki/api/virkailija/quarantine/:id/registration/:reg_id/set', (req, res) => {
-    const mockCall = () => {
-      try {
-        res.send({ success: true });
-      } catch (err) {
-        printError(req, err);
-        res.status(404).send(err.message);
-      }
-    };
+  app.put(
+    '/yki/api/virkailija/quarantine/:id/registration/:reg_id/set',
+    (req, res) => {
+      const mockCall = () => {
+        try {
+          res.send({ success: true });
+        } catch (err) {
+          printError(req, err);
+          res.status(404).send(err.message);
+        }
+      };
 
-    useLocalProxy ? proxyPutCall(req, res) : mockCall();
-  });
+      useLocalProxy ? proxyPutCall(req, res) : mockCall();
+    },
+  );
 
   app.get('/yki/api/virkailija/organizer', (req, res) => {
     const mockCall = () => {
@@ -661,9 +688,10 @@ module.exports = function(app) {
           const i = registrations[examSessionId].participants.findIndex(
             x => x.registration_id == id,
           );
-          const newState = registrations[examSessionId].participants[i].state === 'COMPLETED'
-            ? 'PAID_AND_CANCELLED'
-            : 'CANCELLED';
+          const newState =
+            registrations[examSessionId].participants[i].state === 'COMPLETED'
+              ? 'PAID_AND_CANCELLED'
+              : 'CANCELLED';
 
           registrations[examSessionId].participants[i].state = newState;
           res.send({ success: true });
@@ -908,11 +936,10 @@ module.exports = function(app) {
     },
   );
 
-
   app.get('/yki/auth/user', (req, res) => {
     try {
       res.set('Content-Type', 'application/json; charset=utf-8');
-      res.send(adminUser);
+      res.send(solkiExtendedReadAccessUser);
     } catch (err) {
       printError(req, err);
       res.status(404).send(err.message);

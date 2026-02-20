@@ -37,19 +37,13 @@ const kindComparator = () => (a, b) => {
 
 const fiCollator = new Intl.Collator('fi', { sensitivity: 'base' });
 const namesComparator = () => (a, b) => {
-  const lastNamesComparison = fiCollator.compare(
-    a.last_name,
-    b.last_name,
-  );
+  const lastNamesComparison = fiCollator.compare(a.last_name, b.last_name);
   if (lastNamesComparison < 0) {
     return -1;
   } else if (lastNamesComparison > 0) {
     return 1;
   }
-  const firstNamesComparison = fiCollator.compare(
-    a.first_name,
-    b.first_name,
-  );
+  const firstNamesComparison = fiCollator.compare(a.first_name, b.first_name);
   if (firstNamesComparison < 0) {
     return -1;
   } else if (firstNamesComparison > 0) {
@@ -62,19 +56,34 @@ export const participantList = props => {
   const [actionButtonsDisabled, setActionButtonsDisabled] = useState(false);
   const [displayingQueue, setDisplayingQueue] = useState(false);
 
-  const [sortParticipantsFn, setSortParticipantsFn] = useState(() => R.sortBy(R.prop('created')));
+  const [sortParticipantsFn, setSortParticipantsFn] = useState(() =>
+    R.sortBy(R.prop('created')),
+  );
 
   const getFreeRegistrationDescription = (source, basis, is_foreign) => {
-      const t = (key) => props.t(`examSession.freeRegistration${key}`);
-      return ` (${t("Source." + source)}: ${is_foreign ? t('IsForeign') : ''}${t('Basis.' + basis)})`;
+    const t = key => props.t(`examSession.freeRegistration${key}`);
+    return ` (${t('Source.' + source)}: ${is_foreign ? t('IsForeign') : ''}${t(
+      'Basis.' + basis,
+    )})`;
   };
 
-  const getStateTranslation = (state, isAdmin, isFreeRegistration, freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign) => {
+  const getStateTranslation = (
+    state,
+    isAdmin,
+    isFreeRegistration,
+    freeRegistrationSource,
+    freeRegistrationBasis,
+    freeRegistrationIsForeign,
+  ) => {
     switch (state) {
       case 'COMPLETED':
         if (isFreeRegistration) {
           return isAdmin
-            ? `${props.t('examSession.free')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
+            ? `${props.t('examSession.free')} ${getFreeRegistrationDescription(
+                freeRegistrationSource,
+                freeRegistrationBasis,
+                freeRegistrationIsForeign,
+              )}`
             : props.t('examSession.free');
         }
         return props.t('examSession.paid');
@@ -84,20 +93,32 @@ export const participantList = props => {
         return props.t('examSession.expired');
       case 'PAID_AND_CANCELLED':
         if (isFreeRegistration) {
-          return isAdmin 
-            ? `${props.t('examSession.freeAndCancelled')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
+          return isAdmin
+            ? `${props.t(
+                'examSession.freeAndCancelled',
+              )} ${getFreeRegistrationDescription(
+                freeRegistrationSource,
+                freeRegistrationBasis,
+                freeRegistrationIsForeign,
+              )}`
             : props.t('examSession.freeAndCancelled');
         }
         return props.t('examSession.paidAndCancelled');
-        
+
       case 'TRANSFERED':
         if (isFreeRegistration) {
           return isAdmin
-            ? `${props.t('examSession.freeAndTransfered')} ${getFreeRegistrationDescription(freeRegistrationSource, freeRegistrationBasis, freeRegistrationIsForeign)}`
+            ? `${props.t(
+                'examSession.freeAndTransfered',
+              )} ${getFreeRegistrationDescription(
+                freeRegistrationSource,
+                freeRegistrationBasis,
+                freeRegistrationIsForeign,
+              )}`
             : props.t('examSession.freeAndTransfered');
         }
         return props.t('examSession.paidAndTransfered');
-        
+
       default:
         return props.t('examSession.notPaid');
     }
@@ -111,7 +132,14 @@ export const participantList = props => {
       registrationState === 'COMPLETED' && participant.is_transfered
         ? 'TRANSFERED'
         : registrationState;
-    const text = getStateTranslation(registrationShownState, props.user.isAdmin, participant.is_free_registration, participant.free_registration_source, participant.free_registration_basis, participant.free_registration_is_foreign);
+    const text = getStateTranslation(
+      registrationShownState,
+      props.user.isAdmin,
+      participant.is_free_registration,
+      participant.free_registration_source,
+      participant.free_registration_basis,
+      participant.free_registration_is_foreign,
+    );
 
     return (
       <React.Fragment>
@@ -244,7 +272,19 @@ export const participantList = props => {
 
   const participantRows = participants => {
     const renderCancelButton = p => {
-      return p.state === 'SUBMITTED' || p.state === 'COMPLETED';
+      if (p.state !== 'SUBMITTED' && p.state !== 'COMPLETED') {
+        return false;
+      }
+      if (props.user.isAdmin) {
+        return true;
+      }
+      if (
+        props.user.isOrganizer &&
+        props.user.organizerOrganizationOid === props.examSession.organizer_oid
+      ) {
+        return true;
+      }
+      return false;
     };
 
     return sortParticipantsFn(participants).map((p, i) => (
@@ -282,7 +322,9 @@ export const participantList = props => {
             : props.t('examSession.registration.queue')}
         </div>
         <div className={classes.StateItem}>
-          {(p.is_transferable && props.user.isAdmin) ? relocateParticipant(p) : null}
+          {p.is_transferable && props.user.isAdmin
+            ? relocateParticipant(p)
+            : null}
         </div>
         <div className={classes.Item} />
         <div className={classes.Item}>{ssnOrBirthDate(p.form)}</div>

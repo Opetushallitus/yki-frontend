@@ -57,9 +57,11 @@ export class Registry extends Component {
             this.filterChangeHandler(filtering, filtered)
           }
         />
-        <Button clicked={this.openModalHandler}>
-          {this.props.t('registryItem.button.add')}
-        </Button>
+        {this.props.isAdmin && (
+          <Button clicked={this.openModalHandler}>
+            {this.props.t('registryItem.button.add')}
+          </Button>
+        )}
       </div>
     );
 
@@ -128,6 +130,7 @@ const mapStateToProps = state => {
     registry: state.registry.registry,
     loading: state.registry.loading,
     error: state.registry.error,
+    isAdmin: state.user && state.user.user && state.user.user.isAdmin
   };
 };
 
