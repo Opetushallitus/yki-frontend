@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import {
   ISO_DATE_FORMAT_SHORT,
+  ORG_TYPE_MUU_ORGANISAATIO,
   ORG_TYPE_OPPILAITOS,
   ORG_TYPE_TOIMIPISTE,
 } from '../../common/Constants';
@@ -23,7 +24,8 @@ const flattenOrganizationHierarchy = orgChildrenResponse => {
     .filter(
       ({ tyypit }) =>
         tyypit.includes(ORG_TYPE_OPPILAITOS) ||
-        tyypit.includes(ORG_TYPE_TOIMIPISTE),
+        tyypit.includes(ORG_TYPE_TOIMIPISTE) ||
+        tyypit.includes(ORG_TYPE_MUU_ORGANISAATIO),
     );
 };
 
