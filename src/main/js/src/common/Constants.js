@@ -63,3 +63,4 @@ export const OPH_OID = '1.2.246.562.10.00000000001';
 
 export const ORG_TYPE_OPPILAITOS = 'organisaatiotyyppi_02';
 export const ORG_TYPE_TOIMIPISTE = 'organisaatiotyyppi_03';
+export const ORG_TYPE_MUU_ORGANISAATIO = 'organisaatiotyyppi_05';
