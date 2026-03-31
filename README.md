@@ -2,6 +2,14 @@
 
 Spring boot application for serving YKI frontend application.
 
+## Run locally
+
+```bash
+cd src/main/js
+npm install --legacy-peer-deps
+npm start
+```
+
 ## Packaging
 Maven is used for packaging Spring boot application with React frontend application as a fat JAR.
 
