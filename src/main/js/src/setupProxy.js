@@ -748,6 +748,28 @@ module.exports = function(app) {
     },
   );
 
+  app.get('/organisaatio-service/rest/organisaatio/v4/:oid', (req, res) => {
+    if (useLocalProxy) return proxyGetCall(req, res);
+    try {
+      const org = JSON.parse(fs.readFileSync('./dev/rest/organization/findbyoid.json'));
+      org.oid = req.params.oid;
+      res.send(org);
+    } catch (err) {
+      printError(req, err);
+      res.status(404).send(err.message);
+    }
+  });
+
+  app.get('/organisaatio-service/rest/organisaatio/v4/hierarkia/hae', (req, res) => {
+    if (useLocalProxy) return proxyGetCall(req, res);
+    try {
+      res.send({ organisaatiot: [{ nimi: { fi: 'Testiorganisaatio' }, oid: req.query.oid, tyypit: ['Oppilaitos'], children: [] }] });
+    } catch (err) {
+      printError(req, err);
+      res.status(404).send(err.message);
+    }
+  });
+
   // need to proxy here because dev server bug: https://github.com/webpack/webpack-dev-server/issues/1440
   app.post(
     '/organisaatio-service/rest/organisaatio/v3/findbyoids',
