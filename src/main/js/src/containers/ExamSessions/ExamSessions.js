@@ -36,7 +36,7 @@ class ExamSessions extends Component {
     const userDetailsUpdated = !!currentUser && !previousUser;
     if (userDetailsUpdated) {
       this.props.onFetchExamSessionContent(
-        currentUser.organizerOrganizationOid,
+        currentUser.organizerOrganizationOids,
       );
     }
     // close open modals in case of error
