@@ -52,7 +52,7 @@ const fetchExamSessionContentFail = error => {
   };
 };
 
-export const fetchExamSessionContent = organizerOid => {
+export const fetchExamSessionContent = organizerOids => {
   return dispatch => {
     dispatch(fetchExamSessionContentStart());
     const oneYearAgo = moment()
@@ -62,16 +62,15 @@ export const fetchExamSessionContent = organizerOid => {
     axios
       .get(`/yki/api/virkailija/organizer`)
       .then(orgRes => {
-        // For the purposes of this view, we need to get regarding a single organizer
-        // However, for certain users (admin, extensive read access) the above endpoint will return
-        // data for multiple organizers. Especially in the case that a user is both an organizer AND has extensive read access,
-        // this means that we should find the single organizer entry that matches the organization for which they have the organizer permission.
+        // For the purposes of this view, we need to get data regarding a single organizer.
+        // Users with extensive read access get all organizers from the endpoint above.
+        // In that case we find the organizer matching any of the user's JARJESTAJA org OIDs.
         const organizers = orgRes.data.organizers;
         let organizer;
-        if (organizers && organizers.length > 1 && !!organizerOid) {
-          organizer = organizers.find(({ oid }) => oid === organizerOid);
+        if (organizers && organizers.length > 1 && organizerOids && organizerOids.length > 0) {
+          organizer = organizers.find(({ oid }) => organizerOids.includes(oid));
         }
-        // Fallback to previous behaviour in case we failed to find any suitable organizer above
+        // Fallback for single-organizer users (no extensive read access)
         if (!organizer) {
           organizer = orgRes.data.organizers[0];
         }
@@ -139,7 +138,7 @@ export const addExamSession = (examSession, oid) => {
       .post(`/yki/api/virkailija/organizer/${oid}/exam-session`, examSession)
       .then(() => {
         dispatch(addExamSessionSuccess());
-        dispatch(fetchExamSessionContent(oid));
+        dispatch(fetchExamSessionContent([oid]));
       })
       .catch(err => {
         dispatch(addExamSessionFail(err));
@@ -179,7 +178,7 @@ export const updateExamSession = (examSession, oid) => {
       )
       .then(() => {
         dispatch(updateExamSessionSuccess());
-        dispatch(fetchExamSessionContent(oid));
+        dispatch(fetchExamSessionContent([oid]));
       })
       .catch(err => {
         dispatch(updateExamSessionFail(err));
@@ -265,7 +264,7 @@ export const deleteExamSession = (oid, examSessionId) => {
       )
       .then(() => {
         dispatch(deleteExamSessionSuccess());
-        dispatch(fetchExamSessionContent(oid));
+        dispatch(fetchExamSessionContent([oid]));
       })
       .catch(err => {
         dispatch(deleteExamSessionFail(err));

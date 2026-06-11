@@ -26,7 +26,7 @@ class ExamSessions extends Component {
   componentDidMount = () => {
     const user = this.props.user;
     if (!!user) {
-      this.props.onFetchExamSessionContent(user.organizerOrganizationOid);
+      this.props.onFetchExamSessionContent(user.organizerOrganizationOids);
     }
   };
 
@@ -36,7 +36,7 @@ class ExamSessions extends Component {
     const userDetailsUpdated = !!currentUser && !previousUser;
     if (userDetailsUpdated) {
       this.props.onFetchExamSessionContent(
-        currentUser.organizerOrganizationOid,
+        currentUser.organizerOrganizationOids,
       );
     }
     // close open modals in case of error
@@ -64,7 +64,7 @@ class ExamSessions extends Component {
 
   closeExamSessionDetailsModalHandler = () => {
     this.setState({ showExamSessionDetailsModal: false });
-    this.props.onFetchExamSessionContent(this.props.user.organizerOrganizationOid);
+    this.props.onFetchExamSessionContent(this.props.user.organizerOrganizationOids);
   };
 
   createExamSessionHandler = examSession => {

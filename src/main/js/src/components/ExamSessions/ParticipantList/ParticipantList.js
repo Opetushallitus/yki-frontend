@@ -280,7 +280,7 @@ export const participantList = props => {
       }
       if (
         props.user.isOrganizer &&
-        props.user.organizerOrganizationOid === props.examSession.organizer_oid
+        props.user.organizerOrganizationOids.includes(props.examSession.organizer_oid)
       ) {
         return true;
       }
